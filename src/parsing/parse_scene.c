@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   parse_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/17 15:59:58 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/03/17 15:20:25 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/03/17 16:12:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include "minirt.h"
 
-# include "structs.h"
-# include "libft.h"
-# include <fcntl.h>
-# include <stdio.h>
-# include <string.h>
-# include <errno.h>
+int	is_valid_element(char *line)
+{
+	
+}
 
-int	print_error(char *err);
+int valid_elem_amount()
+{
+	
+}
 
-int	parse_scene(t_minirt *minirt, char *filename);
-
-#endif
+int	parse_scene(t_minirt *minirt, char *filename)
+{
+	int	fd;
+	
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		print_error(strerror(errno));
+	
+	return (1);
+}

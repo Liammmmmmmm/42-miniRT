@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/17 10:45:56 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/17 15:29:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,18 @@ typedef struct s_cylinder
 	t_color	color;
 }	t_cylinder;
 
-enum e_objects
+typedef enum e_objects
 {
 	LIGHT,
 	SPHERE,
 	PLANE,
 	CYLINDER
-};
+}	t_objects;
 
 typedef struct s_object
 {
 	void		*object;
-	e_objects	type;
+	t_objects	type;
 }	t_object;
 
 typedef struct s_scene

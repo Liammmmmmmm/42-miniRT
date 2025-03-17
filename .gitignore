@@ -1,0 +1,13 @@
+.obj/
+.vscode/
+
+libft/.obj/
+libft/.git/
+libft/libft.a
+
+*.o
+
+minirt
+
+.VSCodeCounter
+a.out

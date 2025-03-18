@@ -6,15 +6,12 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:26:28 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/18 12:27:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/18 13:58:37 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-/**
- * @return 1 if the line start by `type` folowed by a space or tab, 0 otherwise
- */
 int	cmp_type(const char *type, const char *line)
 {
 	int	i;
@@ -30,9 +27,8 @@ int	cmp_type(const char *type, const char *line)
 
 static int	is_valid_element(char *line)
 {
-	if (is_valid_type("A", line) || is_valid_type("C", line)
-		|| is_valid_type("L", line) || is_valid_type("sp", line)
-		|| is_valid_type("pl", line) || is_valid_type("cy", line))
+	if (cmp_type("A", line) || cmp_type("C", line) || cmp_type("L", line)
+		|| cmp_type("sp", line) || cmp_type("pl", line) || cmp_type("cy", line))
 		return (1);
 	return (0);
 }
@@ -50,9 +46,6 @@ int	is_empty_line(char *line)
 	return (1);
 }
 
-/**
- * @return -1 for an invalid line, 0 for an empty line, 1 for a valid line
- */
 int is_valid_line(char *line)
 {
 	if (is_valid_element(line))

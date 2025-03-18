@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/17 16:03:17 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/03/18 13:21:32 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ INCLUDES = -I includes/ -I $(LIBFTDIR)includes/ -I $(MINILIBXDIR)
 # Source files
 SRC_DIR  = src/
 SRCS     = main.c                        \
-           parsing/parse_scene.c
+           parsing/parse_scene.c parsing/errors.c parsing/valid_line.c parsing/tranform_line.c
 
 SRCS_BONUS = 
 

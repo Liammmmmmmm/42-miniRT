@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/18 12:27:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/18 14:01:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,29 @@
 # include <string.h>
 # include <errno.h>
 
-int	print_error(char *err);
+int		print_error(char *err);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                   PARSING                                    ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-int	print_line_error(int nb, char *line);
+int		print_line_error(int nb, char *line);
 
 /**
  * @return 1 if the line start by `type` folowed by a space or tab, 0 otherwise
  */
-int	cmp_type(const char *type, const char *line);
+int		cmp_type(const char *type, const char *line);
 
-int	is_empty_line(char *line);
+int		is_empty_line(char *line);
 
-int	count_valid_lines(char *filename);
+/**
+ * @return -1 for an invalid line, 0 for an empty line, 1 for a valid line
+ */
+int 	is_valid_line(char *line);
 
-int	parse_scene(t_minirt *minirt, char *filename);
+int		count_valid_lines(char *filename);
+char	*remove_useless_spaces(char *line);
+
+int		parse_scene(t_minirt *minirt, char *filename);
 
 #endif

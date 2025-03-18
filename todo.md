@@ -7,6 +7,9 @@
   - [ ] Sphere
   - [ ] Plane
   - [ ] Cylinder
+  - [ ] plus d'objets
+  - [ ] tex pour load un fichier de texture
+  - [ ] mat pour creer un material (genre changer toutes les options genre roughness, etc) et y link differentes textures
 - [ ] Ray tracing
 
 

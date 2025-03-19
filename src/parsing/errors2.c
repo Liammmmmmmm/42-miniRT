@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   errors2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 15:21:23 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/03/19 15:05:12 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/03/19 15:06:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	print_error(char *err)
+int	invalid_size_error(char **splited)
 {
-	ft_dprintf(2, RED"[Error]"NC" %s\n", err);
+	print_error("Invalid size, must be a positive value.");
+	free(splited);
 	return (0);
-}
-
-int	main(int argc, char **argv)
-{
-	t_minirt	minirt;
-
-	if (argc < 2)
-		return (print_error("Missing scene file. Usage: ./miniRT <scene.rt>"));
-	if (argc > 2)
-		return (print_error("Too many arguments. Usage: ./miniRT <scene.rt>"));
-	parse_scene(&minirt, argv[1]);
-	print_scene(&minirt.scene);
-	free_scene(&minirt.scene, NULL);
 }

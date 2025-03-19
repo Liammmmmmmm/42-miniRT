@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 15:21:23 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/03/19 12:25:59 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/03/19 12:27:11 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	print_error(char *err)
+int	char_tab_len(char **tab)
 {
-	ft_dprintf(2, RED"[Error]"NC" %s\n", err);
-	return (0);
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
 }
 
-int	main(int argc, char **argv)
+char	**free_ret_null(char **fre)
 {
-	t_minirt	minirt;
-
-	if (argc < 2)
-		return (print_error("Missing scene file. Usage: ./miniRT <scene.rt>"));
-	if (argc > 2)
-		return (print_error("Too many arguments. Usage: ./miniRT <scene.rt>"));
-	parse_scene(&minirt, argv[1]);
-	print_scene(&minirt.scene);
-	free_scene(&minirt.scene, NULL);
+	free(fre);
+	return (NULL);
 }

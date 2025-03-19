@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:20:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 13:54:01 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/19 15:24:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ int	parse_scene(t_minirt *minirt, char *filename)
 	}
 	if (parse_elements(&minirt->scene, lines, ln_amount) == 0)
 		return (0);
+	ft_free_tab_null_term(lines);
 	return (1);
 }

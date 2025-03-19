@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 12:04:47 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/19 15:30:10 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct s_sphere
 typedef struct s_plane
 {
 	t_vec3	position;
-	t_vec3	orientation;
+	t_vec3	normal;
 	t_color	color;
 }	t_plane;
 
@@ -97,6 +97,7 @@ typedef struct s_cylinder
 
 typedef enum e_objects
 {
+	NULL_OBJ,
 	AMBIANT_LIGHT,
 	CAMERA,
 	LIGHT,

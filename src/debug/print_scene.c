@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:57:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 13:00:08 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/19 15:34:58 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ void print_scene(t_scene *scene)
     printf("  FOV: " BLUE "%d" NC "\n", scene->camera.fov);
     
     printf("\n" RED "Scene Objects (%d):\n" NC, scene->el_amount);
-    for (int i = 0; i < scene->el_amount; i++) {
+	int i = -1;
+    while (++i < scene->el_amount && scene->elements)
+	{
         t_object *obj = &scene->elements[i];
         switch (obj->type) {
             case LIGHT: {
@@ -72,8 +74,8 @@ void print_scene(t_scene *scene)
                 printf("  " YELLOW "Plane:\n" NC);
                 printf("    Position: ");
                 print_vec3(plane->position);
-                printf("\n    Orientation: ");
-                print_vec3(plane->orientation);
+                printf("\n    Normal: ");
+                print_vec3(plane->normal);
                 printf("\n    Color: ");
                 print_color(plane->color);
                 printf("\n");

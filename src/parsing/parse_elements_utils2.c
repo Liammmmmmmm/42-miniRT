@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:08:39 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 14:10:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/19 14:53:19 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	parse_vector_normalized(char *str, t_vec3 *vec)
 		free(co);
 		return (print_error("Vector must have 3 coordinates : <x,y,z>"));
 	}
-	if (!is_valid_co(co[0], &vec->x)
-		|| !is_valid_co(co[1], &vec->y)
-		|| !is_valid_co(co[2], &vec->z))
+	if (!is_valid_co_normal(co[0], &vec->x)
+		|| !is_valid_co_normal(co[1], &vec->y)
+		|| !is_valid_co_normal(co[2], &vec->z))
 	{
 		free(co);
 		return (print_error("Invalid vector format. Expected format: "
@@ -46,4 +46,28 @@ int	parse_vector_normalized(char *str, t_vec3 *vec)
 	}
 	free(co);
 	return (1);
+}
+
+int	is_valid_brightness(char *str, float *co)
+{
+	if (is_valid_float(str))
+	{
+		*co = ft_atof(str);
+		if (*co > 1.0 || *co < 0)
+			return (0);
+		return (1);
+	}
+	return (0);
+}
+
+int	is_valid_size(char *str, float *co)
+{
+	if (is_valid_float(str))
+	{
+		*co = ft_atof(str);
+		if (*co < 0)
+			return (0);
+		return (1);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/18 12:41:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/19 11:01:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	print_error(char *err)
 	return (0);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_minirt	minirt;
 
@@ -27,5 +27,4 @@ int main(int argc, char **argv)
 	if (argc > 2)
 		return (print_error("Too many arguments. Usage: ./miniRT <scene.rt>"));
 	parse_scene(&minirt, argv[1]);
-	
 }

@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   parse_elements2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 12:21:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 11:05:46 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/03/19 11:00:33 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	print_line_error(int nb, char *line)
+int	parse_ambiant_light(t_scene *scene, char *line)
 {
-	remove_useless_spaces(line);
-	ft_dprintf(2, RED"[Error]"NC" Syntax error on line %d: `%s'\n", nb, line);
-	free(line);
-	return (0);
+	
 }
 
-int	to_many_el_error(char *el)
+int	parse_camera(t_scene *scene, char *line)
 {
-	ft_dprintf(2, RED"[Error]"NC" To many elements '%s'\n", el);
-	return (0);
-}
-
-int	not_enough_el_error(char *el)
-{
-	ft_dprintf(2, RED"[Error]"NC" No element '%s'. Need at least one.\n", el);
-	return (0);
+	
 }

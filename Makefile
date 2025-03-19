@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/18 13:21:32 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/03/19 11:01:06 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ INCLUDES = -I includes/ -I $(LIBFTDIR)includes/ -I $(MINILIBXDIR)
 # Source files
 SRC_DIR  = src/
 SRCS     = main.c                        \
-           parsing/parse_scene.c parsing/errors.c parsing/valid_line.c parsing/tranform_line.c
+           parsing/parse_scene.c parsing/errors.c parsing/valid_line.c parsing/tranform_line.c parsing/verify_elements.c
 
 SRCS_BONUS = 
 
@@ -140,6 +140,14 @@ fclean : clean
 		rm -f $(NAME); \
 	fi
 
+fcleanp :
+	@echo "$(RED)[Removing] $(NC)object files"
+	@rm -rf $(OBJ_DIR)
+	@if [ -f $(NAME) ]; then \
+		echo "$(RED)[Removing] $(NC)program $(NAME)"; \
+		rm -f $(NAME); \
+	fi
+
 re : fclean
 	@make --no-print-directory all
 
@@ -147,13 +155,13 @@ fast: all
 
 debug: all 
 
-ffast: fclean_fdf_only
+ffast: fcleanp
 	@make --no-print-directory fast
 
-fdebug: fclean_fdf_only
+fdebug: fcleanp
 	@make --no-print-directory debug
 
 norminette:
-	@norminette srcs/ libft/ includes/
+	@norminette src/ libft/ includes/
 
-.PHONY: all clean fclean nothing_to_be_done re end_message norminette fast ffast debug fdebug
+.PHONY: all clean fclean nothing_to_be_done re end_message norminette fast ffast debug fdebug fcleanp

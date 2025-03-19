@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/18 14:01:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/19 10:59:58 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int		print_error(char *err);
 ║                                   PARSING                                    ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
+int		not_enough_el_error(char *el);
+int		to_many_el_error(char *el);
 int		print_line_error(int nb, char *line);
 
 /**
@@ -42,6 +44,11 @@ int 	is_valid_line(char *line);
 
 int		count_valid_lines(char *filename);
 char	*remove_useless_spaces(char *line);
+char	*remove_comments(char *line);
+int		valid_elements_amount(char **lines);
+
+int		free_scene(t_scene *scene, char **lines);
+int		parse_elements(t_scene *scene, char **lines, int ln_amount);
 
 int		parse_scene(t_minirt *minirt, char *filename);
 

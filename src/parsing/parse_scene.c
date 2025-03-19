@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:20:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/18 14:05:53 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/19 11:05:38 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ char	**save_valid_lines(char *filename, int ln_amount)
 	return (res);
 }
 
-
 int	parse_scene(t_minirt *minirt, char *filename)
 {
 	int		ln_amount;
@@ -60,18 +59,19 @@ int	parse_scene(t_minirt *minirt, char *filename)
 
 	if (!is_valid_extension(filename))
 		return (print_error("Invalid file extension. Expected a '.rt' file."));
-	ln_amount =	count_valid_lines(filename);
+	ln_amount = count_valid_lines(filename);
 	if (ln_amount == 0)
 		return (0);
 	lines = save_valid_lines(filename, ln_amount);
 	if (!lines)
 		return (print_error(strerror(errno)));
-	int i = 0;
-	while (lines[i])
+	if (valid_elements_amount(lines) == 0)
 	{
-		ft_printf("%s\n", lines[i]);
-		i++;
+		ft_free_tab_null_term(lines);
+		return (0);
 	}
-	(void)minirt;
+	printf("ok");
+	if (parse_elements(&minirt->scene, lines, ln_amount) == 0)
+		return (0);
 	return (1);
 }

@@ -7,7 +7,7 @@ libft/libft.a
 
 *.o
 
-minirt
+miniRT
 
 .VSCodeCounter
 a.out

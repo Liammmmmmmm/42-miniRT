@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:20:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 11:05:38 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/19 13:54:01 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ char	**save_valid_lines(char *filename, int ln_amount)
 		return (NULL);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		return (free(res),
-			NULL);
+		return (free_ret_null(res));
 	ln = get_next_line(fd);
 	while (ln && c < ln_amount)
 	{
@@ -45,7 +44,8 @@ char	**save_valid_lines(char *filename, int ln_amount)
 			res[c++] = remove_useless_spaces(ln);
 		else
 			free(ln);
-		ln = get_next_line(fd);
+		if (c < ln_amount)
+			ln = get_next_line(fd);
 	}
 	close(fd);
 	res[c] = NULL;
@@ -61,7 +61,7 @@ int	parse_scene(t_minirt *minirt, char *filename)
 		return (print_error("Invalid file extension. Expected a '.rt' file."));
 	ln_amount = count_valid_lines(filename);
 	if (ln_amount == 0)
-		return (0);
+		return (print_error("Empty scene."));
 	lines = save_valid_lines(filename, ln_amount);
 	if (!lines)
 		return (print_error(strerror(errno)));
@@ -70,7 +70,6 @@ int	parse_scene(t_minirt *minirt, char *filename)
 		ft_free_tab_null_term(lines);
 		return (0);
 	}
-	printf("ok");
 	if (parse_elements(&minirt->scene, lines, ln_amount) == 0)
 		return (0);
 	return (1);

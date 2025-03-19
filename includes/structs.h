@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 10:42:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/19 12:04:47 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ typedef struct s_cylinder
 
 typedef enum e_objects
 {
+	AMBIANT_LIGHT,
+	CAMERA,
 	LIGHT,
 	SPHERE,
 	PLANE,

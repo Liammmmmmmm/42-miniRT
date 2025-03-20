@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/20 15:54:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/20 18:03:56 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ typedef struct s_vec3
 	float	z;
 }	t_vec3;
 
+typedef struct s_ray
+{
+	t_vec3	orig;	/* The origin of the ray. */
+	t_vec3	dir;	/* The direction of the ray. */
+}	t_ray;
+
 /**
  * @struct s_point
  * @brief Structure representing a point in 2D space with a color.
@@ -64,7 +70,7 @@ typedef struct s_camera
 {
 	t_vec3			position;
 	t_vec3			orientation;
-	unsigned char	fov; 
+	unsigned char	fov;
 }	t_camera;
 
 typedef struct s_light

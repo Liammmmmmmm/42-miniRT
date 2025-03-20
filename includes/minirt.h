@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/20 16:00:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/20 17:57:27 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ int		print_error(char *err);
 
 void	print_scene(t_scene *scene);
 
-
 int		char_tab_len(char **tab);
 char	**free_ret_null(char **fre);
 
@@ -123,7 +122,7 @@ int		is_empty_line(char *line);
 /**
  * @return -1 for an invalid line, 0 for an empty line, 1 for a valid line
  */
-int 	is_valid_line(char *line);
+int		is_valid_line(char *line);
 
 int		count_valid_lines(char *filename);
 char	*remove_useless_spaces(char *line);

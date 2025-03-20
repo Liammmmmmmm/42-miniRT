@@ -6,12 +6,14 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 15:30:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/20 15:39:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+# include "libft.h"
 
 /**
  * @struct s_color
@@ -46,10 +48,10 @@ typedef struct s_vec3
  */
 typedef struct s_sc_point
 {
-	int		x;		/* X-coordinate of the point on the screen. */
-	int		y;		/* Y-coordinate of the point on the screen. */
+	t_uint	x;		/* X-coordinate of the point on the screen. */
+	t_uint	y;		/* Y-coordinate of the point on the screen. */
 	float	z;		/* Depth of the point. */
-	int		color;	/* Color of the point. */
+	t_color	color;	/* Color of the point. */
 }	t_sc_point;
 
 typedef struct s_amb_light
@@ -120,10 +122,55 @@ typedef struct s_scene
 	t_camera	camera;
 }	t_scene;
 
+/**
+ * @struct s_img
+ * @brief Structure representing an image with its properties.
+ * 
+ * @param img Pointer to identify the image.
+ * @param img_str String containing all the pixels of the image.
+ * @param img_depth Contain the depth of each pixel (from camera)
+ * @param bits Number of bits per pixel.
+ * @param size_line Size of the img_str.
+ * @param endian Indicates the endianness of the image.
+ */
+typedef struct s_img
+{
+	void	*img;		/* Pointer to identify the image */
+	char	*img_str;	/* String containing all the pixels of the image */
+	float	*img_depth;	/* Contain the depth of each pixel (from camera) */
+	int		bits;		/* Number of bits per pixel */
+	int		size_line;	/* Size of the img_str */
+	int		endian;		/* Indicates the endianness of the image */
+	t_uint	width;
+	t_uint	height;
+}	t_img;
+
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*render_win;
+	void	*controls_win;
+	t_img	img;
+}	t_mlx;
+
+typedef struct s_screen
+{
+	t_sc_point	*render;	// Liste de chaque pixel pour l'image rendue
+	int			render_step; // jsp trop mais je pense ce sera utile
+	// stocker aussi ici les différents boutons, sliders ou autres
+}	t_screen;
+
+typedef struct s_stats
+{
+	int	frame;
+}	t_stats;
+
 typedef struct s_minirt
 {
-	t_scene	scene;
-	
+	t_scene		scene;
+	t_mlx		mlx;
+	t_screen	screen;
+	t_stats		stats;
 }	t_minirt;
 
 #endif

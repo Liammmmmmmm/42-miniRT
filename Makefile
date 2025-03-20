@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/19 15:12:10 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/03/20 15:30:46 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,8 @@ SRC_DIR  = src/
 SRCS     = main.c                        \
            utils/utils.c                  \
 		   debug/print_scene.c             \
+		   events/basic.c                   \
+		   rendering/init.c rendering/pixel.c rendering/loop.c \
            parsing/parse_scene.c parsing/errors.c parsing/errors2.c parsing/valid_line.c parsing/tranform_line.c parsing/verify_elements.c parsing/parse_elements.c parsing/parse_elements2.c parsing/parse_elements3.c parsing/parse_elements_utils.c parsing/parse_elements_utils2.c
 
 SRCS_BONUS = 

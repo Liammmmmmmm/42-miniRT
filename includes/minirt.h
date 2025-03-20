@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 15:11:36 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/20 15:43:40 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,80 @@
 
 # include "structs.h"
 # include "libft.h"
+# include "mlx.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <string.h>
 # include <errno.h>
+
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
+
+typedef enum e_mouse_buttons
+{
+	LEFT_CLICK = 1,
+	MIDDLE_CLICK,
+	RIGHT_CLICK,
+	SCROLL_UP,
+	SCROLL_DOWN
+}	t_mouse_buttons;
+
+typedef enum e_event
+{
+	ON_KEYDOWN = 2,
+	ON_KEYUP = 3,
+	ON_MOUSEDOWN = 4,
+	ON_MOUSEUP = 5,
+	ON_MOUSEMOVE = 6,
+	ON_EXPOSE = 12,
+	ON_DESTROY = 17
+}	t_event;
+
+typedef enum e_keys
+{
+	KEY_SPACE = 32,
+	KEY_INF = 44,
+	KEY_MINUS = 45,
+	KEY_SUP = 46,
+	KEY_PLUS = 61,
+	KEY_A = 97,
+	KEY_B = 98,
+	KEY_C = 99,
+	KEY_D = 100,
+	KEY_E = 101,
+	KEY_F = 102,
+	KEY_G = 103,
+	KEY_H = 104,
+	KEY_I = 105,
+	KEY_J = 106,
+	KEY_K = 107,
+	KEY_L = 108,
+	KEY_N = 110,
+	KEY_O = 111,
+	KEY_P = 112,
+	KEY_Q = 113,
+	KEY_R = 114,
+	KEY_S = 115,
+	KEY_T = 116,
+	KEY_V = 118,
+	KEY_W = 119,
+	KEY_X = 120,
+	KEY_Z = 122,
+	NUM_0 = 65438,
+	NUM_1 = 65436,
+	NUM_2 = 65433,
+	NUM_3 = 65435,
+	NUM_4 = 65430,
+	NUM_5 = 65437,
+	NUM_6 = 65432,
+	NUM_7 = 65429,
+	NUM_8 = 65431,
+	NUM_9 = 65434,
+	KEY_ESC = 65307,
+	KEY_SHIFT = 65505,
+	KEY_RSHIFT = 65506,
+	KEY_CTRL_LEFT = 65507,
+}	t_keys;
 
 int		print_error(char *err);
 
@@ -78,5 +148,28 @@ int		parse_plane(t_scene *scene, char *line);
 int		parse_cylinder(t_scene *scene, char *line);
 
 int		parse_scene(t_minirt *minirt, char *filename);
+
+/*═════════════════════════════════════════════════════════════════════════════╗
+║                                     MLX                                      ║
+╚═════════════════════════════════════════════════════════════════════════════*/
+
+int		init_mlx(t_minirt *minirt);
+void	free_mlx(t_minirt *minirt);
+
+void	put_sp_image(t_img *img, t_sc_point *sp);
+void	put_pixel_image(t_img *img, t_uint x, t_uint y, int color);
+
+/*═════════════════════════════════════════════════════════════════════════════╗
+║                                    EVENTS                                    ║
+╚═════════════════════════════════════════════════════════════════════════════*/
+
+void	events(t_minirt *minirt);
+
+/*═════════════════════════════════════════════════════════════════════════════╗
+║                                    RENDER                                    ║
+╚═════════════════════════════════════════════════════════════════════════════*/
+
+void	render_frame(t_minirt *minirt);
+int		init_render(t_minirt *minirt);
 
 #endif

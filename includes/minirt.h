@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/20 15:43:40 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/20 16:00:02 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,5 +171,7 @@ void	events(t_minirt *minirt);
 
 void	render_frame(t_minirt *minirt);
 int		init_render(t_minirt *minirt);
+
+void	render(t_minirt *minirt);
 
 #endif

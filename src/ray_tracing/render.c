@@ -1,40 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/20 16:04:53 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/03/20 16:24:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	put_render_to_frame(t_minirt *minirt)
+void	basic_image(t_minirt *minirt)
 {
-	int	i;
-	int	tpix;
-
-	i = 0;
+	t_uint	tpix;
+	t_uint	i;
+	t_uint	y;
+	t_color	color;
+	
 	tpix = minirt->mlx.img.width * minirt->mlx.img.height;
-	while (i < tpix)
+	i = 0;
+	y = 0;
+	while (i < minirt->mlx.img.height)
 	{
-		put_sp_image(&minirt->mlx.img, &minirt->screen.render[i]);
+		y = 0;
+		while (y < minirt->mlx.img.width)
+		{
+			color.r = i * 255 / minirt->mlx.img.height;
+			color.g = y * 255 / minirt->mlx.img.width;
+			color.b = (minirt->mlx.img.height - i) * 255 / minirt->mlx.img.height;
+			
+			minirt->screen.render[minirt->mlx.img.width * i + y].color = color;
+			y++;
+		}
 		i++;
 	}
+
 }
 
-void	render_frame(t_minirt *minirt)
+void	render(t_minirt *minirt)
 {
-	if (minirt->screen.start_render)
-	{
-		render(minirt);
-		minirt->screen.start_render = 0;
-	}
-	put_render_to_frame(minirt);
-	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
-	minirt->stats.frame += 1;
+	basic_image(minirt);
 }
-

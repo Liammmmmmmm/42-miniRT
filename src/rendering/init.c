@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/20 15:41:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/20 15:54:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ int	init_render(t_minirt *minirt)
 		i++;
 	}
 	minirt->stats.frame = 0;
+	minirt->screen.start_render = 1;
 	return (1);
 }

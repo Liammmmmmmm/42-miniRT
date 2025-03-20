@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/20 18:03:56 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:27:37 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_ray
 {
 	t_vec3	orig;	/* The origin of the ray. */
 	t_vec3	dir;	/* The direction of the ray. */
-}	t_ray;
+}	t_ray;	/*	Add more section for future (length_squared for optimisation)	*/
 
 /**
  * @struct s_point

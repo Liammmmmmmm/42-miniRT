@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/21 15:24:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/21 16:04:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,30 @@ void	basic_image(t_minirt *minirt)
 	}
 }
 
-t_color ray_color(t_ray ray)
+t_color ray_color(t_minirt *minirt, t_ray ray)
 {
 	double	a;
 	t_color	color;
+	int	i;
 
 	a = 0.5 * (ray.dir.y + 1);
 	color.r = (1 - a) * 255 + a * 128;
 	color.g = (1 - a) * 255 + a * 178;
 	color.b = (1 - a) * 255 + a * 255;
+	i = 0;
+	while (i < minirt->scene.el_amount)
+	{
+		if (minirt->scene.elements[i].type == SPHERE)
+		{
+			t_sphere *sphere;
+			sphere = minirt->scene.elements[i].object;
+			if (hit_sphere(sphere->position, sphere->diameter / 2, &ray))
+			{
+				return (sphere->color);
+			}
+		}
+		i++;
+	}
     return (color);
 }
 
@@ -68,7 +83,7 @@ void	draw_pixels(t_minirt *minirt)
 			), 
 			ray.orig
 		);
-		minirt->screen.render[i].color = ray_color(ray);
+		minirt->screen.render[i].color = ray_color(minirt, ray);
 		i++;
 	}
 }
@@ -76,23 +91,19 @@ void	draw_pixels(t_minirt *minirt)
 t_viewport	init_viewport(t_minirt *minirt)
 {
 	t_viewport	viewport;
-	t_vec3		w;
 	t_vec3		u;
-	t_vec3		v;
 
 	viewport.focal_length = 1.0;
 	viewport.height = 2.0;
 	viewport.width = viewport.height * ((double)minirt->mlx.img.width / minirt->mlx.img.height);
-	w = minirt->scene.camera.orientation;
 	u = vec3_unit(vec3_cross((t_vec3){0, 1, 0}, vec3_negate(minirt->scene.camera.orientation)));
-	v = vec3_cross(w, u);
 	viewport.u = vec3_multiply_scalar(u, viewport.width);
-	viewport.v = vec3_multiply_scalar(v, viewport.height);
+	viewport.v = vec3_multiply_scalar(vec3_cross(minirt->scene.camera.orientation, u), viewport.height);
 	viewport.pixel_delta_u = vec3_divide_scalar(viewport.u, minirt->mlx.img.width);
 	viewport.pixel_delta_v = vec3_divide_scalar(viewport.v, minirt->mlx.img.height);
 	viewport.upper_left = vec3_subtract(
 		vec3_subtract(
-			vec3_add(minirt->scene.camera.position, vec3_multiply_scalar(w, viewport.focal_length)),
+			vec3_add(minirt->scene.camera.position, vec3_multiply_scalar(minirt->scene.camera.orientation, viewport.focal_length)),
 			vec3_divide_scalar(viewport.u, 2)
 		),
 		vec3_divide_scalar(viewport.v, 2)

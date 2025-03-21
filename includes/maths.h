@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/21 12:22:44 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/21 15:57:00 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,8 @@ t_vec3	vec3_cross(const t_vec3 u, const t_vec3 v);
 /*	Utility functions	*/
 t_vec3	vec3_unit(const t_vec3 v);
 t_vec3	vec3_negate(const t_vec3 v);
+
+/* Sphere */
+char	hit_sphere(const t_vec3 center, double radius, const t_ray *r);
 
 #endif

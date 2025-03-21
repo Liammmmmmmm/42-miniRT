@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/21 13:19:49 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/21 13:41:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 void	basic_image(t_minirt *minirt)
 {
-	t_uint	tpix;
 	t_uint	i;
 	t_uint	y;
 	t_color	color;
 
-	tpix = minirt->mlx.img.width * minirt->mlx.img.height;
 	i = 0;
 	y = 0;
 	while (i < minirt->mlx.img.height)
@@ -35,7 +33,29 @@ void	basic_image(t_minirt *minirt)
 		}
 		i++;
 	}
+}
 
+t_color ray_color(t_ray ray)
+{
+	(void)ray;
+    return ((t_color){255, 0, 0});
+}
+
+void	draw_pixels(t_minirt *minirt)
+{
+	t_uint	tpix;
+	t_uint	i;
+	t_ray	ray;
+
+	i = 0;
+	tpix = minirt->mlx.img.width * minirt->mlx.img.height;
+	while (i < tpix)
+	{
+		ray.orig = minirt->scene.camera.position;
+		ray.dir = vec3_subtract(vec3_add(vec3_add(minirt->viewport.pixel00_loc, vec3_multiply_scalar(minirt->viewport.pixel_delta_u, i % minirt->mlx.img.width)), vec3_multiply_scalar(minirt->viewport.pixel_delta_v, i / minirt->mlx.img.width)), ray.orig);
+		minirt->screen.render[i].color = ray_color(ray);
+		i++;
+	}
 }
 
 t_viewport	init_viewport(t_minirt *minirt)
@@ -67,13 +87,12 @@ t_viewport	init_viewport(t_minirt *minirt)
 }
 
 void	render(t_minirt *minirt)
-{
-	t_viewport	viewport;
-	
-	viewport = init_viewport(minirt);
-	printf("u : %f %f %f\n", viewport.u.x, viewport.u.y, viewport.u.z);
-	printf("v : %f %f %f\n", viewport.v.x, viewport.v.y, viewport.v.z);
+{	
+	minirt->viewport = init_viewport(minirt);
+	// printf("u : %f %f %f\n", viewport.u.x, viewport.u.y, viewport.u.z);
+	// printf("v : %f %f %f\n", viewport.v.x, viewport.v.y, viewport.v.z);
 
-	printf("LC : %f %f %f\n", viewport.upper_left.x, viewport.upper_left.y, viewport.upper_left.z);
-	basic_image(minirt);
+	// printf("LC : %f %f %f\n", viewport.upper_left.x, viewport.upper_left.y, viewport.upper_left.z);
+	//basic_image(minirt);
+	draw_pixels(minirt);
 }

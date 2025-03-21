@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/21 11:28:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/21 13:36:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,14 +172,6 @@ typedef struct s_stats
 	int	frame;
 }	t_stats;
 
-typedef struct s_minirt
-{
-	t_scene		scene;
-	t_mlx		mlx;
-	t_screen	screen;
-	t_stats		stats;
-}	t_minirt;
-
 typedef struct s_viewport
 {
 	double	focal_length;
@@ -192,6 +184,15 @@ typedef struct s_viewport
 	t_vec3	upper_left;
 	t_vec3	pixel00_loc;
 }	t_viewport;
+
+typedef struct s_minirt
+{
+	t_scene		scene;
+	t_mlx		mlx;
+	t_screen	screen;
+	t_stats		stats;
+	t_viewport	viewport;
+}	t_minirt;
 
 
 

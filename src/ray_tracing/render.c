@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/21 13:41:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/21 15:24:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,14 @@ void	basic_image(t_minirt *minirt)
 
 t_color ray_color(t_ray ray)
 {
-	(void)ray;
-    return ((t_color){255, 0, 0});
+	double	a;
+	t_color	color;
+
+	a = 0.5 * (ray.dir.y + 1);
+	color.r = (1 - a) * 255 + a * 128;
+	color.g = (1 - a) * 255 + a * 178;
+	color.b = (1 - a) * 255 + a * 255;
+    return (color);
 }
 
 void	draw_pixels(t_minirt *minirt)
@@ -52,7 +58,16 @@ void	draw_pixels(t_minirt *minirt)
 	while (i < tpix)
 	{
 		ray.orig = minirt->scene.camera.position;
-		ray.dir = vec3_subtract(vec3_add(vec3_add(minirt->viewport.pixel00_loc, vec3_multiply_scalar(minirt->viewport.pixel_delta_u, i % minirt->mlx.img.width)), vec3_multiply_scalar(minirt->viewport.pixel_delta_v, i / minirt->mlx.img.width)), ray.orig);
+		ray.dir = vec3_subtract(
+			vec3_add(
+				vec3_add(
+					minirt->viewport.pixel00_loc, 
+					vec3_multiply_scalar(minirt->viewport.pixel_delta_u, i % minirt->mlx.img.width)
+				), 
+				vec3_multiply_scalar(minirt->viewport.pixel_delta_v, i / minirt->mlx.img.width)
+			), 
+			ray.orig
+		);
 		minirt->screen.render[i].color = ray_color(ray);
 		i++;
 	}

@@ -6,19 +6,19 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:50:11 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/21 10:52:40 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/21 12:21:18 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "maths.h"
 
-t_vec3	vec3_negate(const t_vec3 *v)
+t_vec3	vec3_negate(const t_vec3 v)
 {
-	return ((t_vec3){-v->x, -v->y, -v->z});
+	return ((t_vec3){-v.x, -v.y, -v.z});
 }
 
-t_vec3	vec3_unit(const t_vec3 *v)
+t_vec3	vec3_unit(const t_vec3 v)
 {
 	double	length;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/20 18:27:37 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/21 11:28:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,5 +179,20 @@ typedef struct s_minirt
 	t_screen	screen;
 	t_stats		stats;
 }	t_minirt;
+
+typedef struct s_viewport
+{
+	double	focal_length;
+	double	height;
+	double	width;
+	t_vec3	u;
+	t_vec3	v;
+	t_vec3	pixel_delta_u;
+	t_vec3	pixel_delta_v;
+	t_vec3	upper_left;
+	t_vec3	pixel00_loc;
+}	t_viewport;
+
+
 
 #endif

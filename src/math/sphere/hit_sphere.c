@@ -6,14 +6,14 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:17:23 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/21 10:41:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/21 12:25:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "maths.h"
 
-char	hit_sphere(const t_vec3 *center, double radius, const t_ray *r)
+char	hit_sphere(const t_vec3 center, double radius, const t_ray *r)
 {
 	t_vec3	oc;
 	double	a;
@@ -21,10 +21,10 @@ char	hit_sphere(const t_vec3 *center, double radius, const t_ray *r)
 	double	c;
 	double	discriminant;
 
-	oc = vec3_subtract(&r->orig, center);
-	a = vec3_dot(&r->dir, &r->dir);
-	b = -2.0 * vec3_dot(&r->dir, &oc);
-	c = vec3_dot(&oc, &oc) - radius * radius;
+	oc = vec3_subtract(r->orig, center);
+	a = vec3_dot(r->dir, r->dir);
+	b = -2.0 * vec3_dot(r->dir, oc);
+	c = vec3_dot(oc, oc) - radius * radius;
 	discriminant = b * b - 4.0 * a * c;
 	return (discriminant >= 0);
 }

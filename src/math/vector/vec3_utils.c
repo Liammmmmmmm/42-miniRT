@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   vec3_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:50:11 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/20 18:07:36 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/21 10:52:40 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
-#include "math.h"
+#include "maths.h"
 
-inline t_vec3	vec3_negate(const t_vec3 *v)
+t_vec3	vec3_negate(const t_vec3 *v)
 {
 	return ((t_vec3){-v->x, -v->y, -v->z});
 }
 
-inline t_vec3	vec3_unit(const t_vec3 *v)
+t_vec3	vec3_unit(const t_vec3 *v)
 {
 	double	length;
 

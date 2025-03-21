@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/20 16:04:33 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/03/21 10:33:20 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,9 @@ SRCS     = main.c                        \
 		   events/basic.c                   \
 		   ray_tracing/render.c                   \
 		   rendering/init.c rendering/pixel.c rendering/loop.c \
+		   math/ray/ray.c \
+		   math/sphere/hit_sphere.c \
+		   math/vector/vec3_dot_cross.c math/vector/vec3_length.c math/vector/vec3_operations.c math/vector/vec3_utils.c \
            parsing/parse_scene.c parsing/errors.c parsing/errors2.c parsing/valid_line.c parsing/tranform_line.c parsing/verify_elements.c parsing/parse_elements.c parsing/parse_elements2.c parsing/parse_elements3.c parsing/parse_elements_utils.c parsing/parse_elements_utils2.c
 
 SRCS_BONUS = 

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:01:54 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/20 18:27:42 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/21 10:53:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
-#include "math.h"
+#include "maths.h"
 
-inline t_vec3	ray_at(t_ray *r, double t)
+t_vec3	ray_at(t_ray *r, double t)
 {
 	return ((t_vec3){
 		r->orig.x + t * r->dir.x,

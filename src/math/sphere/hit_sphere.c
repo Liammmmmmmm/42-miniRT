@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   hit_sphere.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:17:23 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/20 18:30:03 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/21 10:41:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
-#include "math.h"
+#include "maths.h"
 
 char	hit_sphere(const t_vec3 *center, double radius, const t_ray *r)
 {

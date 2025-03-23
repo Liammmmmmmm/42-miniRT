@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/21 10:33:20 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/03/23 14:11:12 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,29 +56,57 @@ MINILIBX    = $(MINILIBXDIR)libmlx.a
 # Includes
 INCLUDES = -I includes/ -I $(LIBFTDIR)includes/ -I $(MINILIBXDIR)
 
-# Source files
-SRC_DIR  = src/
-SRCS     = main.c                        \
-           utils/utils.c                  \
-		   debug/print_scene.c             \
-		   events/basic.c                   \
-		   ray_tracing/render.c                   \
-		   rendering/init.c rendering/pixel.c rendering/loop.c \
-		   math/ray/ray.c \
-		   math/sphere/hit_sphere.c \
-		   math/vector/vec3_dot_cross.c math/vector/vec3_length.c math/vector/vec3_operations.c math/vector/vec3_utils.c \
-           parsing/parse_scene.c parsing/errors.c parsing/errors2.c parsing/valid_line.c parsing/tranform_line.c parsing/verify_elements.c parsing/parse_elements.c parsing/parse_elements2.c parsing/parse_elements3.c parsing/parse_elements_utils.c parsing/parse_elements_utils2.c
+# Source files mandatory
+SRC_DIR				= src/
+SRC_FILE			= main.c
 
+UTILS_DIR			= src/utils/
+UTILS_FILE			= utils.c
+
+DEBUG_DIR			= src/debug/
+DEBUG_FILE			= print_scene.c
+
+EVENT_DIR			= src/events/
+EVENT_FILE			= basic.c
+
+RAY_TRACING_DIR		= src/ray_tracing/
+RAY_TRACING_FILE	= render.c
+
+RENDERING_DIR		= src/rendering/
+RENDERING_FILE		= init.c pixel.c loop.c
+
+MATH_DIR			= src/math/
+MATH_FILE			= ray/ray.c sphere/hit_sphere.c vector/vec3_dot_cross.c \
+					vector/vec3_length.c vector/vec3_operations.c \
+					vector/vec3_utils.c
+
+PARSING_DIR			= src/parsing/
+PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
+					tranform_line.c verify_elements.c parse_elements.c \
+					parse_elements2.c parse_elements3.c parse_elements_utils.c \
+					parse_elements_utils2.c
+
+M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
+			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
+			$(addprefix $(DEBUG_DIR), $(DEBUG_FILE)) \
+			$(addprefix $(EVENT_DIR), $(EVENT_FILE)) \
+			$(addprefix $(RAY_TRACING_DIR), $(RAY_TRACING_FILE)) \
+			$(addprefix $(RENDERING_DIR), $(RENDERING_FILE)) \
+			$(addprefix $(MATH_DIR), $(MATH_FILE)) \
+			$(addprefix $(PARSING_DIR), $(PARSING_FILE))
+
+# Source files bonus
 SRCS_BONUS = 
 
 # Object files directory
 OBJ_DIR   = .obj/
-OBJ       = $(SRCS:%.c=$(OBJ_DIR)%.o)
-OBJ_BONUS = $(SRCS_BONUS:%.c=$(OBJ_DIR)%.o)
+OBJ       = $(M_FILE:%.c=$(OBJ_DIR)%.o)
+OBJ_BONUS = $(B_FILE:%.c=$(OBJ_DIR)%.o)
 
 # Remake all if modified
-REMAKE   = libft/includes/libft.h libft/includes/ft_printf.h libft/includes/get_next_line.h libft/Makefile  \
-		   Makefile includes/structs.h includes/minirt.h
+REMAKE   = libft/includes/libft.h libft/includes/ft_printf.h \
+		libft/includes/get_next_line.h libft/Makefile  Makefile \
+		includes/structs.h includes/minirt.h
 
 # NORMINETTE
 NORM_RET = $(RED)[ERROR]$(BOLD) Norminette Disable$(NC)
@@ -92,7 +120,7 @@ NORM_RET = $(RED)[ERROR]$(BOLD) Norminette Disable$(NC)
 COMPILED_FILES := 0
 
 # Pattern rule for object files
-$(OBJ_DIR)%.o : $(SRC_DIR)%.c $(REMAKE)
+$(OBJ_DIR)%.o : %.c $(REMAKE)
 	@if [ $(COMPILED_FILES) -eq 0 ]; then \
 		echo "\n$(YELLOW)╔══════════════════════════════════════════════╗$(NC)";                          \
 		echo "$(YELLOW)║        Starting $(YELLOW2)$(NAME)$(YELLOW) compilation...        ║$(NC)";           \

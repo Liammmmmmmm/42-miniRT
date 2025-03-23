@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/22 18:36:54 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/23 12:09:44 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "structs.h"
 # include "libft.h"
 # include "maths.h"
+# include <mlx.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <string.h>

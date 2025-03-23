@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:34:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/22 18:37:53 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/23 19:16:14 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_point
 {
 	int		x;
 	int		y;
-	double	z;
+	float	z;
 	int		color;
 }	t_point;
 

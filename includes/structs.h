@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/23 18:33:09 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/23 19:16:14 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,9 +187,9 @@ typedef struct s_stats
 
 typedef struct s_viewport
 {
-	double	focal_length;
-	double	height;
-	double	width;
+	float	focal_length;
+	float	height;
+	float	width;
 	t_vec3	u;
 	t_vec3	v;
 	t_vec3	pixel_delta_u;

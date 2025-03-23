@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/23 18:49:59 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/23 22:05:25 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,28 +60,78 @@ t_color ray_color(t_minirt *minirt, t_ray ray)
     return (color);
 }
 
+float random_float()
+{
+    return (rand() / (RAND_MAX + 1.0));
+}
+
+t_vec3	sample_square()
+{
+    float x = random_float() - 0.5;
+    float y = random_float() - 0.5;
+    return (t_vec3){ x, y, 0 };
+}
+
+t_color	vec3_to_color(t_vec3 vec) {
+	t_color color;
+	color.r = (unsigned char)(vec.x * 255.0f);
+	color.g = (unsigned char)(vec.y * 255.0f);
+	color.b = (unsigned char)(vec.z * 255.0f);
+	return color;
+}
+
+t_vec3	color_to_vec3(t_color color) {
+	t_vec3 vec;
+	vec.x = color.r / 255.0f;
+	vec.y = color.g / 255.0f;
+	vec.z = color.b / 255.0f;
+	return vec;
+}
+
+t_vec3	apply_pixel_samples_scale(t_vec3 color, float pixel_samples_scale)
+{
+	(void)pixel_samples_scale;
+	return ((t_vec3){
+		color.x * pixel_samples_scale,
+		color.y * pixel_samples_scale,
+		color.z * pixel_samples_scale
+	});
+}
+
 void	draw_pixels(t_minirt *minirt)
 {
 	t_uint	tpix;
 	t_uint	i;
 	t_ray	ray;
+	int		samples_per_pixel = 10;
+	int		sample;
+	float	pixel_samples_scale = 1.0 / samples_per_pixel;
+	t_vec3 color;
 
 	i = 0;
 	tpix = minirt->mlx.img.width * minirt->mlx.img.height;
 	while (i < tpix)
 	{
-		ray.orig = minirt->scene.camera.position;
-		ray.dir = vec3_subtract(
-			vec3_add(
+		color = vec3_init(0, 0, 0);
+		sample = 0;
+		while (sample < samples_per_pixel)
+		{
+			t_vec3 offset = sample_square();
+			ray.orig = minirt->scene.camera.position;
+			ray.dir = vec3_subtract(
 				vec3_add(
-					minirt->viewport.pixel00_loc, 
-					vec3_multiply_scalar(minirt->viewport.pixel_delta_u, i % minirt->mlx.img.width)
+					vec3_add(
+						minirt->viewport.pixel00_loc, 
+						vec3_multiply_scalar(minirt->viewport.pixel_delta_u, (i % minirt->mlx.img.width) + offset.x)
+					),
+					vec3_multiply_scalar(minirt->viewport.pixel_delta_v, (i / minirt->mlx.img.width) + offset.y)
 				), 
-				vec3_multiply_scalar(minirt->viewport.pixel_delta_v, i / minirt->mlx.img.width)
-			), 
-			ray.orig
-		);
-		minirt->screen.render[i].color = ray_color(minirt, ray);
+				ray.orig
+			);
+			color = vec3_add(color, color_to_vec3(ray_color(minirt, ray)));
+			sample++;
+		}
+		minirt->screen.render[i].color = vec3_to_color(apply_pixel_samples_scale(color, pixel_samples_scale));
 		i++;
 	}
 }

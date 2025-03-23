@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:50:11 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/23 17:43:39 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/23 19:16:14 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_vec3	vec3_negate(const t_vec3 v)
 
 t_vec3	vec3_unit(const t_vec3 v)
 {
-	double	length;
+	float	length;
 
 	length = vec3_length(v);
 	if (length > 0.0)

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:17:23 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/23 18:35:50 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/23 19:16:14 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 #include "maths.h"
 #include <math.h>
 
-// char	hit_sphere(const t_vec3 center, double radius, const t_ray *r)
+// char	hit_sphere(const t_vec3 center, float radius, const t_ray *r)
 // {
 // 	t_vec3	oc;
-// 	double	a;
-// 	double	b;
-// 	double	c;
-// 	double	discriminant;
+// 	float	a;
+// 	float	b;
+// 	float	c;
+// 	float	discriminant;
 
 // 	oc = vec3_subtract(r->orig, center);
 // 	a = vec3_dot(r->dir, r->dir);
@@ -30,16 +30,16 @@
 // 	return (discriminant >= 0);
 // }
 
-char hit_sphere(const t_vec3 center, double radius, const t_ray *r, \
+char hit_sphere(const t_vec3 center, float radius, const t_ray *r, \
 	t_interval interval, t_hit_record *rec)
 {
 	t_vec3	oc;
-	double	a;
-	double	b;
-	double	c;
-	double	discriminant;
-	double	sqrtd;
-	double	root;
+	float	a;
+	float	b;
+	float	c;
+	float	discriminant;
+	float	sqrtd;
+	float	root;
 
     oc = vec3_subtract(r->orig, center);
     a = vec3_dot(r->dir, r->dir);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   vec3_dot_cross.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:49:23 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/21 12:21:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/23 19:16:14 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 
-double	vec3_dot(const t_vec3 u, const t_vec3 v)
+float	vec3_dot(const t_vec3 u, const t_vec3 v)
 {
 	return (u.x * v.x + u.y * v.y + u.z * v.z);
 }

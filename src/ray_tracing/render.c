@@ -6,11 +6,12 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/22 18:30:11 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/23 18:49:59 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <math.h>
 
 void	basic_image(t_minirt *minirt)
 {
@@ -37,27 +38,24 @@ void	basic_image(t_minirt *minirt)
 
 t_color ray_color(t_minirt *minirt, t_ray ray)
 {
-	double	a;
-	t_color	color;
-	int	i;
+	double			a;
+	t_color			color;
+	t_color			obj_color;
+	t_hit_record	hit_record;
+	t_vec3			adjusted_normal;
 
 	a = 0.5 * (ray.dir.y + 1);
 	color.r = (1 - a) * 255 + a * 128;
 	color.g = (1 - a) * 255 + a * 178;
 	color.b = (1 - a) * 255 + a * 255;
-	i = 0;
-	while (i < minirt->scene.el_amount)
+	if (hit_register(minirt, ray, &hit_record, &obj_color) == 1)
 	{
-		if (minirt->scene.elements[i].type == SPHERE)
-		{
-			t_sphere *sphere;
-			sphere = minirt->scene.elements[i].object;
-			if (hit_sphere(sphere->position, sphere->diameter / 2, &ray))
-			{
-				return (sphere->color);
-			}
-		}
-		i++;
+		adjusted_normal = vec3_add(hit_record.normal, vec3_init(1.0, 1.0, 1.0));
+		adjusted_normal = vec3_multiply_scalar(adjusted_normal, 0.5);
+		color.r = (unsigned char)(adjusted_normal.x * obj_color.r);
+		color.g = (unsigned char)(adjusted_normal.y * obj_color.g);
+		color.b = (unsigned char)(adjusted_normal.z * obj_color.b);
+		return (color);
 	}
     return (color);
 }

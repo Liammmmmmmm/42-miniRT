@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/21 13:36:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/23 18:33:09 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,19 @@ typedef struct s_vec3
 	float	y;
 	float	z;
 }	t_vec3;
+
+typedef	struct s_hit_record
+{
+	t_vec3	point;
+	t_vec3	normal;
+	float	t;
+}	t_hit_record;
+
+typedef	struct s_interval
+{
+	float	min;
+	float	max;
+}	t_interval;
 
 typedef struct s_ray
 {

@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray.c                                              :+:      :+:    :+:   */
+/*   normal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 18:01:54 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/23 16:18:56 by madelvin         ###   ########.fr       */
+/*   Created: 2025/03/23 16:08:12 by madelvin          #+#    #+#             */
+/*   Updated: 2025/03/23 17:54:47 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "maths.h"
 
-t_vec3	ray_at(t_ray r, double t)
+t_vec3	set_normal_face(const t_ray *r, const t_vec3 *outward_normal)
 {
-	return ((t_vec3){
-		r.orig.x + t * r.dir.x,
-		r.orig.y + t * r.dir.y,
-		r.orig.z + t * r.dir.z
-	});
+	char	front_face;
+
+	front_face = vec3_dot(r->dir, *outward_normal) < 0;
+	if (front_face)
+		return (*outward_normal);
+	return (vec3_negate(*outward_normal));
 }

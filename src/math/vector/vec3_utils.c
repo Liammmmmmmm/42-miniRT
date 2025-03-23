@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec3_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:50:11 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/21 12:21:18 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/23 17:43:39 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,9 @@ t_vec3	vec3_unit(const t_vec3 v)
 	if (length > 0.0)
 		return (vec3_divide_scalar(v, length));
 	return ((t_vec3){0.0, 0.0, 0.0});
+}
+
+t_vec3	vec3_init(float x, float y, float z)
+{
+	return ((t_vec3){x, y, z});
 }

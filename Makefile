@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/23 14:11:12 by madelvin         ###   ########.fr        #
+#    Updated: 2025/03/23 18:51:44 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ EVENT_DIR			= src/events/
 EVENT_FILE			= basic.c
 
 RAY_TRACING_DIR		= src/ray_tracing/
-RAY_TRACING_FILE	= render.c
+RAY_TRACING_FILE	= render.c hit_register.c
 
 RENDERING_DIR		= src/rendering/
 RENDERING_FILE		= init.c pixel.c loop.c
@@ -78,7 +78,7 @@ RENDERING_FILE		= init.c pixel.c loop.c
 MATH_DIR			= src/math/
 MATH_FILE			= ray/ray.c sphere/hit_sphere.c vector/vec3_dot_cross.c \
 					vector/vec3_length.c vector/vec3_operations.c \
-					vector/vec3_utils.c
+					vector/vec3_utils.c normal/normal.c
 
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \

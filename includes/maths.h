@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/21 15:57:00 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/23 18:50:19 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MATH_H
-# define MATH_H
+#ifndef MATHS_H
+# define MATHS_H
 
 # include "structs.h"
 
@@ -33,8 +33,13 @@ t_vec3	vec3_cross(const t_vec3 u, const t_vec3 v);
 /*	Utility functions	*/
 t_vec3	vec3_unit(const t_vec3 v);
 t_vec3	vec3_negate(const t_vec3 v);
+t_vec3	vec3_init(float x, float y, float z);
 
-/* Sphere */
-char	hit_sphere(const t_vec3 center, double radius, const t_ray *r);
+char	hit_sphere(const t_vec3 center, double radius, const t_ray *r, \
+	t_interval interval, t_hit_record *rec);
+char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record, \
+	t_color *obj_color);
+t_vec3	set_normal_face(const t_ray *r, const t_vec3 *outward_normal);
+t_vec3	ray_at(t_ray r, double t);
 
 #endif

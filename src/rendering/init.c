@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/23 17:43:49 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/24 10:01:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	init_render(t_minirt *minirt)
 {
 	int	i;
 
-	minirt->screen.render = malloc(sizeof(t_sc_point) * WIN_WIDTH * WIN_HEIGHT);
+	minirt->screen.render = malloc(sizeof(t_lsc_point) * WIN_WIDTH * WIN_HEIGHT)
+		;
 	if (!minirt->screen.render)
 		return (0);
 	i = 0;
@@ -64,7 +65,6 @@ int	init_render(t_minirt *minirt)
 	{
 		minirt->screen.render[i].x = i % WIN_WIDTH;
 		minirt->screen.render[i].y = i / WIN_WIDTH;
-		minirt->screen.render[i].z = 0;
 		ft_bzero(&minirt->screen.render[i].color, sizeof(t_color));
 		i++;
 	}

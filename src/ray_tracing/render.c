@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/03/24 11:32:50 by lilefebv         ###   ########lyon.fr   */
@@ -35,25 +35,31 @@
 // 	}
 // }
 
-t_color ray_color(t_minirt *minirt, t_ray ray)
+t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 {
 	double			a;
 	t_color			color;
 	t_color			obj_color;
 	t_hit_record	hit_record;
 	t_vec3			adjusted_normal;
+	t_vec3			direction;
 
+	if (depth <= 0)
+        return (t_color){0, 0, 0};
 	a = 0.5 * (ray.dir.y + 1);
 	color.r = (1 - a) * 255 + a * 128;
 	color.g = (1 - a) * 255 + a * 178;
 	color.b = (1 - a) * 255 + a * 255;
 	if (hit_register(minirt, ray, &hit_record, &obj_color) == 1)
 	{
-		adjusted_normal = vec3_add(hit_record.normal, vec3_init(1.0, 1.0, 1.0));
-		adjusted_normal = vec3_multiply_scalar(adjusted_normal, 0.5);
-		color.r = (unsigned char)(adjusted_normal.x * obj_color.r);
-		color.g = (unsigned char)(adjusted_normal.y * obj_color.g);
-		color.b = (unsigned char)(adjusted_normal.z * obj_color.b);
+		adjusted_normal = vec3_unit(hit_record.normal);
+		direction = random_on_hemisphere(adjusted_normal);
+		ray.dir = direction;
+		ray.orig = hit_record.point;
+		t_color bounce_color = ray_color(minirt, ray, depth - 1);
+		color.r = 0.5 * bounce_color.r;
+        color.g = 0.5 * bounce_color.g;
+        color.b = 0.5 * bounce_color.b;
 		return (color);
 	}
 	return (color);

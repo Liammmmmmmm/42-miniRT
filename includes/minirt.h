@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/03/24 11:32:33 by lilefebv         ###   ########lyon.fr   */
@@ -183,5 +183,9 @@ void	render(t_minirt *minirt);
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
 float	random_float();
+float	random_float_in_interval(float min, float max);
+t_vec3	random_vec3();
+t_vec3	random_vec3_in_interval(float min, float max);
+t_vec3	random_on_hemisphere(const t_vec3 normal);
 
 #endif

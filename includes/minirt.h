@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 11:24:36 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:32:33 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <stdio.h>
 # include <string.h>
 # include <errno.h>
+# include <math.h>
+
+# define PI_10D 3.1415926535
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 450
@@ -172,6 +175,7 @@ void	events(t_minirt *minirt);
 void	render_frame(t_minirt *minirt);
 int		init_render(t_minirt *minirt);
 
+void	put_render_to_frame(t_minirt *minirt);
 void	render(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗

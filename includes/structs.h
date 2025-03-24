@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/23 19:16:14 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:09:40 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,20 @@ typedef struct s_color
 	unsigned char	g;	/* Green component of the color. */
 	unsigned char	b;	/* Blue component of the color. */
 }	t_color;
+
+typedef struct s_lcolor
+{
+	__uint64_t	r;
+	__uint64_t	g;
+	__uint64_t	b;
+}	t_lcolor;
+
+typedef struct s_lsc_point
+{
+	t_uint		x;
+	t_uint		y;
+	t_lcolor	color;
+}	t_lsc_point;
 
 typedef struct s_vec3
 {
@@ -174,8 +188,9 @@ typedef struct s_mlx
 
 typedef struct s_screen
 {
-	t_sc_point	*render;	// Liste de chaque pixel pour l'image rendue
-	int			render_step; // jsp trop mais je pense ce sera utile
+	t_lsc_point	*render;	// Liste de chaque pixel pour l'image rendue
+	int			sample;
+	int			spp; // sample per pixel
 	int			start_render;
 	// stocker aussi ici les différents boutons, sliders ou autres
 }	t_screen;

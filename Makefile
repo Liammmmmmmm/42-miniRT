@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/23 18:51:44 by madelvin         ###   ########.fr        #
+#    Updated: 2025/03/24 09:54:54 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ EVENT_DIR			= src/events/
 EVENT_FILE			= basic.c
 
 RAY_TRACING_DIR		= src/ray_tracing/
-RAY_TRACING_FILE	= render.c hit_register.c
+RAY_TRACING_FILE	= render.c hit_register.c random.c
 
 RENDERING_DIR		= src/rendering/
 RENDERING_FILE		= init.c pixel.c loop.c

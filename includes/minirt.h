@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 09:33:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 11:24:36 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include <string.h>
 # include <errno.h>
 
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
+# define WIN_WIDTH 800
+# define WIN_HEIGHT 450
 
 typedef enum e_mouse_buttons
 {
@@ -179,5 +179,9 @@ void	render(t_minirt *minirt);
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
 float	random_float();
+float	random_float_in_interval(float min, float max);
+t_vec3	random_vec3();
+t_vec3	random_vec3_in_interval(float min, float max);
+t_vec3	random_on_hemisphere(const t_vec3 normal);
 
 #endif

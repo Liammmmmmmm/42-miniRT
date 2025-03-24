@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pixel.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 14:30:43 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/20 15:02:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 10:10:36 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	put_pixel_image(t_img *img, t_uint x, t_uint y, int color)
 {
 	t_color	c;
 
-	if (x < 0 || x >= img->width || y < 0 || y >= img->height)
+	if (x >= img->width || y >= img->height)
 		return ;
 	c.r = (color >> 16) & 0xff;
 	c.g = (color >> 8) & 0xff;

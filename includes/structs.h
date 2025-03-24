@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 12:57:10 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:42:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,35 @@ typedef struct s_sc_point
 	t_color	color;	/* Color of the point. */
 }	t_sc_point;
 
+typedef enum e_tex_type
+{
+	IMAGE,
+	COLOR,
+}	t_tex_type;
+
+typedef struct s_tex
+{
+	char		name[21];
+	t_tex_type	type;
+	char		*path;
+}	t_tex;
+
+typedef struct s_mat
+{
+	char	name[21];
+	t_tex	*color_tex;
+	t_color	color_value;
+	t_tex	*metallic_tex;
+	double	metallic_value;
+	t_tex	*roughness_tex;
+	double	roughness_value;
+	double	ior;
+	double	transmission;
+	double	emission_strength;
+	t_color	emission_color;
+	t_tex	*normal;
+}	t_mat;
+
 typedef struct s_amb_light
 {
 	double	ratio;
@@ -104,6 +133,7 @@ typedef struct s_light
 {
 	t_vec3	position;
 	double	brightness;
+	t_mat	*material;
 	t_color	color;
 }	t_light;
 
@@ -111,6 +141,7 @@ typedef struct s_sphere
 {
 	t_vec3	position;
 	double	diameter;
+	t_mat	*material;
 	t_color	color;
 }	t_sphere;
 
@@ -119,6 +150,7 @@ typedef struct s_plane
 	t_vec3	position;
 	t_vec3	normal;
 	t_color	color;
+	t_mat	*material;
 }	t_plane;
 
 typedef struct s_cylinder
@@ -127,6 +159,7 @@ typedef struct s_cylinder
 	t_vec3	orientation;
 	double	diameter;
 	double	height;
+	t_mat	*material;
 	t_color	color;
 }	t_cylinder;
 

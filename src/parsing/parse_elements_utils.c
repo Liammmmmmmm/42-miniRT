@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:06:52 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 12:55:44 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:58:37 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	is_valid_co(char *str, double *co)
 {
 	if (is_valid_float(str))
 	{
-		*co = ft_atof(str);
+		*co = ft_atod(str);
 		return (1);
 	}
 	return (0);

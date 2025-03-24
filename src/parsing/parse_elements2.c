@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 15:09:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 13:59:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	parse_ambiant_light(t_scene *scene, char *line)
 		return (invalid_struct_error(AMBIANT_LIGHT, parts));
 	if (!is_valid_float(parts[1]))
 		return (invalid_float_error(parts, 1));
-	scene->amb_light.ratio = atof(parts[1]);
+	scene->amb_light.ratio = ft_atod(parts[1]);
 	if (scene->amb_light.ratio < 0.0 || scene->amb_light.ratio > 1.0)
 	{
 		free(parts);

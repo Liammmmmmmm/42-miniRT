@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:32:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 11:34:43 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:38:17 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ t_vec3	random_vec3_unit()
 	while (1)
 	{
 		p = random_vec3_in_interval(-1, 1);
-		// ft_printf("%f/%f/%f\n", );
 		lensq = vec3_length_squared(p);
 		if (1e-7f < lensq && lensq <= 1.0f)
 			return (vec3_divide_scalar(p, sqrt(lensq)));

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 11:32:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 11:43:13 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 
 	i = 0;
 	tpix = minirt->mlx.img.width * minirt->mlx.img.height;
-	printf("START\n");
 	while (i < tpix)
 	{		
 		ray.orig = minirt->scene.camera.position;
@@ -95,13 +94,12 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 			), 
 			ray.orig
 		);
-		color = ray_color(minirt, ray);
+		color = ray_color(minirt, ray, 10);
 		minirt->screen.render[i].color.r += color.r;
 		minirt->screen.render[i].color.g += color.g;
 		minirt->screen.render[i].color.b += color.b;
 		i++;
 	}
-	printf("END\n");
 }
 
 void	draw_pixels(t_minirt *minirt)
@@ -111,7 +109,6 @@ void	draw_pixels(t_minirt *minirt)
 	offset = sample_square();
 	calc_one_sample(minirt, offset);
 	minirt->screen.sample++;
-	printf("%ld, %ld, %ld\n", minirt->screen.render[0].color.r, minirt->screen.render[0].color.g, minirt->screen.render[0].color.b);
 	put_render_to_frame(minirt);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
 	printf("Sample %d\n", minirt->screen.sample);

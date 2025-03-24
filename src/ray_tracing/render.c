@@ -6,12 +6,11 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 11:17:52 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 11:32:50 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <math.h>
 
 // void	basic_image(t_minirt *minirt)
 // {
@@ -118,8 +117,8 @@ t_viewport	init_viewport(t_minirt *minirt)
 	t_viewport	viewport;
 	t_vec3		u;
 
-	viewport.focal_length = 1.0;
 	viewport.height = 2.0;
+	viewport.focal_length = viewport.height / (2.0 * tan(minirt->scene.camera.fov * 0.5 * PI_10D / 180));
 	viewport.width = viewport.height * ((double)minirt->mlx.img.width / minirt->mlx.img.height);
 	u = vec3_unit(vec3_cross((t_vec3){0, 1, 0}, vec3_negate(minirt->scene.camera.orientation)));
 	viewport.u = vec3_multiply_scalar(u, viewport.width);

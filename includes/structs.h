@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 11:09:40 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 12:57:10 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,22 @@ typedef struct s_lsc_point
 
 typedef struct s_vec3
 {
-	float	x;
-	float	y;
-	float	z;
+	double	x;
+	double	y;
+	double	z;
 }	t_vec3;
 
 typedef	struct s_hit_record
 {
 	t_vec3	point;
 	t_vec3	normal;
-	float	t;
+	double	t;
 }	t_hit_record;
 
 typedef	struct s_interval
 {
-	float	min;
-	float	max;
+	double	min;
+	double	max;
 }	t_interval;
 
 typedef struct s_ray
@@ -89,7 +89,7 @@ typedef struct s_sc_point
 
 typedef struct s_amb_light
 {
-	float	ratio;
+	double	ratio;
 	t_color	color;
 }	t_amb_light;
 
@@ -103,14 +103,14 @@ typedef struct s_camera
 typedef struct s_light
 {
 	t_vec3	position;
-	float	brightness;
+	double	brightness;
 	t_color	color;
 }	t_light;
 
 typedef struct s_sphere
 {
 	t_vec3	position;
-	float	diameter;
+	double	diameter;
 	t_color	color;
 }	t_sphere;
 
@@ -125,8 +125,8 @@ typedef struct s_cylinder
 {
 	t_vec3	position;
 	t_vec3	orientation;
-	float	diameter;
-	float	height;
+	double	diameter;
+	double	height;
 	t_color	color;
 }	t_cylinder;
 

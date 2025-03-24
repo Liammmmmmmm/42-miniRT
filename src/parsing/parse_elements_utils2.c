@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements_utils2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:08:39 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/21 15:35:47 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 12:56:21 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static int	is_valid_co_normal(char *str, float *co)
+static int	is_valid_co_normal(char *str, double *co)
 {
 	if (is_valid_float(str))
 	{
@@ -48,7 +48,7 @@ int	parse_vector_normalized(char *str, t_vec3 *vec)
 	return (1);
 }
 
-int	is_valid_brightness(char *str, float *co)
+int	is_valid_brightness(char *str, double *co)
 {
 	if (is_valid_float(str))
 	{
@@ -60,7 +60,7 @@ int	is_valid_brightness(char *str, float *co)
 	return (0);
 }
 
-int	is_valid_size(char *str, float *co)
+int	is_valid_size(char *str, double *co)
 {
 	if (is_valid_float(str))
 	{

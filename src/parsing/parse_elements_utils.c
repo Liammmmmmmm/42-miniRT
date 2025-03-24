@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:06:52 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 14:24:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 12:55:44 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	parse_color(char *color, t_color *store)
 	return (1);
 }
 
-static int	is_valid_co(char *str, float *co)
+static int	is_valid_co(char *str, double *co)
 {
 	if (is_valid_float(str))
 	{

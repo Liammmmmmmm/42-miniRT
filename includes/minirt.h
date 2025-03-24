@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 11:32:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 12:56:27 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,8 @@ int		valid_elements_amount(char **lines);
 int		free_scene(t_scene *scene, char **lines);
 int		parse_elements(t_scene *scene, char **lines, int ln_amount);
 
-int		is_valid_brightness(char *str, float *co);
-int		is_valid_size(char *str, float *co);
+int		is_valid_brightness(char *str, double *co);
+int		is_valid_size(char *str, double *co);
 int		is_valid_fov(char *str, unsigned char *fov);
 int		parse_color(char *color, t_color *store);
 int		parse_vector(char *str, t_vec3 *vec);
@@ -182,10 +182,10 @@ void	render(t_minirt *minirt);
 ║                                  RAY TRACING                                 ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-float	random_float();
-float	random_float_in_interval(float min, float max);
+double	random_double();
+double	random_double_in_interval(double min, double max);
 t_vec3	random_vec3();
-t_vec3	random_vec3_in_interval(float min, float max);
+t_vec3	random_vec3_in_interval(double min, double max);
 t_vec3	random_on_hemisphere(const t_vec3 normal);
 
 #endif

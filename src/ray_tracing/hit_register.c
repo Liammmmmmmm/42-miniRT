@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/24 11:14:34 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:14:34 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record, \
 
 	i = 0;
 	hit_anything = 0;
-	interval.min = 0;
+	interval.min = 0.001;
 	interval.max = INFINITY;
 	while (i < minirt->scene.el_amount)
 	{
 		if (minirt->scene.elements[i].type == SPHERE)
 		{
 			sphere = minirt->scene.elements[i].object;
-			if (hit_sphere(sphere->position, sphere->diameter / 2, &ray, interval, &temp_hit_record))
+			if (hit_sphere(sphere->position, (sphere->diameter / 2), &ray, interval, &temp_hit_record))
 			{
 				if (temp_hit_record.t < closest_t)
 				{

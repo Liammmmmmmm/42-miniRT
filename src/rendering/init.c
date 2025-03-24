@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 11:22:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 13:03:37 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	init_render(t_minirt *minirt)
 	}
 	minirt->stats.frame = 0;
 	minirt->screen.start_render = 1;
-	minirt->screen.spp = 50;
+	minirt->screen.spp = 100;
 	minirt->screen.sample = 0;
 	return (1);
 }

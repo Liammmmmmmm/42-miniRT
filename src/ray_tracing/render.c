@@ -6,34 +6,11 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 11:43:13 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:17:37 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-// void	basic_image(t_minirt *minirt)
-// {
-// 	t_uint	i;
-// 	t_uint	y;
-// 	t_color	color;
-
-// 	i = 0;
-// 	y = 0;
-// 	while (i < minirt->mlx.img.height)
-// 	{
-// 		y = 0;
-// 		while (y < minirt->mlx.img.width)
-// 		{
-// 			color.r = i * 255 / minirt->mlx.img.height;
-// 			color.g = y * 255 / minirt->mlx.img.width;
-// 			color.b = (minirt->mlx.img.height - i) * 255 / minirt->mlx.img.height;
-// 			minirt->screen.render[minirt->mlx.img.width * i + y].color = color;
-// 			y++;
-// 		}
-// 		i++;
-// 	}
-// }
 
 t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 {
@@ -41,7 +18,6 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 	t_color			color;
 	t_color			obj_color;
 	t_hit_record	hit_record;
-	t_vec3			adjusted_normal;
 	t_vec3			direction;
 
 	if (depth <= 0)
@@ -52,8 +28,7 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 	color.b = (1 - a) * 255 + a * 255;
 	if (hit_register(minirt, ray, &hit_record, &obj_color) == 1)
 	{
-		adjusted_normal = vec3_unit(hit_record.normal);
-		direction = random_on_hemisphere(adjusted_normal);
+		direction = random_on_hemisphere(hit_record.normal);
 		ray.dir = direction;
 		ray.orig = hit_record.point;
 		t_color bounce_color = ray_color(minirt, ray, depth - 1);
@@ -67,8 +42,8 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 
 t_vec3	sample_square()
 {
-	float x = random_float() - 0.5;
-	float y = random_float() - 0.5;
+	double x = random_double() - 0.5;
+	double y = random_double() - 0.5;
 	return (t_vec3){ x, y, 0 };
 }
 
@@ -82,7 +57,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 	i = 0;
 	tpix = minirt->mlx.img.width * minirt->mlx.img.height;
 	while (i < tpix)
-	{		
+	{
 		ray.orig = minirt->scene.camera.position;
 		ray.dir = vec3_subtract(
 			vec3_add(
@@ -94,7 +69,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 			), 
 			ray.orig
 		);
-		color = ray_color(minirt, ray, 10);
+		color = ray_color(minirt, ray, 2);
 		minirt->screen.render[i].color.r += color.r;
 		minirt->screen.render[i].color.g += color.g;
 		minirt->screen.render[i].color.b += color.b;
@@ -122,7 +97,7 @@ t_viewport	init_viewport(t_minirt *minirt)
 
 	viewport.height = 2.0;
 	viewport.focal_length = viewport.height / (2.0 * tan(minirt->scene.camera.fov * 0.5 * PI_10D / 180));
-	viewport.width = viewport.height * ((double)minirt->mlx.img.width / minirt->mlx.img.height);
+	viewport.width = viewport.height * ((float)minirt->mlx.img.width / minirt->mlx.img.height);
 	u = vec3_unit(vec3_cross((t_vec3){0, 1, 0}, vec3_negate(minirt->scene.camera.orientation)));
 	viewport.u = vec3_multiply_scalar(u, viewport.width);
 	viewport.v = vec3_multiply_scalar(vec3_cross(minirt->scene.camera.orientation, u), viewport.height);

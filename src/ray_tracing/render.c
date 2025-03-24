@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/23 22:05:25 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/24 09:32:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,14 @@ t_color ray_color(t_minirt *minirt, t_ray ray)
 		color.b = (unsigned char)(adjusted_normal.z * obj_color.b);
 		return (color);
 	}
-    return (color);
-}
-
-float random_float()
-{
-    return (rand() / (RAND_MAX + 1.0));
+	return (color);
 }
 
 t_vec3	sample_square()
 {
-    float x = random_float() - 0.5;
-    float y = random_float() - 0.5;
-    return (t_vec3){ x, y, 0 };
+	float x = random_float() - 0.5;
+	float y = random_float() - 0.5;
+	return (t_vec3){ x, y, 0 };
 }
 
 t_color	vec3_to_color(t_vec3 vec) {
@@ -103,7 +98,7 @@ void	draw_pixels(t_minirt *minirt)
 	t_uint	tpix;
 	t_uint	i;
 	t_ray	ray;
-	int		samples_per_pixel = 10;
+	int		samples_per_pixel = 3;
 	int		sample;
 	float	pixel_samples_scale = 1.0 / samples_per_pixel;
 	t_vec3 color;

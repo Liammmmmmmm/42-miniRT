@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/23 18:27:51 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/24 09:33:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,11 @@ void	render_frame(t_minirt *minirt);
 int		init_render(t_minirt *minirt);
 
 void	render(t_minirt *minirt);
+
+/*═════════════════════════════════════════════════════════════════════════════╗
+║                                  RAY TRACING                                 ║
+╚═════════════════════════════════════════════════════════════════════════════*/
+
+float	random_float();
 
 #endif

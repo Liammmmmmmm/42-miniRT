@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 14:42:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 16:16:30 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ typedef struct s_tex
 {
 	char		name[21];
 	t_tex_type	type;
-	char		*path;
+	int			fd;
 }	t_tex;
 
 typedef struct s_mat
@@ -166,6 +166,8 @@ typedef struct s_cylinder
 typedef enum e_objects
 {
 	NULL_OBJ,
+	TEXTURE,
+	MATERIAL,
 	AMBIANT_LIGHT,
 	CAMERA,
 	LIGHT,
@@ -182,6 +184,10 @@ typedef struct s_object
 
 typedef struct s_scene
 {
+	t_tex		*textures;
+	int			tex_amount;
+	t_mat		*materials;
+	int			mat_amount;
 	t_object	*elements;	// Liste des tous les objets de la scene
 	int			el_amount;	// Nombre d'elements dans la liste
 	t_amb_light	amb_light;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 12:56:27 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:54:47 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int		print_line_error(int nb, char *line);
 int		invalid_struct_error(t_objects type, char **splited);
 int		invalid_float_error(char **splited, int i);
 int		invalid_size_error(char **splited);
+int		texture_error(int error, char **parts);
 
 /**
  * @return 1 if the line start by `type` folowed by a space or tab, 0 otherwise
@@ -127,6 +128,23 @@ int		is_empty_line(char *line);
  * @return -1 for an invalid line, 0 for an empty line, 1 for a valid line
  */
 int		is_valid_line(char *line);
+
+/**
+ * @return 1 valid, -1 incorrect characters, -2 to long
+ */
+int		is_valid_variable_name(char *str);
+
+/**
+ * @return 1 valid, 0 already used, -1 incorrect characters, -2 to long
+ */
+int		is_valid_variable_name_tex(char *str, t_scene *scene);
+
+/**
+ * @return 1 valid, 0 already used, -1 incorrect characters, -2 to long
+ */
+int		is_valid_variable_name_mat(char *str, t_scene *scene);
+
+int		is_valid_element(char *line);
 
 int		count_valid_lines(char *filename);
 char	*remove_useless_spaces(char *line);
@@ -149,6 +167,8 @@ int		parse_light(t_scene *scene, char *line);
 int		parse_sphere(t_scene *scene, char *line);
 int		parse_plane(t_scene *scene, char *line);
 int		parse_cylinder(t_scene *scene, char *line);
+int		parse_texture(t_scene *scene, char *line);
+int		parse_material(t_scene *scene, char *line);
 
 int		parse_scene(t_minirt *minirt, char *filename);
 

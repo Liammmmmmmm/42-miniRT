@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:08:39 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 13:58:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 16:30:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,21 @@ int	is_valid_size(char *str, double *co)
 		return (1);
 	}
 	return (0);
+}
+
+int	is_valid_variable_name(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_isalpha(str[0]) && str[0] != '_')
+		return (-1);
+	while (str[++i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (-1);
+		if (i >= 20)
+			return (-2);
+	}
+	return (1);
 }

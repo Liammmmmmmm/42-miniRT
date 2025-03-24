@@ -6,11 +6,27 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:29:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 15:32:01 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 16:56:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+void	free_tex_mat(t_scene *scene)
+{
+	int	i;
+
+	if (scene->textures)
+	{
+		i = -1;
+		while (++i < scene->tex_amount)
+			close(scene->textures[i].fd);
+		free(scene->textures);
+		scene->textures = NULL;
+	}
+	free(scene->materials);
+	scene->materials = NULL;
+}
 
 int	free_scene(t_scene *scene, char **lines)
 {
@@ -20,40 +36,43 @@ int	free_scene(t_scene *scene, char **lines)
 		ft_free_tab_null_term(lines);
 	if (scene->elements)
 	{
-		i = 0;
-		while (i < scene->el_amount)
+		i = -1;
+		while (++i < scene->el_amount)
 		{
 			free(scene->elements[i].object);
 			scene->elements[i].object = NULL;
 			scene->elements[i].type = NULL_OBJ;
-			i++;
 		}
 		free(scene->elements);
 		scene->elements = NULL;
 	}
+	free_tex_mat(scene);
 	return (0);
 }
 
 static int	cmp_elements(t_scene *scene, char *line)
 {
-	if (cmp_type("sp", line))
-		if (parse_sphere(scene, line))
-			return (1);
-	if (cmp_type("pl", line))
-		if (parse_plane(scene, line))
-			return (1);
-	if (cmp_type("cy", line))
-		if (parse_cylinder(scene, line))
-			return (1);
-	if (cmp_type("A", line))
-		if (parse_ambiant_light(scene, line))
-			return (1);
-	if (cmp_type("C", line))
-		if (parse_camera(scene, line))
-			return (1);
-	if (cmp_type("L", line))
-		if (parse_light(scene, line))
-			return (1);
+	int	valid;
+
+	valid = is_valid_element(line);
+	if (cmp_type("sp", line) && parse_sphere(scene, line))
+		return (1);
+	else if (cmp_type("pl", line) && parse_plane(scene, line))
+		return (1);
+	else if (cmp_type("cy", line) && parse_cylinder(scene, line))
+		return (1);
+	else if (cmp_type("A", line) && parse_ambiant_light(scene, line))
+		return (1);
+	else if (cmp_type("C", line) && parse_camera(scene, line))
+		return (1);
+	else if (cmp_type("L", line) && parse_light(scene, line))
+		return (1);
+	else if (cmp_type("tex", line) && parse_texture(scene, line))
+		return (1);
+	else if (cmp_type("mat", line) && parse_material(scene, line))
+		return (1);
+	else if (!valid)
+		ft_dprintf(2, RED"[Error]"NC" Invalid parameters for `%s'\n", line);
 	return (0);
 }
 

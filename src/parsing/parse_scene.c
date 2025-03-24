@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:20:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 15:24:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 16:48:02 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,30 @@ char	**save_valid_lines(char *filename, int ln_amount)
 	return (res);
 }
 
+int	count_tex_mat(t_scene *scene, char **lines)
+{
+	int	i;
+
+	i = -1;
+	scene->tex_amount = 0;
+	scene->mat_amount = 0;
+	while (lines[++i])
+	{
+		if (cmp_type("tex", lines[i]))
+			scene->tex_amount++;
+		else if (cmp_type("mat", lines[i]))
+			scene->mat_amount++;
+	}
+	if (scene->tex_amount)
+		scene->textures = ft_calloc(scene->tex_amount, sizeof(t_tex));
+	if (scene->mat_amount)
+		scene->materials = ft_calloc(scene->mat_amount, sizeof(t_mat));
+	if ((scene->tex_amount && !scene->textures)
+		|| (scene->mat_amount && !scene->materials))
+		return (print_error(strerror(errno)));
+	return (1);
+}
+
 int	parse_scene(t_minirt *minirt, char *filename)
 {
 	int		ln_amount;
@@ -70,6 +94,8 @@ int	parse_scene(t_minirt *minirt, char *filename)
 		ft_free_tab_null_term(lines);
 		return (0);
 	}
+	if (count_tex_mat(&minirt->scene, lines) == 0)
+		return (free_scene(&minirt->scene, lines));
 	if (parse_elements(&minirt->scene, lines, ln_amount) == 0)
 		return (0);
 	ft_free_tab_null_term(lines);

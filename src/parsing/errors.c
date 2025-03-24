@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:21:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 14:19:28 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 16:44:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,20 @@ int	invalid_struct_error(t_objects type, char **splited)
 			BLUE"<x,y,z> <brightness ratio> <r,g,b>"NC);
 	else if (type == SPHERE)
 		print_error("Invalid format for sphere. Expected: "CYAN"sp "
-			BLUE"<x,y,z> <diameter> <r,g,b>"NC);
+			BLUE"<x,y,z> <diameter> <r,g,b|material>"NC);
 	else if (type == PLANE)
 		print_error("Invalid format for plane. Expected: "CYAN"pl "
-			BLUE"<x,y,z> <x,y,z> <r,g,b>"NC);
+			BLUE"<x,y,z> <x,y,z> <r,g,b|material>"NC);
 	else if (type == CYLINDER)
 		print_error("Invalid format for plane. Expected: "CYAN"cy "
-			BLUE"<x,y,z> <x,y,z> <diameter> <height> <r,g,b>"NC);
+			BLUE"<x,y,z> <x,y,z> <diameter> <height> <r,g,b|material>"NC);
+	else if (type == MATERIAL)
+		print_error("Invalid format for material. Expected: "CYAN"mat "
+			BLUE"<name> <albedo> <metallic> <roughness> <ior> <transmission>"
+			" <emission_strength> <emission_color> [normal_map]"NC);
+	else if (type == TEXTURE)
+		print_error("Invalid format for texture. Expected: "CYAN"tex "
+			BLUE"<name> <filepath>"NC);
 	free(splited);
 	return (0);
 }

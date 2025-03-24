@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 10:00:40 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 11:09:40 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ typedef struct s_screen
 {
 	t_lsc_point	*render;	// Liste de chaque pixel pour l'image rendue
 	int			sample;
+	int			spp; // sample per pixel
 	int			start_render;
 	// stocker aussi ici les différents boutons, sliders ou autres
 }	t_screen;

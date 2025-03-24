@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 11:07:39 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 11:17:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,26 +101,16 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 
 void	draw_pixels(t_minirt *minirt)
 {
-	int		samples_per_pixel = 5;
 	t_vec3	offset;
-	t_uint	tpix;
-	t_uint	i;
 
-	i = -1;
-	tpix = minirt->mlx.img.width * minirt->mlx.img.height;
-	while (++i < tpix)
-		ft_bzero(&minirt->screen.render[i].color, sizeof(t_color));
-	minirt->screen.sample = 0;
-	while (minirt->screen.sample < samples_per_pixel)
-	{
-		offset = sample_square();
-		calc_one_sample(minirt, offset);
-		minirt->screen.sample++;
-		printf("%ld, %ld, %ld\n", minirt->screen.render[0].color.r, minirt->screen.render[0].color.g, minirt->screen.render[0].color.b);
-		put_render_to_frame(minirt);
-		mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
-		printf("Sample %d\n", minirt->screen.sample);
-	}	
+	offset = sample_square();
+	calc_one_sample(minirt, offset);
+	minirt->screen.sample++;
+	printf("%ld, %ld, %ld\n", minirt->screen.render[0].color.r, minirt->screen.render[0].color.g, minirt->screen.render[0].color.b);
+	put_render_to_frame(minirt);
+	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
+	printf("Sample %d\n", minirt->screen.sample);
+
 }
 
 t_viewport	init_viewport(t_minirt *minirt)
@@ -147,13 +137,27 @@ t_viewport	init_viewport(t_minirt *minirt)
 	return (viewport);
 }
 
-void	render(t_minirt *minirt, int sample)
-{	
-	minirt->viewport = init_viewport(minirt);
-	// printf("u : %f %f %f\n", viewport.u.x, viewport.u.y, viewport.u.z);
-	// printf("v : %f %f %f\n", viewport.v.x, viewport.v.y, viewport.v.z);
+void	render(t_minirt *minirt)
+{
+	t_uint	tpix;
+	t_uint	i;
 
-	// printf("LC : %f %f %f\n", viewport.upper_left.x, viewport.upper_left.y, viewport.upper_left.z);
-	//basic_image(minirt);
+	if (!minirt->screen.start_render)
+		return ;
+	if (minirt->screen.sample == 0)
+	{
+
+		i = -1;
+		tpix = minirt->mlx.img.width * minirt->mlx.img.height;
+		while (++i < tpix)
+			ft_bzero(&minirt->screen.render[i].color, sizeof(t_color));
+		minirt->viewport = init_viewport(minirt);
+	}
+
 	draw_pixels(minirt);
+	if (minirt->screen.sample == minirt->screen.spp)
+	{
+		minirt->screen.sample = 0;
+		minirt->screen.start_render = 0;
+	}
 }

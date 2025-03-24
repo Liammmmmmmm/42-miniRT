@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 11:04:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 11:12:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,8 @@ void	put_render_to_frame(t_minirt *minirt)
 
 void	render_frame(t_minirt *minirt)
 {
-	if (minirt->screen.start_render)
-	{
-		render(minirt);
-		minirt->screen.start_render = 0;
-	}
+	render(minirt);
+
 	// put_render_to_frame(minirt);
 	// mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
 	minirt->stats.frame += 1;

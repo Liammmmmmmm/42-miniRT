@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 14:42:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 15:20:04 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,6 @@ typedef struct s_vec3
 	double	y;
 	double	z;
 }	t_vec3;
-
-typedef	struct s_hit_record
-{
-	t_vec3	point;
-	t_vec3	normal;
-	double	t;
-}	t_hit_record;
 
 typedef	struct s_interval
 {
@@ -115,6 +108,14 @@ typedef struct s_mat
 	t_color	emission_color;
 	t_tex	*normal;
 }	t_mat;
+
+typedef	struct s_hit_record
+{
+	t_vec3	point;
+	t_vec3	normal;
+	double	t;
+	t_mat	*mat;
+}	t_hit_record;
 
 typedef struct s_amb_light
 {
@@ -238,6 +239,7 @@ typedef struct s_viewport
 	float	focal_length;
 	float	height;
 	float	width;
+	float	gamma;
 	t_vec3	u;
 	t_vec3	v;
 	t_vec3	pixel_delta_u;

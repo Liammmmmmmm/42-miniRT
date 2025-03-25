@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/03/25 14:30:58 by madelvin         ###   ########.fr       */
@@ -116,6 +116,7 @@ typedef	struct s_hit_record
 	double	t;
 	t_mat	*mat;
 	char	front_face;
+	t_color	color;
 }	t_hit_record;
 
 typedef struct s_amb_light

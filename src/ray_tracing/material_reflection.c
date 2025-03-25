@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   material_reflection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:04:00 by madelvin          #+#    #+#             */
 /*   Updated: 2025/03/25 15:05:50 by madelvin         ###   ########.fr       */
@@ -98,7 +98,7 @@ char	metal_texture(t_hit_record hit_record, t_ray ray_in, t_ray *scatted, t_colo
 
 	/*------ Reflection ------*/
 	direction = vec3_subtract(ray_in.dir, vec3_multiply_scalar(hit_record.normal, 2 * vec3_dot(ray_in.dir, hit_record.normal)));
-	direction = vec3_add(vec3_unit(direction), vec3_multiply_scalar(random_vec3_unit(), 0));
+	direction = vec3_add(vec3_unit(direction), vec3_multiply_scalar(random_vec3_unit(), hit_record.mat->roughness_value)); // TODO un jour on devra mettre roughness texture et la on va plus en chier x)
 	scatted->dir = direction;
 	scatted->orig = hit_record.point;
 	*attenuation = hit_record.mat->color_value;
@@ -139,9 +139,12 @@ char dielectric_texture(t_hit_record hit_record, t_ray ray_in, t_ray *scattered,
 
 char	calc_ray_reflection(t_hit_record hit_record, t_ray ray_in, t_ray *scatted, t_color *attenuation)
 {
-	if (hit_record.mat->metallic_value == 1)
-		return (metal_texture(hit_record, ray_in, scatted, attenuation));
-	if (hit_record.mat->metallic_value == 2)
-		return (dielectric_texture(hit_record, ray_in, scatted, 1.5, attenuation));
-	return (default_texture(hit_record, scatted, attenuation));
+	if (hit_record.mat)
+	{
+		if (hit_record.mat->metallic_value == 1)
+		{
+			return (metal_texture(hit_record, ray_in, scatted));
+		}
+	}
+	return (default_texture(hit_record, scatted));
 }

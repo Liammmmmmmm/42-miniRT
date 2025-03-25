@@ -1,8 +1,7 @@
-tex b123 todo.md
-tex b1234 todo.md
-tex b1235 todo.md
-
-mat	mattt                        b123       0.228571       b1235       1.450000       0.000000       0.000000            255,255,255 b1235
+# MATERIALS
+#	name                          color             metallic       roughness      ior            transmission   emission_strength   emission_color normal_map
+mat	metal1                        255,255,255       1.0            0.7            1.450000       0.000000       0.000000            255,255,255 
+mat	metal2                        204,153,51        1.0            0.1            1.450000       0.000000       0.000000            255,255,255 
 
 
 A	0.2										255,255,255
@@ -13,6 +12,6 @@ C	0,0,0	0,0,-1 90
 
 sp	0,-100.5,-1	200								204,204,0
 sp	0,0,-1.2	1        						25,51,127
-sp	-1,0,-1		1								255,255,255
-sp	1,0,-1		1								204,153,51
+sp	-1,0,-1		1								metal1
+sp	1,0,-1		1								metal2
 

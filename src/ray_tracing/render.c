@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/03/25 14:41:03 by madelvin         ###   ########.fr       */
@@ -31,9 +31,24 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 		if (calc_ray_reflection(hit_record, ray, &scatted, &attenuation))
 		{
 			t_color bounce_color = ray_color(minirt, scatted, depth - 1);
+
 			color.r = bounce_color.r * attenuation.r / 255;
 			color.g = bounce_color.g * attenuation.g / 255;
 			color.b = bounce_color.b * attenuation.b / 255;
+
+			if (hit_record.mat)
+			{
+				color.r = bounce_color.r * hit_record.mat->color_value.r / 255;
+				color.g = bounce_color.g * hit_record.mat->color_value.g / 255;
+				color.b = bounce_color.b * hit_record.mat->color_value.b / 255;
+			}
+			else
+			{
+				color.r = bounce_color.r * hit_record.color.r / 255;
+				color.g = bounce_color.g * hit_record.color.g / 255;
+				color.b = bounce_color.b * hit_record.color.b / 255;
+			}
+
 			return (color);
 		}
 		return (t_color){0, 0, 0};
@@ -96,18 +111,6 @@ t_viewport	init_viewport(t_minirt *minirt)
 	t_viewport	viewport;
 	t_vec3		u;
 
-	((t_sphere *)minirt->scene.elements[0].object)->material = malloc(sizeof(t_mat) * 1);
-	((t_sphere *)minirt->scene.elements[1].object)->material = malloc(sizeof(t_mat) * 1);
-	((t_sphere *)minirt->scene.elements[2].object)->material = malloc(sizeof(t_mat) * 1);
-	((t_sphere *)minirt->scene.elements[3].object)->material = malloc(sizeof(t_mat) * 1);
-	((t_sphere *)minirt->scene.elements[0].object)->material->metallic_value = 0;
-	((t_sphere *)minirt->scene.elements[1].object)->material->metallic_value = 0;
-	((t_sphere *)minirt->scene.elements[2].object)->material->metallic_value = 1;
-	((t_sphere *)minirt->scene.elements[3].object)->material->metallic_value = 2;
-	((t_sphere *)minirt->scene.elements[0].object)->material->color_value = ((t_sphere *)minirt->scene.elements[0].object)->color;
-	((t_sphere *)minirt->scene.elements[1].object)->material->color_value = ((t_sphere *)minirt->scene.elements[1].object)->color;
-	((t_sphere *)minirt->scene.elements[2].object)->material->color_value = ((t_sphere *)minirt->scene.elements[2].object)->color;
-	((t_sphere *)minirt->scene.elements[3].object)->material->color_value = ((t_sphere *)minirt->scene.elements[3].object)->color;
 	viewport.gamma = sqrt(0.8);
 	viewport.height = 2.0;
 	viewport.focal_length = viewport.height / (2.0 * tan(minirt->scene.camera.fov * 0.5 * PI_10D / 180));

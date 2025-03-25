@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 15:39:49 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:41:25 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define STRUCTS_H
 
 # include "libft.h"
+
+typedef unsigned char t_bool;
 
 /**
  * @struct s_color
@@ -226,6 +228,7 @@ typedef struct s_mlx
 	void	*render_win;
 	void	*controls_win;
 	t_img	img;
+	t_img	img_controls;
 }	t_mlx;
 
 typedef struct s_screen
@@ -256,6 +259,24 @@ typedef struct s_viewport
 	t_vec3	pixel00_loc;
 }	t_viewport;
 
+typedef struct s_keydown
+{
+	t_bool	lmb;
+	t_bool	mmb;
+	t_bool	rmb;
+	t_bool	lshift;
+	t_bool	rshift;
+	t_bool	lctrl;
+	t_bool	rctrl;
+}	t_keydown;
+
+typedef struct s_controls
+{
+	t_keydown	keydown;
+	int			open_controls;
+	
+}	t_controls;
+
 typedef struct s_minirt
 {
 	t_scene		scene;
@@ -263,8 +284,7 @@ typedef struct s_minirt
 	t_screen	screen;
 	t_stats		stats;
 	t_viewport	viewport;
+	t_controls	controls;
 }	t_minirt;
-
-
 
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/25 10:31:57 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/03/25 16:41:05 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ RAY_TRACING_DIR		= src/ray_tracing/
 RAY_TRACING_FILE	= render.c hit_register.c random.c material_reflection.c
 
 RENDERING_DIR		= src/rendering/
-RENDERING_FILE		= init.c pixel.c loop.c
+RENDERING_FILE		= init.c init_controls.c pixel.c loop.c
 
 MATH_DIR			= src/math/
 MATH_FILE			= ray/ray.c sphere/hit_sphere.c vector/vec3_dot_cross.c \

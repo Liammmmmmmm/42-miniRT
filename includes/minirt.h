@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 14:38:48 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:37:17 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
+
+// Control window
+# define CWIN_WIDTH 200
+# define CWIN_HEIGHT 1080
 
 typedef enum e_mouse_buttons
 {
@@ -193,6 +197,12 @@ void	free_mlx(t_minirt *minirt);
 
 void	put_sp_image(t_img *img, t_sc_point *sp);
 void	put_pixel_image(t_img *img, t_uint x, t_uint y, int color);
+
+/*═════════════════════════════════════════════════════════════════════════════╗
+║                                   CONTROLS                                   ║
+╚═════════════════════════════════════════════════════════════════════════════*/
+
+void	init_controls(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    EVENTS                                    ║

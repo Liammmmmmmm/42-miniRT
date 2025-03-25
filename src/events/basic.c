@@ -6,11 +6,23 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:23:57 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/20 15:30:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/25 16:48:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+int	destroy_controls(t_minirt *minirt)
+{
+	if (!minirt)
+		return (0);
+	if (minirt->mlx.controls_win)
+	{
+		mlx_destroy_window(minirt->mlx.mlx, minirt->mlx.controls_win);
+		minirt->mlx.controls_win = NULL;
+	}
+	return (0);
+}
 
 int	destroy(t_minirt *minirt)
 {
@@ -21,8 +33,17 @@ int	destroy(t_minirt *minirt)
 
 int	keydown_render(int key, t_minirt *minirt)
 {
+	printf("aaab\n");
 	if (key == KEY_ESC)
 		mlx_loop_end(minirt->mlx.mlx);
+	if (key == minirt->controls.open_controls)
+	{
+		if (!minirt->mlx.controls_win)
+		{
+			minirt->mlx.controls_win = mlx_new_window(minirt->mlx.mlx, CWIN_WIDTH, CWIN_HEIGHT, "Controls");
+			mlx_hook(minirt->mlx.controls_win, ON_DESTROY, 0, destroy_controls, minirt);
+		}
+	}
 	return (0);
 }
 
@@ -34,5 +55,7 @@ void	events(t_minirt *minirt)
 	// mlx_hook(minirt->mlx.render_win, ON_MOUSEMOVE, 1L << 6, mouse_move, minirt);
 	mlx_hook(minirt->mlx.render_win, ON_DESTROY, 0, destroy, minirt);
 	mlx_hook(minirt->mlx.render_win, ON_KEYDOWN, 1L << 0, keydown_render, minirt);
+
+	mlx_hook(minirt->mlx.controls_win, ON_DESTROY, 0, destroy_controls, minirt);
 	// mlx_hook(minirt->mlx.render_win, ON_KEYUP, 1L << 1, keyup, minirt);
 }

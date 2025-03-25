@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:26:28 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/19 11:05:18 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/24 16:54:38 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@ int	cmp_type(const char *type, const char *line)
 	return (0);
 }
 
-static int	is_valid_element(char *line)
+int	is_valid_element(char *line)
 {
 	if (cmp_type("A", line) || cmp_type("C", line) || cmp_type("L", line)
-		|| cmp_type("sp", line) || cmp_type("pl", line) || cmp_type("cy", line))
+		|| cmp_type("sp", line) || cmp_type("pl", line) || cmp_type("cy", line)
+		|| cmp_type("tex", line) || cmp_type("mat", line))
 		return (1);
 	return (0);
 }

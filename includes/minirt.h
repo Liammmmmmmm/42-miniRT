@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 16:54:47 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/25 11:09:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,9 @@ int		invalid_struct_error(t_objects type, char **splited);
 int		invalid_float_error(char **splited, int i);
 int		invalid_size_error(char **splited);
 int		texture_error(int error, char **parts);
+int		material_error(int error, char **parts);
+int		material_item_error(int error, char *part);
+int		texture_item_error(int error, char *part);
 
 /**
  * @return 1 if the line start by `type` folowed by a space or tab, 0 otherwise
@@ -145,6 +148,7 @@ int		is_valid_variable_name_tex(char *str, t_scene *scene);
 int		is_valid_variable_name_mat(char *str, t_scene *scene);
 
 int		is_valid_element(char *line);
+int		contains_var_chars(char *str);
 
 int		count_valid_lines(char *filename);
 char	*remove_useless_spaces(char *line);
@@ -154,12 +158,18 @@ int		valid_elements_amount(char **lines);
 int		free_scene(t_scene *scene, char **lines);
 int		parse_elements(t_scene *scene, char **lines, int ln_amount);
 
-int		is_valid_brightness(char *str, double *co);
+int		is_valid_double_el(char *str, double *co);
+int		is_valid_double_el_no_bordered(char *str, double *co);
 int		is_valid_size(char *str, double *co);
 int		is_valid_fov(char *str, unsigned char *fov);
 int		parse_color(char *color, t_color *store);
 int		parse_vector(char *str, t_vec3 *vec);
 int		parse_vector_normalized(char *str, t_vec3 *vec);
+int		parse_color_or_mat(char *str, t_color *store, t_mat **mat, t_scene *scene);
+int		parse_color_or_tex(char *str, t_color *store, t_tex **tex, t_scene *scene);
+int		parse_double_b_or_tex(char *str, double *d, t_tex **tex, t_scene *scene);
+int		parse_double_or_tex(char *str, double *d, t_tex **tex, t_scene *scene);
+t_tex	*get_texture(char *str, t_scene *scene);
 
 int		parse_ambiant_light(t_scene *scene, char *line);
 int		parse_camera(t_scene *scene, char *line);
@@ -202,10 +212,10 @@ void	render(t_minirt *minirt);
 ║                                  RAY TRACING                                 ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-double	random_double();
-double	random_double_in_interval(double min, double max);
-t_vec3	random_vec3();
-t_vec3	random_vec3_in_interval(double min, double max);
-t_vec3	random_on_hemisphere(const t_vec3 normal);
+double	random_double() __attribute__((always_inline));
+double	random_double_in_interval(double min, double max) __attribute__((always_inline));
+t_vec3	random_vec3() __attribute__((always_inline));
+t_vec3	random_vec3_in_interval(double min, double max) __attribute__((always_inline));
+t_vec3	random_on_hemisphere(const t_vec3 normal) __attribute__((always_inline));
 
 #endif

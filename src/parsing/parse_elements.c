@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:29:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 16:56:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/25 11:20:59 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	parse_elements(t_scene *scene, char **lines, int ln_amount)
 	int	i;
 
 	scene->el_amount = 0;
-	scene->elements = ft_calloc(sizeof(t_object), ln_amount - 2);
+	scene->elements = ft_calloc(sizeof(t_object), ln_amount - 2 - scene->tex_amount - scene->mat_amount);
 	if (!scene->elements)
 		return (free_scene(scene, lines));
 	i = -1;
@@ -91,6 +91,6 @@ int	parse_elements(t_scene *scene, char **lines, int ln_amount)
 			continue ;
 		return (free_scene(scene, lines));
 	}
-	scene->el_amount = ln_amount - 2;
+	scene->el_amount = ln_amount - 2 - scene->tex_amount - scene->mat_amount;
 	return (1);
 }

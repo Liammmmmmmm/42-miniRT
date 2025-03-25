@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:08:39 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 16:30:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/25 10:44:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	parse_vector_normalized(char *str, t_vec3 *vec)
 	return (1);
 }
 
-int	is_valid_brightness(char *str, double *co)
+int	is_valid_double_el(char *str, double *co)
 {
 	if (is_valid_float(str))
 	{

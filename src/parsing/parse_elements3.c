@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:00:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 17:08:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/25 11:32:25 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	parse_cylinder(t_scene *scene, char *line)
 	char		**parts;
 	t_cylinder	*cylinder;
 
-	cylinder = malloc(sizeof(t_cylinder));
+	cylinder = ft_calloc(sizeof(t_cylinder), 1);
 	if (!cylinder)
 		return (print_error(strerror(errno)));
 	scene->elements[scene->el_amount].type = CYLINDER;
@@ -35,7 +35,7 @@ int	parse_cylinder(t_scene *scene, char *line)
 		return (invalid_size_error(parts));
 	if (!is_valid_size(parts[4], &cylinder->height))
 		return (invalid_size_error(parts));
-	if (!parse_color(parts[5], &cylinder->color))
+	if (!parse_color_or_mat(parts[5], &cylinder->color, &cylinder->material, scene))
 		return (invalid_struct_error(CYLINDER, parts));
 	free(parts);
 	return (1);
@@ -69,6 +69,29 @@ int	parse_texture(t_scene *scene, char *line)
 	return (1);
 }
 
+static int	parse_mat_prop(char **parts, t_mat *mat, t_scene *scene)
+{
+	if (parse_color_or_tex(parts[2], &mat->color_value, &mat->color_tex, scene) == 0)
+		return (0);
+	if (parse_double_b_or_tex(parts[3], &mat->metallic_value, &mat->metallic_tex, scene) == 0)
+		return (material_item_error(2, mat->name));
+	if (parse_double_b_or_tex(parts[4], &mat->roughness_value, &mat->roughness_tex, scene) == 0)
+		return (material_item_error(3, mat->name));
+	if (is_valid_double_el_no_bordered(parts[5], &mat->ior) == 0)
+		return (material_item_error(4, mat->name));
+	if (is_valid_double_el(parts[6], &mat->transmission) == 0)
+		return (material_item_error(5, mat->name));
+	if (is_valid_double_el(parts[7], &mat->emission_strength) == 0)
+		return (material_item_error(6, mat->name));
+	if (parse_color(parts[8], &mat->emission_color) == 0)
+		return (0);
+	if (char_tab_len(parts) == 10)
+		mat->normal = get_texture(parts[9], scene);
+	if (char_tab_len(parts) == 10 && mat->normal == NULL)
+		return (material_item_error(7, mat->name));
+	return (1);
+}
+
 int	parse_material(t_scene *scene, char *line)
 {
 	static int	y = 0;
@@ -81,16 +104,20 @@ int	parse_material(t_scene *scene, char *line)
 	if (char_tab_len(parts) != 9 && char_tab_len(parts) != 10)
 		return (invalid_struct_error(MATERIAL, parts));
 	valid_name = is_valid_variable_name_mat(parts[1], scene);
-	// if (valid_name == -1)
-	// 	return (texture_error(0, parts));
-	// else if (valid_name == -2)
-	// 	return (texture_error(1, parts));
-	// ft_strlcpy(scene->textures[y].name, parts[1], 21);
-	// scene->textures[y].type = IMAGE;
-	// scene->textures[y].fd = open(parts[2], O_RDONLY);
-	// if (scene->textures[y].fd == -1)
-	// 	return (texture_error(2, parts));
+	if (valid_name == -1)
+		return (material_error(0, parts));
+	else if (valid_name == -2)
+		return (material_error(1, parts));
+	else if (valid_name == 0)
+		return (material_error(2, parts));
+	ft_strlcpy(scene->materials[y].name, parts[1], 21);
+	if (parse_mat_prop(parts, &scene->materials[y], scene) == 0)
+		return (invalid_struct_error(MATERIAL, parts));
 	free(parts);
 	y++;
 	return (1);
 }
+
+// #	name                          color             metallic       roughness      ior            transmission   emission_strength   emission_color
+// mat	mat_car                        15,  1,  2       0.228571       0.057143       1.450000       0.000000       0.000000            255,255,255
+

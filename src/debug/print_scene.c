@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:57:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 16:58:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/25 11:51:37 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,13 @@ void print_scene(t_scene *scene)
 				printf("    Position: ");
 				print_vec3(sphere->position);
 				printf("\n    Diameter: " BLUE "%.2f" NC "\n", sphere->diameter);
-				printf("    Color: ");
-				print_color(sphere->color);
+				if (sphere->material)
+					printf("    Material: %s", sphere->material->name);
+				else
+				{
+					printf("    Color: ");
+					print_color(sphere->color);
+				}
 				printf("\n");
 				break;
 			}
@@ -77,8 +82,13 @@ void print_scene(t_scene *scene)
 				print_vec3(plane->position);
 				printf("\n    Normal: ");
 				print_vec3(plane->normal);
-				printf("\n    Color: ");
-				print_color(plane->color);
+				if (plane->material)
+					printf("    Material: %s", plane->material->name);
+				else
+				{
+					printf("\n    Color: ");
+					print_color(plane->color);
+				}
 				printf("\n");
 				break;
 			}
@@ -91,8 +101,13 @@ void print_scene(t_scene *scene)
 				print_vec3(cylinder->orientation);
 				printf("\n    Diameter: " BLUE "%.2f" NC "\n", cylinder->diameter);
 				printf("    Height: " BLUE "%.2f" NC "\n", cylinder->height);
-				printf("    Color: ");
-				print_color(cylinder->color);
+				if (cylinder->material)
+					printf("    Material: %s", cylinder->material->name);
+				else
+				{
+					printf("    Color: ");
+					print_color(cylinder->color);
+				}
 				printf("\n");
 				break;
 			}
@@ -118,8 +133,37 @@ void print_scene(t_scene *scene)
 	{
 		t_mat *material = &scene->materials[i];
 
-		printf("  " YELLOW "Mat: `%s'\n" NC, material->name);		
+		printf("  " YELLOW "Mat: `%s'\n" NC, material->name);
 		
+		if (material->color_tex)
+			printf("    Color Texture: %s\n", material->color_tex->name);
+		else
+		{
+			printf("    Color Value: ");
+			print_color(material->color_value);
+			printf("\n");
+		}
+
+		if (material->metallic_tex)
+			printf("    Metallic Texture: %s\n", material->metallic_tex->name);
+		else
+			printf("    Metallic Value: %.2f\n", material->metallic_value);
+
+		if (material->roughness_tex)
+			printf("    Roughness Texture: %s\n", material->roughness_tex->name);
+		else
+			printf("    Roughness Value: %.2f\n", material->roughness_value);
+
+		printf("    IOR: %.2f\n", material->ior);
+		printf("    Transmission: %.2f\n", material->transmission);
+		printf("    Emission Strength: %.2f\n", material->emission_strength);
+
+		printf("    Emission Color: ");
+		print_color(material->emission_color);
+		printf("\n");
+
+		if (material->normal)
+			printf("    Normal Texture: %s\n", material->normal->name);
 	}
 	printf(GREEN "====================================\n" NC);
 }

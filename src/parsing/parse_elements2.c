@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 13:59:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/25 11:33:20 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	parse_light(t_scene *scene, char *line)
 	char	**parts;
 	t_light	*light;
 
-	light = malloc(sizeof(t_light));
+	light = ft_calloc(sizeof(t_light), 1);
 	if (!light)
 		return (print_error(strerror(errno)));
 	scene->elements[scene->el_amount].type = LIGHT;
@@ -75,7 +75,7 @@ int	parse_light(t_scene *scene, char *line)
 		return (invalid_struct_error(LIGHT, parts));
 	if (!parse_vector(parts[1], &light->position))
 		return (invalid_struct_error(LIGHT, parts));
-	if (!is_valid_brightness(parts[2], &light->brightness))
+	if (!is_valid_double_el(parts[2], &light->brightness))
 	{
 		free(parts);
 		return (print_error("Invalid light ratio."
@@ -92,7 +92,7 @@ int	parse_sphere(t_scene *scene, char *line)
 	char		**parts;
 	t_sphere	*sphere;
 
-	sphere = malloc(sizeof(t_sphere));
+	sphere = ft_calloc(sizeof(t_sphere), 1);
 	if (!sphere)
 		return (print_error(strerror(errno)));
 	scene->elements[scene->el_amount].type = SPHERE;
@@ -106,7 +106,7 @@ int	parse_sphere(t_scene *scene, char *line)
 		return (invalid_struct_error(SPHERE, parts));
 	if (!is_valid_size(parts[2], &sphere->diameter))
 		return (invalid_size_error(parts));
-	if (!parse_color(parts[3], &sphere->color))
+	if (!parse_color_or_mat(parts[3], &sphere->color, &sphere->material, scene))
 		return (invalid_struct_error(SPHERE, parts));
 	free(parts);
 	return (1);
@@ -117,7 +117,7 @@ int	parse_plane(t_scene *scene, char *line)
 	char	**parts;
 	t_plane	*plane;
 
-	plane = malloc(sizeof(t_plane));
+	plane = ft_calloc(sizeof(t_plane), 1);
 	if (!plane)
 		return (print_error(strerror(errno)));
 	scene->elements[scene->el_amount].type = PLANE;
@@ -131,7 +131,7 @@ int	parse_plane(t_scene *scene, char *line)
 		return (invalid_struct_error(PLANE, parts));
 	if (!parse_vector_normalized(parts[2], &plane->normal))
 		return (invalid_struct_error(PLANE, parts));
-	if (!parse_color(parts[3], &plane->color))
+	if (!parse_color_or_mat(parts[3], &plane->color, &plane->material, scene))
 		return (invalid_struct_error(PLANE, parts));
 	free(parts);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 17:20:59 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:23:51 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 		if (calc_ray_reflection(hit_record, ray, &scatted))
 		{
 			t_color bounce_color = ray_color(minirt, scatted, depth - 1);
-			color.r = bounce_color.r;
-			color.g = bounce_color.g;
-			color.b = bounce_color.b;
+			color.r = bounce_color.r * hit_record.mat->color_value.r / 255;
+			color.g = bounce_color.g * hit_record.mat->color_value.g / 255;
+			color.b = bounce_color.b * hit_record.mat->color_value.b / 255;
 			return (color);
 		}
 		return (t_color){0, 0, 0};
@@ -69,7 +69,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 			), 
 			ray.orig
 		);
-		color = ray_color(minirt, ray, 2);
+		color = ray_color(minirt, ray, 10);
 		minirt->screen.render[i].color.r += color.r * minirt->viewport.gamma;
 		minirt->screen.render[i].color.g += color.g * minirt->viewport.gamma;
 		minirt->screen.render[i].color.b += color.b * minirt->viewport.gamma;
@@ -107,7 +107,7 @@ t_viewport	init_viewport(t_minirt *minirt)
 	((t_sphere *)minirt->scene.elements[1].object)->material->color_value = ((t_sphere *)minirt->scene.elements[1].object)->color;
 	((t_sphere *)minirt->scene.elements[2].object)->material->color_value = ((t_sphere *)minirt->scene.elements[2].object)->color;
 	((t_sphere *)minirt->scene.elements[3].object)->material->color_value = ((t_sphere *)minirt->scene.elements[3].object)->color;
-	viewport.gamma = sqrt(1);
+	viewport.gamma = sqrt(0.8);
 	viewport.height = 2.0;
 	viewport.focal_length = viewport.height / (2.0 * tan(minirt->scene.camera.fov * 0.5 * PI_10D / 180));
 	viewport.width = viewport.height * ((float)minirt->mlx.img.width / minirt->mlx.img.height);

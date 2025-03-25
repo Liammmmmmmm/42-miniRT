@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/24 13:14:34 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:06:36 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include "maths.h"
 #include <math.h>
 
-char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record, \
-	t_color *obj_color)
+char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record)
 {
 	t_hit_record	temp_hit_record;
 	t_sphere		*sphere;
@@ -40,7 +39,7 @@ char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record, \
 					hit_anything = 1;
 					closest_t = temp_hit_record.t;
 					*hit_record = temp_hit_record;
-					*obj_color = sphere->color;
+					hit_record->mat = sphere->material;
 				}
 			}
 		}

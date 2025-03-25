@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
 #    Updated: 2025/03/25 10:31:57 by lilefebv         ###   ########lyon.fr    #
@@ -70,7 +70,7 @@ EVENT_DIR			= src/events/
 EVENT_FILE			= basic.c
 
 RAY_TRACING_DIR		= src/ray_tracing/
-RAY_TRACING_FILE	= render.c hit_register.c random.c
+RAY_TRACING_FILE	= render.c hit_register.c random.c material_reflection.c
 
 RENDERING_DIR		= src/rendering/
 RENDERING_FILE		= init.c pixel.c loop.c

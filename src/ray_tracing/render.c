@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 14:41:03 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:43:21 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,6 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 			color.r = bounce_color.r * attenuation.r / 255;
 			color.g = bounce_color.g * attenuation.g / 255;
 			color.b = bounce_color.b * attenuation.b / 255;
-
-			if (hit_record.mat)
-			{
-				color.r = bounce_color.r * hit_record.mat->color_value.r / 255;
-				color.g = bounce_color.g * hit_record.mat->color_value.g / 255;
-				color.b = bounce_color.b * hit_record.mat->color_value.b / 255;
-			}
-			else
-			{
-				color.r = bounce_color.r * hit_record.color.r / 255;
-				color.g = bounce_color.g * hit_record.color.g / 255;
-				color.b = bounce_color.b * hit_record.color.b / 255;
-			}
-
 			return (color);
 		}
 		return (t_color){0, 0, 0};
@@ -111,7 +97,7 @@ t_viewport	init_viewport(t_minirt *minirt)
 	t_viewport	viewport;
 	t_vec3		u;
 
-	viewport.gamma = sqrt(0.8);
+	viewport.gamma = sqrt(0.5);
 	viewport.height = 2.0;
 	viewport.focal_length = viewport.height / (2.0 * tan(minirt->scene.camera.fov * 0.5 * PI_10D / 180));
 	viewport.width = viewport.height * ((float)minirt->mlx.img.width / minirt->mlx.img.height);
@@ -144,7 +130,7 @@ void	render(t_minirt *minirt)
 		i = -1;
 		tpix = minirt->mlx.img.width * minirt->mlx.img.height;
 		while (++i < tpix)
-			ft_bzero(&minirt->screen.render[i].color, sizeof(t_color));
+			ft_bzero(&minirt->screen.render[i].color, sizeof(t_lcolor));
 		minirt->viewport = init_viewport(minirt);
 	}
 

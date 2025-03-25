@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_register.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/25 15:11:36 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:26:39 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record)
 					hit_anything = 1;
 					closest_t = temp_hit_record.t;
 					*hit_record = temp_hit_record;
-					hit_record->mat = sphere->material;
-					if (!sphere->material)
-						hit_record->color = sphere->color;
+					if (sphere->material)
+						hit_record->mat = sphere->material;
+					else
+						hit_record->mat = NULL;
+					hit_record->color = sphere->color;
 				}
 			}
 		}

@@ -1,7 +1,7 @@
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   emission_strength   emission_color normal_map
-mat	metal1                        255,255,255       1.0            0.7            1.450000       0.000000       0.000000            255,255,255 
-mat	metal2                        204,153,51        1.0            0.1            1.450000       0.000000       0.000000            255,255,255 
+mat	metal1                        255,255,255       0.0            0.0            1.000000       0.000000       0.000000            255,255,255 
+mat	metal2                        204,153,51        1.0            0.0            1.450000       0.000000       0.000000            255,255,255 
 
 
 A	0.2										255,255,255

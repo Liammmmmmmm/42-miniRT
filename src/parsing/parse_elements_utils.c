@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:06:52 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 13:58:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/25 13:20:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_valid_fov(char *str, unsigned char *fov)
 {
 	int	i;
 	int	ffov;
-	
+
 	i = -1;
 	if (str[0] == '+')
 		i++;
@@ -36,7 +36,7 @@ static int	is_valid_color_nb(char *str, unsigned char *ccolor)
 {
 	int	i;
 	int	fcolor;
-	
+
 	i = -1;
 	if (str[0] == '+')
 		i++;
@@ -70,7 +70,7 @@ int	parse_color(char *color, t_color *store)
 	{
 		free(colors);
 		return (print_error("Invalid color format. Expected format: "
-			"r,g,b [0;255]"));
+				"r,g,b [0;255]"));
 	}
 	free(colors);
 	return (1);

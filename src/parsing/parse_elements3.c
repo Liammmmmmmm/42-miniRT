@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:00:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 11:32:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/25 13:20:17 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,27 @@
 int	parse_cylinder(t_scene *scene, char *line)
 {
 	char		**parts;
-	t_cylinder	*cylinder;
+	t_cylinder	*cyl;
 
-	cylinder = ft_calloc(sizeof(t_cylinder), 1);
-	if (!cylinder)
+	cyl = ft_calloc(sizeof(t_cylinder), 1);
+	if (!cyl)
 		return (print_error(strerror(errno)));
 	scene->elements[scene->el_amount].type = CYLINDER;
-	scene->elements[scene->el_amount++].object = cylinder;
+	scene->elements[scene->el_amount++].object = cyl;
 	parts = ft_split_in_line(line, " ");
 	if (!parts)
 		return (print_error(strerror(errno)));
 	if (char_tab_len(parts) != 6)
 		return (invalid_struct_error(CYLINDER, parts));
-	if (!parse_vector(parts[1], &cylinder->position))
+	if (!parse_vector(parts[1], &cyl->position))
 		return (invalid_struct_error(CYLINDER, parts));
-	if (!parse_vector_normalized(parts[2], &cylinder->orientation))
+	if (!parse_vector_normalized(parts[2], &cyl->orientation))
 		return (invalid_struct_error(CYLINDER, parts));
-	if (!is_valid_size(parts[3], &cylinder->diameter))
+	if (!is_valid_size(parts[3], &cyl->diameter))
 		return (invalid_size_error(parts));
-	if (!is_valid_size(parts[4], &cylinder->height))
+	if (!is_valid_size(parts[4], &cyl->height))
 		return (invalid_size_error(parts));
-	if (!parse_color_or_mat(parts[5], &cylinder->color, &cylinder->material, scene))
+	if (!parse_color_or_mat(parts[5], &cyl->color, &cyl->material, scene))
 		return (invalid_struct_error(CYLINDER, parts));
 	free(parts);
 	return (1);
@@ -71,11 +71,14 @@ int	parse_texture(t_scene *scene, char *line)
 
 static int	parse_mat_prop(char **parts, t_mat *mat, t_scene *scene)
 {
-	if (parse_color_or_tex(parts[2], &mat->color_value, &mat->color_tex, scene) == 0)
+	if (parse_color_or_tex(parts[2], &mat->color_value,
+			&mat->color_tex, scene) == 0)
 		return (0);
-	if (parse_double_b_or_tex(parts[3], &mat->metallic_value, &mat->metallic_tex, scene) == 0)
+	if (parse_double_b_or_tex(parts[3], &mat->metallic_value,
+			&mat->metallic_tex, scene) == 0)
 		return (material_item_error(2, mat->name));
-	if (parse_double_b_or_tex(parts[4], &mat->roughness_value, &mat->roughness_tex, scene) == 0)
+	if (parse_double_b_or_tex(parts[4], &mat->roughness_value,
+			&mat->roughness_tex, scene) == 0)
 		return (material_item_error(3, mat->name));
 	if (is_valid_double_el_no_bordered(parts[5], &mat->ior) == 0)
 		return (material_item_error(4, mat->name));
@@ -117,7 +120,3 @@ int	parse_material(t_scene *scene, char *line)
 	y++;
 	return (1);
 }
-
-// #	name                          color             metallic       roughness      ior            transmission   emission_strength   emission_color
-// mat	mat_car                        15,  1,  2       0.228571       0.057143       1.450000       0.000000       0.000000            255,255,255
-

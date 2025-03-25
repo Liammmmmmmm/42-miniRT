@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:05:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 11:10:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/25 12:19:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,23 @@ int	material_item_error(int error, char *part)
 	else if (error == 1)
 		ft_dprintf(2, RED"[Error]"NC" Invalid material name: `%s'\n", part);
 	else if (error == 2)
-		ft_dprintf(2, RED"[Error]"NC" Invalid metallic value for: `%s'\n", part);
+		ft_dprintf(2, RED"[Error]"NC" Invalid metallic value for: `%s'\n", part)
+		;
 	else if (error == 3)
-		ft_dprintf(2, RED"[Error]"NC" Invalid roughness value for: `%s'\n", part);
+		ft_dprintf(2, RED"[Error]"NC" Invalid roughness value for: `%s'\n",
+			part);
 	else if (error == 4)
 		ft_dprintf(2, RED"[Error]"NC" Invalid ior value for: `%s'\n", part);
 	else if (error == 5)
-		ft_dprintf(2, RED"[Error]"NC" Invalid transmission value for: `%s'\n", part);
+		ft_dprintf(2, RED"[Error]"NC" Invalid transmission value for: `%s'\n",
+			part);
 	else if (error == 6)
-		ft_dprintf(2, RED"[Error]"NC" Invalid emission_strength value for: `%s'\n", part);
+		ft_dprintf(2, RED"[Error]"NC" Invalid emission_strength value for: "
+			"`%s'\n", part);
 	else if (error == 7)
 		ft_dprintf(2, RED"[Error]"NC" Invalid normal map for: `%s'\n", part);
 	return (0);
-}                  
+}
 
 int	texture_item_error(int error, char *part)
 {

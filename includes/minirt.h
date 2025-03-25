@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 11:09:28 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/25 12:15:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ typedef enum e_keys
 	KEY_RSHIFT = 65506,
 	KEY_CTRL_LEFT = 65507,
 }	t_keys;
+
+# define ERR_F "Invalid format for"
 
 int		print_error(char *err);
 

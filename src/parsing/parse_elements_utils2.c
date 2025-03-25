@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:08:39 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 10:44:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/25 13:21:57 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	parse_vector_normalized(char *str, t_vec3 *vec)
 	{
 		free(co);
 		return (print_error("Invalid vector format. Expected format: "
-			"x,y,z [-1.0;1.0]"));
+				"x,y,z [-1.0;1.0]"));
 	}
 	free(co);
 	return (1);

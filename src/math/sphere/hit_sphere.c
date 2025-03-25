@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:17:23 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/25 15:21:33 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/25 21:13:55 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char hit_sphere(const t_vec3 center, double radius, const t_ray *r, \
         return (0);
     sqrtd = sqrt(discriminant);
     root = (-b - sqrtd) / a;
-    if (root < interval.min || root > interval.max)
+    if (root < interval.min || root > interval.max) 
 	{
         root = (-b + sqrtd) / a;
         if (root < interval.min || root > interval.max)

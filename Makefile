@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/25 10:31:57 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/03/25 21:57:34 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ CC       = cc
 CFLAGS   = -Wall -Wextra -Werror
 LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm
 DEBUG_FLAGS = -g3
-FAST_FLAGS = -Ofast
+FAST_FLAGS = -Ofast -flto -march=native
 
 ifeq ($(MAKECMDGOALS), debug)
 	CFLAGS += $(DEBUG_FLAGS)
@@ -76,9 +76,9 @@ RENDERING_DIR		= src/rendering/
 RENDERING_FILE		= init.c pixel.c loop.c
 
 MATH_DIR			= src/math/
-MATH_FILE			= ray/ray.c sphere/hit_sphere.c vector/vec3_dot_cross.c \
-					vector/vec3_length.c vector/vec3_operations.c \
-					vector/vec3_utils.c normal/normal.c
+MATH_FILE			= ray/ray.c sphere/hit_sphere.c \
+					vector/vec3_dot_cross.c vector/vec3_length.c plane/hit_plane.c \
+					vector/vec3_operations.c vector/vec3_utils.c normal/normal.c
 
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \

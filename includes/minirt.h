@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 14:38:48 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/25 22:12:38 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 
 # define PI_10D 3.1415926535
 
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
+# define WIN_WIDTH 650
+# define WIN_HEIGHT 1000
 
 typedef enum e_mouse_buttons
 {
@@ -220,6 +220,6 @@ t_vec3	random_vec3() __attribute__((always_inline));
 t_vec3	random_vec3_unit() __attribute__((always_inline));
 t_vec3	random_vec3_in_interval(double min, double max) __attribute__((always_inline));
 t_vec3	random_on_hemisphere(const t_vec3 normal) __attribute__((always_inline));
-char	calc_ray_reflection(t_hit_record hit_record, t_ray ray_in, t_ray *scatted, t_color *attenuation);
+char	calc_ray_reflection(t_hit_record hit_record, t_ray ray_in, t_ray *scatted, t_color *attenuation, t_minirt *minirt);
 
 #endif

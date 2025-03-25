@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 15:39:49 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/25 19:16:06 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ typedef struct s_scene
 	int			el_amount;	// Nombre d'elements dans la liste
 	t_amb_light	amb_light;
 	t_camera	camera;
+	double		ior_all;
 }	t_scene;
 
 /**

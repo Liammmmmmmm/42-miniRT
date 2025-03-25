@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:20:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 16:48:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/25 19:16:47 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	parse_scene(t_minirt *minirt, char *filename)
 		return (free_scene(&minirt->scene, lines));
 	if (parse_elements(&minirt->scene, lines, ln_amount) == 0)
 		return (0);
+	minirt->scene.ior_all = 1.0;
 	ft_free_tab_null_term(lines);
 	return (1);
 }

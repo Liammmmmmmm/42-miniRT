@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 15:43:21 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/25 21:15:41 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 	t_color			color;
 	t_color			attenuation;
 	t_hit_record	hit_record;
+	t_color			bounce_color;
 	t_ray			scatted;
 
 	if (depth <= 0)
@@ -28,10 +29,9 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 	color.b = (1 - a) * 255 + a * 255;
 	if (hit_register(minirt, ray, &hit_record) == 1)
 	{
-		if (calc_ray_reflection(hit_record, ray, &scatted, &attenuation))
+		if (calc_ray_reflection(hit_record, ray, &scatted, &attenuation, minirt))
 		{
-			t_color bounce_color = ray_color(minirt, scatted, depth - 1);
-
+			bounce_color = ray_color(minirt, scatted, depth - 1);
 			color.r = bounce_color.r * attenuation.r / 255;
 			color.g = bounce_color.g * attenuation.g / 255;
 			color.b = bounce_color.b * attenuation.b / 255;
@@ -97,7 +97,7 @@ t_viewport	init_viewport(t_minirt *minirt)
 	t_viewport	viewport;
 	t_vec3		u;
 
-	viewport.gamma = sqrt(0.5);
+	viewport.gamma = sqrt(0.8);
 	viewport.height = 2.0;
 	viewport.focal_length = viewport.height / (2.0 * tan(minirt->scene.camera.fov * 0.5 * PI_10D / 180));
 	viewport.width = viewport.height * ((float)minirt->mlx.img.width / minirt->mlx.img.height);

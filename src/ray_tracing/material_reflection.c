@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:04:00 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/25 15:47:02 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/25 21:57:04 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,70 +14,77 @@
 #include "minirt.h"
 #include "maths.h"
 
-// char	apply_material(t_hit_record hit_record, t_ray ray_in, t_ray *scattered, t_mat material)
-// {
-// 	t_vec3	reflected_dir;
-// 	t_vec3	diffuse_dir;
-// 	t_vec3	transmitted_dir;
-// 	t_vec3	mixed_dir;
+t_vec3  reflection_vec(const t_vec3 uv, const t_vec3 n)
+{
+	t_vec3	direction;
 
-// 	/* --- Réflexion métallique --- */
-// 	reflected_dir = vec3_subtract(ray_in.dir, 
-// 		vec3_multiply_scalar(hit_record.normal, 2 * vec3_dot(ray_in.dir, hit_record.normal)));
-// 	reflected_dir = vec3_add(reflected_dir, 
-// 		vec3_multiply_scalar(random_vec3_unit(), material.roughness_value)); // Ajoute de la rugosité
+	direction = vec3_subtract(uv, vec3_multiply_scalar(n, 2 * vec3_dot(uv, n)));
+    return (direction);
+}
 
-// 	/* --- Diffusion classique --- */
-// 	diffuse_dir = vec3_add(hit_record.normal, random_vec3_unit());
-// 	if (fabs(diffuse_dir.x) < 1e-8 && fabs(diffuse_dir.y) < 1e-8 && fabs(diffuse_dir.z) < 1e-8)
-// 		diffuse_dir = hit_record.normal;
+t_vec3  refracted_vec(const t_vec3 uv, const t_vec3 n, double ri)
+{
+    double  cos_theta;
+    t_vec3 r_out_perp;
+    t_vec3 r_out_parallel;
 
-// 	/* --- Transmission (Réfraction) --- */
-// 	if (material.transmission > 0.0)
-// 	{
-// 		double	etai = 1.0; // Indice de réfraction externe (air)
-// 		double	etat = material.ior; // Indice de réfraction interne (matériau)
-// 		if (vec3_dot(ray_in.dir, hit_record.normal) > 0.0) // Ray sortant
-// 		{
-// 			double tmp = etai;
-// 			etai = etat;
-// 			etat = tmp;
-// 			hit_record.normal = vec3_multiply_scalar(hit_record.normal, -1);
-// 		}
-// 		double eta = etai / etat;
-// 		double cos_theta = -vec3_dot(ray_in.dir, hit_record.normal);
-// 		double sin_theta2 = eta * eta * (1.0 - cos_theta * cos_theta);
+    cos_theta = fmin(vec3_dot(vec3_negate(uv), n), 1.0);
+    r_out_perp = vec3_multiply_scalar(vec3_add(uv, vec3_multiply_scalar(n, cos_theta)), ri);
+    double r_out_perp_length_squared = vec3_length_squared(r_out_perp);
+    double parallel_factor = -sqrt(fabs(1.0 - r_out_perp_length_squared));
+    r_out_parallel = vec3_multiply_scalar(n, parallel_factor);
+    return (vec3_add(r_out_parallel, r_out_perp));
+}
 
-// 		if (sin_theta2 > 1.0) // Réflexion totale interne
-// 			transmitted_dir = reflected_dir;
-// 		else
-// 		{
-// 			t_vec3	refracted_perp = vec3_multiply_scalar(vec3_add(ray_in.dir, 
-// 				vec3_multiply_scalar(hit_record.normal, cos_theta)), eta);
-// 			t_vec3	refracted_parallel = vec3_multiply_scalar(hit_record.normal, 
-// 				-sqrt(fabs(1.0 - vec3_dot(refracted_perp, refracted_perp))));
-// 			transmitted_dir = vec3_add(refracted_perp, refracted_parallel);
-// 		}
-// 	}
-// 	else
-// 		transmitted_dir = reflected_dir; // Si pas de transmission, utiliser réflexion
+double	reflectance(double cosine, double refraction_index)
+{
+	double	r0;
 
-// 	/* --- Mélange des directions --- */
-// 	mixed_dir = vec3_add(
-// 		vec3_multiply_scalar(reflected_dir, material.metallic_value),    // Pondération métallique
-// 		vec3_multiply_scalar(diffuse_dir, (1.0 - material.metallic_value) * (1.0 - material.transmission)) // Pondération diffuse
-// 	);
-// 	mixed_dir = vec3_add(mixed_dir, vec3_multiply_scalar(transmitted_dir, material.transmission)); // Ajoute la transmission
-// 	mixed_dir = vec3_unit(mixed_dir); // Normalisation
+	r0 = (1 - refraction_index) / (1 + refraction_index);
+	r0 = r0 * r0;
+	return (r0 + (1 - r0) * pow((1 - cosine), 5));
+}
 
-// 	/* --- Mise à jour du rayon diffusé --- */
-// 	scattered->dir = mixed_dir;
-// 	scattered->orig = hit_record.point;
+char	mix_mat(t_hit_record hit_record, t_ray ray_in, t_ray *scattered, t_mat material, t_color *attenuation, t_minirt *minirt)
+{
+	t_vec3	unit_direction;
+	double	etai_over_etat;
+	double	cos_theta; 
+	double	sin_theta;
+	t_vec3	direction;
 
-// 	/* Retourne 1 si le rayon sort de la surface */
-// 	return (vec3_dot(scattered->dir, hit_record.normal) > 0);
-// }
+	*attenuation = material.color_value;
 
+	if (material.metallic_value > 0.0)
+	{
+		direction = reflection_vec(ray_in.dir, hit_record.normal);
+		attenuation->r *= material.metallic_value;
+		attenuation->g *= material.metallic_value;
+		attenuation->b *= material.metallic_value;
+	} 
+	else if (material.ior > 0)
+	{
+		unit_direction = vec3_unit(ray_in.dir);
+		etai_over_etat = hit_record.front_face ? (minirt->scene.ior_all / material.ior) : material.ior;
+		cos_theta = fmin(vec3_dot(vec3_negate(unit_direction), hit_record.normal), 1.0);
+		sin_theta = sqrt(1.0 - cos_theta * cos_theta);
+		if (etai_over_etat * sin_theta > 1.0 || reflectance(cos_theta, etai_over_etat) > random_double())
+			direction = reflection_vec(unit_direction, hit_record.normal);
+		else
+			direction = refracted_vec(unit_direction, hit_record.normal, etai_over_etat);
+	} 
+	else
+	{
+		direction = vec3_add(hit_record.normal, random_vec3_unit());
+		if (fabs(direction.x) < 1e-8 && fabs(direction.y) < 1e-8 && fabs(direction.z) < 1e-8)
+			direction = hit_record.normal;
+	}
+	if (material.roughness_value > 0.0)
+		direction = vec3_add(vec3_unit(direction), vec3_multiply_scalar(random_vec3_unit(), material.roughness_value));
+	scattered->orig = hit_record.point;
+	scattered->dir = direction;
+	return (1);
+}
 
 char	default_texture(t_hit_record hit_record, t_ray *scatted)
 {
@@ -91,63 +98,11 @@ char	default_texture(t_hit_record hit_record, t_ray *scatted)
 	return (1);
 }
 
-char	metal_texture(t_hit_record hit_record, t_ray ray_in, t_ray *scatted)
-{
-	t_vec3	direction;
-
-	/*------ Reflection ------*/
-	direction = vec3_subtract(ray_in.dir, vec3_multiply_scalar(hit_record.normal, 2 * vec3_dot(ray_in.dir, hit_record.normal)));
-	direction = vec3_add(vec3_unit(direction), vec3_multiply_scalar(random_vec3_unit(), hit_record.mat->roughness_value)); // TODO un jour on devra mettre roughness texture et la on va plus en chier x)
-	scatted->dir = direction;
-	scatted->orig = hit_record.point;
-	return (vec3_dot(scatted->dir, hit_record.normal) > 0);
-}
-
-t_vec3  refracted_vec(const t_vec3 uv, const t_vec3 n, double etai_over_etat)
-{
-    double  cos_theta;
-    t_vec3 r_out_perp;
-    t_vec3 r_out_parallel;
-
-    cos_theta = fmin(vec3_dot(vec3_negate(uv), n), 1.0);
-    r_out_perp = vec3_multiply_scalar(vec3_add(uv, vec3_multiply_scalar(n, cos_theta)), etai_over_etat);
-    double r_out_perp_length_squared = vec3_length_squared(r_out_perp);
-    double parallel_factor = -sqrt(fabs(1.0 - r_out_perp_length_squared));
-    r_out_parallel = vec3_multiply_scalar(n, parallel_factor);
-    return (vec3_add(r_out_parallel, r_out_perp));
-}
-
-char dielectric_texture(t_hit_record hit_record, t_ray ray_in, t_ray *scattered, double ior, t_color *attenuation)
-{
-    t_vec3 unit_direction;
-    t_vec3 refracted;
-    double etai_over_etat;
-
-    *attenuation = (t_color){255, 255, 255};
-    etai_over_etat = hit_record.front_face ? (1.0 / ior) : ior;
-
-    unit_direction = vec3_unit(ray_in.dir);
-    refracted = refracted_vec(unit_direction, hit_record.normal, etai_over_etat);
-
-    scattered->dir = refracted;
-    scattered->orig = hit_record.point;
-    return (1);
-}
-
-
-char	calc_ray_reflection(t_hit_record hit_record, t_ray ray_in, t_ray *scatted, t_color *attenuation)
+char	calc_ray_reflection(t_hit_record hit_record, t_ray ray_in, t_ray *scatted, t_color *attenuation, t_minirt *minirt)
 {
 	if (hit_record.mat)
 	{
-		*attenuation = hit_record.mat->color_value;
-		if (hit_record.mat->metallic_value != 0)
-		{
-			return (metal_texture(hit_record, ray_in, scatted));
-		}
-		if (hit_record.mat->ior != 0)
-		{
-			return (dielectric_texture(hit_record, ray_in, scatted, hit_record.mat->ior, attenuation));
-		}
+		return (mix_mat(hit_record, ray_in, scatted, *hit_record.mat, attenuation, minirt));
 	}
 	*attenuation = hit_record.color;
 	return (default_texture(hit_record, scatted));

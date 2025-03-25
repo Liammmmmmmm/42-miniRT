@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 14:19:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/25 14:41:03 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 {
 	double			a;
 	t_color			color;
+	t_color			attenuation;
 	t_hit_record	hit_record;
 	t_ray			scatted;
 
@@ -27,9 +28,14 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 	color.b = (1 - a) * 255 + a * 255;
 	if (hit_register(minirt, ray, &hit_record) == 1)
 	{
-		if (calc_ray_reflection(hit_record, ray, &scatted))
+		if (calc_ray_reflection(hit_record, ray, &scatted, &attenuation))
 		{
 			t_color bounce_color = ray_color(minirt, scatted, depth - 1);
+
+			color.r = bounce_color.r * attenuation.r / 255;
+			color.g = bounce_color.g * attenuation.g / 255;
+			color.b = bounce_color.b * attenuation.b / 255;
+
 			if (hit_record.mat)
 			{
 				color.r = bounce_color.r * hit_record.mat->color_value.r / 255;
@@ -42,6 +48,7 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 				color.g = bounce_color.g * hit_record.color.g / 255;
 				color.b = bounce_color.b * hit_record.color.b / 255;
 			}
+
 			return (color);
 		}
 		return (t_color){0, 0, 0};

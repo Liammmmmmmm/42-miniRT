@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 14:15:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/25 14:30:58 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef	struct s_hit_record
 	t_vec3	normal;
 	double	t;
 	t_mat	*mat;
+	char	front_face;
 	t_color	color;
 }	t_hit_record;
 

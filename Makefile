@@ -37,7 +37,7 @@ CC       = cc
 CFLAGS   = -Wall -Wextra -Werror
 LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm
 DEBUG_FLAGS = -g3
-FAST_FLAGS = -Ofast
+FAST_FLAGS = -O3 -flto -march=native -funroll-loops
 
 ifeq ($(MAKECMDGOALS), debug)
 	CFLAGS += $(DEBUG_FLAGS)
@@ -82,9 +82,9 @@ RENDERING_DIR		= src/rendering/
 RENDERING_FILE		= init.c init_controls.c pixel.c loop.c
 
 MATH_DIR			= src/math/
-MATH_FILE			= ray/ray.c sphere/hit_sphere.c vector/vec3_dot_cross.c \
-					vector/vec3_length.c vector/vec3_operations.c \
-					vector/vec3_utils.c normal/normal.c
+MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/vec3_length.c \
+					vector/vec3_utils.c normal/normal.c\
+					plane/hit_plane.c sphere/hit_sphere.c
 
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \

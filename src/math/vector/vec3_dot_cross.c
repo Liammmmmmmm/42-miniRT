@@ -6,18 +6,19 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:49:23 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/23 19:16:14 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:42:57 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
+#include "maths.h"
 
-float	vec3_dot(const t_vec3 u, const t_vec3 v)
+inline double	vec3_dot(register t_vec3 u, register t_vec3 v)
 {
 	return (u.x * v.x + u.y * v.y + u.z * v.z);
 }
 
-t_vec3	vec3_cross(const t_vec3 u, const t_vec3 v)
+inline t_vec3	vec3_cross(const t_vec3 u, const t_vec3 v)
 {
 	return ((t_vec3){
 		u.y * v.z - u.z * v.y,

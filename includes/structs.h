@@ -120,6 +120,8 @@ typedef struct s_camera
 	t_vec3			position;
 	t_vec3			orientation;
 	unsigned char	fov;
+    double			focus_dist;  
+	double			defocus_angle;
 }	t_camera;
 
 typedef struct s_light
@@ -136,6 +138,7 @@ typedef struct s_sphere
 	double	diameter;
 	t_mat	*material;
 	t_color	color;
+	double	sqrt_diameter;
 }	t_sphere;
 
 typedef struct s_plane
@@ -185,6 +188,7 @@ typedef struct s_scene
 	int			el_amount;	// Nombre d'elements dans la liste
 	t_amb_light	amb_light;
 	t_camera	camera;
+	double		ior_all;
 }	t_scene;
 
 typedef struct s_mlx
@@ -222,6 +226,9 @@ typedef struct s_viewport
 	t_vec3	pixel_delta_v;
 	t_vec3	upper_left;
 	t_vec3	pixel00_loc;
+	double	defocus_radius;
+	t_vec3	defocus_disk_u;
+    t_vec3	defocus_disk_v;
 }	t_viewport;
 
 typedef struct s_keydown

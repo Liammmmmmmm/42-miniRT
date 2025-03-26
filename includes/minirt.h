@@ -237,6 +237,6 @@ t_vec3	random_vec3() __attribute__((always_inline));
 t_vec3	random_vec3_unit() __attribute__((always_inline));
 t_vec3	random_vec3_in_interval(double min, double max) __attribute__((always_inline));
 t_vec3	random_on_hemisphere(const t_vec3 normal) __attribute__((always_inline));
-char	calc_ray_reflection(t_hit_record hit_record, t_ray ray_in, t_ray *scatted, t_color *attenuation);
+char	calc_ray_reflection(t_hit_record hit_record, t_ray ray_in, t_ray *scatted, t_color *attenuation, t_minirt *minirt);
 
 #endif

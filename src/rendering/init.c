@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 16:41:56 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/26 14:29:58 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	init_controls_mlx(t_minirt *minirt)
 	if (!mlx->img_controls.img_str)
 		return (free_mlx_error(minirt));
 	mlx->img_controls.width = CWIN_WIDTH;
+	mlx->img_controls.width4 = CWIN_WIDTH * 4;
 	mlx->img_controls.height = CWIN_HEIGHT;
 	return (1);
 }
@@ -69,6 +70,7 @@ int	init_mlx(t_minirt *minirt)
 	if (!mlx->img.img_str)
 		return (free_mlx_error(minirt));
 	mlx->img.width = WIN_WIDTH;
+	mlx->img.width4 = WIN_WIDTH * 4;
 	mlx->img.height = WIN_HEIGHT;
 	init_controls(minirt);
 	return (init_controls_mlx(minirt));
@@ -92,7 +94,10 @@ int	init_render(t_minirt *minirt)
 	}
 	minirt->stats.frame = 0;
 	minirt->screen.start_render = 1;
+	minirt->screen.pause_render = 0;
 	minirt->screen.spp = 100000;
 	minirt->screen.sample = 0;
+	init_font(minirt);
+	init_buttons(minirt);
 	return (1);
 }

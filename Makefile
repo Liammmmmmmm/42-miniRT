@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/25 16:41:05 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/03/26 14:49:05 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,12 @@ SRC_FILE			= main.c
 UTILS_DIR			= src/utils/
 UTILS_FILE			= utils.c
 
+UTILS_MLX_DIR		= src/utils/mlx/
+UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c
+
+CONTROLS_DIR		= src/controls/
+CONTROLS_FILE		= button_click.c init_buttons.c
+
 DEBUG_DIR			= src/debug/
 DEBUG_FILE			= print_scene.c
 
@@ -93,6 +99,8 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(RAY_TRACING_DIR), $(RAY_TRACING_FILE)) \
 			$(addprefix $(RENDERING_DIR), $(RENDERING_FILE)) \
 			$(addprefix $(MATH_DIR), $(MATH_FILE)) \
+			$(addprefix $(UTILS_MLX_DIR), $(UTILS_MLX_FILE)) \
+			$(addprefix $(CONTROLS_DIR), $(CONTROLS_FILE)) \
 			$(addprefix $(PARSING_DIR), $(PARSING_FILE))
 
 # Source files bonus

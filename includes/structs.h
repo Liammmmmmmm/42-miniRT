@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 16:41:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/26 16:31:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,11 @@
 # define STRUCTS_H
 
 # include "libft.h"
+# include "mlx_base.h"
+# include "mlx_components.h"
 
 typedef unsigned char t_bool;
-
-/**
- * @struct s_color
- * @brief Structure representing a color with RGB components.
- * 
- * @param r Red component of the color.
- * @param g Green component of the color.
- * @param b Blue component of the color.
- */
-typedef struct s_color
-{
-	unsigned char	r;	/* Red component of the color. */
-	unsigned char	g;	/* Green component of the color. */
-	unsigned char	b;	/* Blue component of the color. */
-}	t_color;
+typedef unsigned char t_uchar;
 
 typedef struct s_lcolor
 {
@@ -45,6 +33,23 @@ typedef struct s_lsc_point
 	t_uint		y;
 	t_lcolor	color;
 }	t_lsc_point;
+
+/**
+ * @struct s_point
+ * @brief Structure representing a point in 2D space with a color.
+ * 
+ * @param x X-coordinate of the point on the screen.
+ * @param y Y-coordinate of the point on the screen.
+ * @param z Depth of the point.
+ * @param color Color of the point.
+ */
+typedef struct s_sc_point
+{
+	t_uint	x;		/* X-coordinate of the point on the screen. */
+	t_uint	y;		/* Y-coordinate of the point on the screen. */
+	float	z;		/* Depth of the point. */
+	t_color	color;	/* Color of the point. */
+}	t_sc_point;
 
 typedef struct s_vec3
 {
@@ -64,23 +69,6 @@ typedef struct s_ray
 	t_vec3	orig;	/* The origin of the ray. */
 	t_vec3	dir;	/* The direction of the ray. */
 }	t_ray;	/*	Add more section for future (length_squared for optimisation)	*/
-
-/**
- * @struct s_point
- * @brief Structure representing a point in 2D space with a color.
- * 
- * @param x X-coordinate of the point on the screen.
- * @param y Y-coordinate of the point on the screen.
- * @param z Depth of the point.
- * @param color Color of the point.
- */
-typedef struct s_sc_point
-{
-	t_uint	x;		/* X-coordinate of the point on the screen. */
-	t_uint	y;		/* Y-coordinate of the point on the screen. */
-	float	z;		/* Depth of the point. */
-	t_color	color;	/* Color of the point. */
-}	t_sc_point;
 
 typedef enum e_tex_type
 {
@@ -199,29 +187,6 @@ typedef struct s_scene
 	t_camera	camera;
 }	t_scene;
 
-/**
- * @struct s_img
- * @brief Structure representing an image with its properties.
- * 
- * @param img Pointer to identify the image.
- * @param img_str String containing all the pixels of the image.
- * @param img_depth Contain the depth of each pixel (from camera)
- * @param bits Number of bits per pixel.
- * @param size_line Size of the img_str.
- * @param endian Indicates the endianness of the image.
- */
-typedef struct s_img
-{
-	void	*img;		/* Pointer to identify the image */
-	char	*img_str;	/* String containing all the pixels of the image */
-	float	*img_depth;	/* Contain the depth of each pixel (from camera) */
-	int		bits;		/* Number of bits per pixel */
-	int		size_line;	/* Size of the img_str */
-	int		endian;		/* Indicates the endianness of the image */
-	t_uint	width;
-	t_uint	height;
-}	t_img;
-
 typedef struct s_mlx
 {
 	void	*mlx;
@@ -233,11 +198,11 @@ typedef struct s_mlx
 
 typedef struct s_screen
 {
-	t_lsc_point	*render;	// Liste de chaque pixel pour l'image rendue
+	t_lsc_point	*render;
 	int			sample;
 	int			spp; // sample per pixel
-	int			start_render;
-	// stocker aussi ici les différents boutons, sliders ou autres
+	t_bool		start_render;
+	t_bool		pause_render;
 }	t_screen;
 
 typedef struct s_stats
@@ -273,7 +238,15 @@ typedef struct s_keydown
 typedef struct s_controls
 {
 	t_keydown	keydown;
+	t_uint		mlxc;
+	t_uint		mlyc;
+	t_uint		mlxr;
+	t_uint		mlyr;
+	t_uchar		font[96][5];
 	int			open_controls;
+	int			nb_buttons;
+	int			btn_clicked;
+	t_button	*buttons;
 	
 }	t_controls;
 
@@ -286,5 +259,13 @@ typedef struct s_minirt
 	t_viewport	viewport;
 	t_controls	controls;
 }	t_minirt;
+
+typedef struct s_btn_param
+{
+	t_minirt	*minirt;
+	int			action;
+}	t_btn_param;
+
+
 
 #endif

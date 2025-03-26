@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 22:12:38 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/26 09:35:21 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 
 # define PI_10D 3.1415926535
 
-# define WIN_WIDTH 650
-# define WIN_HEIGHT 1000
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 
 typedef enum e_mouse_buttons
 {

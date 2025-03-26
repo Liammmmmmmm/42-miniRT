@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/26 13:32:30 by madelvin         ###   ########.fr        #
+#    Updated: 2025/03/26 14:49:05 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,12 @@ SRC_FILE			= main.c
 UTILS_DIR			= src/utils/
 UTILS_FILE			= utils.c
 
+UTILS_MLX_DIR		= src/utils/mlx/
+UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c
+
+CONTROLS_DIR		= src/controls/
+CONTROLS_FILE		= button_click.c init_buttons.c
+
 DEBUG_DIR			= src/debug/
 DEBUG_FILE			= print_scene.c
 
@@ -73,7 +79,7 @@ RAY_TRACING_DIR		= src/ray_tracing/
 RAY_TRACING_FILE	= render.c hit_register.c random.c material_reflection.c
 
 RENDERING_DIR		= src/rendering/
-RENDERING_FILE		= init.c pixel.c loop.c
+RENDERING_FILE		= init.c init_controls.c pixel.c loop.c
 
 MATH_DIR			= src/math/
 MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/vec3_length.c \
@@ -93,8 +99,9 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(RAY_TRACING_DIR), $(RAY_TRACING_FILE)) \
 			$(addprefix $(RENDERING_DIR), $(RENDERING_FILE)) \
 			$(addprefix $(MATH_DIR), $(MATH_FILE)) \
-			$(addprefix $(PARSING_DIR), $(PARSING_FILE)) \
-			$(addprefix $(T), $(TT))
+			$(addprefix $(UTILS_MLX_DIR), $(UTILS_MLX_FILE)) \
+			$(addprefix $(CONTROLS_DIR), $(CONTROLS_FILE)) \
+			$(addprefix $(PARSING_DIR), $(PARSING_FILE))
 
 # Source files bonus
 SRCS_BONUS = 

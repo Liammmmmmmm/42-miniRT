@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   slider_int.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:47:09 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/24 14:06:28 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/26 14:45:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	display_slider_int(t_img *img, const t_int_slider slider)
 		j = slider.x;
 		while (j < slider.x + slider.width)
 		{
-			put_pixel_image(img->img_str, j, i, slider.bar_color);
+			put_pixel_image(img, j, i, slider.bar_color);
 			j++;
 		}
 		i++;

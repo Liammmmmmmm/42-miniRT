@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 14:24:11 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:55:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,12 @@
 
 # define PI_10D 3.1415926535
 
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
+# define WIN_WIDTH 1000
+# define WIN_HEIGHT 500
+
+// Control window
+# define CWIN_WIDTH 300
+# define CWIN_HEIGHT 1080
 
 typedef enum e_mouse_buttons
 {
@@ -89,9 +93,10 @@ typedef enum e_keys
 	NUM_8 = 65431,
 	NUM_9 = 65434,
 	KEY_ESC = 65307,
-	KEY_SHIFT = 65505,
+	KEY_LSHIFT = 65505,
 	KEY_RSHIFT = 65506,
-	KEY_CTRL_LEFT = 65507,
+	KEY_LCTRL = 65507,
+	KEY_RCTRL = 65508,
 }	t_keys;
 
 # define ERR_F "Invalid format for"
@@ -195,10 +200,22 @@ void	put_sp_image(t_img *img, t_sc_point *sp);
 void	put_pixel_image(t_img *img, t_uint x, t_uint y, int color);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
+║                                   CONTROLS                                   ║
+╚═════════════════════════════════════════════════════════════════════════════*/
+
+void	init_font(t_minirt *minirt);
+void	init_controls(t_minirt *minirt);
+int		init_buttons(t_minirt *minirt);
+
+void	click_start_stop(void *vparam);
+void	clear_buttons(t_minirt *minirt);
+
+/*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    EVENTS                                    ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
 void	events(t_minirt *minirt);
+void	events_controls(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    RENDER                                    ║

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 16:43:15 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/26 14:13:14 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void	render(t_minirt *minirt)
 	t_uint	tpix;
 	t_uint	i;
 
-	if (!minirt->screen.start_render)
+	if (!minirt->screen.start_render || minirt->screen.pause_render)
 		return ;
 	if (minirt->screen.sample == 0)
 	{

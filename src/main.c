@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/23 15:40:08 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:24:21 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	clean(t_minirt *minirt)
 {
 	free_scene(&minirt->scene, NULL);
 	free_mlx(minirt);
+	clear_buttons(minirt);
 	if (minirt->screen.render)
 		free(minirt->screen.render);
 	return (1);

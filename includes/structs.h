@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 17:12:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/26 18:19:58 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,8 @@ typedef struct s_edited_val
 {
 	int	focus_dist;
 	int	defocus_angle;
+	int	fov;
+	int	gamma;
 }	t_edited_val;
 
 typedef struct s_controls

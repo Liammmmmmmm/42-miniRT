@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 17:59:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/26 18:20:49 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,9 @@ t_viewport	init_viewport(t_minirt *minirt)
 	minirt->scene.camera.defocus_angle = minirt->controls.values.defocus_angle / 30.0;
 	printf("Focus dist: %f\nDefocus angle: %f\n", minirt->scene.camera.focus_dist, minirt->scene.camera.defocus_angle);
 	minirt->scene.camera.orientation = vec3_unit(minirt->scene.camera.orientation);
-	viewport.gamma = sqrt(0.8);
-	viewport.height = 2 * tan((minirt->scene.camera.fov * PI_10D/180)/2) * minirt->scene.camera.focus_dist;
-	// viewport.focal_length = viewport.height / (2.0 * tan(minirt->scene.camera.fov * 0.5 * PI_10D / 180));
+	viewport.gamma = sqrt(minirt->controls.values.gamma / 1000.0);
+	viewport.height = 2 * tan((minirt->controls.values.fov * PI_10D/180)/2) * minirt->scene.camera.focus_dist;
+	// viewport.focal_length = viewport.height / (2.0 * tan(minirt->controls.values.fov * 0.5 * PI_10D / 180));
 	viewport.width = viewport.height * ((float)minirt->mlx.img.width / minirt->mlx.img.height);
 	u = vec3_unit(vec3_cross((t_vec3){0, 1, 0}, vec3_negate(minirt->scene.camera.orientation)));
 	viewport.u = vec3_multiply_scalar(u, viewport.width);

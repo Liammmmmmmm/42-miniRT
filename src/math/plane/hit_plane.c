@@ -6,13 +6,15 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:53:12 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/25 21:47:33 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:41:03 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "maths.h"
 #include <math.h>
+
+t_vec3	vec3_subtract(register t_vec3 u, register t_vec3 v);
 
 char	hit_plane(const t_vec3 point_on_plane, const t_vec3 normal, \
 	const t_ray *r, t_interval interval, t_hit_record *rec)

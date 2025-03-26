@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 19:16:06 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:04:05 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ typedef struct s_camera
 	t_vec3			position;
 	t_vec3			orientation;
 	unsigned char	fov;
+    double			focus_dist;  
+	double			defocus_angle;
 }	t_camera;
 
 typedef struct s_light
@@ -146,6 +148,7 @@ typedef struct s_sphere
 	double	diameter;
 	t_mat	*material;
 	t_color	color;
+	double	sqrt_diameter;
 }	t_sphere;
 
 typedef struct s_plane
@@ -255,6 +258,9 @@ typedef struct s_viewport
 	t_vec3	pixel_delta_v;
 	t_vec3	upper_left;
 	t_vec3	pixel00_loc;
+	double	defocus_radius;
+	t_vec3	defocus_disk_u;
+    t_vec3	defocus_disk_v;
 }	t_viewport;
 
 typedef struct s_minirt

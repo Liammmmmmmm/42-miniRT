@@ -34,11 +34,11 @@ mat	coral                         255,127,80        0.0            0.4          
 A	0.2										255,255,255
 
 # CAMERA
-C	0,0,5		0,0,-1 50
+C	-6,0,4		1,0,-1 90
 
 # OBJECTS
 # Format: sp	x,y,z			radius						material
-sp				0,-150.5,-1		200							204,204,0
+# sp				0,-150.5,-1		200							204,204,0
 sp				0,0,-1.2		1        					blue_glass
 sp				1,0.8,-1.2		1							metal2
 sp				2,0,-1			0.3							red_metal

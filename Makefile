@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/25 21:57:34 by madelvin         ###   ########.fr        #
+#    Updated: 2025/03/26 13:32:30 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ CC       = cc
 CFLAGS   = -Wall -Wextra -Werror
 LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm
 DEBUG_FLAGS = -g3
-FAST_FLAGS = -Ofast -flto -march=native
+FAST_FLAGS = -O3 -flto -march=native -funroll-loops
 
 ifeq ($(MAKECMDGOALS), debug)
 	CFLAGS += $(DEBUG_FLAGS)
@@ -76,9 +76,9 @@ RENDERING_DIR		= src/rendering/
 RENDERING_FILE		= init.c pixel.c loop.c
 
 MATH_DIR			= src/math/
-MATH_FILE			= ray/ray.c sphere/hit_sphere.c \
-					vector/vec3_dot_cross.c vector/vec3_length.c plane/hit_plane.c \
-					vector/vec3_operations.c vector/vec3_utils.c normal/normal.c
+MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/vec3_length.c \
+					vector/vec3_utils.c normal/normal.c\
+					plane/hit_plane.c sphere/hit_sphere.c
 
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
@@ -93,7 +93,8 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(RAY_TRACING_DIR), $(RAY_TRACING_FILE)) \
 			$(addprefix $(RENDERING_DIR), $(RENDERING_FILE)) \
 			$(addprefix $(MATH_DIR), $(MATH_FILE)) \
-			$(addprefix $(PARSING_DIR), $(PARSING_FILE))
+			$(addprefix $(PARSING_DIR), $(PARSING_FILE)) \
+			$(addprefix $(T), $(TT))
 
 # Source files bonus
 SRCS_BONUS = 

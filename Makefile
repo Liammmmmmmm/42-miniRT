@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/26 14:49:05 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/03/26 17:26:03 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c
 
 CONTROLS_DIR		= src/controls/
-CONTROLS_FILE		= button_click.c init_buttons.c
+CONTROLS_FILE		= button_click.c init_buttons.c init_sliders.c
 
 DEBUG_DIR			= src/debug/
 DEBUG_FILE			= print_scene.c

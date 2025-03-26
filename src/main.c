@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 15:24:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/26 17:25:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	clean(t_minirt *minirt)
 	free_scene(&minirt->scene, NULL);
 	free_mlx(minirt);
 	clear_buttons(minirt);
+	clear_sliders(minirt);
 	if (minirt->screen.render)
 		free(minirt->screen.render);
 	return (1);

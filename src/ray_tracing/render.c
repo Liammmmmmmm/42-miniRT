@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 14:13:14 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/26 17:59:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,9 @@ t_viewport	init_viewport(t_minirt *minirt)
 	t_viewport	viewport;
 	t_vec3		u;
 
-	minirt->scene.camera.focus_dist = 3.5;
-	minirt->scene.camera.defocus_angle = 3.4;
+	minirt->scene.camera.focus_dist = minirt->controls.values.focus_dist / 10.0;
+	minirt->scene.camera.defocus_angle = minirt->controls.values.defocus_angle / 30.0;
+	printf("Focus dist: %f\nDefocus angle: %f\n", minirt->scene.camera.focus_dist, minirt->scene.camera.defocus_angle);
 	minirt->scene.camera.orientation = vec3_unit(minirt->scene.camera.orientation);
 	viewport.gamma = sqrt(0.8);
 	viewport.height = 2 * tan((minirt->scene.camera.fov * PI_10D/180)/2) * minirt->scene.camera.focus_dist;

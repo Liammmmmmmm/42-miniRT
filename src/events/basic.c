@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:23:57 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 16:33:27 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/26 17:51:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,9 @@ int	mousedown_controls(int key, int x, int y, t_minirt *minirt)
 	i = -1;
 	while (++i < minirt->controls.nb_buttons)
 		button_action(&minirt->controls.buttons[i], x, y, &minirt->controls.btn_clicked);
+	i = -1;
+	while (++i < minirt->controls.nb_sliders)
+		slider_mouse_down(&minirt->controls.sliders[i], x, y);
 	return (0);
 }
 
@@ -145,6 +148,9 @@ int	mouseup_controls(int key, int x, int y, t_minirt *minirt)
 	i = -1;
 	while (++i < minirt->controls.nb_buttons)
 		button_release(&minirt->controls.buttons[i]);
+	i = -1;
+	while (++i < minirt->controls.nb_sliders)
+		slider_mouse_up(&minirt->controls.sliders[i]);
 	return (0);
 }
 
@@ -157,6 +163,18 @@ int	mouseup_render(int key, int x, int y, t_minirt *minirt)
 	return (0);
 }
 
+int	mouse_move_controls(int x, int y, t_minirt *minirt)
+{
+	int	i;
+
+	minirt->controls.mlxc = (t_uint)x;
+	minirt->controls.mlxc = (t_uint)y;
+	i = -1;
+	while (++i < minirt->controls.nb_sliders)
+		slider_mouse_move(&minirt->controls.sliders[i], x);
+	return (0);
+}
+
 void	events_controls(t_minirt *minirt)
 {
 	mlx_hook(minirt->mlx.controls_win, ON_DESTROY, 0, destroy_controls, minirt);
@@ -164,6 +182,7 @@ void	events_controls(t_minirt *minirt)
 	mlx_hook(minirt->mlx.controls_win, ON_KEYUP, 1L << 0, keyup_controls, minirt);
 	mlx_hook(minirt->mlx.controls_win, ON_MOUSEDOWN, 1L << 2, mousedown_controls, minirt);
 	mlx_hook(minirt->mlx.controls_win, ON_MOUSEUP, 1L << 3, mouseup_controls, minirt);
+	mlx_hook(minirt->mlx.controls_win, ON_MOUSEMOVE, 1L << 6, mouse_move_controls, minirt);
 }
 
 void	events(t_minirt *minirt)

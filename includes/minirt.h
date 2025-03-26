@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 15:55:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/26 17:21:33 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 
 # define PI_10D 3.1415926535
 
-# define WIN_WIDTH 1000
-# define WIN_HEIGHT 500
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 
 // Control window
 # define CWIN_WIDTH 300
@@ -206,7 +206,9 @@ void	put_pixel_image(t_img *img, t_uint x, t_uint y, int color);
 void	init_font(t_minirt *minirt);
 void	init_controls(t_minirt *minirt);
 int		init_buttons(t_minirt *minirt);
+int		init_sliders(t_minirt *minirt);
 
+void	clear_sliders(t_minirt *minirt);
 void	click_start_stop(void *vparam);
 void	clear_buttons(t_minirt *minirt);
 

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 16:31:28 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/26 17:12:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,18 +242,27 @@ typedef struct s_keydown
 	t_bool	rctrl;
 }	t_keydown;
 
+typedef struct s_edited_val
+{
+	int	focus_dist;
+	int	defocus_angle;
+}	t_edited_val;
+
 typedef struct s_controls
 {
-	t_keydown	keydown;
-	t_uint		mlxc;
-	t_uint		mlyc;
-	t_uint		mlxr;
-	t_uint		mlyr;
-	t_uchar		font[96][5];
-	int			open_controls;
-	int			nb_buttons;
-	int			btn_clicked;
-	t_button	*buttons;
+	t_keydown		keydown;
+	t_uint			mlxc;
+	t_uint			mlyc;
+	t_uint			mlxr;
+	t_uint			mlyr;
+	t_uchar			font[96][5];
+	int				open_controls;
+	int				nb_buttons;
+	int				btn_clicked;
+	t_button		*buttons;
+	t_edited_val	values;
+	int				nb_sliders;
+	t_int_slider	*sliders;
 	
 }	t_controls;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 18:20:49 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/27 13:02:55 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,66 @@ t_vec3 defocus_disk_sample(t_minirt *minirt)
 	));
 }
 
+char	is_hit_before_target(t_minirt *minirt, t_vec3 origin, t_vec3 target)
+{
+	t_ray			shadow_ray;
+	t_hit_record	hit_record;
+	double			distance_to_target;
+
+	shadow_ray.orig = origin;
+	shadow_ray.dir = vec3_unit(vec3_subtract(target, origin));
+	distance_to_target = vec3_length(vec3_subtract(target, origin));
+	if (hit_register(minirt, shadow_ray, &hit_record))
+	{
+		if (hit_record.t < distance_to_target)
+			return (1);
+	}
+	return (0);
+}
+
+
+t_color	comptute_light(t_hit_record *hit_record, t_minirt *minirt)
+{
+	t_color	intensity;
+	t_vec3	light_dir;
+	t_light	*light;
+	double	n_dot_l;
+	int		i;
+
+	intensity = (t_color){0, 0, 0};
+	i = 0;
+	while (i < minirt->scene.el_amount)
+	{
+		if (minirt->scene.elements[i].type == LIGHT)
+		{
+			light = minirt->scene.elements[i].object;
+			light_dir = vec3_unit(vec3_subtract(light->position, hit_record->point));
+			if (is_hit_before_target(minirt, hit_record->point, light->position) == 1)
+			{
+				i++;
+				continue ;
+			}
+			n_dot_l = vec3_dot(hit_record->normal, light_dir);
+			if (n_dot_l > 0)
+			{
+				intensity.r = (intensity.r + (light->color.r * (light->brightness * n_dot_l))) / 2;
+				intensity.g = (intensity.g + (light->color.g * (light->brightness * n_dot_l))) / 2;
+				intensity.b = (intensity.b + (light->color.b * (light->brightness * n_dot_l))) / 2;
+			}	
+		}
+		i++;
+	}
+	return (intensity);
+}
+
 t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 {
 	double			a;
 	t_color			color;
 	t_color			attenuation;
 	t_hit_record	hit_record;
-	t_color			bounce_color;
-	t_ray			scatted;
+	// t_color			bounce_color;
+	// t_ray			scatted;
 
 	if (depth <= 0)
 		return (t_color){0, 0, 0};
@@ -63,17 +115,14 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 	color.b = (1 - a) * 255 + a * 255;
 	if (hit_register(minirt, ray, &hit_record) == 1)
 	{
-		if (calc_ray_reflection(hit_record, ray, &scatted, &attenuation, minirt))
-		{
-			bounce_color = ray_color(minirt, scatted, depth - 1);
-			color.r = bounce_color.r * attenuation.r / 255;
-			color.g = bounce_color.g * attenuation.g / 255;
-			color.b = bounce_color.b * attenuation.b / 255;
-			return (color);
-		}
-		return (t_color){0, 0, 0};
+		color = hit_record.color;
+		attenuation = comptute_light(&hit_record, minirt);
+		color.r = (attenuation.r * color.r) / 255;
+		color.g = (attenuation.g * color.g) / 255;
+		color.b = (attenuation.b * color.b) / 255;
+		return (color);
 	}
-	return (color);
+	return (t_color){0, 0, 0};
 }
 
 t_vec3	sample_square()

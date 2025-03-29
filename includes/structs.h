@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 18:19:58 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/26 18:44:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,8 @@ typedef struct s_sphere
 	double	diameter;
 	t_mat	*material;
 	t_color	color;
-	double	sqrt_diameter;
+	double	sqrt_radius;
+	double	radius;
 }	t_sphere;
 
 typedef struct s_plane

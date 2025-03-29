@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:13:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 18:21:24 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/26 18:25:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_focal_sliders(t_minirt *minirt)
 	base_slider(&minirt->controls.sliders[1]);
 	base_slider(&minirt->controls.sliders[2]);
 	base_slider(&minirt->controls.sliders[3]);
-	minirt->controls.values.focus_dist = 1;
+	minirt->controls.values.focus_dist = 100;
 	minirt->controls.sliders[0].min = 1;
 	minirt->controls.sliders[0].max = 300;
 	minirt->controls.sliders[0].value = &minirt->controls.values.focus_dist;

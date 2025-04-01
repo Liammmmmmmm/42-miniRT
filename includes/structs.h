@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 18:44:29 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/03/30 15:38:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 # include "libft.h"
 # include "mlx_base.h"
 # include "mlx_components.h"
-
-typedef unsigned char t_bool;
-typedef unsigned char t_uchar;
 
 typedef struct s_lcolor
 {

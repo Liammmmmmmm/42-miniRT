@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:49:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/02 16:00:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/02 19:05:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,21 @@ void	print_cmap(t_cmap *c)
 		else if (es->platform_id == 3)
 			printf("Microsoft");
 		printf("\n");
+		i++;
+	}
+}
+
+void	print_format4(t_format4 *f4)
+{
+	int	i;
+	
+	i = 0;
+	printf("Format: %d, Length: %d, Language: %d, Segment Count: %d\n", f4->format, f4->length, f4->language, f4->seg_count_x2 / 2);
+	printf("Search Params: (searchRange: %d, entrySelector: %d, rangeShift: %d)\n", f4->search_range, f4->entry_selector, f4->range_shift);
+	printf("Segment Ranges:\tstartCode\tendCode\tidDelta\tidRangeOffset\n");
+	while (i < f4->seg_count_x2 / 2)
+	{
+		printf("--------------:\t% 9d\t% 7d\t% 7d\t% 12d\n", f4->start_code[i], f4->end_code[i], f4->id_delta[i], f4->id_range_offset[i]);
 		i++;
 	}
 }

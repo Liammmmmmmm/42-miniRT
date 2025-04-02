@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/02 17:20:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/02 19:14:39 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ t_table_directory	*get_table_directory(t_font_directoy *ft_dir, char c[4]);
 int		read_font_directory(t_bin *bin, t_font_directoy *ft_dir);
 int		read_cmap(t_bin *bin, size_t *i, t_cmap *cmap);
 int		get_cmap(t_bin *bin, t_ttf *ttf);
+int		read_format4(t_bin *bin, t_ttf *ttf);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    DEBUG                                     ║
@@ -117,5 +118,6 @@ int		get_cmap(t_bin *bin, t_ttf *ttf);
 
 void	print_table_directory(t_table_directory *tbl_dir, uint16_t tbl_size);
 void	print_cmap(t_cmap *c);
+void	print_format4(t_format4 *f4);
 
 #endif

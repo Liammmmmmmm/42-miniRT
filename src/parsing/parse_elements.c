@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:29:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 13:16:56 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/02 17:04:52 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ static int	cmp_elements(t_scene *scene, char *line)
 	else if (cmp_type("C", line) && parse_camera(scene, line))
 		return (1);
 	else if (cmp_type("L", line) && parse_light(scene, line))
+		return (1);
+	else if (cmp_type("l", line) && parse_light(scene, line))
 		return (1);
 	else if (cmp_type("tex", line) && parse_texture(scene, line))
 		return (1);

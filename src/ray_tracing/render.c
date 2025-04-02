@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/01 17:38:29 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:26:29 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	is_hit_before_target(t_minirt *minirt, t_vec3 origin, t_vec3 target)
 	return (0);
 }
 
-t_color	comptute_light(t_hit_record *hit_record, t_minirt *minirt)
+t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt)
 {
 	t_lcolor	light_color;
 	t_vec3		light_dir;
@@ -87,10 +87,10 @@ t_color	comptute_light(t_hit_record *hit_record, t_minirt *minirt)
 			n_dot_l = vec3_dot(hit_record->normal, light_dir);
 			if (n_dot_l > 0)
 			{
-				light_color.r += light->color.r * light->brightness;
-				light_color.g += light->color.g * light->brightness;
-				light_color.b += light->color.b * light->brightness;
-				light_intensity += light->brightness;
+				light_color.r += light->color.r * (light->brightness * n_dot_l);
+				light_color.g += light->color.g * (light->brightness * n_dot_l);
+				light_color.b += light->color.b * (light->brightness * n_dot_l);
+				light_intensity += (light->brightness * n_dot_l);
 				count++;
 			}
 		}
@@ -98,7 +98,7 @@ t_color	comptute_light(t_hit_record *hit_record, t_minirt *minirt)
 	}
 	if (light_intensity == 0)
 		return ((t_color){0, 0, 0});
-	return ((t_color){light_color.r / count, light_color.g / count, light_color.b / count});
+	return ((t_color){light_color.r / light_intensity, light_color.g / light_intensity, light_color.b / light_intensity});
 }
 
 t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
@@ -108,7 +108,7 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 	t_hit_record	hit_record;
 	t_color			bounce_color;
 	t_color			amb;
-	t_color		light_color;
+	t_color			light_color;
 	t_ray			scatted;
 	float			ratio;
 
@@ -125,13 +125,10 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 		if (calc_ray_reflection(hit_record, ray, &scatted, &attenuation, minirt))
 		{
 			bounce_color = ray_color(minirt, scatted, depth - 1);
+			light_color = compute_light(&hit_record, minirt);
 			color.r = bounce_color.r * attenuation.r / 255;
 			color.g = bounce_color.g * attenuation.g / 255;
 			color.b = bounce_color.b * attenuation.b / 255;
-			light_color = comptute_light(&hit_record, minirt);
-			color.r = light_color.r * color.r / 255;
-			color.g = light_color.g * color.g / 255;
-			color.b = light_color.b * color.b / 255;
 			return (color);
 		}
 		return (t_color){0, 0, 0};

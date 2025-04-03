@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/03 15:52:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/03 16:30:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ typedef struct s_font_directoy
 
 
 
-
 typedef struct s_ttf
 {
 	t_font_directory		ft_dir;
@@ -124,6 +123,37 @@ typedef struct s_ttf
 	t_head				head;
 }	t_ttf;
 
+
+typedef union u_glyph_lag
+{
+	struct
+	{
+		uint8_t	on_curve: 1;
+		uint8_t	x_short: 1;
+		uint8_t	y_short: 1;
+		uint8_t	repeat: 1;
+		uint8_t	x_short_pos: 1;
+		uint8_t	y_short_pos: 1;
+		uint8_t	reserved1: 1;
+		uint8_t	reserved2: 1;
+	};
+	uint8_t	flag;
+}	t_glyph_flag;
+
+typedef struct s_glyph_outline
+{
+	int16_t			number_of_contours;
+	int16_t			xmin;
+	int16_t			ymin;
+	int16_t			xmax;
+	int16_t			ymax;
+	uint16_t		instruction_length;
+	uint8_t			*instructions;
+	t_glyph_flag	*flags;
+	int16_t			*x_coordinates;
+	int16_t			*y_coordinates;
+	uint16_t		*end_pts_of_contours;
+}	t_glyph_outline;
 
 
 

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:07:16 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/03 10:18:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/03 11:41:39 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	read_table_directory(t_bin *bin, size_t *i, t_table_directory **tbl_dir,
 	return (0);
 }
 
-int	read_font_directory(t_bin *bin, t_font_directoy *ft_dir)
+int	read_font_directory(t_bin *bin, t_font_directory *ft_dir, t_ttf *ttf)
 {
 	size_t	i;
 
@@ -69,5 +69,21 @@ int	read_font_directory(t_bin *bin, t_font_directoy *ft_dir)
 	if (read_table_directory(bin, &i, &ft_dir->tbl_dir,
 			ft_dir->off_sub.num_tables) == -1)
 		return (-1);
+	ttf->r_data.glyf_offset = 0;
+	ttf->r_data.loca_offset = 0;
+	ttf->r_data.head_offset = 0;
+	i = -1;
+	while (++i < (size_t)ft_dir->off_sub.num_tables)
+	{
+		if (cmp_tbl_tag("glyf", ft_dir->tbl_dir[i].tag))
+			ttf->r_data.glyf_offset = ft_dir->tbl_dir[i].offset;
+		else if (cmp_tbl_tag("loca", ft_dir->tbl_dir[i].tag))
+			ttf->r_data.loca_offset = ft_dir->tbl_dir[i].offset;
+		else if (cmp_tbl_tag("head", ft_dir->tbl_dir[i].tag))
+			ttf->r_data.head_offset = ft_dir->tbl_dir[i].offset;
+	}
+	if (!ttf->r_data.glyf_offset || !ttf->r_data.loca_offset
+		|| !ttf->r_data.head_offset)
+		return (free_tbl_ret(ft_dir->tbl_dir));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:35:05 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/03 10:30:40 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/03 15:54:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	get_ttf(t_bin *bin, t_ttf *ttf)
 {
-	if (read_font_directory(bin, &ttf->ft_dir) == -1)
+	if (read_font_directory(bin, &ttf->ft_dir, ttf) == -1)
 		return (-1); // MSG: error invalid file format
 	if (FONT_DEBUG)
 		print_table_directory(ttf->ft_dir.tbl_dir, ttf->ft_dir.off_sub.num_tables);
@@ -26,10 +26,12 @@ int	get_ttf(t_bin *bin, t_ttf *ttf)
 		return (-1); // error format4
 	if (FONT_DEBUG)
 		print_format4(ttf->cmap.format4);
+	if (read_head(bin, ttf) == -1)
+		return (-1); // corrupted ?
 	uint16_t i = 'A';
 	while (i <= 'Z')
 	{
-		printf("%c = %d    ", i, get_glyph_index(i, ttf->cmap.format4));
+		printf("%c = %d, %d    ", i, get_glyph_index(i, ttf->cmap.format4), get_glyph_offset(bin, ttf, get_glyph_index(i, ttf->cmap.format4)));
 		i++;
 	}
 	return (0);

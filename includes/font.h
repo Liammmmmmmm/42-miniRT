@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/03 10:24:24 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/03 15:52:07 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,38 @@
 # include <stdio.h>
 
 # define FONT_DEBUG 1
+# define MAGIC_NUMBER 0x5F0F3CF5
+
+typedef struct s_head
+{
+	uint32_t	version;
+	uint32_t	font_revision;
+	uint32_t	check_sum_adjustment;
+	uint32_t	magic_number;
+	uint16_t	flags;
+	uint16_t	units_per_em;
+	int64_t		created;
+	int64_t		modified;
+	int16_t		xmin;
+	int16_t		ymin;
+	int16_t		xmax;
+	int16_t		ymax;
+	uint16_t	mac_style;
+	uint16_t	lowest_rec_ppem;
+	int16_t		font_direction_hint;
+	int16_t		index_to_loc_format;
+	int16_t		glyph_data_format;
+}	t_head;
+
 
 
 typedef struct s_random_font_data
 {
-	uint16_t	cmap_offset;
-	uint16_t	uni_f4_offset;
+	uint32_t	cmap_offset;
+	uint32_t	uni_f4_offset;
+	uint32_t	head_offset;
+	uint32_t	loca_offset;
+	uint32_t	glyf_offset;
  }	t_random_font_data;
 
 
@@ -85,16 +111,17 @@ typedef struct s_font_directoy
 {
 	t_offset_subtable	off_sub;
 	t_table_directory	*tbl_dir;
-}	t_font_directoy;
+}	t_font_directory;
 
 
 
 
 typedef struct s_ttf
 {
-	t_font_directoy		ft_dir;
+	t_font_directory		ft_dir;
 	t_cmap				cmap;
 	t_random_font_data	r_data;
+	t_head				head;
 }	t_ttf;
 
 
@@ -105,13 +132,17 @@ typedef struct s_ttf
 ║                                   PARSING                                    ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-t_table_directory	*get_table_directory(t_font_directoy *ft_dir, char c[4]);
+t_table_directory	*get_table_directory(t_font_directory *ft_dir, char c[4]);
 uint32_t			get_glyph_index(uint16_t code_point, t_format4 *f);
+int					cmp_tbl_tag(char c[4], uint32_t tag);
+uint32_t			get_glyph_offset(t_bin *bin, t_ttf *ttf, uint32_t glyph_index);
 
-int		read_font_directory(t_bin *bin, t_font_directoy *ft_dir);
+int		read_font_directory(t_bin *bin, t_font_directory *ft_dir, t_ttf *ttf);
 int		read_cmap(t_bin *bin, size_t *i, t_cmap *cmap);
 int		get_cmap(t_bin *bin, t_ttf *ttf);
 int		read_format4(t_bin *bin, t_ttf *ttf);
+int		read_head(t_bin *bin, t_ttf *ttf);
+
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    DEBUG                                     ║

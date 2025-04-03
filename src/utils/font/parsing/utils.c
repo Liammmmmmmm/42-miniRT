@@ -6,23 +6,28 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 14:59:09 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/03 10:17:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/03 11:41:39 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "font.h"
 
-t_table_directory	*get_table_directory(t_font_directoy *ft_dir, char c[4])
+int	cmp_tbl_tag(char c[4], uint32_t tag)
+{
+	if (tag == ((uint32_t)(c[0] << 24) | (uint32_t)(c[1] << 16)
+		| (uint32_t)(c[2] << 8) | (uint32_t)c[3]))
+		return (1);
+	return (0);
+}
+
+t_table_directory	*get_table_directory(t_font_directory *ft_dir, char c[4])
 {
 	uint16_t	i;
 
 	i = 0;
 	while (i < ft_dir->off_sub.num_tables)
 	{
-		if (ft_dir->tbl_dir[i].tag_c[0] == c[3]
-			&& ft_dir->tbl_dir[i].tag_c[1] == c[2]
-			&& ft_dir->tbl_dir[i].tag_c[2] == c[1]
-			&& ft_dir->tbl_dir[i].tag_c[3] == c[0])
+		if (cmp_tbl_tag(c, ft_dir->tbl_dir[i].tag))
 			return (&ft_dir->tbl_dir[i]);
 		i++;
 	}

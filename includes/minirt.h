@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/02 09:45:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/03 11:28:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 
 # define PI_10D 3.1415926535
 
-# define WIN_WIDTH 400
-# define WIN_HEIGHT 250
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 
 // Control window
 # define CWIN_WIDTH 300

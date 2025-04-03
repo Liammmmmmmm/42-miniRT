@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 14:35:14 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/02 17:22:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/03 10:20:24 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	read_cmap(t_bin *bin, size_t *i, t_cmap *cmap)
 		return (-1);
 	if (read_uint16_move(bin, i, &cmap->number_subtables) == -1)
 		return (-1);
-	cmap->subtables = ft_calloc(cmap->number_subtables, sizeof(t_cmap_encoding_subtable));
+	cmap->subtables = ft_calloc(cmap->number_subtables,
+			sizeof(t_cmap_encoding_subtable));
 	if (!cmap->subtables)
 		return (-1);
 	y = 0;
@@ -60,7 +61,8 @@ int	font_unicode_format4(t_bin *bin, t_ttf *ttf, uint16_t cmap_offset)
 	if (i == ttf->cmap.number_subtables)
 		return (-1);
 	ttf->r_data.uni_f4_offset = ttf->cmap.subtables[i].offset;
-	if (read_uint16(bin, (size_t)(cmap_offset + ttf->r_data.uni_f4_offset), &i) == -1)
+	if (read_uint16(bin, (size_t)(cmap_offset + ttf->r_data.uni_f4_offset), &i)
+		== -1)
 		return (-1);
 	if (i != 4)
 		return (-1);
@@ -84,7 +86,8 @@ int	get_cmap(t_bin *bin, t_ttf *ttf)
 		return (-1);
 	if (font_unicode_format4(bin, ttf, cmap_tbl->offset) == -1)
 	{
-		printf("Unsupported font format. Only support format4 unicode fonts.\n");
+		printf("Unsupported font format. Only support format4 unicode fonts.\n")
+		;
 		return (-1);
 	}
 	return (1);

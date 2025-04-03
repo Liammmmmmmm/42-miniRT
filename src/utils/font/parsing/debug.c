@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:49:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/02 19:05:27 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/03 10:19:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_table_directory(t_table_directory *tbl_dir, uint16_t tbl_size)
 	while (i < tbl_size)
 	{
 		tbl = tbl_dir + i;
-		printf("%d)\t%c%c%c%c\t%d\t%d\n", i+1, tbl->tag_c[3], tbl->tag_c[2],
+		printf("%d)\t%c%c%c%c\t%d\t%d\n", i + 1, tbl->tag_c[3], tbl->tag_c[2],
 			tbl->tag_c[1], tbl->tag_c[0], tbl->length, tbl->offset);
 		i++;
 	}
@@ -35,9 +35,11 @@ void	print_cmap(t_cmap *c)
 
 	printf("\n#)\tpId\tpsID\toffset\ttype\n");
 	i = 0;
-	while (i < c->number_subtables) {
+	while (i < c->number_subtables)
+	{
 		es = c->subtables + i;
-		printf("%d)\t%d\t%d\t%d\t", i+1, es->platform_id, es->platform_specific_id, es->offset);
+		printf("%d)\t%d\t%d\t%d\t", i + 1, es->platform_id,
+			es->platform_specific_id, es->offset);
 		if (es->platform_id == 0)
 			printf("Unicode");
 		else if (es->platform_id == 1)
@@ -54,14 +56,17 @@ void	print_cmap(t_cmap *c)
 void	print_format4(t_format4 *f4)
 {
 	int	i;
-	
+
 	i = 0;
-	printf("Format: %d, Length: %d, Language: %d, Segment Count: %d\n", f4->format, f4->length, f4->language, f4->seg_count_x2 / 2);
-	printf("Search Params: (searchRange: %d, entrySelector: %d, rangeShift: %d)\n", f4->search_range, f4->entry_selector, f4->range_shift);
+	printf("Format: %d, Length: %d, Language: %d, Segment Count: %d\n",
+		f4->format, f4->length, f4->language, f4->seg_count_x2 / 2);
+	printf("Search Params: (searchRange: %d, entrySelector: %d, rangeShift: %d)"
+		"\n", f4->search_range, f4->entry_selector, f4->range_shift);
 	printf("Segment Ranges:\tstartCode\tendCode\tidDelta\tidRangeOffset\n");
 	while (i < f4->seg_count_x2 / 2)
 	{
-		printf("--------------:\t% 9d\t% 7d\t% 7d\t% 12d\n", f4->start_code[i], f4->end_code[i], f4->id_delta[i], f4->id_range_offset[i]);
+		printf("--------------:\t% 9d\t% 7d\t% 7d\t% 12d\n", f4->start_code[i],
+			f4->end_code[i], f4->id_delta[i], f4->id_range_offset[i]);
 		i++;
 	}
 }

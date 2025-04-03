@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/02 19:14:39 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/03 10:24:24 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct s_ttf
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
 t_table_directory	*get_table_directory(t_font_directoy *ft_dir, char c[4]);
+uint32_t			get_glyph_index(uint16_t code_point, t_format4 *f);
 
 int		read_font_directory(t_bin *bin, t_font_directoy *ft_dir);
 int		read_cmap(t_bin *bin, size_t *i, t_cmap *cmap);

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:37:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/04 13:34:51 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/04 15:03:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	save_bezier_lines(t_glyph_outline *o, int pts_am)
 	int y;
 	int i;
 
+
 	i = 0;
 	while (i < pts_am && !o->flags[i].on_curve)
 		i++;
@@ -64,14 +65,18 @@ void	save_bezier_lines(t_glyph_outline *o, int pts_am)
 				o->bezier_lines[y].p2 = (t_point2){.x = (o->x_coordinates[i + 1] + o->x_coordinates[i + 2]) / 2, (o->y_coordinates[i + 1] + o->y_coordinates[i + 2]) / 2};
 			y++;
 		}
-		else if (!o->flags[i].on_curve && !o->flags[i].on_curve)
+		else if (!o->flags[i].on_curve && !o->flags[i + 1].on_curve)
 		{
 			if (!(i + 2 < pts_am))
 				continue ;
 			o->bezier_lines[y].have_control = 1;
 			o->bezier_lines[y].pc = (t_point2){.x = o->x_coordinates[i], .y = o->y_coordinates[i]};
-			o->bezier_lines[y].p2 = (t_point2){.x = (o->x_coordinates[i + 1] + o->x_coordinates[i + 2]) / 2, (o->y_coordinates[i + 1] + o->y_coordinates[i + 2]) / 2};
-			o->bezier_lines[y].p1 = (t_point2){.x = (o->x_coordinates[i] + o->x_coordinates[i - 1]) / 2, (o->y_coordinates[i] + o->y_coordinates[i - 1]) / 2};
+			if (o->flags[i + 2].on_curve)
+				o->bezier_lines[y].p2 = (t_point2){.x = o->x_coordinates[i + 2], .y = o->y_coordinates[i + 2]};
+			else
+				o->bezier_lines[y].p2 = (t_point2){.x = (o->x_coordinates[i + 1] + o->x_coordinates[i + 2]) / 2, (o->y_coordinates[i + 1] + o->y_coordinates[i + 2]) / 2};
+		
+			o->bezier_lines[y].p1 = (t_point2){.x = (o->x_coordinates[i] + o->x_coordinates[i + 1]) / 2, (o->y_coordinates[i] + o->y_coordinates[i + 1]) / 2};
 			y++;
 		}
 		i++;

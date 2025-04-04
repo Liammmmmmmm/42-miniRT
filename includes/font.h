@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/04 13:20:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/04 14:02:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "libft.h"
 # include <stdio.h>
+
+
 
 # define FONT_DEBUG 1
 # define MAGIC_NUMBER 0x5F0F3CF5
@@ -158,7 +160,7 @@ typedef struct s_glyph_outline
 	int16_t			*y_coordinates;
 	uint16_t		*end_pts_of_contours;
 	t_bezier		*bezier_lines;
-	uint32_t		bezier_amount;
+	int32_t		bezier_amount;
 }	t_glyph_outline;
 
 
@@ -172,6 +174,7 @@ typedef struct s_ttf
 }	t_ttf;
 
 
+int		get_font(t_ttf *ttf, char *filename);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                   PARSING                                    ║
@@ -189,6 +192,9 @@ int		read_format4(t_bin *bin, t_ttf *ttf);
 int		read_head(t_bin *bin, t_ttf *ttf);
 int		get_glyph_outline(t_bin *bin, t_ttf* ttf, uint32_t glyph_index,
 	t_glyph_outline *outline);
+int		init_co_y(t_bin *bin, size_t *i, t_glyph_outline *o, int last_index);
+int		init_co_x(t_bin *bin, size_t *i, t_glyph_outline *o, int last_index);
+int		get_bezier(t_glyph_outline *o, int pts_am);
 
 int		free_glyph(t_glyph_outline *o);
 
@@ -200,6 +206,11 @@ void	print_table_directory(t_table_directory *tbl_dir, uint16_t tbl_size);
 void	print_cmap(t_cmap *c);
 void	print_format4(t_format4 *f4);
 void	print_glyph_outline(t_glyph_outline *outline);
+
+#include "./structs.h"
+
+void	draw_line(t_point *point_a, t_point *point_b, t_img *img);
+void	draw_glyph(t_img *img);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    RENDER                                    ║

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 14:35:14 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/03 10:20:24 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/04 14:00:21 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	read_cmap(t_bin *bin, size_t *i, t_cmap *cmap)
 int	font_unicode_format4(t_bin *bin, t_ttf *ttf, uint16_t cmap_offset)
 {
 	uint16_t	i;
-	size_t		r;
 
 	i = 0;
 	while (i < ttf->cmap.number_subtables)

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:33:29 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/04 12:08:01 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/04 13:42:10 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int	get_glyph_outline(t_bin *bin, t_ttf* ttf, uint32_t glyph_index,
 	if (init_co_x(bin, &i, outline, last_index) == -1)
 		return (free_glyph(outline));
 	if (init_co_y(bin, &i, outline, last_index) == -1)
+		return (free_glyph(outline));
+	if (get_bezier(outline, last_index + 1) == -1)
 		return (free_glyph(outline));
 	return (0);
 }

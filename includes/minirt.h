@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/04 10:24:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/04 14:10:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <string.h>
 # include <errno.h>
 # include <math.h>
+# include "font.h"
 
 # define PI_10D 3.1415926535
 
@@ -29,8 +30,8 @@
 # define WIN_HEIGHT 1080
 
 // Control window
-# define CWIN_WIDTH 1000
-# define CWIN_HEIGHT 1080
+# define CWIN_WIDTH 1500
+# define CWIN_HEIGHT 1500
 
 typedef enum e_mouse_buttons
 {

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 17:23:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/04 14:09:30 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ void	render_buttons(t_minirt *minirt)
 		return ;
 	ft_bzero(minirt->mlx.img_controls.img_str, minirt->mlx.img_controls.width * minirt->mlx.img_controls.height * 4);
 	i = -1;
-	while (++i < minirt->controls.nb_buttons)
-		display_button(&minirt->mlx.img_controls, minirt->controls.buttons[i], minirt->controls.font);
-	i = -1;
-	while (++i < minirt->controls.nb_sliders)
-		display_slider_int(&minirt->mlx.img_controls, minirt->controls.sliders[i]);
+	// while (++i < minirt->controls.nb_buttons)
+	// 	display_button(&minirt->mlx.img_controls, minirt->controls.buttons[i], minirt->controls.font);
+	// i = -1;
+	// while (++i < minirt->controls.nb_sliders)
+	// 	display_slider_int(&minirt->mlx.img_controls, minirt->controls.sliders[i]);
+
+	draw_glyph(&minirt->mlx.img_controls);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.controls_win, minirt->mlx.img_controls.img, 0, 0);
 }
 

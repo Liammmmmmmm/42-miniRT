@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:49:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/04 14:02:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/04 15:30:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,6 @@ void	print_glyph_outline(t_glyph_outline *outline)
 		if (outline->bezier_lines[i].have_control)
 			printf("%d) (%.1f,%.1f - %.1f,%.1f) + control %.1f,%.1f\n", i, outline->bezier_lines[i].p1.x, outline->bezier_lines[i].p1.y, outline->bezier_lines[i].p2.x, outline->bezier_lines[i].p2.y, outline->bezier_lines[i].pc.x, outline->bezier_lines[i].pc.y);
 		else
-		printf("%d) (%.1f,%.1f - %.1f,%.1f)\n", i, outline->bezier_lines[i].p1.x, outline->bezier_lines[i].p1.y, outline->bezier_lines[i].p2.x, outline->bezier_lines[i].p2.y);
+			printf("%d) (%.1f,%.1f - %.1f,%.1f)\n", i, outline->bezier_lines[i].p1.x, outline->bezier_lines[i].p1.y, outline->bezier_lines[i].p2.x, outline->bezier_lines[i].p2.y);
 	}
 }

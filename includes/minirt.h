@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/03 11:28:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/04 10:24:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define WIN_HEIGHT 1080
 
 // Control window
-# define CWIN_WIDTH 300
+# define CWIN_WIDTH 1000
 # define CWIN_HEIGHT 1080
 
 typedef enum e_mouse_buttons

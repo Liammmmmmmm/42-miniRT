@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/26 17:26:03 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/04/04 11:13:14 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,6 +92,15 @@ PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
 					parse_elements2.c parse_elements3.c parse_elements_utils.c \
 					parse_elements_utils2.c parse_elements_utils3.c parse_elements_utils4.c
 
+FONT_PARS_DIR		= src/utils/font/parsing/
+FONT_PARS_FILE		= debug.c free.c get_glyph_outline.c parse_ttf.c read_cmap.c \
+					read_font_directory.c read_format4.c read_glyph.c read_head.c \
+					read_loca.c utils.c
+
+FONT_REND_DIR		= src/utils/font/rendering/
+FONT_REND_FILE		= get_points.c
+
+
 M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
 			$(addprefix $(DEBUG_DIR), $(DEBUG_FILE)) \
@@ -101,7 +110,9 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(MATH_DIR), $(MATH_FILE)) \
 			$(addprefix $(UTILS_MLX_DIR), $(UTILS_MLX_FILE)) \
 			$(addprefix $(CONTROLS_DIR), $(CONTROLS_FILE)) \
-			$(addprefix $(PARSING_DIR), $(PARSING_FILE))
+			$(addprefix $(PARSING_DIR), $(PARSING_FILE)) \
+			$(addprefix $(FONT_PARS_DIR), $(FONT_PARS_FILE)) \
+			$(addprefix $(FONT_REND_DIR), $(FONT_REND_FILE))
 
 # Source files bonus
 SRCS_BONUS = 

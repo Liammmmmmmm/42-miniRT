@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/03 16:30:44 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/04 13:20:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,20 @@
 
 # define FONT_DEBUG 1
 # define MAGIC_NUMBER 0x5F0F3CF5
+
+typedef struct s_point2
+{
+	float	x; 
+	float	y;
+}	t_point2;
+
+typedef struct s_bezier
+{
+	t_point2	p1; 
+	t_point2	p2;
+	t_bool		have_control;
+	t_point2	pc;
+}	t_bezier;
 
 typedef struct s_head
 {
@@ -114,16 +128,6 @@ typedef struct s_font_directoy
 }	t_font_directory;
 
 
-
-typedef struct s_ttf
-{
-	t_font_directory		ft_dir;
-	t_cmap				cmap;
-	t_random_font_data	r_data;
-	t_head				head;
-}	t_ttf;
-
-
 typedef union u_glyph_lag
 {
 	struct
@@ -153,8 +157,19 @@ typedef struct s_glyph_outline
 	int16_t			*x_coordinates;
 	int16_t			*y_coordinates;
 	uint16_t		*end_pts_of_contours;
+	t_bezier		*bezier_lines;
+	uint32_t		bezier_amount;
 }	t_glyph_outline;
 
+
+typedef struct s_ttf
+{
+	t_font_directory		ft_dir;
+	t_cmap				cmap;
+	t_random_font_data	r_data;
+	t_head				head;
+	t_glyph_outline		outline;
+}	t_ttf;
 
 
 
@@ -172,7 +187,10 @@ int		read_cmap(t_bin *bin, size_t *i, t_cmap *cmap);
 int		get_cmap(t_bin *bin, t_ttf *ttf);
 int		read_format4(t_bin *bin, t_ttf *ttf);
 int		read_head(t_bin *bin, t_ttf *ttf);
+int		get_glyph_outline(t_bin *bin, t_ttf* ttf, uint32_t glyph_index,
+	t_glyph_outline *outline);
 
+int		free_glyph(t_glyph_outline *o);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    DEBUG                                     ║
@@ -181,5 +199,12 @@ int		read_head(t_bin *bin, t_ttf *ttf);
 void	print_table_directory(t_table_directory *tbl_dir, uint16_t tbl_size);
 void	print_cmap(t_cmap *c);
 void	print_format4(t_format4 *f4);
+void	print_glyph_outline(t_glyph_outline *outline);
+
+/*═════════════════════════════════════════════════════════════════════════════╗
+║                                    RENDER                                    ║
+╚═════════════════════════════════════════════════════════════════════════════*/
+
+
 
 #endif

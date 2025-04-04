@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:49:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/04 10:08:17 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/04 12:00:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,21 @@ void	print_glyph_outline(t_glyph_outline *outline)
 	last_index = outline->end_pts_of_contours[outline->number_of_contours - 1];
 	i = -1;
 	while (++i <= last_index)
-		printf("%d)\t(%5d,%5d)\n", i, outline->x_coordinates[i], outline->y_coordinates[i]);
+		printf("%d)\t(%5d,%5d) -> on curve: %d\n", i, outline->x_coordinates[i], outline->y_coordinates[i], outline->flags[i].on_curve);
 	i = -1;
 	while (++i <= last_index)
 	{
+		if (i + 'A' <= 'Z')
+			printf("%c=(%d,%d)\n", 'A' + i, outline->x_coordinates[i], outline->y_coordinates[i]);
+		else
+			printf("%c=(%d,%d)\n", 'a' - 26 + i, outline->x_coordinates[i], outline->y_coordinates[i]);
+	}
+	printf("\nOn curve only\n");
+	i = -1;
+	while (++i <= last_index)
+	{
+		if (!outline->flags[i].on_curve)
+			continue ;
 		if (i + 'A' <= 'Z')
 			printf("%c=(%d,%d)\n", 'A' + i, outline->x_coordinates[i], outline->y_coordinates[i]);
 		else

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:49:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/03 10:19:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/04 10:08:17 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,29 @@ void	print_format4(t_format4 *f4)
 		printf("--------------:\t% 9d\t% 7d\t% 7d\t% 12d\n", f4->start_code[i],
 			f4->end_code[i], f4->id_delta[i], f4->id_range_offset[i]);
 		i++;
+	}
+}
+
+void	print_glyph_outline(t_glyph_outline *outline)
+{
+	int	last_index;
+	int	i;
+
+	printf("#contours\t(xMin,yMin)\t(xMax,yMax)\tinst_length\n");
+	printf("%9d\t(%d,%d)\t\t(%d,%d)\t%d\n", outline->number_of_contours,
+		outline->xmin, outline->ymin, outline->xmax, outline->ymax,
+		outline->instruction_length);
+	printf("#)\t(  x  ,  y  )\n");
+	last_index = outline->end_pts_of_contours[outline->number_of_contours - 1];
+	i = -1;
+	while (++i <= last_index)
+		printf("%d)\t(%5d,%5d)\n", i, outline->x_coordinates[i], outline->y_coordinates[i]);
+	i = -1;
+	while (++i <= last_index)
+	{
+		if (i + 'A' <= 'Z')
+			printf("%c=(%d,%d)\n", 'A' + i, outline->x_coordinates[i], outline->y_coordinates[i]);
+		else
+			printf("%c=(%d,%d)\n", 'a' - 26 + i, outline->x_coordinates[i], outline->y_coordinates[i]);
 	}
 }

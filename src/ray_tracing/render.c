@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/02 19:26:29 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:36:02 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	is_hit_before_target(t_minirt *minirt, t_vec3 origin, t_vec3 target)
 	return (0);
 }
 
-t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt)
+double	compute_light(t_hit_record *hit_record, t_minirt *minirt)
 {
 	t_lcolor	light_color;
 	t_vec3		light_dir;
@@ -70,7 +70,9 @@ t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt)
 	int			count;
 
 	light_intensity = minirt->scene.amb_light.ratio;
-	light_color = (t_lcolor){minirt->scene.amb_light.color.r * light_intensity, minirt->scene.amb_light.color.g * light_intensity, minirt->scene.amb_light.color.b * light_intensity};
+	light_color = (t_lcolor){0, 0, 0};
+	// light_intensity = minirt->scene.amb_light.ratio;
+	// light_color = (t_lcolor){minirt->scene.amb_light.color.r * light_intensity, minirt->scene.amb_light.color.g * light_intensity, minirt->scene.amb_light.color.b * light_intensity};
 	i = 0;
 	count = 1;
 	while (i < minirt->scene.el_amount)
@@ -85,32 +87,25 @@ t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt)
 				continue ;
 			}
 			n_dot_l = vec3_dot(hit_record->normal, light_dir);
-			if (n_dot_l > 0)
+			if (n_dot_l > 0.0)
 			{
-				light_color.r += light->color.r * (light->brightness * n_dot_l);
-				light_color.g += light->color.g * (light->brightness * n_dot_l);
-				light_color.b += light->color.b * (light->brightness * n_dot_l);
 				light_intensity += (light->brightness * n_dot_l);
 				count++;
 			}
 		}
 		i++;
 	}
-	if (light_intensity == 0)
-		return ((t_color){0, 0, 0});
-	return ((t_color){light_color.r / light_intensity, light_color.g / light_intensity, light_color.b / light_intensity});
+	return (fmin(light_intensity, 1.0));
 }
 
 t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 {
 	t_color			color;
-	t_color			attenuation;
+	// t_color			attenuation;
 	t_hit_record	hit_record;
-	t_color			bounce_color;
+	// t_color			bounce_color;
 	t_color			amb;
-	t_color			light_color;
-	t_ray			scatted;
-	float			ratio;
+	double			ratio;
 
 	if (depth <= 0)
 		return (t_color){0, 0, 0};
@@ -122,18 +117,14 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 	color.b *= minirt->scene.amb_light.ratio;
 	if (hit_register(minirt, ray, &hit_record) == 1)
 	{
-		if (calc_ray_reflection(hit_record, ray, &scatted, &attenuation, minirt))
-		{
-			bounce_color = ray_color(minirt, scatted, depth - 1);
-			light_color = compute_light(&hit_record, minirt);
-			color.r = bounce_color.r * attenuation.r / 255;
-			color.g = bounce_color.g * attenuation.g / 255;
-			color.b = bounce_color.b * attenuation.b / 255;
-			return (color);
-		}
-		return (t_color){0, 0, 0};
+		// bounce_color = ray_color(minirt, scatted, depth - 1);
+		ratio = compute_light(&hit_record, minirt);
+		color.r = ratio * hit_record.color.r;
+		color.g = ratio * hit_record.color.g;
+		color.b = ratio * hit_record.color.b;
+		return (color);
 	}
-	return (color);
+	return (t_color){0, 0, 0};
 }
 
 t_vec3	sample_square()

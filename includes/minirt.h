@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 15:06:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 19:46:08 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <string.h>
 # include <errno.h>
 # include <math.h>
-# include "font.h"
 
 # define PI_10D 3.1415926535
 
@@ -103,6 +102,8 @@ typedef enum e_keys
 # define ERR_F "Invalid format for"
 
 int		print_error(char *err);
+
+int		init_ui(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    UTILS                                     ║

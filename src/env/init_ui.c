@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_glyph.c                                       :+:      :+:    :+:   */
+/*   init_ui.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 16:33:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 19:49:55 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/04/08 19:34:55 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/04/08 19:49:37 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "font.h"
+#include "minirt.h"
 
-int	save_glyph256(t_bin *bin, t_ttf *ttf)
+int	init_ui(t_minirt *minirt)
 {
-	int	i;
-
-	ttf->glyph256 = ft_calloc(256, sizeof(t_glyph_outline));
-	if (!ttf->glyph256)
-		return (-1);
-	i = 0;
-	while (i < 256)
-	{
-		if (get_glyph_outline(bin, ttf, get_glyph_index(i, ttf->cmap.format4),
-				&ttf->glyph256[i]) == -1)
-			return (free_glyphs(ttf->glyph256, i));
-		i++;
-	}
-	return (0);
+	if (get_font(&minirt->controls.font[0],
+		"assets/fonts/falling_sky_medium.ttf") == -1)
+		return (0);
+	return (1);
 }

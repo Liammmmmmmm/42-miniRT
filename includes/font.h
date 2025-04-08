@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 15:04:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 19:50:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ typedef struct s_ttf
 	t_cmap				cmap;
 	t_random_font_data	r_data;
 	t_head				head;
-	t_glyph_outline		outline;
+	t_glyph_outline		*glyph256;
 }	t_ttf;
 
 
@@ -196,7 +196,13 @@ int		init_co_y(t_bin *bin, size_t *i, t_glyph_outline *o, int last_index);
 int		init_co_x(t_bin *bin, size_t *i, t_glyph_outline *o, int last_index);
 int		get_bezier(t_glyph_outline *o, int pts_am);
 
+int		save_glyph256(t_bin *bin, t_ttf *ttf);
+int		free_glyphs(t_glyph_outline *glyphs, int i);
 int		free_glyph(t_glyph_outline *o);
+
+int		print_err_ttf(char *str);
+
+int		free_ttf(t_ttf *ttf);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    DEBUG                                     ║
@@ -210,7 +216,7 @@ void	print_glyph_outline(t_glyph_outline *outline);
 #include "./structs.h"
 
 void	draw_line(t_point *point_a, t_point *point_b, t_img *img);
-void	draw_glyph(t_img *img);
+void	draw_glyph(t_img *img, t_ttf *ttf, t_uchar c);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    RENDER                                    ║

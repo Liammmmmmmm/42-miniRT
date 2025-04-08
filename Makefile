@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/04 14:01:19 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/04/08 19:53:49 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,10 @@ RAY_TRACING_DIR		= src/ray_tracing/
 RAY_TRACING_FILE	= render.c hit_register.c random.c material_reflection.c
 
 RENDERING_DIR		= src/rendering/
-RENDERING_FILE		= init.c init_controls.c pixel.c loop.c
+RENDERING_FILE		= pixel.c loop.c
+
+ENV_DIR				= src/env/
+ENV_FILE			= init_mlx.c init_controls.c init_ui.c
 
 MATH_DIR			= src/math/
 MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/vec3_length.c \
@@ -112,7 +115,8 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(CONTROLS_DIR), $(CONTROLS_FILE)) \
 			$(addprefix $(PARSING_DIR), $(PARSING_FILE)) \
 			$(addprefix $(FONT_PARS_DIR), $(FONT_PARS_FILE)) \
-			$(addprefix $(FONT_REND_DIR), $(FONT_REND_FILE))
+			$(addprefix $(FONT_REND_DIR), $(FONT_REND_FILE)) \
+			$(addprefix $(ENV_DIR), $(ENV_FILE))
 
 # Source files bonus
 SRCS_BONUS = 

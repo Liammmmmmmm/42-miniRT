@@ -6,30 +6,26 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:53:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 17:02:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 19:33:56 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "font.h"
 
-void	draw_glyph(t_img *img)
+void	draw_glyph(t_img *img, t_ttf *ttf, t_uchar c)
 {
-	t_ttf	ttf;
-
-	get_font(&ttf, "test2.ttf");
-
-
 	int i = 0;
-	while (i < ttf.outline.bezier_amount)
+
+	while (i < ttf->glyph256[c].bezier_amount)
 	{
-		if (ttf.outline.bezier_lines[i].have_control == 0)
+		if (ttf->glyph256[c].bezier_lines[i].have_control == 0)
 		{
 			t_point p1;
-			p1.x = ttf.outline.bezier_lines[i].p1.x;
-			p1.y = ttf.outline.bezier_lines[i].p1.y;
+			p1.x = ttf->glyph256[c].bezier_lines[i].p1.x;
+			p1.y = ttf->glyph256[c].bezier_lines[i].p1.y;
 			t_point p2;
-			p2.x = ttf.outline.bezier_lines[i].p2.x;
-			p2.y = ttf.outline.bezier_lines[i].p2.y;
+			p2.x = ttf->glyph256[c].bezier_lines[i].p2.x;
+			p2.y = ttf->glyph256[c].bezier_lines[i].p2.y;
 			draw_line(&p1, &p2, img);
 		}
 		else
@@ -37,7 +33,7 @@ void	draw_glyph(t_img *img)
 			uint32_t size = 10;
 			t_point2 points[size];
 			uint32_t y = 0;
-			tessellate_bezier(points, &size, &ttf.outline.bezier_lines[i]);
+			tessellate_bezier(points, &size, &ttf->glyph256[c].bezier_lines[i]);
 			while (y < size - 1)
 			{
 				t_point p1;
@@ -50,8 +46,6 @@ void	draw_glyph(t_img *img)
 				y++;
 			}
 		}
-		
-		printf("JDRAW LA LINE\n");
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:35:05 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 17:03:55 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 19:20:18 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,40 +15,38 @@
 int	get_ttf(t_bin *bin, t_ttf *ttf)
 {
 	if (read_font_directory(bin, &ttf->ft_dir, ttf) == -1)
-		return (-1); // MSG: error invalid file format
-	if (FONT_DEBUG)
-		print_table_directory(ttf->ft_dir.tbl_dir, ttf->ft_dir.off_sub.num_tables);
+		return (print_err_ttf("Error reading font directory. Is it really a ttf"
+			" file ?"));
 	if (get_cmap(bin, ttf) == -1)
-		return (-1); // MSG: invalid cmap table
-	if (FONT_DEBUG)
-		print_cmap(&ttf->cmap);
+		return (free_ttf(ttf));
 	if (read_format4(bin, ttf) == -1)
-		return (-1); // error format4
-	if (FONT_DEBUG)
-		print_format4(ttf->cmap.format4);
+	{
+		free_ttf(ttf);
+		return (print_err_ttf("Error reading font format4. It may not be "
+			"compatible."));
+	}
 	if (read_head(bin, ttf) == -1)
-		return (-1); // corrupted ?
-	// uint16_t i = 'A';
-	// while (i <= 'Z')
-	// {
-	// 	printf("%c = %d, %d    ", i, get_glyph_index(i, ttf->cmap.format4), get_glyph_offset(bin, ttf, get_glyph_index(i, ttf->cmap.format4)));
-	// 	i++;
-	// }
-	static unsigned char c = 33;
-	get_glyph_outline(bin, ttf, get_glyph_index(128, ttf->cmap.format4), &ttf->outline);
-	c++;
-	print_glyph_outline(&ttf->outline);
+	{
+		free_ttf(ttf);
+		return (print_err_ttf("Error reading font file (corrupted file)."));
+	}
+	if (save_glyph256(bin, ttf) == -1)
+	{
+		free_ttf(ttf);
+		return (print_err_ttf("Error reading font file (malloc failed)."));
+	}
 	return (0);
 }
 
 int	get_font(t_ttf *ttf, char *filename)
 {
-	t_bin bin;
+	t_bin	bin;
+	int		ttf_res;
 
 	if (!read_bin_file(&bin, filename))
-		return (-1); // MSG: cant read font file
-	if (get_ttf(&bin, ttf) == -1)
-		return (-1);
+		return (print_err_ttf("Error reading font file."));
+	ft_bzero(&ttf, sizeof(t_ttf));
+	ttf_res = get_ttf(&bin, ttf);
 	free(bin.data);
-	return (0);
+	return (ttf_res);
 }

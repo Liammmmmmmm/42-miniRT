@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:01:31 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 11:06:39 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 19:48:56 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ void	init_font(t_minirt *m)
 
 	pt_one = get_font_part_one();
 	pt_two = get_font_part_two();
-	ft_memcpy(m->controls.font, pt_one, 48 * 5 * sizeof(t_uchar));
-	ft_memcpy(&m->controls.font[48], pt_two, 48 * 5 * sizeof(t_uchar));
+	ft_memcpy(m->controls.font8b, pt_one, 48 * 5 * sizeof(t_uchar));
+	ft_memcpy(&m->controls.font8b[48], pt_two, 48 * 5 * sizeof(t_uchar));
 }

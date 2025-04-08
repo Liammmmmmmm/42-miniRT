@@ -6,11 +6,17 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 14:59:09 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 14:08:36 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 18:56:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "font.h"
+
+int	print_err_ttf(char *str)
+{
+	ft_dprintf(2, RED"[Error]"NC" %s\n", str);
+	return (-1);
+}
 
 int	cmp_tbl_tag(char c[4], uint32_t tag)
 {

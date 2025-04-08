@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/30 15:38:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 19:46:39 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include "mlx_base.h"
 # include "mlx_components.h"
+# include "font.h"
 
 typedef struct s_lcolor
 {
@@ -255,7 +256,7 @@ typedef struct s_controls
 	t_uint			mlyc;
 	t_uint			mlxr;
 	t_uint			mlyr;
-	t_uchar			font[96][5];
+	t_uchar			font8b[96][5];
 	int				open_controls;
 	int				nb_buttons;
 	int				btn_clicked;
@@ -263,7 +264,7 @@ typedef struct s_controls
 	t_edited_val	values;
 	int				nb_sliders;
 	t_int_slider	*sliders;
-	
+	t_ttf			font[1];
 }	t_controls;
 
 typedef struct s_minirt

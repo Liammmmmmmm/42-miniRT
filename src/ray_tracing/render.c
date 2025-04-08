@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/04 17:13:56 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/08 15:45:29 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,29 @@ char	is_hit_before_target(t_minirt *minirt, t_vec3 origin, t_vec3 target)
 	return (0);
 }
 
-t_lcolor compute_light(t_hit_record *hit_record, t_minirt *minirt)
+t_vec3 vec3_reflect(t_vec3 v, t_vec3 normal)
+{
+	return vec3_subtract(v, vec3_multiply_scalar(normal, 2.0 * vec3_dot(v, normal)));
+}
+
+t_color compute_light(t_hit_record *hit_record, t_minirt *minirt)
 {
 	t_lcolor	light_color;
 	t_vec3		light_dir;
+	t_vec3		view_dir;
+	t_vec3		reflect_dir;
 	t_light		*light;
+	double		spec;
 	double		n_dot_l;
+	double		r_dot_v;
+	double		specular_strength = 1;
+	double		shine = 64.0;
 	int			i;
 
 	light_color.r = minirt->scene.amb_light.color.r * minirt->scene.amb_light.ratio;
 	light_color.g = minirt->scene.amb_light.color.g * minirt->scene.amb_light.ratio;
 	light_color.b = minirt->scene.amb_light.color.b * minirt->scene.amb_light.ratio;
+	view_dir = vec3_unit(vec3_subtract(minirt->scene.camera.position, hit_record->point));
 	i = 0;
 	while (i < minirt->scene.el_amount)
 	{
@@ -82,12 +94,25 @@ t_lcolor compute_light(t_hit_record *hit_record, t_minirt *minirt)
 				i++;
 				continue;
 			}
+			// diffuse
 			n_dot_l = vec3_dot(hit_record->normal, light_dir);
 			if (n_dot_l > 0.0)
 			{
+				// speculaire
+				reflect_dir = vec3_reflect(vec3_negate(light_dir), hit_record->normal);
+				r_dot_v = vec3_dot(reflect_dir, view_dir);
+				if (r_dot_v < 0.0) r_dot_v = 0.0;
+				spec = pow(r_dot_v, shine);
+
+				// diffuse
 				light_color.r += light->color.r * light->brightness * n_dot_l;
 				light_color.g += light->color.g * light->brightness * n_dot_l;
 				light_color.b += light->color.b * light->brightness * n_dot_l;
+				
+				// speculaire
+				light_color.r += light->color.r * light->brightness * specular_strength * spec;
+				light_color.g += light->color.g * light->brightness * specular_strength * spec;
+				light_color.b += light->color.b * light->brightness * specular_strength * spec;
 			}
 		}
 		i++;
@@ -95,30 +120,44 @@ t_lcolor compute_light(t_hit_record *hit_record, t_minirt *minirt)
 	if (light_color.r > 255.0) light_color.r = 255.0;
 	if (light_color.g > 255.0) light_color.g = 255.0;
 	if (light_color.b > 255.0) light_color.b = 255.0;
-	return (light_color);
+	return ((t_color){light_color.r, light_color.g, light_color.b});
 }
+
 
 
 t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 {
 	t_color			color;
-	// t_color			attenuation;
+	t_color			background;
 	t_hit_record	hit_record;
-	// t_color			bounce_color;
-	t_lcolor			ratio;
+	t_color			final_color;
+	t_color			light_color;
+	double			a;
 
 	if (depth <= 0)
 		return (t_color){0, 0, 0};
+	a = 0.5 * (ray.dir.y + 1);
+	if (a > 1)
+		a = 1;
+	if (a < 0)
+		a = 0;
+	background.r = (1 - a) * 255 + a * 128;
+	background.g = (1 - a) * 255 + a * 178;
+	background.b = (1 - a) * 255 + a * 255;
 	if (hit_register(minirt, ray, &hit_record) == 1)
 	{
-		// bounce_color = ray_color(minirt, scatted, depth - 1);
-		ratio = compute_light(&hit_record, minirt);
-		color.r = ratio.r * hit_record.color.r / 255;
-		color.g = ratio.g * hit_record.color.g / 255;
-		color.b = ratio.b * hit_record.color.b / 255;
-		return (color);
+		light_color = compute_light(&hit_record, minirt);
+		if (hit_record.mat)
+			color = hit_record.mat->color_value;
+		else
+			color = hit_record.color;
+		color.r = light_color.r * color.r / 255;
+		color.g = light_color.g * color.g / 255;
+		color.b = light_color.b * color.b / 255;
+		final_color = calc_ray_reflection(hit_record, minirt, ray, color, depth);
+		return (final_color);
 	}
-	return (t_color){0, 0, 0};
+	return ((t_color){0, 0, 0});
 }
 
 t_vec3	sample_square()
@@ -136,6 +175,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 	t_color color;
 
 	i = 0;
+	printf("%f|%f\n", offset.x, offset.y);
 	tpix = minirt->mlx.img.width * minirt->mlx.img.height;
 	while (i < tpix)
 	{

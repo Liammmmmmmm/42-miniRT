@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/26 13:58:59 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:24:33 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ t_vec3	vec3_cross(const t_vec3 u, const t_vec3 v);
 t_vec3	vec3_unit(const t_vec3 v);
 t_vec3	vec3_negate(const t_vec3 v);
 t_vec3	vec3_init(double x, double y, double z);
+
+double	ft_dmin(double a, double b);
+
+t_color	color_add(t_color c1, t_color c2);
+t_color	color_scale(t_color c1, double ratio);
+t_color	color_multiply(t_color c1, t_color c2);
 
 char hit_sphere(t_sphere sphere, t_ray *r, \
 	t_interval interval, t_hit_record *rec);

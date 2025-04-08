@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/26 17:26:03 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/04/08 14:32:14 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,7 @@ RENDERING_FILE		= init.c init_controls.c pixel.c loop.c
 
 MATH_DIR			= src/math/
 MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/vec3_length.c \
-					vector/vec3_utils.c normal/normal.c\
+					vector/vec3_utils.c normal/normal.c color/color_operation.c ft_dmin.c\
 					plane/hit_plane.c sphere/hit_sphere.c
 
 PARSING_DIR			= src/parsing/

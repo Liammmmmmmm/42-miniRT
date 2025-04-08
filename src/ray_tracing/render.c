@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 16:58:01 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:54:51 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,12 +125,11 @@ t_color compute_light(t_hit_record *hit_record, t_minirt *minirt)
 
 
 
-t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
+t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit)
 {
 	t_color			color;
 	t_color			background;
 	t_hit_record	hit_record;
-	t_color			final_color;
 	t_color			light_color;
 	double			a;
 
@@ -151,13 +150,13 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 			color = hit_record.mat->color_value;
 		else
 			color = hit_record.color;
-		color.r = light_color.r * color.r / 255;
-		color.g = light_color.g * color.g / 255;
-		color.b = light_color.b * color.b / 255;
-		final_color = calc_ray_reflection(hit_record, minirt, ray, color, depth);
-		return (final_color);
+		color = color_multiply(color, light_color);
+		color = calc_ray_reflection(hit_record, minirt, ray, color, depth);
+		*hit = 1;
+		return (color);
 	}
-	return (background);
+	*hit = 0;
+	return (color_scale(background, minirt->scene.amb_light.ratio));
 }
 
 t_vec3	sample_square()
@@ -173,9 +172,9 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 	t_uint	i;
 	t_ray	ray;
 	t_color color;
+	char		bounce_hit;
 
 	i = 0;
-	printf("%f|%f\n", offset.x, offset.y);
 	tpix = minirt->mlx.img.width * minirt->mlx.img.height;
 	while (i < tpix)
 	{
@@ -193,7 +192,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 			), 
 			ray.orig
 		);
-		color = ray_color(minirt, ray, 10);
+		color = ray_color(minirt, ray, 10, &bounce_hit);
 		minirt->screen.render[i].color.r += color.r * minirt->viewport.gamma;
 		minirt->screen.render[i].color.g += color.g * minirt->viewport.gamma;
 		minirt->screen.render[i].color.b += color.b * minirt->viewport.gamma;

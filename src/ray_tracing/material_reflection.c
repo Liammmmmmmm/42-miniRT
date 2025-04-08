@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:04:00 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/08 16:49:25 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:50:56 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ t_color	mix_mat(t_hit_record hit_record, t_ray ray_in, t_minirt *minirt, t_color
 	double		sin_theta;
 	double		refract_bend;
 	t_ray		ray;
-	// t_color		color;
-	// t_lcolor	tmp;
+	char		bounce_hit;
 	t_color		bounce_color;
 	t_vec3		direction;
 
@@ -74,7 +73,7 @@ t_color	mix_mat(t_hit_record hit_record, t_ray ray_in, t_minirt *minirt, t_color
 			direction = vec3_add(vec3_unit(direction), vec3_multiply_scalar(random_vec3_unit(), hit_record.mat->roughness_value));
 		ray.dir = direction;
 		ray.orig = hit_record.point;
-		bounce_color = ray_color(minirt, ray, depth - 1);
+		bounce_color = ray_color(minirt, ray, depth - 1, &bounce_hit);
 		bounce_color = color_scale(bounce_color, hit_record.mat->metallic_value);
 		color = color_scale(color, 1 - hit_record.mat->metallic_value);
 		color = color_add(color, bounce_color);
@@ -93,7 +92,7 @@ t_color	mix_mat(t_hit_record hit_record, t_ray ray_in, t_minirt *minirt, t_color
 			direction = vec3_add(vec3_unit(direction), vec3_multiply_scalar(random_vec3_unit(), hit_record.mat->roughness_value));
 		ray.dir = direction;
 		ray.orig = hit_record.point;
-		bounce_color = ray_color(minirt, ray, depth - 1);
+		bounce_color = ray_color(minirt, ray, depth - 1, &bounce_hit);
 		refract_bend = fresnel_schlick(cos_theta, etai_over_etat);
 		bounce_color = color_scale(bounce_color, 1-refract_bend);
 		color = color_scale(color, refract_bend);
@@ -106,19 +105,10 @@ t_color	mix_mat(t_hit_record hit_record, t_ray ray_in, t_minirt *minirt, t_color
 			direction = hit_record.normal;
 		ray.dir = direction;
 		ray.orig = hit_record.point;	
-		bounce_color = ray_color(minirt, ray, depth - 1);
-		color = color_multiply(hit_record.color, bounce_color);
+		bounce_color = ray_color(minirt, ray, depth - 1, &bounce_hit);
+		if (bounce_hit)
+			color = color_multiply(color, bounce_color);
 	}
-	// else
-	// {
-	// 	direction = vec3_add(hit_record.normal, random_vec3_unit());
-	// 	if (fabs(direction.x) < 1e-8 && fabs(direction.y) < 1e-8 && fabs(direction.z) < 1e-8)
-	// 		direction = hit_record.normal;
-	// }
-	// if (material.roughness_value > 0.0)
-	// 	direction = vec3_add(vec3_unit(direction), vec3_multiply_scalar(random_vec3_unit(), material.roughness_value));
-	// scattered->orig = hit_record.point;
-	// scattered->dir = direction;
 	return (color);
 }
 
@@ -126,6 +116,7 @@ t_color	default_texture(t_hit_record hit_record, t_color color, int depth, t_min
 {
 	t_vec3	direction;
 	t_ray	ray;
+	char	bounce_hit;
 	t_color	bounce_color;
 
 	direction = vec3_add(hit_record.normal, random_vec3_unit());
@@ -133,8 +124,9 @@ t_color	default_texture(t_hit_record hit_record, t_color color, int depth, t_min
 		direction = hit_record.normal;
 	ray.dir = direction;
 	ray.orig = hit_record.point;
-	bounce_color = ray_color(minirt, ray, depth - 1);
-	color = color_multiply(color, bounce_color);
+	bounce_color = ray_color(minirt, ray, depth - 1, &bounce_hit);
+	if (bounce_hit)
+		color = color_multiply(color, bounce_color);
 	return (color);
 }
 

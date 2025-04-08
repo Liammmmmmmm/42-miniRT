@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:10:05 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 14:41:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 15:10:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ typedef struct s_color
  */
 typedef struct s_point
 {
-	int		x;		/* X-coordinate of the point on the screen. */
-	int		y;		/* Y-coordinate of the point on the screen. */
-	double	z;		/* Depth of the point. */
-	int		color;	/* Color of the point. */
+	int32_t	x;		/* X-coordinate of the point on the screen. */
+	int32_t	y;		/* Y-coordinate of the point on the screen. */
+	double		z;		/* Depth of the point. */
+	int			color;	/* Color of the point. */
 }	t_point;
 
 #endif

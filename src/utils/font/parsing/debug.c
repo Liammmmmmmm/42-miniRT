@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:49:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/04 15:30:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 15:04:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	print_format4(t_format4 *f4)
 	while (i < f4->seg_count_x2 / 2)
 	{
 		printf("--------------:\t% 9d\t% 7d\t% 7d\t% 12d\n", f4->start_code[i],
-			f4->end_code[i], f4->id_delta[i], f4->id_range_offset[i]);
+			f4->end_code[i], (int16_t)f4->id_delta[i], f4->id_range_offset[i]);
 		i++;
 	}
 }
@@ -109,8 +109,8 @@ void	print_glyph_outline(t_glyph_outline *outline)
 	while (++i < outline->bezier_amount)
 	{
 		if (outline->bezier_lines[i].have_control)
-			printf("%d) (%.1f,%.1f - %.1f,%.1f) + control %.1f,%.1f\n", i, outline->bezier_lines[i].p1.x, outline->bezier_lines[i].p1.y, outline->bezier_lines[i].p2.x, outline->bezier_lines[i].p2.y, outline->bezier_lines[i].pc.x, outline->bezier_lines[i].pc.y);
+			printf("%d) (%d,%d - %d,%d) + control %d,%d\n", i, outline->bezier_lines[i].p1.x, outline->bezier_lines[i].p1.y, outline->bezier_lines[i].p2.x, outline->bezier_lines[i].p2.y, outline->bezier_lines[i].pc.x, outline->bezier_lines[i].pc.y);
 		else
-			printf("%d) (%.1f,%.1f - %.1f,%.1f)\n", i, outline->bezier_lines[i].p1.x, outline->bezier_lines[i].p1.y, outline->bezier_lines[i].p2.x, outline->bezier_lines[i].p2.y);
+			printf("%d) (%d,%d - %d,%d)\n", i, outline->bezier_lines[i].p1.x, outline->bezier_lines[i].p1.y, outline->bezier_lines[i].p2.x, outline->bezier_lines[i].p2.y);
 	}
 }

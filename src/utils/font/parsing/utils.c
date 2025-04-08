@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 14:59:09 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/03 11:41:39 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 14:08:36 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@ uint32_t	get_glyph_index(uint16_t code_point, t_format4 *f)
 	}
 	if (i == f->seg_count_x2 / 2)
 		return (0);
+	printf("INDEX 1 : %d\n", i);
 	if (f->start_code[i] < code_point)
 	{
 		if (f->id_range_offset[i] == 0)
-			return (code_point + f->id_delta[i]);
+			return (code_point + (int16_t)f->id_delta[i]);
 		ptr = f->id_range_offset + i + f->id_range_offset[i] / 2;
 		ptr += code_point - f->start_code[i];
 		if (*ptr == 0)

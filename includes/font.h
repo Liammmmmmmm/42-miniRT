@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/04 14:02:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 15:04:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 
 typedef struct s_point2
 {
-	float	x; 
-	float	y;
+	int32_t	x; 
+	int32_t	y;
 }	t_point2;
 
 typedef struct s_bezier
@@ -216,6 +216,6 @@ void	draw_glyph(t_img *img);
 ║                                    RENDER                                    ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-
+void	tessellate_bezier(t_point2 *output, uint32_t *output_size, t_bezier *pts);
 
 #endif

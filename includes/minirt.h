@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/04 14:10:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 15:06:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ int		init_mlx(t_minirt *minirt);
 void	free_mlx(t_minirt *minirt);
 
 void	put_sp_image(t_img *img, t_sc_point *sp);
-void	put_pixel_image(t_img *img, t_uint x, t_uint y, int color);
+void	put_pixel_image(t_img *img, int x, int y, int color);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                   CONTROLS                                   ║

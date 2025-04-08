@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 15:45:29 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:58:01 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,9 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 		a = 1;
 	if (a < 0)
 		a = 0;
-	background.r = (1 - a) * 255 + a * 128;
-	background.g = (1 - a) * 255 + a * 178;
-	background.b = (1 - a) * 255 + a * 255;
+	background.r = ((1 - a) * 255 + a * 128);
+	background.g = ((1 - a) * 255 + a * 178);
+	background.b = ((1 - a) * 255 + a * 255);
 	if (hit_register(minirt, ray, &hit_record) == 1)
 	{
 		light_color = compute_light(&hit_record, minirt);
@@ -157,7 +157,7 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 		final_color = calc_ray_reflection(hit_record, minirt, ray, color, depth);
 		return (final_color);
 	}
-	return ((t_color){0, 0, 0});
+	return (background);
 }
 
 t_vec3	sample_square()

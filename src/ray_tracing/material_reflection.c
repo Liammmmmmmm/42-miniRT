@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:04:00 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/08 15:45:39 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:49:25 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,16 +122,20 @@ t_color	mix_mat(t_hit_record hit_record, t_ray ray_in, t_minirt *minirt, t_color
 	return (color);
 }
 
-char	default_texture(t_hit_record hit_record, t_ray *scatted)
+t_color	default_texture(t_hit_record hit_record, t_color color, int depth, t_minirt *minirt)
 {
 	t_vec3	direction;
+	t_ray	ray;
+	t_color	bounce_color;
 
 	direction = vec3_add(hit_record.normal, random_vec3_unit());
 	if (fabs(direction.x) < 1e-8 && fabs(direction.y) < 1e-8 && fabs(direction.z) < 1e-8)
 		direction = hit_record.normal;
-	scatted->dir = direction;
-	scatted->orig = hit_record.point;
-	return (1);
+	ray.dir = direction;
+	ray.orig = hit_record.point;
+	bounce_color = ray_color(minirt, ray, depth - 1);
+	color = color_multiply(color, bounce_color);
+	return (color);
 }
 
 t_color	calc_ray_reflection(t_hit_record hit_record, t_minirt *minirt, t_ray ray_in, t_color color, int depth)
@@ -141,5 +145,5 @@ t_color	calc_ray_reflection(t_hit_record hit_record, t_minirt *minirt, t_ray ray
 	{
 		return (mix_mat(hit_record, ray_in, minirt, color, depth));
 	}
-	return (hit_record.color);
+	return (default_texture(hit_record, color, depth, minirt));
 }

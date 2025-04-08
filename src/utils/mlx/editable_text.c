@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   editable_text.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:19:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 14:45:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 21:06:03 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx_components.h"
 
-void	display_text_input(t_img *img, t_text_input *text_input, unsigned char font[96][5])
+void	display_text_input(t_img *img, t_text_input *text_input, \
+	unsigned char font[96][5])
 {
 	int		i;
 	int		j;
-	t_point start;
+	t_point	start;
 	int		br_color;
 
 	if (text_input->is_focused)
@@ -62,7 +63,8 @@ void	display_text_input(t_img *img, t_text_input *text_input, unsigned char font
 int	text_input_focus(t_text_input *text_input, int mouse_x, int mouse_y)
 {
 	if (text_input->x <= mouse_x && text_input->x + text_input->width >= mouse_x
-		&& text_input->y <= mouse_y && text_input->y + text_input->height >= mouse_y)
+		&& text_input->y <= mouse_y && \
+		text_input->y + text_input->height >= mouse_y)
 	{
 		text_input->is_focused = 1;
 		return (1);
@@ -77,7 +79,8 @@ int	text_input_type(t_text_input *text_input, int key, int is_shift_down)
 	{
 		if (key >= 32 && key < 127)
 		{
-			if (text_input->cursor_pos >= 255 || text_input->cursor_pos >= text_input->max_char)
+			if (text_input->cursor_pos >= 255 || \
+					text_input->cursor_pos >= text_input->max_char)
 				return (1);
 			if (is_shift_down)
 				text_input->text[text_input->cursor_pos] = ft_toupper(key);

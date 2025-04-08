@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_sliders.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:13:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 18:21:24 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 21:03:00 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,23 @@ void	init_focal_sliders(t_minirt *minirt)
 	minirt->controls.sliders[0].max = 300;
 	minirt->controls.sliders[0].value = &minirt->controls.values.focus_dist;
 	minirt->controls.sliders[1].min = 0;
-	minirt->controls.sliders[1].max	= 300;
+	minirt->controls.sliders[1].max = 300;
 	minirt->controls.sliders[1].value = &minirt->controls.values.defocus_angle;
 	minirt->controls.values.fov = minirt->scene.camera.fov;
 	minirt->controls.sliders[2].min = 0;
-	minirt->controls.sliders[2].max	= 180;
+	minirt->controls.sliders[2].max = 180;
 	minirt->controls.sliders[2].value = &minirt->controls.values.fov;
 	minirt->controls.values.gamma = 800;
 	minirt->controls.sliders[3].min = 0;
-	minirt->controls.sliders[3].max	= 1000;
+	minirt->controls.sliders[3].max = 1000;
 	minirt->controls.sliders[3].value = &minirt->controls.values.gamma;
 }
 
 int	init_sliders(t_minirt *minirt)
 {
 	minirt->controls.nb_sliders = 4;
-	minirt->controls.sliders = ft_calloc(minirt->controls.nb_sliders, sizeof(t_int_slider));
+	minirt->controls.sliders = ft_calloc(minirt->controls.nb_sliders, \
+		sizeof(t_int_slider));
 	if (!minirt->controls.sliders)
 		return (0);
 	init_focal_sliders(minirt);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_buttons.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:55:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 16:07:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 21:03:07 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	init_start_stop(t_minirt *minirt)
 int	init_buttons(t_minirt *minirt)
 {
 	minirt->controls.nb_buttons = 3;
-	minirt->controls.buttons = ft_calloc(minirt->controls.nb_buttons, sizeof(t_button));
+	minirt->controls.buttons = ft_calloc(minirt->controls.nb_buttons, \
+		sizeof(t_button));
 	if (!minirt->controls.buttons)
 		return (0);
 	init_start_stop(minirt);

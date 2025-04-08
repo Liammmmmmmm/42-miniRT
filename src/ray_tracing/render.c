@@ -6,131 +6,19 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 17:54:51 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:00:55 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "material.h"
 #include <math.h>
 
-t_vec3	random_in_unit_disk()
-{
-	t_vec3	p;
-
-	p.z = 0;
-	while (1)
-	{
-		p.x = random_double_in_interval(-1, 1);
-		p.y = random_double_in_interval(-1, 1);
-		if (vec3_length_squared(p) < 1)
-			return (p);
-	}
-	return (p);
-}
-
-t_vec3 defocus_disk_sample(t_minirt *minirt)
-{
-	t_vec3	random_point;
-
-	random_point = random_in_unit_disk();
-	return (vec3_add(
-		minirt->scene.camera.position,
-		vec3_add(
-			vec3_multiply_scalar(minirt->viewport.defocus_disk_u, random_point.x),
-			vec3_multiply_scalar(minirt->viewport.defocus_disk_v, random_point.y)
-		)
-	));
-}
-
-char	is_hit_before_target(t_minirt *minirt, t_vec3 origin, t_vec3 target)
-{
-	t_ray			shadow_ray;
-	t_hit_record	hit_record;
-	double			distance_to_target;
-
-	shadow_ray.orig = origin;
-	shadow_ray.dir = vec3_unit(vec3_subtract(target, origin));
-	distance_to_target = vec3_length(vec3_subtract(target, origin));
-	if (hit_register(minirt, shadow_ray, &hit_record))
-	{
-		if (hit_record.t < distance_to_target)
-			return (1);
-	}
-	return (0);
-}
-
-t_vec3 vec3_reflect(t_vec3 v, t_vec3 normal)
-{
-	return vec3_subtract(v, vec3_multiply_scalar(normal, 2.0 * vec3_dot(v, normal)));
-}
-
-t_color compute_light(t_hit_record *hit_record, t_minirt *minirt)
-{
-	t_lcolor	light_color;
-	t_vec3		light_dir;
-	t_vec3		view_dir;
-	t_vec3		reflect_dir;
-	t_light		*light;
-	double		spec;
-	double		n_dot_l;
-	double		r_dot_v;
-	double		specular_strength = 1;
-	double		shine = 64.0;
-	int			i;
-
-	light_color.r = minirt->scene.amb_light.color.r * minirt->scene.amb_light.ratio;
-	light_color.g = minirt->scene.amb_light.color.g * minirt->scene.amb_light.ratio;
-	light_color.b = minirt->scene.amb_light.color.b * minirt->scene.amb_light.ratio;
-	view_dir = vec3_unit(vec3_subtract(minirt->scene.camera.position, hit_record->point));
-	i = 0;
-	while (i < minirt->scene.el_amount)
-	{
-		if (minirt->scene.elements[i].type == LIGHT)
-		{
-			light = minirt->scene.elements[i].object;
-			light_dir = vec3_unit(vec3_subtract(light->position, hit_record->point));
-			if (is_hit_before_target(minirt, hit_record->point, light->position))
-			{
-				i++;
-				continue;
-			}
-			// diffuse
-			n_dot_l = vec3_dot(hit_record->normal, light_dir);
-			if (n_dot_l > 0.0)
-			{
-				// speculaire
-				reflect_dir = vec3_reflect(vec3_negate(light_dir), hit_record->normal);
-				r_dot_v = vec3_dot(reflect_dir, view_dir);
-				if (r_dot_v < 0.0) r_dot_v = 0.0;
-				spec = pow(r_dot_v, shine);
-
-				// diffuse
-				light_color.r += light->color.r * light->brightness * n_dot_l;
-				light_color.g += light->color.g * light->brightness * n_dot_l;
-				light_color.b += light->color.b * light->brightness * n_dot_l;
-				
-				// speculaire
-				light_color.r += light->color.r * light->brightness * specular_strength * spec;
-				light_color.g += light->color.g * light->brightness * specular_strength * spec;
-				light_color.b += light->color.b * light->brightness * specular_strength * spec;
-			}
-		}
-		i++;
-	}
-	if (light_color.r > 255.0) light_color.r = 255.0;
-	if (light_color.g > 255.0) light_color.g = 255.0;
-	if (light_color.b > 255.0) light_color.b = 255.0;
-	return ((t_color){light_color.r, light_color.g, light_color.b});
-}
-
-
-
-t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit)
+t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
 {
 	t_color			color;
 	t_color			background;
 	t_hit_record	hit_record;
-	t_color			light_color;
 	double			a;
 
 	if (depth <= 0)
@@ -145,25 +33,19 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit)
 	background.b = ((1 - a) * 255 + a * 255);
 	if (hit_register(minirt, ray, &hit_record) == 1)
 	{
-		light_color = compute_light(&hit_record, minirt);
 		if (hit_record.mat)
 			color = hit_record.mat->color_value;
 		else
 			color = hit_record.color;
-		color = color_multiply(color, light_color);
-		color = calc_ray_reflection(hit_record, minirt, ray, color, depth);
-		*hit = 1;
+		color = color_multiply(color, compute_light(&hit_record, minirt));
+		color = material_manager((t_mat_manager){hit_record, ray, minirt, color, depth});
+		if (hit)
+			*hit = 1;
 		return (color);
 	}
-	*hit = 0;
+	if (hit)
+		*hit = 0;
 	return (color_scale(background, minirt->scene.amb_light.ratio));
-}
-
-t_vec3	sample_square()
-{
-	double x = random_double() - 0.5;
-	double y = random_double() - 0.5;
-	return (t_vec3){ x, y, 0 };
 }
 	
 void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
@@ -204,7 +86,7 @@ void	draw_pixels(t_minirt *minirt)
 {
 	t_vec3	offset;
 
-	offset = sample_square();
+	offset = vec3_random();
 	calc_one_sample(minirt, offset);
 	minirt->screen.sample++;
 	put_render_to_frame(minirt);

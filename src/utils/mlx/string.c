@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 14:38:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 14:45:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 21:04:32 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	char_to_img(t_img *img, unsigned char font[96][5], t_point p, char c)
 	}
 }
 
-void	string_to_img(t_img *img, unsigned char font[96][5], t_point p, char *str)
+void	string_to_img(t_img *img, unsigned char font[96][5], t_point p, \
+	char *str)
 {
 	int	xstart;
 	int	i;

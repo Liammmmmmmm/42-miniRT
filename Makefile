@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/08 14:32:14 by madelvin         ###   ########.fr        #
+#    Updated: 2025/04/08 20:40:03 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,15 +76,19 @@ EVENT_DIR			= src/events/
 EVENT_FILE			= basic.c
 
 RAY_TRACING_DIR		= src/ray_tracing/
-RAY_TRACING_FILE	= render.c hit_register.c random.c material_reflection.c
+RAY_TRACING_FILE	= render.c hit_register.c focus.c light.c
 
 RENDERING_DIR		= src/rendering/
 RENDERING_FILE		= init.c init_controls.c pixel.c loop.c
 
+MAT_DIR				= src/material/
+MAT_FILE			= material_default.c material_manager.c material_mix.c reflection_color.c \
+					reflection_math.c refraction_color.c refraction_math.c
+
 MATH_DIR			= src/math/
 MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/vec3_length.c \
-					vector/vec3_utils.c normal/normal.c color/color_operation.c ft_dmin.c\
-					plane/hit_plane.c sphere/hit_sphere.c
+					vector/vec3_utils.c vector/vec3_random.c normal/normal.c color/color_operation.c ft_dmin.c\
+					plane/hit_plane.c sphere/hit_sphere.c random.c
 
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
@@ -98,6 +102,7 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(EVENT_DIR), $(EVENT_FILE)) \
 			$(addprefix $(RAY_TRACING_DIR), $(RAY_TRACING_FILE)) \
 			$(addprefix $(RENDERING_DIR), $(RENDERING_FILE)) \
+			$(addprefix $(MAT_DIR), $(MAT_FILE)) \
 			$(addprefix $(MATH_DIR), $(MATH_FILE)) \
 			$(addprefix $(UTILS_MLX_DIR), $(UTILS_MLX_FILE)) \
 			$(addprefix $(CONTROLS_DIR), $(CONTROLS_FILE)) \

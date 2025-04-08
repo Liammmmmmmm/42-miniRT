@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button_click.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 14:07:20 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 16:34:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 21:03:53 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	click_start_stop(void *vparam)
 {
 	t_btn_param	*param;
+
 	if (!vparam)
 		return ;
 	param = (t_btn_param *)vparam;
@@ -36,7 +37,6 @@ void	click_start_stop(void *vparam)
 		param->minirt->controls.buttons[2].disabled = 1;
 	}
 	else if (param->action == 2)
-	{
-		param->minirt->screen.pause_render = !param->minirt->screen.pause_render;
-	}
+		param->minirt->screen.pause_render \
+			= !param->minirt->screen.pause_render;
 }

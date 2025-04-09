@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 09:02:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 19:18:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 09:21:14 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	free_glyph(t_glyph_outline *o)
 	free(o->x_coordinates);
 	free(o->y_coordinates);
 	free(o->instructions);
+	free(o->bezier_lines);
 	return (-1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:33:29 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 13:08:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 09:06:22 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	get_glyph_outline(t_bin *bin, t_ttf* ttf, uint32_t glyph_index,
 	size_t	i;
 	int		last_index;
 
-	printf("GLYPH INDEX : %d\n", glyph_index);
 	i = get_glyph_offset(bin, ttf, glyph_index) + ttf->r_data.glyf_offset;
 	if (init_base(bin, &i, outline) == -1)
 		return (-1);

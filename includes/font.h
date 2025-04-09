@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 19:50:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 10:34:00 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_bezier
 {
 	t_point2	p1; 
 	t_point2	p2;
-	t_bool		have_control;
+	t_bool		have_control: 1;
 	t_point2	pc;
 }	t_bezier;
 
@@ -166,7 +166,7 @@ typedef struct s_glyph_outline
 
 typedef struct s_ttf
 {
-	t_font_directory		ft_dir;
+	t_font_directory	ft_dir;
 	t_cmap				cmap;
 	t_random_font_data	r_data;
 	t_head				head;
@@ -185,7 +185,7 @@ uint32_t			get_glyph_index(uint16_t code_point, t_format4 *f);
 int					cmp_tbl_tag(char c[4], uint32_t tag);
 uint32_t			get_glyph_offset(t_bin *bin, t_ttf *ttf, uint32_t glyph_index);
 
-int		read_font_directory(t_bin *bin, t_font_directory *ft_dir, t_ttf *ttf);
+int		read_font_directory(t_bin *bin, t_ttf *ttf);
 int		read_cmap(t_bin *bin, size_t *i, t_cmap *cmap);
 int		get_cmap(t_bin *bin, t_ttf *ttf);
 int		read_format4(t_bin *bin, t_ttf *ttf);

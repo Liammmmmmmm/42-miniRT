@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 19:53:17 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 10:04:49 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	render_buttons(t_minirt *minirt)
 	// 	display_slider_int(&minirt->mlx.img_controls, minirt->controls.sliders[i]);
 
 	static unsigned char y = 0;
+	printf("Printing glyph %c (%d)\n", y, (uint32_t)y);
 	draw_glyph(&minirt->mlx.img_controls, &minirt->controls.font[0], y);
 	y++;
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.controls_win, minirt->mlx.img_controls.img, 0, 0);

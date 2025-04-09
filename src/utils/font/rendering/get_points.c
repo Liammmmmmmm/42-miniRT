@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:53:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 19:33:56 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 10:04:17 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	draw_glyph(t_img *img, t_ttf *ttf, t_uchar c)
 		else
 		{
 			uint32_t size = 10;
-			t_point2 points[size];
+			t_point2 points[11];
 			uint32_t y = 0;
 			tessellate_bezier(points, &size, &ttf->glyph256[c].bezier_lines[i]);
-			while (y < size - 1)
+			while (y < size)
 			{
 				t_point p1;
 				p1.x = points[y].x;

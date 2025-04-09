@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:37:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 17:01:01 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 09:12:32 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	save_bezier_lines(t_glyph_outline *o, int pts_am)
 	i = 0;
 	y = 0;
 	n_contours = 0;
-	while (i < pts_am - 1)
+	while (i < pts_am - 1 && y < o->bezier_amount)
 	{
 		if (i == o->end_pts_of_contours[n_contours] && n_contours < o->number_of_contours)
 		{
@@ -106,7 +106,7 @@ void	save_bezier_lines(t_glyph_outline *o, int pts_am)
 		i++;
 	}
 	n_contours = 0;
-	while (n_contours < o->number_of_contours)
+	while (n_contours < o->number_of_contours && y < o->bezier_amount)
 	{
 		if (n_contours < 1)
 			tmp = 0;

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:53:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 10:04:17 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 10:44:01 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	draw_glyph(t_img *img, t_ttf *ttf, t_uchar c)
 {
 	int i = 0;
 
+	print_glyph_outline(&ttf->glyph256[c]);
 	while (i < ttf->glyph256[c].bezier_amount)
 	{
 		if (ttf->glyph256[c].bezier_lines[i].have_control == 0)

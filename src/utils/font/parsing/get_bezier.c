@@ -6,32 +6,64 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:37:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 09:12:32 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 11:39:37 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "font.h"
 
+int	get_tmp_next(int i, t_glyph_outline *o, int n_contours)
+{
+	if (i + 1 == o->end_pts_of_contours[n_contours] && n_contours > 0)
+		return (o->end_pts_of_contours[n_contours - 1] + 1);
+	else if (i + 1 == o->end_pts_of_contours[n_contours] && n_contours == 0)
+		return (0);
+	else
+		return (i + 2);
+}
+
 int	count_bezier_lines(t_glyph_outline *o, int pts_am)
 {
 	int	res;
-	int	i;
+	int i;
+	int	n_contours;
+	int	tmp;
 
-	i = 0;
-	while (i < pts_am && !o->flags[i].on_curve)
-		i++;
-	if (i == pts_am)
-		return (-1);
 	res = 0;
-	while (i < pts_am - 1)
+	i = -1;
+	n_contours = 0;
+	while (++i < pts_am - 1)
 	{
-		if (o->flags[i].on_curve)
-			res++;
-		else if (!o->flags[i].on_curve && !o->flags[i].on_curve)
-			res++;
-		i++;
+		if (i == o->end_pts_of_contours[n_contours] && n_contours < o->number_of_contours)
+		{
+			n_contours++;
+			continue ;
+		}
+		if (o->flags[i].on_curve && !o->flags[i + 1].on_curve)
+		{
+			if (!(get_tmp_next(i, o, n_contours) < pts_am))
+				continue ;
+		}
+		else if (!o->flags[i].on_curve && !o->flags[i + 1].on_curve)
+		{
+			if (!(get_tmp_next(i, o, n_contours) < pts_am))
+				continue ;
+		}
+		else if (!(o->flags[i].on_curve && o->flags[i + 1].on_curve))
+			continue ;
+		res++;
 	}
-	res += o->number_of_contours;
+	n_contours = -1;
+	while (++n_contours < o->number_of_contours)
+	{
+		if (n_contours < 1)
+			tmp = 0;
+		else
+			tmp = o->end_pts_of_contours[n_contours - 1] + 1;
+		if (!o->flags[o->end_pts_of_contours[n_contours]].on_curve && o->flags[tmp].on_curve)
+			continue;
+		res++;
+	}
 	return (res);
 }
 
@@ -61,12 +93,7 @@ void	save_bezier_lines(t_glyph_outline *o, int pts_am)
 		}
 		else if (o->flags[i].on_curve && !o->flags[i + 1].on_curve)
 		{
-			if (i + 1 == o->end_pts_of_contours[n_contours] && n_contours > 0)
-				tmp = o->end_pts_of_contours[n_contours - 1] + 1;
-			else if (i + 1 == o->end_pts_of_contours[n_contours] && n_contours == 0)
-				tmp = 0;
-			else
-				tmp = i + 2;
+			tmp = get_tmp_next(i, o, n_contours);
 			if (!(tmp < pts_am))
 			{
 				i++;
@@ -83,12 +110,7 @@ void	save_bezier_lines(t_glyph_outline *o, int pts_am)
 		}
 		else if (!o->flags[i].on_curve && !o->flags[i + 1].on_curve)
 		{
-			if (i + 1 == o->end_pts_of_contours[n_contours] && n_contours > 0)
-				tmp = o->end_pts_of_contours[n_contours - 1] + 1;
-			else if (i + 1 == o->end_pts_of_contours[n_contours] && n_contours == 0)
-				tmp = 0;
-			else
-				tmp = i + 2;
+			tmp = get_tmp_next(i, o, n_contours);
 			if (!(tmp < pts_am))
 			{
 				i++;

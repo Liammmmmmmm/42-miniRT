@@ -6,17 +6,11 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 14:35:14 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 13:14:32 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 14:09:01 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "font.h"
-
-static int	free_map_ret(t_cmap_encoding_subtable *map)
-{
-	free(map);
-	return (-1);
-}
 
 int	read_cmap(t_bin *bin, size_t *i, t_cmap *cmap)
 {
@@ -36,11 +30,11 @@ int	read_cmap(t_bin *bin, size_t *i, t_cmap *cmap)
 	{
 		enc_s = cmap->subtables + y;
 		if (read_uint16_move(bin, i, &enc_s->platform_id) == -1)
-			return (free_map_ret(cmap->subtables));
+			return (-1);
 		if (read_uint16_move(bin, i, &enc_s->platform_specific_id) == -1)
-			return (free_map_ret(cmap->subtables));
+			return (-1);
 		if (read_uint32_move(bin, i, &enc_s->offset) == -1)
-			return (free_map_ret(cmap->subtables));
+			return (-1);
 		y++;
 	}
 	return (0);
@@ -83,7 +77,6 @@ int	get_cmap(t_bin *bin, t_ttf *ttf)
 		return (-1);
 	if (font_unicode_format4(bin, ttf, cmap_tbl->offset) == -1)
 	{
-		free(ttf->cmap.subtables);
 		return (print_err_ttf("Error reading font file. Unsupported font "
 				"format, only support format4 unicode fonts.\n"));
 	}

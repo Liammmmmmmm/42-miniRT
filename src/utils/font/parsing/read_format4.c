@@ -6,17 +6,11 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:37:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 13:14:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 14:12:37 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "font.h"
-
-static int	free_format_ret(t_format4 *f)
-{
-	free(f);
-	return (-1);
-}
 
 int	init_struct_basics(t_bin *bin, size_t *i, t_format4 *f, t_uint length)
 {
@@ -96,14 +90,14 @@ int	read_format4(t_bin *bin, t_ttf *ttf)
 	if (!f)
 		return (-1);
 	if (init_struct_basics(bin, &i, f, length) == -1)
-		return (free_format_ret(f));
+		return (-1);
 	if (read_uint16(bin, i + f->seg_count_x2, &f->reserved_pad) == -1
 		|| f->reserved_pad != 0)
-		return (free_format_ret(f));
+		return (-1);
 	if (init_arrays(bin, &i, f) == -1)
-		return (free_format_ret(f));
+		return (-1);
 	if (init_remaining_bytes(bin, &i, f, ttf) == -1)
-		return (free_format_ret(f));
+		return (-1);
 	ttf->cmap.format4 = f;
 	return (0);
 }

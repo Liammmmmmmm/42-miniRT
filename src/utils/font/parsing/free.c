@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 09:02:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 09:21:14 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 14:11:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,12 @@ int	free_glyphs(t_glyph_outline *glyphs, int i)
 int	free_ttf(t_ttf *ttf)
 {
 	free(ttf->ft_dir.tbl_dir);
+	ttf->ft_dir.tbl_dir = NULL;
 	free(ttf->cmap.subtables);
+	ttf->cmap.subtables = NULL;
 	free(ttf->cmap.format4);
+	ttf->cmap.format4 = NULL;
 	free_glyphs(ttf->glyph256, 256);
+	ttf->glyph256 = NULL;
 	return (-1);
 }

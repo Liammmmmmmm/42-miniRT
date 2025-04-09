@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/26 17:26:03 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/04/09 15:09:19 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ SRC_DIR				= src/
 SRC_FILE			= main.c
 
 UTILS_DIR			= src/utils/
-UTILS_FILE			= utils.c
+UTILS_FILE			= utils.c bmp/bmp_manager.c
 
 UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c
@@ -114,7 +114,7 @@ OBJ_BONUS = $(B_FILE:%.c=$(OBJ_DIR)%.o)
 # Remake all if modified
 REMAKE   = libft/includes/libft.h libft/includes/ft_printf.h \
 		libft/includes/get_next_line.h libft/Makefile  Makefile \
-		includes/structs.h includes/minirt.h
+		includes/structs.h includes/minirt.h includes/bmp_parsing.h
 
 # NORMINETTE
 NORM_RET = $(RED)[ERROR]$(BOLD) Norminette Disable$(NC)

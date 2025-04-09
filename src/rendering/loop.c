@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 11:41:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 18:04:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,14 @@ void	render_buttons(t_minirt *minirt)
 	// while (++i < minirt->controls.nb_sliders)
 	// 	display_slider_int(&minirt->mlx.img_controls, minirt->controls.sliders[i]);
 
-	static unsigned char y = ' ';
-	printf("Printing glyph %c (%d)\n", y, (uint32_t)y);
-	draw_glyph(&minirt->mlx.img_controls, &minirt->controls.font[0], y);
-	y++;
+	// static unsigned char y = ' ';
+	// printf("Printing glyph %c (%d)\n", y, (uint32_t)y);
+	// draw_glyph_outline(&minirt->mlx.img_controls, &minirt->controls.font[0], y);
+	// y++;
+	
+	t_point2 pos = (t_point2){ .x = 100, .y = 100 };
+	minirt->controls.font[0].size = 100;
+	draw_string(&minirt->mlx.img_controls, &minirt->controls.font[0], "abcdefghijklmnopqrstuvwxyz\nABCDEFGHIJKLMNOPQRSTUVWXYZ", pos);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.controls_win, minirt->mlx.img_controls.img, 0, 0);
 }
 

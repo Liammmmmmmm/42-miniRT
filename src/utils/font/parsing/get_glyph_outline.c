@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:33:29 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 13:12:38 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 16:20:02 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int	init_base(t_bin *bin, size_t *i, t_glyph_outline *o)
 		|| read_int16_move(bin, i, &o->xmax) == -1
 		|| read_int16_move(bin, i, &o->ymax) == -1)
 		return (-1);
+	if (o->number_of_contours < 1)
+		return (-2);
 	o->end_pts_of_contours = ft_calloc(o->number_of_contours, sizeof(int16_t));
 	if (!o->end_pts_of_contours)
 		return (-1);
@@ -97,6 +99,8 @@ int	get_glyph_outline(t_bin *bin, t_ttf *ttf, uint32_t glyph_index,
 	i = get_glyph_offset(bin, ttf, glyph_index) + ttf->r_data.glyf_offset;
 	if (init_base(bin, &i, outline) == -1)
 		return (-1);
+	if (outline->number_of_contours < 1)
+		return (-2);
 	last_index = outline->end_pts_of_contours[outline->number_of_contours - 1];
 	if (init_instuct_and_mem(bin, &i, outline, last_index) == -1)
 	{

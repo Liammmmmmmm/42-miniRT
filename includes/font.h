@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 15:08:32 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 17:46:19 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,15 +154,18 @@ typedef struct s_glyph_outline
 	int16_t			*y_coordinates;
 	uint16_t		*end_pts_of_contours;
 	t_bezier		*bezier_lines;
-	int32_t		bezier_amount;
+	int32_t			bezier_amount;
+	uint16_t		advance_width;
+	int16_t			left_side_bearing;
 }	t_glyph_outline;
 
 typedef struct s_hhea
 {
 	uint32_t	version;
-	uint16_t	ascent;
-	uint16_t	descent;
-	uint16_t	line_gap;
+	int16_t	ascent;
+	int16_t	descent;
+	int16_t	line_gap;
+	uint16_t	num_hmetrics;
 }	t_hhea;
 
 typedef struct s_ttf
@@ -173,6 +176,8 @@ typedef struct s_ttf
 	t_head				head;
 	t_hhea				hhea;
 	t_glyph_outline		*glyph256;
+	int32_t				size;
+	uint16_t			bezier_resolution;
 }	t_ttf;
 
 # include "./structs.h"
@@ -224,7 +229,8 @@ void	print_glyph_outline(t_glyph_outline *outline);
 
 
 void	draw_line(t_point *point_a, t_point *point_b, t_img *img);
-void	draw_glyph(t_img *img, t_ttf *ttf, t_uchar c);
+void	draw_glyph_outline(t_img *img, t_ttf *ttf, t_uchar c, t_point2 pos);
+void	draw_string(t_img *img, t_ttf *ttf, char *str, t_point2 pos);
 
 void	print_head(t_head *head);
 

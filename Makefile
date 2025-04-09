@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/09 15:29:53 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/04/09 17:05:06 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,7 +101,7 @@ FONT_PARS_FILE		= debug.c free.c get_glyph_outline.c get_glyph_outline_xy.c pars
 					read_loca.c utils.c get_bezier.c get_bezier_utils.c read_hhea.c read_hmtx.c
 
 FONT_REND_DIR		= src/utils/font/rendering/
-FONT_REND_FILE		= get_points.c basic_slope.c tesselate_bezier.c
+FONT_REND_FILE		= draw_glyph_outline.c draw_string.c basic_slope.c tesselate_bezier.c
 
 
 M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \

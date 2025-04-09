@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:49:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 14:43:55 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 17:00:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	print_glyph_outline(t_glyph_outline *outline)
 	printf("%9d\t(%d,%d)\t\t(%d,%d)\t%d\n", outline->number_of_contours,
 		outline->xmin, outline->ymin, outline->xmax, outline->ymax,
 		outline->instruction_length);
+	printf("advance : %d\n", outline->advance_width);
+	printf("lsb     : %d\n", outline->left_side_bearing);
 	printf("#)\t(  x  ,  y  )\n");
 	if (outline->number_of_contours < 1)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:35:05 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 09:02:14 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 13:13:12 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ int	get_ttf(t_bin *bin, t_ttf *ttf)
 {
 	if (read_font_directory(bin, ttf) == -1)
 		return (print_err_ttf("Error reading font directory. Is it really a ttf"
-			" file ?"));
+				" file ?"));
 	if (get_cmap(bin, ttf) == -1)
 		return (free_ttf(ttf));
 	if (read_format4(bin, ttf) == -1)
 	{
 		free_ttf(ttf);
 		return (print_err_ttf("Error reading font format4. It may not be "
-			"compatible."));
+				"compatible."));
 	}
 	if (read_head(bin, ttf) == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 14:35:14 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 19:04:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 13:14:32 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int	get_cmap(t_bin *bin, t_ttf *ttf)
 
 	cmap_tbl = get_table_directory(&ttf->ft_dir, "cmap");
 	if (!cmap_tbl)
-		return (print_err_ttf("Error reading font file. Cant find cmap table."))
-		;
+		return (print_err_ttf("Error reading font file. Cant find cmap table.")
+		);
 	cmap_offset = cmap_tbl->offset;
 	ttf->r_data.cmap_offset = cmap_tbl->offset;
 	if (read_cmap(bin, &cmap_offset, &ttf->cmap) == -1)

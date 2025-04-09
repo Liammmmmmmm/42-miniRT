@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:08:19 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/04 13:40:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 13:12:59 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	init_co_x(t_bin *bin, size_t *i, t_glyph_outline *o, int last_index)
 	int16_t	prev_coordinate;
 	int16_t	current_coordinate;
 	uint8_t	flag_combined;
-	
+
 	y = 0;
 	prev_coordinate = 0;
 	while (y < last_index + 1)
@@ -65,7 +65,7 @@ int	init_co_y(t_bin *bin, size_t *i, t_glyph_outline *o, int last_index)
 	int16_t	prev_coordinate;
 	int16_t	current_coordinate;
 	uint8_t	flag_combined;
-	
+
 	y = 0;
 	prev_coordinate = 0;
 	while (y < last_index + 1)

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:33:29 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 11:40:01 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 13:12:38 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static int	init_base(t_bin *bin, size_t *i, t_glyph_outline *o)
 	return (0);
 }
 
-static int	init_instuct_and_mem(t_bin *bin, size_t *i, t_glyph_outline *o, int last_index)
+static int	init_instuct_and_mem(t_bin *bin, size_t *i, t_glyph_outline *o,
+	int last_index)
 {
 	if (read_uint16_move(bin, i, &o->instruction_length) == -1)
 		return (-1);
@@ -61,11 +62,12 @@ static int	init_instuct_and_mem(t_bin *bin, size_t *i, t_glyph_outline *o, int l
 	return (0);
 }
 
-static int	init_flags(t_bin *bin, size_t *i, t_glyph_outline *o, int last_index)
+static int	init_flags(t_bin *bin, size_t *i, t_glyph_outline *o, int last_index
+	)
 {
 	int		y;
 	uint8_t	repeat_count;
-	
+
 	y = 0;
 	while (y < last_index + 1)
 	{
@@ -86,7 +88,7 @@ static int	init_flags(t_bin *bin, size_t *i, t_glyph_outline *o, int last_index)
 	return (0);
 }
 
-int	get_glyph_outline(t_bin *bin, t_ttf* ttf, uint32_t glyph_index,
+int	get_glyph_outline(t_bin *bin, t_ttf *ttf, uint32_t glyph_index,
 	t_glyph_outline *outline)
 {
 	size_t	i;

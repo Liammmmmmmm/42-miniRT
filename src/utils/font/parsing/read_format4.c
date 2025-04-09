@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:37:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/02 19:25:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 13:14:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ int	init_struct_basics(t_bin *bin, size_t *i, t_format4 *f, t_uint length)
 int	init_arrays(t_bin *bin, size_t *i, t_format4 *f)
 {
 	const size_t	start_code_start = *i + f->seg_count_x2 + sizeof(uint16_t);
-	const size_t	id_delta_start = *i + f->seg_count_x2 * 2 + sizeof(uint16_t);
-	const size_t	id_range_start = *i + f->seg_count_x2 * 3 + sizeof(uint16_t);
+	const size_t	id_delta_start = *i + f->seg_count_x2 * 2 + sizeof(uint16_t)
+		;
+	const size_t	id_range_start = *i + f->seg_count_x2 * 3 + sizeof(uint16_t)
+		;
 	uint16_t		y;
 
 	y = 0;

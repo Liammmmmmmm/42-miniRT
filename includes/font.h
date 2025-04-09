@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 10:34:00 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 13:10:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,9 @@ int		get_glyph_outline(t_bin *bin, t_ttf* ttf, uint32_t glyph_index,
 int		init_co_y(t_bin *bin, size_t *i, t_glyph_outline *o, int last_index);
 int		init_co_x(t_bin *bin, size_t *i, t_glyph_outline *o, int last_index);
 int		get_bezier(t_glyph_outline *o, int pts_am);
+int		count_bezier_lines(t_glyph_outline *o, int pts_am);
+t_point2	p2co(t_glyph_outline *o, int i1, int i2);
+int		get_tmp_next(int i, t_glyph_outline *o, int n_contours);
 
 int		save_glyph256(t_bin *bin, t_ttf *ttf);
 int		free_glyphs(t_glyph_outline *glyphs, int i);

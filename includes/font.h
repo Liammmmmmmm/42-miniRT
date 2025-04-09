@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 13:10:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 15:08:32 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "libft.h"
 # include <stdio.h>
-
-
 
 # define FONT_DEBUG 1
 # define MAGIC_NUMBER 0x5F0F3CF5
@@ -56,8 +54,6 @@ typedef struct s_head
 	int16_t		glyph_data_format;
 }	t_head;
 
-
-
 typedef struct s_random_font_data
 {
 	uint32_t	cmap_offset;
@@ -65,8 +61,9 @@ typedef struct s_random_font_data
 	uint32_t	head_offset;
 	uint32_t	loca_offset;
 	uint32_t	glyf_offset;
- }	t_random_font_data;
-
+	uint32_t	hhea_offset;
+	uint32_t	hmtx_offset;
+}	t_random_font_data;
 
 typedef struct s_format4
 {
@@ -97,10 +94,8 @@ typedef struct s_cmap
 	uint16_t					version;
 	uint16_t					number_subtables;
 	t_cmap_encoding_subtable*	subtables;
-	t_format4					*format4; // Just transform it into an union if I want to accept other formats
+	t_format4					*format4;
 } 	t_cmap;
-
-
 
 typedef struct s_offset_subtable
 {
@@ -128,7 +123,6 @@ typedef struct s_font_directoy
 	t_offset_subtable	off_sub;
 	t_table_directory	*tbl_dir;
 }	t_font_directory;
-
 
 typedef union u_glyph_lag
 {
@@ -163,16 +157,25 @@ typedef struct s_glyph_outline
 	int32_t		bezier_amount;
 }	t_glyph_outline;
 
+typedef struct s_hhea
+{
+	uint32_t	version;
+	uint16_t	ascent;
+	uint16_t	descent;
+	uint16_t	line_gap;
+}	t_hhea;
 
 typedef struct s_ttf
 {
 	t_font_directory	ft_dir;
-	t_cmap				cmap;
 	t_random_font_data	r_data;
+	t_cmap				cmap;
 	t_head				head;
+	t_hhea				hhea;
 	t_glyph_outline		*glyph256;
 }	t_ttf;
 
+# include "./structs.h"
 
 int		get_font(t_ttf *ttf, char *filename);
 
@@ -190,6 +193,8 @@ int		read_cmap(t_bin *bin, size_t *i, t_cmap *cmap);
 int		get_cmap(t_bin *bin, t_ttf *ttf);
 int		read_format4(t_bin *bin, t_ttf *ttf);
 int		read_head(t_bin *bin, t_ttf *ttf);
+int		read_hhea(t_bin *bin, t_ttf *ttf);
+int		read_hmtx(t_bin *bin, t_ttf *ttf);
 int		get_glyph_outline(t_bin *bin, t_ttf* ttf, uint32_t glyph_index,
 	t_glyph_outline *outline);
 int		init_co_y(t_bin *bin, size_t *i, t_glyph_outline *o, int last_index);
@@ -198,6 +203,7 @@ int		get_bezier(t_glyph_outline *o, int pts_am);
 int		count_bezier_lines(t_glyph_outline *o, int pts_am);
 t_point2	p2co(t_glyph_outline *o, int i1, int i2);
 int		get_tmp_next(int i, t_glyph_outline *o, int n_contours);
+
 
 int		save_glyph256(t_bin *bin, t_ttf *ttf);
 int		free_glyphs(t_glyph_outline *glyphs, int i);
@@ -216,10 +222,11 @@ void	print_cmap(t_cmap *c);
 void	print_format4(t_format4 *f4);
 void	print_glyph_outline(t_glyph_outline *outline);
 
-#include "./structs.h"
 
 void	draw_line(t_point *point_a, t_point *point_b, t_img *img);
 void	draw_glyph(t_img *img, t_ttf *ttf, t_uchar c);
+
+void	print_head(t_head *head);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    RENDER                                    ║

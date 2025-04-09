@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_glyph.c                                       :+:      :+:    :+:   */
+/*   read_hhea.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 16:33:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 15:59:14 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/04/09 14:48:57 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/04/09 15:05:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "font.h"
 
-int	save_glyph256(t_bin *bin, t_ttf *ttf)
+int	read_hhea(t_bin *bin, t_ttf *ttf)
 {
-	int	i;
+	size_t	i;
 
-	ttf->glyph256 = ft_calloc(256, sizeof(t_glyph_outline));
-	if (!ttf->glyph256)
+	i = ttf->r_data.hhea_offset;
+	if (read_uint32_move(bin, &i, &ttf->hhea.version) == -1
+		|| read_uint16_move(bin, &i, &ttf->hhea.ascent) == -1
+		|| read_uint16_move(bin, &i, &ttf->hhea.descent) == -1
+		|| read_uint16_move(bin, &i, &ttf->hhea.line_gap) == -1)
 		return (-1);
-	i = 34;
-	while (i < 256)
-	{
-		if (get_glyph_outline(bin, ttf, get_glyph_index(i, ttf->cmap.format4),
-				&ttf->glyph256[i]) == -1)
-		{
-			printf("FAILED %d\n", i);
-			free_glyphs(ttf->glyph256, i);
-			ttf->glyph256 = NULL;
-			return (-1);
-		}
-		i++;
-	}
 	return (0);
 }

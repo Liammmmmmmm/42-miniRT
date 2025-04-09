@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:43:13 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/03 15:51:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 15:24:20 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ int	read_head(t_bin *bin, t_ttf *ttf)
 		|| read_int16_move(bin, &i, &ttf->head.index_to_loc_format) == -1
 		|| read_int16_move(bin, &i, &ttf->head.glyph_data_format) == -1)
 		return (-1);
+	if (ttf->head.units_per_em == 0)
+		ttf->head.units_per_em = 2048;
 	return (0);
 }

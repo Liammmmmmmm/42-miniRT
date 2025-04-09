@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:07:16 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 09:01:36 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 15:29:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,20 @@ int	read_table_directory(t_bin *bin, size_t *i, t_table_directory **tbl_dir,
 	return (0);
 }
 
+static void	save_offsets(t_ttf *ttf, int i)
+{
+	if (cmp_tbl_tag("glyf", ttf->ft_dir.tbl_dir[i].tag))
+		ttf->r_data.glyf_offset = ttf->ft_dir.tbl_dir[i].offset;
+	else if (cmp_tbl_tag("loca", ttf->ft_dir.tbl_dir[i].tag))
+		ttf->r_data.loca_offset = ttf->ft_dir.tbl_dir[i].offset;
+	else if (cmp_tbl_tag("head", ttf->ft_dir.tbl_dir[i].tag))
+		ttf->r_data.head_offset = ttf->ft_dir.tbl_dir[i].offset;
+	else if (cmp_tbl_tag("hhea", ttf->ft_dir.tbl_dir[i].tag))
+		ttf->r_data.hhea_offset = ttf->ft_dir.tbl_dir[i].offset;
+	else if (cmp_tbl_tag("hmtx", ttf->ft_dir.tbl_dir[i].tag))
+		ttf->r_data.hmtx_offset = ttf->ft_dir.tbl_dir[i].offset;
+}
+
 int	read_font_directory(t_bin *bin, t_ttf *ttf)
 {
 	size_t	i;
@@ -75,12 +89,7 @@ int	read_font_directory(t_bin *bin, t_ttf *ttf)
 	i = -1;
 	while (++i < (size_t)ttf->ft_dir.off_sub.num_tables)
 	{
-		if (cmp_tbl_tag("glyf", ttf->ft_dir.tbl_dir[i].tag))
-			ttf->r_data.glyf_offset = ttf->ft_dir.tbl_dir[i].offset;
-		else if (cmp_tbl_tag("loca", ttf->ft_dir.tbl_dir[i].tag))
-			ttf->r_data.loca_offset = ttf->ft_dir.tbl_dir[i].offset;
-		else if (cmp_tbl_tag("head", ttf->ft_dir.tbl_dir[i].tag))
-			ttf->r_data.head_offset = ttf->ft_dir.tbl_dir[i].offset;
+		save_offsets(ttf, i);
 	}
 	if (!ttf->r_data.glyf_offset || !ttf->r_data.loca_offset
 		|| !ttf->r_data.head_offset)

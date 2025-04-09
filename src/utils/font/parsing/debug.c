@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:49:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 18:18:17 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 14:43:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,4 +115,26 @@ void	print_glyph_outline(t_glyph_outline *outline)
 		else
 			printf("%d) (%d,%d - %d,%d)\n", i, outline->bezier_lines[i].p1.x, outline->bezier_lines[i].p1.y, outline->bezier_lines[i].p2.x, outline->bezier_lines[i].p2.y);
 	}
+}
+
+void	print_head(t_head *head)
+{
+	printf("\n--- HEAD ---");
+	printf("Version:              %u\n", head->version);
+    printf("Font Revision:        %u\n", head->font_revision);
+    printf("Check Sum Adjustment: %u\n", head->check_sum_adjustment);
+    printf("Magic Number:        %u\n", head->magic_number);
+    printf("Flags:               %u\n", head->flags);
+    printf("Units per EM:        %u\n", head->units_per_em);
+    printf("Created:             %ld\n", head->created);
+    printf("Modified:            %ld\n", head->modified);
+    printf("xMin:                %d\n", head->xmin);
+    printf("yMin:                %d\n", head->ymin);
+    printf("xMax:                %d\n", head->xmax);
+    printf("yMax:                %d\n", head->ymax);
+    printf("Mac Style:           %u\n", head->mac_style);
+    printf("Lowest Rec PPEM:     %u\n", head->lowest_rec_ppem);
+    printf("Font Direction Hint: %d\n", head->font_direction_hint);
+    printf("Index to Loc Format: %d\n", head->index_to_loc_format);
+    printf("Glyph Data Format:   %d\n", head->glyph_data_format);
 }

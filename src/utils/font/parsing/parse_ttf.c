@@ -6,11 +6,17 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:35:05 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 13:13:12 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 15:23:07 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "font.h"
+
+static int	free_print_msg(t_ttf *ttf, char *msg)
+{
+	free_ttf(ttf);
+	return (print_err_ttf(msg));
+}
 
 int	get_ttf(t_bin *bin, t_ttf *ttf)
 {
@@ -20,21 +26,14 @@ int	get_ttf(t_bin *bin, t_ttf *ttf)
 	if (get_cmap(bin, ttf) == -1)
 		return (free_ttf(ttf));
 	if (read_format4(bin, ttf) == -1)
-	{
-		free_ttf(ttf);
-		return (print_err_ttf("Error reading font format4. It may not be "
+		return (free_print_msg(ttf, "Error reading font format4. It may not be "
 				"compatible."));
-	}
 	if (read_head(bin, ttf) == -1)
-	{
-		free_ttf(ttf);
-		return (print_err_ttf("Error reading font file (corrupted file)."));
-	}
+		return (free_print_msg(ttf, "Error reading font file (corrupted file)."));
 	if (save_glyph256(bin, ttf) == -1)
-	{
-		free_ttf(ttf);
-		return (print_err_ttf("Error reading font file (malloc failed)."));
-	}
+		return (free_print_msg(ttf, "Error reading font file (malloc failed)."));
+	read_hhea(bin, ttf);
+	print_head(&ttf->head);
 	return (0);
 }
 

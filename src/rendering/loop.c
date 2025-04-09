@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 17:23:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 18:04:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,20 @@ void	render_buttons(t_minirt *minirt)
 		return ;
 	ft_bzero(minirt->mlx.img_controls.img_str, minirt->mlx.img_controls.width * minirt->mlx.img_controls.height * 4);
 	i = -1;
-	while (++i < minirt->controls.nb_buttons)
-		display_button(&minirt->mlx.img_controls, minirt->controls.buttons[i], minirt->controls.font);
-	i = -1;
-	while (++i < minirt->controls.nb_sliders)
-		display_slider_int(&minirt->mlx.img_controls, minirt->controls.sliders[i]);
+	// while (++i < minirt->controls.nb_buttons)
+	// 	display_button(&minirt->mlx.img_controls, minirt->controls.buttons[i], minirt->controls.font);
+	// i = -1;
+	// while (++i < minirt->controls.nb_sliders)
+	// 	display_slider_int(&minirt->mlx.img_controls, minirt->controls.sliders[i]);
+
+	// static unsigned char y = ' ';
+	// printf("Printing glyph %c (%d)\n", y, (uint32_t)y);
+	// draw_glyph_outline(&minirt->mlx.img_controls, &minirt->controls.font[0], y);
+	// y++;
+	
+	t_point2 pos = (t_point2){ .x = 100, .y = 100 };
+	minirt->controls.font[0].size = 100;
+	draw_string(&minirt->mlx.img_controls, &minirt->controls.font[0], "abcdefghijklmnopqrstuvwxyz\nABCDEFGHIJKLMNOPQRSTUVWXYZ", pos);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.controls_win, minirt->mlx.img_controls.img, 0, 0);
 }
 
@@ -53,7 +62,7 @@ void	put_render_to_frame(t_minirt *minirt)
 
 void	render_frame(t_minirt *minirt)
 {
-	render(minirt);
+	//render(minirt);
 	render_buttons(minirt);
 
 	minirt->stats.frame += 1;

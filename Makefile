@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/03/26 17:26:03 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/04/09 17:05:06 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,10 @@ RAY_TRACING_DIR		= src/ray_tracing/
 RAY_TRACING_FILE	= render.c hit_register.c random.c material_reflection.c
 
 RENDERING_DIR		= src/rendering/
-RENDERING_FILE		= init.c init_controls.c pixel.c loop.c
+RENDERING_FILE		= pixel.c loop.c
+
+ENV_DIR				= src/env/
+ENV_FILE			= init_mlx.c init_controls.c init_ui.c
 
 MATH_DIR			= src/math/
 MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/vec3_length.c \
@@ -92,6 +95,15 @@ PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
 					parse_elements2.c parse_elements3.c parse_elements_utils.c \
 					parse_elements_utils2.c parse_elements_utils3.c parse_elements_utils4.c
 
+FONT_PARS_DIR		= src/utils/font/parsing/
+FONT_PARS_FILE		= debug.c free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c read_cmap.c \
+					read_font_directory.c read_format4.c read_glyph.c read_head.c \
+					read_loca.c utils.c get_bezier.c get_bezier_utils.c read_hhea.c read_hmtx.c
+
+FONT_REND_DIR		= src/utils/font/rendering/
+FONT_REND_FILE		= draw_glyph_outline.c draw_string.c basic_slope.c tesselate_bezier.c
+
+
 M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
 			$(addprefix $(DEBUG_DIR), $(DEBUG_FILE)) \
@@ -101,7 +113,10 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(MATH_DIR), $(MATH_FILE)) \
 			$(addprefix $(UTILS_MLX_DIR), $(UTILS_MLX_FILE)) \
 			$(addprefix $(CONTROLS_DIR), $(CONTROLS_FILE)) \
-			$(addprefix $(PARSING_DIR), $(PARSING_FILE))
+			$(addprefix $(PARSING_DIR), $(PARSING_FILE)) \
+			$(addprefix $(FONT_PARS_DIR), $(FONT_PARS_FILE)) \
+			$(addprefix $(FONT_REND_DIR), $(FONT_REND_FILE)) \
+			$(addprefix $(ENV_DIR), $(ENV_FILE))
 
 # Source files bonus
 SRCS_BONUS = 

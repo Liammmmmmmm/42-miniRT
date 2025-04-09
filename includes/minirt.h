@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 17:21:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 19:46:08 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 # define WIN_HEIGHT 1080
 
 // Control window
-# define CWIN_WIDTH 300
-# define CWIN_HEIGHT 1080
+# define CWIN_WIDTH 1500
+# define CWIN_HEIGHT 1500
 
 typedef enum e_mouse_buttons
 {
@@ -102,6 +102,8 @@ typedef enum e_keys
 # define ERR_F "Invalid format for"
 
 int		print_error(char *err);
+
+int		init_ui(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    UTILS                                     ║
@@ -197,7 +199,7 @@ int		init_mlx(t_minirt *minirt);
 void	free_mlx(t_minirt *minirt);
 
 void	put_sp_image(t_img *img, t_sc_point *sp);
-void	put_pixel_image(t_img *img, t_uint x, t_uint y, int color);
+void	put_pixel_image(t_img *img, int x, int y, int color);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                   CONTROLS                                   ║

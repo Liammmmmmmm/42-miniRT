@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/09 17:05:06 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/04/10 12:15:16 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,11 +97,12 @@ PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
 
 FONT_PARS_DIR		= src/utils/font/parsing/
 FONT_PARS_FILE		= debug.c free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c read_cmap.c \
-					read_font_directory.c read_format4.c read_glyph.c read_head.c \
-					read_loca.c utils.c get_bezier.c get_bezier_utils.c read_hhea.c read_hmtx.c
+					read_font_directory.c read_format4.c read_glyph.c read_maxp.c read_head.c \
+					read_loca.c utils.c get_bezier.c get_bezier_utils.c read_hhea.c read_hmtx.c \
+					set_bezier_res.c
 
 FONT_REND_DIR		= src/utils/font/rendering/
-FONT_REND_FILE		= draw_glyph_outline.c draw_string.c basic_slope.c tesselate_bezier.c
+FONT_REND_FILE		= draw_glyph_outline.c draw_string.c basic_slope.c tesselate_bezier.c rasterization.c
 
 
 M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \

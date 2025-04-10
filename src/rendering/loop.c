@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 11:00:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/10 15:29:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	render_buttons(t_minirt *minirt)
 	// y++;
 	
 	t_point2 pos = (t_point2){ .x = 10, .y = 300 };
-	minirt->controls.font[0].size = 200;
+	minirt->controls.font[0].size = 150;
 
 	char printttt[300];
 	int start = 32;

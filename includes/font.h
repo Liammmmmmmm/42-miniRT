@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 10:48:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/10 15:01:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,13 @@ typedef struct s_random_font_data
 	uint32_t	glyf_offset;
 	uint32_t	hhea_offset;
 	uint32_t	hmtx_offset;
+	uint32_t	maxp_offset;
+	t_point2	*points_buff;
+	int32_t		estimated_max_seg_intersect;
+	int32_t		*seg_intersec;
+	float		scale;
+	int32_t		xmax;
+	int32_t		ytmp;
 }	t_random_font_data;
 
 typedef struct s_format4
@@ -163,6 +170,8 @@ typedef struct s_glyph_outline
 	int32_t			bezier_amount;
 	uint16_t		advance_width;
 	int16_t			left_side_bearing;
+	t_segment		*segments;
+	uint32_t		segments_amount;
 }	t_glyph_outline;
 
 typedef struct s_hhea
@@ -174,6 +183,11 @@ typedef struct s_hhea
 	uint16_t	num_hmetrics;
 }	t_hhea;
 
+typedef struct s_maxp
+{
+	uint16_t	max_contours;
+}	t_maxp;
+
 typedef struct s_ttf
 {
 	t_font_directory	ft_dir;
@@ -181,6 +195,7 @@ typedef struct s_ttf
 	t_cmap				cmap;
 	t_head				head;
 	t_hhea				hhea;
+	t_maxp				maxp;
 	t_glyph_outline		*glyph256;
 	int32_t				size;
 	uint16_t			bezier_resolution;
@@ -207,6 +222,7 @@ int		read_format4(t_bin *bin, t_ttf *ttf);
 int		read_head(t_bin *bin, t_ttf *ttf);
 int		read_hhea(t_bin *bin, t_ttf *ttf);
 int		read_hmtx(t_bin *bin, t_ttf *ttf);
+int		read_maxp(t_bin *bin, t_ttf *ttf);
 int		get_glyph_outline(t_bin *bin, t_ttf* ttf, uint32_t glyph_index,
 	t_glyph_outline *outline);
 int		init_co_y(t_bin *bin, size_t *i, t_glyph_outline *o, int last_index);
@@ -225,6 +241,8 @@ int		print_err_ttf(char *str);
 
 int		free_ttf(t_ttf *ttf);
 
+int		set_bezier_res(t_ttf *ttf, uint8_t bezier_res);
+
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    DEBUG                                     ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
@@ -233,18 +251,18 @@ void	print_table_directory(t_table_directory *tbl_dir, uint16_t tbl_size);
 void	print_cmap(t_cmap *c);
 void	print_format4(t_format4 *f4);
 void	print_glyph_outline(t_glyph_outline *outline);
-
-
-void	draw_line(t_point *point_a, t_point *point_b, t_img *img);
-void	draw_glyph_outline(t_img *img, t_ttf *ttf, t_uchar c, t_point2 pos);
-void	draw_string(t_img *img, t_ttf *ttf, char *str, t_point2 pos);
-
 void	print_head(t_head *head);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    RENDER                                    ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-void	tessellate_bezier(t_point2 *output, uint32_t *output_size, t_bezier *pts);
+void	tessellate_bezier(t_point2 *output, uint32_t output_size, t_bezier *pts);
+
+void	draw_line(t_point *point_a, t_point *point_b, t_img *img);
+void	draw_glyph_outline(t_img *img, t_ttf *ttf, t_uchar c, t_point2 pos);
+
+void	draw_glyph(t_img *img, t_ttf *ttf, t_uchar c, t_point2 pos);
+void	draw_string(t_img *img, t_ttf *ttf, char *str, t_point2 pos);
 
 #endif

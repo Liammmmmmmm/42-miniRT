@@ -6,16 +6,15 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:24:16 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 13:41:47 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/10 11:20:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "font.h"
 
-void	tessellate_bezier(t_point2 *output, uint32_t *output_size, t_bezier *pts
-	)
+void	tessellate_bezier(t_point2 *output, uint32_t output_size, t_bezier *pts)
 {
-	const uint32_t	subdiv_into = *output_size;
+	const uint32_t	subdiv_into = output_size;
 	uint32_t		i;
 	_Float32		step_per_iter;
 

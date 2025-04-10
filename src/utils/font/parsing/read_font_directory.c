@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:07:16 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 15:29:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/10 12:11:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ static void	save_offsets(t_ttf *ttf, int i)
 		ttf->r_data.hhea_offset = ttf->ft_dir.tbl_dir[i].offset;
 	else if (cmp_tbl_tag("hmtx", ttf->ft_dir.tbl_dir[i].tag))
 		ttf->r_data.hmtx_offset = ttf->ft_dir.tbl_dir[i].offset;
+	else if (cmp_tbl_tag("maxp", ttf->ft_dir.tbl_dir[i].tag))
+		ttf->r_data.maxp_offset = ttf->ft_dir.tbl_dir[i].offset;
 }
 
 int	read_font_directory(t_bin *bin, t_ttf *ttf)

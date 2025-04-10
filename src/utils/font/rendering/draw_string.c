@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:42:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 09:57:38 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/10 15:07:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void	draw_string(t_img *img, t_ttf *ttf, char *str, t_point2 pos)
 			continue ;
 		}
 		else if (str[i] != ' ')
-			draw_glyph_outline(img, ttf, str[i], pos);
+		{
+		//	draw_glyph_outline(img, ttf, str[i], pos);
+			draw_glyph(img, ttf, str[i], pos);
+		}
 		pos.x += ttf->glyph256[(uint8_t)str[i]].advance_width * scale;
 	}
 }

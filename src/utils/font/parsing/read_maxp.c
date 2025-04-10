@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_ui.c                                          :+:      :+:    :+:   */
+/*   read_maxp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 19:34:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 15:30:29 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/04/10 12:05:30 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/04/10 12:14:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "font.h"
 
-int	init_ui(t_minirt *minirt)
+int	read_maxp(t_bin *bin, t_ttf *ttf)
 {
-	if (get_font(&minirt->controls.font[0],
-		"assets/fonts/falling_sky_medium.ttf") == -1)
-		return (0);
-	return (1);
+	if (read_uint16(bin, ttf->r_data.maxp_offset + 8, &ttf->maxp.max_contours))
+		return (-1);
+	return (0);
 }
+

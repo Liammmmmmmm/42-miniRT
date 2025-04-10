@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 17:46:19 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/10 10:48:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ typedef struct s_bezier
 	t_bool		have_control: 1;
 	t_point2	pc;
 }	t_bezier;
+
+typedef struct s_segment
+{
+	t_point2	p1; 
+	t_point2	p2;
+}	t_segment;
 
 typedef struct s_head
 {
@@ -162,9 +168,9 @@ typedef struct s_glyph_outline
 typedef struct s_hhea
 {
 	uint32_t	version;
-	int16_t	ascent;
-	int16_t	descent;
-	int16_t	line_gap;
+	int16_t		ascent;
+	int16_t		descent;
+	int16_t		line_gap;
 	uint16_t	num_hmetrics;
 }	t_hhea;
 
@@ -178,6 +184,7 @@ typedef struct s_ttf
 	t_glyph_outline		*glyph256;
 	int32_t				size;
 	uint16_t			bezier_resolution;
+	uint8_t				ssp;
 }	t_ttf;
 
 # include "./structs.h"

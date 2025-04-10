@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 18:04:28 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/10 10:25:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,26 @@ void	render_buttons(t_minirt *minirt)
 	// draw_glyph_outline(&minirt->mlx.img_controls, &minirt->controls.font[0], y);
 	// y++;
 	
-	t_point2 pos = (t_point2){ .x = 100, .y = 100 };
-	minirt->controls.font[0].size = 100;
-	draw_string(&minirt->mlx.img_controls, &minirt->controls.font[0], "abcdefghijklmnopqrstuvwxyz\nABCDEFGHIJKLMNOPQRSTUVWXYZ", pos);
+	t_point2 pos = (t_point2){ .x = 10, .y = 300 };
+	minirt->controls.font[0].size = 300;
+
+	// char printttt[300];
+	// int start = 32;
+	// int y = start;
+	// int s = 0;
+	// while (y < 256)
+	// {
+	// 	printttt[y + s - start] = y;
+	// 	if (y == '/' || y == '9' || y == '@' || y == 'z' || y == 'Z' || y == '`' || y == '}' || y == 160 || y == 192)
+	// 	{
+	// 		s++;
+	// 		printttt[y + s - start] = '\n';
+	// 	}
+	// 	y++;
+	// }
+	// printttt[y + s - start] = '\0';
+
+	draw_string(&minirt->mlx.img_controls, &minirt->controls.font[0], "ABCDEF\nGHIJKL\nMNOPQR\nSTUVWX\nYZ", pos);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.controls_win, minirt->mlx.img_controls.img, 0, 0);
 }
 

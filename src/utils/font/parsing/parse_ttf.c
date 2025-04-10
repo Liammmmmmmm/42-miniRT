@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:35:05 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 14:49:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/10 16:30:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ int	get_font(t_ttf *ttf, char *filename)
 	ttf_res = get_ttf(&bin, ttf);
 	free(bin.data);
 	ttf->size = 50;
+	ttf->color = 0xFFFFFF;
 	return (ttf_res);
 }

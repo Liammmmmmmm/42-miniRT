@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 15:01:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/10 16:36:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,7 @@ typedef struct s_ttf
 	int32_t				size;
 	uint16_t			bezier_resolution;
 	uint8_t				ssp;
+	uint32_t			color;
 }	t_ttf;
 
 # include "./structs.h"
@@ -259,7 +260,7 @@ void	print_head(t_head *head);
 
 void	tessellate_bezier(t_point2 *output, uint32_t output_size, t_bezier *pts);
 
-void	draw_line(t_point *point_a, t_point *point_b, t_img *img);
+void	draw_line(t_point *point_a, t_point *point_b, t_img *img, int c);
 void	draw_glyph_outline(t_img *img, t_ttf *ttf, t_uchar c, t_point2 pos);
 
 void	draw_glyph(t_img *img, t_ttf *ttf, t_uchar c, t_point2 pos);

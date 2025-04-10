@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:48:45 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 11:35:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/10 15:44:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static void	get_segments_char(t_ttf *ttf, t_uchar c)
 	ttf->glyph256[c].segments = ft_calloc(ttf->glyph256[c].segments_amount, sizeof(t_segment));
 	if (!ttf->glyph256[c].segments)
 		return ;
+	ttf->glyph256[c].xmin += lsb;
+	ttf->glyph256[c].xmax += lsb;
 	while (i < ttf->glyph256[c].bezier_amount && y < ttf->glyph256[c].segments_amount)
 	{
 		if (ttf->glyph256[c].bezier_lines[i].have_control == 0)

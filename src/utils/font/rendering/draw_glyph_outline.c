@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:41:04 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 11:41:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/10 16:36:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	draw_glyph_outline(t_img *img, t_ttf *ttf, t_uchar c, t_point2 pos)
 		p1.y = ttf->glyph256[c].segments[i].p1.y * -scale + pos.y;
 		p2.x = ttf->glyph256[c].segments[i].p2.x * scale + pos.x;
 		p2.y = ttf->glyph256[c].segments[i].p2.y * -scale + pos.y;
-		draw_line(&p1, &p2, img);
+		draw_line(&p1, &p2, img, ttf->color);
 		i++;
 	}
 }

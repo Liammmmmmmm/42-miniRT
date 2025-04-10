@@ -6,13 +6,13 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 15:02:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 15:11:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/10 16:35:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	draw_line_x(t_point *point_a, t_point *point_b, t_img *img)
+void	draw_line_x(t_point *point_a, t_point *point_b, t_img *img, int c)
 {
 	float	m;
 	int		dx;
@@ -26,17 +26,17 @@ void	draw_line_x(t_point *point_a, t_point *point_b, t_img *img)
 	{
 		temp = point_a->x - 1;
 		while (++temp <= point_b->x)
-			put_pixel_image(img, temp, m * (temp - point_a->x) + point_a->y, 0xffffff);
+			put_pixel_image(img, temp, m * (temp - point_a->x) + point_a->y, c);
 	}
 	else
 	{
 		temp = point_b->x - 1;
 		while (++temp <= point_a->x)
-			put_pixel_image(img, temp, m * (temp - point_b->x) + point_b->y, 0xffffff);
+			put_pixel_image(img, temp, m * (temp - point_b->x) + point_b->y, c);
 	}
 }
 
-void	draw_line_y(t_point *point_a, t_point *point_b, t_img *img)
+void	draw_line_y(t_point *point_a, t_point *point_b, t_img *img, int c)
 {
 	float	m;
 	int		dx;
@@ -50,17 +50,17 @@ void	draw_line_y(t_point *point_a, t_point *point_b, t_img *img)
 	{
 		temp = point_a->y - 1;
 		while (++temp <= point_b->y)
-			put_pixel_image(img, m * (temp - point_a->y) + point_a->x, temp, 0xffffff);
+			put_pixel_image(img, m * (temp - point_a->y) + point_a->x, temp, c);
 	}
 	else
 	{
 		temp = point_b->y - 1;
 		while (++temp <= point_a->y)
-			put_pixel_image(img, m * (temp - point_b->y) + point_b->x, temp, 0xffffff);
+			put_pixel_image(img, m * (temp - point_b->y) + point_b->x, temp, c);
 	}
 }
 
-void	draw_line(t_point *point_a, t_point *point_b, t_img *img)
+void	draw_line(t_point *point_a, t_point *point_b, t_img *img, int c)
 {
 	int	dx;
 	int	dy;
@@ -71,12 +71,12 @@ void	draw_line(t_point *point_a, t_point *point_b, t_img *img)
 	{
 		if (dx == 0)
 			return ;
-		draw_line_x(point_a, point_b, img);
+		draw_line_x(point_a, point_b, img,c);
 	}
 	else
 	{
 		if (dy == 0)
 			return ;
-		draw_line_y(point_a, point_b, img);
+		draw_line_y(point_a, point_b, img, c);
 	}
 }

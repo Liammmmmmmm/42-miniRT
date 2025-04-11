@@ -16,6 +16,7 @@
 # include "libft.h"
 # include "mlx_base.h"
 # include "mlx_components.h"
+# include "font.h"
 
 typedef unsigned char t_bool;
 typedef unsigned char t_uchar;
@@ -76,11 +77,18 @@ typedef enum e_tex_type
 	COLOR,
 }	t_tex_type;
 
+typedef struct s_tex_img
+{
+	uint32_t	width;
+	uint32_t	height;
+	uint32_t	*pixel_data;
+}	t_tex_img;
+
 typedef struct s_tex
 {
 	char		name[21];
 	t_tex_type	type;
-	int			fd;
+	t_tex_img	img;
 }	t_tex;
 
 typedef struct s_mat
@@ -138,7 +146,8 @@ typedef struct s_sphere
 	double	diameter;
 	t_mat	*material;
 	t_color	color;
-	double	sqrt_diameter;
+	double	sqrt_radius;
+	double	radius;
 }	t_sphere;
 
 typedef struct s_plane
@@ -257,7 +266,7 @@ typedef struct s_controls
 	t_uint			mlyc;
 	t_uint			mlxr;
 	t_uint			mlyr;
-	t_uchar			font[96][5];
+	t_uchar			font8b[96][5];
 	int				open_controls;
 	int				nb_buttons;
 	int				btn_clicked;
@@ -265,7 +274,7 @@ typedef struct s_controls
 	t_edited_val	values;
 	int				nb_sliders;
 	t_int_slider	*sliders;
-	
+	t_ttf			font[1];
 }	t_controls;
 
 typedef struct s_minirt

@@ -35,9 +35,9 @@ void	init_start_stop(t_minirt *minirt)
 	minirt->controls.buttons[0].text = ft_strdup("START");
 	minirt->controls.buttons[1].text = ft_strdup("STOP");
 	minirt->controls.buttons[2].text = ft_strdup("PAUSE/RESUME");
-	minirt->controls.buttons[0].y = 1046;
-	minirt->controls.buttons[1].y = 1046;
-	minirt->controls.buttons[2].y = 1018;
+	minirt->controls.buttons[0].y = 1038;
+	minirt->controls.buttons[1].y = 1038;
+	minirt->controls.buttons[2].y = 1002;
 	minirt->controls.buttons[0].disabled = 1;
 	if (minirt->controls.buttons[0].param)
 		((t_btn_param *)minirt->controls.buttons[0].param)->action = 0;

@@ -13,6 +13,7 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
+# include "font.h"
 # include "structs.h"
 # include "libft.h"
 # include "maths.h"
@@ -22,6 +23,7 @@
 # include <string.h>
 # include <errno.h>
 # include <math.h>
+# include "bmp_parsing.h"
 
 # define PI_10D 3.1415926535
 
@@ -29,8 +31,8 @@
 # define WIN_HEIGHT 1080
 
 // Control window
-# define CWIN_WIDTH 300
-# define CWIN_HEIGHT 1080
+# define CWIN_WIDTH 1500
+# define CWIN_HEIGHT 1500
 
 typedef enum e_mouse_buttons
 {
@@ -102,6 +104,8 @@ typedef enum e_keys
 # define ERR_F "Invalid format for"
 
 int		print_error(char *err);
+
+int		init_ui(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    UTILS                                     ║
@@ -197,7 +201,7 @@ int		init_mlx(t_minirt *minirt);
 void	free_mlx(t_minirt *minirt);
 
 void	put_sp_image(t_img *img, t_sc_point *sp);
-void	put_pixel_image(t_img *img, t_uint x, t_uint y, int color);
+void	put_pixel_image(t_img *img, int x, int y, int color);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                   CONTROLS                                   ║
@@ -226,6 +230,7 @@ void	events_controls(t_minirt *minirt);
 void	render_frame(t_minirt *minirt);
 int		init_render(t_minirt *minirt);
 
+int		calc_gradiant_color(int color_a, int color_b, float ratio);
 void	put_render_to_frame(t_minirt *minirt);
 void	render(t_minirt *minirt);
 

@@ -124,7 +124,7 @@ void	print_scene(t_scene *scene)
 		t_tex *texture = &scene->textures[i];
 
 		printf("  " YELLOW "Tex: `%s'\n" NC, texture->name);		
-		printf("    Associated fd: " BLUE "%d" NC "\n", texture->fd);
+		// printf("    Associated fd: " BLUE "%d" NC "\n", texture->fd);
 	}
 
 	printf("\n" RED "Scene Materials (%d):\n" NC, scene->mat_amount);

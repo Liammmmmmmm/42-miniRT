@@ -20,7 +20,7 @@ void	free_tex_mat(t_scene *scene)
 	{
 		i = -1;
 		while (++i < scene->tex_amount)
-			close(scene->textures[i].fd);
+			free(scene->textures[i].img.pixel_data);
 		free(scene->textures);
 		scene->textures = NULL;
 	}

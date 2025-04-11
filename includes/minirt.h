@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/04/11 15:12:43 by lilefebv         ###   ########lyon.fr   */
@@ -23,6 +23,7 @@
 # include <string.h>
 # include <errno.h>
 # include <math.h>
+# include "bmp_parsing.h"
 
 # define PI_10D 3.1415926535
 

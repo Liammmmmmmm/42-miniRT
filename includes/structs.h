@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 09:04:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/10 19:18:07 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@
 # include "libft.h"
 # include "mlx_base.h"
 # include "mlx_components.h"
+# include "bmp_parsing.h"
 # include "font.h"
+
+typedef unsigned char t_bool;
+typedef unsigned char t_uchar;
 
 typedef struct s_lcolor
 {
@@ -275,6 +279,7 @@ typedef struct s_minirt
 	t_stats		stats;
 	t_viewport	viewport;
 	t_controls	controls;
+	t_bmp		bmp;
 }	t_minirt;
 
 typedef struct s_btn_param

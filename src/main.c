@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 10:34:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 15:27:52 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "bmp_parsing.h"
 
 int	render_next_frame(t_minirt *minirt)
 {
@@ -59,7 +60,8 @@ int	main(int argc, char **argv)
 		return (clean(&minirt));
 	if (!init_render(&minirt))
 		return (clean(&minirt));
-	print_scene(&minirt.scene);
+	// print_scene(&minirt.scene);
+	bmp_manager(&minirt.bmp, "assets/texture/test.bmp");
 	events(&minirt);
 	mlx_loop_hook(minirt.mlx.mlx, render_next_frame, &minirt);
 	mlx_loop(minirt.mlx.mlx);

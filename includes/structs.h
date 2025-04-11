@@ -17,6 +17,7 @@
 # include "mlx_base.h"
 # include "mlx_components.h"
 # include "bmp_parsing.h"
+# include "font.h"
 
 typedef unsigned char t_bool;
 typedef unsigned char t_uchar;
@@ -259,7 +260,7 @@ typedef struct s_controls
 	t_uint			mlyc;
 	t_uint			mlxr;
 	t_uint			mlyr;
-	t_uchar			font[96][5];
+	t_uchar			font8b[96][5];
 	int				open_controls;
 	int				nb_buttons;
 	int				btn_clicked;
@@ -267,7 +268,7 @@ typedef struct s_controls
 	t_edited_val	values;
 	int				nb_sliders;
 	t_int_slider	*sliders;
-	
+	t_ttf			font[1];
 }	t_controls;
 
 typedef struct s_minirt

@@ -13,16 +13,18 @@
 #include "minirt.h"
 #include "bmp_parsing.h"
 
-void	render_buttons(t_minirt *minirt)
+void	render_controls(t_minirt *minirt)
 {
 	int	i;
 
 	if (!minirt->mlx.controls_win)
 		return ;
 	ft_bzero(minirt->mlx.img_controls.img_str, minirt->mlx.img_controls.width * minirt->mlx.img_controls.height * 4);
+	minirt->controls.font[0].size = 20;
+	minirt->controls.font[0].color = 0;
 	i = -1;
 	while (++i < minirt->controls.nb_buttons)
-		display_button(&minirt->mlx.img_controls, minirt->controls.buttons[i], minirt->controls.font);
+		display_button(&minirt->mlx.img_controls, minirt->controls.buttons[i], &minirt->controls.font[0]);
 	i = -1;
 	while (++i < minirt->controls.nb_sliders)
 		display_slider_int(&minirt->mlx.img_controls, minirt->controls.sliders[i]);
@@ -54,20 +56,7 @@ void	put_render_to_frame(t_minirt *minirt)
 
 void render_frame(t_minirt *minirt)
 {
-	int width = minirt->bmp.info.with;
-	int height = minirt->bmp.info.height;
-
-	for (int y = 0; y < height; y++)
-	{
-		int bmp_y = height - 1 - y;
-		for (int x = 0; x < width; x++)
-		{
-			size_t offset = bmp_y * minirt->bmp.info.with + x;
-			put_pixel_image(&minirt->mlx.img, x, y, minirt->bmp.pixel_data[offset]);
-		}
-	}
-	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
+	render(minirt);
+	render_controls(minirt);
 	minirt->stats.frame += 1;
 }
-
-

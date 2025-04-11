@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:10:05 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 14:41:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 12:55:56 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ typedef struct s_color
 	unsigned char	b;	/* Blue component of the color. */
 }	t_color;
 
+typedef struct s_color_alpha
+{
+	int		color;
+	float	alpha;
+}	t_color_alpha;
+
 /**
  * @struct s_point
  * @brief Structure representing a point in 2D space with a color.
@@ -65,10 +71,12 @@ typedef struct s_color
  */
 typedef struct s_point
 {
-	int		x;		/* X-coordinate of the point on the screen. */
-	int		y;		/* Y-coordinate of the point on the screen. */
-	double	z;		/* Depth of the point. */
-	int		color;	/* Color of the point. */
+	int32_t	x;		/* X-coordinate of the point on the screen. */
+	int32_t	y;		/* Y-coordinate of the point on the screen. */
+	double		z;		/* Depth of the point. */
+	int			color;	/* Color of the point. */
 }	t_point;
+
+void	put_pixel_image_alpha(t_img *img, int x, int y, t_color_alpha color);
 
 #endif

@@ -6,20 +6,20 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:47:09 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 16:31:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 15:35:24 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx_components.h"
 #include <stdio.h>
 
-void	display_button(t_img *img, const t_button button, unsigned char font[96][5])
+void	display_button(t_img *img, const t_button button, t_ttf *ttf)
 {
-	int		i;
-	int		j;
-	t_point start;
-	int		bg_color;
-	int		br_color;
+	int			i;
+	int			j;
+	t_point2	start;
+	int			bg_color;
+	int			br_color;
 
 	if (button.disabled)
 		return ;
@@ -55,10 +55,11 @@ void	display_button(t_img *img, const t_button button, unsigned char font[96][5]
 	}
 	if (button.text)
 	{
-		start.x = button.x + button.width / 2 - (string_size(button.text) / 2);
-		start.y = button.y + button.height / 2 - 3;
-		start.color = 0;
-		string_to_img(img, font, start, button.text);
+		start.x = button.x + button.width / 2 - (get_string_width(ttf, button.text) / 2);
+		start.y = button.y + button.height / 2 + ((get_height(ttf)) / 2);
+		draw_string(img, ttf, button.text, start);
+		put_pixel_image(img, 20, start.y, 0xFF0000);
+		put_pixel_image(img, 20, start.y - get_height(ttf), 0xFF0000);
 	}
 }
 

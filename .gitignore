@@ -13,3 +13,7 @@ miniRT
 a.out
 
 test.c*
+
+callgrind.out
+
+assets/fonts/fontdecon*.ttf

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 19:46:08 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 10:24:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +228,7 @@ void	events_controls(t_minirt *minirt);
 void	render_frame(t_minirt *minirt);
 int		init_render(t_minirt *minirt);
 
+int		calc_gradiant_color(int color_a, int color_b, float ratio);
 void	put_render_to_frame(t_minirt *minirt);
 void	render(t_minirt *minirt);
 

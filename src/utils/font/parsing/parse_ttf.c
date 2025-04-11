@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:35:05 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 09:00:51 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 10:26:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,6 @@ int	get_ttf(t_bin *bin, t_ttf *ttf)
 	read_hmtx(bin, ttf);
 	read_maxp(bin, ttf);
 	ttf->r_data.estimated_max_seg_intersect = 64;
-	ttf->r_data.seg_intersec
-		= ft_calloc(ttf->r_data.estimated_max_seg_intersect, sizeof(uint32_t));
-	if (!ttf->r_data.seg_intersec)
-		return (free_print_msg(ttf, "Error reading font (malloc failed)."));
 	set_bezier_res(ttf, 5);
 	return (0);
 }
@@ -50,6 +46,8 @@ int	get_font(t_ttf *ttf, char *filename)
 	t_bin	bin;
 	int		ttf_res;
 
+	if (ANTI_ALIASING_LEVEL <= 0)
+		return (print_err_ttf("Invalid anti aliasing level."));
 	if (!ttf)
 		return (-1);
 	if (!read_bin_file(&bin, filename))
@@ -59,5 +57,6 @@ int	get_font(t_ttf *ttf, char *filename)
 	free(bin.data);
 	ttf->size = 50;
 	ttf->color = 0xFFFFFF;
+	ttf->r_data.aalvlsqr = ANTI_ALIASING_LEVEL * ANTI_ALIASING_LEVEL;
 	return (ttf_res);
 }

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 16:36:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 11:20:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 
 # define FONT_DEBUG 1
 # define MAGIC_NUMBER 0x5F0F3CF5
+
+# define ESTIMATED_MAX_INTERSECT 64
+# define ANTI_ALIASING_LEVEL 2
 
 typedef struct s_point2
 {
@@ -72,7 +75,8 @@ typedef struct s_random_font_data
 	uint32_t	maxp_offset;
 	t_point2	*points_buff;
 	int32_t		estimated_max_seg_intersect;
-	int32_t		*seg_intersec;
+	int32_t		seg_intersec[ANTI_ALIASING_LEVEL][ESTIMATED_MAX_INTERSECT];
+	int32_t		aalvlsqr;
 	float		scale;
 	int32_t		xmax;
 	int32_t		ytmp;
@@ -258,6 +262,7 @@ void	print_head(t_head *head);
 ║                                    RENDER                                    ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
+int		calc_gradiant_color(int color_a, int color_b, float ratio);
 void	tessellate_bezier(t_point2 *output, uint32_t output_size, t_bezier *pts);
 
 void	draw_line(t_point *point_a, t_point *point_b, t_img *img, int c);

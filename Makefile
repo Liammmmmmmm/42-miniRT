@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/10 12:15:16 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/04/11 11:17:50 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -130,7 +130,7 @@ OBJ_BONUS = $(B_FILE:%.c=$(OBJ_DIR)%.o)
 # Remake all if modified
 REMAKE   = libft/includes/libft.h libft/includes/ft_printf.h \
 		libft/includes/get_next_line.h libft/Makefile  Makefile \
-		includes/structs.h includes/minirt.h
+		includes/structs.h includes/minirt.h includes/font.h
 
 # NORMINETTE
 NORM_RET = $(RED)[ERROR]$(BOLD) Norminette Disable$(NC)

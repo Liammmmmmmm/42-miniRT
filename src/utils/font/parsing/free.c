@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 09:02:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 12:17:24 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 09:46:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,5 @@ int	free_ttf(t_ttf *ttf)
 	ttf->cmap.format4 = NULL;
 	free_glyphs(ttf->glyph256, 256);
 	ttf->glyph256 = NULL;
-	free(ttf->r_data.seg_intersec);
 	return (-1);
 }

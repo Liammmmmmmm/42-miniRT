@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 16:26:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 11:15:17 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	render_buttons(t_minirt *minirt)
 	// y++;
 	
 	t_point2 pos = (t_point2){ .x = 10, .y = 300 };
-	minirt->controls.font[0].size = 50;
+	minirt->controls.font[0].size = 15;
 
 	char printttt[300];
 	int start = 32;
@@ -51,6 +51,11 @@ void	render_buttons(t_minirt *minirt)
 	printttt[y + s - start] = '\0';
 
 	draw_string(&minirt->mlx.img_controls, &minirt->controls.font[0], printttt, pos);
+	t_point p;
+	p.x = 20;
+	p.y = 1000;
+	p.color = 0xFFFFFF;
+	string_to_img(&minirt->mlx.img_controls, minirt->controls.font8b, p, "Test");
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.controls_win, minirt->mlx.img_controls.img, 0, 0);
 }
 

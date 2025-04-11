@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:44:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 16:34:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 11:19:20 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,30 @@ static void	min_max_seg(t_point2 *p1, t_point2 *p2, t_segment seg)
 	}
 }
 
-static uint16_t	get_all_seg_intersect(t_ttf *ttf, t_glyph_outline *o, int y,
-	const float scale)
+static uint16_t	*get_all_seg_intersect(t_ttf *ttf, t_glyph_outline *o, int y,
+	uint16_t n[ANTI_ALIASING_LEVEL])
 {
 	t_uint		i;
-	uint16_t	n;
+	int			m;
 	t_point2	p1;
 	t_point2	p2;
 
-	i = -1;
-	n = 0;
-	while (++i < o->segments_amount
-		&& n < ttf->r_data.estimated_max_seg_intersect)
+	m = -1;
+	while (++m < ANTI_ALIASING_LEVEL)
 	{
-		min_max_seg(&p1, &p2, o->segments[i]);
-		if (y <= p1.y || y > p2.y)
+		i = -1;
+		n[m] = 0;
+		while (++i < o->segments_amount
+			&& n[m] < ttf->r_data.estimated_max_seg_intersect)
+		{
+			min_max_seg(&p1, &p2, o->segments[i]);
+			if (y <= p1.y || y > p2.y)
 			continue ;
-		ttf->r_data.seg_intersec[n] = \
-		(p1.x + ((y - p1.y) / (float)(p2.y - p1.y)) * (p2.x - p1.x)) * scale;
-		n++;
+			ttf->r_data.seg_intersec[m][n[m]] = \
+			(p1.x + ((y - p1.y) / (float)(p2.y - p1.y)) * (p2.x - p1.x)) * ttf->r_data.scale;
+			n[m]++;
+		}
+		y++;
 	}
 	return (n);
 }
@@ -71,19 +76,29 @@ static uint16_t	count_intersect_pos(int32_t *interlist, uint16_t num_seg, int x)
 
 static void	draw_scanline(t_img *img, t_ttf *ttf, t_uchar c, t_point2 pos)
 {
-	const uint16_t	num_seg = get_all_seg_intersect(ttf, &ttf->glyph256[c],
-			ttf->r_data.ytmp / ttf->r_data.scale, ttf->r_data.scale);
-	int32_t			x;
-	uint16_t		intersects;
+	uint16_t	num_seg[ANTI_ALIASING_LEVEL];
+	int32_t		x;
+	uint16_t	intersects[ANTI_ALIASING_LEVEL];
+	int32_t		y;
+	int			total_inter;
 
+	get_all_seg_intersect(ttf, &ttf->glyph256[c], ttf->r_data.ytmp / ttf->r_data.scale, num_seg);
 	x = ttf->glyph256[c].xmin * ttf->r_data.scale;
-	intersects = 0;
+	int32_t xstart = x;
+	ft_bzero(intersects, sizeof(uint16_t) * ANTI_ALIASING_LEVEL);
 	while (x <= ttf->r_data.xmax)
 	{
-		intersects += count_intersect_pos(ttf->r_data.seg_intersec, num_seg, x);
-		if (intersects % 2 == 1)
-			put_pixel_image(img, pos.x + x, pos.y - ttf->r_data.ytmp,
-				ttf->color);
+		if ((x - xstart) % ANTI_ALIASING_LEVEL == 0)
+			total_inter = 0;
+		y = -1;
+		while (++y < ANTI_ALIASING_LEVEL)
+		{
+			intersects[y] += count_intersect_pos(ttf->r_data.seg_intersec[y], num_seg[y], x);
+			if (intersects[y] % 2 == 1)
+				total_inter++;
+		}
+		if ((x - xstart) % ANTI_ALIASING_LEVEL == ANTI_ALIASING_LEVEL - 1)
+			put_pixel_image(img, pos.x + (x / ANTI_ALIASING_LEVEL), pos.y - (ttf->r_data.ytmp / ANTI_ALIASING_LEVEL), calc_gradiant_color(0, ttf->color, (float)total_inter / ttf->r_data.aalvlsqr));
 		x++;
 	}
 }
@@ -93,14 +108,14 @@ void	draw_glyph(t_img *img, t_ttf *ttf, t_uchar c, t_point2 pos)
 	int	maxy;
 	int	y;
 
-	ttf->r_data.scale = ttf->size / (float)ttf->head.units_per_em;
+	ttf->r_data.scale = ttf->size / (float)ttf->head.units_per_em * ANTI_ALIASING_LEVEL;
 	ttf->r_data.xmax = ttf->glyph256[c].xmax * ttf->r_data.scale;
 	maxy = ttf->glyph256[c].ymax * ttf->r_data.scale;
 	y = ttf->glyph256[c].ymin * ttf->r_data.scale;
-	while (y < maxy)
+	while (y <= maxy)
 	{
 		ttf->r_data.ytmp = y;
 		draw_scanline(img, ttf, c, pos);
-		y++;
+		y += ANTI_ALIASING_LEVEL;
 	}
 }

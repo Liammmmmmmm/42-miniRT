@@ -6,20 +6,21 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:50:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/10 19:27:33 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:25:28 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "bmp_parsing.h"
+#include <stdio.h>
 
-int	extract_palette_pixel(t_bin *bin, size_t *i, uint32_t *value)
+int	extract_palette_pixel(t_bin *bin, size_t *i, uint32_t *value, t_bmp *bmp)
 {
 	uint8_t	palette_index;
 
 	if (read_uint8_move(bin, i, &palette_index) == -1)
 		return (1);
-	*value = palette_index;
+	*value = bmp->palette[palette_index];
 	return (0);
 }
 
@@ -81,11 +82,11 @@ int	extract_pixel(t_bin *bin, size_t *i, t_bmp *bmp, uint32_t *value)
 
 	pixel_value = 0;
 	if (bmp->info.bpp == 1)
-		return (extract_palette_pixel(bin, i, value));
+		return (extract_palette_pixel(bin, i, value, bmp));
 	else if (bmp->info.bpp == 4)
-		return (extract_palette_pixel(bin, i, value));
+		return (extract_palette_pixel(bin, i, value, bmp));
 	else if (bmp->info.bpp == 8)
-		return (extract_palette_pixel(bin, i, value));
+		return (extract_palette_pixel(bin, i, value, bmp));
 	else if (bmp->info.bpp == 16)
 		return (extract_16bpp_pixel(bin, i, value));
 	else if (bmp->info.bpp == 24)

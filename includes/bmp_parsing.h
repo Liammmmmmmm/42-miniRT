@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:42:24 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/10 17:56:35 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:24:51 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_bmp
 
 int	bmp_manager(t_bmp *bmp, char *file);
 int	error_and_return(char *message);
-int	extract_palette_pixel(t_bin *bin, size_t *i, uint32_t *value);
+int	extract_palette_pixel(t_bin *bin, size_t *i, uint32_t *value, t_bmp *bmp);
 int	extract_16bpp_pixel(t_bin *bin, size_t *i, uint32_t *value);
 int	extract_24bpp_pixel(t_bin *bin, size_t *i, uint32_t *value);
 int	extract_32bpp_pixel(t_bin *bin, size_t *i, uint32_t *value);

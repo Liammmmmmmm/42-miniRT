@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:31:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/10 19:15:19 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:12:46 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ int	extract_bmp_data(t_bmp *bmp, char *file, t_bin *bin, size_t *i)
 	uint32_t	palette_entry_count;
 
 	if (read_bin_file(bin, file) == 0)
-		return(error_and_return("error: unable to read BMP file\n"));
+		return (error_and_return("error: unable to read BMP file\n"));
 	if (read_header(bmp, i, bin) == 1 || read_info(bmp, i, bin) == 1)
+		return (1);
 	if (bmp->info.bpp == 1 || bmp->info.bpp == 4 || bmp->info.bpp == 8)
 	{
 		palette_entry_count = bmp->info.nb_color;

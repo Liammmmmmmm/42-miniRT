@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 19:42:24 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:27:52 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	main(int argc, char **argv)
 		return (clean(&minirt));
 	if (!init_render(&minirt))
 		return (clean(&minirt));
-	print_scene(&minirt.scene);
-	bmp_manager(&minirt.bmp, "assets/texture/type16.bmp");
+	// print_scene(&minirt.scene);
+	bmp_manager(&minirt.bmp, "assets/texture/test.bmp");
 	events(&minirt);
 	mlx_loop_hook(minirt.mlx.mlx, render_next_frame, &minirt);
 	mlx_loop(minirt.mlx.mlx);

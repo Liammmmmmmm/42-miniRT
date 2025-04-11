@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 19:33:47 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:05:20 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,29 +52,22 @@ void	put_render_to_frame(t_minirt *minirt)
 	}
 }
 
-void	render_frame(t_minirt *minirt)
+void render_frame(t_minirt *minirt)
 {
-	int i = -1;
-	int tpix = minirt->mlx.img.width * minirt->mlx.img.height;
-	// t_sc_point	point;
-	i = -1;
-	while (++i < tpix)
+	int width = minirt->bmp.info.with;
+	int height = minirt->bmp.info.height;
+
+	for (int y = 0; y < height; y++)
 	{
-		uint32_t x = i % minirt->bmp.info.with;
-		uint32_t y = i / minirt->bmp.info.with;
-		if (x < minirt->bmp.info.with && y < minirt->bmp.info.height)
+		int bmp_y = height - 1 - y;
+		for (int x = 0; x < width; x++)
 		{
-			// point.x = x;
-			// point.y = y;
-			// point.color.r = (minirt->bmp.pixel_data[y * minirt->bmp.info.with + x] >> 16) & 0xFF;
-			// point.color.g = (minirt->bmp.pixel_data[y * minirt->bmp.info.with + x]  >> 8) & 0xFF;
-			// point.color.b = minirt->bmp.pixel_data[y * minirt->bmp.info.with + x]  & 0xFF;
-			((int *)minirt->mlx.img.img_str + (x) + (minirt->mlx.img.width * y))[0] = \
-			(int)(minirt->bmp.pixel_data[y * minirt->bmp.info.with + x]);
-			// put_sp_image(&minirt->mlx.img, &point);
+			size_t offset = bmp_y * minirt->bmp.info.with + x;
+			put_pixel_image(&minirt->mlx.img, x, y, minirt->bmp.pixel_data[offset]);
 		}
 	}
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
 	minirt->stats.frame += 1;
 }
+
 

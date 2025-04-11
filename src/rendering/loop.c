@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 17:23:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 13:29:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	put_render_to_frame(t_minirt *minirt)
 
 void	render_frame(t_minirt *minirt)
 {
-	render(minirt);
+	//render(minirt);
 	render_buttons(minirt);
 
 	minirt->stats.frame += 1;

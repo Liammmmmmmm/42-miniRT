@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 17:25:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/09 10:34:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	clean(t_minirt *minirt)
 	clear_sliders(minirt);
 	if (minirt->screen.render)
 		free(minirt->screen.render);
+	free_ttf(&minirt->controls.font[0]);
 	return (1);
 }
 
@@ -52,6 +53,8 @@ int	main(int argc, char **argv)
 	ft_bzero(&minirt, sizeof(t_minirt));
 	if (parse_scene(&minirt, argv[1]) == 0)
 		return (1);
+	if (!init_ui(&minirt))
+		return (clean(&minirt));
 	if (!init_mlx(&minirt))
 		return (clean(&minirt));
 	if (!init_render(&minirt))

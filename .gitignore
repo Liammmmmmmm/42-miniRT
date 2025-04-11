@@ -15,5 +15,6 @@ a.out
 test.c*
 
 callgrind.out
+out
 
 assets/fonts/fontdecon*.ttf

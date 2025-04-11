@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/11 17:08:37 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/04/11 17:18:14 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,8 @@ SRC_DIR				= src/
 SRC_FILE			= main.c
 
 UTILS_DIR			= src/utils/
-UTILS_FILE			= utils.c bmp/bmp_extract_header.c bmp/bmp_extract_color.c bmp/bmp_extract_pixel.c
+UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
+					bmp/bmp_extract_color.c bmp/bmp_extract_pixel.c
 
 UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c

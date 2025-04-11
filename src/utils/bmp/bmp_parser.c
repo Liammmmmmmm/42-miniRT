@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:31:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/11 16:07:46 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:18:40 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	init_data(t_bin *bin, t_bmp *bmp, size_t *i, char *file)
 	i = 0;
 	bmp->palette = NULL;
 	bin->data = NULL;
-	if (extract_bmp_data(&bmp, file, &bin, &i) == 1)
+	if (extract_bmp_data(bmp, file, bin, i) == 1)
 	{
 		if (!bin->data)
 			free(bin->data);

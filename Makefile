@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/11 11:17:50 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/04/11 11:49:36 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,7 @@ PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
 					parse_elements_utils2.c parse_elements_utils3.c parse_elements_utils4.c
 
 FONT_PARS_DIR		= src/utils/font/parsing/
-FONT_PARS_FILE		= debug.c free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c read_cmap.c \
+FONT_PARS_FILE		= free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c read_cmap.c \
 					read_font_directory.c read_format4.c read_glyph.c read_maxp.c read_head.c \
 					read_loca.c utils.c get_bezier.c get_bezier_utils.c read_hhea.c read_hmtx.c \
 					set_bezier_res.c

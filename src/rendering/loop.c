@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 11:15:17 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 11:53:00 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ void	render_buttons(t_minirt *minirt)
 	}
 	printttt[y + s - start] = '\0';
 
-	draw_string(&minirt->mlx.img_controls, &minirt->controls.font[0], printttt, pos);
+	draw_string(&minirt->mlx.img_controls, &minirt->controls.font[0], "Test", pos);
 	t_point p;
-	p.x = 20;
-	p.y = 1000;
+	p.x = 10;
+	p.y = 400;
 	p.color = 0xFFFFFF;
 	string_to_img(&minirt->mlx.img_controls, minirt->controls.font8b, p, "Test");
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.controls_win, minirt->mlx.img_controls.img, 0, 0);

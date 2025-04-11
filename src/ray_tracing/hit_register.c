@@ -3,16 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   hit_register.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/08 21:00:40 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:51:10 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
-#include "maths.h"
-#include <math.h>
+#include "minirt.h"
+
+t_color	get_hit_register_color(t_mat *mat, t_color color, t_hit_record *hit)
+{
+	if (mat)
+	{
+		if (mat->color_tex)
+		{
+			if (mat->color_tex->img.pixel_data)
+				; // recup dnas la texture
+			else
+				return (get_solid_texture(hit->point, 4));
+		}
+		else
+			return (mat->color_value);
+	}
+	return (color);
+}
 
 char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record)
 {
@@ -41,16 +56,8 @@ char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record)
 					hit_anything = 1;
 					closest_t = temp_hit_record.t;
 					*hit_record = temp_hit_record;
-					if (sphere->material)
-					{
-						hit_record->mat = sphere->material;
-						hit_record->color = sphere->material->color_value;
-					}
-					else
-					{
-						hit_record->mat = NULL;
-						hit_record->color = sphere->color;
-					}
+					hit_record->mat = sphere->material;
+					hit_record->color = get_hit_register_color(sphere->material, sphere->color, hit_record);
 				}
 			}
 		}
@@ -64,16 +71,8 @@ char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record)
 					hit_anything = 1;
 					closest_t = temp_hit_record.t;
 					*hit_record = temp_hit_record;
-					if (plane->material)
-					{
-						hit_record->mat = plane->material;
-						hit_record->color = plane->material->color_value;
-					}
-					else
-					{
-						hit_record->mat = NULL;
-						hit_record->color = plane->color;
-					}
+					hit_record->mat = plane->material;
+					hit_record->color = get_hit_register_color(plane->material, plane->color, hit_record);
 				}
 			}
 		}

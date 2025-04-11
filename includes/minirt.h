@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 17:10:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 18:32:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define WIN_HEIGHT 1080
 
 // Control window
-# define CWIN_WIDTH 600
+# define CWIN_WIDTH 1
 # define CWIN_HEIGHT 1080
 
 typedef enum e_mouse_buttons
@@ -241,7 +241,8 @@ void	render(t_minirt *minirt);
 t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit);
 
 t_vec3	random_in_unit_disk();
-t_vec3 defocus_disk_sample(t_minirt *minirt);
+t_vec3	defocus_disk_sample(t_minirt *minirt);
 t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt);
+t_color	get_solid_texture(t_vec3 point, double scale);
 
 #endif

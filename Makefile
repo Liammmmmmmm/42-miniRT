@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/11 17:18:14 by madelvin         ###   ########.fr        #
+#    Updated: 2025/04/11 18:34:34 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,9 @@ EVENT_FILE			= basic.c
 RAY_TRACING_DIR		= src/ray_tracing/
 RAY_TRACING_FILE	= render.c hit_register.c focus.c light.c
 
+TEXTURES_DIR		= src/ray_tracing/textures/
+TEXTURES_FILE		= get_solid_texture.c
+
 RENDERING_DIR		= src/rendering/
 RENDERING_FILE		= pixel.c loop.c
 
@@ -115,6 +118,7 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(DEBUG_DIR), $(DEBUG_FILE)) \
 			$(addprefix $(EVENT_DIR), $(EVENT_FILE)) \
 			$(addprefix $(RAY_TRACING_DIR), $(RAY_TRACING_FILE)) \
+			$(addprefix $(TEXTURES_DIR), $(TEXTURES_FILE)) \
 			$(addprefix $(RENDERING_DIR), $(RENDERING_FILE)) \
 			$(addprefix $(MAT_DIR), $(MAT_FILE)) \
 			$(addprefix $(MATH_DIR), $(MATH_FILE)) \

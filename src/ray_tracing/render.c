@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 21:00:55 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:38:51 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
 	background.b = ((1 - a) * 255 + a * 255);
 	if (hit_register(minirt, ray, &hit_record) == 1)
 	{
-		if (hit_record.mat)
-			color = hit_record.mat->color_value;
-		else
-			color = hit_record.color;
+		// if (hit_record.mat)
+		// 	color = hit_record.mat->color_value;
+		// else
+		color = hit_record.color;
 		color = color_multiply(color, compute_light(&hit_record, minirt));
 		color = material_manager((t_mat_manager){hit_record, ray, minirt, color, depth});
 		if (hit)

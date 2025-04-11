@@ -20,38 +20,11 @@ void	render_buttons(t_minirt *minirt)
 		return ;
 	ft_bzero(minirt->mlx.img_controls.img_str, minirt->mlx.img_controls.width * minirt->mlx.img_controls.height * 4);
 	i = -1;
-	// while (++i < minirt->controls.nb_buttons)
-	// 	display_button(&minirt->mlx.img_controls, minirt->controls.buttons[i], minirt->controls.font);
-	// i = -1;
-	// while (++i < minirt->controls.nb_sliders)
-	// 	display_slider_int(&minirt->mlx.img_controls, minirt->controls.sliders[i]);
-
-	// static unsigned char y = ' ';
-	// printf("Printing glyph %c (%d)\n", y, (uint32_t)y);
-	// draw_glyph_outline(&minirt->mlx.img_controls, &minirt->controls.font[0], y);
-	// y++;
-	
-	t_point2 pos = (t_point2){ .x = 10, .y = 300 };
-	minirt->controls.font[0].size = 30;
-
-	char printttt[300];
-	int start = 32;
-	int y = start;
-	int s = 0;
-	while (y < 256)
-	{
-		printttt[y + s - start] = y;
-		if (y == '/' || y == '9' || y == '@' || y == 'z' || y == 'Z' || y == '`' || y == '}' || y == 160 || y == 192)
-		{
-			s++;
-			printttt[y + s - start] = '\n';
-		}
-		y++;
-	}
-	printttt[y + s - start] = '\0';
-
-	draw_string(&minirt->mlx.img_controls, &minirt->controls.font[0], "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", pos);
-	printf("Okok c'est print bg\n");
+	while (++i < minirt->controls.nb_buttons)
+		display_button(&minirt->mlx.img_controls, minirt->controls.buttons[i], minirt->controls.font);
+	i = -1;
+	while (++i < minirt->controls.nb_sliders)
+		display_slider_int(&minirt->mlx.img_controls, minirt->controls.sliders[i]);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.controls_win, minirt->mlx.img_controls.img, 0, 0);
 }
 

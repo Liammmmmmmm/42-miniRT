@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:44:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 11:46:47 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 12:58:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,9 @@ static void	draw_scanline(t_img *img, t_ttf *ttf, t_uchar c, t_point2 pos)
 		total_inter += count_intersect_pos(ttf->r_data.seg_intersec, ns, x, in);
 		if ((x - ttf->r_data.xstart) % ANTI_ALIASING_LEVEL
 			== ANTI_ALIASING_LEVEL - 1)
-			put_pixel_image(img, pos.x + (x / ANTI_ALIASING_LEVEL), pos.y \
-	- (ttf->r_data.ytmp / ANTI_ALIASING_LEVEL), \
-calc_gradiant_color(0, ttf->color, (float)total_inter / ttf->r_data.aalvlsqr));
+			put_pixel_image_alpha(img, pos.x + (x / ANTI_ALIASING_LEVEL), pos.y \
+	- (ttf->r_data.ytmp / ANTI_ALIASING_LEVEL), (t_color_alpha) \
+	{.color = ttf->color, .alpha = (float)total_inter / ttf->r_data.aalvlsqr});
 		x++;
 	}
 }

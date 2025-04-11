@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 12:02:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 12:55:50 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include <stdio.h>
+# include "mlx_base.h"
 # include "font_structs.h"
 # include "structs.h"
 
@@ -68,6 +69,7 @@ void	print_head(t_head *head);
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
 int		calc_gradiant_color(int color_a, int color_b, float ratio);
+int		get_pixel_color(t_img *img, int x, int y);
 void	tessellate_bezier(t_point2 *output, uint32_t output_size, t_bezier *pts)
 		;
 

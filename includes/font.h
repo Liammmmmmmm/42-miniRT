@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 12:55:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 15:13:21 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdio.h>
 # include "mlx_base.h"
 # include "font_structs.h"
-# include "structs.h"
 
 # define FONT_DEBUG 1
 # define MAGIC_NUMBER 0x5F0F3CF5

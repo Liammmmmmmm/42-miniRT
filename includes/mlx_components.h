@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:34:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/08 15:06:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 15:02:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "mlx_base.h"
+# include "font.h"
 
 typedef struct s_button
 {
@@ -113,7 +114,7 @@ int		slider_mouse_down(t_int_slider *slider, int mouse_x, int mouse_y);
 int		slider_mouse_up(t_int_slider *slider);
 int		slider_mouse_move(t_int_slider *slider, int mouse_x);
 
-void	display_button(t_img *img, const t_button button, unsigned char font[96][5]);
+void	display_button(t_img *img, const t_button button, t_ttf *ttf);
 int		button_action(t_button *button, int mouse_x, int mouse_y, int *is_clicked);
 int		button_release(t_button *button);
 

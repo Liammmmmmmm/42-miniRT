@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:58:26 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 13:20:38 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 15:17:11 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,5 +214,7 @@ int					cmp_tbl_tag(char c[4], uint32_t tag);
 uint32_t			get_glyph_offset(t_bin *bin, t_ttf *ttf,
 						uint32_t glyph_index);
 t_point2			p2co(t_glyph_outline *o, int i1, int i2);
+uint32_t			get_string_width(t_ttf *ttf, char *str);
+uint32_t			get_height(t_ttf *ttf);
 
 #endif

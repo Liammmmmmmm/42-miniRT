@@ -6,13 +6,14 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 10:24:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 15:12:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
+# include "font.h"
 # include "structs.h"
 # include "libft.h"
 # include "maths.h"

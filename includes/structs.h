@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 19:18:07 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:55:35 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "libft.h"
 # include "mlx_base.h"
 # include "mlx_components.h"
-# include "bmp_parsing.h"
 # include "font.h"
 
 typedef unsigned char t_bool;
@@ -78,11 +77,18 @@ typedef enum e_tex_type
 	COLOR,
 }	t_tex_type;
 
+typedef struct s_tex_img
+{
+	uint32_t	width;
+	uint32_t	height;
+	uint32_t	*pixel_data;
+}	t_tex_img;
+
 typedef struct s_tex
 {
 	char		name[21];
 	t_tex_type	type;
-	int			fd;
+	t_tex_img	img;
 }	t_tex;
 
 typedef struct s_mat
@@ -279,7 +285,6 @@ typedef struct s_minirt
 	t_stats		stats;
 	t_viewport	viewport;
 	t_controls	controls;
-	t_bmp		bmp;
 }	t_minirt;
 
 typedef struct s_btn_param

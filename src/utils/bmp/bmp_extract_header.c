@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:51:35 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/11 15:22:12 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:09:00 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	read_palette(t_bin *bin, size_t *i, t_bmp *bmp, size_t palette_entry_count)
 
 int	read_header(t_bmp *bmp, size_t *i, t_bin *bin)
 {
-	if (read_uint16_move_little(bin, i, &bmp->header.signature) == -1)
+	if (read_uint16_move_little(bin, i, &bmp->header.signature) == -1 || \
+		(bmp->header.signature_c[0] == 'B' && bmp->header.signature_c[0] == 'M'))
 		return (error_and_return ("error: unable to read signature\n"));
 	if (read_uint32_move_little(bin, i, &bmp->header.file_size) == -1)
 		return (error_and_return ("error: unable to read file size\n"));
@@ -64,7 +65,7 @@ int	read_header(t_bmp *bmp, size_t *i, t_bin *bin)
 
 int	read_info(t_bmp *bmp, size_t *i, t_bin *bin)
 {
-	if (read_uint32_move_little(bin, i, &bmp->info.with) == -1)
+	if (read_uint32_move_little(bin, i, &bmp->info.width) == -1)
 		return (error_and_return ("error: unable to read width\n"));
 	if (read_uint32_move_little(bin, i, &bmp->info.height) == -1)
 		return (error_and_return ("error: unable to read height\n"));

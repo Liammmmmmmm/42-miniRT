@@ -6,11 +6,12 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:50:32 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/11 15:27:42 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:02:27 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
+#include "bmp_parsing.h"
 
 static inline int	allocate_pixel_data(t_bmp *bmp, size_t tpx)
 {
@@ -26,10 +27,10 @@ static inline int	read_pixels_for_row(t_bin *bin, size_t *i, t_bmp *bmp, \
 	size_t	x;
 
 	x = 0;
-	while (x < bmp->info.with)
+	while (x < bmp->info.width)
 	{
 		if (extract_pixel(bin, i, bmp, &bmp->pixel_data[y * \
-				bmp->info.with + x]) == -1)
+				bmp->info.width + x]) == -1)
 			return (-1);
 		x++;
 	}
@@ -58,8 +59,8 @@ int	extract_raw_pixels(t_bin *bin, size_t *i, t_bmp *bmp)
 	size_t	padding;
 
 	y = 0;
-	tpx = bmp->info.with * bmp->info.height;
-	padding = (4 - (bmp->info.with * 3) % 4) % 4;
+	tpx = bmp->info.width * bmp->info.height;
+	padding = (4 - (bmp->info.width * 3) % 4) % 4;
 	if (allocate_pixel_data(bmp, tpx) != 0)
 		return (1);
 	while (y < bmp->info.height)

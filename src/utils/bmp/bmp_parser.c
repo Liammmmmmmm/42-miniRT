@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bmp_manager.c                                      :+:      :+:    :+:   */
+/*   bmp_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:31:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/11 15:12:46 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:07:46 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,40 @@ int	extract_bmp_data(t_bmp *bmp, char *file, t_bin *bin, size_t *i)
 	return (0);
 }
 
-int	bmp_manager(t_bmp *bmp, char *file)
+int	init_data(t_bin *bin, t_bmp *bmp, size_t *i, char *file)
 {
+	i = 0;
+	bmp->palette = NULL;
+	bin->data = NULL;
+	if (extract_bmp_data(&bmp, file, &bin, &i) == 1)
+	{
+		if (!bin->data)
+			free(bin->data);
+		return (1);
+	}
+	return (0);
+}
+
+int	parse_bmp(char *file, t_tex_img *img)
+{
+	t_bmp 		bmp;
 	t_bin		bin;
 	size_t		i;
 
-	i = 0;
-	bmp->palette = NULL;
-	bin.data = NULL;
-	if (extract_bmp_data(bmp, file, &bin, &i) == 1)
-	{
-		free(bin.data);
+	if (init_data(&bin, &bmp, &i, file) == 1)
 		return (1);
-	}
-	if (extract_raw_pixels(&bin, &i, bmp) == 1)
+	if (extract_raw_pixels(&bin, &i, &bmp) == 1)
 	{
 		free(bin.data);
-		if (bmp->palette != NULL)
-			free(bmp->palette);
+		if (bmp.palette != NULL)
+			free(bmp.palette);
 		return (1);
 	}
 	free(bin.data);
-	if (bmp->palette != NULL)
-		free(bmp->palette);
+	if (bmp.palette != NULL)
+		free(bmp.palette);
+	img->height = bmp.info.height;
+	img->width = bmp.info.width;
+	img->pixel_data = bmp.pixel_data;	
 	return (0);
 }

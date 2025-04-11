@@ -6,12 +6,14 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:42:24 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/11 15:24:51 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:55:34 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef	BMP_PARSING
 # define BMP_PARSING
+
+#include "structs.h"
 
 typedef struct s_bmp_header
 {
@@ -29,7 +31,7 @@ typedef struct s_bmp_header
 typedef struct s_bmp_info
 {
 	uint32_t		info_header_size;
-	uint32_t		with;
+	uint32_t		width;
 	uint32_t		height;
 	uint16_t		nb_planes;
 	uint16_t		bpp;
@@ -46,10 +48,10 @@ typedef struct s_bmp
 	t_bmp_header	header;
 	t_bmp_info		info;
 	uint32_t		*pixel_data;
-	uint32_t		*palette;  
+	uint32_t		*palette;
 }	t_bmp;
 
-int	bmp_manager(t_bmp *bmp, char *file);
+int	parse_bmp(t_bmp *bmp, char *file, t_tex_img *img);
 int	error_and_return(char *message);
 int	extract_palette_pixel(t_bin *bin, size_t *i, uint32_t *value, t_bmp *bmp);
 int	extract_16bpp_pixel(t_bin *bin, size_t *i, uint32_t *value);

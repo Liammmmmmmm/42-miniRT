@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:29:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 13:16:56 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 16:04:29 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	free_tex_mat(t_scene *scene)
 	{
 		i = -1;
 		while (++i < scene->tex_amount)
-			close(scene->textures[i].fd);
+			free(scene->textures[i].img.pixel_data);
 		free(scene->textures);
 		scene->textures = NULL;
 	}

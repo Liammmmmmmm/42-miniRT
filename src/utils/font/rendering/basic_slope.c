@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 15:02:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 16:35:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 09:30:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	draw_line_x(t_point *point_a, t_point *point_b, t_img *img, int c)
 	float	m;
 	int		dx;
 	int		dy;
-	int	temp;
+	int		temp;
 
 	dx = point_b->x - point_a->x;
 	dy = point_b->y - point_a->y;
@@ -41,7 +41,7 @@ void	draw_line_y(t_point *point_a, t_point *point_b, t_img *img, int c)
 	float	m;
 	int		dx;
 	int		dy;
-	int	temp;
+	int		temp;
 
 	dx = point_b->x - point_a->x;
 	dy = point_b->y - point_a->y;
@@ -71,7 +71,7 @@ void	draw_line(t_point *point_a, t_point *point_b, t_img *img, int c)
 	{
 		if (dx == 0)
 			return ;
-		draw_line_x(point_a, point_b, img,c);
+		draw_line_x(point_a, point_b, img, c);
 	}
 	else
 	{

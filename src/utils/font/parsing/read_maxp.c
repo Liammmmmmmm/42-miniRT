@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:05:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 12:14:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 09:29:50 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,3 @@ int	read_maxp(t_bin *bin, t_ttf *ttf)
 		return (-1);
 	return (0);
 }
-

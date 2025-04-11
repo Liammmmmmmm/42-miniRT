@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:35:05 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/10 16:30:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/11 09:00:51 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,16 @@ int	get_ttf(t_bin *bin, t_ttf *ttf)
 		return (free_print_msg(ttf, "Error reading font format4. It may not be "
 				"compatible."));
 	if (read_head(bin, ttf) == -1)
-		return (free_print_msg(ttf, "Error reading font file (corrupted file)."));
+		return (free_print_msg(ttf, "Error reading font file (corrupted file).")
+		);
 	if (save_glyph256(bin, ttf) == -1)
 		return (free_print_msg(ttf, "Error reading font (malloc failed)."));
 	read_hhea(bin, ttf);
 	read_hmtx(bin, ttf);
 	read_maxp(bin, ttf);
 	ttf->r_data.estimated_max_seg_intersect = 64;
-	ttf->r_data.seg_intersec = ft_calloc(ttf->r_data.estimated_max_seg_intersect, sizeof(uint32_t));
+	ttf->r_data.seg_intersec
+		= ft_calloc(ttf->r_data.estimated_max_seg_intersect, sizeof(uint32_t));
 	if (!ttf->r_data.seg_intersec)
 		return (free_print_msg(ttf, "Error reading font (malloc failed)."));
 	set_bezier_res(ttf, 5);

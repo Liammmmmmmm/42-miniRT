@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 15:12:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 20:38:52 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,12 +238,10 @@ void	render(t_minirt *minirt);
 ║                                  RAY TRACING                                 ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-double	random_double() __attribute__((always_inline));
-double	random_double_in_interval(double min, double max) __attribute__((always_inline));
-t_vec3	random_vec3() __attribute__((always_inline));
-t_vec3	random_vec3_unit() __attribute__((always_inline));
-t_vec3	random_vec3_in_interval(double min, double max) __attribute__((always_inline));
-t_vec3	random_on_hemisphere(const t_vec3 normal) __attribute__((always_inline));
-char	calc_ray_reflection(t_hit_record hit_record, t_ray ray_in, t_ray *scatted, t_color *attenuation, t_minirt *minirt);
+t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit);
+
+t_vec3	random_in_unit_disk();
+t_vec3 defocus_disk_sample(t_minirt *minirt);
+t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt);
 
 #endif

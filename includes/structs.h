@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 15:55:35 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/08 19:35:00 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,6 +293,13 @@ typedef struct s_btn_param
 	int			action;
 }	t_btn_param;
 
-
+typedef struct s_mat_manager
+{
+	t_hit_record	hit_record;
+	t_ray			ray_in;
+	t_minirt		*minirt;
+	t_color			color;
+	int				depth;
+}	t_mat_manager;
 
 #endif

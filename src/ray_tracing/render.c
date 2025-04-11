@@ -3,53 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 18:20:49 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 21:00:55 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "material.h"
 #include <math.h>
 
-t_vec3	random_in_unit_disk()
+t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
 {
-	t_vec3	p;
-
-	p.z = 0;
-	while (1)
-	{
-		p.x = random_double_in_interval(-1, 1);
-		p.y = random_double_in_interval(-1, 1);
-		if (vec3_length_squared(p) < 1)
-			return (p);
-	}
-	return (p);
-}
-
-t_vec3 defocus_disk_sample(t_minirt *minirt)
-{
-	t_vec3	random_point;
-
-	random_point = random_in_unit_disk();
-	return (vec3_add(
-		minirt->scene.camera.position,
-		vec3_add(
-			vec3_multiply_scalar(minirt->viewport.defocus_disk_u, random_point.x),
-			vec3_multiply_scalar(minirt->viewport.defocus_disk_v, random_point.y)
-		)
-	));
-}
-
-t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
-{
-	double			a;
 	t_color			color;
-	t_color			attenuation;
+	t_color			background;
 	t_hit_record	hit_record;
-	t_color			bounce_color;
-	t_ray			scatted;
+	double			a;
 
 	if (depth <= 0)
 		return (t_color){0, 0, 0};
@@ -58,29 +28,24 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth)
 		a = 1;
 	if (a < 0)
 		a = 0;
-	color.r = (1 - a) * 255 + a * 128;
-	color.g = (1 - a) * 255 + a * 178;
-	color.b = (1 - a) * 255 + a * 255;
+	background.r = ((1 - a) * 255 + a * 128);
+	background.g = ((1 - a) * 255 + a * 178);
+	background.b = ((1 - a) * 255 + a * 255);
 	if (hit_register(minirt, ray, &hit_record) == 1)
 	{
-		if (calc_ray_reflection(hit_record, ray, &scatted, &attenuation, minirt))
-		{
-			bounce_color = ray_color(minirt, scatted, depth - 1);
-			color.r = bounce_color.r * attenuation.r / 255;
-			color.g = bounce_color.g * attenuation.g / 255;
-			color.b = bounce_color.b * attenuation.b / 255;
-			return (color);
-		}
-		return (t_color){0, 0, 0};
+		if (hit_record.mat)
+			color = hit_record.mat->color_value;
+		else
+			color = hit_record.color;
+		color = color_multiply(color, compute_light(&hit_record, minirt));
+		color = material_manager((t_mat_manager){hit_record, ray, minirt, color, depth});
+		if (hit)
+			*hit = 1;
+		return (color);
 	}
-	return (color);
-}
-
-t_vec3	sample_square()
-{
-	double x = random_double() - 0.5;
-	double y = random_double() - 0.5;
-	return (t_vec3){ x, y, 0 };
+	if (hit)
+		*hit = 0;
+	return (color_scale(background, minirt->scene.amb_light.ratio));
 }
 	
 void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
@@ -89,6 +54,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 	t_uint	i;
 	t_ray	ray;
 	t_color color;
+	char		bounce_hit;
 
 	i = 0;
 	tpix = minirt->mlx.img.width * minirt->mlx.img.height;
@@ -108,7 +74,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 			), 
 			ray.orig
 		);
-		color = ray_color(minirt, ray, 10);
+		color = ray_color(minirt, ray, 10, &bounce_hit);
 		minirt->screen.render[i].color.r += color.r * minirt->viewport.gamma;
 		minirt->screen.render[i].color.g += color.g * minirt->viewport.gamma;
 		minirt->screen.render[i].color.b += color.b * minirt->viewport.gamma;
@@ -120,7 +86,7 @@ void	draw_pixels(t_minirt *minirt)
 {
 	t_vec3	offset;
 
-	offset = sample_square();
+	offset = vec3_random();
 	calc_one_sample(minirt, offset);
 	minirt->screen.sample++;
 	put_render_to_frame(minirt);

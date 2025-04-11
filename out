@@ -1,0 +1,277 @@
+[0;32m
+===== Scene Debug Information =====
+[0;0m
+[0;31mAmbient Light:
+[0;0m  Ratio: [0;34m0.20[0;0m
+  Color: ([0;33m255, 255, 255[0;0m)
+
+[0;31mCamera:
+[0;0m  Position: ([0;36m0.00, 0.00, 1.00[0;0m)
+  Orientation: ([0;36m0.00, 0.00, -1.00[0;0m)
+  FOV: [0;34m50[0;0m
+
+[0;31mScene Objects (3):
+[0;0m  [0;33mPlane:
+[0;0m    Position: ([0;36m0.00, -0.51, 1.00[0;0m)
+    Normal: ([0;36m0.00, 1.00, 0.00[0;0m)
+    Color: ([0;33m0, 0, 255[0;0m)
+  [0;33mSphere:
+[0;0m    Position: ([0;36m0.00, 0.00, -1.00[0;0m)
+    Diameter: [0;34m0.10[0;0m
+    Color: ([0;33m255, 0, 0[0;0m)
+  [0;33mLight:
+[0;0m    Position: ([0;36m0.00, 50.00, -50.00[0;0m)
+    Brightness: [0;34m1.00[0;0m
+    Color: ([0;33m255, 255, 255[0;0m)
+
+[0;31mScene Textures (0):
+[0;0m
+[0;31mScene Materials (4):
+[0;0m  [0;33mMat: `metal0'
+[0;0m    Color Value: ([0;33m255, 255, 255[0;0m)
+    Metallic Value: 0.00
+    Roughness Value: 0.00
+    IOR: 0.75
+    Transmission: 0.00
+    Emission Strength: 0.00
+    Emission Color: ([0;33m255, 255, 255[0;0m)
+  [0;33mMat: `metal1'
+[0;0m    Color Value: ([0;33m204, 153, 51[0;0m)
+    Metallic Value: 1.00
+    Roughness Value: 0.00
+    IOR: 0.00
+    Transmission: 0.00
+    Emission Strength: 0.00
+    Emission Color: ([0;33m255, 255, 255[0;0m)
+  [0;33mMat: `metal2'
+[0;0m    Color Value: ([0;33m255, 255, 255[0;0m)
+    Metallic Value: 0.00
+    Roughness Value: 1.00
+    IOR: 0.00
+    Transmission: 0.00
+    Emission Strength: 0.00
+    Emission Color: ([0;33m255, 255, 255[0;0m)
+  [0;33mMat: `metal3'
+[0;0m    Color Value: ([0;33m255, 255, 255[0;0m)
+    Metallic Value: 0.00
+    Roughness Value: 1.00
+    IOR: 0.00
+    Transmission: 0.00
+    Emission Strength: 0.00
+    Emission Color: ([0;33m255, 255, 255[0;0m)
+[0;32m====================================
+[0;0mFocus dist: 0.100000
+Defocus angle: 0.000000
+Sample 1
+Sample 2
+Sample 3
+Sample 4
+Sample 5
+Sample 6
+Sample 7
+Sample 8
+Sample 9
+Sample 10
+Sample 11
+Sample 12
+Sample 13
+Sample 14
+Sample 15
+Sample 16
+Sample 17
+Sample 18
+Sample 19
+Sample 20
+Sample 21
+Sample 22
+Sample 23
+Sample 24
+Sample 25
+Sample 26
+Sample 27
+Sample 28
+Sample 29
+Sample 30
+Sample 31
+Sample 32
+Sample 33
+Sample 34
+Sample 35
+Sample 36
+Sample 37
+Sample 38
+Sample 39
+Sample 40
+Sample 41
+Sample 42
+Sample 43
+Sample 44
+Sample 45
+Sample 46
+Sample 47
+Sample 48
+Sample 49
+Sample 50
+Sample 51
+Sample 52
+Sample 53
+Sample 54
+Sample 55
+Sample 56
+Sample 57
+Sample 58
+Sample 59
+Sample 60
+Sample 61
+Sample 62
+Sample 63
+Sample 64
+Sample 65
+Sample 66
+Sample 67
+Sample 68
+Sample 69
+Sample 70
+Sample 71
+Sample 72
+Sample 73
+Sample 74
+Sample 75
+Sample 76
+Sample 77
+Sample 78
+Sample 79
+Sample 80
+Sample 81
+Sample 82
+Sample 83
+Sample 84
+Sample 85
+Sample 86
+Sample 87
+Sample 88
+Sample 89
+Sample 90
+Sample 91
+Sample 92
+Sample 93
+Sample 94
+Sample 95
+Sample 96
+Sample 97
+Sample 98
+Sample 99
+Sample 100
+Sample 101
+Sample 102
+Sample 103
+Sample 104
+Sample 105
+Sample 106
+Sample 107
+Sample 108
+Sample 109
+Sample 110
+Sample 111
+Sample 112
+Sample 113
+Sample 114
+Sample 115
+Sample 116
+Sample 117
+Sample 118
+Sample 119
+Sample 120
+Sample 121
+Sample 122
+Sample 123
+Sample 124
+Sample 125
+Sample 126
+Sample 127
+Sample 128
+Sample 129
+Sample 130
+Sample 131
+Sample 132
+Sample 133
+Sample 134
+Sample 135
+Sample 136
+Sample 137
+Sample 138
+Sample 139
+Sample 140
+Sample 141
+Sample 142
+Sample 143
+Sample 144
+Sample 145
+Sample 146
+Sample 147
+Sample 148
+Sample 149
+Sample 150
+Sample 151
+Sample 152
+Sample 153
+Sample 154
+Sample 155
+Sample 156
+Sample 157
+Sample 158
+Sample 159
+Sample 160
+Sample 161
+Sample 162
+Sample 163
+Sample 164
+Sample 165
+Sample 166
+Sample 167
+Sample 168
+Sample 169
+Sample 170
+Sample 171
+Sample 172
+Sample 173
+Sample 174
+Sample 175
+Sample 176
+Sample 177
+Sample 178
+Sample 179
+Sample 180
+Sample 181
+Sample 182
+Sample 183
+Sample 184
+Sample 185
+Sample 186
+Sample 187
+Sample 188
+Sample 189
+Sample 190
+Sample 191
+Sample 192
+Sample 193
+Sample 194
+Sample 195
+Sample 196
+Sample 197
+Sample 198
+Sample 199
+Sample 200
+Sample 201
+Sample 202
+Sample 203
+Sample 204
+Sample 205
+Sample 206
+Sample 207
+Sample 208
+Sample 209
+Sample 210
+Sample 211
+Sample 212
+Sam

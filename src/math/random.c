@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec3_utils.c                                       :+:      :+:    :+:   */
+/*   random.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 17:50:11 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/08 19:36:40 by madelvin         ###   ########.fr       */
+/*   Created: 2025/03/24 09:32:27 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/04/08 20:22:30 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
-#include "maths.h"
+#include "minirt.h"
+#include <math.h>
 
-inline t_vec3	vec3_negate(const t_vec3 v)
+double	random_double(void)
 {
-	return ((t_vec3){-v.x, -v.y, -v.z});
+	return (rand() / (RAND_MAX + 1.0));
 }
 
-inline t_vec3	vec3_unit(const t_vec3 v)
+double	random_double_in_interval(double min, double max)
 {
-	double	length;
-
-	length = vec3_length(v);
-	if (length > 0.0)
-		return (vec3_divide_scalar(v, length));
-	return ((t_vec3){0.0, 0.0, 0.0});
-}
-
-inline t_vec3	vec3_init(double x, double y, double z)
-{
-	return ((t_vec3){x, y, z});
+	return (min + (rand() / ((double)RAND_MAX / (max - min))));
 }

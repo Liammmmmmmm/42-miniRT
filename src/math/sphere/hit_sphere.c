@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:17:23 by madelvin          #+#    #+#             */
-/*   Updated: 2025/03/26 18:45:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/08 21:09:20 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 char	hit_sphere(t_sphere sphere, t_ray *r, \
 	t_interval interval, t_hit_record *rec)
 {
-	t_vec3	oc;
+	t_vec3			oc;
 	register double	a;
 	register double	b;
 	register double	d;

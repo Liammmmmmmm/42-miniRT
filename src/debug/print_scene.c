@@ -6,23 +6,23 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:57:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 16:03:17 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:06:51 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void print_color(t_color color)
+void	print_color(t_color color)
 {
     printf("(" YELLOW "%d, %d, %d" NC ")", color.r, color.g, color.b);
 }
 
-void print_vec3(t_vec3 vec)
+void	print_vec3(t_vec3 vec)
 {
     printf("(" CYAN "%.2f, %.2f, %.2f" NC ")", vec.x, vec.y, vec.z);
 }
 
-void print_scene(t_scene *scene)
+void	print_scene(t_scene *scene)
 {
 	int i;
 	printf(GREEN "\n===== Scene Debug Information =====\n" NC);

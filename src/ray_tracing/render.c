@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/14 14:39:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/14 15:31:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
 		return (t_color){0, 0, 0};
 	if (hit_register(minirt, ray, &hit_record) == 1)
 	{
-		// if (hit_record.mat)
-		// 	color = hit_record.mat->color_value;
-		// else
+
 		color = hit_record.color;
 		color = color_multiply(color, compute_light(&hit_record, minirt));
 		color = material_manager((t_mat_manager){hit_record, ray, minirt, color, depth});
@@ -67,7 +65,8 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
 	if (hit)
 		*hit = 0;
 	
-	return (color_scale(get_background_color(minirt, ray), minirt->scene.amb_light.ratio));
+	//return (color_scale(get_background_color(minirt, ray), minirt->scene.amb_light.ratio));
+	return (get_background_color(minirt, ray));
 }
 	
 void	calc_one_sample(t_minirt *minirt, t_vec3 offset)

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/14 10:32:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/14 12:51:08 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@ t_color	get_hit_register_color(t_mat *mat, t_color color, t_hit_record *hit)
 	{
 		if (mat->color_tex)
 		{
-			if (mat->color_tex->img.pixel_data)
-				; // recup dnas la texture
-			else
+			if (!mat->color_tex->img.pixel_data || !mat->color_tex->img.width || !mat->color_tex->img.height)
 				return (get_solid_texture(hit->point, 2));
+			else
+			{
+				uint32_t c = mat->color_tex->img.pixel_data[mat->color_tex->img.width * (int)(hit->v * mat->color_tex->img.height) + (int)(hit->u * mat->color_tex->img.width)]; // peut etre mettre un -1 mais pas sur du tout
+				return ((t_color){(c >> 16) & 0xFF, (c >> 8) & 0xFF, c & 0xFF});
+			}
 		}
 		else
 			return (mat->color_value);
@@ -49,10 +52,7 @@ char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record)
 		if (minirt->scene.elements[i].type == SPHERE)
 		{
 			sphere = minirt->scene.elements[i].object;
-			if (hit_sphere(*sphere,
-				&ray, 
-				interval, 
-				&temp_hit_record))
+			if (hit_sphere(*sphere, &ray, interval, &temp_hit_record))
 			{
 				if (temp_hit_record.t < closest_t)
 				{

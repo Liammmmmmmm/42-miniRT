@@ -1,0 +1,11 @@
+tex texture1 assets/textures/earth_daymap_2k.bmp
+
+# MATERIALS
+#	name                          color             metallic       roughness      ior            transmission   emission_strength   emission_color normal_map
+mat	texture_rel                   texture1          0.0            1.0            0.000000       0.000000       0.000000            255,255,255 
+
+A	1										255,255,255
+
+C	4,4,4	-1,-1,-1 50
+
+sp 0,0,1		4							texture_rel

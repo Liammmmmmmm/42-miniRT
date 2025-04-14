@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 17:54:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/14 13:10:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ typedef struct s_amb_light
 {
 	double	ratio;
 	t_color	color;
+	t_color	skybox_c;
+	t_tex	*skybox_t;
 }	t_amb_light;
 
 typedef struct s_camera

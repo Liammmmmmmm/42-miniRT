@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/14 09:59:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/14 11:16:00 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <math.h>
 # include "bmp_parsing.h"
 
-# define PI_10D 3.1415926535
+# define PI_D 3.1415926535897
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080

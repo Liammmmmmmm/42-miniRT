@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 18:38:51 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/14 11:16:10 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ t_viewport	init_viewport(t_minirt *minirt)
 	printf("Focus dist: %f\nDefocus angle: %f\n", minirt->scene.camera.focus_dist, minirt->scene.camera.defocus_angle);
 	minirt->scene.camera.orientation = vec3_unit(minirt->scene.camera.orientation);
 	viewport.gamma = sqrt(minirt->controls.values.gamma / 1000.0);
-	viewport.height = 2 * tan((minirt->controls.values.fov * PI_10D/180)/2) * minirt->scene.camera.focus_dist;
-	// viewport.focal_length = viewport.height / (2.0 * tan(minirt->controls.values.fov * 0.5 * PI_10D / 180));
+	viewport.height = 2 * tan((minirt->controls.values.fov * PI_D/180)/2) * minirt->scene.camera.focus_dist;
+	// viewport.focal_length = viewport.height / (2.0 * tan(minirt->controls.values.fov * 0.5 * PI_D / 180));
 	viewport.width = viewport.height * ((float)minirt->mlx.img.width / minirt->mlx.img.height);
 	u = vec3_unit(vec3_cross((t_vec3){0, 1, 0}, vec3_negate(minirt->scene.camera.orientation)));
 	viewport.u = vec3_multiply_scalar(u, viewport.width);
@@ -122,7 +122,7 @@ t_viewport	init_viewport(t_minirt *minirt)
 	);
 
 	viewport.pixel00_loc = vec3_add(viewport.upper_left, vec3_multiply_scalar(vec3_add(viewport.pixel_delta_u, viewport.pixel_delta_v), 0.5));
-	viewport.defocus_radius = minirt->scene.camera.focus_dist * tan(minirt->scene.camera.defocus_angle * PI_10D / 360);;
+	viewport.defocus_radius = minirt->scene.camera.focus_dist * tan(minirt->scene.camera.defocus_angle * PI_D / 360);;
 	viewport.defocus_disk_u = vec3_multiply_scalar(u, viewport.defocus_radius);
 	viewport.defocus_disk_v = vec3_multiply_scalar(vec3_cross(minirt->scene.camera.orientation, u), viewport.defocus_radius);
 	return (viewport);

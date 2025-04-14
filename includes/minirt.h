@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 18:32:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/14 09:59:11 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,8 @@ int		parse_color_or_tex(char *str, t_color *store, t_tex **tex, t_scene *scene);
 int		parse_double_b_or_tex(char *str, double *d, t_tex **tex, t_scene *scene);
 int		parse_double_or_tex(char *str, double *d, t_tex **tex, t_scene *scene);
 t_tex	*get_texture(char *str, t_scene *scene);
+void	get_texture_image(t_tex *tex, char *filename);
+int		is_extension(char *filename, char *extension);
 
 int		parse_ambiant_light(t_scene *scene, char *line);
 int		parse_camera(t_scene *scene, char *line);

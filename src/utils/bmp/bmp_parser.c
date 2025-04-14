@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:31:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/11 17:18:40 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/14 10:23:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	extract_bmp_data(t_bmp *bmp, char *file, t_bin *bin, size_t *i)
 
 	if (read_bin_file(bin, file) == 0)
 		return (error_and_return("error: unable to read BMP file\n"));
+	printf("%zu \n", bin->size);
 	if (read_header(bmp, i, bin) == 1 || read_info(bmp, i, bin) == 1)
 		return (1);
 	if (bmp->info.bpp == 1 || bmp->info.bpp == 4 || bmp->info.bpp == 8)
@@ -41,7 +42,7 @@ int	extract_bmp_data(t_bmp *bmp, char *file, t_bin *bin, size_t *i)
 
 int	init_data(t_bin *bin, t_bmp *bmp, size_t *i, char *file)
 {
-	i = 0;
+	*i = 0;
 	bmp->palette = NULL;
 	bin->data = NULL;
 	if (extract_bmp_data(bmp, file, bin, i) == 1)

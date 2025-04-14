@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:57:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 21:06:51 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/14 10:04:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,8 @@ void	print_scene(t_scene *scene)
 		t_tex *texture = &scene->textures[i];
 
 		printf("  " YELLOW "Tex: `%s'\n" NC, texture->name);		
-		// printf("    Associated fd: " BLUE "%d" NC "\n", texture->fd);
+		printf("    Texture width : " BLUE "%d" NC "\n", texture->img.width);
+		printf("    Texture height: " BLUE "%d" NC "\n", texture->img.height);
 	}
 
 	printf("\n" RED "Scene Materials (%d):\n" NC, scene->mat_amount);

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/11 18:51:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/14 10:32:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_color	get_hit_register_color(t_mat *mat, t_color color, t_hit_record *hit)
 			if (mat->color_tex->img.pixel_data)
 				; // recup dnas la texture
 			else
-				return (get_solid_texture(hit->point, 4));
+				return (get_solid_texture(hit->point, 2));
 		}
 		else
 			return (mat->color_value);
@@ -49,7 +49,10 @@ char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record)
 		if (minirt->scene.elements[i].type == SPHERE)
 		{
 			sphere = minirt->scene.elements[i].object;
-			if (hit_sphere(*sphere, &ray, interval, &temp_hit_record))
+			if (hit_sphere(*sphere,
+				&ray, 
+				interval, 
+				&temp_hit_record))
 			{
 				if (temp_hit_record.t < closest_t)
 				{

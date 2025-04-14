@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/14 13:10:46 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/14 14:32:17 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_tex_img
 {
 	uint32_t	width;
 	uint32_t	height;
-	uint32_t	*pixel_data;
+	t_color		*pixel_data;
 }	t_tex_img;
 
 typedef struct s_tex
@@ -123,6 +123,7 @@ typedef struct s_amb_light
 {
 	double	ratio;
 	t_color	color;
+	t_bool	have_skybox;
 	t_color	skybox_c;
 	t_tex	*skybox_t;
 }	t_amb_light;

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/14 12:51:08 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/14 14:40:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ t_color	get_hit_register_color(t_mat *mat, t_color color, t_hit_record *hit)
 				return (get_solid_texture(hit->point, 2));
 			else
 			{
-				uint32_t c = mat->color_tex->img.pixel_data[mat->color_tex->img.width * (int)(hit->v * mat->color_tex->img.height) + (int)(hit->u * mat->color_tex->img.width)]; // peut etre mettre un -1 mais pas sur du tout
-				return ((t_color){(c >> 16) & 0xFF, (c >> 8) & 0xFF, c & 0xFF});
+				return (mat->color_tex->img.pixel_data[mat->color_tex->img.width * (int)(hit->v * mat->color_tex->img.height) + (int)(hit->u * mat->color_tex->img.width)]);
 			}
 		}
 		else

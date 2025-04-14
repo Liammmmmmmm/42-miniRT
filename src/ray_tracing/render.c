@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/14 11:16:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/14 14:39:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,44 @@
 #include "material.h"
 #include <math.h>
 
+t_color	get_background_color(t_minirt *minirt, t_ray ray)
+{
+	double	a;
+	t_color	background;
+
+	if (minirt->scene.amb_light.have_skybox == 0)
+	{
+		a = 0.5 * (ray.dir.y + 1);
+		if (a > 1)
+			a = 1;
+		if (a < 0)
+			a = 0;
+		background.r = ((1 - a) * 255 + a * 128);
+		background.g = ((1 - a) * 255 + a * 178);
+		background.b = ((1 - a) * 255 + a * 255);
+	}
+	else if (minirt->scene.amb_light.skybox_t == NULL)
+		return (minirt->scene.amb_light.skybox_c);
+	else
+	{
+		ray.dir = vec3_unit(ray.dir);
+
+		double u, v;
+
+		v = 0.5 + ray.dir.y * 0.5;
+		u = 0.5 + atan2(ray.dir.x, ray.dir.z) / (2 * PI_D);
+		return (minirt->scene.amb_light.skybox_t->img.pixel_data[minirt->scene.amb_light.skybox_t->img.width * (int)(v * minirt->scene.amb_light.skybox_t->img.height) + (int)(u * minirt->scene.amb_light.skybox_t->img.width)]);
+	}
+	return (background);
+}
+
 t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
 {
 	t_color			color;
-	t_color			background;
 	t_hit_record	hit_record;
-	double			a;
 
 	if (depth <= 0)
 		return (t_color){0, 0, 0};
-	a = 0.5 * (ray.dir.y + 1);
-	if (a > 1)
-		a = 1;
-	if (a < 0)
-		a = 0;
-	background.r = ((1 - a) * 255 + a * 128);
-	background.g = ((1 - a) * 255 + a * 178);
-	background.b = ((1 - a) * 255 + a * 255);
 	if (hit_register(minirt, ray, &hit_record) == 1)
 	{
 		// if (hit_record.mat)
@@ -45,7 +66,8 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
 	}
 	if (hit)
 		*hit = 0;
-	return (color_scale(background, minirt->scene.amb_light.ratio));
+	
+	return (color_scale(get_background_color(minirt, ray), minirt->scene.amb_light.ratio));
 }
 	
 void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
@@ -54,7 +76,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 	t_uint	i;
 	t_ray	ray;
 	t_color color;
-	char		bounce_hit;
+	char	bounce_hit;
 
 	i = 0;
 	tpix = minirt->mlx.img.width * minirt->mlx.img.height;

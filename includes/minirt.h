@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 17:10:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/14 13:48:18 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@
 # include <math.h>
 # include "bmp_parsing.h"
 
-# define PI_10D 3.1415926535
+# define PI_D 3.1415926535897
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
 
 // Control window
-# define CWIN_WIDTH 600
+# define CWIN_WIDTH 1
 # define CWIN_HEIGHT 1080
 
 typedef enum e_mouse_buttons
@@ -181,6 +181,8 @@ int		parse_color_or_tex(char *str, t_color *store, t_tex **tex, t_scene *scene);
 int		parse_double_b_or_tex(char *str, double *d, t_tex **tex, t_scene *scene);
 int		parse_double_or_tex(char *str, double *d, t_tex **tex, t_scene *scene);
 t_tex	*get_texture(char *str, t_scene *scene);
+void	get_texture_image(t_tex *tex, char *filename);
+int		is_extension(char *filename, char *extension);
 
 int		parse_ambiant_light(t_scene *scene, char *line);
 int		parse_camera(t_scene *scene, char *line);
@@ -241,7 +243,8 @@ void	render(t_minirt *minirt);
 t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit);
 
 t_vec3	random_in_unit_disk();
-t_vec3 defocus_disk_sample(t_minirt *minirt);
+t_vec3	defocus_disk_sample(t_minirt *minirt);
 t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt);
+t_color	get_solid_texture(t_vec3 point, double scale);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:21:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 12:18:29 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/14 13:18:40 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	invalid_struct_error(t_objects type, char **splited)
 {
 	if (type == AMBIANT_LIGHT)
 		print_error(ERR_F" ambient lighting. Expected: A "BLUE
-			"<ratio> <r,g,b>"NC);
+			"<ratio> <r,g,b> [r,g,b|texture]"NC);
 	else if (type == CAMERA)
 		print_error(ERR_F" camera. Expected: C "BLUE"<x,y,z> <x,y,z> <fov>"NC);
 	else if (type == LIGHT)

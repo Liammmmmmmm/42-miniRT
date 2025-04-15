@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:00:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 16:05:52 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/14 09:58:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ int	parse_texture(t_scene *scene, char *line)
 		return (texture_error(2, parts));
 	ft_strlcpy(scene->textures[i].name, parts[1], 21);
 	scene->textures[i].type = IMAGE;
-	// tester la extention et parser le fichier
-	// scene->textures[i].img = open(parts[2], O_RDONLY);
-	// if (scene->textures[i].fd == -1)
-	// 	return (texture_error(3, parts));
+	get_texture_image(&scene->textures[i], parts[2]);
 	free(parts);
 	i++;
 	return (1);

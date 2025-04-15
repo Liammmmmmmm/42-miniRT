@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/14 16:18:24 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/15 11:20:37 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,25 @@ void	apply_normal_map(t_hit_record *hit)
 	normal_map.y = (map.g / 127.5f) - 1.0f;
 	normal_map.z = (map.b / 127.5f) - 1.0f;
 
-	t_vec3 T;
-	if (fabs(hit->normal.x) > 0.9f)
-		T = (t_vec3){0, 1, 0};
-	else
-		T = (t_vec3){1, 0, 0};
-	T = vec3_unit(vec3_cross(T, hit->normal));
+	double	tbn[3][3];
+	t_vec3	tangent;
+	t_vec3	bi_tangent;
 	
-	t_vec3 B = vec3_cross(hit->normal, T);
-
-	
-	hit->normal = vec3_add(
-		vec3_add(
-			vec3_multiply_scalar(T, normal_map.x),
-			vec3_multiply_scalar(B, normal_map.y)),
-		vec3_multiply_scalar(hit->normal, normal_map.z)
-	);
+	tangent = vec3_cross(hit->normal, (t_vec3){0, -1, 0});
+	if (vec3_length(tangent) == 0)
+		tangent = vec3_cross(hit->normal, (t_vec3){0, 0, 1});
+	tangent = vec3_unit(tangent);
+	bi_tangent = vec3_unit(vec3_cross(hit->normal, tangent));
+	tbn[0][0] = tangent.x;
+	tbn[1][0] = tangent.y;
+	tbn[2][0] = tangent.z;
+	tbn[0][1] = bi_tangent.x;
+	tbn[1][1] = bi_tangent.y;
+	tbn[2][1] = bi_tangent.z;
+	tbn[0][2] = hit->normal.x;
+	tbn[1][2] = hit->normal.y;
+	tbn[2][2] = hit->normal.z;
+	hit->normal = vec3_unit(matrix3_dot_vec3(tbn, normal_map));
 }
 
 char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record)

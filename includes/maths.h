@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/08 20:00:43 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/15 10:59:00 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,11 @@ char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record);
 t_vec3	set_normal_face(const t_ray *r, const t_vec3 *outward_normal, t_hit_record	*hit_record);
 
 t_vec3	ray_at(t_ray r, double t);
+
+
+// MATRIX
+
+t_vec3	matrix3_dot_vec3(double matrix[3][3], const t_vec3 v);
+
 
 #endif

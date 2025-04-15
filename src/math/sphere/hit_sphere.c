@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:17:23 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/14 12:51:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/15 13:30:49 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@ static inline void get_sphere_uv(t_hit_record *rec, t_sphere *sphere)
 {
 	rec->u = clamp((atan2((-rec->point.z + sphere->position.z) / sphere->radius, (rec->point.x - sphere->position.x) / sphere->radius) + PI_D) / (2 * PI_D));
 	rec->v = clamp(acos((-rec->point.y + sphere->position.y) / sphere->radius) / PI_D);
+
+	// Truc pour avoir plusieurs repetitions d'une texture sur une sphere
+	rec->u *= 4;
+	rec->v *= 4;
+	while (rec->u > 1)
+		rec->u -= 1;
+	while (rec->v > 1)
+		rec->v -= 1;
 }
 
 char	hit_sphere(t_sphere sphere, t_ray *r, \

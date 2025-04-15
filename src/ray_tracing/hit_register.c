@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/15 11:20:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/15 13:45:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	apply_normal_map(t_hit_record *hit)
 {
 	t_color	map;
 
-	if (hit->mat == NULL || hit->mat->normal == NULL)
+	if (hit->mat == NULL || hit->mat->normal == NULL || hit->mat->normal->img.pixel_data == NULL)
 		return ;
 	map = hit->mat->normal->img.pixel_data[hit->mat->normal->img.width * (int)(hit->v * hit->mat->normal->img.height) + (int)(hit->u * hit->mat->normal->img.width)];
 	
@@ -63,6 +63,26 @@ void	apply_normal_map(t_hit_record *hit)
 	tbn[1][2] = hit->normal.y;
 	tbn[2][2] = hit->normal.z;
 	hit->normal = vec3_unit(matrix3_dot_vec3(tbn, normal_map));
+}
+
+void	apply_roughness_map(t_hit_record *hit)
+{
+	t_color	map;
+
+	if (hit->mat == NULL || hit->mat->roughness_tex == NULL || hit->mat->roughness_tex->img.pixel_data == NULL)
+		return ;
+	map = hit->mat->roughness_tex->img.pixel_data[hit->mat->normal->img.width * (int)(hit->v * hit->mat->normal->img.height) + (int)(hit->u * hit->mat->normal->img.width)];
+	hit->mat->roughness_value = map.r / 255.0; // potentiellement remplacer map.r par (map.r + map.g + map.b) / 3 pour une secu en plus
+}
+
+void	apply_metallic_map(t_hit_record *hit)
+{
+	t_color	map;
+
+	if (hit->mat == NULL || hit->mat->metallic_tex == NULL || hit->mat->metallic_tex->img.pixel_data == NULL)
+		return ;
+	map = hit->mat->metallic_tex->img.pixel_data[hit->mat->normal->img.width * (int)(hit->v * hit->mat->normal->img.height) + (int)(hit->u * hit->mat->normal->img.width)];
+	hit->mat->metallic_value = map.r / 255.0; // potentiellement remplacer map.r par (map.r + map.g + map.b) / 3 pour une secu en plus
 }
 
 char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record)
@@ -94,6 +114,8 @@ char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record)
 					*hit_record = temp_hit_record;
 					hit_record->mat = sphere->material;
 					apply_normal_map(hit_record);
+					apply_roughness_map(hit_record);
+					apply_metallic_map(hit_record);
 					hit_record->color = get_hit_register_color(sphere->material, sphere->color, hit_record);
 				}
 			}

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 17:19:59 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/16 13:59:19 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,40 @@ typedef struct s_object
 	t_objects	type;
 }	t_object;
 
+typedef struct s_aabb
+{
+	t_vec3	min;
+	t_vec3	max;
+}	t_aabb;
+
+typedef struct s_bvh_node
+{
+	t_aabb		node_bounds;
+	uint32_t	left_child;
+	uint32_t	right_child;
+	uint32_t	first_prim;
+	uint32_t	prim_count;
+	char		is_leaf;
+}	t_bvh_node;
+
+typedef struct s_bvh
+{
+	uint32_t	*prim_indices;
+	t_bvh_node	*bvh_nodes;
+	uint16_t	bvh_nodes_used;	
+	t_object	*obj_list;
+	uint32_t	*closest_t;
+	uint32_t	node_index;
+}	t_bvh;
+
+typedef struct s_axis
+{
+	double	orig;
+	double	dir;
+	double	min;
+	double	max;
+}	t_axis;
+
 typedef struct s_scene
 {
 	t_tex		*textures;
@@ -198,6 +232,7 @@ typedef struct s_scene
 	t_amb_light	amb_light;
 	t_camera	camera;
 	double		ior_all;
+	t_bvh		bvh;
 }	t_scene;
 
 typedef struct s_mlx

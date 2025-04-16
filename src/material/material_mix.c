@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:28:45 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/16 15:49:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/16 16:39:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_color	material_mix(t_mat_manager *mat_man)
 {
 	if (mat_man->hit_record.mat->metallic_value > 0.0)
 		return (reflection_color(mat_man));
-	else if (mat_man->hit_record.mat->ior > 0)
+	else if (mat_man->hit_record.mat->ior > 0 && mat_man->hit_record.mat->transmission > 0)
 		return (refracted_color(mat_man));
 	else
 		return (material_default(mat_man));
@@ -48,10 +48,10 @@ t_color	dielectric_material(t_mat_manager *mat_man)
 
 t_color	material_mix_v2(t_mat_manager *mat_man)
 {
-	if (mat_man->hit_record.color.r != 0
-		|| mat_man->hit_record.color.g != 0
-		|| mat_man->hit_record.color.b != 0)
-	{
+	// if (mat_man->hit_record.color.r != 0
+	// 	|| mat_man->hit_record.color.g != 0
+	// 	|| mat_man->hit_record.color.b != 0)
+	// { // faut pas tester si le rayon est noir ici, sinon ca peut peter des trucs
 		if (mat_man->hit_record.mat->metallic_value == 1.0)
 			return (metallic_material(mat_man));
 		else if (mat_man->hit_record.mat->metallic_value == 0.0)
@@ -68,7 +68,7 @@ t_color	material_mix_v2(t_mat_manager *mat_man)
 			else
 				return (metallic_material(mat_man));
 		}
-	}
+	// }
 	return ((t_color){0, 0, 0});
 }
 

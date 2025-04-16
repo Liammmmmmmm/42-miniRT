@@ -35,4 +35,4 @@ https://www.cg.tuwien.ac.at/sites/default/files/course/4411/attachments/04_path_
 ## Resources
 
 - [Apple True Type reference manual](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6.html)
-- 
+- https://www.adobe.com/learn/substance-3d-designer/web/the-pbr-guide-part-2

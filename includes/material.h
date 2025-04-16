@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   material.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:32:20 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/08 20:57:08 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:35:59 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,27 @@ t_color	material_mix(t_mat_manager *mat_man);
 t_color	material_default(t_mat_manager *mat_man);
 
 t_color	material_manager(t_mat_manager mat_man);
+
+
+// v2
+
+t_color	material_mix_v2(t_mat_manager *mat_man);
+
+/**
+ * Calc color of a ray hitting a metallic surface
+ * 
+ * direction : bouncing ray
+ * `R = I−2(I⋅N)N`
+ * with
+ * • `I` : the direction of the ray hitting the object
+ * • `N` : normal of the point
+ */
+t_color	metallic_material(t_mat_manager *mat_man);
+
+t_color	dielectric_non_transmissive_material(t_mat_manager *mat_man);
+t_color	dielectric_transmissive_material(t_mat_manager *mat_man);
+
+
+double get_cos_theta(t_vec3 dir_in, t_vec3 normal);
 
 #endif

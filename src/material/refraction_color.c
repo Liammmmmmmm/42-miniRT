@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   refraction_color.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:26:47 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/08 20:19:44 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:14:40 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

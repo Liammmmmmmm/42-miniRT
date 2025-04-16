@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/14 13:19:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/16 09:29:24 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	parse_ambiant_light(t_scene *scene, char *line)
 		if (!parse_color_or_tex(parts[3], &scene->amb_light.skybox_c, &scene->amb_light.skybox_t, scene))
 			return (invalid_struct_error(AMBIANT_LIGHT, parts));
 		scene->amb_light.have_skybox = 1;
+		if (scene->amb_light.skybox_t && !scene->amb_light.skybox_t->img.pixel_data)
+			scene->amb_light.skybox_t = NULL;
 	}
 	free(parts);
 	return (1);

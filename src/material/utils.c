@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   material_manager.c                                 :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 18:27:51 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/16 10:49:08 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/04/16 12:34:41 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/04/16 13:07:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
+#include "minirt.h"
 #include "material.h"
 
-t_color	material_manager(t_mat_manager mat_man)
+double get_cos_theta(t_vec3 dir_in, t_vec3 normal)
 {
-	if (mat_man.hit_record.mat)
-	{
-		return (material_mix_v2(&mat_man));
-	}
-	return (material_default(&mat_man));
+	return (vec3_dot(vec3_negate(vec3_unit(dir_in)), normal));
 }

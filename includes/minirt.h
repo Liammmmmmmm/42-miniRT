@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/14 13:48:18 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/16 13:07:47 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <errno.h>
 # include <math.h>
 # include "bmp_parsing.h"
+# include "material.h"
 
 # define PI_D 3.1415926535897
 

@@ -4,13 +4,13 @@ tex skybox assets/textures/mountain_skybox.bmp
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   emission_strength   emission_color normal_map
-mat	metal0                        255,255,255       0.0            0.0            0.750000       0.000000       0.000000            255,255,255 
+mat	metal0                        255,255,255       0.0            0.0            0.750000       1.000000       0.000000            255,255,255 
 mat	metal1                        255,227,157       1.0            0.0            0.000000       0.000000       0.000000            255,255,255 
 mat	metal2                        255,255,255       0.0            1.0            0.000000       0.000000       0.000000            255,255,255 
 mat	metal3                        255,255,255       0.0            1.0            0.000000       0.000000       0.000000            255,255,255 
 mat	texture_rel                   texture1          0.0            1.0            0.000000       0.000000       0.000000            255,255,255 
 mat	texture_rel2                  texture2          0.0            1.0            0.000000       0.000000       0.000000            255,255,255 
-mat mat_0_0  					  255,255,255       0.0            0.02           0.0            0.0            0.0                 220,220,220
+mat mat_0_0  					  255,255,255       0.05           0.0            1.460          0.0            0.0                 220,220,220
 
 
 A	0.5										255,255,255 skybox
@@ -18,8 +18,8 @@ A	0.5										255,255,255 skybox
 C	-2,1,1	1,-0.5,-1 50
 
 L	-4,1,1	1							255,255,255
-# pl	0,-0.51,1		0,1,0						texture_rel2
+pl	0,-0.51,1		0,1,0						texture_rel2
 # sp	0,-100.5,-1.2	100						204,204,204
-# sp	-1,0,-1		1							metal0
-# sp	0,0,-1		1							mat_0_0 # 25,51,127
+sp	-1,0,-1		1							metal0
+sp	0,0,-1		1							mat_0_0 # 25,51,127
 sp	1,0,-1		1							metal1

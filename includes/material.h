@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:32:20 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/16 12:35:59 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/16 16:04:38 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ t_color	material_manager(t_mat_manager mat_man);
 
 
 // v2
+
+t_color	color_lerp(t_color a, t_color b, float t);
+
 
 t_color	material_mix_v2(t_mat_manager *mat_man);
 

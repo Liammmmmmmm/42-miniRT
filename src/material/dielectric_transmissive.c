@@ -6,11 +6,21 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:44:50 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/17 15:54:53 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/17 16:27:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+static inline t_vec3	refracted_v(const t_vec3 uv, const t_vec3 n, double ri)
+{
+	t_vec3	r_out_perp;
+
+	r_out_perp = vec3_multiply_scalar(vec3_add(uv, \
+		vec3_multiply_scalar(n, fmin(vec3_dot(vec3_negate(uv), n), 1.0))), ri);
+	return (vec3_add(vec3_multiply_scalar(n, \
+		-sqrt(fabs(1.0 - vec3_length_squared(r_out_perp)))), r_out_perp));
+}
 
 static inline t_color	refracted_ray(t_mat_manager *mat_man)
 {
@@ -33,7 +43,7 @@ static inline t_color	refracted_ray(t_mat_manager *mat_man)
 		return (metallic_material(mat_man));
 	else
 	{
-		direction = refracted_vec(mat_man->ray_in.dir, mat_man->hit_record.normal, eta);
+		direction = refracted_v(mat_man->ray_in.dir, mat_man->hit_record.normal, eta);
 		if (mat_man->hit_record.mat->roughness_value > 0.0)
 			direction = vec3_add(vec3_unit(direction),
 				vec3_multiply_scalar(vec3_random_unit(),

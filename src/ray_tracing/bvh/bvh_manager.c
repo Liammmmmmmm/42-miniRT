@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/16 14:20:35 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/16 19:38:23 by delmath          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_bvh_node	init_bvh_node(t_bvh *bvh, uint32_t start, uint32_t count)
 	node.node_bounds = bounds;
 	node.first_prim = start;
 	node.prim_count = count;
-	node.is_leaf = (count <= 2);
+	node.is_leaf = (count == 1);
 	node.left_child = 0;
 	node.right_child = 0;
 	return (node);
@@ -110,10 +110,11 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 char	hit_bvh(t_bvh *bvh, uint32_t node_index, t_ray *ray, \
 	t_hit_record *hit_rec)
 {
-	char		hit_anything;
-	char		hit_left;
-	char		hit_right;
-	t_bvh_node	*node;
+	char			hit_anything;
+	char			hit_left;
+	char			hit_right;
+	t_hit_record	hit_tmp;
+	t_bvh_node		*node;
 
 	node = &bvh->bvh_nodes[node_index];
 	if (!intersect_aabb(*ray, node->node_bounds))
@@ -124,7 +125,10 @@ char	hit_bvh(t_bvh *bvh, uint32_t node_index, t_ray *ray, \
 	else
 	{
 		hit_left = hit_bvh(bvh, node->left_child, ray, hit_rec);
-		hit_right = hit_bvh(bvh, node->right_child, ray, hit_rec);
+		hit_right = hit_bvh(bvh, node->right_child, ray, &hit_tmp);
+		if (hit_right)
+			if ((hit_tmp.t < hit_rec->t) || (hit_right && !hit_left))
+				*hit_rec = hit_tmp;
 		hit_anything = hit_left || hit_right;
 	}
 	return (hit_anything);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/16 13:59:19 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/16 20:00:31 by delmath          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,16 @@ typedef struct s_sc_point
 	float	z;		/* Depth of the point. */
 	t_color	color;	/* Color of the point. */
 }	t_sc_point;
+
+typedef struct s_calc_trigo
+{
+	double	sin_yaw;
+	double	cos_yaw;
+	double	sin_pitch;
+	double	cos_pitch;
+	double	sin_roll;
+	double	cos_roll;
+}	t_calc_trigo;
 
 typedef struct s_vec3
 {

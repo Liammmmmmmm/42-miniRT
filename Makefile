@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/15 11:00:49 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/04/17 15:33:06 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,12 +90,14 @@ ENV_FILE			= init_mlx.c init_controls.c init_ui.c
 
 MAT_DIR				= src/material/
 MAT_FILE			= material_default.c material_manager.c material_mix.c reflection_color.c \
-					reflection_math.c refraction_color.c refraction_math.c
+					reflection_math.c refraction_color.c refraction_math.c \
+					dielectric_non_transmissive.c dielectric_transmissive.c dielectric.c metallic.c \
+					utils.c
 
 MATH_DIR			= src/math/
 MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/vec3_length.c \
 					vector/vec3_utils.c vector/vec3_random.c normal/normal.c color/color_operation.c ft_dmin.c\
-					plane/hit_plane.c sphere/hit_sphere.c random.c matrix/matrix3.c
+					plane/hit_plane.c sphere/hit_sphere.c random.c matrix/matrix3.c fresnel_schlick.c
 
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/17 17:03:28 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/17 23:22:45 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ char	hit_bvh(t_bvh *bvh, uint32_t node_index, t_ray *ray, \
 		return (0);
 	hit_anything = 0;
 	if (node->is_leaf)
-		hit_anything = hit_register(bvh, node, ray, hit_rec);
+		hit_anything = hit_register_bvh(bvh, node, ray, hit_rec);
 	else
 	{
 		hit_left = hit_bvh(bvh, node->left_child, ray, hit_rec);

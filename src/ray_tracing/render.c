@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/16 19:32:04 by delmath          ###   ########.fr       */
+/*   Updated: 2025/04/17 23:23:43 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
 	background.r = ((1 - a) * 255 + a * 128);
 	background.g = ((1 - a) * 255 + a * 178);
 	background.b = ((1 - a) * 255 + a * 255);
-	if (hit_bvh(&minirt->scene.bvh, 0, &ray, &hit_record) == 1)
+	if (hit_register_all(minirt, &ray, &hit_record) == 1)
 	{
 		if (hit_record.mat)
 			color = hit_record.mat->color_value;

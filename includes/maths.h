@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/17 20:44:29 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/17 23:23:50 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ char	hit_sphere(t_sphere *sphere, t_ray *r, \
 	t_interval interval, t_hit_record *rec);
 char	hit_plane(const t_vec3 point_on_plane, const t_vec3 normal, \
 	const t_ray *r, t_interval interval, t_hit_record *rec);
-char	hit_register(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hit_record);
+char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record);
+char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hit_record);
 t_vec3	set_normal_face(const t_ray *r, const t_vec3 *outward_normal, t_hit_record	*hit_record);
 t_vec3	ray_at(t_ray r, double t);
 

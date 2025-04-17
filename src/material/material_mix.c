@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:28:45 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/16 16:39:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/17 16:11:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,17 @@ t_color	dielectric_material(t_mat_manager *mat_man)
 {
 	if (mat_man->hit_record.mat->ior > 0)
 	{
-		if (mat_man->hit_record.mat->transmission > 0)
+		if (mat_man->hit_record.mat->transmission == 1.0)
 			return (dielectric_transmissive_material(mat_man));
-		else
+		else if (mat_man->hit_record.mat->transmission == 0.0)
 			return (dielectric_non_transmissive_material(mat_man));
+		else
+		{
+			if (random_double() > mat_man->hit_record.mat->transmission)
+				return (dielectric_non_transmissive_material(mat_man));
+			else
+				return (dielectric_transmissive_material(mat_man));
+		}
 	}
 	else
 		return (material_default(mat_man));

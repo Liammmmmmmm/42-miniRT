@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/16 12:34:21 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/04/17 15:33:06 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,7 +91,7 @@ ENV_FILE			= init_mlx.c init_controls.c init_ui.c
 MAT_DIR				= src/material/
 MAT_FILE			= material_default.c material_manager.c material_mix.c reflection_color.c \
 					reflection_math.c refraction_color.c refraction_math.c \
-					dielectric_non_transmissive.c dielectric_transmissive.c metallic.c \
+					dielectric_non_transmissive.c dielectric_transmissive.c dielectric.c metallic.c \
 					utils.c
 
 MATH_DIR			= src/math/

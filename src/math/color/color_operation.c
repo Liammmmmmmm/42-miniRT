@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:14:42 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/16 11:44:53 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/17 15:49:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ t_color	color_sub(t_color c1, t_color c2)
 t_color	color_multiply(t_color c1, t_color c2)
 {
 	return ((t_color){
-		c1.r * c2.r / 255,
-		c1.g * c2.g / 255,
-		c1.b * c2.b / 255
+		.r = (uint16_t)c1.r * c2.r / 255,
+		.g = (uint16_t)c1.g * c2.g / 255,
+		.b = (uint16_t)c1.b * c2.b / 255
 	});
 }

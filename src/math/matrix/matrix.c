@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:07:24 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/17 09:36:40 by delmath          ###   ########.fr       */
+/*   Updated: 2025/04/17 17:57:59 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,24 @@ void	init_pitch_matrix(double matrix[3][3], t_calc_trigo trigo_calcs)
 
 void	init_perspective_matrix(double matrix[4][4], t_minirt *minirt)
 {
-	double	focale;
+	const double	fov_rad = minirt->scene.camera.fov * (PI_10D / 180.0);
+	const double	aspect = (double)WIN_WIDTH / (double)WIN_HEIGHT;
+	const double	f = 1.0 / tan(fov_rad / 2.0);
+	const double	znear = 0.1;
+	const double	zfar = 1000.0;
 
-	focale = 1 / tan(minirt->scene.camera.fov * (PI_10D / 180) / 2);
-	matrix[0][0] = focale / (WIN_WIDTH / WIN_HEIGHT);
+	matrix[0][0] = f / aspect;
 	matrix[0][1] = 0;
 	matrix[0][2] = 0;
 	matrix[0][3] = 0;
 	matrix[1][0] = 0;
-	matrix[1][1] = focale;
+	matrix[1][1] = f;
 	matrix[1][2] = 0;
 	matrix[1][3] = 0;
 	matrix[2][0] = 0;
 	matrix[2][1] = 0;
-	matrix[2][2] = (1000 + 0) / (0 - 1000);
-	matrix[2][3] = 2 * 1000 * 0 / (0 - 1000);
+	matrix[2][2] = (zfar + znear) / (znear - zfar);
+	matrix[2][3] = (2 * zfar * znear) / (znear - zfar);
 	matrix[3][0] = 0;
 	matrix[3][1] = 0;
 	matrix[3][2] = -1;

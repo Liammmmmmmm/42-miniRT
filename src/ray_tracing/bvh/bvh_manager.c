@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/16 19:38:23 by delmath          ###   ########.fr       */
+/*   Updated: 2025/04/17 17:03:28 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ char	hit_bvh(t_bvh *bvh, uint32_t node_index, t_ray *ray, \
 		hit_left = hit_bvh(bvh, node->left_child, ray, hit_rec);
 		hit_right = hit_bvh(bvh, node->right_child, ray, &hit_tmp);
 		if (hit_right)
-			if ((hit_tmp.t < hit_rec->t) || (hit_right && !hit_left))
+			if ((hit_right && !hit_left) || (hit_tmp.t < hit_rec->t))
 				*hit_rec = hit_tmp;
 		hit_anything = hit_left || hit_right;
 	}

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 18:42:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/17 18:43:10 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:28:27 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,38 +33,47 @@ int	depth_to_color_int(int depth)
 	return ((r << 16) | (g << 8) | b);
 }
 
-t_calc_trigo	get_cam_trigo(t_vec3 orientation)
+t_calc_trigo	get_cam_trigo(t_vec3 direction)
 {
 	t_calc_trigo	trigo;
+	t_vec3			angles;
+	double			yaw;
+	double			pitch;
+	double			direction_d[3];
 
-	trigo.cos_yaw = cos(orientation.x * PI_10D);
-	trigo.sin_yaw = sin(orientation.x * PI_10D);
-	trigo.cos_pitch = cos(orientation.y * PI_10D);
-	trigo.sin_pitch = sin(orientation.y * PI_10D);
-	trigo.cos_roll = cos(orientation.z * PI_10D);
-	trigo.sin_roll = sin(orientation.z * PI_10D);
+	direction_d[0] = direction.x;
+	direction_d[1] = direction.y;
+	direction_d[2] = direction.z;
+	vector_to_angles(direction_d, &yaw, &pitch);
+	angles = (t_vec3){0, -pitch, yaw + 1.570796};
+	trigo.cos_yaw = cos(angles.x);
+	trigo.sin_yaw = sin(angles.x);
+	trigo.cos_pitch = cos(angles.y);
+	trigo.sin_pitch = sin(angles.y);
+	trigo.cos_roll = cos(angles.z);
+	trigo.sin_roll = sin(angles.z);
 	return (trigo);
 }
 
-void	project_vertex(t_minirt *m, t_vec3 v, int *x, int *y)
+void	project_vertex(t_minirt *minirt, t_vec3 v, int *x, int *y)
 {
 	double			vec[4];
 	double			mat[3][3];
 	double			persp[4][4];
-	t_calc_trigo	t;
+	t_calc_trigo	calc_trigo;
 
-	t = get_cam_trigo(m->scene.camera.orientation);
-	vec[0] = m->scene.camera.position.x - v.x;
-	vec[1] = m->scene.camera.position.y - v.y;
-	vec[2] = m->scene.camera.position.z - v.z;
+	calc_trigo = get_cam_trigo(minirt->scene.camera.orientation);
+	vec[0] = minirt->scene.camera.position.x - v.x;
+	vec[1] = minirt->scene.camera.position.y - v.y;
+	vec[2] = minirt->scene.camera.position.z - v.z;
 	vec[3] = 1;
-	init_roll_matrix(mat, t);
+	init_roll_matrix(mat, calc_trigo);
 	vector_multiply_matrix_3x3(mat, vec);
-	init_yaw_matrix(mat, t);
+	init_yaw_matrix(mat, calc_trigo);
 	vector_multiply_matrix_3x3(mat, vec);
-	init_pitch_matrix(mat, t);
+	init_pitch_matrix(mat, calc_trigo);
 	vector_multiply_matrix_3x3(mat, vec);
-	init_perspective_matrix(persp, m);
+	init_perspective_matrix(persp, minirt);
 	vector_multiply_matrix_4x4(persp, vec);
 	*x = ((vec[0] / vec[3]) + 1) * 0.5 * WIN_WIDTH;
 	*y = (1 - (vec[1] / vec[3])) * 0.5 * WIN_HEIGHT;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/17 09:39:16 by delmath          ###   ########.fr       */
+/*   Updated: 2025/04/17 20:44:29 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ void	vector_multiply_matrix_3x3(double matrix[3][3], double v[3]);
 void	vector_multiply_matrix_4x4(double m[4][4], double v[4]);
 void	multiply_matrix_3x3(double res[3][3], double a[3][3], double b[3][3]);
 void	multiply_matrix_4x4(double res[4][4], double a[4][4], double b[4][4]);
+
+void	vector_to_angles(double vec[3], double *yaw, double *pitch);
+void	angles_to_vector(double yaw, double pitch, double vec[3]);
 
 t_color	color_add(t_color c1, t_color c2);
 t_color	color_scale(t_color c1, double ratio);

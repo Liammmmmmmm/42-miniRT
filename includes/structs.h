@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/18 16:49:46 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:37:15 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,10 +313,11 @@ typedef struct s_keydown
 
 typedef struct s_edited_val
 {
-	int	focus_dist;
-	int	defocus_angle;
-	int	fov;
-	int	gamma;
+	int		focus_dist;
+	int		defocus_angle;
+	int		fov;
+	int		gamma;
+	char	debug;
 }	t_edited_val;
 
 typedef struct s_controls

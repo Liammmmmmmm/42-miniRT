@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/18 17:34:06 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:40:57 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 			), 
 			ray.orig
 		);
-		color = ray_color(minirt, ray, 10, &bounce_hit);
+		color = ray_color(minirt, ray, 20, &bounce_hit);
 		minirt->screen.render[i].color.r += color.r * minirt->viewport.gamma;
 		minirt->screen.render[i].color.g += color.g * minirt->viewport.gamma;
 		minirt->screen.render[i].color.b += color.b * minirt->viewport.gamma;
@@ -122,14 +122,9 @@ t_viewport	init_viewport(t_minirt *minirt)
 	t_viewport	viewport;
 	t_vec3		u;
 
-
-	/* a securiser */
 	minirt->scene.camera.fov = minirt->controls.values.fov;
 	init_bvh(&minirt->scene.bvh, minirt->scene.elements, minirt->scene.el_amount);
 	init_plane_light_lst(minirt);
-	/* a securiser */
-
-
 	minirt->scene.camera.focus_dist = minirt->controls.values.focus_dist / 10.0;
 	minirt->scene.camera.defocus_angle = minirt->controls.values.defocus_angle / 30.0;
 	printf("Focus dist: %f\nDefocus angle: %f\n", minirt->scene.camera.focus_dist, minirt->scene.camera.defocus_angle);

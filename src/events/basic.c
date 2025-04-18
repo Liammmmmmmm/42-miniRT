@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   basic.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:23:57 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/26 17:51:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/18 17:38:54 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ void	keydown_common(int key, t_minirt *minirt)
 		minirt->controls.keydown.lshift = (char)1;
 	else if (key == KEY_RSHIFT)
 		minirt->controls.keydown.rshift = (char)1;
+	else if (key == KEY_D && minirt->controls.values.debug == 0)
+		minirt->controls.values.debug = 1;
+	else if (key == KEY_D && minirt->controls.values.debug == 1)
+		minirt->controls.values.debug = 0;
 }
 
 void	keyup_common(int key, t_minirt *minirt)

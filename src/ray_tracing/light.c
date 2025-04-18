@@ -6,13 +6,14 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:27:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/08 20:57:44 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:49:36 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "maths.h"
 #include "material.h"
+#include "bvh.h"
 #include <math.h>
 
 char	check_hit(t_minirt *minirt, t_vec3 origin, t_vec3 target)
@@ -24,7 +25,7 @@ char	check_hit(t_minirt *minirt, t_vec3 origin, t_vec3 target)
 	shadow_ray.orig = origin;
 	shadow_ray.dir = vec3_unit(vec3_subtract(target, origin));
 	distance_to_target = vec3_length(vec3_subtract(target, origin));
-	if (hit_register(minirt, shadow_ray, &hit_record))
+	if (hit_register_all(minirt, &shadow_ray, &hit_record))
 	{
 		if (hit_record.t < distance_to_target)
 			return (1);

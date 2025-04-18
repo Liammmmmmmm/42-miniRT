@@ -6,11 +6,12 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/16 13:32:19 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/18 13:14:08 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "bvh.h"
 #include "material.h"
 #include <math.h>
 
@@ -52,7 +53,7 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
 
 	if (depth <= 0)
 		return (t_color){0, 0, 0};
-	if (hit_register(minirt, ray, &hit_record) == 1)
+	if (hit_register_all(minirt, &ray, &hit_record) == 1)
 	{
 
 		color = hit_record.color;
@@ -68,15 +69,16 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
 	//return (color_scale(get_background_color(minirt, ray), minirt->scene.amb_light.ratio));
 	return (get_background_color(minirt, ray));
 }
-	
+
 void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 {
+	t_color	color;
 	t_uint	tpix;
 	t_uint	i;
 	t_ray	ray;
-	t_color color;
 	char	bounce_hit;
 
+	bounce_hit = 0;
 	i = 0;
 	tpix = minirt->mlx.img.width * minirt->mlx.img.height;
 	while (i < tpix)
@@ -113,13 +115,19 @@ void	draw_pixels(t_minirt *minirt)
 	put_render_to_frame(minirt);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
 	printf("Sample %d\n", minirt->screen.sample);
-
 }
 
 t_viewport	init_viewport(t_minirt *minirt)
 {
 	t_viewport	viewport;
 	t_vec3		u;
+
+
+	/* a securiser */
+	minirt->scene.camera.fov = minirt->controls.values.fov;
+	init_bvh(&minirt->scene.bvh, minirt->scene.elements, minirt->scene.el_amount);
+	// print_bvh(bvh, 0, 0);
+	/* a securiser */
 
 	minirt->scene.camera.focus_dist = minirt->controls.values.focus_dist / 10.0;
 	minirt->scene.camera.defocus_angle = minirt->controls.values.defocus_angle / 30.0;

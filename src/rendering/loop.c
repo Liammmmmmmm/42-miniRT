@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/14 13:47:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/18 13:48:56 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,25 @@ void	render_controls(t_minirt *minirt)
 	while (++i < minirt->controls.nb_sliders)
 		display_slider_int(&minirt->mlx.img_controls, minirt->controls.sliders[i]);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.controls_win, minirt->mlx.img_controls.img, 0, 0);
+}
+
+void	put_ext_image_to_frame(t_tex_img *img, t_img *img_buff)
+{
+	int i;
+	int total;
+	t_sc_point	pt;
+	const int red_ratio = 2;
+
+	i = 0;
+	total = img->height * img->width;
+	while (i < total)
+	{
+		pt.x = (i % img->width) / red_ratio;
+		pt.y = (img->height - i / img->width) / red_ratio;
+		pt.color = img->pixel_data[i];
+		put_sp_image(img_buff, &pt);
+		i++;
+	}
 }
 
 void	put_render_to_frame(t_minirt *minirt)

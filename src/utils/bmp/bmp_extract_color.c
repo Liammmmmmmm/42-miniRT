@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_extract_color.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:50:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/11 15:25:28 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 12:28:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ int	extract_palette_pixel(t_bin *bin, size_t *i, uint32_t *value, t_bmp *bmp)
 
 	if (read_uint8_move(bin, i, &palette_index) == -1)
 		return (1);
-	*value = bmp->palette[palette_index];
+	if (palette_index < bmp->info.nb_color)
+		*value = bmp->palette[palette_index];
+	else
+		*value = 0;
+	//printf("Color %d : %6X\n", palette_index, bmp->palette[palette_index]);
 	return (0);
 }
 
@@ -81,6 +85,7 @@ int	extract_pixel(t_bin *bin, size_t *i, t_bmp *bmp, uint32_t *value)
 	uint32_t	pixel_value;
 
 	pixel_value = 0;
+	//printf("BMP VAL : %d\n", bmp->info.bpp);
 	if (bmp->info.bpp == 1)
 		return (extract_palette_pixel(bin, i, value, bmp));
 	else if (bmp->info.bpp == 4)

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/16 13:07:47 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/18 14:32:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,8 @@ int		parse_plane(t_scene *scene, char *line);
 int		parse_cylinder(t_scene *scene, char *line);
 int		parse_texture(t_scene *scene, char *line);
 int		parse_material(t_scene *scene, char *line);
+
+void	bump_to_normal(t_tex_img *bump);
 
 int		parse_scene(t_minirt *minirt, char *filename);
 

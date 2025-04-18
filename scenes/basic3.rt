@@ -4,7 +4,7 @@ tex skybox assets/textures/mountain_skybox.bmp
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   emission_strength   emission_color normal_map
-mat	glass0                        255,255,255       0.0            0.1            1.450000       1.00000       0.000000            255,255,255 
+mat	glass0                        143, 181, 139       0.0            0.0            1.450000       1.00000       0.000000            255,255,255 
 mat	glass1                        143, 181, 139       0.0            0.0            0.750000       0.500000       0.000000            255,255,255 
 mat	metal1                        255,227,157       1.0            0.0            0.000000       0.000000       0.000000            255,255,255 
 mat	metal2                        255,255,255       0.0            1.0            0.000000       0.000000       0.000000            255,255,255 

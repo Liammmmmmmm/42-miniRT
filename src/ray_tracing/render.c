@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/18 13:14:08 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:51:02 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 			), 
 			ray.orig
 		);
-		color = ray_color(minirt, ray, 10, &bounce_hit);
+		color = ray_color(minirt, ray, 2, &bounce_hit);
 		minirt->screen.render[i].color.r += color.r * minirt->viewport.gamma;
 		minirt->screen.render[i].color.g += color.g * minirt->viewport.gamma;
 		minirt->screen.render[i].color.b += color.b * minirt->viewport.gamma;
@@ -126,8 +126,9 @@ t_viewport	init_viewport(t_minirt *minirt)
 	/* a securiser */
 	minirt->scene.camera.fov = minirt->controls.values.fov;
 	init_bvh(&minirt->scene.bvh, minirt->scene.elements, minirt->scene.el_amount);
-	// print_bvh(bvh, 0, 0);
+	init_plane_light_lst(minirt);
 	/* a securiser */
+
 
 	minirt->scene.camera.focus_dist = minirt->controls.values.focus_dist / 10.0;
 	minirt->scene.camera.defocus_angle = minirt->controls.values.defocus_angle / 30.0;
@@ -173,8 +174,8 @@ void	render(t_minirt *minirt)
 			ft_bzero(&minirt->screen.render[i].color, sizeof(t_lcolor));
 		minirt->viewport = init_viewport(minirt);
 	}
-
-	draw_pixels(minirt);
+	if (minirt->scene.bvh.valid == 1)
+		draw_pixels(minirt);
 	if (minirt->screen.sample == minirt->screen.spp)
 	{
 		minirt->screen.sample = 0;

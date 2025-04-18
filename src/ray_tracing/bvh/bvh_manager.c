@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/17 23:22:45 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:14:13 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,10 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	uint32_t		j;
 	const uint32_t	count = count_object(obj_list, obj_c);
 
-	bvh->obj_list = malloc(sizeof(t_object) * count);
-	bvh->bvh_nodes = malloc(sizeof(t_bvh_node) * count * 2);
-	bvh->bvh_nodes_used = 0;
-	bvh->node_index = 0;
-	bvh->prim_indices = malloc(sizeof(uint32_t) * count);
+	ft_bzero(bvh, sizeof(t_bvh));
+	if (init_bvh_malloc(bvh, obj_c) == 1)
+		return ;
+	bvh->valid = 1;
 	i = 0;
 	j = 0;
 	while (j < obj_c)

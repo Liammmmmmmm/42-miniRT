@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/18 16:50:01 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:30:56 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,17 +157,16 @@ char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record)
 	char			hit;
 	int				i;
 	t_plane			*plane;
-	t_interval		interval;
+	t_plane			**plane_lst;
 	t_hit_record	temp_hit_record;
 
-	interval.min = 0.001;
-	interval.max = 1000;
 	hit = hit_bvh(&minirt->scene.bvh, 0, ray, hit_record);
 	i = 0;
+	plane_lst = minirt->scene.obj_lst.plane_lst;
 	while (i < minirt->scene.obj_lst.plane_nb)
 	{
-		plane = minirt->scene.obj_lst.plane_lst[i];
-		if (hit_plane(plane->position, plane->normal, ray, interval, &temp_hit_record))
+		plane = plane_lst[i];
+		if (hit_plane(plane->position, plane->normal, ray, (t_interval){0.001, 1000}, &temp_hit_record))
 		{
 			if (hit == 0 || temp_hit_record.t < hit_record->t)
 			{

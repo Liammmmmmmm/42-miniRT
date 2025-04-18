@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_extract_header.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:51:35 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/11 16:09:00 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 12:19:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,15 @@ int	error_and_return(char *message)
 int	read_palette(t_bin *bin, size_t *i, t_bmp *bmp, size_t palette_entry_count)
 {
 	size_t	j;
-	size_t	palette_size;
 
 	j = 0;
-	palette_size = palette_entry_count * sizeof(uint32_t);
-	bmp->palette = malloc(palette_size);
+	bmp->palette = malloc(palette_entry_count * sizeof(uint32_t));
 	if (bmp->palette == NULL)
 	{
 		return (\
 		error_and_return ("Error: unable to allocate memory for palette\n"));
 	}
+	*i += 21 * 4;
 	while (j < palette_entry_count && *i < bin->size)
 	{
 		if (read_uint32_move_little(bin, i, &bmp->palette[j]))
@@ -40,6 +39,7 @@ int	read_palette(t_bin *bin, size_t *i, t_bmp *bmp, size_t palette_entry_count)
 			free(bmp->palette);
 			return (error_and_return ("error: unable to read color\n"));
 		}
+		//printf("Color %zu : %6X\n", j, bmp->palette[j]);
 		j++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:50:32 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/14 14:39:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/18 13:31:21 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ static inline int	read_pixels_for_row(t_bin *bin, size_t *i, t_bmp *bmp, \
 		if (extract_pixel(bin, i, bmp, &color) == -1)
 			return (-1);
 		bmp->pixel_data[y * bmp->info.width + x] = (t_color){(color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF};
+		// if (color == 0xffffff)
+		// 	printf("bah %zu %zu\n", x, y);
+		//printf("%zu %zu, %d %d %d\n", x, y, bmp->pixel_data[y * bmp->info.width + x].r, bmp->pixel_data[y * bmp->info.width + x].g, bmp->pixel_data[y * bmp->info.width + x].b);
 		x++;
 	}
 	return (0);
@@ -61,7 +64,10 @@ int	extract_raw_pixels(t_bin *bin, size_t *i, t_bmp *bmp)
 
 	y = 0;
 	tpx = bmp->info.width * bmp->info.height;
-	padding = (4 - (bmp->info.width * 3) % 4) % 4;
+	size_t row_bytes = ((bmp->info.width * bmp->info.bpp + 7) / 8);
+	padding = (4 - (row_bytes % 4)) % 4;
+
+	// padding = (4 - (bmp->info.width * 3) % 4) % 4;
 	if (allocate_pixel_data(bmp, tpx) != 0)
 		return (1);
 	while (y < bmp->info.height)

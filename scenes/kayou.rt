@@ -1,0 +1,19 @@
+tex color assets/textures/kayou/Curated_Stone_Facade_vjqifhu_2K_BaseColor.bmp
+tex normal assets/textures/kayou/Curated_Stone_Facade_vjqifhu_2K_Normal.bmp
+tex bump assets/textures/kayou/Curated_Stone_Facade_vjqifhu_2K_Bump.bmp
+# tex metallic assets/textures/kayou/.bmp
+tex roughness assets/textures/kayou/Curated_Stone_Facade_vjqifhu_2K_Roughness.bmp
+tex back assets/textures/mountain_skybox.bmp
+
+# MATERIALS
+#	name                          color             metallic       roughness      ior            transmission   emission_strength   emission_color normal_map
+mat	MATERIAL                      color             0.0            roughness      0              0.00000        0.000000            255,255,255   normal
+
+A	0.2								255,255,255 back
+
+C	3,1.5,0	 -1,-0.5,0 90
+
+# pl	0,-2.01,1		0,1,0		    255,255,255
+
+sp 0,0,0		4							MATERIAL
+L  10,3,10        1    250, 249, 225

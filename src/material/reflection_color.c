@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reflection_color.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:26:22 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/08 19:52:12 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/16 11:02:00 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_color	reflection_color(t_mat_manager *mat_man)
 			mat_man->hit_record.mat->roughness_value));
 	mat_man->ray_in.dir = direction;
 	mat_man->ray_in.orig = mat_man->hit_record.point;
+
 	bounce_color = ray_color(mat_man->minirt, mat_man->ray_in, \
 					mat_man->depth - 1, NULL);
 	bounce_color = color_scale(bounce_color, \

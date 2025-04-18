@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
 /*   Updated: 2025/04/17 23:23:50 by madelvin         ###   ########.fr       */
@@ -41,6 +41,13 @@ t_vec3	vec3_negate(const t_vec3 v);
 t_vec3	vec3_init(double x, double y, double z);
 t_vec3	vec3_random();
 
+double	ft_dmin(double a, double b);
+
+t_color	color_add(t_color c1, t_color c2);
+t_color	color_sub(t_color c1, t_color c2);
+t_color	color_scale(t_color c1, double ratio);
+t_color	color_multiply(t_color c1, t_color c2);
+
 t_vec3	vec3_random();
 t_vec3	vec3_random_unit();
 t_vec3	vec3_random_sample();
@@ -65,10 +72,6 @@ void	multiply_matrix_4x4(double res[4][4], double a[4][4], double b[4][4]);
 void	vector_to_angles(double vec[3], double *yaw, double *pitch);
 void	angles_to_vector(double yaw, double pitch, double vec[3]);
 
-t_color	color_add(t_color c1, t_color c2);
-t_color	color_scale(t_color c1, double ratio);
-t_color	color_multiply(t_color c1, t_color c2);
-
 char	hit_sphere(t_sphere *sphere, t_ray *r, \
 	t_interval interval, t_hit_record *rec);
 char	hit_plane(const t_vec3 point_on_plane, const t_vec3 normal, \
@@ -77,5 +80,23 @@ char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record);
 char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hit_record);
 t_vec3	set_normal_face(const t_ray *r, const t_vec3 *outward_normal, t_hit_record	*hit_record);
 t_vec3	ray_at(t_ray r, double t);
+
+
+// MATRIX
+
+t_vec3	matrix3_dot_vec3(double matrix[3][3], const t_vec3 v);
+
+// FORMULES
+
+/**
+ * `F = F0​+(1−F0​)(1−cos(θ))^5`
+ */
+t_color	fresnel_schlick_color(double cos_theta, t_color f0);
+
+/**
+ * `F = F0​+(1−F0​)(1−cos(θ))^5`
+ */
+double	fresnel_schlick_f(double cos_theta, double f0);
+
 
 #endif

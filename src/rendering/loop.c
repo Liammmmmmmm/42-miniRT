@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/04/18 13:13:27 by madelvin         ###   ########.fr       */
@@ -60,6 +60,5 @@ void render_frame(t_minirt *minirt)
 	render(minirt);
 	render_bvh(minirt);
 	render_controls(minirt);
-	// minirt->screen.sample = 0;
 	minirt->stats.frame += 1;
 }

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/02 17:05:03 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/16 09:29:24 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	parse_ambiant_light(t_scene *scene, char *line)
 	parts = ft_split_in_line(line, " ");
 	if (!parts)
 		return (print_error(strerror(errno)));
-	if (char_tab_len(parts) != 3)
+	if (char_tab_len(parts) < 3)
 		return (invalid_struct_error(AMBIANT_LIGHT, parts));
 	if (!is_valid_float(parts[1]))
 		return (invalid_float_error(parts, 1));
@@ -32,6 +32,14 @@ int	parse_ambiant_light(t_scene *scene, char *line)
 	}
 	if (!parse_color(parts[2], &scene->amb_light.color))
 		return (invalid_struct_error(AMBIANT_LIGHT, parts));
+	if (char_tab_len(parts) == 4)
+	{
+		if (!parse_color_or_tex(parts[3], &scene->amb_light.skybox_c, &scene->amb_light.skybox_t, scene))
+			return (invalid_struct_error(AMBIANT_LIGHT, parts));
+		scene->amb_light.have_skybox = 1;
+		if (scene->amb_light.skybox_t && !scene->amb_light.skybox_t->img.pixel_data)
+			scene->amb_light.skybox_t = NULL;
+	}
 	free(parts);
 	return (1);
 }

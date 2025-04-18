@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/17 23:23:43 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:14:08 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ t_viewport	init_viewport(t_minirt *minirt)
 
 
 	/* a securiser */
+	minirt->scene.camera.fov = minirt->controls.values.fov;
 	init_bvh(&minirt->scene.bvh, minirt->scene.elements, minirt->scene.el_amount);
 	// print_bvh(bvh, 0, 0);
 	/* a securiser */

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 19:46:13 by delmath           #+#    #+#             */
-/*   Updated: 2025/04/17 22:57:39 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:20:54 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,21 @@ void	render_bvh_recursive(t_minirt *minirt, int depth, int start, \
 	if (node->left_child != 0)
 	{
 		if (start == 0)
-			draw_box(minirt, \
-				minirt->scene.bvh.bvh_nodes[node->left_child].node_bounds.min,\
-				minirt->scene.bvh.bvh_nodes[node->left_child].node_bounds.max,\
+			draw_box(minirt,
+				minirt->scene.bvh.bvh_nodes[node->left_child].node_bounds.min,
+				minirt->scene.bvh.bvh_nodes[node->left_child].node_bounds.max,
 				depth);
-		render_bvh_recursive(minirt, depth - 1, start,\
+		render_bvh_recursive(minirt, depth - 1, start,
 			&minirt->scene.bvh.bvh_nodes[node->left_child]);
 	}
 	if (node->right_child != 0)
 	{
 		if (start == 0)
-			draw_box(minirt, \
-				minirt->scene.bvh.bvh_nodes[node->right_child].node_bounds.min,\
-				minirt->scene.bvh.bvh_nodes[node->right_child].node_bounds.max,\
+			draw_box(minirt,
+				minirt->scene.bvh.bvh_nodes[node->right_child].node_bounds.min,
+				minirt->scene.bvh.bvh_nodes[node->right_child].node_bounds.max,
 				depth);
-		render_bvh_recursive(minirt, depth - 1, start,\
+		render_bvh_recursive(minirt, depth - 1, start,
 			&minirt->scene.bvh.bvh_nodes[node->right_child]);
 	}
 }
@@ -88,9 +88,9 @@ void	render_bvh(t_minirt *minirt)
 	start = 0;
 	depth += start;
 	if (depth > 0 && start == 0)
-		draw_box(minirt, minirt->scene.bvh.bvh_nodes[0].node_bounds.min, \
+		draw_box(minirt, minirt->scene.bvh.bvh_nodes[0].node_bounds.min,
 			minirt->scene.bvh.bvh_nodes[0].node_bounds.max, depth);
 	if (depth > 1)
-		render_bvh_recursive(minirt, depth, start, \
-						&minirt->scene.bvh.bvh_nodes[0]);
+		render_bvh_recursive(minirt, depth, start,
+			&minirt->scene.bvh.bvh_nodes[0]);
 }

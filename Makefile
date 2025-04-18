@@ -78,7 +78,8 @@ EVENT_DIR			= src/events/
 EVENT_FILE			= basic.c
 
 RAY_TRACING_DIR		= src/ray_tracing/
-RAY_TRACING_FILE	= render.c hit_register.c focus.c light.c
+RAY_TRACING_FILE	= render.c hit_register.c focus.c light.c bvh/bvh_manager.c bvh/bvh_math.c \
+					bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_print.c bvh/bvh_draw.c bvh/bvh_draw_utils.c
 
 TEXTURES_DIR		= src/ray_tracing/textures/
 TEXTURES_FILE		= get_solid_texture.c
@@ -97,8 +98,9 @@ MAT_FILE			= material_default.c material_manager.c material_mix.c reflection_col
 
 MATH_DIR			= src/math/
 MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/vec3_length.c \
-					vector/vec3_utils.c vector/vec3_random.c normal/normal.c color/color_operation.c ft_dmin.c\
-					plane/hit_plane.c sphere/hit_sphere.c random.c matrix/matrix3.c fresnel_schlick.c
+					vector/vec3_utils.c vector/vec3_random.c vector/vec3_operation_scalar.c normal/normal.c \
+					color/color_operation.c ft_dmin.c plane/hit_plane.c sphere/hit_sphere.c random.c \
+					matrix/matrix.c matrix/matrix_calc.c angle/angle_math.c matrix/matrix3.c fresnel_schlick.c
 
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
@@ -145,7 +147,7 @@ OBJ_BONUS = $(B_FILE:%.c=$(OBJ_DIR)%.o)
 REMAKE   = libft/includes/libft.h libft/includes/ft_printf.h \
 		libft/includes/get_next_line.h libft/Makefile  Makefile \
 		includes/structs.h includes/minirt.h includes/bmp_parsing.h \
-    includes/font.h includes/font_structs.h
+    includes/font.h includes/font_structs.h includes/bvh.h
 
 # NORMINETTE
 NORM_RET = $(RED)[ERROR]$(BOLD) Norminette Disable$(NC)

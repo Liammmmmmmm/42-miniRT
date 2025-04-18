@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/04/18 14:32:16 by lilefebv         ###   ########lyon.fr   */
@@ -32,7 +32,7 @@
 # define WIN_HEIGHT 1080
 
 // Control window
-# define CWIN_WIDTH 1
+# define CWIN_WIDTH 600
 # define CWIN_HEIGHT 1080
 
 typedef enum e_mouse_buttons

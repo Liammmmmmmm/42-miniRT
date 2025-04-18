@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dmin.c                                          :+:      :+:    :+:   */
+/*   angle_math.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 14:15:05 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/16 12:40:51 by madelvin         ###   ########.fr       */
+/*   Created: 2025/04/17 20:39:30 by madelvin          #+#    #+#             */
+/*   Updated: 2025/04/17 20:41:11 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "maths.h"
+#include <math.h>
 
-inline double	ft_dmin(double a, double b)
+void	vector_to_angles(double vec[3], double *yaw, double *pitch)
 {
-	if (a < b)
-		return (a);
-	return (b);
+	*pitch = asin(vec[1]);
+	*yaw = atan2(vec[2], vec[0]);
 }
 
-inline double	ft_dmax(double a, double b)
+void	angles_to_vector(double yaw, double pitch, double vec[3])
 {
-	if (a > b)
-		return (a);
-	return (b);
+	vec[0] = cos(pitch) * cos(yaw);
+	vec[1] = sin(pitch);
+	vec[2] = cos(pitch) * sin(yaw);
 }

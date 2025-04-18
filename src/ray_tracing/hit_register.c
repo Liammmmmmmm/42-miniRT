@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   hit_register.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
 /*   Updated: 2025/04/18 15:34:42 by lilefebv         ###   ########lyon.fr   */
@@ -11,6 +11,11 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "structs.h"
+#include "maths.h"
+#include "bvh.h"
+#include <math.h>
+
 
 t_color	get_hit_register_color(t_mat *mat, t_color color, t_hit_record *hit)
 {
@@ -85,50 +90,90 @@ void	apply_metallic_map(t_hit_record *hit)
 	hit->mat->metallic_value = map.r / 255.0; // potentiellement remplacer map.r par (map.r + map.g + map.b) / 3 pour une secu en plus
 }
 
-char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record)
+char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hit_record)
 {
 	t_hit_record	temp_hit_record;
-	t_sphere		*sphere;
-	t_plane			*plane;
+	// t_plane			*plane;
 	t_interval		interval;
+	char			hit_anything;
+	uint32_t		i;
+	uint32_t		prim_index;
 	double			closest_t;
-	int				hit_anything;
-	int				i;
+	t_object		*obj;
 
 	i = 0;
 	hit_anything = 0;
 	interval.min = 0.001;
 	interval.max = 1000;
-	closest_t = INFINITY;
-	while (i < minirt->scene.el_amount)
+	closest_t = 1000;
+	while (i < node->prim_count)
 	{
-		if (minirt->scene.elements[i].type == SPHERE)
-		{
-			sphere = minirt->scene.elements[i].object;
-			if (hit_sphere(*sphere, &ray, interval, &temp_hit_record))
+		prim_index = bvh->prim_indices[node->first_prim + i];
+		obj = &bvh->obj_list[prim_index];
+		if (obj->type == SPHERE && hit_sphere(((t_sphere *)obj->object), ray, interval, &temp_hit_record))
+		{			
+			if (temp_hit_record.t < closest_t)
 			{
-				if (temp_hit_record.t < closest_t)
-				{
 					hit_anything = 1;
 					closest_t = temp_hit_record.t;
 					*hit_record = temp_hit_record;
-					hit_record->mat = sphere->material;
+					hit_record->mat = ((t_sphere *)obj->object)->material;
 					apply_normal_map(hit_record);
 					apply_roughness_map(hit_record);
 					apply_metallic_map(hit_record);
-					hit_record->color = get_hit_register_color(sphere->material, sphere->color, hit_record);
-				}
+					hit_record->color = get_hit_register_color(((t_sphere *)obj->object)->material, ((t_sphere *)obj->object)->color, hit_record);
 			}
 		}
+		// if (minirt->scene.elements[i].type == PLANE)
+		// {
+		// 	plane = minirt->scene.elements[i].object;
+		// 	if (hit_plane(plane->position, plane->normal, &ray, interval, &temp_hit_record))
+		// 	{
+		// 		if (temp_hit_record.t < closest_t)
+		// 		{
+		// 			hit_anything = 1;
+		// 			closest_t = temp_hit_record.t;
+		// 			*hit_record = temp_hit_record;
+		// 			if (plane->material)
+		// 			{
+		// 				hit_record->mat = plane->material;
+		// 				hit_record->color = plane->material->color_value;
+		// 			}
+		// 			else
+		// 			{
+		// 				hit_record->mat = NULL;
+		// 				hit_record->color = plane->color;
+		// 			}
+		// 		}
+		// 	}
+		// }
+		i++;
+	}
+	return (hit_anything);
+}
+
+char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record)
+{
+	char			hit;
+	int				i;
+	t_plane			*plane;
+	t_interval		interval;
+	t_hit_record	temp_hit_record;
+
+	interval.min = 0.001;
+	interval.max = 1000;
+	hit = hit_bvh(&minirt->scene.bvh, 0, ray, hit_record);
+	i = 0;
+	while (i < minirt->scene.el_amount)
+	{
 		if (minirt->scene.elements[i].type == PLANE)
 		{
 			plane = minirt->scene.elements[i].object;
-			if (hit_plane(plane->position, plane->normal, &ray, interval, &temp_hit_record))
+			if (hit_plane(plane->position, plane->normal, ray, interval, &temp_hit_record))
 			{
-				if (temp_hit_record.t < closest_t)
+				if (hit == 0 || temp_hit_record.t < hit_record->t)
 				{
-					hit_anything = 1;
-					closest_t = temp_hit_record.t;
+					hit = 1;
 					*hit_record = temp_hit_record;
 					hit_record->mat = plane->material;
 					hit_record->color = get_hit_register_color(plane->material, plane->color, hit_record);
@@ -137,5 +182,5 @@ char	hit_register(t_minirt *minirt, t_ray ray, t_hit_record *hit_record)
 		}
 		i++;
 	}
-	return (hit_anything);
+	return (hit);
 }

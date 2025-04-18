@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/15 13:45:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/18 15:34:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	apply_roughness_map(t_hit_record *hit)
 
 	if (hit->mat == NULL || hit->mat->roughness_tex == NULL || hit->mat->roughness_tex->img.pixel_data == NULL)
 		return ;
-	map = hit->mat->roughness_tex->img.pixel_data[hit->mat->normal->img.width * (int)(hit->v * hit->mat->normal->img.height) + (int)(hit->u * hit->mat->normal->img.width)];
+	map = hit->mat->roughness_tex->img.pixel_data[hit->mat->roughness_tex->img.width * (int)(hit->v * hit->mat->roughness_tex->img.height) + (int)(hit->u * hit->mat->roughness_tex->img.width)];
 	hit->mat->roughness_value = map.r / 255.0; // potentiellement remplacer map.r par (map.r + map.g + map.b) / 3 pour une secu en plus
 }
 
@@ -81,7 +81,7 @@ void	apply_metallic_map(t_hit_record *hit)
 
 	if (hit->mat == NULL || hit->mat->metallic_tex == NULL || hit->mat->metallic_tex->img.pixel_data == NULL)
 		return ;
-	map = hit->mat->metallic_tex->img.pixel_data[hit->mat->normal->img.width * (int)(hit->v * hit->mat->normal->img.height) + (int)(hit->u * hit->mat->normal->img.width)];
+	map = hit->mat->metallic_tex->img.pixel_data[hit->mat->metallic_tex->img.width * (int)(hit->v * hit->mat->metallic_tex->img.height) + (int)(hit->u * hit->mat->metallic_tex->img.width)];
 	hit->mat->metallic_value = map.r / 255.0; // potentiellement remplacer map.r par (map.r + map.g + map.b) / 3 pour une secu en plus
 }
 

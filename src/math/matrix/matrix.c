@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:07:24 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/17 22:29:16 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 14:06:22 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	init_pitch_matrix(double matrix[3][3], t_calc_trigo trigo_calcs)
 
 void	init_perspective_matrix(double matrix[4][4], t_minirt *minirt)
 {
-	const double	fov_rad = minirt->scene.camera.fov * (PI_10D / 180.0);
+	const double	fov_rad = minirt->scene.camera.fov * (PI_D / 180.0);
 	const double	aspect = (double)WIN_WIDTH / (double)WIN_HEIGHT;
 	const double	f = 1.0 / tan(fov_rad / 2.0);
 	const double	znear = 0.1;

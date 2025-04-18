@@ -63,6 +63,6 @@ char	hit_sphere(t_sphere *sphere, t_ray *r, \
 	rec->point = ray_at(*r, rec->t);
 	oc = vec3_divide_scalar((t_vec3){rec->point.x - sphere->position.x, rec->point.y - sphere->position.y, rec->point.z - sphere->position.z}, sphere->radius);
 	rec->normal = set_normal_face(r, &oc, rec);
-	get_sphere_uv(rec, &sphere);
+	get_sphere_uv(rec, sphere);
 	return (1);
 }

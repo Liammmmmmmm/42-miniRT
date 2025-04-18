@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/16 20:00:31 by delmath          ###   ########.fr       */
+/*   Updated: 2025/04/18 16:49:46 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,14 @@ typedef struct s_object
 	t_objects	type;
 }	t_object;
 
+typedef struct s_obj_lst
+{
+	t_light	**light_lst;
+	int		light_nb;
+	t_plane	**plane_lst;
+	int		plane_nb;
+}	t_obj_lst;
+
 typedef struct s_aabb
 {
 	t_vec3	min;
@@ -226,6 +234,7 @@ typedef struct s_bvh
 	t_object	*obj_list;
 	uint32_t	*closest_t;
 	uint32_t	node_index;
+	char		valid;
 }	t_bvh;
 
 typedef struct s_axis
@@ -243,6 +252,7 @@ typedef struct s_scene
 	t_mat		*materials;
 	int			mat_amount;
 	t_object	*elements;	// Liste des tous les objets de la scene
+	t_obj_lst	obj_lst;
 	int			el_amount;	// Nombre d'elements dans la liste
 	t_amb_light	amb_light;
 	t_camera	camera;

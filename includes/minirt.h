@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/18 14:09:05 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:40:13 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,5 +247,7 @@ t_vec3	random_in_unit_disk();
 t_vec3	defocus_disk_sample(t_minirt *minirt);
 t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt);
 t_color	get_solid_texture(t_vec3 point, double scale);
+
+int		init_plane_light_lst(t_minirt *minirt);
 
 #endif

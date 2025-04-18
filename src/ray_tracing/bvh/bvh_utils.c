@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:49:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/16 14:27:00 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:14:21 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,30 @@ inline char	intersect_aabb(t_ray ray, t_aabb aabb)
 	update_interval(get_axis_interval((t_axis){ray.orig.z, ray.dir.z, \
 		aabb.min.z, aabb.max.z}), &tmin, &tmax);
 	return (tmax >= tmin && tmin < 1000.0 && tmax > 0.0);
+}
+
+int	init_bvh_malloc(t_bvh *bvh, int count)
+{
+	bvh->obj_list = malloc(sizeof(t_object) * count);
+	if (!bvh->obj_list)
+	{
+		ft_dprintf(2, "malloc failed in bvh_init\n");
+		return (1);
+	}
+	bvh->bvh_nodes = malloc(sizeof(t_bvh_node) * count * 2);
+	if (!bvh->bvh_nodes)
+	{
+		ft_dprintf(2, "malloc failed in bvh_init\n");
+		free(bvh->obj_list);
+		return (1);
+	}
+	bvh->prim_indices = malloc(sizeof(uint32_t) * count);
+	if (!bvh->prim_indices)
+	{
+		ft_dprintf(2, "malloc failed in bvh_init\n");
+		free(bvh->bvh_nodes);
+		free(bvh->obj_list);
+		return (1);
+	}
+	return (0);
 }

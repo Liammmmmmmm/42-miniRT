@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:11:47 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/17 18:49:02 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:19:11 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void			render_bvh(t_minirt *minirt);
 uint32_t		count_object(t_object *obj_list, uint32_t obj_c);
 uint32_t		hash32(uint32_t x);
 int				depth_to_color_int(int depth);
+int				init_bvh_malloc(t_bvh *bvh, int count);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                         PROJECTION / TRIGONOMÉTRIE                          ║

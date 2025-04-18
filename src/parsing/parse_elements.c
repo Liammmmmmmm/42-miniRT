@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:29:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/02 17:04:52 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:08:35 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,20 @@ void	free_tex_mat(t_scene *scene)
 	scene->materials = NULL;
 }
 
+void	free_bvh_obj_lst(t_scene *scene)
+{
+	if (scene->obj_lst.light_nb != 0)
+		free(scene->obj_lst.light_lst);
+	if (scene->obj_lst.plane_nb != 0)
+		free(scene->obj_lst.plane_lst);
+	if (scene->bvh.valid == 1)
+	{
+		free(scene->bvh.bvh_nodes);
+		free(scene->bvh.obj_list);
+		free(scene->bvh.prim_indices);
+	}
+}
+
 int	free_scene(t_scene *scene, char **lines)
 {
 	int	i;
@@ -47,6 +61,7 @@ int	free_scene(t_scene *scene, char **lines)
 		scene->elements = NULL;
 	}
 	free_tex_mat(scene);
+	free_bvh_obj_lst(scene);
 	return (0);
 }
 

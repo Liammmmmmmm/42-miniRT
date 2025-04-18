@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:27:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/18 13:49:36 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:17:11 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,11 @@ t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt)
 	view_dir = vec3_unit(vec3_subtract(minirt->scene.camera.position, \
 		hit_record->point));
 	i = 0;
-	while (i < minirt->scene.el_amount)
+	while (i < minirt->scene.obj_lst.light_nb)
 	{
-		if (minirt->scene.elements[i].type == LIGHT)
-		{
-			light = minirt->scene.elements[i].object;
-			if (check_hit(minirt, hit_record->point, light->position) == 0)
-				add_light(&light_color, hit_record, light, view_dir);
-		}
+		light = minirt->scene.obj_lst.light_lst[i];
+		if (check_hit(minirt, hit_record->point, light->position) == 0)
+			add_light(&light_color, hit_record, light, view_dir);
 		i++;
 	}
 	clamp_light_color(&light_color);

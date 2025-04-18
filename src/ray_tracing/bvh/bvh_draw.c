@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 19:46:13 by delmath           #+#    #+#             */
-/*   Updated: 2025/04/18 13:20:54 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:04:19 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	render_bvh(t_minirt *minirt)
 	int	depth;
 	int	start;
 
+	if (minirt->scene.bvh.valid == 0)
+		return ;
 	depth = 10;
 	start = 0;
 	depth += start;

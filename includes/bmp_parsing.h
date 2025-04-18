@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:42:24 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/14 14:32:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/18 10:23:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_bmp
 	t_bmp_info		info;
 	t_color			*pixel_data;
 	uint32_t		*palette;
+	uint32_t		palette_size;
 }	t_bmp;
 
 int	parse_bmp(char *file, t_tex_img *img);

@@ -194,6 +194,8 @@ int		parse_cylinder(t_scene *scene, char *line);
 int		parse_texture(t_scene *scene, char *line);
 int		parse_material(t_scene *scene, char *line);
 
+void	bump_to_normal(t_tex_img *bump);
+
 int		parse_scene(t_minirt *minirt, char *filename);
 
 /*═════════════════════════════════════════════════════════════════════════════╗

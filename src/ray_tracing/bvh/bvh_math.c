@@ -6,51 +6,36 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:31:37 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/20 15:53:01 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/20 17:23:51 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "maths.h"
 #include "bvh.h"
+#include <math.h>
 
 static inline t_aabb	compute_cylinder_bounds(t_cylinder *cyl)
 {
-	t_vec3	rvec;
-	t_vec3	half_height_vec;
-	t_vec3	top;
-	t_vec3	bottom;
+	t_vec3	axis;
+	t_vec3	e;
+	double	r;
+	double	len_sq;
 
-	double	radius = cyl->diameter * 0.5;
-	double	half_height = cyl->height * 0.5;
-
-	// Normalisée si besoin, pour la direction du cylindre
-	t_vec3	dir = vec3_unit(cyl->orientation);
-
-	// Les extrémités du cylindre (centre de chaque base)
-	half_height_vec = vec3_multiply_scalar(dir, half_height);
-	top = vec3_add(cyl->position, half_height_vec);
-	bottom = vec3_subtract(cyl->position, half_height_vec);
-
-	// Le rayon s’applique perpendiculairement à l'axe
-	rvec = (t_vec3){radius, radius, radius};
-
-	// Le AABB doit inclure les deux extrémités + rayon
-	t_vec3 min = {
-		ft_dmin(top.x, bottom.x) - radius,
-		ft_dmin(top.y, bottom.y) - radius,
-		ft_dmin(top.z, bottom.z) - radius
-	};
-
-	t_vec3 max = {
-		ft_dmax(top.x, bottom.x) + radius,
-		ft_dmax(top.y, bottom.y) + radius,
-		ft_dmax(top.z, bottom.z) + radius
-	};
-
-	return ((t_aabb){.min = min, .max = max});
+	r = cyl->diameter * 0.5;
+	axis = vec3_multiply_scalar(vec3_unit(cyl->orientation), cyl->height);
+	len_sq = vec3_dot(axis, axis);
+	e = vec3_multiply_scalar(
+			vec3_sqrt(vec3_subtract((t_vec3){1, 1, 1},
+				vec3_divide(vec3_multiply(axis, axis),
+					(t_vec3){len_sq, len_sq, len_sq}))), r);
+	return ((t_aabb){
+		.min = vec3_min(vec3_subtract(cyl->position, e),
+			vec3_subtract(vec3_add(cyl->position, axis), e)),
+		.max = vec3_max(vec3_add(cyl->position, e),
+			vec3_add(vec3_add(cyl->position, axis), e))
+	});
 }
-
 
 static inline t_aabb	compute_sphere_bounds(t_sphere *s)
 {

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/20 16:20:41 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/20 17:23:22 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ t_vec3	vec3_subtract(register t_vec3 u, register t_vec3 v);
 t_vec3	vec3_add(const t_vec3 u, const t_vec3 v);
 t_vec3	vec3_multiply(const t_vec3 u, const t_vec3 v);
 t_vec3	vec3_multiply_scalar(const t_vec3 v, double t);
+t_vec3	vec3_divide(t_vec3 a, t_vec3 b);
 t_vec3	vec3_divide_scalar(const t_vec3 v, double t);
 t_vec3	vec3_add_scalar(t_vec3 vec, double t);
 t_vec3	vec3_subtract_scalar(t_vec3 vec, double t);
+t_vec3	vec3_sqrt(t_vec3 v);
 
 /*	Length and squared length calculation	*/
 double	vec3_length(const t_vec3 v);
@@ -74,6 +76,10 @@ void	angles_to_vector(double yaw, double pitch, double vec[3]);
 
 char	solve_quadratic(t_quadratic *q);
 char	init_cylinder_quadratic(t_quadratic *q, t_cylinder *cyl, t_ray *r);
+
+t_vec3	vec3_abs(t_vec3 v);
+t_vec3	vec3_min(t_vec3 a, t_vec3 b);
+t_vec3	vec3_max(t_vec3 a, t_vec3 b);
 
 char	hit_sphere(t_sphere *sphere, t_ray *r, \
 	t_interval interval, t_hit_record *rec);

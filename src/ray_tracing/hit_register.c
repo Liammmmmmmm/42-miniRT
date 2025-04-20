@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/18 18:58:31 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/20 17:04:01 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record)
 	char			hit;
 	int				i;
 	t_plane			*plane;
-	t_cylinder		*cylinder;
 	t_plane			**plane_lst;
 	t_hit_record	temp_hit_record;
 
@@ -166,25 +165,6 @@ char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record)
 				*hit_record = temp_hit_record;
 				hit_record->mat = plane->material;
 				hit_record->color = get_hit_register_color(plane->material, plane->color, hit_record);
-			}
-		}
-		i++;
-	}
-	i = 0;
-	while (i < minirt->scene.el_amount)
-	{
-		if (minirt->scene.elements[i].type == CYLINDER)
-		{
-			cylinder = (t_cylinder *)minirt->scene.elements[i].object;
-			if (hit_cylinder(cylinder, ray, (t_interval){0.001, 1000}, &temp_hit_record))
-			{
-				if (hit == 0 || temp_hit_record.t < hit_record->t)
-				{
-					hit = 1;
-					*hit_record = temp_hit_record;
-					hit_record->mat = plane->material;
-					hit_record->color = get_hit_register_color(plane->material, plane->color, hit_record);
-				}
 			}
 		}
 		i++;

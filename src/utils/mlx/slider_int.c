@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:47:09 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 21:05:15 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/20 15:52:34 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	slider_mouse_down(t_int_slider *slider, int mouse_x, int mouse_y)
 
 	circle_center_x = slider->x + ((*slider->value - slider->min) * \
 		slider->width / (slider->max - slider->min));
-	circle_center_y = slider->y + slider->height / 2;
+	circle_center_y = slider->y + slider->height * 0.5;
 	if (circle_center_x - 7 <= mouse_x && circle_center_x + 7 >= mouse_x
 		&& circle_center_y - 7 <= mouse_y && circle_center_y + 7 >= mouse_y)
 	{

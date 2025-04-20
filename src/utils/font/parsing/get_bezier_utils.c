@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_bezier_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:09:15 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 13:09:46 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/20 15:52:50 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ int	count_bezier_lines(t_glyph_outline *o, int pts_am)
 
 static int32_t	x_average(t_glyph_outline *o, int i1, int i2)
 {
-	return ((o->x_coordinates[i1] + o->x_coordinates[i2]) / 2);
+	return ((o->x_coordinates[i1] + o->x_coordinates[i2]) * 0.5);
 }
 
 static int32_t	y_average(t_glyph_outline *o, int i1, int i2)
 {
-	return ((o->y_coordinates[i1] + o->y_coordinates[i2]) / 2);
+	return ((o->y_coordinates[i1] + o->y_coordinates[i2]) * 0.5);
 }
 
 t_point2	p2co(t_glyph_outline *o, int i1, int i2)

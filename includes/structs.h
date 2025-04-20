@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/18 17:37:15 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/20 16:05:00 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,17 @@ typedef	struct s_hit_record
 	double	u;
 	double	v;
 }	t_hit_record;
+
+typedef struct s_quadratic
+{
+	double	a;
+	double	b;
+	double	c;
+	double	disc;
+	double	t0;
+	double	t1;
+	double	t_hit;
+}	t_quadratic;
 
 typedef struct s_amb_light
 {

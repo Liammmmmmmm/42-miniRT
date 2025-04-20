@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:19:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 21:06:03 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/20 15:52:37 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ void	display_text_input(t_img *img, t_text_input *text_input, \
 	if (text_input->text[0])
 	{
 		start.x = text_input->x + text_input->padding_left;
-		start.y = text_input->y + text_input->height / 2 - 3;
+		start.y = text_input->y + text_input->height * 0.5 - 3;
 		start.color = 0;
 		string_to_img(img, font, start, text_input->text);
 	}
 	else if (text_input->placeholder[0])
 	{
 		start.x = text_input->x + text_input->padding_left;
-		start.y = text_input->y + text_input->height / 2 - 3;
+		start.y = text_input->y + text_input->height * 0.5 - 3;
 		start.color = 0;
 		string_to_img(img, font, start, text_input->placeholder);
 	}

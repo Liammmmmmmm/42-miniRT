@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/18 17:14:13 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/20 15:52:27 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	split_bvh_node(t_bvh *bvh, uint32_t index, uint32_t start, \
 		axis = 2;
 	qsort_axis(bvh->prim_indices + start, \
 		(t_interval){0, count - 1}, bvh, axis);
-	left = build_bvh(bvh, start, (start + count / 2) - start);
-	right = build_bvh(bvh, (start + count / 2), start + count - (start + \
-		count / 2));
+	left = build_bvh(bvh, start, (start + count * 0.5) - start);
+	right = build_bvh(bvh, (start + count * 0.5), start + count - (start + \
+		count * 0.5));
 	bvh->bvh_nodes[index].left_child = left;
 	bvh->bvh_nodes[index].right_child = right;
 }
@@ -47,12 +47,11 @@ t_bvh_node	init_bvh_node(t_bvh *bvh, uint32_t start, uint32_t count)
 	uint32_t	i;
 
 	bounds = \
-		compute_sphere_bounds(bvh->obj_list[bvh->prim_indices[start]].object);
+		compute_object_bounds(&bvh->obj_list[bvh->prim_indices[start]]);
 	i = 0;
 	while (i < count)
 	{
-		b = compute_sphere_bounds(bvh->obj_list[bvh->prim_indices[start + \
-			i]].object);
+		b = compute_object_bounds(&bvh->obj_list[bvh->prim_indices[start + i]]);
 		bounds.min = vec3_fmin(bounds.min, b.min);
 		bounds.max = vec3_fmax(bounds.max, b.max);
 		i++;

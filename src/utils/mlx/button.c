@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:47:09 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 15:35:24 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/20 15:52:41 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	display_button(t_img *img, const t_button button, t_ttf *ttf)
 	}
 	if (button.text)
 	{
-		start.x = button.x + button.width / 2 - (get_string_width(ttf, button.text) / 2);
-		start.y = button.y + button.height / 2 + ((get_height(ttf)) / 2);
+		start.x = button.x + button.width * 0.5 - (get_string_width(ttf, button.text) * 0.5);
+		start.y = button.y + button.height * 0.5 + ((get_height(ttf)) * 0.5);
 		draw_string(img, ttf, button.text, start);
 		put_pixel_image(img, 20, start.y, 0xFF0000);
 		put_pixel_image(img, 20, start.y - get_height(ttf), 0xFF0000);

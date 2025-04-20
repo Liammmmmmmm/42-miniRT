@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/16 09:29:24 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/20 15:53:12 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	parse_sphere(t_scene *scene, char *line)
 		return (invalid_struct_error(SPHERE, parts));
 	if (!is_valid_size(parts[2], &sphere->diameter))
 		return (invalid_size_error(parts));
-	sphere->radius = sphere->diameter / 2;
+	sphere->radius = sphere->diameter * 0.5;
 	sphere->sqrt_radius = sphere->radius * sphere->radius;
 	if (!parse_color_or_mat(parts[3], &sphere->color, &sphere->material, scene))
 		return (invalid_struct_error(SPHERE, parts));

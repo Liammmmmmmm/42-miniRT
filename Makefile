@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/18 17:19:14 by madelvin         ###   ########.fr        #
+#    Updated: 2025/04/20 16:20:45 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,7 +100,8 @@ MATH_DIR			= src/math/
 MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/vec3_length.c \
 					vector/vec3_utils.c vector/vec3_random.c vector/vec3_operation_scalar.c normal/normal.c \
 					color/color_operation.c ft_dmin.c plane/hit_plane.c sphere/hit_sphere.c random.c \
-					matrix/matrix.c matrix/matrix_calc.c angle/angle_math.c matrix/matrix3.c fresnel_schlick.c
+					matrix/matrix.c matrix/matrix_calc.c angle/angle_math.c matrix/matrix3.c fresnel_schlick.c \
+					cylinder/cylinder.c quadratique.c
 
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \

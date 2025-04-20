@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_format4.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:37:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/09 14:12:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/20 15:56:37 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	init_struct_basics(t_bin *bin, size_t *i, t_format4 *f, t_uint length)
 		|| length - sizeof(uint16_t) * 8 <= f->seg_count_x2 * 4)
 		return (-1);
 	f->end_code = (uint16_t *)((uint8_t *)f + sizeof(t_format4));
-	f->start_code = f->end_code + f->seg_count_x2 / 2;
-	f->id_delta = f->start_code + f->seg_count_x2 / 2;
-	f->id_range_offset = f->id_delta + f->seg_count_x2 / 2;
-	f->glyph_id_array = f->id_range_offset + f->seg_count_x2 / 2;
+	f->start_code = f->end_code + (f->seg_count_x2 >> 1);
+	f->id_delta = f->start_code + (f->seg_count_x2 >> 1);
+	f->id_range_offset = f->id_delta + (f->seg_count_x2 >> 1);
+	f->glyph_id_array = f->id_range_offset + (f->seg_count_x2 >> 1);
 	return (0);
 }
 
@@ -45,7 +45,7 @@ int	init_arrays(t_bin *bin, size_t *i, t_format4 *f)
 	uint16_t		y;
 
 	y = 0;
-	while (y < f->seg_count_x2 / 2)
+	while (y < f->seg_count_x2 * 0.5)
 	{
 		if (read_uint16(bin, *i + y * 2, f->end_code + y) == -1 \
 		|| read_uint16(bin, start_code_start + y * 2, f->start_code + y) == -1
@@ -65,7 +65,7 @@ int	init_remaining_bytes(t_bin *bin, size_t *i, t_format4 *f, t_ttf *ttf)
 	int			y;
 
 	y = 0;
-	while (y < remaining_bytes / 2)
+	while (y < remaining_bytes * 0.5)
 	{
 		if (read_uint16_move(bin, i, &f->glyph_id_array[y]) == -1)
 			return (-1);

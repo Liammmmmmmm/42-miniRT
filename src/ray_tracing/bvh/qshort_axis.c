@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:11:31 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/16 14:22:12 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 18:54:27 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	qsort_axis(uint32_t *arr, t_interval inter, t_bvh *bvh, int axis)
 	j = inter.min;
 	while (j < inter.max)
 	{
-		if (compare_sphere_axis_with_bvh(arr[j], pivot, bvh, axis) < 0)
+		if (compare_obj_axis_with_bvh(arr[j], pivot, bvh, axis) < 0)
 		{
 			i++;
 			swap_uint32(&arr[i], &arr[j]);

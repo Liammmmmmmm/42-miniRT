@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/18 17:30:56 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/18 18:58:31 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,29 +124,20 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 					hit_record->color = get_hit_register_color(((t_sphere *)obj->object)->material, ((t_sphere *)obj->object)->color, hit_record);
 			}
 		}
-		// if (minirt->scene.elements[i].type == PLANE)
-		// {
-		// 	plane = minirt->scene.elements[i].object;
-		// 	if (hit_plane(plane->position, plane->normal, &ray, interval, &temp_hit_record))
-		// 	{
-		// 		if (temp_hit_record.t < closest_t)
-		// 		{
-		// 			hit_anything = 1;
-		// 			closest_t = temp_hit_record.t;
-		// 			*hit_record = temp_hit_record;
-		// 			if (plane->material)
-		// 			{
-		// 				hit_record->mat = plane->material;
-		// 				hit_record->color = plane->material->color_value;
-		// 			}
-		// 			else
-		// 			{
-		// 				hit_record->mat = NULL;
-		// 				hit_record->color = plane->color;
-		// 			}
-		// 		}
-		// 	}
-		// }
+		if (obj->type == CYLINDER && hit_cylinder(((t_cylinder *)obj->object), ray, interval, &temp_hit_record))
+		{
+			if (temp_hit_record.t < closest_t)
+			{
+					hit_anything = 1;
+					closest_t = temp_hit_record.t;
+					*hit_record = temp_hit_record;
+					hit_record->mat = ((t_cylinder *)obj->object)->material;
+					apply_normal_map(hit_record);
+					apply_roughness_map(hit_record);
+					apply_metallic_map(hit_record);
+					hit_record->color = get_hit_register_color(((t_cylinder *)obj->object)->material, ((t_cylinder *)obj->object)->color, hit_record);
+			}
+		}
 		i++;
 	}
 	return (hit_anything);
@@ -157,6 +148,7 @@ char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record)
 	char			hit;
 	int				i;
 	t_plane			*plane;
+	t_cylinder		*cylinder;
 	t_plane			**plane_lst;
 	t_hit_record	temp_hit_record;
 
@@ -174,6 +166,25 @@ char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record)
 				*hit_record = temp_hit_record;
 				hit_record->mat = plane->material;
 				hit_record->color = get_hit_register_color(plane->material, plane->color, hit_record);
+			}
+		}
+		i++;
+	}
+	i = 0;
+	while (i < minirt->scene.el_amount)
+	{
+		if (minirt->scene.elements[i].type == CYLINDER)
+		{
+			cylinder = (t_cylinder *)minirt->scene.elements[i].object;
+			if (hit_cylinder(cylinder, ray, (t_interval){0.001, 1000}, &temp_hit_record))
+			{
+				if (hit == 0 || temp_hit_record.t < hit_record->t)
+				{
+					hit = 1;
+					*hit_record = temp_hit_record;
+					hit_record->mat = plane->material;
+					hit_record->color = get_hit_register_color(plane->material, plane->color, hit_record);
+				}
 			}
 		}
 		i++;

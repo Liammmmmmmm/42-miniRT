@@ -4,8 +4,8 @@ tex earth_bump assets/textures/earth/earth_bump_map_4k2.bmp
 tex stars assets/textures/stars_2k.bmp
 
 # MATERIALS
-#	name                          color             metallic       roughness      ior            transmission   emission_strength   emission_color normal_map
-mat	earth_mat                   earth_tex           0.0            1.0            0.000000       0.000000       0.000000            255,255,255    earth_bump
+#	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color normal_map
+mat	earth_mat                   earth_tex           0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255    earth_bump
 
 A	0.1									255,255,255 stars
 

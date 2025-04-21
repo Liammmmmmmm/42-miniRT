@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:05:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 12:19:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/21 09:55:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	material_item_error(int error, char *part)
 			"`%s'\n", part);
 	else if (error == 7)
 		ft_dprintf(2, RED"[Error]"NC" Invalid normal map for: `%s'\n", part);
+	else if (error == 8)
+		ft_dprintf(2, RED"[Error]"NC" Invalid ambient occlusion for: `%s'\n", part);
 	return (0);
 }
 

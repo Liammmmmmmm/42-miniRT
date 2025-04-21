@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/21 09:47:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/21 15:17:49 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,6 +333,12 @@ typedef struct s_edited_val
 	char	debug;
 }	t_edited_val;
 
+typedef struct s_ui_infos
+{
+	uint8_t	tab_selected;
+	
+}	t_ui_infos;
+
 typedef struct s_controls
 {
 	t_keydown		keydown;
@@ -349,6 +355,7 @@ typedef struct s_controls
 	int				nb_sliders;
 	t_int_slider	*sliders;
 	t_ttf			font[1];
+	t_ui_infos		ui_infos;
 }	t_controls;
 
 typedef struct s_minirt

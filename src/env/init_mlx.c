@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 18:01:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/21 15:26:01 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	init_render(t_minirt *minirt)
 	}
 	minirt->stats.frame = 0;
 	minirt->screen.start_render = 1;
-	minirt->screen.pause_render = 0;
+	minirt->screen.pause_render = 1;
 	minirt->screen.spp = 100000;
 	minirt->screen.sample = 0;
 	init_font(minirt);

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:34:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/11 15:02:29 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/21 17:07:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,13 @@ typedef struct s_text_input
 	char	placeholder[256];
 	int		cursor_pos;
 }	t_text_input;
+
+typedef struct s_color_picker
+{
+	t_button	btn;
+	t_bool		active;
+	t_color		*color;
+}	t_color_picker;
 
 void	put_pixel_image(t_img *img, int x, int y, int color);
 

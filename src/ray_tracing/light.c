@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:27:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/18 16:17:11 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/21 10:11:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,27 @@ t_lcolor	compute_ambient(t_minirt *minirt)
 	return (ambient);
 }
 
+void	apply_ao_map(t_hit_record *hit, t_lcolor *light_color)
+{
+	t_color	map;
+
+	if (hit->mat == NULL || hit->mat->ao_value == 1.0)
+		return ;
+	if (hit->mat->ao_tex == NULL || hit->mat->ao_tex->img.pixel_data == NULL)
+	{
+		light_color->r = light_color->r * hit->mat->ao_value;
+		light_color->g = light_color->g * hit->mat->ao_value;
+		light_color->b = light_color->b * hit->mat->ao_value;
+	}
+	else
+	{
+		map = hit->mat->ao_tex->img.pixel_data[hit->mat->ao_tex->img.width * (int)(hit->v * hit->mat->ao_tex->img.height) + (int)(hit->u * hit->mat->ao_tex->img.width)];
+		light_color->r = light_color->r * map.r / 255.0; // potentiellement remplacer map.r par (map.r + map.g + map.b) / 3 pour une secu en plus
+		light_color->g = light_color->g * map.r / 255.0;
+		light_color->b = light_color->b * map.r / 255.0; 
+	}
+}
+
 t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt)
 {
 	t_lcolor	light_color;
@@ -83,6 +104,7 @@ t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt)
 	int			i;
 
 	light_color = compute_ambient(minirt);
+	apply_ao_map(hit_record, &light_color);
 	view_dir = vec3_unit(vec3_subtract(minirt->scene.camera.position, \
 		hit_record->point));
 	i = 0;

@@ -3,15 +3,15 @@ tex texture2 assets/textures/non.bmp
 tex skybox assets/textures/mountain_skybox.bmp
 
 # MATERIALS
-#	name                          color             metallic       roughness      ior            transmission   emission_strength   emission_color normal_map
-mat	glass0                        143, 181, 139       0.0            0.0            1.450000       1.00000       0.000000            255,255,255 
-mat	glass1                        143, 181, 139       0.0            0.0            0.750000       0.500000       0.000000            255,255,255 
-mat	metal1                        255,227,157       1.0            0.0            0.000000       0.000000       0.000000            255,255,255 
-mat	metal2                        255,255,255       0.0            1.0            0.000000       0.000000       0.000000            255,255,255 
-mat	metal3                        255,255,255       0.0            1.0            0.000000       0.000000       0.000000            255,255,255 
-mat	texture_rel                   texture1          0.0            1.0            0.000000       0.000000       0.000000            255,255,255 
-mat	texture_rel2                  texture2          0.0            1.0            0.000000       0.000000       0.000000            255,255,255 
-mat mat_0_0  					  255,255,255       0.05           0.0            1.460          0.0            0.0                 220,220,220
+#	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color normal_map
+mat	glass0                        143, 181, 139     0.0            0.0            1.450000       1.00000        1.0                 0.000000            255,255,255 
+mat	glass1                        143, 181, 139     0.0            0.0            0.750000       0.500000       1.0                 0.000000            255,255,255 
+mat	metal1                        255,227,157       1.0            0.0            0.000000       0.000000       1.0                 0.000000            255,255,255 
+mat	metal2                        255,255,255       0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255 
+mat	metal3                        255,255,255       0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255 
+mat	texture_rel                   texture1          0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255 
+mat	texture_rel2                  texture2          0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255 
+mat mat_0_0  					  255,255,255       0.05           0.0            1.460          0.0            1.0                 0.0                 220,220,220
 
 
 A	0.5										255,255,255 skybox

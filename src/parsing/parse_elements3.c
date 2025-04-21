@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:00:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/18 14:27:39 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/21 09:54:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,15 @@ static int	parse_mat_prop(char **parts, t_mat *mat, t_scene *scene)
 		return (material_item_error(4, mat->name));
 	if (is_valid_double_el(parts[6], &mat->transmission) == 0)
 		return (material_item_error(5, mat->name));
-	if (is_valid_double_el(parts[7], &mat->emission_strength) == 0)
+	if (parse_double_b_or_tex(parts[7], &mat->ao_value, &mat->ao_tex, scene) == 0)
+		return (material_item_error(8, mat->name));
+	if (is_valid_double_el(parts[8], &mat->emission_strength) == 0)
 		return (material_item_error(6, mat->name));
-	if (parse_color(parts[8], &mat->emission_color) == 0)
+	if (parse_color(parts[9], &mat->emission_color) == 0)
 		return (0);
-	if (char_tab_len(parts) == 10)
-		mat->normal = get_texture(parts[9], scene);
-	if (char_tab_len(parts) == 10 && mat->normal == NULL)
+	if (char_tab_len(parts) == 11)
+		mat->normal = get_texture(parts[10], scene);
+	if (char_tab_len(parts) == 11 && mat->normal == NULL)
 		return (material_item_error(7, mat->name));
 	return (1);
 }
@@ -104,7 +106,7 @@ int	parse_material(t_scene *scene, char *line)
 	parts = ft_split_in_line(line, " ");
 	if (!parts)
 		return (print_error(strerror(errno)));
-	if (char_tab_len(parts) != 9 && char_tab_len(parts) != 10)
+	if (char_tab_len(parts) != 10 && char_tab_len(parts) != 11)
 		return (invalid_struct_error(MATERIAL, parts));
 	valid_name = is_valid_variable_name_mat(parts[1], scene);
 	if (valid_name == -1)

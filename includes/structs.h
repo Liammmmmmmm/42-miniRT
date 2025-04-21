@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/20 16:05:00 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/21 09:47:57 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ typedef struct s_mat
 	double	roughness_value;
 	double	ior;
 	double	transmission;
+	t_tex	*ao_tex;
+	double	ao_value;
 	double	emission_strength;
 	t_color	emission_color;
 	t_tex	*normal;

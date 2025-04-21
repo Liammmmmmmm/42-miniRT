@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:32:20 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/17 15:36:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/21 10:54:17 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_color	metallic_material(t_mat_manager *mat_man);
 t_color	dielectric_non_transmissive_material(t_mat_manager *mat_man);
 t_color	dielectric_transmissive_material(t_mat_manager *mat_man);
 t_color	reflected_dielectric_color(t_mat_manager *mat_man);
+t_color	emissive_material(t_mat_manager *mat_man);
 
 double	get_reflect_value(t_mat_manager *mat_man);
 

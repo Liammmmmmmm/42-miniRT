@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/14 10:35:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/21 13:18:22 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,15 @@ t_color	material_default(t_mat_manager *mat_man)
 		direction = mat_man->hit_record.normal;
 	ray.dir = direction;
 	ray.orig = mat_man->hit_record.point;
-	bounce_color = ray_color(mat_man->minirt, ray, mat_man->depth - 1, \
-												&bounce_hit);
+	bounce_color = ray_color(mat_man->minirt, ray, mat_man->depth - 1,
+		&bounce_hit);
+	// facon de gros porc pour considerer que le ray suivant etait une emissive (marche que avec les emissive blanches)
 	if (bounce_hit)
-		mat_man->color = color_multiply(mat_man->color, bounce_color);
+	{
+		if (bounce_color.r != 255 || bounce_color.g != 255 || bounce_color.b != 255)
+			mat_man->color = color_multiply(mat_man->color, bounce_color);
+		else
+			mat_man->color = color_add_clamp(bounce_color, color_multiply(mat_man->color, bounce_color));
+	}
 	return (mat_man->color);
 }

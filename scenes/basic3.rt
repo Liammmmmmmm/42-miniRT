@@ -1,4 +1,4 @@
-tex texture1 assets/textures/earth_daymap_2k.bmp
+# tex texture1 assets/textures/earth_daymap_2k.bmp
 tex texture2 assets/textures/non.bmp
 tex skybox assets/textures/mountain_skybox.bmp
 
@@ -9,7 +9,7 @@ mat	glass1                        143, 181, 139     0.0            0.0          
 mat	metal1                        255,227,157       1.0            0.0            0.000000       0.000000       1.0                 0.000000            255,255,255 
 mat	metal2                        255,255,255       0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255 
 mat	metal3                        255,255,255       0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255 
-mat	texture_rel                   texture1          0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255 
+# mat	texture_rel                   texture1          0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255 
 mat	texture_rel2                  texture2          0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255 
 mat mat_0_0  					  255,255,255       0.05           0.0            1.460          0.0            1.0                 0.0                 220,220,220
 

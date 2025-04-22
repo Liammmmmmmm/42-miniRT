@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/21 15:17:49 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/22 09:55:32 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,7 +336,7 @@ typedef struct s_edited_val
 typedef struct s_ui_infos
 {
 	uint8_t	tab_selected;
-	
+	t_color	picker_no_color;
 }	t_ui_infos;
 
 typedef struct s_controls
@@ -354,6 +354,8 @@ typedef struct s_controls
 	t_edited_val	values;
 	int				nb_sliders;
 	t_int_slider	*sliders;
+	int				nb_color_picker;
+	t_color_picker	color_picker[1];
 	t_ttf			font[1];
 	t_ui_infos		ui_infos;
 }	t_controls;

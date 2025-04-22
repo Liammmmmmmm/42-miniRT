@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:34:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/21 17:07:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/22 15:06:38 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,13 @@ typedef struct s_text_input
 
 typedef struct s_color_picker
 {
-	t_button	btn;
-	t_bool		active;
-	t_color		*color;
+	t_button		btn;
+	t_bool			active;
+	t_color			*color;
+	t_hsv_color		hsv;
+	t_bool			mouse_in_hue;
+	t_bool			mouse_in_val_sat;
+	t_text_input	text_input;
 }	t_color_picker;
 
 void	put_pixel_image(t_img *img, int x, int y, int color);
@@ -128,5 +132,12 @@ int		button_release(t_button *button);
 void	display_text_input(t_img *img, t_text_input *text_input, unsigned char font[96][5]);
 int		text_input_focus(t_text_input *text_input, int mouse_x, int mouse_y);
 int		text_input_type(t_text_input *text_input, int key, int is_shift_down);
+
+void	init_color_picker(t_color_picker *cp, t_color *color_var);
+void	display_color_picker(t_img *img, t_color_picker *cp, uint8_t font8b[96][5]);
+int		color_picker_release(t_color_picker *cp);
+int		color_picker_action(t_color_picker *cp, int mouse_x, int mouse_y);
+int		color_picker_mouse_move(t_color_picker *cp, int mouse_x, int mouse_y);
+int		color_picker_type(t_color_picker *cp, int key);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 09:57:56 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/22 18:43:40 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,28 @@ void	put_pixel_image(t_img *img, int x, int y, int color);
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    EVENTS                                    ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
+
+int		destroy_controls(t_minirt *minirt);
+int		destroy(t_minirt *minirt);
+
+void	keydown_common(int key, t_minirt *minirt);
+void	keyup_common(int key, t_minirt *minirt);
+
+int		keydown_render(int key, t_minirt *minirt);
+int		keyup_render(int key, t_minirt *minirt);
+
+int		keydown_controls(int key, t_minirt *minirt);
+int		keyup_controls(int key, t_minirt *minirt);
+
+void	mouseup_common(int key, t_minirt *minirt);
+void	mousedown_common(int key, t_minirt *minirt);
+
+int		mouse_move_controls(int x, int y, t_minirt *minirt);
+int		mouseup_controls(int key, int x, int y, t_minirt *minirt);
+int		mousedown_controls(int key, int x, int y, t_minirt *minirt);
+
+int		mousedown_render(int key, int x, int y, t_minirt *minirt);
+int		mouseup_render(int key, int x, int y, t_minirt *minirt);
 
 void	events(t_minirt *minirt);
 void	events_controls(t_minirt *minirt);

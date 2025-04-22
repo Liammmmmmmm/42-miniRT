@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:34:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/22 15:06:38 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/22 15:39:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,12 @@ void	display_button(t_img *img, const t_button button, t_ttf *ttf);
 int		button_action(t_button *button, int mouse_x, int mouse_y, int *is_clicked);
 int		button_release(t_button *button);
 
-void	display_text_input(t_img *img, t_text_input *text_input, unsigned char font[96][5]);
+void	display_text_input(t_img *img, t_text_input *text_input, t_ttf *ttf);
 int		text_input_focus(t_text_input *text_input, int mouse_x, int mouse_y);
 int		text_input_type(t_text_input *text_input, int key, int is_shift_down);
 
 void	init_color_picker(t_color_picker *cp, t_color *color_var);
-void	display_color_picker(t_img *img, t_color_picker *cp, uint8_t font8b[96][5]);
+void	display_color_picker(t_img *img, t_color_picker *cp, t_ttf *ttf);
 int		color_picker_release(t_color_picker *cp);
 int		color_picker_action(t_color_picker *cp, int mouse_x, int mouse_y);
 int		color_picker_mouse_move(t_color_picker *cp, int mouse_x, int mouse_y);

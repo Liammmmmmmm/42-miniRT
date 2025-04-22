@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:50:31 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 15:15:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/22 16:42:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	draw_sat_val_colors(t_img *img, t_color_picker *cp)
 	circle_bres(cp->btn.x + 1 + 279 * cp->hsv.sat, cp->btn.y + 150 - 149 * cp->hsv.val, 3, img, 0xFFFFFF);
 }
 
-void	display_color_picker(t_img *img, t_color_picker *cp, uint8_t font8b[96][5])
+void	display_color_picker(t_img *img, t_color_picker *cp, t_ttf *ttf)
 {
 	int	x;
 	int	y;
@@ -109,7 +109,8 @@ void	display_color_picker(t_img *img, t_color_picker *cp, uint8_t font8b[96][5])
 	draw_vertical_line(img, cp->btn.x + 280, cp->btn.y, cp->btn.y + 221);
 	draw_hue_colors(img, cp);
 	draw_sat_val_colors(img, cp);
-	display_text_input(img, &cp->text_input, font8b);
+	ttf->size = 20;
+	display_text_input(img, &cp->text_input, ttf);
 	x = cp->btn.x + 240;
 	while (++x < 280 + cp->btn.x)
 	{
@@ -196,6 +197,8 @@ void	active_color_picker(void *param)
 
 int	color_picker_type(t_color_picker *cp, int key)
 {
+	if (cp->text_input.cursor_pos == 1 && key == 65288)
+		return (1);
 	if (text_input_type(&cp->text_input, key, 1))
 	{
 		cp->btn.background_color = ft_atoi_base(cp->text_input.text + 1, "0123456789ABCDEF");

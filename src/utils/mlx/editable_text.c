@@ -6,19 +6,18 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:19:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 14:54:12 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/22 15:46:21 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx_components.h"
 
-void	display_text_input(t_img *img, t_text_input *text_input, \
-	unsigned char font[96][5])
+void	display_text_input(t_img *img, t_text_input *text_input, t_ttf *ttf)
 {
-	int		i;
-	int		j;
-	t_point	start;
-	int		br_color;
+	int			i;
+	int			j;
+	t_point2	start;
+	int			br_color;
 
 	if (text_input->is_focused)
 		br_color = text_input->border_color_focus;
@@ -47,16 +46,16 @@ void	display_text_input(t_img *img, t_text_input *text_input, \
 	if (text_input->text[0])
 	{
 		start.x = text_input->x + text_input->padding_left;
-		start.y = text_input->y + text_input->height * 0.5 - 3;
-		start.color = 0;
-		string_to_img(img, font, start, text_input->text);
+		start.y = text_input->y + text_input->height * 0.5 + ((get_height(ttf)) * 0.5);
+		ttf->color = text_input->text_color;
+		draw_string(img, ttf, text_input->text, start);
 	}
 	else if (text_input->placeholder[0])
 	{
 		start.x = text_input->x + text_input->padding_left;
-		start.y = text_input->y + text_input->height * 0.5 - 3;
-		start.color = 0;
-		string_to_img(img, font, start, text_input->placeholder);
+		start.y = text_input->y + text_input->height * 0.5 + ((get_height(ttf)) * 0.5);
+		ttf->color = text_input->text_color;
+		draw_string(img, ttf, text_input->text, start);
 	}
 }
 

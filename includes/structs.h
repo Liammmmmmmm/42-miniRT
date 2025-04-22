@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/04/22 09:55:32 by lilefebv         ###   ########lyon.fr   */
@@ -119,18 +119,6 @@ typedef struct s_mat
 	t_tex	*normal;
 }	t_mat;
 
-typedef	struct s_hit_record
-{
-	t_vec3	point;
-	t_vec3	normal;
-	double	t;
-	t_mat	*mat;
-	char	front_face;
-	t_color	color;
-	double	u;
-	double	v;
-}	t_hit_record;
-
 typedef struct s_quadratic
 {
 	double	a;
@@ -215,12 +203,25 @@ typedef struct s_object
 	t_objects	type;
 }	t_object;
 
+typedef	struct s_hit_record
+{
+	t_object	*obj;
+	t_vec3		point;
+	t_vec3		normal;
+	double		t;
+	t_mat		*mat;
+	char		front_face;
+	t_color		color;
+	double		u;
+	double		v;
+}	t_hit_record;
+
 typedef struct s_obj_lst
 {
-	t_light	**light_lst;
-	int		light_nb;
-	t_plane	**plane_lst;
-	int		plane_nb;
+	t_object	**light_lst;
+	int			light_nb;
+	t_object		**plane_lst;
+	int			plane_nb;
 }	t_obj_lst;
 
 typedef struct s_aabb
@@ -358,6 +359,7 @@ typedef struct s_controls
 	t_color_picker	color_picker[1];
 	t_ttf			font[1];
 	t_ui_infos		ui_infos;
+	t_object		*selected_object;
 }	t_controls;
 
 typedef struct s_minirt

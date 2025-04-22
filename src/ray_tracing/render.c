@@ -169,8 +169,7 @@ void	render(t_minirt *minirt)
 			ft_bzero(&minirt->screen.render[i].color, sizeof(t_lcolor));
 		minirt->viewport = init_viewport(minirt);
 	}
-	if (minirt->scene.bvh.valid == 1)
-		draw_pixels(minirt);
+	draw_pixels(minirt);
 	if (minirt->screen.sample == minirt->screen.spp)
 	{
 		minirt->screen.sample = 0;

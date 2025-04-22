@@ -60,6 +60,10 @@ void render_frame(t_minirt *minirt)
 {
 	render(minirt);
 	render_bvh(minirt);
+
 	render_ui(minirt);
+  
+	draw_selected_object(minirt);
+
 	minirt->stats.frame += 1;
 }

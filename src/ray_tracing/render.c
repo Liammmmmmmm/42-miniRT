@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/21 20:03:48 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/22 16:58:05 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 			), 
 			ray.orig
 		);
-		color = ray_color(minirt, ray, 20, &bounce_hit);
+		color = ray_color(minirt, ray, 10, &bounce_hit);
 		minirt->screen.render[i].color.r += color.r * minirt->viewport.gamma;
 		minirt->screen.render[i].color.g += color.g * minirt->viewport.gamma;
 		minirt->screen.render[i].color.b += color.b * minirt->viewport.gamma;
@@ -169,8 +169,7 @@ void	render(t_minirt *minirt)
 			ft_bzero(&minirt->screen.render[i].color, sizeof(t_lcolor));
 		minirt->viewport = init_viewport(minirt);
 	}
-	if (minirt->scene.bvh.valid == 1)
-		draw_pixels(minirt);
+	draw_pixels(minirt);
 	if (minirt->screen.sample == minirt->screen.spp)
 	{
 		minirt->screen.sample = 0;

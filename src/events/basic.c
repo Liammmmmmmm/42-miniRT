@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:23:57 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/18 17:38:54 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:02:15 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ void	keydown_common(int key, t_minirt *minirt)
 	else if (key == KEY_D && minirt->controls.values.debug == 0)
 		minirt->controls.values.debug = 1;
 	else if (key == KEY_D && minirt->controls.values.debug == 1)
+	{
 		minirt->controls.values.debug = 0;
+		put_render_to_frame(minirt);
+		mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
+	}
 }
 
 void	keyup_common(int key, t_minirt *minirt)
@@ -63,8 +67,21 @@ void	keyup_common(int key, t_minirt *minirt)
 
 void	mousedown_common(int key, t_minirt *minirt)
 {
+	char	item_null;
+
 	if (key == LEFT_CLICK)
+	{
+		item_null = (minirt->controls.selected_object == NULL);
 		minirt->controls.keydown.lmb = (char)1;
+		minirt->controls.selected_object = select_object(minirt, minirt->controls.mlxr, minirt->controls.mlyr);
+		if (minirt->controls.selected_object == NULL && item_null == 0)
+		{
+			put_render_to_frame(minirt);
+			mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
+		}
+		else if (minirt->controls.selected_object != NULL && item_null == 0)
+			put_render_to_frame(minirt);
+	}
 	else if (key == MIDDLE_CLICK)
 		minirt->controls.keydown.mmb = (char)1;
 	else if (key == RIGHT_CLICK)
@@ -73,7 +90,7 @@ void	mousedown_common(int key, t_minirt *minirt)
 
 void	mouseup_common(int key, t_minirt *minirt)
 {
-	minirt->controls.btn_clicked = 0;
+	minirt->controls.btn_clicked = (char)0;
 	if (key == LEFT_CLICK)
 		minirt->controls.keydown.lmb = (char)0;
 	else if (key == MIDDLE_CLICK)
@@ -122,7 +139,7 @@ int	mousedown_controls(int key, int x, int y, t_minirt *minirt)
 	int	i;
 
 	minirt->controls.mlxc = (t_uint)x;
-	minirt->controls.mlxc = (t_uint)y;
+	minirt->controls.mlyc = (t_uint)y;
 	mousedown_common(key, minirt);
 	i = -1;
 	while (++i < minirt->controls.nb_buttons)
@@ -136,7 +153,7 @@ int	mousedown_controls(int key, int x, int y, t_minirt *minirt)
 int	mousedown_render(int key, int x, int y, t_minirt *minirt)
 {
 	minirt->controls.mlxr = (t_uint)x;
-	minirt->controls.mlxr = (t_uint)y;
+	minirt->controls.mlyr = (t_uint)y;
 	mousedown_common(key, minirt);
 	
 	return (0);
@@ -147,7 +164,7 @@ int	mouseup_controls(int key, int x, int y, t_minirt *minirt)
 	int	i;
 
 	minirt->controls.mlxc = (t_uint)x;
-	minirt->controls.mlxc = (t_uint)y;
+	minirt->controls.mlyc = (t_uint)y;
 	mouseup_common(key, minirt);
 	i = -1;
 	while (++i < minirt->controls.nb_buttons)
@@ -161,7 +178,7 @@ int	mouseup_controls(int key, int x, int y, t_minirt *minirt)
 int	mouseup_render(int key, int x, int y, t_minirt *minirt)
 {
 	minirt->controls.mlxr = (t_uint)x;
-	minirt->controls.mlxr = (t_uint)y;
+	minirt->controls.mlyr = (t_uint)y;
 	mouseup_common(key, minirt);
 	
 	return (0);
@@ -172,7 +189,7 @@ int	mouse_move_controls(int x, int y, t_minirt *minirt)
 	int	i;
 
 	minirt->controls.mlxc = (t_uint)x;
-	minirt->controls.mlxc = (t_uint)y;
+	minirt->controls.mlyc = (t_uint)y;
 	i = -1;
 	while (++i < minirt->controls.nb_sliders)
 		slider_mouse_move(&minirt->controls.sliders[i], x);
@@ -193,7 +210,7 @@ void	events(t_minirt *minirt)
 {
 	// mlx_hook(minirt->mlx.render_win, ON_MOUSEDOWN, 1L << 2, mouse_down, minirt);
 	// mlx_hook(minirt->mlx.render_win, ON_MOUSEUP, 1L << 3, mouse_up, minirt);
-	// mlx_hook(minirt->mlx.render_win, ON_MOUSEMOVE, 1L << 6, mouse_move, minirt);
+	// mlx_hook(minirt->mlx.render_win, ON_MOUSEMOVE, 1L << 6, mouse_move_render, minirt);
 	mlx_hook(minirt->mlx.render_win, ON_DESTROY, 0, destroy, minirt);
 	mlx_hook(minirt->mlx.render_win, ON_KEYDOWN, 1L << 0, keydown_render, minirt);
 	mlx_hook(minirt->mlx.render_win, ON_KEYUP, 1L << 0, keyup_render, minirt);

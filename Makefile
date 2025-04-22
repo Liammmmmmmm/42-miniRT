@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/20 16:20:45 by madelvin         ###   ########.fr        #
+#    Updated: 2025/04/22 14:45:30 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,6 +119,9 @@ FONT_PARS_FILE		= free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c 
 FONT_REND_DIR		= src/utils/font/rendering/
 FONT_REND_FILE		= draw_glyph_outline.c draw_string.c basic_slope.c tesselate_bezier.c rasterization.c
 
+EDIT_MOD_DIR		= src/edition_mod/
+EDIT_MOD_FILE		= select_obj.c
+
 
 M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
@@ -134,7 +137,8 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(PARSING_DIR), $(PARSING_FILE)) \
 			$(addprefix $(FONT_PARS_DIR), $(FONT_PARS_FILE)) \
 			$(addprefix $(FONT_REND_DIR), $(FONT_REND_FILE)) \
-			$(addprefix $(ENV_DIR), $(ENV_FILE))
+			$(addprefix $(ENV_DIR), $(ENV_FILE)) \
+			$(addprefix $(EDIT_MOD_DIR), $(EDIT_MOD_FILE))
 
 # Source files bonus
 SRCS_BONUS = 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:27:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/21 10:11:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/22 16:32:19 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt)
 	i = 0;
 	while (i < minirt->scene.obj_lst.light_nb)
 	{
-		light = minirt->scene.obj_lst.light_lst[i];
+		light = (t_light *)minirt->scene.obj_lst.light_lst[i]->object;
 		if (check_hit(minirt, hit_record->point, light->position) == 0)
 			add_light(&light_color, hit_record, light, view_dir);
 		i++;

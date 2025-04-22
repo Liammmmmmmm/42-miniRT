@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/21 20:03:40 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/22 16:55:39 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	const uint32_t	count = count_object(obj_list, obj_c);
 
 	ft_bzero(bvh, sizeof(t_bvh));
+	if (count == 0)
+		return ;
 	if (init_bvh_malloc(bvh, obj_c) == 1)
 		return ;
 	bvh->valid = 1;

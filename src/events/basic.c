@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:23:57 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 15:07:39 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/22 17:53:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,12 @@ void	mouseup_common(int key, t_minirt *minirt)
 		minirt->controls.keydown.rmb = (char)0;
 }
 
+// int dummy_expose(void *param)
+// {
+// 	(void)param;
+// 	return (0);
+// }
+
 int	keydown_render(int key, t_minirt *minirt)
 {
 	keydown_common(key, minirt);
@@ -108,6 +114,7 @@ int	keydown_render(int key, t_minirt *minirt)
 		{
 			minirt->mlx.controls_win = mlx_new_window(minirt->mlx.mlx, CWIN_WIDTH, CWIN_HEIGHT, "Controls");
 			events_controls(minirt);
+			mlx_loop(minirt->mlx.mlx);
 		}
 	}
 	return (0);

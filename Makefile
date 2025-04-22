@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/22 14:45:30 by madelvin         ###   ########.fr        #
+#    Updated: 2025/04/22 17:06:42 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,10 +66,11 @@ UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					bump_to_normal.c
 
 UTILS_MLX_DIR		= src/utils/mlx/
-UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c
+UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c conversions.c color_picker.c
 
-CONTROLS_DIR		= src/controls/
-CONTROLS_FILE		= button_click.c init_buttons.c init_sliders.c
+UI_DIR				= src/ui/
+UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_sliders.c controls/init_color_picker.c \
+					render.c layout.c list_objects.c
 
 DEBUG_DIR			= src/debug/
 DEBUG_FILE			= print_scene.c
@@ -133,7 +134,7 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(MAT_DIR), $(MAT_FILE)) \
 			$(addprefix $(MATH_DIR), $(MATH_FILE)) \
 			$(addprefix $(UTILS_MLX_DIR), $(UTILS_MLX_FILE)) \
-			$(addprefix $(CONTROLS_DIR), $(CONTROLS_FILE)) \
+			$(addprefix $(UI_DIR), $(UI_FILE)) \
 			$(addprefix $(PARSING_DIR), $(PARSING_FILE)) \
 			$(addprefix $(FONT_PARS_DIR), $(FONT_PARS_FILE)) \
 			$(addprefix $(FONT_REND_DIR), $(FONT_REND_FILE)) \

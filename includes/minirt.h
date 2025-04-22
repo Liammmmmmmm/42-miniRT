@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 15:46:06 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/22 09:57:56 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <math.h>
 # include "bmp_parsing.h"
 # include "material.h"
+# include "ui.h"
 
 # define PI_D 3.1415926535897
 
@@ -105,8 +106,6 @@ typedef enum e_keys
 # define ERR_F "Invalid format for"
 
 int		print_error(char *err);
-
-int		init_ui(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    UTILS                                     ║
@@ -207,19 +206,6 @@ void	free_mlx(t_minirt *minirt);
 
 void	put_sp_image(t_img *img, t_sc_point *sp);
 void	put_pixel_image(t_img *img, int x, int y, int color);
-
-/*═════════════════════════════════════════════════════════════════════════════╗
-║                                   CONTROLS                                   ║
-╚═════════════════════════════════════════════════════════════════════════════*/
-
-void	init_font(t_minirt *minirt);
-void	init_controls(t_minirt *minirt);
-int		init_buttons(t_minirt *minirt);
-int		init_sliders(t_minirt *minirt);
-
-void	clear_sliders(t_minirt *minirt);
-void	click_start_stop(void *vparam);
-void	clear_buttons(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    EVENTS                                    ║

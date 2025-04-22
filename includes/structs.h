@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 15:46:39 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/22 09:55:32 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,6 +334,12 @@ typedef struct s_edited_val
 	char	debug;
 }	t_edited_val;
 
+typedef struct s_ui_infos
+{
+	uint8_t	tab_selected;
+	t_color	picker_no_color;
+}	t_ui_infos;
+
 typedef struct s_controls
 {
 	t_keydown		keydown;
@@ -349,7 +355,10 @@ typedef struct s_controls
 	t_edited_val	values;
 	int				nb_sliders;
 	t_int_slider	*sliders;
+	int				nb_color_picker;
+	t_color_picker	color_picker[1];
 	t_ttf			font[1];
+	t_ui_infos		ui_infos;
 	t_object		*selected_object;
 }	t_controls;
 

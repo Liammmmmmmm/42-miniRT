@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   basic.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:23:57 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 17:02:15 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:07:39 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,13 @@ int	keydown_render(int key, t_minirt *minirt)
 
 int	keydown_controls(int key, t_minirt *minirt)
 {
+	int	i;
+
 	keydown_common(key, minirt);
-	
+	i = -1;
+	while (++i < minirt->controls.nb_color_picker)
+		if (color_picker_type(&minirt->controls.color_picker[i], key))
+			return (0);
 	return (0);
 }
 
@@ -142,6 +147,10 @@ int	mousedown_controls(int key, int x, int y, t_minirt *minirt)
 	minirt->controls.mlyc = (t_uint)y;
 	mousedown_common(key, minirt);
 	i = -1;
+	while (++i < minirt->controls.nb_color_picker)
+		if (color_picker_action(&minirt->controls.color_picker[i], x, y))
+			return (0);
+	i = -1;
 	while (++i < minirt->controls.nb_buttons)
 		button_action(&minirt->controls.buttons[i], x, y, &minirt->controls.btn_clicked);
 	i = -1;
@@ -155,7 +164,6 @@ int	mousedown_render(int key, int x, int y, t_minirt *minirt)
 	minirt->controls.mlxr = (t_uint)x;
 	minirt->controls.mlyr = (t_uint)y;
 	mousedown_common(key, minirt);
-	
 	return (0);
 }
 
@@ -172,6 +180,9 @@ int	mouseup_controls(int key, int x, int y, t_minirt *minirt)
 	i = -1;
 	while (++i < minirt->controls.nb_sliders)
 		slider_mouse_up(&minirt->controls.sliders[i]);
+	i = -1;
+	while (++i < minirt->controls.nb_color_picker)
+		color_picker_release(&minirt->controls.color_picker[i]);
 	return (0);
 }
 
@@ -193,6 +204,9 @@ int	mouse_move_controls(int x, int y, t_minirt *minirt)
 	i = -1;
 	while (++i < minirt->controls.nb_sliders)
 		slider_mouse_move(&minirt->controls.sliders[i], x);
+	i = -1;
+	while (++i < minirt->controls.nb_color_picker)
+		color_picker_mouse_move(&minirt->controls.color_picker[i], x, y);	
 	return (0);
 }
 

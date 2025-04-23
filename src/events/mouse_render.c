@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:42:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 18:43:30 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/23 09:34:18 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	mousedown_render(int key, int x, int y, t_minirt *minirt)
 		char item_null;
 		item_null = (minirt->controls.selected_object == NULL);
 		minirt->controls.selected_object = select_object(minirt, minirt->controls.mlxr, minirt->controls.mlyr);
-		if (minirt->controls.selected_object == NULL && item_null == 0)
+		if (minirt->controls.selected_object == NULL
+			&& item_null == 0)
 		{
 			put_render_to_frame(minirt);
 			mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);

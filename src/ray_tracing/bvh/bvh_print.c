@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_print.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:48:31 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/16 14:32:55 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:20:36 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	print_leaf(t_bvh *bvh, t_bvh_node *node, int depth)
 	while (i < node->prim_count)
 	{
 		prim_index = bvh->prim_indices[node->first_prim + i];
-		sphere = (t_sphere *)bvh->obj_list[prim_index].object;
+		sphere = (t_sphere *)bvh->obj_list[prim_index]->object;
 		print_indent(depth);
 		printf("Sphere at (%.2f %.2f %.2f)\n",
 			sphere->position.x, sphere->position.y, sphere->position.z);

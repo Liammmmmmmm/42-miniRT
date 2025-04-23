@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/22 16:55:39 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:18:47 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ t_bvh_node	init_bvh_node(t_bvh *bvh, uint32_t start, uint32_t count)
 	uint32_t	i;
 
 	bounds = \
-		compute_object_bounds(&bvh->obj_list[bvh->prim_indices[start]]);
+		compute_object_bounds(bvh->obj_list[bvh->prim_indices[start]]);
 	i = 0;
 	while (i < count)
 	{
-		b = compute_object_bounds(&bvh->obj_list[bvh->prim_indices[start + i]]);
+		b = compute_object_bounds(bvh->obj_list[bvh->prim_indices[start + i]]);
 		bounds.min = vec3_fmin(bounds.min, b.min);
 		bounds.max = vec3_fmax(bounds.max, b.max);
 		i++;
@@ -78,7 +78,7 @@ uint32_t	build_bvh(t_bvh *bvh, uint32_t start, uint32_t count)
 	return (index);
 }
 
-void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
+void	init_bvh(t_bvh *bvh, t_object **obj_list, uint32_t obj_c)
 {
 	uint32_t		i;
 	uint32_t		j;
@@ -94,7 +94,7 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	j = 0;
 	while (j < obj_c)
 	{
-		if (obj_list[j].type == SPHERE || obj_list[j].type == CYLINDER)
+		if (obj_list[j]->type == SPHERE || obj_list[j]->type == CYLINDER)
 		{
 			bvh->prim_indices[i] = i;
 			bvh->obj_list[i++] = obj_list[j];

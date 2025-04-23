@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_math.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:31:37 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/20 17:23:51 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:20:27 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,15 @@ int	compare_obj_axis_with_bvh(uint32_t a, uint32_t b, t_bvh *bvh, int axis)
 	t_vec3	pos_a;
 	t_vec3	pos_b;
 
-	if (bvh->obj_list[a].type == SPHERE)
-		pos_a = ((t_sphere *)bvh->obj_list[a].object)->position;
-	else if (bvh->obj_list[a].type == CYLINDER)
-		pos_a = ((t_cylinder *)bvh->obj_list[a].object)->position;
+	if (bvh->obj_list[a]->type == SPHERE)
+		pos_a = ((t_sphere *)bvh->obj_list[a]->object)->position;
+	else if (bvh->obj_list[a]->type == CYLINDER)
+		pos_a = ((t_cylinder *)bvh->obj_list[a]->object)->position;
 
-	if (bvh->obj_list[b].type == SPHERE)
-		pos_b = ((t_sphere *)bvh->obj_list[b].object)->position;
-	else if (bvh->obj_list[b].type == CYLINDER)
-		pos_b = ((t_cylinder *)bvh->obj_list[b].object)->position;
+	if (bvh->obj_list[b]->type == SPHERE)
+		pos_b = ((t_sphere *)bvh->obj_list[b]->object)->position;
+	else if (bvh->obj_list[b]->type == CYLINDER)
+		pos_b = ((t_cylinder *)bvh->obj_list[b]->object)->position;
 
 	float va = (axis == 0) ? pos_a.x : (axis == 1) ? pos_a.y : pos_a.z;
 	float vb = (axis == 0) ? pos_b.x : (axis == 1) ? pos_b.y : pos_b.z;

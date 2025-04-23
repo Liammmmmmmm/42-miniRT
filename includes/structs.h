@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 17:51:52 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/23 11:14:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ typedef struct s_obj_lst
 {
 	t_object	**light_lst;
 	int			light_nb;
-	t_object		**plane_lst;
+	t_object	**plane_lst;
 	int			plane_nb;
 }	t_obj_lst;
 
@@ -336,8 +336,11 @@ typedef struct s_edited_val
 
 typedef struct s_ui_infos
 {
-	uint8_t	tab_selected;
-	t_color	picker_no_color;
+	uint8_t		tab_selected;
+	t_color		picker_no_color;
+	t_object	*selected_object;
+	int			objects_scroll_offset;
+	t_mat		*selected_material;
 }	t_ui_infos;
 
 typedef struct s_controls
@@ -359,7 +362,6 @@ typedef struct s_controls
 	t_color_picker	color_picker[1];
 	t_ttf			font[1];
 	t_ui_infos		ui_infos;
-	t_object		*selected_object;
 }	t_controls;
 
 typedef struct s_minirt

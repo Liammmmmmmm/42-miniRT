@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:22:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 09:58:00 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/23 11:57:56 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,15 @@
 ║                                 CONTROLS / UI                                ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
+// typedef struct s_ui_param
+// {
+// 	int	key;
+// 	int	mouse_x;
+// 	int	mouse_y;
+// }	t_ui_param;
+
+void	draw_box_2d(t_img *img, t_point2 p1, t_point2 p2, int color);
+
 int		init_ui(t_minirt *minirt);
 
 void	init_font(t_minirt *minirt);
@@ -37,6 +46,8 @@ void	click_start_stop(void *vparam);
 void	clear_buttons(t_minirt *minirt);
 
 void	change_tab(void *vparam);
+
+void	draw_list_objects(t_minirt *minirt);
 
 void	init_layout(t_img *img, t_minirt *minirt);
 

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:41:18 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 18:42:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/23 13:08:58 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	mousedown_controls(int key, int x, int y, t_minirt *minirt)
 	minirt->controls.mlxc = (t_uint)x;
 	minirt->controls.mlyc = (t_uint)y;
 	mousedown_common(key, minirt);
+	if (mouse_down_obj(minirt, key, x, y))
+		return (0);
 	i = -1;
 	while (++i < minirt->controls.nb_color_picker)
 		if (color_picker_action(&minirt->controls.color_picker[i], x, y))

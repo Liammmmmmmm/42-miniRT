@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:49:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/23 11:18:06 by codespace        ###   ########.fr       */
+/*   Updated: 2025/04/23 13:30:20 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "bvh.h"
 #include <math.h>
 
-uint32_t	count_object(t_object **obj_list, uint32_t obj_c)
+uint32_t	count_object(t_object *obj_list, uint32_t obj_c)
 {
 	uint32_t	i;
 	uint32_t	count;
@@ -24,7 +24,7 @@ uint32_t	count_object(t_object **obj_list, uint32_t obj_c)
 	count = 0;
 	while (i < obj_c)
 	{
-		if (obj_list[i]->type == SPHERE || obj_list[i]->type == CYLINDER)
+		if (obj_list[i].type == SPHERE || obj_list[i].type == CYLINDER)
 			count++;
 		i++;
 	}

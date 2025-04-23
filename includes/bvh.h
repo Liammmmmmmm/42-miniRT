@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:11:47 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/23 11:19:28 by codespace        ###   ########.fr       */
+/*   Updated: 2025/04/23 13:30:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ╚═════════════════════════════════════════════════════════════════════════════*/
 t_aabb			compute_object_bounds(t_object *obj);
 uint32_t		build_bvh(t_bvh *bvh, uint32_t start, uint32_t count);
-void			init_bvh(t_bvh *bvh, t_object **obj_list, uint32_t obj_c);
+void			init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c);
 void			qsort_axis(uint32_t *arr, t_interval inter, t_bvh *bvh,
 					int axis);
 int				compare_obj_axis_with_bvh(uint32_t a, uint32_t b, t_bvh *bvh, \
@@ -38,7 +38,7 @@ void			render_bvh(t_minirt *minirt);
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                 OUTILS OBJETS                               ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
-uint32_t		count_object(t_object **obj_list, uint32_t obj_c);
+uint32_t		count_object(t_object *obj_list, uint32_t obj_c);
 uint32_t		hash32(uint32_t x);
 int				depth_to_color_int(int depth);
 int				init_bvh_malloc(t_bvh *bvh, int count);

@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/23 12:00:16 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/04/23 13:46:22 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,7 +102,7 @@ MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/
 					vector/vec3_utils.c vector/vec3_random.c vector/vec3_operation_scalar.c normal/normal.c \
 					color/color_operation.c ft_dmin.c plane/hit_plane.c sphere/hit_sphere.c random.c \
 					matrix/matrix.c matrix/matrix_calc.c angle/angle_math.c matrix/matrix3.c fresnel_schlick.c \
-					cylinder/cylinder.c quadratique.c
+					cylinder/cylinder.c quadratique.c clamp_int.c
 
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \

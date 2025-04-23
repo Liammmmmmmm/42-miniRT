@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:22:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/23 11:57:56 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/23 13:09:07 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	clear_buttons(t_minirt *minirt);
 
 void	change_tab(void *vparam);
 
+int		mouse_down_obj(t_minirt *minirt, int key, int mouse_x, int mouse_y);
 void	draw_list_objects(t_minirt *minirt);
 
 void	init_layout(t_img *img, t_minirt *minirt);

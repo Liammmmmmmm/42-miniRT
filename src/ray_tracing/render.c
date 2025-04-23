@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/23 11:17:27 by codespace        ###   ########.fr       */
+/*   Updated: 2025/04/23 13:29:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ t_viewport	init_viewport(t_minirt *minirt)
 	t_vec3		u;
 
 	minirt->scene.camera.fov = minirt->controls.values.fov;
-	init_bvh(&minirt->scene.bvh, &minirt->scene.elements, minirt->scene.el_amount);
+	init_bvh(&minirt->scene.bvh, minirt->scene.elements, minirt->scene.el_amount);
 	init_plane_light_lst(minirt);
 	minirt->scene.camera.focus_dist = minirt->controls.values.focus_dist / 10.0;
 	minirt->scene.camera.defocus_angle = minirt->controls.values.defocus_angle / 30.0;

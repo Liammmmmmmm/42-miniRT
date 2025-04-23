@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_register.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/22 16:57:40 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:40:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record)
 	t_object		**plane_lst;
 	t_hit_record	temp_hit_record;
 
+	hit = 0;
 	if (minirt->scene.bvh.valid == 1)
 		hit = hit_bvh(&minirt->scene.bvh, 0, ray, hit_record);
 	i = 0;

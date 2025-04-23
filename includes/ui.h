@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:22:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/23 13:09:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/23 14:41:08 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define UI_H
 
 # include "structs.h"
+# include "utils.h"
 
 # define UI_BACK_COLOR 0x0E0E0E
 # define UI_SEP_COLOR 0xFFFFFF

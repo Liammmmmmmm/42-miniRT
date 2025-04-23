@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_color_picker.c                                :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 12:55:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/23 16:12:30 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/04/23 14:40:16 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/04/23 14:40:57 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#ifndef UTILS_H
+# define UTILS_H
 
-int	init_cps(t_minirt *minirt)
-{
-	minirt->controls.nb_color_picker = 1;
-	init_color_picker(&minirt->controls.color_picker[0], &minirt->controls.ui_infos.picker_no_color);
-	minirt->controls.color_picker[0].btn.x = 310;
-	minirt->controls.color_picker[0].btn.y = 710;
-	return (1);
-}
+# include "structs.h"
+
+const char	*get_object_name(t_objects obj);
+
+#endif

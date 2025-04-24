@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:31:37 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/20 17:23:51 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/24 13:54:24 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,20 @@
 #include "bvh.h"
 #include <math.h>
 
-static inline t_aabb	compute_cylinder_bounds(t_cylinder *cyl)
+static inline	t_aabb compute_cylinder_bounds(t_cylinder *cyl)
 {
-	t_vec3	axis;
-	t_vec3	e;
-	double	r;
-	double	len_sq;
+	const t_vec3 axis_half = vec3_multiply_scalar(vec3_unit(cyl->orientation), \
+		cyl->height * 0.5);
+	const t_vec3 center1 = vec3_subtract(cyl->position, axis_half);
+	const t_vec3 center2 = vec3_add(cyl->position, axis_half);
+	const t_vec3 radius_vec = { cyl->diameter * 0.5, cyl->diameter * 0.5, \
+		cyl->diameter * 0.5 };
 
-	r = cyl->diameter * 0.5;
-	axis = vec3_multiply_scalar(vec3_unit(cyl->orientation), cyl->height);
-	len_sq = vec3_dot(axis, axis);
-	e = vec3_multiply_scalar(
-			vec3_sqrt(vec3_subtract((t_vec3){1, 1, 1},
-				vec3_divide(vec3_multiply(axis, axis),
-					(t_vec3){len_sq, len_sq, len_sq}))), r);
-	return ((t_aabb){
-		.min = vec3_min(vec3_subtract(cyl->position, e),
-			vec3_subtract(vec3_add(cyl->position, axis), e)),
-		.max = vec3_max(vec3_add(cyl->position, e),
-			vec3_add(vec3_add(cyl->position, axis), e))
-	});
+	return (t_aabb){
+		.min = vec3_subtract(vec3_min(center1, center2), radius_vec),
+		.max = vec3_add(vec3_max(center1, center2), radius_vec)};
 }
+
 
 static inline t_aabb	compute_sphere_bounds(t_sphere *s)
 {

@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/23 14:41:37 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/04/24 16:53:32 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,8 +69,8 @@ UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c conversions.c color_picker.c
 
 UI_DIR				= src/ui/
-UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_sliders.c controls/init_color_picker.c \
-					render.c layout.c list_objects.c
+UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_sliders.c controls/init_color_picker.c controls/init_dropdown.c \
+					render.c layout.c list_objects.c materials_dropdown.c selected_object.c
 
 DEBUG_DIR			= src/debug/
 DEBUG_FILE			= print_scene.c

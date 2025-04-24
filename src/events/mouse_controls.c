@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:41:18 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/23 14:31:17 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 14:41:08 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 				if (color_picker_action(&minirt->controls.color_picker[0], x, y))
 					return ;
 			}
+			if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
+				return ;
 		}
 	}
 	else if (minirt->controls.ui_infos.tab_selected == 1)

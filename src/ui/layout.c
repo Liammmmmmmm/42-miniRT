@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:53:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/23 16:19:19 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 15:31:30 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,14 @@ void	init_layout(t_img *img, t_minirt *minirt)
 				minirt->controls.font[0].size = 20;
 
 				// Material
-				draw_string(img, &minirt->controls.font[0], "Un jour j'aurai le\ncomposant dropdown", (t_point2){310, 820});
+				// draw_string(img, &minirt->controls.font[0], "Un jour j'aurai le\ncomposant dropdown", (t_point2){310, 820});
 				
 				// Size
 				draw_string(img, &minirt->controls.font[0], "Diameter", (t_point2){310, 920});
 				draw_box_2d(img, (t_point2){400, 905}, (t_point2){590, 925}, 0xFFFFFF);
 				
+				// Last to render for render priority reasons (with the part that can appear on the others)
+				display_mat_dropdown(minirt, &minirt->controls.dropdown[0]);
 				display_color_picker(img, &minirt->controls.color_picker[0], &minirt->controls.font[0]);
 			}
 			else if (minirt->controls.ui_infos.selected_object->type == PLANE)

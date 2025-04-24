@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:56:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/23 14:06:46 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 16:52:39 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,13 @@ void	get_clicked_object(t_minirt *minirt, int mouse_y)
 	put_render_to_frame(minirt);
 	while (++i < minirt->scene.el_amount)
 	{
-		i1 = 32 + i * 40 - minirt->controls.ui_infos.objects_scroll_offset;
+		i1 = 31 + i * 40 - minirt->controls.ui_infos.objects_scroll_offset;
 		i2 = 70 + i * 40 - minirt->controls.ui_infos.objects_scroll_offset;
 		if (mouse_y > i1 && mouse_y < i2)
 		{
 			minirt->controls.ui_infos.selected_object = &minirt->scene.elements[i];
+			set_selected_object(minirt, minirt->controls.ui_infos.selected_object);
+			mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
 			return ;
 		}
 	}

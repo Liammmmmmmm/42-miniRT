@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/23 15:33:51 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 10:12:49 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -359,6 +359,8 @@ typedef struct s_controls
 	t_int_slider	*sliders;
 	int				nb_color_picker;
 	t_color_picker	color_picker[1];
+	int				nb_dropdown;
+	t_dropdown		*dropdown;
 	t_ttf			font[1];
 	t_ui_infos		ui_infos;
 }	t_controls;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/21 09:47:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 11:15:23 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@
 
 typedef unsigned char t_bool;
 typedef unsigned char t_uchar;
+
+typedef	enum	e_mat_type
+{
+	DEFFAULT,
+	EMISSIVE
+}	t_mat_type;
 
 typedef struct s_lcolor
 {
@@ -150,6 +156,13 @@ typedef struct s_amb_light
 	t_color	skybox_c;
 	t_tex	*skybox_t;
 }	t_amb_light;
+
+typedef struct s_ray_data
+{
+	t_color		color;
+	t_mat_type	mat_type;
+}	t_ray_data;
+
 
 typedef struct s_camera
 {

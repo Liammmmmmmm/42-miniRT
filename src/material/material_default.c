@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   material_default.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/21 13:18:22 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 11:32:21 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 
 t_color	material_default(t_mat_manager *mat_man)
 {
-	t_vec3	direction;
-	t_ray	ray;
-	char	bounce_hit;
-	t_color	bounce_color;
+	t_vec3		direction;
+	t_ray		ray;
+	char		bounce_hit;
+	t_ray_data	ray_data;
 
 	bounce_hit = 0;
 	direction = vec3_add(mat_man->hit_record.normal, vec3_random_unit());
@@ -28,15 +28,14 @@ t_color	material_default(t_mat_manager *mat_man)
 		direction = mat_man->hit_record.normal;
 	ray.dir = direction;
 	ray.orig = mat_man->hit_record.point;
-	bounce_color = ray_color(mat_man->minirt, ray, mat_man->depth - 1,
+	ray_data = ray_color(mat_man->minirt, ray, mat_man->depth - 1,
 		&bounce_hit);
-	// facon de gros porc pour considerer que le ray suivant etait une emissive (marche que avec les emissive blanches)
 	if (bounce_hit)
 	{
-		if (bounce_color.r != 255 || bounce_color.g != 255 || bounce_color.b != 255)
-			mat_man->color = color_multiply(mat_man->color, bounce_color);
+		if (ray_data.mat_type != EMISSIVE)
+			mat_man->color = color_multiply(mat_man->color, ray_data.color);
 		else
-			mat_man->color = color_add_clamp(bounce_color, color_multiply(mat_man->color, bounce_color));
+			mat_man->color = color_add_clamp(ray_data.color, color_multiply(mat_man->color, ray_data.color));
 	}
 	return (mat_man->color);
 }

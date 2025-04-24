@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/18 16:40:13 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:15:39 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <math.h>
 # include "bmp_parsing.h"
 # include "material.h"
-
+	
 # define PI_D 3.1415926535897
 
 # define WIN_WIDTH 1920
@@ -243,7 +243,7 @@ void	render(t_minirt *minirt);
 ║                                  RAY TRACING                                 ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit);
+t_ray_data ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit);
 
 t_vec3	random_in_unit_disk();
 t_vec3	defocus_disk_sample(t_minirt *minirt);

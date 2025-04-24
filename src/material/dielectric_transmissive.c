@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dielectric_transmissive.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:44:50 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/17 16:27:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 11:17:57 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ static inline t_vec3	refracted_v(const t_vec3 uv, const t_vec3 n, double ri)
 
 static inline t_color	refracted_ray(t_mat_manager *mat_man)
 {
-	double	eta;
-	double	cos_theta;
-	double	sin_theta;
-	t_vec3	direction;
-	t_color	bounce_color;
+	double		eta;
+	double		cos_theta;
+	double		sin_theta;
+	t_vec3		direction;
+	t_ray_data	ray_data;
 
 	if (mat_man->hit_record.front_face)
 		eta = mat_man->minirt->scene.ior_all / mat_man->hit_record.mat->ior;
@@ -51,8 +51,8 @@ static inline t_color	refracted_ray(t_mat_manager *mat_man)
 		mat_man->ray_in.dir = vec3_unit(direction);
 		mat_man->ray_in.orig = mat_man->hit_record.point;
 
-		bounce_color = ray_color(mat_man->minirt, mat_man->ray_in, mat_man->depth - 1, NULL);
-		return (color_multiply(mat_man->hit_record.color, bounce_color)
+		ray_data = ray_color(mat_man->minirt, mat_man->ray_in, mat_man->depth - 1, NULL);
+		return (color_multiply(mat_man->hit_record.color, ray_data.color)
 		);
 	}
 }

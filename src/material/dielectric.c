@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dielectric.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:30:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/17 15:35:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 11:24:11 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ inline t_color	reflected_dielectric_color(t_mat_manager *mat_man)
 			vec3_random_unit(), mat_man->hit_record.mat->roughness_value));
 	mat_man->ray_in.dir = vec3_unit(direction);
 	mat_man->ray_in.orig = mat_man->hit_record.point;
-	return (ray_color(mat_man->minirt, mat_man->ray_in, mat_man->depth - 1, NULL));
+	return (ray_color(mat_man->minirt, mat_man->ray_in, mat_man->depth - 1, NULL).color);
 }
 
 inline double	get_reflect_value(t_mat_manager *mat_man)

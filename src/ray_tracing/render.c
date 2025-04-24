@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/18 17:40:57 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:27:18 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ t_color	get_background_color(t_minirt *minirt, t_ray ray)
 	return (background);
 }
 
-t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
+t_ray_data ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
 {
 	t_color			color;
 	t_hit_record	hit_record;
 
 	if (depth <= 0)
-		return (t_color){0, 0, 0};
+		return ((t_ray_data){(t_color){0, 0, 0}, DEFFAULT});
 	if (hit_register_all(minirt, &ray, &hit_record) == 1)
 	{
 
@@ -61,13 +61,16 @@ t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
 		color = material_manager((t_mat_manager){hit_record, ray, minirt, color, depth});
 		if (hit)
 			*hit = 1;
-		return (color);
+		if (hit_record.mat && hit_record.mat->emission_strength > 0)
+			return ((t_ray_data){color, EMISSIVE});
+		else
+			return ((t_ray_data){color, DEFFAULT});
 	}
 	if (hit)
 		*hit = 0;
 	
 	//return (color_scale(get_background_color(minirt, ray), minirt->scene.amb_light.ratio));
-	return (get_background_color(minirt, ray));
+	return ((t_ray_data){get_background_color(minirt, ray), DEFFAULT});
 }
 
 void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
@@ -97,7 +100,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 			), 
 			ray.orig
 		);
-		color = ray_color(minirt, ray, 20, &bounce_hit);
+		color = ray_color(minirt, ray, 20, &bounce_hit).color;
 		minirt->screen.render[i].color.r += color.r * minirt->viewport.gamma;
 		minirt->screen.render[i].color.g += color.g * minirt->viewport.gamma;
 		minirt->screen.render[i].color.b += color.b * minirt->viewport.gamma;

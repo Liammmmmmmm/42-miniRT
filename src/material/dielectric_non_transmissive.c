@@ -6,13 +6,13 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:44:34 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/24 11:18:35 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:07:23 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static inline t_color	random_bounce_ray(t_mat_manager *mat_man)
+static inline t_ray_data	random_bounce_ray(t_mat_manager *mat_man)
 {
 	t_vec3			direction;
 	char			bounce_hit;
@@ -25,15 +25,15 @@ static inline t_color	random_bounce_ray(t_mat_manager *mat_man)
 	mat_man->ray_in.dir = direction;
 	ray_data = ray_color(mat_man->minirt, mat_man->ray_in, mat_man->depth - 1, &bounce_hit);
 	if (bounce_hit)
-		return (color_multiply(mat_man->color, ray_data.color));
+		return ((t_ray_data){color_multiply(mat_man->color, ray_data.color), ray_data.mat_type});
 	else
 	{
-		return (mat_man->color);
+		return ((t_ray_data){mat_man->color, ray_data.mat_type});
 		// *bounce = color_lerp(mat_man->color, *bounce, 0.4); // Pour avoir la skybox qui influe legerement
 	}
 }
 
-t_color	dielectric_non_transmissive_material(t_mat_manager *mat_man)
+t_ray_data	dielectric_non_transmissive_material(t_mat_manager *mat_man)
 {
 	const double	f = get_reflect_value(mat_man);
 

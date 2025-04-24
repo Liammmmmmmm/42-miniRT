@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:28:45 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/24 11:22:50 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:23:19 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 // 	});
 // }
 
-t_color	dielectric_material(t_mat_manager *mat_man)
+t_ray_data	dielectric_material(t_mat_manager *mat_man)
 {
 	if (mat_man->hit_record.mat->ior > 0)
 	{
@@ -53,10 +53,10 @@ t_color	dielectric_material(t_mat_manager *mat_man)
 		return (material_default(mat_man));
 }
 
-t_color	material_mix_v2(t_mat_manager *mat_man)
+t_ray_data	material_mix_v2(t_mat_manager *mat_man)
 {
 	if (mat_man->hit_record.mat->emission_strength > 0.0)
-		return (emissive_material(mat_man));
+		return ((t_ray_data){emissive_material(mat_man), EMISSIVE});
 	else
 	{
 		
@@ -72,6 +72,6 @@ t_color	material_mix_v2(t_mat_manager *mat_man)
 				return (metallic_material(mat_man));
 		}
 	}
-	return ((t_color){0, 0, 0});
+	return ((t_ray_data){(t_color){0, 0, 0}, DEFFAULT});
 }
 

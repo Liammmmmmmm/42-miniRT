@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/24 11:27:18 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:15:20 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_color	get_background_color(t_minirt *minirt, t_ray ray)
 t_ray_data ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
 {
 	t_color			color;
+	t_ray_data		ray_data;
 	t_hit_record	hit_record;
 
 	if (depth <= 0)
@@ -58,13 +59,10 @@ t_ray_data ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
 
 		color = hit_record.color;
 		color = color_multiply(color, compute_light(&hit_record, minirt));
-		color = material_manager((t_mat_manager){hit_record, ray, minirt, color, depth});
+		ray_data = material_manager((t_mat_manager){hit_record, ray, minirt, color, depth});
 		if (hit)
 			*hit = 1;
-		if (hit_record.mat && hit_record.mat->emission_strength > 0)
-			return ((t_ray_data){color, EMISSIVE});
-		else
-			return ((t_ray_data){color, DEFFAULT});
+		return (ray_data);
 	}
 	if (hit)
 		*hit = 0;

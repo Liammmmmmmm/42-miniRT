@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/24 11:32:21 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:11:23 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minirt.h"
 #include "maths.h"
 
-t_color	material_default(t_mat_manager *mat_man)
+t_ray_data	material_default(t_mat_manager *mat_man)
 {
 	t_vec3		direction;
 	t_ray		ray;
@@ -37,5 +37,5 @@ t_color	material_default(t_mat_manager *mat_man)
 		else
 			mat_man->color = color_add_clamp(ray_data.color, color_multiply(mat_man->color, ray_data.color));
 	}
-	return (mat_man->color);
+	return ((t_ray_data){mat_man->color, DEFFAULT});
 }

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:42:13 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/24 11:17:20 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:03:47 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * • `I` : the direction of the ray hitting the object
  * • `N` : normal of the point
  */
-t_color	metallic_material(t_mat_manager *mat_man)
+t_ray_data	metallic_material(t_mat_manager *mat_man)
 {
 	t_vec3		direction;
 	t_ray_data	ray_data;
@@ -37,8 +37,8 @@ t_color	metallic_material(t_mat_manager *mat_man)
 
 	ray_data = ray_color(mat_man->minirt, mat_man->ray_in, mat_man->depth - 1, NULL);
 
-	return (color_multiply(
+	return ((t_ray_data){color_multiply(
 		fresnel_schlick_color(cos_theta, mat_man->color),
-		ray_data.color)
+		ray_data.color), ray_data.mat_type}
 	);
 }

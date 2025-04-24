@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 18:43:40 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 11:15:39 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,7 @@ void	render(t_minirt *minirt);
 ║                                  RAY TRACING                                 ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit);
+t_ray_data ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit);
 t_vec3	random_in_unit_disk();
 t_vec3	defocus_disk_sample(t_minirt *minirt);
 t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt);

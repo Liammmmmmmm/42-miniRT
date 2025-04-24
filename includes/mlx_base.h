@@ -6,12 +6,15 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:10:05 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 12:55:56 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/22 11:39:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MLX_BASE_H
 # define MLX_BASE_H
+
+# include <math.h>
+# include "libft.h"
 
 /**
  * @struct s_img
@@ -60,6 +63,20 @@ typedef struct s_color_alpha
 	float	alpha;
 }	t_color_alpha;
 
+typedef struct s_hsv_color
+{
+	uint16_t	hue;
+	double		sat;
+	double		val;
+}	t_hsv_color;
+
+typedef struct s_fcolor
+{
+	float	r;
+	float	g;
+	float	b;
+}	t_fcolor;
+
 /**
  * @struct s_point
  * @brief Structure representing a point in 2D space with a color.
@@ -77,6 +94,18 @@ typedef struct s_point
 	int			color;	/* Color of the point. */
 }	t_point;
 
-void	put_pixel_image_alpha(t_img *img, int x, int y, t_color_alpha color);
+void		put_pixel_image_alpha(t_img *img, int x, int y, t_color_alpha color)
+;
+
+int			color_to_int(t_color color);
+t_color		int_to_color(int color);
+
+void		draw_vertical_line(t_img *img, uint32_t x, uint32_t y1,
+	uint32_t y2);
+void		draw_horizontal_line(t_img *img, uint32_t y, uint32_t x1,
+	uint32_t x2);
+
+t_hsv_color	rgb_to_hsv(int rgb);
+int			hsv_to_rgb(int h, float s, float v);
 
 #endif

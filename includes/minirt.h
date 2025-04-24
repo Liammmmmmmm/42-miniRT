@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/04/24 11:15:39 by madelvin         ###   ########.fr       */
@@ -25,7 +25,8 @@
 # include <math.h>
 # include "bmp_parsing.h"
 # include "material.h"
-	
+# include "ui.h"
+
 # define PI_D 3.1415926535897
 
 # define WIN_WIDTH 1920
@@ -105,8 +106,6 @@ typedef enum e_keys
 # define ERR_F "Invalid format for"
 
 int		print_error(char *err);
-
-int		init_ui(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    UTILS                                     ║
@@ -209,21 +208,30 @@ void	put_sp_image(t_img *img, t_sc_point *sp);
 void	put_pixel_image(t_img *img, int x, int y, int color);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
-║                                   CONTROLS                                   ║
-╚═════════════════════════════════════════════════════════════════════════════*/
-
-void	init_font(t_minirt *minirt);
-void	init_controls(t_minirt *minirt);
-int		init_buttons(t_minirt *minirt);
-int		init_sliders(t_minirt *minirt);
-
-void	clear_sliders(t_minirt *minirt);
-void	click_start_stop(void *vparam);
-void	clear_buttons(t_minirt *minirt);
-
-/*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    EVENTS                                    ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
+
+int		destroy_controls(t_minirt *minirt);
+int		destroy(t_minirt *minirt);
+
+void	keydown_common(int key, t_minirt *minirt);
+void	keyup_common(int key, t_minirt *minirt);
+
+int		keydown_render(int key, t_minirt *minirt);
+int		keyup_render(int key, t_minirt *minirt);
+
+int		keydown_controls(int key, t_minirt *minirt);
+int		keyup_controls(int key, t_minirt *minirt);
+
+void	mouseup_common(int key, t_minirt *minirt);
+void	mousedown_common(int key, t_minirt *minirt);
+
+int		mouse_move_controls(int x, int y, t_minirt *minirt);
+int		mouseup_controls(int key, int x, int y, t_minirt *minirt);
+int		mousedown_controls(int key, int x, int y, t_minirt *minirt);
+
+int		mousedown_render(int key, int x, int y, t_minirt *minirt);
+int		mouseup_render(int key, int x, int y, t_minirt *minirt);
 
 void	events(t_minirt *minirt);
 void	events_controls(t_minirt *minirt);
@@ -244,12 +252,17 @@ void	render(t_minirt *minirt);
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
 t_ray_data ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit);
-
 t_vec3	random_in_unit_disk();
 t_vec3	defocus_disk_sample(t_minirt *minirt);
 t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt);
 t_color	get_solid_texture(t_vec3 point, double scale);
-
 int		init_plane_light_lst(t_minirt *minirt);
+
+/*═════════════════════════════════════════════════════════════════════════════╗
+║                                    EDIT MOD                                  ║
+╚═════════════════════════════════════════════════════════════════════════════*/
+
+t_object	*select_object(t_minirt *minirt, int x, int y);
+void		draw_selected_object(t_minirt *minirt);
 
 #endif

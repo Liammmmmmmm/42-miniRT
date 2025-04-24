@@ -125,18 +125,6 @@ typedef struct s_mat
 	t_tex	*normal;
 }	t_mat;
 
-typedef	struct s_hit_record
-{
-	t_vec3	point;
-	t_vec3	normal;
-	double	t;
-	t_mat	*mat;
-	char	front_face;
-	t_color	color;
-	double	u;
-	double	v;
-}	t_hit_record;
-
 typedef struct s_quadratic
 {
 	double	a;
@@ -228,12 +216,25 @@ typedef struct s_object
 	t_objects	type;
 }	t_object;
 
+typedef	struct s_hit_record
+{
+	t_object	*obj;
+	t_vec3		point;
+	t_vec3		normal;
+	double		t;
+	t_mat		*mat;
+	char		front_face;
+	t_color		color;
+	double		u;
+	double		v;
+}	t_hit_record;
+
 typedef struct s_obj_lst
 {
-	t_light	**light_lst;
-	int		light_nb;
-	t_plane	**plane_lst;
-	int		plane_nb;
+	t_object	**light_lst;
+	int			light_nb;
+	t_object		**plane_lst;
+	int			plane_nb;
 }	t_obj_lst;
 
 typedef struct s_aabb
@@ -346,6 +347,12 @@ typedef struct s_edited_val
 	char	debug;
 }	t_edited_val;
 
+typedef struct s_ui_infos
+{
+	uint8_t	tab_selected;
+	t_color	picker_no_color;
+}	t_ui_infos;
+
 typedef struct s_controls
 {
 	t_keydown		keydown;
@@ -361,7 +368,11 @@ typedef struct s_controls
 	t_edited_val	values;
 	int				nb_sliders;
 	t_int_slider	*sliders;
+	int				nb_color_picker;
+	t_color_picker	color_picker[1];
 	t_ttf			font[1];
+	t_ui_infos		ui_infos;
+	t_object		*selected_object;
 }	t_controls;
 
 typedef struct s_minirt

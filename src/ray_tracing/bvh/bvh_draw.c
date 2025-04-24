@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 19:46:13 by delmath           #+#    #+#             */
-/*   Updated: 2025/04/18 17:37:53 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/22 16:53:46 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minirt.h"
 #include "bvh.h"
 
-void	draw_aabb(t_minirt *minirt, t_vec3 *verts, int depth)
+void	draw_aabb(t_minirt *minirt, t_vec3 *verts, int color)
 {
 	int			points[8][2];
 	t_point		p1;
@@ -34,20 +34,20 @@ void	draw_aabb(t_minirt *minirt, t_vec3 *verts, int depth)
 	while (i < 12)
 	{
 		p1 = (t_point){points[edges[i][0]][0], points[edges[i][0]][1], 0,
-			depth_to_color_int(depth)};
+			color};
 		p2 = (t_point){points[edges[i][1]][0], points[edges[i][1]][1], 0,
-			depth_to_color_int(depth)};
+			color};
 		draw_line(&p1, &p2, &minirt->mlx.img, p1.color);
 		i++;
 	}
 }
 
-void	draw_box(t_minirt *minirt, t_vec3 min, t_vec3 max, int depth)
+void	draw_box(t_minirt *minirt, t_vec3 min, t_vec3 max, int color)
 {
 	t_vec3	verts[8];
 
 	init_box_vertices(verts, min, max);
-	draw_aabb(minirt, verts, depth);
+	draw_aabb(minirt, verts, color);
 }
 
 void	render_bvh_recursive(t_minirt *minirt, int depth, int start, \
@@ -63,7 +63,7 @@ void	render_bvh_recursive(t_minirt *minirt, int depth, int start, \
 			draw_box(minirt,
 				minirt->scene.bvh.bvh_nodes[node->left_child].node_bounds.min,
 				minirt->scene.bvh.bvh_nodes[node->left_child].node_bounds.max,
-				depth);
+				depth_to_color_int(depth));
 		render_bvh_recursive(minirt, depth - 1, start,
 			&minirt->scene.bvh.bvh_nodes[node->left_child]);
 	}
@@ -73,7 +73,7 @@ void	render_bvh_recursive(t_minirt *minirt, int depth, int start, \
 			draw_box(minirt,
 				minirt->scene.bvh.bvh_nodes[node->right_child].node_bounds.min,
 				minirt->scene.bvh.bvh_nodes[node->right_child].node_bounds.max,
-				depth);
+				depth_to_color_int(depth));
 		render_bvh_recursive(minirt, depth - 1, start,
 			&minirt->scene.bvh.bvh_nodes[node->right_child]);
 	}
@@ -95,4 +95,5 @@ void	render_bvh(t_minirt *minirt)
 	if (depth > 1)
 		render_bvh_recursive(minirt, depth, start,
 			&minirt->scene.bvh.bvh_nodes[0]);
+	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
 }

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/04/24 12:15:20 by madelvin         ###   ########.fr       */
@@ -170,8 +170,7 @@ void	render(t_minirt *minirt)
 			ft_bzero(&minirt->screen.render[i].color, sizeof(t_lcolor));
 		minirt->viewport = init_viewport(minirt);
 	}
-	if (minirt->scene.bvh.valid == 1)
-		draw_pixels(minirt);
+	draw_pixels(minirt);
 	if (minirt->screen.sample == minirt->screen.spp)
 	{
 		minirt->screen.sample = 0;

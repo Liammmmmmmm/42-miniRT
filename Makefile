@@ -66,16 +66,17 @@ UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					bump_to_normal.c
 
 UTILS_MLX_DIR		= src/utils/mlx/
-UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c
+UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c conversions.c color_picker.c
 
-CONTROLS_DIR		= src/controls/
-CONTROLS_FILE		= button_click.c init_buttons.c init_sliders.c
+UI_DIR				= src/ui/
+UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_sliders.c controls/init_color_picker.c \
+					render.c layout.c list_objects.c
 
 DEBUG_DIR			= src/debug/
 DEBUG_FILE			= print_scene.c
 
 EVENT_DIR			= src/events/
-EVENT_FILE			= basic.c
+EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c  key_render.c  mouse_common.c  mouse_controls.c  mouse_render.c
 
 RAY_TRACING_DIR		= src/ray_tracing/
 RAY_TRACING_FILE	= render.c hit_register.c focus.c light.c bvh/bvh_manager.c bvh/bvh_math.c \
@@ -119,6 +120,9 @@ FONT_PARS_FILE		= free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c 
 FONT_REND_DIR		= src/utils/font/rendering/
 FONT_REND_FILE		= draw_glyph_outline.c draw_string.c basic_slope.c tesselate_bezier.c rasterization.c
 
+EDIT_MOD_DIR		= src/edition_mod/
+EDIT_MOD_FILE		= select_obj.c
+
 
 M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
@@ -130,11 +134,12 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(MAT_DIR), $(MAT_FILE)) \
 			$(addprefix $(MATH_DIR), $(MATH_FILE)) \
 			$(addprefix $(UTILS_MLX_DIR), $(UTILS_MLX_FILE)) \
-			$(addprefix $(CONTROLS_DIR), $(CONTROLS_FILE)) \
+			$(addprefix $(UI_DIR), $(UI_FILE)) \
 			$(addprefix $(PARSING_DIR), $(PARSING_FILE)) \
 			$(addprefix $(FONT_PARS_DIR), $(FONT_PARS_FILE)) \
 			$(addprefix $(FONT_REND_DIR), $(FONT_REND_FILE)) \
-			$(addprefix $(ENV_DIR), $(ENV_FILE))
+			$(addprefix $(ENV_DIR), $(ENV_FILE)) \
+			$(addprefix $(EDIT_MOD_DIR), $(EDIT_MOD_FILE))
 
 # Source files bonus
 SRCS_BONUS = 

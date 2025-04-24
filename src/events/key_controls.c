@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_solid_texture.c                                :+:      :+:    :+:   */
+/*   key_controls.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/11 18:19:43 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 16:52:03 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/04/22 18:38:41 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/04/22 18:39:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_color	get_solid_texture(t_vec3 point, double scale)
+int	keydown_controls(int key, t_minirt *minirt)
 {
-	int	a;
-	int	b;
-	int	c;
+	int	i;
 
-	point = vec3_multiply_scalar(point, scale);
-	a = floor(point.x);
-	b = floor(point.y);
-	c = floor(point.z);
-	if ((a + b + c) % 2 == 0)
-		return ((t_color){0, 0, 0});
-	return ((t_color){243, 0, 243});
+	keydown_common(key, minirt);
+	i = -1;
+	while (++i < minirt->controls.nb_color_picker)
+		if (color_picker_type(&minirt->controls.color_picker[i], key))
+			return (0);
+	return (0);
+}
+
+int	keyup_controls(int key, t_minirt *minirt)
+{
+	keyup_common(key, minirt);
+	
+	return (0);
 }

@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_solid_texture.c                                :+:      :+:    :+:   */
+/*   key_render.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/11 18:19:43 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 16:52:03 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/04/22 18:37:12 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/04/22 18:37:59 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_color	get_solid_texture(t_vec3 point, double scale)
+int	keydown_render(int key, t_minirt *minirt)
 {
-	int	a;
-	int	b;
-	int	c;
+	keydown_common(key, minirt);
+	if (key == minirt->controls.open_controls)
+	{
+		if (!minirt->mlx.controls_win)
+		{
+			minirt->mlx.controls_win = mlx_new_window(minirt->mlx.mlx, CWIN_WIDTH, CWIN_HEIGHT, "Controls");
+			events_controls(minirt);
+			mlx_loop(minirt->mlx.mlx);
+		}
+	}
+	return (0);
+}
 
-	point = vec3_multiply_scalar(point, scale);
-	a = floor(point.x);
-	b = floor(point.y);
-	c = floor(point.z);
-	if ((a + b + c) % 2 == 0)
-		return ((t_color){0, 0, 0});
-	return ((t_color){243, 0, 243});
+int	keyup_render(int key, t_minirt *minirt)
+{
+	keyup_common(key, minirt);
+	
+	return (0);
 }

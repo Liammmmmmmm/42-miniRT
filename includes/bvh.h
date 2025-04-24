@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:11:47 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/18 18:54:49 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:42:34 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ uint32_t		count_object(t_object *obj_list, uint32_t obj_c);
 uint32_t		hash32(uint32_t x);
 int				depth_to_color_int(int depth);
 int				init_bvh_malloc(t_bvh *bvh, int count);
+t_aabb			compute_object_bounds(t_object *obj);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                         PROJECTION / TRIGONOMÉTRIE                          ║
@@ -49,5 +50,6 @@ int				init_bvh_malloc(t_bvh *bvh, int count);
 t_calc_trigo	get_cam_trigo(t_vec3 orientation);
 void			project_vertex(t_minirt *m, t_vec3 v, int *x, int *y);
 void			init_box_vertices(t_vec3 *v, t_vec3 min, t_vec3 max);
+void			draw_box(t_minirt *minirt, t_vec3 min, t_vec3 max, int color);
 
 #endif

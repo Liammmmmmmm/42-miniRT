@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_buttons.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:55:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 21:03:07 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:34:53 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	base_button(t_button *button, t_minirt *minirt)
 {
-	button->background_color = 0xB4B4B4;
-	button->border_color = 0xffffff;
-	button->background_color_on_click = 0x919191;
+	button->background_color = UI_BUTTON_BACK;
+	button->border_color = UI_SEP_COLOR;
+	button->background_color_on_click = UI_BUTTON_CLICK;
 	button->border_color_on_click = 0xffffff;
 	button->height = 24;
 	button->width = 280;
@@ -47,14 +47,45 @@ void	init_start_stop(t_minirt *minirt)
 		((t_btn_param *)minirt->controls.buttons[2].param)->action = 2;
 }
 
+void	base_tab_btn(t_button *button, t_minirt *minirt, int action)
+{
+	button->background_color = UI_BUTTON_BACK;
+	button->border_color = UI_SEP_COLOR;
+	button->background_color_on_click = 0xDDDDDD;
+	button->border_color_on_click = 0xffffff;
+	button->height = 20;
+	button->width = 90;
+	button->y = 10;
+	button->param = malloc(sizeof(t_btn_param));
+	if (button->param)
+	{
+		((t_btn_param *)button->param)->minirt = minirt;
+		((t_btn_param *)button->param)->action = action;
+	}
+	button->action = &change_tab;
+}
+
+void	init_tab_btns(t_minirt *minirt)
+{
+	minirt->controls.ui_infos.tab_selected = 0;
+	base_tab_btn(&minirt->controls.buttons[3], minirt, 0);
+	base_tab_btn(&minirt->controls.buttons[4], minirt, 1);
+	minirt->controls.buttons[3].text = ft_strdup("Objects");
+	minirt->controls.buttons[4].text = ft_strdup("Materials");
+	minirt->controls.buttons[3].x = 310;
+	minirt->controls.buttons[4].x = 410;
+	minirt->controls.buttons[3].background_color = UI_SEP_COLOR;
+}
+
 int	init_buttons(t_minirt *minirt)
 {
-	minirt->controls.nb_buttons = 3;
+	minirt->controls.nb_buttons = 5;
 	minirt->controls.buttons = ft_calloc(minirt->controls.nb_buttons, \
 		sizeof(t_button));
 	if (!minirt->controls.buttons)
 		return (0);
 	init_start_stop(minirt);
+	init_tab_btns(minirt);
 	return (1);
 }
 

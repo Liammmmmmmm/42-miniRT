@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_register.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/20 17:04:01 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:40:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 					hit_anything = 1;
 					closest_t = temp_hit_record.t;
 					*hit_record = temp_hit_record;
+					hit_record->obj = obj;
 					hit_record->mat = ((t_sphere *)obj->object)->material;
 					apply_normal_map(hit_record);
 					apply_roughness_map(hit_record);
@@ -131,6 +132,7 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 					hit_anything = 1;
 					closest_t = temp_hit_record.t;
 					*hit_record = temp_hit_record;
+					hit_record->obj = obj;
 					hit_record->mat = ((t_cylinder *)obj->object)->material;
 					apply_normal_map(hit_record);
 					apply_roughness_map(hit_record);
@@ -148,15 +150,17 @@ char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record)
 	char			hit;
 	int				i;
 	t_plane			*plane;
-	t_plane			**plane_lst;
+	t_object		**plane_lst;
 	t_hit_record	temp_hit_record;
 
-	hit = hit_bvh(&minirt->scene.bvh, 0, ray, hit_record);
+	hit = 0;
+	if (minirt->scene.bvh.valid == 1)
+		hit = hit_bvh(&minirt->scene.bvh, 0, ray, hit_record);
 	i = 0;
 	plane_lst = minirt->scene.obj_lst.plane_lst;
 	while (i < minirt->scene.obj_lst.plane_nb)
 	{
-		plane = plane_lst[i];
+		plane = (t_plane *)plane_lst[i]->object;
 		if (hit_plane(plane->position, plane->normal, ray, (t_interval){0.001, 1000}, &temp_hit_record))
 		{
 			if (hit == 0 || temp_hit_record.t < hit_record->t)
@@ -164,6 +168,7 @@ char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record)
 				hit = 1;
 				*hit_record = temp_hit_record;
 				hit_record->mat = plane->material;
+				hit_record->obj = plane_lst[i];
 				hit_record->color = get_hit_register_color(plane->material, plane->color, hit_record);
 			}
 		}

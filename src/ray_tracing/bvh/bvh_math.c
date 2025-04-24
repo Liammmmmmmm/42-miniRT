@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:31:37 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/24 13:54:24 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:40:31 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,27 @@
 #include "bvh.h"
 #include <math.h>
 
-static inline	t_aabb compute_cylinder_bounds(t_cylinder *cyl)
+static inline t_aabb compute_cylinder_bounds(t_cylinder *cyl)
 {
-	const t_vec3 axis_half = vec3_multiply_scalar(vec3_unit(cyl->orientation), \
-		cyl->height * 0.5);
-	const t_vec3 center1 = vec3_subtract(cyl->position, axis_half);
-	const t_vec3 center2 = vec3_add(cyl->position, axis_half);
-	const t_vec3 radius_vec = { cyl->diameter * 0.5, cyl->diameter * 0.5, \
-		cyl->diameter * 0.5 };
+	const t_vec3	axis = vec3_unit(cyl->orientation);
+	const t_vec3	half = vec3_multiply_scalar(axis, cyl->height * 0.5);
+	const double	r = cyl->diameter * 0.5;
+	t_vec3			min;
+	t_vec3			max;
 
-	return (t_aabb){
-		.min = vec3_subtract(vec3_min(center1, center2), radius_vec),
-		.max = vec3_add(vec3_max(center1, center2), radius_vec)};
+	min = vec3_min(vec3_subtract(cyl->position, half), \
+							vec3_add(cyl->position, half));
+	max = vec3_max(vec3_subtract(cyl->position, half),  \
+							vec3_add(cyl->position, half));
+	min.x -= r * sqrt(1.0 - axis.x * axis.x);
+	min.y -= r * sqrt(1.0 - axis.y * axis.y);
+	min.z -= r * sqrt(1.0 - axis.z * axis.z);
+	max.x += r * sqrt(1.0 - axis.x * axis.x);
+	max.y += r * sqrt(1.0 - axis.y * axis.y);
+	max.z += r * sqrt(1.0 - axis.z * axis.z);
+	return ((t_aabb){min, max});
 }
+
 
 
 static inline t_aabb	compute_sphere_bounds(t_sphere *s)

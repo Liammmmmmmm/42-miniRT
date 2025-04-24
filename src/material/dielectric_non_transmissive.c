@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:44:34 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/24 12:07:23 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:53:38 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,12 @@ static inline t_ray_data	random_bounce_ray(t_mat_manager *mat_man)
 	mat_man->ray_in.dir = direction;
 	ray_data = ray_color(mat_man->minirt, mat_man->ray_in, mat_man->depth - 1, &bounce_hit);
 	if (bounce_hit)
-		return ((t_ray_data){color_multiply(mat_man->color, ray_data.color), ray_data.mat_type});
+	{
+		if (ray_data.mat_type == DEFFAULT)
+			return ((t_ray_data){color_multiply(mat_man->color, ray_data.color), ray_data.mat_type});
+		else
+			return ((t_ray_data){color_add_clamp(ray_data.color, color_multiply(mat_man->color, ray_data.color)), ray_data.mat_type});
+	}
 	else
 	{
 		return ((t_ray_data){mat_man->color, ray_data.mat_type});

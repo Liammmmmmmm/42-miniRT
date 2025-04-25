@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 17:50:52 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:17:33 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,6 +240,8 @@ void	events_controls(t_minirt *minirt);
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    RENDER                                    ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
+
+void	stop_minirt(t_minirt *minirt);
 
 void	render_frame(t_minirt *minirt);
 int		init_render(t_minirt *minirt);

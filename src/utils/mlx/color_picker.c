@@ -6,28 +6,12 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:50:31 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 17:17:45 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:32:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx_components.h"
 #include "minirt.h"
-
-int imax(int i1, int i2)
-{
-	if (i1 > i2)
-		return (i1);
-	return (i2);
-}
-
-int	iclamp(int min, int val, int max)
-{
-	if (min > val)
-		return (min);
-	else if (max < val)
-		return (max);
-	return (val);
-}
 
 void	color_to_hex(char *dest, t_color color)
 {
@@ -147,9 +131,7 @@ int	color_picker_action(t_color_picker *cp, int mouse_x, int mouse_y)
 			cp->mouse_in_val_sat = 1;
 		}
 		else
-		{
 			text_input_focus(&cp->text_input, mouse_x, mouse_y);
-		}
 		cp->btn.background_color = hsv_to_rgb(cp->hsv.hue, cp->hsv.sat, cp->hsv.val);
 		cp->btn.background_color_on_click = cp->btn.background_color;
 		*cp->color = int_to_color(cp->btn.background_color);

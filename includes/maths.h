@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/25 17:28:54 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:45:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,10 @@ t_color	fresnel_schlick_color(double cos_theta, t_color f0);
  * `F = F0​+(1−F0​)(1−cos(θ))^5`
  */
 double	fresnel_schlick_f(double cos_theta, double f0);
+
+int		iclamp(int min, int val, int max);
+int		imin(int i1, int i2);
+int		imax(int i1, int i2);
 
 
 #endif

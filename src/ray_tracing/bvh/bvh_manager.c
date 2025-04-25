@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/25 18:18:28 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:31:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ t_bvh_node	init_bvh_node(t_bvh *bvh, uint32_t start, uint32_t count)
 	uint32_t	i;
 
 	bounds = \
-		compute_object_bounds(&bvh->obj_list[bvh->prim_indices[start]]);
+		compute_object_bounds(bvh->obj_list[bvh->prim_indices[start]]);
 	i = 0;
 	while (i < count)
 	{
-		b = compute_object_bounds(&bvh->obj_list[bvh->prim_indices[start + i]]);
+		b = compute_object_bounds(bvh->obj_list[bvh->prim_indices[start + i]]);
 		bounds.min = vec3_fmin(bounds.min, b.min);
 		bounds.max = vec3_fmax(bounds.max, b.max);
 		i++;
@@ -98,7 +98,7 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 			obj_list[j].type == CONE)
 		{
 			bvh->prim_indices[i] = i;
-			bvh->obj_list[i++] = obj_list[j];
+			bvh->obj_list[i++] = &obj_list[j];
 		}
 		j++;
 	}

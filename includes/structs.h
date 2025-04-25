@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 16:46:14 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:12:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,6 @@ typedef struct s_light
 {
 	t_vec3	position;
 	double	brightness;
-	t_mat	*material;
 	t_color	color;
 }	t_light;
 
@@ -246,7 +245,7 @@ typedef struct s_obj_lst
 {
 	t_object	**light_lst;
 	int			light_nb;
-	t_object		**plane_lst;
+	t_object	**plane_lst;
 	int			plane_nb;
 }	t_obj_lst;
 
@@ -271,7 +270,7 @@ typedef struct s_bvh
 	uint32_t	*prim_indices;
 	t_bvh_node	*bvh_nodes;
 	uint16_t	bvh_nodes_used;	
-	t_object	*obj_list;
+	t_object	**obj_list;
 	uint32_t	*closest_t;
 	uint32_t	node_index;
 	char		valid;
@@ -313,6 +312,7 @@ typedef struct s_screen
 {
 	t_lsc_point	*render;
 	int			sample;
+	int			last_sample_am;
 	int			spp; // sample per pixel
 	t_bool		start_render;
 	t_bool		pause_render;
@@ -362,8 +362,11 @@ typedef struct s_edited_val
 
 typedef struct s_ui_infos
 {
-	uint8_t	tab_selected;
-	t_color	picker_no_color;
+	uint8_t		tab_selected;
+	t_color		picker_no_color;
+	t_object	*selected_object;
+	int			objects_scroll_offset;
+	t_mat		*selected_material;
 }	t_ui_infos;
 
 typedef struct s_controls
@@ -383,9 +386,10 @@ typedef struct s_controls
 	t_int_slider	*sliders;
 	int				nb_color_picker;
 	t_color_picker	color_picker[1];
+	int				nb_dropdown;
+	t_dropdown		*dropdown;
 	t_ttf			font[1];
 	t_ui_infos		ui_infos;
-	t_object		*selected_object;
 }	t_controls;
 
 typedef struct s_minirt

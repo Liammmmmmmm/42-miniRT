@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:47:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 15:13:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/23 11:28:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ void	draw_line(t_point *point_a, t_point *point_b, t_img *img, int c);
 void	draw_glyph_outline(t_img *img, t_ttf *ttf, t_uchar c, t_point2 pos);
 
 void	draw_glyph(t_img *img, t_ttf *ttf, t_uchar c, t_point2 pos);
-void	draw_string(t_img *img, t_ttf *ttf, char *str, t_point2 pos);
+void	draw_string(t_img *img, t_ttf *ttf, const char *str, t_point2 pos);
 
 #endif

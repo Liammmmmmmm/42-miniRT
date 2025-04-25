@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/25 17:28:04 by madelvin         ###   ########.fr        #
+#    Updated: 2025/04/24 16:53:32 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,8 +69,8 @@ UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c conversions.c color_picker.c
 
 UI_DIR				= src/ui/
-UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_sliders.c controls/init_color_picker.c \
-					render.c layout.c list_objects.c
+UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_sliders.c controls/init_color_picker.c controls/init_dropdown.c \
+					render.c layout.c list_objects.c materials_dropdown.c selected_object.c
 
 DEBUG_DIR			= src/debug/
 DEBUG_FILE			= print_scene.c
@@ -102,7 +102,7 @@ MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/
 					vector/vec3_utils.c vector/vec3_random.c vector/vec3_operation_scalar.c normal/normal.c \
 					color/color_operation.c color/color_utils.c ft_dmin.c plane/hit_plane.c sphere/hit_sphere.c random.c \
 					matrix/matrix.c matrix/matrix_calc.c angle/angle_math.c matrix/matrix3.c fresnel_schlick.c \
-					cylinder/hit_cylinder.c quadratique.c cone/hit_cone.c valid_t.c
+					cylinder/hit_cylinder.c quadratique.c cone/hit_cone.c valid_t.c clamp_int.c
 
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
@@ -152,8 +152,9 @@ OBJ_BONUS = $(B_FILE:%.c=$(OBJ_DIR)%.o)
 # Remake all if modified
 REMAKE   = libft/includes/libft.h libft/includes/ft_printf.h \
 		libft/includes/get_next_line.h libft/Makefile  Makefile \
-		includes/structs.h includes/minirt.h includes/bmp_parsing.h \
-    includes/font.h includes/font_structs.h includes/bvh.h
+		includes/bmp_parsing.h includes/bvh.h includes/font.h includes/font_structs.h \
+		includes/material.h includes/maths.h includes/minirt.h \
+		includes/mlx_base.h includes/mlx_components.h includes/structs.h includes/ui.h includes/utils.h
 
 # NORMINETTE
 NORM_RET = $(RED)[ERROR]$(BOLD) Norminette Disable$(NC)

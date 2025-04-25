@@ -1,22 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_color_picker.c                                :+:      :+:    :+:   */
+/*   clamp_int.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 12:55:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/23 16:12:30 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/04/23 13:44:30 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/04/23 13:45:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	init_cps(t_minirt *minirt)
+int imax(int i1, int i2)
 {
-	minirt->controls.nb_color_picker = 1;
-	init_color_picker(&minirt->controls.color_picker[0], &minirt->controls.ui_infos.picker_no_color);
-	minirt->controls.color_picker[0].btn.x = 310;
-	minirt->controls.color_picker[0].btn.y = 710;
-	return (1);
+	if (i1 > i2)
+		return (i1);
+	return (i2);
+}
+
+int imin(int i1, int i2)
+{
+	if (i1 < i2)
+		return (i1);
+	return (i2);
+}
+
+int	iclamp(int min, int val, int max)
+{
+	if (min > val)
+		return (min);
+	else if (max < val)
+		return (max);
+	return (val);
 }

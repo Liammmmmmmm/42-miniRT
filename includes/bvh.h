@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:11:47 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/22 15:42:34 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:17:55 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int				compare_obj_axis_with_bvh(uint32_t a, uint32_t b, t_bvh *bvh, \
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                             BVH UTILISATION                                 ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
-char			intersect_aabb(t_ray ray, t_aabb aabb);
+char			intersect_aabb(const t_ray *ray, const t_aabb *aabb);
 char			hit_bvh(t_bvh *bvh, uint32_t node_index, t_ray *ray, \
 	t_hit_record *hit_rec);
 void			print_bvh(t_bvh *bvh, uint32_t node_index, int depth);

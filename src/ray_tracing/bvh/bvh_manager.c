@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/25 14:15:51 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:18:28 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ char	hit_bvh(t_bvh *bvh, uint32_t node_index, t_ray *ray, \
 	t_bvh_node		*node;
 
 	node = &bvh->bvh_nodes[node_index];
-	if (!intersect_aabb(*ray, node->node_bounds))
+	if (!intersect_aabb(ray, &node->node_bounds))
 		return (0);
 	hit_anything = 0;
 	if (node->is_leaf)

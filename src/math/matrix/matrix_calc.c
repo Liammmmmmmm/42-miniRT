@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:51:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 16:57:16 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:33:22 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,18 @@ void	multiply_matrix_3x3(double res[3][3], double a[3][3], double b[3][3])
 	res[2][2] = a[2][0] * b[0][2] + a[2][1] * b[1][2] + a[2][2] * b[2][2];
 }
 
-void	multiply_matrix_4x4(double res[4][4], double a[4][4], double b[4][4])
+static inline void	mult_line(double r[4], double a[4], double b[4][4])
 {
-	int	i;
-	int	j;
-	int	k;
+	r[0] = a[0] * b[0][0] + a[1] * b[1][0] + a[2] * b[2][0] + a[3] * b[3][0];
+	r[1] = a[0] * b[0][1] + a[1] * b[1][1] + a[2] * b[2][1] + a[3] * b[3][1];
+	r[2] = a[0] * b[0][2] + a[1] * b[1][2] + a[2] * b[2][2] + a[3] * b[3][2];
+	r[3] = a[0] * b[0][3] + a[1] * b[1][3] + a[2] * b[2][3] + a[3] * b[3][3];
+}
 
-	i = -1;
-	while (++i < 4)
-	{
-		j = -1;
-		while (++j < 4)
-		{
-			res[i][j] = 0;
-			k = -1;
-			while (++k < 4)
-				res[i][j] += a[i][k] * b[k][j];
-		}
-	}
+void	multiply_matrix_4x4(double r[4][4], double a[4][4], double b[4][4])
+{
+	mult_line(r[0], a[0], b);
+	mult_line(r[1], a[1], b);
+	mult_line(r[2], a[2], b);
+	mult_line(r[3], a[3], b);
 }

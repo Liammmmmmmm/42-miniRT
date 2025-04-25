@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fresnel_schlick.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:30:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/16 12:41:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/25 17:01:26 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ inline t_color	fresnel_schlick_color(double cos_theta, t_color f0)
 			f0,
 			color_scale(
 				color_sub((t_color){255, 255, 255}, f0),
-				powf(1 - cos_theta, 5)
-			)
+			powf(1 - cos_theta, 5)
 		)
+	)
 	);
 }
 

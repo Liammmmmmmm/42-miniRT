@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:21:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/14 13:18:40 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/25 17:20:00 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	invalid_struct_error(t_objects type, char **splited)
 		print_error(ERR_F" plane. Expected: pl "BLUE
 			"<x,y,z> <x,y,z> <r,g,b|material>"NC);
 	else if (type == CYLINDER)
-		print_error(ERR_F" plane. Expected: cy "BLUE
+		print_error(ERR_F" cylinder. Expected: cy "BLUE
+			"<x,y,z> <x,y,z> <diameter> <height> <r,g,b|material>"NC);
+	else if (type == CONE)
+		print_error(ERR_F" cone. Expected: co "BLUE
 			"<x,y,z> <x,y,z> <diameter> <height> <r,g,b|material>"NC);
 	else if (type == MATERIAL)
 		print_error(ERR_F" material. Expected: mat "BLUE"<name> <albedo>"\

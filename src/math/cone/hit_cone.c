@@ -6,23 +6,11 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:49:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/25 16:33:26 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:29:06 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "maths.h"
-
-static inline char	valid_t(t_quadratic *q, t_interval i)
-{
-	q->t_hit = q->t0;
-	if (q->t_hit < i.min || q->t_hit > i.max)
-	{
-		q->t_hit = q->t1;
-		if (q->t_hit < i.min || q->t_hit > i.max)
-			return (0);
-	}
-	return (1);
-}
 
 static inline char	handle_cone_hit(t_cone *cone, t_ray *r, t_hit_record *rec, \
 	t_quadratic *q)

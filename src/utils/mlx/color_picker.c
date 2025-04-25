@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color_picker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:50:31 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 16:42:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/25 17:17:45 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,5 @@ void	init_color_picker(t_color_picker *cp, t_color *color_var)
 	cp->text_input.padding_left = 10;
 	ft_strlcpy(cp->text_input.placeholder, "#color", 8);
 	color_to_hex(cp->text_input.text, *color_var);
-	printf("%s\n", cp->text_input.text);
 	cp->text_input.text_color = 0;
 }

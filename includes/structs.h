@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 14:06:30 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/25 16:46:14 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ typedef struct s_quadratic
 	double	t0;
 	double	t1;
 	double	t_hit;
+	double  dd;
+	double  oo;
 }	t_quadratic;
 
 typedef struct s_amb_light

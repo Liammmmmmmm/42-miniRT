@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cylinder.c                                         :+:      :+:    :+:   */
+/*   hit_cylinder.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 16:54:11 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/24 14:07:44 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:42:43 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "maths.h"
 #include <math.h>
-
-static inline char	valid_t(t_quadratic *q, t_interval i)
-{
-	q->t_hit = q->t0;
-	if (q->t_hit < i.min || q->t_hit > i.max)
-	{
-		q->t_hit = q->t1;
-		if (q->t_hit < i.min || q->t_hit > i.max)
-			return (0);
-	}
-	return (1);
-}
 
 static inline char	handle_cylinder_hit(t_cylinder *cyl, t_ray *r,
 t_hit_record *rec, t_quadratic *q)
@@ -121,25 +109,3 @@ char	hit_cylinder(t_cylinder *cyl, t_ray *r, t_interval interval,
 	rec->normal = set_normal_face(r, &rec->normal, rec);
 	return (1);
 }
-/*
-
-
-// if (hit_cap_bottom && hit_cap_top)
-// {
-//  dist_bottom = vec3_length(vec3_subtract(rec->point, r->orig));
-//  if (dist_bottom < rec->t)
-//  {
-//      rec->t = dist_bottom;
-//      rec->normal = cyl->orientation;
-//  }
-//  else
-//      rec->normal = vec3_negate(cyl->orientation);
-// }
-// else
-// {
-//  if (hit_cap_bottom)
-//      rec->normal = cyl->orientation;
-//  else
-//      rec->normal = vec3_negate(cyl->orientation);
-// }
-*/

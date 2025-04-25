@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/25 16:22:38 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:28:54 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	angles_to_vector(double yaw, double pitch, double vec[3]);
 char	solve_quadratic(t_quadratic *q);
 char	init_cylinder_quadratic(t_quadratic *q, t_cylinder *cyl, t_ray *r);
 char	init_cone_quadratic(t_quadratic *q, t_cone *cone, t_ray *r);
+char	init_sphere_quadratic(t_quadratic *q, t_sphere *s, t_ray *r);
 
 t_vec3	vec3_abs(t_vec3 v);
 t_vec3	vec3_min(t_vec3 a, t_vec3 b);
@@ -86,8 +87,8 @@ t_vec3	vec3_max(t_vec3 a, t_vec3 b);
 
 char	hit_sphere(t_sphere *sphere, t_ray *r, \
 	t_interval interval, t_hit_record *rec);
-char	hit_plane(const t_vec3 point_on_plane, const t_vec3 normal, \
-	const t_ray *r, t_interval interval, t_hit_record *rec);
+char	hit_plane(t_plane *plane, const t_ray *r, \
+	t_interval interval, t_hit_record *rec);
 char	hit_cylinder(t_cylinder *cylinder, t_ray *r, t_interval interval, \
 	t_hit_record *rec);
 char	hit_cone(t_cone *cone, t_ray *ray, t_interval interval,
@@ -97,6 +98,8 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 t_vec3	set_normal_face(const t_ray *r, const t_vec3 *outward_normal, t_hit_record	*hit_record);
 t_vec3	ray_at(t_ray r, double t);
 
+
+char	valid_t(t_quadratic *q, t_interval i);
 
 // MATRIX
 

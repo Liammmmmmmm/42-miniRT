@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/25 14:02:55 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:04:25 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record)
 	while (i < minirt->scene.obj_lst.plane_nb)
 	{
 		plane = (t_plane *)plane_lst[i]->object;
-		if (hit_plane(plane->position, plane->normal, ray, (t_interval){0.001, 1000}, &temp_hit_record))
+		if (hit_plane(plane, ray, (t_interval){0.001, 1000}, &temp_hit_record))
 		{
 			if (hit == 0 || temp_hit_record.t < hit_record->t)
 			{

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/23 13:29:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/25 18:14:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	draw_pixels(t_minirt *minirt)
 	offset = vec3_random();
 	calc_one_sample(minirt, offset);
 	minirt->screen.sample++;
+	minirt->screen.last_sample_am = minirt->screen.sample;
 	put_render_to_frame(minirt);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
 	printf("Sample %d\n", minirt->screen.sample);

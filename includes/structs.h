@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/24 10:12:49 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/25 18:12:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,6 +286,7 @@ typedef struct s_screen
 {
 	t_lsc_point	*render;
 	int			sample;
+	int			last_sample_am;
 	int			spp; // sample per pixel
 	t_bool		start_render;
 	t_bool		pause_render;

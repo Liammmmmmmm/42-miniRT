@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:50:31 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/23 13:44:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/25 17:32:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,9 +131,7 @@ int	color_picker_action(t_color_picker *cp, int mouse_x, int mouse_y)
 			cp->mouse_in_val_sat = 1;
 		}
 		else
-		{
 			text_input_focus(&cp->text_input, mouse_x, mouse_y);
-		}
 		cp->btn.background_color = hsv_to_rgb(cp->hsv.hue, cp->hsv.sat, cp->hsv.val);
 		cp->btn.background_color_on_click = cp->btn.background_color;
 		*cp->color = int_to_color(cp->btn.background_color);

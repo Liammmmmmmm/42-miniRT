@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:56:17 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/24 17:06:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 18:07:38 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	get_selected_mat_dropdown(t_minirt *minirt, t_dropdown *dropdown, int mouse
 
 	if (!dropdown->selected)
 		return ;
+	stop_minirt(minirt);
 	i = -2;
 	while (++i < minirt->scene.mat_amount)
 	{

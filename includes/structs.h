@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/04/25 18:12:31 by lilefebv         ###   ########lyon.fr   */
@@ -20,6 +20,12 @@
 
 typedef unsigned char t_bool;
 typedef unsigned char t_uchar;
+
+typedef	enum	e_mat_type
+{
+	DEFFAULT,
+	EMISSIVE
+}	t_mat_type;
 
 typedef struct s_lcolor
 {
@@ -128,6 +134,8 @@ typedef struct s_quadratic
 	double	t0;
 	double	t1;
 	double	t_hit;
+	double  dd;
+	double  oo;
 }	t_quadratic;
 
 typedef struct s_amb_light
@@ -138,6 +146,13 @@ typedef struct s_amb_light
 	t_color	skybox_c;
 	t_tex	*skybox_t;
 }	t_amb_light;
+
+typedef struct s_ray_data
+{
+	t_color		color;
+	t_mat_type	mat_type;
+}	t_ray_data;
+
 
 typedef struct s_camera
 {
@@ -173,6 +188,16 @@ typedef struct s_plane
 	t_mat	*material;
 }	t_plane;
 
+typedef struct s_cone
+{
+	t_vec3	position;
+	t_vec3	orientation;
+	double	diameter;
+	double	height;
+	t_mat	*material;
+	t_color	color;
+}	t_cone;
+
 typedef struct s_cylinder
 {
 	t_vec3	position;
@@ -193,7 +218,8 @@ typedef enum e_objects
 	LIGHT,
 	SPHERE,
 	PLANE,
-	CYLINDER
+	CYLINDER,
+	CONE
 }	t_objects;
 
 typedef struct s_object

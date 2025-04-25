@@ -29,7 +29,7 @@ int				compare_obj_axis_with_bvh(uint32_t a, uint32_t b, t_bvh *bvh, \
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                             BVH UTILISATION                                 ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
-char			intersect_aabb(t_ray ray, t_aabb aabb);
+char			intersect_aabb(const t_ray *ray, const t_aabb *aabb);
 char			hit_bvh(t_bvh *bvh, uint32_t node_index, t_ray *ray, \
 	t_hit_record *hit_rec);
 void			print_bvh(t_bvh *bvh, uint32_t node_index, int depth);

@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
 #    Updated: 2025/04/24 16:53:32 by lilefebv         ###   ########lyon.fr    #
@@ -95,21 +95,21 @@ MAT_DIR				= src/material/
 MAT_FILE			= material_default.c material_manager.c material_mix.c reflection_color.c \
 					reflection_math.c refraction_color.c refraction_math.c \
 					dielectric_non_transmissive.c dielectric_transmissive.c dielectric.c metallic.c \
-					utils.c
+					emissive.c utils.c
 
 MATH_DIR			= src/math/
 MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/vec3_length.c \
 					vector/vec3_utils.c vector/vec3_random.c vector/vec3_operation_scalar.c normal/normal.c \
-					color/color_operation.c ft_dmin.c plane/hit_plane.c sphere/hit_sphere.c random.c \
+					color/color_operation.c color/color_utils.c ft_dmin.c plane/hit_plane.c sphere/hit_sphere.c random.c \
 					matrix/matrix.c matrix/matrix_calc.c angle/angle_math.c matrix/matrix3.c fresnel_schlick.c \
-					cylinder/cylinder.c quadratique.c clamp_int.c
+					cylinder/hit_cylinder.c quadratique.c cone/hit_cone.c valid_t.c clamp_int.c
 
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
 					tranform_line.c verify_elements.c parse_elements.c \
 					parse_elements2.c parse_elements3.c parse_elements_utils.c \
 					parse_elements_utils2.c parse_elements_utils3.c parse_elements_utils4.c \
-					parse_elements_utils5.c get_texture.c
+					parse_elements_utils5.c get_texture.c parse_elements4.c
 
 FONT_PARS_DIR		= src/utils/font/parsing/
 FONT_PARS_FILE		= free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c read_cmap.c \

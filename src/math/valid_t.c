@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   material_manager.c                                 :+:      :+:    :+:   */
+/*   valid_t.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 18:27:51 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/24 12:12:08 by madelvin         ###   ########.fr       */
+/*   Created: 2025/04/25 17:24:00 by madelvin          #+#    #+#             */
+/*   Updated: 2025/04/25 17:24:37 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
-#include "material.h"
+#include "maths.h"
 
-t_ray_data	material_manager(t_mat_manager mat_man)
+inline char	valid_t(t_quadratic *q, t_interval i)
 {
-	if (mat_man.hit_record.mat)
+	q->t_hit = q->t0;
+	if (q->t_hit < i.min || q->t_hit > i.max)
 	{
-		return (material_mix_v2(&mat_man));
+		q->t_hit = q->t1;
+		if (q->t_hit < i.min || q->t_hit > i.max)
+			return (0);
 	}
-	return (material_default(&mat_man));
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dielectric_transmissive.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:44:50 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/17 16:27:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 12:25:27 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ static inline t_vec3	refracted_v(const t_vec3 uv, const t_vec3 n, double ri)
 		-sqrt(fabs(1.0 - vec3_length_squared(r_out_perp)))), r_out_perp));
 }
 
-static inline t_color	refracted_ray(t_mat_manager *mat_man)
+static inline t_ray_data	refracted_ray(t_mat_manager *mat_man)
 {
-	double	eta;
-	double	cos_theta;
-	double	sin_theta;
-	t_vec3	direction;
-	t_color	bounce_color;
+	double		eta;
+	double		cos_theta;
+	double		sin_theta;
+	t_vec3		direction;
+	t_ray_data	ray_data;
 
 	if (mat_man->hit_record.front_face)
 		eta = mat_man->minirt->scene.ior_all / mat_man->hit_record.mat->ior;
@@ -51,13 +51,12 @@ static inline t_color	refracted_ray(t_mat_manager *mat_man)
 		mat_man->ray_in.dir = vec3_unit(direction);
 		mat_man->ray_in.orig = mat_man->hit_record.point;
 
-		bounce_color = ray_color(mat_man->minirt, mat_man->ray_in, mat_man->depth - 1, NULL);
-		return (color_multiply(mat_man->hit_record.color, bounce_color)
-		);
+		ray_data = ray_color(mat_man->minirt, mat_man->ray_in, mat_man->depth - 1, NULL);
+		return ((t_ray_data){color_multiply(mat_man->hit_record.color, ray_data.color), ray_data.mat_type});
 	}
 }
 
-t_color	dielectric_transmissive_material(t_mat_manager *mat_man)
+t_ray_data	dielectric_transmissive_material(t_mat_manager *mat_man)
 {
 	const double	f = get_reflect_value(mat_man);
 

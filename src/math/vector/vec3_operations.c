@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:44:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/20 17:23:41 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:00:04 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ inline t_vec3	vec3_divide(t_vec3 a, t_vec3 b)
 	return ((t_vec3){a.x / b.x, a.y / b.y, a.z / b.z});
 }
 
-inline t_vec3 vec3_sqrt(t_vec3 v)
+inline t_vec3	vec3_sqrt(t_vec3 v)
 {
 	return ((t_vec3){sqrt(v.x), sqrt(v.y), sqrt(v.z)});
 }

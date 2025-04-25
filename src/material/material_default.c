@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   material_default.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/14 10:35:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 12:11:23 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include "minirt.h"
 #include "maths.h"
 
-t_color	material_default(t_mat_manager *mat_man)
+t_ray_data	material_default(t_mat_manager *mat_man)
 {
-	t_vec3	direction;
-	t_ray	ray;
-	char	bounce_hit;
-	t_color	bounce_color;
+	t_vec3		direction;
+	t_ray		ray;
+	char		bounce_hit;
+	t_ray_data	ray_data;
 
 	bounce_hit = 0;
 	direction = vec3_add(mat_man->hit_record.normal, vec3_random_unit());
@@ -28,9 +28,14 @@ t_color	material_default(t_mat_manager *mat_man)
 		direction = mat_man->hit_record.normal;
 	ray.dir = direction;
 	ray.orig = mat_man->hit_record.point;
-	bounce_color = ray_color(mat_man->minirt, ray, mat_man->depth - 1, \
-												&bounce_hit);
+	ray_data = ray_color(mat_man->minirt, ray, mat_man->depth - 1,
+		&bounce_hit);
 	if (bounce_hit)
-		mat_man->color = color_multiply(mat_man->color, bounce_color);
-	return (mat_man->color);
+	{
+		if (ray_data.mat_type != EMISSIVE)
+			mat_man->color = color_multiply(mat_man->color, ray_data.color);
+		else
+			mat_man->color = color_add_clamp(ray_data.color, color_multiply(mat_man->color, ray_data.color));
+	}
+	return ((t_ray_data){mat_man->color, DEFFAULT});
 }

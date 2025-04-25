@@ -46,28 +46,29 @@ t_color	get_background_color(t_minirt *minirt, t_ray ray)
 	return (background);
 }
 
-t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
+t_ray_data ray_color(t_minirt *minirt, t_ray ray, int depth, char *hit)
 {
 	t_color			color;
+	t_ray_data		ray_data;
 	t_hit_record	hit_record;
 
 	if (depth <= 0)
-		return (t_color){0, 0, 0};
+		return ((t_ray_data){(t_color){0, 0, 0}, DEFFAULT});
 	if (hit_register_all(minirt, &ray, &hit_record) == 1)
 	{
 
 		color = hit_record.color;
 		color = color_multiply(color, compute_light(&hit_record, minirt));
-		color = material_manager((t_mat_manager){hit_record, ray, minirt, color, depth});
+		ray_data = material_manager((t_mat_manager){hit_record, ray, minirt, color, depth});
 		if (hit)
 			*hit = 1;
-		return (color);
+		return (ray_data);
 	}
 	if (hit)
 		*hit = 0;
 	
 	//return (color_scale(get_background_color(minirt, ray), minirt->scene.amb_light.ratio));
-	return (get_background_color(minirt, ray));
+	return ((t_ray_data){get_background_color(minirt, ray), DEFFAULT});
 }
 
 void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
@@ -97,7 +98,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 			), 
 			ray.orig
 		);
-		color = ray_color(minirt, ray, 10, &bounce_hit);
+		color = ray_color(minirt, ray, 20, &bounce_hit).color;
 		minirt->screen.render[i].color.r += color.r * minirt->viewport.gamma;
 		minirt->screen.render[i].color.g += color.g * minirt->viewport.gamma;
 		minirt->screen.render[i].color.b += color.b * minirt->viewport.gamma;

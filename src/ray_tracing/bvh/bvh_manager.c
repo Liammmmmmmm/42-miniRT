@@ -94,7 +94,8 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	j = 0;
 	while (j < obj_c)
 	{
-		if (obj_list[j].type == SPHERE || obj_list[j].type == CYLINDER)
+		if (obj_list[j].type == SPHERE || obj_list[j].type == CYLINDER || \
+			obj_list[j].type == CONE)
 		{
 			bvh->prim_indices[i] = i;
 			bvh->obj_list[i++] = &obj_list[j];
@@ -114,7 +115,7 @@ char	hit_bvh(t_bvh *bvh, uint32_t node_index, t_ray *ray, \
 	t_bvh_node		*node;
 
 	node = &bvh->bvh_nodes[node_index];
-	if (!intersect_aabb(*ray, node->node_bounds))
+	if (!intersect_aabb(ray, &node->node_bounds))
 		return (0);
 	hit_anything = 0;
 	if (node->is_leaf)

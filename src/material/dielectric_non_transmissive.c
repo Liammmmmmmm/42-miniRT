@@ -3,37 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   dielectric_non_transmissive.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:44:34 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/17 15:42:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 12:53:38 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static inline t_color	random_bounce_ray(t_mat_manager *mat_man)
+static inline t_ray_data	random_bounce_ray(t_mat_manager *mat_man)
 {
 	t_vec3			direction;
 	char			bounce_hit;
-	t_color			bounce;
+	t_ray_data		ray_data;
 
 	bounce_hit = 0;
 	direction = vec3_add(mat_man->hit_record.normal, vec3_random_unit());
 	if (fabs(direction.x) < 1e-8 && fabs(direction.y) < 1e-8 && fabs(direction.z) < 1e-8)
 		direction = mat_man->hit_record.normal;
 	mat_man->ray_in.dir = direction;
-	bounce = ray_color(mat_man->minirt, mat_man->ray_in, mat_man->depth - 1, &bounce_hit);
+	ray_data = ray_color(mat_man->minirt, mat_man->ray_in, mat_man->depth - 1, &bounce_hit);
 	if (bounce_hit)
-		return (color_multiply(mat_man->color, bounce));
+	{
+		if (ray_data.mat_type == DEFFAULT)
+			return ((t_ray_data){color_multiply(mat_man->color, ray_data.color), ray_data.mat_type});
+		else
+			return ((t_ray_data){color_add_clamp(ray_data.color, color_multiply(mat_man->color, ray_data.color)), ray_data.mat_type});
+	}
 	else
 	{
-		return (mat_man->color);
+		return ((t_ray_data){mat_man->color, ray_data.mat_type});
 		// *bounce = color_lerp(mat_man->color, *bounce, 0.4); // Pour avoir la skybox qui influe legerement
 	}
 }
 
-t_color	dielectric_non_transmissive_material(t_mat_manager *mat_man)
+t_ray_data	dielectric_non_transmissive_material(t_mat_manager *mat_man)
 {
 	const double	f = get_reflect_value(mat_man);
 

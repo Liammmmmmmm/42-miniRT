@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/04/24 17:17:33 by lilefebv         ###   ########lyon.fr   */
@@ -29,8 +29,8 @@
 
 # define PI_D 3.1415926535897
 
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
+# define WIN_WIDTH 300
+# define WIN_HEIGHT 300
 
 // Control window
 # define CWIN_WIDTH 600
@@ -192,6 +192,7 @@ int		parse_plane(t_scene *scene, char *line);
 int		parse_cylinder(t_scene *scene, char *line);
 int		parse_texture(t_scene *scene, char *line);
 int		parse_material(t_scene *scene, char *line);
+int		parse_cone(t_scene *scene, char *line);
 
 void	bump_to_normal(t_tex_img *bump);
 
@@ -253,7 +254,7 @@ void	render(t_minirt *minirt);
 ║                                  RAY TRACING                                 ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-t_color ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit);
+t_ray_data ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit);
 t_vec3	random_in_unit_disk();
 t_vec3	defocus_disk_sample(t_minirt *minirt);
 t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt);

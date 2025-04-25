@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   metallic.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:42:13 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/16 13:50:53 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/24 15:07:07 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
  * • `I` : the direction of the ray hitting the object
  * • `N` : normal of the point
  */
-t_color	metallic_material(t_mat_manager *mat_man)
+t_ray_data	metallic_material(t_mat_manager *mat_man)
 {
-	t_vec3	direction;
-	t_color	bounce_color;
+	t_vec3		direction;
+	t_ray_data	ray_data;
 	const double	cos_theta = get_cos_theta(mat_man->ray_in.dir, mat_man->hit_record.normal);
 
 	direction = vec3_subtract(mat_man->ray_in.dir, vec3_multiply_scalar(mat_man->hit_record.normal, 2 * vec3_dot(mat_man->ray_in.dir, mat_man->hit_record.normal)));
@@ -35,10 +35,10 @@ t_color	metallic_material(t_mat_manager *mat_man)
 	mat_man->ray_in.dir = vec3_unit(direction);
 	mat_man->ray_in.orig = mat_man->hit_record.point;
 
-	bounce_color = ray_color(mat_man->minirt, mat_man->ray_in, mat_man->depth - 1, NULL);
+	ray_data = ray_color(mat_man->minirt, mat_man->ray_in, mat_man->depth - 1, NULL);
 
-	return (color_multiply(
-		fresnel_schlick_color(cos_theta, mat_man->color),
-		bounce_color)
+	return ((t_ray_data){color_multiply(
+		fresnel_schlick_color(cos_theta, mat_man->hit_record.color),
+		ray_data.color), ray_data.mat_type}
 	);
 }

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/22 16:55:39 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/25 14:15:51 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	j = 0;
 	while (j < obj_c)
 	{
-		if (obj_list[j].type == SPHERE || obj_list[j].type == CYLINDER)
+		if (obj_list[j].type == SPHERE || obj_list[j].type == CYLINDER || \
+			obj_list[j].type == CONE)
 		{
 			bvh->prim_indices[i] = i;
 			bvh->obj_list[i++] = obj_list[j];

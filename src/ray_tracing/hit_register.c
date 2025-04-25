@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_register.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/23 09:40:46 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/25 14:02:55 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,21 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 					apply_roughness_map(hit_record);
 					apply_metallic_map(hit_record);
 					hit_record->color = get_hit_register_color(((t_cylinder *)obj->object)->material, ((t_cylinder *)obj->object)->color, hit_record);
+			}
+		}
+		if (obj->type == CONE && hit_cone(((t_cone *)obj->object), ray, interval, &temp_hit_record))
+		{
+			if (temp_hit_record.t < closest_t)
+			{
+					hit_anything = 1;
+					closest_t = temp_hit_record.t;
+					*hit_record = temp_hit_record;
+					hit_record->obj = obj;
+					hit_record->mat = ((t_cone *)obj->object)->material;
+					apply_normal_map(hit_record);
+					apply_roughness_map(hit_record);
+					apply_metallic_map(hit_record);
+					hit_record->color = get_hit_register_color(((t_cone *)obj->object)->material, ((t_cone *)obj->object)->color, hit_record);
 			}
 		}
 		i++;

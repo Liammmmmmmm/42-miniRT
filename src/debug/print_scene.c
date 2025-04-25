@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:57:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/14 10:04:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/25 15:39:58 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,25 @@ void	print_scene(t_scene *scene)
 				{
 					printf("    Color: ");
 					print_color(cylinder->color);
+				}
+				printf("\n");
+				break;
+			}
+			case CONE: {
+				t_cone *cone = (t_cone *)obj->object;
+				printf("  " YELLOW "Cone:\n" NC);
+				printf("    Position: ");
+				print_vec3(cone->position);
+				printf("\n    Orientation: ");
+				print_vec3(cone->orientation);
+				printf("\n    Diameter: " BLUE "%.2f" NC "\n", cone->diameter);
+				printf("    Height: " BLUE "%.2f" NC "\n", cone->height);
+				if (cone->material)
+					printf("    Material: %s", cone->material->name);
+				else
+				{
+					printf("    Color: ");
+					print_color(cone->color);
 				}
 				printf("\n");
 				break;

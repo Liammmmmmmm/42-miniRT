@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/24 11:54:27 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/25 14:06:30 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,16 @@ typedef struct s_plane
 	t_mat	*material;
 }	t_plane;
 
+typedef struct s_cone
+{
+	t_vec3	position;
+	t_vec3	orientation;
+	double	diameter;
+	double	height;
+	t_mat	*material;
+	t_color	color;
+}	t_cone;
+
 typedef struct s_cylinder
 {
 	t_vec3	position;
@@ -207,7 +217,8 @@ typedef enum e_objects
 	LIGHT,
 	SPHERE,
 	PLANE,
-	CYLINDER
+	CYLINDER,
+	CONE
 }	t_objects;
 
 typedef struct s_object

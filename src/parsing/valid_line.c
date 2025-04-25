@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:26:28 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 20:24:51 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/25 13:34:33 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	is_valid_element(char *line)
 {
 	if (cmp_type("A", line) || cmp_type("C", line) || cmp_type("l", line) || cmp_type("L", line)
 		|| cmp_type("sp", line) || cmp_type("pl", line) || cmp_type("cy", line)
-		|| cmp_type("tex", line) || cmp_type("mat", line))
+		|| cmp_type("tex", line) || cmp_type("mat", line) || cmp_type("co", line))
 		return (1);
 	return (0);
 }

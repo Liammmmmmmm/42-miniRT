@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_math.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:31:37 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/23 11:20:27 by codespace        ###   ########.fr       */
+/*   Updated: 2025/04/25 18:49:03 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,18 @@ int compare_obj_axis_with_bvh(uint32_t a, uint32_t b, t_bvh *bvh, int axis)
 	float	va;
 	float	vb;
 
-	if (bvh->obj_list[a].type == SPHERE)
-		pos_a = ((t_sphere *)bvh->obj_list[a].object)->position;
-	else if (bvh->obj_list[a].type == CYLINDER)
-		pos_a = ((t_cylinder *)bvh->obj_list[a].object)->position;
-	else if (bvh->obj_list[a].type == CONE)
-		pos_a = ((t_cone *)bvh->obj_list[a].object)->position;
-	if (bvh->obj_list[b].type == SPHERE)
-		pos_b = ((t_sphere *)bvh->obj_list[b].object)->position;
-	else if (bvh->obj_list[b].type == CYLINDER)
-		pos_b = ((t_cylinder *)bvh->obj_list[b].object)->position;
-	else if (bvh->obj_list[b].type == CONE)
-		pos_b = ((t_cone *)bvh->obj_list[b].object)->position;
+	if (bvh->obj_list[a]->type == SPHERE)
+		pos_a = ((t_sphere *)bvh->obj_list[a]->object)->position;
+	else if (bvh->obj_list[a]->type == CYLINDER)
+		pos_a = ((t_cylinder *)bvh->obj_list[a]->object)->position;
+	else if (bvh->obj_list[a]->type == CONE)
+		pos_a = ((t_cone *)bvh->obj_list[a]->object)->position;
+	if (bvh->obj_list[b]->type == SPHERE)
+		pos_b = ((t_sphere *)bvh->obj_list[b]->object)->position;
+	else if (bvh->obj_list[b]->type == CYLINDER)
+		pos_b = ((t_cylinder *)bvh->obj_list[b]->object)->position;
+	else if (bvh->obj_list[b]->type == CONE)
+		pos_b = ((t_cone *)bvh->obj_list[b]->object)->position;
 	va = (axis == 0) ? pos_a.x : (axis == 1) ? pos_a.y : pos_a.z;
 	vb = (axis == 0) ? pos_b.x : (axis == 1) ? pos_b.y : pos_b.z;
 	if (va < vb)

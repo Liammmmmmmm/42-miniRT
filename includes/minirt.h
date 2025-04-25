@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/24 17:17:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/25 18:51:43 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 
 # define PI_D 3.1415926535897
 
-# define WIN_WIDTH 300
-# define WIN_HEIGHT 300
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 
 // Control window
 # define CWIN_WIDTH 600

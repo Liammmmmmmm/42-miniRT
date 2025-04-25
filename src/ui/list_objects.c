@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_objects.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:56:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/24 16:52:39 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/25 18:49:33 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 const char	*get_object_name(t_objects obj)
 {
-	static const char	*objects[10] = {"NULL Object", "Texture", "Material",
-		"Ambiant light", "Camera", "Light", "Sphere", "Plane", "Cylinder"};
+	static const char	*objects[11] = {"NULL Object", "Texture", "Material",
+		"Ambiant light", "Camera", "Light", "Sphere", "Plane", "Cylinder", "Cone"};
 	
 	return (objects[(int)obj]);
 }

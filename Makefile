@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/26 19:55:20 by madelvin         ###   ########.fr        #
+#    Updated: 2025/04/26 20:13:57 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -124,7 +124,7 @@ EDIT_MOD_DIR		= src/edition_mod/
 EDIT_MOD_FILE		= select_obj.c
 
 UPSCALING_DIR		= src/upscaling/
-UPSCALING_FILE		= bilinear.c bicubic.c neighbour.c no_upscaling.c
+UPSCALING_FILE		= bilinear.c bicubic.c neighbor.c no_upscaling.c
 
 M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \

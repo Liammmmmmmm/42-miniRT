@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   select_obj.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:20:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/23 10:59:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 20:02:00 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_object	*select_object(t_minirt *minirt, int x, int y)
 	t_ray 			ray;
 	t_hit_record	hit_record;
 
+	x = (int)(x * (minirt->controls.values.upscaling_ratio / 100.0f) + 0.5f);
+    y = (int)(y * (minirt->controls.values.upscaling_ratio / 100.0f) + 0.5f);
 	ray.orig = minirt->scene.camera.position;
 	ray.dir = vec3_subtract(
 		vec3_add(

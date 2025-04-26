@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/24 16:53:32 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/04/26 19:55:20 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,6 +123,8 @@ FONT_REND_FILE		= draw_glyph_outline.c draw_string.c basic_slope.c tesselate_bez
 EDIT_MOD_DIR		= src/edition_mod/
 EDIT_MOD_FILE		= select_obj.c
 
+UPSCALING_DIR		= src/upscaling/
+UPSCALING_FILE		= bilinear.c bicubic.c neighbour.c no_upscaling.c
 
 M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
@@ -139,7 +141,8 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(FONT_PARS_DIR), $(FONT_PARS_FILE)) \
 			$(addprefix $(FONT_REND_DIR), $(FONT_REND_FILE)) \
 			$(addprefix $(ENV_DIR), $(ENV_FILE)) \
-			$(addprefix $(EDIT_MOD_DIR), $(EDIT_MOD_FILE))
+			$(addprefix $(EDIT_MOD_DIR), $(EDIT_MOD_FILE)) \
+			$(addprefix $(UPSCALING_DIR), $(UPSCALING_FILE))
 
 # Source files bonus
 SRCS_BONUS = 

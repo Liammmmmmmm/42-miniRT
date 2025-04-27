@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:56:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 18:49:33 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/27 18:25:06 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 const char	*get_object_name(t_objects obj)
 {
 	static const char	*objects[11] = {"NULL Object", "Texture", "Material",
-		"Ambiant light", "Camera", "Light", "Sphere", "Plane", "Cylinder", "Cone"};
-	
+		"Ambiant light", "Camera", "Light", "Sphere", "Plane", "Cylinder",
+		"Cone"};
+
 	return (objects[(int)obj]);
 }
 
@@ -37,7 +38,8 @@ void	draw_object(t_img *img, t_ttf *ttf, t_minirt *minirt, int i)
 		draw_box_2d(img, (t_point2){301, i1}, (t_point2){600, i2}, 0x433366);
 	else
 		draw_box_2d(img, (t_point2){301, i1}, (t_point2){600, i2}, 0x3D3943);
-	draw_string(img, ttf, get_object_name(minirt->scene.elements[i].type), (t_point2){.x = 320, .y = i2 - 20 + ((get_height(ttf)) * 0.5)});
+	draw_string(img, ttf, get_object_name(minirt->scene.elements[i].type),
+	(t_point2){.x = 320, .y = i2 - 20 + ((get_height(ttf)) * 0.5)});
 	img->height = tmp;
 }
 

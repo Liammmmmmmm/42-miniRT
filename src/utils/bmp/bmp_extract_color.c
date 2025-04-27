@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_extract_color.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:50:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/18 12:28:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 18:42:07 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	extract_palette_pixel(t_bin *bin, size_t *i, uint32_t *value, t_bmp *bmp)
 		*value = bmp->palette[palette_index];
 	else
 		*value = 0;
-	//printf("Color %d : %6X\n", palette_index, bmp->palette[palette_index]);
 	return (0);
 }
 

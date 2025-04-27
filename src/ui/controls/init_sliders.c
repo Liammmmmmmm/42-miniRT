@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:13:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/26 19:55:07 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/27 18:21:22 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,8 @@ void	base_slider(t_int_slider *slider)
 	height += 30;
 }
 
-void	init_focal_sliders(t_minirt *minirt)
+void	init_focal_sliders_value(t_minirt *minirt)
 {
-	base_slider(&minirt->controls.sliders[0]);
-	base_slider(&minirt->controls.sliders[1]);
-	base_slider(&minirt->controls.sliders[2]);
-	base_slider(&minirt->controls.sliders[3]);
-	base_slider(&minirt->controls.sliders[4]);
-	base_slider(&minirt->controls.sliders[5]);
 	minirt->controls.values.focus_dist = 100;
 	minirt->controls.sliders[0].min = 1;
 	minirt->controls.sliders[0].max = 300;
@@ -51,11 +45,24 @@ void	init_focal_sliders(t_minirt *minirt)
 	minirt->controls.values.upscaling_ratio = 50;
 	minirt->controls.sliders[4].min = 0;
 	minirt->controls.sliders[4].max = 100;
-	minirt->controls.sliders[4].value = &minirt->controls.values.upscaling_ratio;
+	minirt->controls.sliders[4].value
+		= &minirt->controls.values.upscaling_ratio;
 	minirt->controls.sliders[5].min = 0;
 	minirt->controls.sliders[5].max = 2;
-	minirt->controls.sliders[5].value = &minirt->controls.values.upscaling_selected;
+	minirt->controls.sliders[5].value
+		= &minirt->controls.values.upscaling_selected;
 	minirt->controls.values.upscaling_selected = 0;
+}
+
+void	init_focal_sliders(t_minirt *minirt)
+{
+	base_slider(&minirt->controls.sliders[0]);
+	base_slider(&minirt->controls.sliders[1]);
+	base_slider(&minirt->controls.sliders[2]);
+	base_slider(&minirt->controls.sliders[3]);
+	base_slider(&minirt->controls.sliders[4]);
+	base_slider(&minirt->controls.sliders[5]);
+	init_focal_sliders_value(minirt);
 }
 
 int	init_sliders(t_minirt *minirt)

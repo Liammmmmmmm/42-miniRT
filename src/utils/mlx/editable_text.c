@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editable_text.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:19:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 15:46:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 18:44:00 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,16 @@ void	display_text_input(t_img *img, t_text_input *text_input, t_ttf *ttf)
 	if (text_input->text[0])
 	{
 		start.x = text_input->x + text_input->padding_left;
-		start.y = text_input->y + text_input->height * 0.5 + ((get_height(ttf)) * 0.5);
+		start.y = text_input->y + text_input->height * 0.5
+			+ ((get_height(ttf)) * 0.5);
 		ttf->color = text_input->text_color;
 		draw_string(img, ttf, text_input->text, start);
 	}
 	else if (text_input->placeholder[0])
 	{
 		start.x = text_input->x + text_input->padding_left;
-		start.y = text_input->y + text_input->height * 0.5 + ((get_height(ttf)) * 0.5);
+		start.y = text_input->y + text_input->height * 0.5
+			+ ((get_height(ttf)) * 0.5);
 		ttf->color = text_input->text_color;
 		draw_string(img, ttf, text_input->text, start);
 	}

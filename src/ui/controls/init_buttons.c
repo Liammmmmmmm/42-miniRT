@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_buttons.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:55:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/21 15:34:53 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 18:22:22 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,6 @@ void	base_tab_btn(t_button *button, t_minirt *minirt, int action)
 	button->action = &change_tab;
 }
 
-void	init_tab_btns(t_minirt *minirt)
-{
-	minirt->controls.ui_infos.tab_selected = 0;
-	base_tab_btn(&minirt->controls.buttons[3], minirt, 0);
-	base_tab_btn(&minirt->controls.buttons[4], minirt, 1);
-	minirt->controls.buttons[3].text = ft_strdup("Objects");
-	minirt->controls.buttons[4].text = ft_strdup("Materials");
-	minirt->controls.buttons[3].x = 310;
-	minirt->controls.buttons[4].x = 410;
-	minirt->controls.buttons[3].background_color = UI_SEP_COLOR;
-}
-
 int	init_buttons(t_minirt *minirt)
 {
 	minirt->controls.nb_buttons = 5;
@@ -85,7 +73,14 @@ int	init_buttons(t_minirt *minirt)
 	if (!minirt->controls.buttons)
 		return (0);
 	init_start_stop(minirt);
-	init_tab_btns(minirt);
+	minirt->controls.ui_infos.tab_selected = 0;
+	base_tab_btn(&minirt->controls.buttons[3], minirt, 0);
+	base_tab_btn(&minirt->controls.buttons[4], minirt, 1);
+	minirt->controls.buttons[3].text = ft_strdup("Objects");
+	minirt->controls.buttons[4].text = ft_strdup("Materials");
+	minirt->controls.buttons[3].x = 310;
+	minirt->controls.buttons[4].x = 410;
+	minirt->controls.buttons[3].background_color = UI_SEP_COLOR;
 	return (1);
 }
 

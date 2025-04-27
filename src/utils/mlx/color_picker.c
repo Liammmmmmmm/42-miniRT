@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:50:31 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 17:32:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 18:43:37 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,15 @@ void	draw_sat_val_colors(t_img *img, t_color_picker *cp)
 		y = cp->btn.y + 1;
 		while (y < cp->btn.y + 150)
 		{
-			put_pixel_image(img, x, y, hsv_to_rgb(cp->hsv.hue, (x - cp->btn.x - 1) * 0.003584, 1 - ((y - cp->btn.y - 1) * 0.006711)));
+			put_pixel_image(img, x, y, hsv_to_rgb(cp->hsv.hue,
+				(x - cp->btn.x - 1) * 0.003584, 1 - ((y - cp->btn.y - 1)
+				* 0.006711)));
 			y++;
 		}
 		x++;
 	}
-	circle_bres(cp->btn.x + 1 + 279 * cp->hsv.sat, cp->btn.y + 150 - 149 * cp->hsv.val, 3, img, 0xFFFFFF);
+	circle_bres(cp->btn.x + 1 + 279 * cp->hsv.sat, cp->btn.y + 150 - 149
+		* cp->hsv.val, 3, img, 0xFFFFFF);
 }
 
 void	display_color_picker(t_img *img, t_color_picker *cp, t_ttf *ttf)
@@ -87,8 +90,6 @@ void	display_color_picker(t_img *img, t_color_picker *cp, t_ttf *ttf)
 		return ;
 	draw_horizontal_line(img, cp->btn.y, cp->btn.x, cp->btn.x + 280);
 	draw_horizontal_line(img, cp->btn.y + 150, cp->btn.x, cp->btn.x + 280);
-	// draw_horizontal_line(img, cp->btn.y + 190, cp->btn.x, cp->btn.x + 280);
-	// draw_horizontal_line(img, cp->btn.y + 220, cp->btn.x, cp->btn.x + 280);
 	draw_vertical_line(img, cp->btn.x, cp->btn.y, cp->btn.y + 220);
 	draw_vertical_line(img, cp->btn.x + 280, cp->btn.y, cp->btn.y + 221);
 	draw_hue_colors(img, cp);
@@ -183,7 +184,8 @@ int	color_picker_type(t_color_picker *cp, int key)
 		return (1);
 	if (text_input_type(&cp->text_input, key, 1))
 	{
-		cp->btn.background_color = ft_atoi_base(cp->text_input.text + 1, "0123456789ABCDEF");
+		cp->btn.background_color = ft_atoi_base(cp->text_input.text + 1,
+				"0123456789ABCDEF");
 		cp->btn.background_color_on_click = cp->btn.background_color;
 		*cp->color = int_to_color(cp->btn.background_color);
 		cp->hsv = rgb_to_hsv(cp->btn.background_color);

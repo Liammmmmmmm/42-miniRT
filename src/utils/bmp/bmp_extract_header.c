@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_extract_header.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:51:35 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/18 12:19:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 18:40:57 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	read_palette(t_bin *bin, size_t *i, t_bmp *bmp, size_t palette_entry_count)
 			free(bmp->palette);
 			return (error_and_return ("error: unable to read color\n"));
 		}
-		//printf("Color %zu : %6X\n", j, bmp->palette[j]);
 		j++;
 	}
 	return (0);
@@ -48,7 +47,7 @@ int	read_palette(t_bin *bin, size_t *i, t_bmp *bmp, size_t palette_entry_count)
 int	read_header(t_bmp *bmp, size_t *i, t_bin *bin)
 {
 	if (read_uint16_move_little(bin, i, &bmp->header.signature) == -1 || \
-		(bmp->header.signature_c[0] == 'B' && bmp->header.signature_c[0] == 'M'))
+	(bmp->header.signature_c[0] == 'B' && bmp->header.signature_c[0] == 'M'))
 		return (error_and_return ("error: unable to read signature\n"));
 	if (read_uint32_move_little(bin, i, &bmp->header.file_size) == -1)
 		return (error_and_return ("error: unable to read file size\n"));

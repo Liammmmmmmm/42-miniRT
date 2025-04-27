@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_extract_pixel.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:50:32 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/18 13:31:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 18:41:58 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ static inline int	read_pixels_for_row(t_bin *bin, size_t *i, t_bmp *bmp, \
 	{
 		if (extract_pixel(bin, i, bmp, &color) == -1)
 			return (-1);
-		bmp->pixel_data[y * bmp->info.width + x] = (t_color){(color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF};
-		// if (color == 0xffffff)
-		// 	printf("bah %zu %zu\n", x, y);
-		//printf("%zu %zu, %d %d %d\n", x, y, bmp->pixel_data[y * bmp->info.width + x].r, bmp->pixel_data[y * bmp->info.width + x].g, bmp->pixel_data[y * bmp->info.width + x].b);
+		bmp->pixel_data[y * bmp->info.width + x] = \
+			(t_color){(color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF};
 		x++;
 	}
 	return (0);
@@ -58,16 +56,14 @@ static inline int	skip_padding(t_bin *bin, size_t *i, size_t padding)
 
 int	extract_raw_pixels(t_bin *bin, size_t *i, t_bmp *bmp)
 {
-	size_t	y;
-	size_t	tpx;
-	size_t	padding;
+	size_t			y;
+	const size_t	tpx = bmp->info.width * bmp->info.height;
+	size_t			padding;
+	size_t			row_bytes;
 
 	y = 0;
-	tpx = bmp->info.width * bmp->info.height;
-	size_t row_bytes = ((bmp->info.width * bmp->info.bpp + 7) / 8);
+	row_bytes = ((bmp->info.width * bmp->info.bpp + 7) / 8);
 	padding = (4 - (row_bytes % 4)) % 4;
-
-	// padding = (4 - (bmp->info.width * 3) % 4) % 4;
 	if (allocate_pixel_data(bmp, tpx) != 0)
 		return (1);
 	while (y < bmp->info.height)

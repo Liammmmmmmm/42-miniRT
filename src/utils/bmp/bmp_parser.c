@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:31:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/18 10:36:58 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 18:39:44 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	extract_bmp_data(t_bmp *bmp, char *file, t_bin *bin, size_t *i)
 	{
 		if (bmp->info.nb_color == 0 && (bmp->info.bpp == 1 || \
 				bmp->info.bpp == 4 || bmp->info.bpp == 8))
-				bmp->info.nb_color = 1 << bmp->info.bpp;
+			bmp->info.nb_color = 1 << bmp->info.bpp;
 		palette_bytes = bmp->info.nb_color * sizeof(uint32_t);
 		if (bmp->info.nb_color > 0 && bmp->header.pixel_data_offset >= \
 				*i + palette_bytes)
@@ -53,7 +53,7 @@ int	init_data(t_bin *bin, t_bmp *bmp, size_t *i, char *file)
 
 int	parse_bmp(char *file, t_tex_img *img)
 {
-	t_bmp 		bmp;
+	t_bmp		bmp;
 	t_bin		bin;
 	size_t		i;
 
@@ -71,6 +71,6 @@ int	parse_bmp(char *file, t_tex_img *img)
 		free(bmp.palette);
 	img->height = bmp.info.height;
 	img->width = bmp.info.width;
-	img->pixel_data = bmp.pixel_data;	
+	img->pixel_data = bmp.pixel_data;
 	return (0);
 }

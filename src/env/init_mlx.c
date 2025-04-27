@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 18:51:56 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/27 16:44:29 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,13 @@ int	init_controls_mlx(t_minirt *minirt)
 	t_mlx	*mlx;
 
 	mlx = &minirt->mlx;
-	mlx->controls_win = mlx_new_window(mlx->mlx, CWIN_WIDTH, CWIN_HEIGHT, "Controls");
+	mlx->controls_win = mlx_new_window(mlx->mlx, CWIN_WIDTH, CWIN_HEIGHT,
+			"Controls");
 	mlx->img_controls.img = mlx_new_image(mlx->mlx, CWIN_WIDTH, CWIN_HEIGHT);
 	if (!mlx->img_controls.img || !mlx->controls_win)
 		return (free_mlx_error(minirt));
-	mlx->img_controls.img_str = mlx_get_data_addr(mlx->img_controls.img, &mlx->img_controls.bits,
+	mlx->img_controls.img_str = mlx_get_data_addr(mlx->img_controls.img,
+			&mlx->img_controls.bits,
 			&mlx->img_controls.size_line, &mlx->img_controls.endian);
 	if (!mlx->img_controls.img_str)
 		return (free_mlx_error(minirt));

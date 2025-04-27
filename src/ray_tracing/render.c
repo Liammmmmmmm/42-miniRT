@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/26 19:14:42 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/26 20:23:15 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 			), 
 			ray.orig
 		);
-		color = ray_color(minirt, ray, 2, &bounce_hit).color;
+		color = ray_color(minirt, ray, 20, &bounce_hit).color;
 		minirt->screen.render[i].color.r += color.r * minirt->viewport.gamma;
 		minirt->screen.render[i].color.g += color.g * minirt->viewport.gamma;
 		minirt->screen.render[i].color.b += color.b * minirt->viewport.gamma;
@@ -112,19 +112,19 @@ void	draw_pixels(t_minirt *minirt)
 {
 	t_vec3	offset;
 
-	clock_t start = clock();
+	// clock_t start = clock();
 	offset = vec3_random();
 	calc_one_sample(minirt, offset);
-	clock_t end = clock();
-	double elapsed_time = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("Temps d'exécution calc 1 sample : %.6f secondes\n", elapsed_time);
-	start = clock();
+	// clock_t end = clock();
+	// double elapsed_time = (double)(end - start) / CLOCKS_PER_SEC;
+    // printf("Temps d'exécution calc 1 sample : %.6f secondes\n", elapsed_time);
+	// start = clock();
 	minirt->screen.sample++;
 	minirt->screen.last_sample_am = minirt->screen.sample;
 	put_render_to_frame(minirt);
-	end = clock();
-	elapsed_time = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("Temps d'exécution upscaling affichage : %.6f secondes\n", elapsed_time);
+	// end = clock();
+	// elapsed_time = (double)(end - start) / CLOCKS_PER_SEC;
+    // printf("Temps d'exécution upscaling affichage : %.6f secondes\n", elapsed_time);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
 	printf("Sample %d\n", minirt->screen.sample);
 }

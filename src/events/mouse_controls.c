@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "minirt.h"
 
 void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
@@ -49,6 +50,12 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 						stop_minirt(minirt);
 					return ;
 				}
+				if (float_input_focus(&minirt->controls.float_input[0], x, y))
+					return ;
+				if (float_input_focus(&minirt->controls.float_input[1], x, y))
+					return ;
+				if (float_input_focus(&minirt->controls.float_input[2], x, y))
+					return ;
 			}
 			if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
 				return ;

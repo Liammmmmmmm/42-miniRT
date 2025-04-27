@@ -21,6 +21,10 @@ int	keydown_controls(int key, t_minirt *minirt)
 	while (++i < minirt->controls.nb_color_picker)
 		if (color_picker_type(&minirt->controls.color_picker[i], key))
 			return (0);
+	i = -1;
+	while (++i < minirt->controls.nb_float_input)
+		if (float_input_type(&minirt->controls.float_input[i], key))
+			return (0);
 	return (0);
 }
 

@@ -41,6 +41,7 @@ void	draw_selected_object(t_minirt *minirt)
 		minirt->controls.ui_infos.selected_object->type == PLANE)
 		return ;
 	box = compute_object_bounds(minirt->controls.ui_infos.selected_object);
+	put_render_to_frame(minirt); // A remplacer par une copie dans un buffer tempo jsp comment encore pour eviter de tout calculer 100000 fois
 	draw_box(minirt, box.min, box.max, 0xFFF00FF);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win,
 		minirt->mlx.img.img, 0, 0);

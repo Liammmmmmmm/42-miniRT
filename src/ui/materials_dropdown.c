@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:56:17 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/24 18:07:38 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 09:09:10 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	draw_dropdown_object(t_img *img, t_minirt *minirt, t_dropdown *dropdown, in
 void	draw_dropdown_select_box(t_img *img, t_dropdown *dropdown, t_minirt *minirt)
 {
 	int	i;
-
+ 
 	draw_horizontal_line(img, dropdown->y + dropdown->deployed_height, dropdown->x, dropdown->x + dropdown->width);
 	draw_vertical_line(img, dropdown->x, dropdown->y + dropdown->height, dropdown->y + dropdown->deployed_height);
 	draw_vertical_line(img, dropdown->x + dropdown->width, dropdown->y + dropdown->height, dropdown->y + dropdown->deployed_height + 1);

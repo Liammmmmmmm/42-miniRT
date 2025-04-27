@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:34:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/27 14:08:22 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 15:02:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_float_input
 	double	*number;
 	double	last_displayed;
 	int		precision;
+	int		max_char;
 }	t_float_input;
 
 typedef struct s_color_picker
@@ -174,5 +175,6 @@ int		color_picker_type(t_color_picker *cp, int key);
 void	display_float_input(t_img *img, t_float_input *input, t_ttf *ttf);
 int		float_input_focus(t_float_input *input, int mouse_x, int mouse_y);
 int		float_input_type(t_float_input *input, int key);
+void	link_float_input(t_float_input *input, double *val);
 
 #endif

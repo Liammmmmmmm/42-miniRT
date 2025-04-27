@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements_utils5.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:41:31 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 17:53:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 17:27:04 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "error_message.h"
 
 int	is_extension(char *filename, char *extension)
 {
@@ -30,4 +31,33 @@ int	is_extension(char *filename, char *extension)
 	if (ei == -2)
 		return (1);
 	return (0);
+}
+
+inline int	parse_ambient_light_ratio_and_color(t_scene *scene, char **parts)
+{
+	if (char_tab_len(parts) < 3)
+		return (invalid_struct_error(AMBIANT_LIGHT, parts));
+	if (!is_valid_float(parts[1]))
+		return (invalid_float_error(parts, 1));
+	scene->amb_light.ratio = ft_atod(parts[1]);
+	if (scene->amb_light.ratio < 0.0 || scene->amb_light.ratio > 1.0)
+		return (print_error(MSG_ERR_AMBIENT_LIGHT_RATIO));
+	if (!parse_color(parts[2], &scene->amb_light.color))
+		return (invalid_struct_error(AMBIANT_LIGHT, parts));
+	return (1);
+}
+
+inline int	parse_ambient_light_skybox(t_scene *scene, char **parts)
+{
+	if (char_tab_len(parts) == 4)
+	{
+		if (!parse_color_or_tex(parts[3], &scene->amb_light.skybox_c,
+				&scene->amb_light.skybox_t, scene))
+			return (invalid_struct_error(AMBIANT_LIGHT, parts));
+		scene->amb_light.have_skybox = 1;
+		if (scene->amb_light.skybox_t
+			&& !scene->amb_light.skybox_t->img.pixel_data)
+			scene->amb_light.skybox_t = NULL;
+	}
+	return (1);
 }

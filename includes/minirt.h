@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/26 19:42:14 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/27 17:52:26 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,8 @@ int		parse_cone(t_scene *scene, char *line);
 void	bump_to_normal(t_tex_img *bump);
 
 int		parse_scene(t_minirt *minirt, char *filename);
+int		parse_ambient_light_ratio_and_color(t_scene *scene, char **parts);
+int		parse_ambient_light_skybox(t_scene *scene, char **parts);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                     MLX                                      ║
@@ -254,12 +256,13 @@ void	render(t_minirt *minirt);
 ║                                  RAY TRACING                                 ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-t_ray_data ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit);
-t_vec3	random_in_unit_disk();
-t_vec3	defocus_disk_sample(t_minirt *minirt);
-t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt);
-t_color	get_solid_texture(t_vec3 point, double scale);
-int		init_plane_light_lst(t_minirt *minirt);
+t_ray_data	ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit);
+t_color		get_background_color(t_minirt *minirt, t_ray ray);
+t_viewport	init_viewport(t_minirt *minirt);
+t_vec3		defocus_disk_sample(t_minirt *minirt);
+t_color		compute_light(t_hit_record *hit_record, t_minirt *minirt);
+t_color		get_solid_texture(t_vec3 point, double scale);
+int			init_plane_light_lst(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    EDIT MOD                                  ║

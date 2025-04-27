@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 14:28:49 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/22 15:07:40 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/27 17:57:16 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	fill_obj_lists(t_minirt *minirt)
 	while (i < minirt->scene.el_amount)
 	{
 		if (minirt->scene.elements[i].type == LIGHT)
-			minirt->scene.obj_lst.light_lst[minirt->scene.obj_lst.light_nb++] =
-				&minirt->scene.elements[i];
+			minirt->scene.obj_lst.light_lst[minirt->scene.obj_lst.light_nb++]
+				= &minirt->scene.elements[i];
 		else if (minirt->scene.elements[i].type == PLANE)
-			minirt->scene.obj_lst.plane_lst[minirt->scene.obj_lst.plane_nb++] =
-				&minirt->scene.elements[i];
+			minirt->scene.obj_lst.plane_lst[minirt->scene.obj_lst.plane_nb++]
+				= &minirt->scene.elements[i];
 		i++;
 	}
 }

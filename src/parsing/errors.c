@@ -6,40 +6,33 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:21:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 17:20:00 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/27 17:25:21 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "error_message.h"
 
 int	invalid_struct_error(t_objects type, char **splited)
 {
 	if (type == AMBIANT_LIGHT)
-		print_error(ERR_F" ambient lighting. Expected: A "BLUE
-			"<ratio> <r,g,b> [r,g,b|texture]"NC);
+		print_error(ERR_AMBIENT_LIGHT_FORMAT);
 	else if (type == CAMERA)
-		print_error(ERR_F" camera. Expected: C "BLUE"<x,y,z> <x,y,z> <fov>"NC);
+		print_error(ERR_CAMERA_FORMAT);
 	else if (type == LIGHT)
-		print_error(ERR_F" light. Expected: L "BLUE
-			"<x,y,z> <brightness ratio> <r,g,b>"NC);
+		print_error(ERR_LIGHT_FORMAT);
 	else if (type == SPHERE)
-		print_error(ERR_F" sphere. Expected: sp "BLUE
-			"<x,y,z> <diameter> <r,g,b|material>"NC);
+		print_error(ERR_SPHERE_FORMAT);
 	else if (type == PLANE)
-		print_error(ERR_F" plane. Expected: pl "BLUE
-			"<x,y,z> <x,y,z> <r,g,b|material>"NC);
+		print_error(ERR_PLANE_FORMAT);
 	else if (type == CYLINDER)
-		print_error(ERR_F" cylinder. Expected: cy "BLUE
-			"<x,y,z> <x,y,z> <diameter> <height> <r,g,b|material>"NC);
+		print_error(ERR_CYLINDER_FORMAT);
 	else if (type == CONE)
-		print_error(ERR_F" cone. Expected: co "BLUE
-			"<x,y,z> <x,y,z> <diameter> <height> <r,g,b|material>"NC);
+		print_error(ERR_CONE_FORMAT);
 	else if (type == MATERIAL)
-		print_error(ERR_F" material. Expected: mat "BLUE"<name> <albedo>"\
-" <metallic> <roughness> <ior> <transmission> <emission_strength> "\
-"<emission_color> [normal_map]"NC);
+		print_error(ERR_MATERIAL_FORMAT);
 	else if (type == TEXTURE)
-		print_error(ERR_F" texture. Expected: tex "BLUE"<name> <filepath>"NC);
+		print_error(ERR_TEXTURE_FORMAT);
 	free(splited);
 	return (0);
 }

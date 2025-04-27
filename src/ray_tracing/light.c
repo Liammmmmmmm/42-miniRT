@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:27:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/22 16:32:19 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/27 18:02:46 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,6 @@ char	check_hit(t_minirt *minirt, t_vec3 origin, t_vec3 target)
 			return (1);
 	}
 	return (0);
-}
-
-void	clamp_light_color(t_lcolor *color)
-{
-	color->r = ft_dmin(color->r, 255);
-	color->g = ft_dmin(color->g, 255);
-	color->b = ft_dmin(color->b, 255);
 }
 
 void	add_light(t_lcolor *light_color, t_hit_record *hit, t_light *light, \
@@ -89,10 +82,12 @@ void	apply_ao_map(t_hit_record *hit, t_lcolor *light_color)
 	}
 	else
 	{
-		map = hit->mat->ao_tex->img.pixel_data[hit->mat->ao_tex->img.width * (int)(hit->v * hit->mat->ao_tex->img.height) + (int)(hit->u * hit->mat->ao_tex->img.width)];
-		light_color->r = light_color->r * map.r / 255.0; // potentiellement remplacer map.r par (map.r + map.g + map.b) / 3 pour une secu en plus
+		map = hit->mat->ao_tex->img.pixel_data[hit->mat->ao_tex->img.width
+			* (int)(hit->v * hit->mat->ao_tex->img.height) + (int)(hit->u
+				* hit->mat->ao_tex->img.width)];
+		light_color->r = light_color->r * map.r / 255.0;
 		light_color->g = light_color->g * map.r / 255.0;
-		light_color->b = light_color->b * map.r / 255.0; 
+		light_color->b = light_color->b * map.r / 255.0;
 	}
 }
 
@@ -115,6 +110,8 @@ t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt)
 			add_light(&light_color, hit_record, light, view_dir);
 		i++;
 	}
-	clamp_light_color(&light_color);
+	light_color.r = ft_dmin(light_color.r, 255);
+	light_color.g = ft_dmin(light_color.g, 255);
+	light_color.b = ft_dmin(light_color.b, 255);
 	return ((t_color){light_color.r, light_color.g, light_color.b});
 }

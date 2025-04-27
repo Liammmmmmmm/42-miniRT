@@ -6,11 +6,12 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/20 15:53:12 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/27 17:25:59 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "error_message.h"
 
 int	parse_ambiant_light(t_scene *scene, char *line)
 {
@@ -19,26 +20,15 @@ int	parse_ambiant_light(t_scene *scene, char *line)
 	parts = ft_split_in_line(line, " ");
 	if (!parts)
 		return (print_error(strerror(errno)));
-	if (char_tab_len(parts) < 3)
-		return (invalid_struct_error(AMBIANT_LIGHT, parts));
-	if (!is_valid_float(parts[1]))
-		return (invalid_float_error(parts, 1));
-	scene->amb_light.ratio = ft_atod(parts[1]);
-	if (scene->amb_light.ratio < 0.0 || scene->amb_light.ratio > 1.0)
+	if (!parse_ambient_light_ratio_and_color(scene, parts))
 	{
 		free(parts);
-		return (print_error("Invalid ambient light ratio."
-				" Expected a value between 0.0 and 1.0"));
+		return (0);
 	}
-	if (!parse_color(parts[2], &scene->amb_light.color))
-		return (invalid_struct_error(AMBIANT_LIGHT, parts));
-	if (char_tab_len(parts) == 4)
+	if (!parse_ambient_light_skybox(scene, parts))
 	{
-		if (!parse_color_or_tex(parts[3], &scene->amb_light.skybox_c, &scene->amb_light.skybox_t, scene))
-			return (invalid_struct_error(AMBIANT_LIGHT, parts));
-		scene->amb_light.have_skybox = 1;
-		if (scene->amb_light.skybox_t && !scene->amb_light.skybox_t->img.pixel_data)
-			scene->amb_light.skybox_t = NULL;
+		free(parts);
+		return (0);
 	}
 	free(parts);
 	return (1);
@@ -60,7 +50,7 @@ int	parse_camera(t_scene *scene, char *line)
 	if (!is_valid_fov(parts[3], &scene->camera.fov))
 	{
 		free(parts);
-		return (print_error("Invalid FOV. Expected a value between 0 and 180"));
+		return (print_error(ERR_INVALID_FOV));
 	}
 	free(parts);
 	return (1);
@@ -86,8 +76,7 @@ int	parse_light(t_scene *scene, char *line)
 	if (!is_valid_double_el(parts[2], &light->brightness))
 	{
 		free(parts);
-		return (print_error("Invalid light ratio."
-				" Expected a value between 0.0 and 1.0"));
+		return (print_error(ERR_INVALID_LIGHT_RATIO));
 	}
 	if (!parse_color(parts[3], &light->color))
 		return (invalid_struct_error(LIGHT, parts));

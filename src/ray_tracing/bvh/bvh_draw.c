@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 19:46:13 by delmath           #+#    #+#             */
-/*   Updated: 2025/04/22 16:53:46 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/27 17:29:02 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ void	render_bvh(t_minirt *minirt)
 	if (depth > 1)
 		render_bvh_recursive(minirt, depth, start,
 			&minirt->scene.bvh.bvh_nodes[0]);
-	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
+	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win,
+		minirt->mlx.img.img, 0, 0);
 }

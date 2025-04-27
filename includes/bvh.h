@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:11:47 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/23 13:30:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 17:33:48 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void			qsort_axis(uint32_t *arr, t_interval inter, t_bvh *bvh,
 					int axis);
 int				compare_obj_axis_with_bvh(uint32_t a, uint32_t b, t_bvh *bvh, \
 	int axis);
+t_vec3			get_obj_position(uint32_t i, t_bvh *bvh);
+float			get_axis_value(t_vec3 pos, int axis);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                             BVH UTILISATION                                 ║

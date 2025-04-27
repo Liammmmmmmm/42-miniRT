@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:29:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 17:18:33 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/27 17:13:02 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,25 +70,16 @@ static int	cmp_elements(t_scene *scene, char *line)
 	int	valid;
 
 	valid = is_valid_element(line);
-	if (cmp_type("sp", line) && parse_sphere(scene, line))
-		return (1);
-	else if (cmp_type("pl", line) && parse_plane(scene, line))
-		return (1);
-	else if (cmp_type("cy", line) && parse_cylinder(scene, line))
-		return (1);
-	else if (cmp_type("co", line) && parse_cone(scene, line))
-		return (1);
-	else if (cmp_type("A", line) && parse_ambiant_light(scene, line))
-		return (1);
-	else if (cmp_type("C", line) && parse_camera(scene, line))
-		return (1);
-	else if (cmp_type("L", line) && parse_light(scene, line))
-		return (1);
-	else if (cmp_type("l", line) && parse_light(scene, line))
-		return (1);
-	else if (cmp_type("tex", line) && parse_texture(scene, line))
-		return (1);
-	else if (cmp_type("mat", line) && parse_material(scene, line))
+	if ((cmp_type("sp", line) && parse_sphere(scene, line))
+		|| (cmp_type("pl", line) && parse_plane(scene, line))
+		|| (cmp_type("cy", line) && parse_cylinder(scene, line))
+		|| (cmp_type("co", line) && parse_cone(scene, line))
+		|| (cmp_type("A", line) && parse_ambiant_light(scene, line))
+		|| (cmp_type("C", line) && parse_camera(scene, line))
+		|| (cmp_type("L", line) && parse_light(scene, line))
+		|| (cmp_type("l", line) && parse_light(scene, line))
+		|| (cmp_type("tex", line) && parse_texture(scene, line))
+		|| (cmp_type("mat", line) && parse_material(scene, line)))
 		return (1);
 	else if (!valid)
 		ft_dprintf(2, RED"[Error]"NC" Invalid parameters for `%s'\n", line);

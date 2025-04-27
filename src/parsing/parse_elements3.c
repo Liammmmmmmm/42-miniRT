@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:00:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 17:18:18 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/27 17:08:04 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ static int	parse_mat_prop(char **parts, t_mat *mat, t_scene *scene)
 		return (material_item_error(4, mat->name));
 	if (is_valid_double_el(parts[6], &mat->transmission) == 0)
 		return (material_item_error(5, mat->name));
-	if (parse_double_b_or_tex(parts[7], &mat->ao_value, &mat->ao_tex, scene) == 0)
+	if (parse_double_b_or_tex(parts[7], &mat->ao_value, &mat->ao_tex,
+			scene) == 0)
 		return (material_item_error(8, mat->name));
 	if (is_valid_double_el(parts[8], &mat->emission_strength) == 0)
 		return (material_item_error(6, mat->name));

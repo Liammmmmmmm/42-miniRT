@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/26 20:13:57 by madelvin         ###   ########.fr        #
+#    Updated: 2025/04/27 17:47:04 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,8 @@ EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c  key_render.c  m
 
 RAY_TRACING_DIR		= src/ray_tracing/
 RAY_TRACING_FILE	= render.c hit_register.c focus.c light.c bvh/bvh_manager.c bvh/bvh_math.c \
-					bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_print.c bvh/bvh_draw.c bvh/bvh_draw_utils.c setup_scene_obj.c
+					bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_print.c bvh/bvh_draw.c bvh/bvh_draw_utils.c \
+					setup_scene_obj.c ray_color.c background.c viewport.c
 
 TEXTURES_DIR		= src/ray_tracing/textures/
 TEXTURES_FILE		= get_solid_texture.c
@@ -94,7 +95,7 @@ ENV_FILE			= init_mlx.c init_controls.c init_ui.c
 
 MAT_DIR				= src/material/
 MAT_FILE			= material_default.c material_manager.c material_mix.c reflection_color.c \
-					reflection_math.c refraction_color.c refraction_math.c \
+					reflection_math.c refraction_math.c \
 					dielectric_non_transmissive.c dielectric_transmissive.c dielectric.c metallic.c \
 					emissive.c utils.c
 

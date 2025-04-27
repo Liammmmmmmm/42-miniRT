@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:05:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/21 09:55:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 17:11:23 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int	material_item_error(int error, char *part)
 	else if (error == 7)
 		ft_dprintf(2, RED"[Error]"NC" Invalid normal map for: `%s'\n", part);
 	else if (error == 8)
-		ft_dprintf(2, RED"[Error]"NC" Invalid ambient occlusion for: `%s'\n", part);
+		ft_dprintf(2, RED"[Error]"NC" Invalid ambient occlusion for: `%s'\n",
+			part);
 	return (0);
 }
 

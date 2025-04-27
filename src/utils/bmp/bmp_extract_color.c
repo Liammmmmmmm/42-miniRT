@@ -81,9 +81,6 @@ int	extract_32bpp_pixel(t_bin *bin, size_t *i, uint32_t *value)
 
 int	extract_pixel(t_bin *bin, size_t *i, t_bmp *bmp, uint32_t *value)
 {
-	uint32_t	pixel_value;
-
-	pixel_value = 0;
 	if (bmp->info.bpp == 1)
 		return (extract_palette_pixel(bin, i, value, bmp));
 	else if (bmp->info.bpp == 4)

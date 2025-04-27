@@ -27,8 +27,8 @@ static inline void	process_pixel(t_upscale_data *d, const int i, const int px, c
 {
 	register int				x1;
 	register int				y1;
-	const register float		tx = px * d->scaleX - d->x;
-	const register float		ty = py * d->scaleY - d->y;
+	const float					tx = px * d->scaleX - d->x;
+	const float					ty = py * d->scaleY - d->y;
 	register t_color			c[4];
 	t_sc_point					p;
 

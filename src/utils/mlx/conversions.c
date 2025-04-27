@@ -61,8 +61,6 @@ t_hsv_color rgb_to_hsv(int rgb)
 		res.hue = (int)(60 * ((c.b - c.r) / delta + 2));
 	else
 		res.hue = (int)(60 * ((c.r - c.g) / delta + 4));
-	if (res.hue < 0)
-		res.hue += 360;
 	res.sat = (max == 0) ? 0 : (delta / max);
 	res.val = max;
 	return (res);

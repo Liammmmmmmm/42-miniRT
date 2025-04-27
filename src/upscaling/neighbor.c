@@ -16,7 +16,7 @@ void	neighbor_upscale(t_minirt *minirt)
 {
 	t_upscale_data		d;
 	register int		i;
-	const register int	tpi = minirt->mlx.img.width * minirt->mlx.img.height;
+	const int			tpi = minirt->mlx.img.width * minirt->mlx.img.height;
 	const t_lsc_point	*render;
 	t_sc_point			p;
 	register int		src_index;

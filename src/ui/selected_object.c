@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:45:58 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/24 16:54:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 15:50:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ void	set_selected_sphere(t_minirt *minirt, t_sphere *obj)
 {
 	minirt->controls.color_picker[0].color = &obj->color;
 	minirt->controls.dropdown[0].selected = (void **)&obj->material;
+	link_float_input(&minirt->controls.float_input[0], &obj->position.x);
+	link_float_input(&minirt->controls.float_input[1], &obj->position.y);
+	link_float_input(&minirt->controls.float_input[2], &obj->position.z);
 }
 
 void	set_selected_plane(t_minirt *minirt, t_plane *obj)

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:20:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/23 10:59:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 15:47:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	draw_selected_object(t_minirt *minirt)
 		minirt->controls.ui_infos.selected_object->type == PLANE)
 		return ;
 	box = compute_object_bounds(minirt->controls.ui_infos.selected_object);
+	put_render_to_frame(minirt); // A remplacer par une copie dans un buffer tempo jsp comment encore pour eviter de tout calculer 100000 fois
 	draw_box(minirt, box.min, box.max, 0xFFF00FF);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
 }

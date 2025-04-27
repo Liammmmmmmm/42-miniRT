@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 18:51:56 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/27 14:24:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	init_render(t_minirt *minirt)
 	}
 	minirt->stats.frame = 0;
 	minirt->screen.start_render = 1;
-	minirt->screen.pause_render = 0;
+	minirt->screen.pause_render = 1;
 	minirt->screen.spp = 100000;
 	minirt->screen.sample = 0;
 	init_font(minirt);
@@ -102,5 +102,6 @@ int	init_render(t_minirt *minirt)
 	init_sliders(minirt);
 	init_cps(minirt);
 	init_dropdowns(minirt);
+	init_float_inputs(minirt);
 	return (1);
 }

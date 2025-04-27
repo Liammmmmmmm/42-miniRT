@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 18:41:18 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 17:38:09 by lilefebv         ###   ########lyon.fr   */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/04/27 15:54:10 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minirt.h"
 
@@ -47,6 +48,12 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 						stop_minirt(minirt);
 					return ;
 				}
+				if (float_input_focus(&minirt->controls.float_input[0], x, y))
+					return ;
+				if (float_input_focus(&minirt->controls.float_input[1], x, y))
+					return ;
+				if (float_input_focus(&minirt->controls.float_input[2], x, y))
+					return ;
 			}
 			if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
 				return ;

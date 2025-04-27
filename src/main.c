@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/24 10:29:51 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 13:49:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	clean(t_minirt *minirt)
 	clear_buttons(minirt);
 	clear_sliders(minirt);
 	clear_dropdown(minirt);
+	clear_float_inputs(minirt);
 	if (minirt->screen.render)
 		free(minirt->screen.render);
 	free_ttf(&minirt->controls.font[0]);

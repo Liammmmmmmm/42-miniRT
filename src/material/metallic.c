@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:42:13 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 18:41:24 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/27 15:34:16 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,24 @@
  */
 t_ray_data	metallic_material(t_mat_manager *mat_man)
 {
-	t_vec3		direction;
-	t_ray_data	ray_data;
-	const double	cos_theta = get_cos_theta(mat_man->ray_in.dir, mat_man->hit_record.normal);
+	t_vec3			direction;
+	t_ray_data		ray_data;
+	const double	cos_theta = get_cos_theta(mat_man->ray_in.dir, \
+		mat_man->hit_record.normal);
 
-	direction = vec3_subtract(mat_man->ray_in.dir, vec3_multiply_scalar(mat_man->hit_record.normal, 2 * vec3_dot(mat_man->ray_in.dir, mat_man->hit_record.normal)));
+	direction = vec3_subtract(mat_man->ray_in.dir, \
+		vec3_multiply_scalar(mat_man->hit_record.normal, 2 * \
+			vec3_dot(mat_man->ray_in.dir, mat_man->hit_record.normal)));
 	if (mat_man->hit_record.mat->roughness_value > 0.0)
-		direction = vec3_add(vec3_unit(direction),
-			vec3_multiply_scalar(vec3_random_unit(),
+		direction = vec3_add(vec3_unit(direction), \
+			vec3_multiply_scalar(vec3_random_unit(), \
 			mat_man->hit_record.mat->roughness_value));
 	mat_man->ray_in.dir = vec3_unit(direction);
 	mat_man->ray_in.orig = mat_man->hit_record.point;
-
-	ray_data = ray_color(mat_man->minirt, mat_man->ray_in, mat_man->depth - 1, NULL);
-
-	return ((t_ray_data){color_multiply(
-		fresnel_schlick_color(cos_theta, mat_man->hit_record.color),
+	ray_data = ray_color(mat_man->minirt, mat_man->ray_in, mat_man->depth - 1, \
+		NULL);
+	return ((t_ray_data){color_multiply(\
+		fresnel_schlick_color(cos_theta, mat_man->hit_record.color), \
 		ray_data.color), ray_data.mat_type}
 	);
 }

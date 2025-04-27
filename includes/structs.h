@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 14:20:27 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 18:41:43 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,6 +328,8 @@ typedef struct s_viewport
 	float	focal_length;
 	float	height;
 	float	width;
+	int		render_w;
+	int		render_h;
 	float	gamma;
 	t_vec3	u;
 	t_vec3	v;
@@ -358,6 +360,8 @@ typedef struct s_edited_val
 	int		fov;
 	int		gamma;
 	char	debug;
+	int		upscaling_ratio;
+	int		upscaling_selected;
 }	t_edited_val;
 
 typedef struct s_ui_infos
@@ -403,6 +407,20 @@ typedef struct s_minirt
 	t_viewport	viewport;
 	t_controls	controls;
 }	t_minirt;
+
+typedef struct s_upscale_data
+{
+	t_minirt	*minirt;
+	int			x;
+	int			y;
+	int			sw;
+	int			sh;
+	int			dw;
+	int			dh;
+	int			divide;
+	float		scaleX;
+	float		scaleY;
+}	t_upscale_data;
 
 typedef struct s_btn_param
 {

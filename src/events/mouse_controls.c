@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_controls.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/27 15:54:10 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/04/22 18:41:18 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/04/26 19:24:28 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 		slider_mouse_down(&minirt->controls.sliders[1], x, y);
 		slider_mouse_down(&minirt->controls.sliders[2], x, y);
 		slider_mouse_down(&minirt->controls.sliders[3], x, y);
+		slider_mouse_down(&minirt->controls.sliders[4], x, y);
+		slider_mouse_down(&minirt->controls.sliders[5], x, y);
 	}
 	
 	if (minirt->controls.ui_infos.tab_selected == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 18:14:27 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 20:23:15 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "bvh.h"
 #include "material.h"
 #include <math.h>
+#include <stdio.h>
+#include <time.h>
 
 t_color	get_background_color(t_minirt *minirt, t_ray ray)
 {
@@ -81,7 +83,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 
 	bounce_hit = 0;
 	i = 0;
-	tpix = minirt->mlx.img.width * minirt->mlx.img.height;
+	tpix =  minirt->viewport.render_w * minirt->viewport.render_h;
 	while (i < tpix)
 	{
 		if (minirt->scene.camera.defocus_angle <= 0)
@@ -92,9 +94,9 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 			vec3_add(
 				vec3_add(
 					minirt->viewport.pixel00_loc, 
-					vec3_multiply_scalar(minirt->viewport.pixel_delta_u, (i % minirt->mlx.img.width) + offset.x)
+					vec3_multiply_scalar(minirt->viewport.pixel_delta_u, (i % minirt->viewport.render_w) + offset.x)
 				),
-				vec3_multiply_scalar(minirt->viewport.pixel_delta_v, (i / minirt->mlx.img.width) + offset.y)
+				vec3_multiply_scalar(minirt->viewport.pixel_delta_v, (i / minirt->viewport.render_w) + offset.y)
 			), 
 			ray.orig
 		);
@@ -110,11 +112,19 @@ void	draw_pixels(t_minirt *minirt)
 {
 	t_vec3	offset;
 
+	// clock_t start = clock();
 	offset = vec3_random();
 	calc_one_sample(minirt, offset);
+	// clock_t end = clock();
+	// double elapsed_time = (double)(end - start) / CLOCKS_PER_SEC;
+    // printf("Temps d'exécution calc 1 sample : %.6f secondes\n", elapsed_time);
+	// start = clock();
 	minirt->screen.sample++;
 	minirt->screen.last_sample_am = minirt->screen.sample;
 	put_render_to_frame(minirt);
+	// end = clock();
+	// elapsed_time = (double)(end - start) / CLOCKS_PER_SEC;
+    // printf("Temps d'exécution upscaling affichage : %.6f secondes\n", elapsed_time);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
 	printf("Sample %d\n", minirt->screen.sample);
 }
@@ -133,13 +143,15 @@ t_viewport	init_viewport(t_minirt *minirt)
 	minirt->scene.camera.orientation = vec3_unit(minirt->scene.camera.orientation);
 	viewport.gamma = sqrt(minirt->controls.values.gamma / 1000.0);
 	viewport.height = 2 * tan((minirt->controls.values.fov * PI_D/180)/2) * minirt->scene.camera.focus_dist;
+	viewport.render_w = (int)(minirt->mlx.img.width * (minirt->controls.values.upscaling_ratio  / 100.0f) + 0.5f);
+	viewport.render_h = (int)(minirt->mlx.img.height * (minirt->controls.values.upscaling_ratio  / 100.0f) + 0.5f);
 	// viewport.focal_length = viewport.height / (2.0 * tan(minirt->controls.values.fov * 0.5 * PI_D / 180));
-	viewport.width = viewport.height * ((float)minirt->mlx.img.width / minirt->mlx.img.height);
+	viewport.width = viewport.height * ((float)viewport.render_w / viewport.render_h);
 	u = vec3_unit(vec3_cross((t_vec3){0, 1, 0}, vec3_negate(minirt->scene.camera.orientation)));
 	viewport.u = vec3_multiply_scalar(u, viewport.width);
 	viewport.v = vec3_multiply_scalar(vec3_cross(minirt->scene.camera.orientation, u), viewport.height);
-	viewport.pixel_delta_u = vec3_divide_scalar(viewport.u, minirt->mlx.img.width);
-	viewport.pixel_delta_v = vec3_divide_scalar(viewport.v, minirt->mlx.img.height);
+	viewport.pixel_delta_u = vec3_divide_scalar(viewport.u, viewport.render_w);
+	viewport.pixel_delta_v = vec3_divide_scalar(viewport.v, viewport.render_h);
 	viewport.upper_left = vec3_subtract(
 		vec3_subtract(
 			vec3_add(minirt->scene.camera.position, vec3_multiply_scalar(minirt->scene.camera.orientation, minirt->scene.camera.focus_dist)),
@@ -166,7 +178,7 @@ void	render(t_minirt *minirt)
 	{
 
 		i = -1;
-		tpix = minirt->mlx.img.width * minirt->mlx.img.height;
+		tpix = minirt->viewport.render_w * minirt->viewport.render_h;
 		while (++i < tpix)
 			ft_bzero(&minirt->screen.render[i].color, sizeof(t_lcolor));
 		minirt->viewport = init_viewport(minirt);

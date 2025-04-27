@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 18:15:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/26 19:55:17 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,36 +35,22 @@ void	put_ext_image_to_frame(t_tex_img *img, t_img *img_buff)
 
 void	put_render_to_frame(t_minirt *minirt)
 {
-	int			i;
-	int			tpix;
-	t_sc_point	point;
-	int			divide;
+	if (minirt->controls.values.upscaling_ratio == 100)
+		no_upscaling(minirt);
+	if (minirt->controls.values.upscaling_selected == 0)
+		neighbor_upscale(minirt);
+	if (minirt->controls.values.upscaling_selected == 1)
+		bilinear_upscale(minirt);
+	if (minirt->controls.values.upscaling_selected == 2)
+		bicubic_upscale(minirt);
 
-	divide = minirt->screen.last_sample_am;
-	if (divide == 0)
-		divide = 1;
-	i = 0;
-	tpix = minirt->mlx.img.width * minirt->mlx.img.height;
-	point.z = 0;
-	while (i < tpix)
-	{
-		point.x = minirt->screen.render[i].x;
-		point.y = minirt->screen.render[i].y;
-		point.color.r = minirt->screen.render[i].color.r / divide;
-		point.color.g = minirt->screen.render[i].color.g / divide;
-		point.color.b = minirt->screen.render[i].color.b / divide;
-		put_sp_image(&minirt->mlx.img, &point);
-		i++;
-	}
 }
 
 void render_frame(t_minirt *minirt)
 {
 	render(minirt);
 	render_bvh(minirt);
-
 	render_ui(minirt);
-  
 	draw_selected_object(minirt);
 
 	minirt->stats.frame += 1;

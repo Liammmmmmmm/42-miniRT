@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 18:51:43 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/26 19:42:14 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,5 +267,11 @@ int		init_plane_light_lst(t_minirt *minirt);
 
 t_object	*select_object(t_minirt *minirt, int x, int y);
 void		draw_selected_object(t_minirt *minirt);
+
+void		bilinear_upscale(t_minirt *minirt);
+void		neighbor_upscale(t_minirt *minirt);
+void		lanczos3_upscale(t_minirt *minirt);
+void		bicubic_upscale(t_minirt *minirt);
+void		no_upscaling(t_minirt *minirt);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:22:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/24 16:52:14 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 13:49:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ void	clear_buttons(t_minirt *minirt);
 int		init_dropdowns(t_minirt *minirt);
 void	clear_dropdown(t_minirt *minirt);
 int		mouse_down_dropdown(t_minirt *minirt, int key, t_point2 pos, t_dropdown *dropdown);
+
+int		init_float_inputs(t_minirt *minirt);
+void	clear_float_inputs(t_minirt *minirt);
 
 void	display_mat_dropdown(t_minirt *minirt, t_dropdown *dropdown);
 

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:53:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/24 15:31:30 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 14:13:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	init_layout(t_img *img, t_minirt *minirt)
 				minirt->controls.font[0].size = 20;
 				// Position
 				draw_string(img, &minirt->controls.font[0], "X", (t_point2){310, 526});
-				draw_box_2d(img, (t_point2){325, 510}, (t_point2){395, 530}, 0xFFFFFF);
+				display_float_input(img, &minirt->controls.float_input[0], &minirt->controls.font[0]);
 				draw_string(img, &minirt->controls.font[0], "Y", (t_point2){405, 526});
 				draw_box_2d(img, (t_point2){420, 510}, (t_point2){490, 530}, 0xFFFFFF);
 				draw_string(img, &minirt->controls.font[0], "Z", (t_point2){505, 526});

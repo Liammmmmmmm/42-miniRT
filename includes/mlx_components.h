@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:34:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/24 14:57:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/27 14:08:22 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,25 @@ typedef struct s_text_input
 	char	placeholder[256];
 	int		cursor_pos;
 }	t_text_input;
+
+typedef struct s_float_input
+{
+	int		x;
+	int		y;
+	int		width;
+	int		height;
+	int		border_color;
+	int		background_color;
+	int		border_color_focus;
+	int		is_focused;
+	int		padding_left;
+	int		text_color;
+	char	text[20];
+	int		cursor_pos;
+	double	*number;
+	double	last_displayed;
+	int		precision;
+}	t_float_input;
 
 typedef struct s_color_picker
 {
@@ -151,5 +170,9 @@ int		color_picker_release(t_color_picker *cp);
 int		color_picker_action(t_color_picker *cp, int mouse_x, int mouse_y);
 int		color_picker_mouse_move(t_color_picker *cp, int mouse_x, int mouse_y);
 int		color_picker_type(t_color_picker *cp, int key);
+
+void	display_float_input(t_img *img, t_float_input *input, t_ttf *ttf);
+int		float_input_focus(t_float_input *input, int mouse_x, int mouse_y);
+int		float_input_type(t_float_input *input, int key);
 
 #endif

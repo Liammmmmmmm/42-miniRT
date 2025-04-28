@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/27 18:19:28 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/28 13:17:09 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	init_camera_values(t_minirt *minirt)
 
 static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 {
-	*vp = (t_viewport){0};
+	ft_bzero(vp, sizeof(t_viewport));
 	init_camera_values(minirt);
 	init_bvh(&minirt->scene.bvh, minirt->scene.elements,
 		minirt->scene.el_amount);

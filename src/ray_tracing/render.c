@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 17:56:00 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/28 13:29:39 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 
 	bounce_hit = 0;
 	i = 0;
-	while (i < (tpi))
+	while (i < tpi)
 	{
 		if (minirt->scene.camera.defocus_angle <= 0)
 			ray.orig = minirt->scene.camera.position;
@@ -68,10 +68,10 @@ void	render(t_minirt *minirt)
 	if (minirt->screen.sample == 0)
 	{
 		i = -1;
+		minirt->viewport = init_viewport(minirt);
 		tpix = minirt->viewport.render_w * minirt->viewport.render_h;
 		while (++i < tpix)
 			ft_bzero(&minirt->screen.render[i].color, sizeof(t_lcolor));
-		minirt->viewport = init_viewport(minirt);
 	}
 	draw_pixels(minirt);
 	if (minirt->screen.sample == minirt->screen.spp)

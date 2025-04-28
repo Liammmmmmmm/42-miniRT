@@ -6,22 +6,13 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 19:39:11 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/26 20:17:10 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/28 12:46:10 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "minirt.h"
-
-// static inline t_color	bilerp(t_color c00, t_color c10, t_color c01, t_color c11, float tx, float ty)
-// {
-// 	return ((t_color){
-// 		(c00.r + (c10.r - c00.r) * tx) + ((c01.r + (c11.r - c01.r) * tx) - (c00.r + (c10.r - c00.r) * tx)) * ty,
-// 		(c00.g + (c10.g - c00.g) * tx) + ((c01.g + (c11.g - c01.g) * tx) - (c00.g + (c10.g - c00.g) * tx)) * ty,
-// 		(c00.b + (c10.b - c00.b) * tx) + ((c01.b + (c11.b - c01.b) * tx) - (c00.b + (c10.b - c00.b) * tx)) * ty
-// 	});
-// }
 
 static inline void	process_pixel(t_upscale_data *d, const int i, const int px, const int py)
 {

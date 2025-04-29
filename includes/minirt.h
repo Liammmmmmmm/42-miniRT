@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 17:52:26 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/29 13:16:06 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,7 @@ int		parse_cylinder(t_scene *scene, char *line);
 int		parse_texture(t_scene *scene, char *line);
 int		parse_material(t_scene *scene, char *line);
 int		parse_cone(t_scene *scene, char *line);
+int		parse_hyperboloid(t_scene *scene, char *line);
 
 void	bump_to_normal(t_tex_img *bump);
 

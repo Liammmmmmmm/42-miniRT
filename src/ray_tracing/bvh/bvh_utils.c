@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:49:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/27 17:34:50 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/29 13:08:35 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ uint32_t	count_object(t_object *obj_list, uint32_t obj_c)
 	while (i < obj_c)
 	{
 		if (obj_list[i].type == SPHERE || obj_list[i].type == CYLINDER || \
-			obj_list[i].type == CONE)
+			obj_list[i].type == CONE || obj_list[i].type == HYPERBOLOID)
 			count++;
 		i++;
 	}
@@ -95,6 +95,8 @@ inline t_vec3	get_obj_position(uint32_t i, t_bvh *bvh)
 		return (((t_cylinder *)obj->object)->position);
 	else if (obj->type == CONE)
 		return (((t_cone *)obj->object)->position);
+	else if (obj->type == HYPERBOLOID)
+		return (((t_hyperboloid *)obj->object)->position);
 	return ((t_vec3){0, 0, 0});
 }
 

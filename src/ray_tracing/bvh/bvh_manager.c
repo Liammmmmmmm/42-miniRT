@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/23 13:31:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/29 13:30:01 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	while (j < obj_c)
 	{
 		if (obj_list[j].type == SPHERE || obj_list[j].type == CYLINDER || \
-			obj_list[j].type == CONE)
+			obj_list[j].type == CONE || obj_list[j].type == HYPERBOLOID)
 		{
 			bvh->prim_indices[i] = i;
 			bvh->obj_list[i++] = &obj_list[j];

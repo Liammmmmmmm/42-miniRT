@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/23 13:45:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/04/28 15:38:50 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char	solve_quadratic(t_quadratic *q);
 char	init_cylinder_quadratic(t_quadratic *q, t_cylinder *cyl, t_ray *r);
 char	init_cone_quadratic(t_quadratic *q, t_cone *cone, t_ray *r);
 char	init_sphere_quadratic(t_quadratic *q, t_sphere *s, t_ray *r);
+char	init_hyperboloid_quadratic(t_quadratic *q, t_hyperboloid *h, t_ray *r);
 
 t_vec3	vec3_abs(t_vec3 v);
 t_vec3	vec3_min(t_vec3 a, t_vec3 b);
@@ -95,6 +96,7 @@ char	hit_cone(t_cone *cone, t_ray *ray, t_interval interval,
 		t_hit_record *rec);
 char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record);
 char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hit_record);
+char	hit_hyperboloid(t_hyperboloid *hyp, t_ray *r, t_interval interval, t_hit_record *rec);
 t_vec3	set_normal_face(const t_ray *r, const t_vec3 *outward_normal, t_hit_record	*hit_record);
 t_vec3	ray_at(t_ray r, double t);
 

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:21:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 17:25:21 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:10:12 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	invalid_struct_error(t_objects type, char **splited)
 		print_error(ERR_SPHERE_FORMAT);
 	else if (type == PLANE)
 		print_error(ERR_PLANE_FORMAT);
+	else if (type == HYPERBOLOID)
+		print_error(ERR_HYPERBOLOID_FORMAT);
 	else if (type == CYLINDER)
 		print_error(ERR_CYLINDER_FORMAT);
 	else if (type == CONE)

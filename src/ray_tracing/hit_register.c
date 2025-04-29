@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/27 18:12:20 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/29 13:23:10 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	apply_metallic_map(t_hit_record *hit)
 char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hit_record)
 {
 	t_hit_record	temp_hit_record;
-	// t_plane			*plane;
 	t_interval		interval;
 	char			hit_anything;
 	uint32_t		i;
@@ -153,6 +152,21 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 					apply_roughness_map(hit_record);
 					apply_metallic_map(hit_record);
 					hit_record->color = get_hit_register_color(((t_cone *)obj->object)->material, ((t_cone *)obj->object)->color, hit_record);
+			}
+		}
+		if (obj->type == HYPERBOLOID && hit_hyperboloid(((t_hyperboloid *)obj->object), ray, interval, &temp_hit_record))
+		{
+			if (temp_hit_record.t < closest_t)
+			{
+					hit_anything = 1;
+					closest_t = temp_hit_record.t;
+					*hit_record = temp_hit_record;
+					hit_record->obj = obj;
+					hit_record->mat = ((t_hyperboloid *)obj->object)->material;
+					apply_normal_map(hit_record);
+					apply_roughness_map(hit_record);
+					apply_metallic_map(hit_record);
+					hit_record->color = get_hit_register_color(((t_hyperboloid *)obj->object)->material, ((t_hyperboloid *)obj->object)->color, hit_record);
 			}
 		}
 		i++;

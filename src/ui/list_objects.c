@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:56:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 18:25:06 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:28:40 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 const char	*get_object_name(t_objects obj)
 {
-	static const char	*objects[11] = {"NULL Object", "Texture", "Material",
+	static const char	*objects[12] = {"NULL Object", "Texture", "Material",
 		"Ambiant light", "Camera", "Light", "Sphere", "Plane", "Cylinder",
-		"Cone"};
+		"Cone", "Hyperboloid"};
 
 	return (objects[(int)obj]);
 }

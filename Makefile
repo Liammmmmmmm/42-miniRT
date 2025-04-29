@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/27 17:47:04 by madelvin         ###   ########.fr        #
+#    Updated: 2025/04/29 15:25:42 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,7 @@ ENV_DIR				= src/env/
 ENV_FILE			= init_mlx.c init_controls.c init_ui.c
 
 MAT_DIR				= src/material/
-MAT_FILE			= material_default.c material_manager.c material_mix.c reflection_color.c \
+MAT_FILE			= material_default.c material_manager.c material_mix.c \
 					reflection_math.c refraction_math.c \
 					dielectric_non_transmissive.c dielectric_transmissive.c dielectric.c metallic.c \
 					emissive.c utils.c
@@ -104,7 +104,8 @@ MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/
 					vector/vec3_utils.c vector/vec3_random.c vector/vec3_operation_scalar.c normal/normal.c \
 					color/color_operation.c color/color_utils.c ft_dmin.c plane/hit_plane.c sphere/hit_sphere.c random.c \
 					matrix/matrix.c matrix/matrix_calc.c angle/angle_math.c matrix/matrix3.c fresnel_schlick.c \
-					cylinder/hit_cylinder.c quadratique.c cone/hit_cone.c valid_t.c clamp_int.c
+					cylinder/hit_cylinder.c quadratique/quadratique.c quadratique/quadratique_hyperboloid.c \
+					cone/hit_cone.c valid_t.c clamp_int.c hyperboloid/hit_hyperboloid.c
 
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \

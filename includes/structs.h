@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/26 18:41:43 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/29 13:04:44 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ typedef struct s_quadratic
 	double	t0;
 	double	t1;
 	double	t_hit;
+	double	t_hit2;
 	double  dd;
 	double  oo;
 }	t_quadratic;
@@ -169,6 +170,19 @@ typedef struct s_light
 	double	brightness;
 	t_color	color;
 }	t_light;
+
+typedef struct s_hyperboloid
+{
+	t_vec3	position;
+	t_vec3	orientation;
+	double	a;
+	double	b;
+	double	c;
+	double	shape;
+	t_mat	*material;
+	t_color	color;
+	double	height;
+}	t_hyperboloid;
 
 typedef struct s_sphere
 {
@@ -219,7 +233,8 @@ typedef enum e_objects
 	SPHERE,
 	PLANE,
 	CYLINDER,
-	CONE
+	CONE,
+	HYPERBOLOID
 }	t_objects;
 
 typedef struct s_object

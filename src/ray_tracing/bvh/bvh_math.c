@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:31:37 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/27 17:32:38 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/29 13:29:41 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,36 @@
 #include "maths.h"
 #include "bvh.h"
 #include <math.h>
+
+static inline t_aabb compute_hyperboloid_bounds(t_hyperboloid *hyp) {
+    const t_vec3 axis = vec3_unit(hyp->orientation);
+    const t_vec3 half_height_vec = vec3_multiply_scalar(axis, hyp->height * 0.5);
+    
+    // Points extrêmes le long de l'axe
+    t_vec3 bottom = vec3_subtract(hyp->position, half_height_vec);
+    t_vec3 top = vec3_add(hyp->position, half_height_vec);
+    
+    // Rayon maximal dans le plan perpendiculaire à l'axe
+    double z_max = hyp->height * 0.5;
+    double term = sqrt(1.0 + (z_max * z_max) / (hyp->c * hyp->c));
+    double r_max = fmax(hyp->a, hyp->b) * term;
+    
+    // Extension perpendiculaire à l'axe
+    t_vec3 r_vec = {
+        .x = r_max * sqrt(1.0 - axis.x * axis.x),
+        .y = r_max * sqrt(1.0 - axis.y * axis.y),
+        .z = r_max * sqrt(1.0 - axis.z * axis.z)
+    };
+    
+    // Calcul des min/max
+    t_vec3 min = vec3_min(bottom, top);
+    t_vec3 max = vec3_max(bottom, top);
+    
+    min = vec3_subtract(min, r_vec);
+    max = vec3_add(max, r_vec);
+    
+    return (t_aabb){min, max};
+}
 
 static inline t_aabb	compute_cylinder_bounds(t_cylinder *cyl)
 {
@@ -71,6 +101,8 @@ inline t_aabb	compute_object_bounds(t_object *obj)
 		return (compute_sphere_bounds(obj->object));
 	if (obj->type == CONE)
 		return (compute_cone_bounds(obj->object));
+	if (obj->type == HYPERBOLOID)
+		return (compute_hyperboloid_bounds(obj->object));
 	return (compute_cylinder_bounds(obj->object));
 }
 

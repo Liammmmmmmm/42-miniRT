@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:57:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/25 15:39:58 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:30:56 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,28 @@ void	print_scene(t_scene *scene)
 				{
 					printf("    Color: ");
 					print_color(cone->color);
+				}
+				printf("\n");
+				break;
+			}
+			case HYPERBOLOID: {
+				t_hyperboloid *hyp = (t_hyperboloid *)obj->object;
+				printf("  " YELLOW "Hyperboloid:\n" NC);
+				printf("    Position: ");
+				print_vec3(hyp->position);
+				printf("\n    Orientation: ");
+				print_vec3(hyp->orientation);
+				printf("\n    Height: " BLUE "%.2f" NC "\n", hyp->height);
+				printf("    a: " BLUE "%.2f" NC "\n", hyp->a);
+				printf("    b: " BLUE "%.2f" NC "\n", hyp->b);
+				printf("    c: " BLUE "%.2f" NC "\n", hyp->c);
+				printf("    shape: " BLUE "%.2f" NC "\n", hyp->shape);
+				if (hyp->material)
+					printf("    Material: %s", hyp->material->name);
+				else
+				{
+					printf("    Color: ");
+					print_color(hyp->color);
 				}
 				printf("\n");
 				break;

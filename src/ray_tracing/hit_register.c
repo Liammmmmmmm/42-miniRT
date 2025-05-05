@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_register.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/29 13:23:10 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:39:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,13 @@ void	apply_normal_map(t_hit_record *hit)
 	tbn[0][2] = hit->normal.x;
 	tbn[1][2] = hit->normal.y;
 	tbn[2][2] = hit->normal.z;
-	hit->normal = vec3_unit(matrix3_dot_vec3(tbn, normal_map));
+	if (hit->mat->normal_intensity == 1.0)
+		hit->normal = vec3_unit(matrix3_dot_vec3(tbn, normal_map));
+	else
+	{
+		t_vec3 mapped_normal = vec3_unit(matrix3_dot_vec3(tbn, normal_map));
+		hit->normal = vec3_unit(vec3_lerp(hit->normal, mapped_normal, hit->mat->normal_intensity));
+	}
 }
 
 void	apply_roughness_map(t_hit_record *hit)

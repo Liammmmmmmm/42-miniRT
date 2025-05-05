@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/04/29 15:25:42 by madelvin         ###   ########.fr        #
+#    Updated: 2025/05/03 18:36:04 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ SRC_FILE			= main.c
 UTILS_DIR			= src/utils/
 UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					bmp/bmp_extract_color.c bmp/bmp_extract_pixel.c \
-					bump_to_normal.c
+					bump_to_normal.c obj/obj_parser.c
 
 UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c conversions.c color_picker.c float_input.c

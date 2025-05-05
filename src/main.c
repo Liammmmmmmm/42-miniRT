@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 13:49:46 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/03 20:25:19 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	main(int argc, char **argv)
 	if (!init_render(&minirt))
 		return (clean(&minirt));
 	print_scene(&minirt.scene);
+	parse_obj("assets/test.obj", &minirt.obj, 1);
 	events(&minirt);
 	mlx_loop_hook(minirt.mlx.mlx, render_next_frame, &minirt);
 	mlx_loop(minirt.mlx.mlx);

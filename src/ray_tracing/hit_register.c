@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/29 13:23:10 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/03 19:20:29 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,9 @@ char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record)
 				*hit_record = temp_hit_record;
 				hit_record->mat = plane->material;
 				hit_record->obj = plane_lst[i];
+				apply_normal_map(hit_record);
+				apply_roughness_map(hit_record);
+				apply_metallic_map(hit_record);
 				hit_record->color = get_hit_register_color(plane->material, plane->color, hit_record);
 			}
 		}

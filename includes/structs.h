@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/04 16:04:02 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/05 20:56:24 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,19 @@ typedef struct s_quadratic
 	double  oo;
 }	t_quadratic;
 
+typedef struct s_moller
+{
+	t_vec3	e1;
+	t_vec3	e2;
+	t_vec3	h;
+	t_vec3	s;
+	t_vec3	q;
+	float	f;
+	float	u;
+	float	v;
+	float	t;
+}	t_moller;
+
 typedef struct s_amb_light
 {
 	double	ratio;
@@ -228,6 +241,7 @@ typedef struct s_vertex
 	t_vec3	normal;
 	double	u;
 	double	v;
+	double	angle;
 }	t_vertex;
 
 typedef struct s_triangle
@@ -235,6 +249,9 @@ typedef struct s_triangle
 	t_vertex	v0;
 	t_vertex	v1;
 	t_vertex	v2;
+	t_vec3		center;
+	t_mat		*material;
+	t_color		color;
 }	t_triangle;
 
 typedef struct s_face
@@ -268,6 +285,7 @@ typedef struct s_custom_object
 	double		scale;
 	t_mat		*material;
 	t_color		color;
+	int			index;
 }	t_custom_object;
 
 
@@ -283,7 +301,9 @@ typedef enum e_objects
 	PLANE,
 	CYLINDER,
 	CONE,
-	HYPERBOLOID
+	HYPERBOLOID,
+	TRIANGLE,
+	CUSTOM
 }	t_objects;
 
 typedef struct s_object
@@ -337,7 +357,7 @@ typedef struct s_bvh
 	t_object	**obj_list;
 	uint32_t	*closest_t;
 	uint32_t	node_index;
-	char		valid;
+	char		valid; 
 }	t_bvh;
 
 typedef struct s_axis

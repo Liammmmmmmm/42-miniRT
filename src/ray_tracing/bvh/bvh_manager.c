@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/29 13:30:01 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/05 20:52:54 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,14 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 {
 	uint32_t		i;
 	uint32_t		j;
+	uint32_t		k;
+	t_object		*obj;
 	const uint32_t	count = count_object(obj_list, obj_c);
 
 	ft_bzero(bvh, sizeof(t_bvh));
 	if (count == 0)
 		return ;
-	if (init_bvh_malloc(bvh, obj_c) == 1)
+	if (init_bvh_malloc(bvh, count) == 1)
 		return ;
 	bvh->valid = 1;
 	i = 0;
@@ -99,6 +101,19 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 		{
 			bvh->prim_indices[i] = i;
 			bvh->obj_list[i++] = &obj_list[j];
+		}
+		if (obj_list[j].type == CUSTOM)
+		{
+			k = 0;
+			while (k < ((t_custom_object *)obj_list[j].object)->triangle_count)
+			{
+				obj = malloc(sizeof(t_triangle));
+				((t_custom_object *)obj_list[j].object)->triangles[k].material = ((t_custom_object *)obj_list[j].object)->material;
+				obj->object = &((t_custom_object *)obj_list[j].object)->triangles[k++];
+				obj->type = TRIANGLE;
+				bvh->prim_indices[i] = i;
+				bvh->obj_list[i++] = obj;
+			}
 		}
 		j++;
 	}

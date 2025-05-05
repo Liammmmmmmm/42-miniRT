@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:31:25 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/29 13:27:03 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/05 20:00:07 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,35 @@ int	parse_hyperboloid(t_scene *scene, char *line)
 		return (invalid_size_error(parts));
 	if (!parse_color_or_mat(parts[8], &hyp->color, &hyp->material, scene))
 		return (invalid_struct_error(HYPERBOLOID, parts));
+	free(parts);
+	return (1);
+}
+
+int	parse_obj_custom(t_scene *scene, char *line)
+{
+	char			**parts;
+	t_custom_object	*obj;
+
+	obj = ft_calloc(sizeof(t_custom_object), 1);
+	if (!obj)
+		return (print_error(strerror(errno)));
+	scene->elements[scene->el_amount].type = CUSTOM;
+	scene->elements[scene->el_amount++].object = obj;
+	parts = ft_split_in_line(line, " ");
+	if (!parts)
+		return (print_error(strerror(errno)));
+	if (char_tab_len(parts) != 6)
+		return (invalid_struct_error(CUSTOM, parts));
+	if (!parse_vector(parts[1], &obj->position))
+		return (invalid_struct_error(CUSTOM, parts));
+	if (!parse_vector_normalized(parts[2], &obj->orientation))
+		return (invalid_struct_error(CUSTOM, parts));
+	if (!is_valid_size(parts[3], &obj->scale))
+		return (invalid_size_error(parts));
+	if (!parse_obj(parts[4], obj))
+		return (invalid_size_error(parts)); // a changer
+	if (!parse_color_or_mat(parts[5], &obj->color, &obj->material, scene))
+		return (invalid_struct_error(CUSTOM, parts));
 	free(parts);
 	return (1);
 }

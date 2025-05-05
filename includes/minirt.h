@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/05 13:24:51 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/05 19:24:07 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 # define PI_D 3.1415926535897
 
-# define WIN_WIDTH 1080
+# define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
 
 // Control window
@@ -194,6 +194,7 @@ int		parse_texture(t_scene *scene, char *line);
 int		parse_material(t_scene *scene, char *line);
 int		parse_cone(t_scene *scene, char *line);
 int		parse_hyperboloid(t_scene *scene, char *line);
+int		parse_obj_custom(t_scene *scene, char *line);
 
 void	bump_to_normal(t_tex_img *bump);
 
@@ -278,6 +279,6 @@ void		lanczos3_upscale(t_minirt *minirt);
 void		bicubic_upscale(t_minirt *minirt);
 void		no_upscaling(t_minirt *minirt);
 
-int		parse_obj(const char *file, t_custom_object *obj, int obj_index);
+int		parse_obj(const char *file, t_custom_object *obj);
 
 #endif

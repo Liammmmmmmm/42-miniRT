@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:29:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/29 13:16:31 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/05 19:00:54 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static int	cmp_elements(t_scene *scene, char *line)
 		|| (cmp_type("cy", line) && parse_cylinder(scene, line))
 		|| (cmp_type("co", line) && parse_cone(scene, line))
 		|| (cmp_type("hb", line) && parse_hyperboloid(scene, line))
+		|| (cmp_type("cu", line) && parse_obj_custom(scene, line))
 		|| (cmp_type("A", line) && parse_ambiant_light(scene, line))
 		|| (cmp_type("C", line) && parse_camera(scene, line))
 		|| (cmp_type("L", line) && parse_light(scene, line))

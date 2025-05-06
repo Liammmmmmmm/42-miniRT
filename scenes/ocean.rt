@@ -1,10 +1,11 @@
 # tex texture1 assets/textures/earth_daymap_2k.bmp
 tex texture2 assets/textures/non.bmp
 tex skybox assets/textures/sunflowers_puresky_2k.bmp
+tex water_tex assets/textures/water.bmp
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color normal_map
-mat	water                        105,165,197   	    0.6            0.0            1.450000       0.00000        1.0                 0.000000            255,255,255 
+mat	water                        105,165,197   	    0.6            0.0            1.450000       0.00000        1.0                 0.000000            255,255,255 water_tex
 mat	mat_red                       161,  0,  0       0.100000       0.250000       1.450000       0.000000  		1     				0.000000            161,  0,  0
 mat	mat_green                       0,121,  0       0.100000       0.250000       1.450000       0.000000   	1    				0.000000              0,121,  0
 mat	mat_blue                        0,  0,121       0.100000       0.250000       1.450000       0.000000  	 	1    				0.000000              0,  0,121

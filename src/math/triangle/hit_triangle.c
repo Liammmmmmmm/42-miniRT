@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:27:26 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/05 21:02:04 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:13:52 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	hit_triangle(t_triangle *t, t_ray *r, t_interval i, t_hit_record *rec)
 {
 	t_moller	m;
 
-    m.e1 = vec3_subtract(t->v1.pos, t->v0.pos);
+	m.e1 = vec3_subtract(t->v1.pos, t->v0.pos);
 	m.e2 = vec3_subtract(t->v2.pos, t->v0.pos);
 	m.h = vec3_cross(r->dir, m.e2);
 	if (is_parallel(&m))
@@ -71,7 +71,7 @@ char	hit_triangle(t_triangle *t, t_ray *r, t_interval i, t_hit_record *rec)
 	rec->t = m.t;
 	rec->point = ray_at(*r, m.t);
 	interpolate_normal(rec, t, m.u, m.v);
-    rec->u = m.u;
-    rec->v = m.v;
+	rec->u = (1.0f - m.u - m.v) * t->v0.u + m.u * t->v1.u + m.v * t->v2.u;
+	rec->v = (1.0f - m.u - m.v) * t->v0.v + m.u * t->v1.v + m.v * t->v2.v;
 	return (1);
 }

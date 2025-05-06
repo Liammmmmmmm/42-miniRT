@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:00:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/05 11:30:14 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/06 13:05:25 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,15 @@ static int	parse_mat_prop(char **parts, t_mat *mat, t_scene *scene, int nb_parts
 		return (material_item_error(6, mat->name));
 	if (parse_color(parts[9], &mat->emission_color) == 0)
 		return (0);
-	if (nb_parts >= 11)
-		mat->normal = get_texture(parts[10], scene);
-	if (nb_parts >= 11 && mat->normal == NULL)
+	if (nb_parts >= 11 && is_valid_double_el_no_bordered(parts[10], &mat->scale) == 0)
+		return (material_item_error(10, mat->name));
+	if (nb_parts >= 12)
+		mat->normal = get_texture(parts[11], scene);
+	if (nb_parts >= 12 && mat->normal == NULL)
 		return (material_item_error(7, mat->name));
 	mat->normal_intensity = 1;
-	if (nb_parts >= 12 && is_valid_double_el_no_bordered(parts[11], &mat->normal_intensity) == 0)
-		return (material_item_error(9, parts[11]));
+	if (nb_parts >= 13 && is_valid_double_el_no_bordered(parts[12], &mat->normal_intensity) == 0)
+		return (material_item_error(9, parts[12]));
 	return (1);
 }
 
@@ -112,7 +114,7 @@ int	parse_material(t_scene *scene, char *line)
 	if (!parts)
 		return (print_error(strerror(errno)));
 	nb_parts = char_tab_len(parts);
-	if (nb_parts < 10 || nb_parts > 12)
+	if (nb_parts < 10 || nb_parts > 13)
 		return (invalid_struct_error(MATERIAL, parts));
 	valid_name = is_valid_variable_name_mat(parts[1], scene);
 	if (valid_name == -1)

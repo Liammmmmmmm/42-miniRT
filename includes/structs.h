@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/05 10:24:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/06 13:01:12 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct s_mat
 	double	ao_value;
 	double	emission_strength;
 	t_color	emission_color;
+	double	scale;
 	t_tex	*normal;
 	double	normal_intensity;
 }	t_mat;

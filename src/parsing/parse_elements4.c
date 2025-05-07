@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:31:25 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/06 16:22:51 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 15:31:24 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	parse_cone(t_scene *scene, char *line)
 {
 	char		**parts;
 	t_cone		*cone;
+	int			nb_parts;
 
 	cone = ft_calloc(sizeof(t_cone), 1);
 	if (!cone)
@@ -25,7 +26,8 @@ int	parse_cone(t_scene *scene, char *line)
 	parts = ft_split_in_line(line, " ");
 	if (!parts)
 		return (print_error(strerror(errno)));
-	if (char_tab_len(parts) != 6)
+	nb_parts = char_tab_len(parts);
+	if (nb_parts < 6 || nb_parts > 7)
 		return (invalid_struct_error(CONE, parts));
 	if (!parse_vector(parts[1], &cone->position))
 		return (invalid_struct_error(CONE, parts));
@@ -37,6 +39,10 @@ int	parse_cone(t_scene *scene, char *line)
 		return (invalid_size_error(parts));
 	if (!parse_color_or_mat(parts[5], &cone->color, &cone->material, scene))
 		return (invalid_struct_error(CONE, parts));
+	cone->material_top = NULL;
+	if (!parse_only_mat(parts[6], &cone->material_top, scene))
+		return (invalid_struct_error(CONE, parts));
+	cone->orientation = vec3_unit(cone->orientation);
 	free(parts);
 	return (1);
 }
@@ -72,6 +78,7 @@ int	parse_hyperboloid(t_scene *scene, char *line)
 		return (invalid_size_error(parts));
 	if (!parse_color_or_mat(parts[8], &hyp->color, &hyp->material, scene))
 		return (invalid_struct_error(HYPERBOLOID, parts));
+	hyp->orientation = vec3_unit(hyp->orientation);
 	free(parts);
 	return (1);
 }

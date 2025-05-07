@@ -3,16 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cylinder.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 16:54:11 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/25 17:42:43 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/07 15:06:08 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
-#include "maths.h"
+#include "minirt.h"
 #include <math.h>
+
+static inline void	get_cylinder_lateral_uv(t_hit_record *rec, t_cylinder *cyl)
+{
+	t_vec3			right;
+	const t_vec3	rel = vec3_subtract(rec->point, cyl->position);
+
+	if (fabs(cyl->orientation.y) < 0.99)
+		right = vec3_unit(vec3_cross((t_vec3){0, 1, 0}, cyl->orientation));
+	else
+		right = vec3_unit(vec3_cross((t_vec3){1, 0, 0}, cyl->orientation));
+	rec->u = clamp_double((atan2(vec3_dot(rel, vec3_cross(cyl->orientation, \
+		right)), vec3_dot(rel, right)) + PI_D) / (2.0 * PI_D));
+
+	rec->v = clamp_double((vec3_dot(vec3_subtract(rec->point, cyl->position), cyl->orientation) / (cyl->height)) + 0.5);
+	if (rec->mat && rec->mat->scale != 1)
+	{
+		rec->u *= rec->mat->scale;
+		rec->v *= rec->mat->scale;
+		rec->u = modf(rec->u, &(double){0});
+		rec->v = modf(rec->v, &(double){0});
+	}
+}
+
+static inline void get_cylinder_cap_uv(t_hit_record *rec, t_cylinder *cyl, int top)
+{
+	t_vec3			right;
+	const t_vec3	rel = vec3_subtract(rec->point, vec3_add(cyl->position, \
+		vec3_multiply_scalar(cyl->orientation, cyl->height * 0.5 * top)));
+
+	if (fabs(cyl->orientation.y) < 0.99)
+		right = vec3_unit(vec3_cross((t_vec3){0, 1, 0}, cyl->orientation));
+	else
+		right = vec3_unit(vec3_cross((t_vec3){1, 0, 0}, cyl->orientation));
+	rec->u = clamp_double((vec3_dot(rel, right) / cyl->diameter) + 0.5);
+	rec->v = clamp_double((vec3_dot(rel, vec3_cross(cyl->orientation, right)) / cyl->diameter) + 0.5);
+	if (rec->mat && rec->mat->scale != 1)
+	{
+		rec->u *= rec->mat->scale;
+		rec->v *= rec->mat->scale;
+		rec->u = modf(rec->u, &(double){0});
+		rec->v = modf(rec->v, &(double){0});
+	}
+}
 
 static inline char	handle_cylinder_hit(t_cylinder *cyl, t_ray *r,
 t_hit_record *rec, t_quadratic *q)
@@ -32,6 +74,8 @@ t_hit_record *rec, t_quadratic *q)
 	rec->t = q->t_hit;
 	rec->point = p;
 	rec->normal = set_normal_face(r, &outward, rec);
+	rec->mat = cyl->material;
+	get_cylinder_lateral_uv(rec, cyl);
 	return (1);
 }
 
@@ -57,10 +101,15 @@ static inline char	cylinder_cap_bottom(t_ray *r, t_cylinder *cyl,
 	rec->point = hit_point;
 	rec->normal = vec3_negate(cyl->orientation);
 	rec->front_face = (vec3_dot(r->dir, rec->normal) < 0);
+	rec->mat = cyl->material_bot;
+	if (rec->mat == NULL)
+		rec->mat = cyl->material;
+	rec->part = BOTTOM_CAP;
+	get_cylinder_cap_uv(rec, cyl, -1);
 	return (1);
 }
 
-static inline char	cylinder_cap_top(t_ray *r, t_cylinder *cyl, \
+static inline char	cylinder_cap_top(t_ray *r, t_cylinder *cyl,
 	t_interval interval, t_hit_record *rec)
 {
 	const t_vec3	plane_origin = vec3_add(cyl->position,
@@ -84,6 +133,11 @@ static inline char	cylinder_cap_top(t_ray *r, t_cylinder *cyl, \
 	rec->point = hit_point;
 	rec->normal = cyl->orientation;
 	rec->front_face = (vec3_dot(r->dir, rec->normal) < 0);
+	rec->mat = cyl->material_top;
+	if (rec->mat == NULL)
+		rec->mat = cyl->material;
+	rec->part = TOP_CAP;
+	get_cylinder_cap_uv(rec, cyl, 1);
 	return (1);
 }
 
@@ -94,6 +148,8 @@ char	hit_cylinder(t_cylinder *cyl, t_ray *r, t_interval interval,
 	int			hit_cap_bottom;
 	int			hit_cap_top;
 
+	rec->u = 0;
+	rec->v = 0;
 	if (cyl->orientation.x == 0 && cyl->orientation.y == 0 && \
 			cyl->orientation.z == 0)
 		cyl->orientation.y = 1;

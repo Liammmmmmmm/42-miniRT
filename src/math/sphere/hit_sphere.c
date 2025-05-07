@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:47:38 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 10:02:27 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 12:47:40 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static inline void	get_sphere_uv(t_hit_record *rec, t_sphere *sphere)
 					/ sphere->radius) + PI_D) / (2 * PI_D));
 	rec->v = clamp_double(acos((-rec->point.y + sphere->position.y)
 				/ sphere->radius) / PI_D);
-	if (sphere->material)
+	if (sphere->material && sphere->material->scale != 1)
 	{
 		rec->u *= sphere->material->scale;
 		rec->v *= sphere->material->scale;

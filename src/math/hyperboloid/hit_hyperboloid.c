@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:50:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 10:27:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 12:47:19 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static inline void	get_hyperboloid_uv(t_hit_record *rec, t_hyperboloid *hyper)
 	rec->v = clamp_double((vec3_dot(vec3_subtract(rec->point, \
 		hyper->position), hyper->orientation) / (hyper->height * 0.5)) * 0.5 + \
 		0.5);
-	if (hyper->material)
+	if (hyper->material && hyper->material->scale != 1)
 	{
 		rec->u *= hyper->material->scale;
 		rec->v *= hyper->material->scale;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/29 13:30:01 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:36:30 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ char	hit_bvh(t_bvh *bvh, uint32_t node_index, t_ray *ray, \
 	t_hit_record	hit_tmp;
 	t_bvh_node		*node;
 
+	hit_tmp.part = DEFAULT;
 	node = &bvh->bvh_nodes[node_index];
 	if (!intersect_aabb(ray, &node->node_bounds))
 		return (0);

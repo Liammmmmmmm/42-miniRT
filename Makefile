@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/05 16:29:26 by madelvin         ###   ########.fr        #
+#    Updated: 2025/05/07 17:47:09 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,9 @@ SRC_FILE			= main.c
 UTILS_DIR			= src/utils/
 UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					bmp/bmp_extract_color.c bmp/bmp_extract_pixel.c \
-					bump_to_normal.c obj/obj_parser.c
+					bump_to_normal.c obj/obj_parser.c obj/obj_parser_utils.c \
+					obj/obj_extract_value.c obj/obj_extract_value2.c progress_bar.c \
+					obj/obj_ear_clipping.c obj/obj_triangle_extract.c
 
 UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c conversions.c color_picker.c float_input.c
@@ -160,7 +162,8 @@ REMAKE   = libft/includes/libft.h libft/includes/ft_printf.h \
 		libft/includes/get_next_line.h libft/Makefile  Makefile \
 		includes/bmp_parsing.h includes/bvh.h includes/font.h includes/font_structs.h \
 		includes/material.h includes/maths.h includes/minirt.h \
-		includes/mlx_base.h includes/mlx_components.h includes/structs.h includes/ui.h includes/utils.h
+		includes/mlx_base.h includes/mlx_components.h includes/structs.h includes/ui.h \
+		includes/utils.h includes/obj_parsing.h
 
 # NORMINETTE
 NORM_RET = $(RED)[ERROR]$(BOLD) Norminette Disable$(NC)

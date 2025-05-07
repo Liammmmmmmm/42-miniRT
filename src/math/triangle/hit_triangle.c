@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:27:26 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/06 12:00:26 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:10:44 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	hit_triangle(t_triangle *t, t_ray *r, t_interval i, t_hit_record *rec)
 	rec->t = m.t;
 	rec->point = ray_at(*r, m.t);
 	interpolate_normal(rec, t, m.u, m.v);
-	// rec->normal = set_normal_face(r, &rec->normal, rec);
+	rec->normal = set_normal_face(r, &rec->normal, rec);
 	rec->front_face = 1;
 	rec->u = (1.0f - m.u - m.v) * t->v0.u + m.u * t->v1.u + m.v * t->v2.u;
 	rec->v = (1.0f - m.u - m.v) * t->v0.v + m.u * t->v1.v + m.v * t->v2.v;

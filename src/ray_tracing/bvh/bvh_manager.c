@@ -6,13 +6,12 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/05 20:52:54 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:31:54 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bvh.h"
-#include "structs.h"
-#include "maths.h"
+#include "minirt.h"
 #include <math.h>
 
 void	split_bvh_node(t_bvh *bvh, uint32_t index, uint32_t start, \
@@ -72,6 +71,9 @@ uint32_t	build_bvh(t_bvh *bvh, uint32_t start, uint32_t count)
 
 	node = init_bvh_node(bvh, start, count);
 	index = bvh->bvh_nodes_used++;
+	if (node.is_leaf)
+		bvh->actual++;
+	print_progress_bar(bvh->actual, bvh->size);
 	bvh->bvh_nodes[index] = node;
 	if (!node.is_leaf)
 		split_bvh_node(bvh, index, start, count);
@@ -86,6 +88,7 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	t_object		*obj;
 	const uint32_t	count = count_object(obj_list, obj_c);
 
+	printf("\nStarting building bvh :\n");
 	ft_bzero(bvh, sizeof(t_bvh));
 	if (count == 0)
 		return ;
@@ -117,7 +120,11 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 		}
 		j++;
 	}
+	bvh->actual = 0;
+	bvh->size = count;
+	print_progress_bar(0, count);
 	build_bvh(bvh, 0, count);
+	printf("\nEnd building bvh\n\n");
 }
 
 char	hit_bvh(t_bvh *bvh, uint32_t node_index, t_ray *ray, \

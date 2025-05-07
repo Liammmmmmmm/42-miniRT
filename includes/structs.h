@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/05 20:56:24 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:08:52 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,6 +358,8 @@ typedef struct s_bvh
 	uint32_t	*closest_t;
 	uint32_t	node_index;
 	char		valid; 
+	uint32_t	size;
+	uint32_t	actual;
 }	t_bvh;
 
 typedef struct s_axis

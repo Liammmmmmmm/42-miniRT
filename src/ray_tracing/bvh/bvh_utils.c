@@ -6,13 +6,14 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:49:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/05 20:51:42 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:21:59 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "maths.h"
 #include "bvh.h"
+#include "minirt.h"
 #include <math.h>
 
 uint32_t	count_object(t_object *obj_list, uint32_t obj_c)

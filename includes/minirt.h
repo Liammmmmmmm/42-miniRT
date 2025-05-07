@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/05 19:24:07 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:37:15 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <errno.h>
 # include <math.h>
 # include "bmp_parsing.h"
+# include "obj_parsing.h"
 # include "material.h"
 # include "ui.h"
 
@@ -112,7 +113,7 @@ int		print_error(char *err);
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
 void	print_scene(t_scene *scene);
-
+void	print_progress_bar(size_t actual, size_t max);
 int		char_tab_len(char **tab);
 char	**free_ret_null(char **fre);
 
@@ -279,6 +280,6 @@ void		lanczos3_upscale(t_minirt *minirt);
 void		bicubic_upscale(t_minirt *minirt);
 void		no_upscaling(t_minirt *minirt);
 
-int		parse_obj(const char *file, t_custom_object *obj);
+int		parse_obj(char *file, t_custom_object *obj);
 
 #endif

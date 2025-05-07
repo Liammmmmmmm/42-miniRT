@@ -1,4 +1,4 @@
-tex skybox assets/textures/brown_photostudio_02_2k_greyscale.bmp
+tex skybox assets/textures/sunflowers_puresky_2k.bmp
 
 #	name     color        metallic       roughness      ior   transmission   ambient_occlusion   emission_strength   emission_color normal_map
 mat   alge   100,180,113  0.0  			 0.5  			1.400 0.0  			 1.0  				 0.0   				 220,220,220
@@ -22,20 +22,20 @@ mat   bocal2 255,255,255  0.0  			 0  			1.450 1.0  			 1.0  				 0.0   				 220
 # L   -1,1,1 1 255,0,0
 # cu	2,2,2 1,1,1 1 assets/test7.obj mat_0_1
 
-cu	2,2,2 1,1,1 1 assets/scene/coral/coral-red.obj cor
-cu	2,2,2 1,1,1 1 assets/scene/coral/coral-green.obj cog
-cu	2,2,2 1,1,1 1 assets/scene/coral/coral-orange.obj coo
-cu	2,2,2 1,1,1 1 assets/scene/coral/coral-purple.obj cop
-cu	2,2,2 1,1,1 1 assets/scene/coral/coral-yellow.obj coy
-cu	2,2,2 1,1,1 1 assets/scene/coral/coral-blue.obj cob
-cu	2,2,2 1,1,1 1 assets/scene/coral/algue.obj alge
-cu	2,2,2 1,1,1 1 assets/scene/coral/rock3.obj ro3
-cu	2,2,2 1,1,1 1 assets/scene/coral/rock2.obj ro2
-cu	2,2,2 1,1,1 1 assets/scene/coral/rock.obj ro1
-cu	2,2,2 1,1,1 1 assets/scene/coral/ground.obj ground
-cu	2,2,2 1,1,1 1 assets/scene/coral/meduse.obj meduse
-cu	2,2,2 1,1,1 1 assets/scene/coral/glass.obj bocal
-cu	2,2,2 1,1,1 1 assets/scene/coral/glass2.obj bocal2
+cu	2,2,2 1,1,1 1 assets/obj/bocal/coral-red.obj cor
+cu	2,2,2 1,1,1 1 assets/obj/bocal/coral-green.obj cog
+cu	2,2,2 1,1,1 1 assets/obj/bocal/coral-orange.obj coo
+cu	2,2,2 1,1,1 1 assets/obj/bocal/coral-purple.obj cop
+cu	2,2,2 1,1,1 1 assets/obj/bocal/coral-yellow.obj coy
+cu	2,2,2 1,1,1 1 assets/obj/bocal/coral-blue.obj cob
+cu	2,2,2 1,1,1 1 assets/obj/bocal/algue.obj alge
+cu	2,2,2 1,1,1 1 assets/obj/bocal/rock3.obj ro3
+cu	2,2,2 1,1,1 1 assets/obj/bocal/rock2.obj ro2
+cu	2,2,2 1,1,1 1 assets/obj/bocal/rock.obj ro1
+cu	2,2,2 1,1,1 1 assets/obj/bocal/ground.obj ground
+cu	2,2,2 1,1,1 1 assets/obj/bocal/meduse.obj meduse
+cu	2,2,2 1,1,1 1 assets/obj/bocal/glass.obj bocal
+cu	2,2,2 1,1,1 1 assets/obj/bocal/glass2.obj bocal2
 
 A	0.9										220,220,220 skybox
 C	0.8,1.1,2	-0.5,-0.5,-1 80

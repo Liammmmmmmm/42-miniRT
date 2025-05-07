@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_plane.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:53:12 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/25 18:32:18 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:28:20 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,31 @@
 #include "maths.h"
 #include <math.h>
 
-/*
-char	hit_plane(t_plane *plane, const t_ray *r, \
-	t_interval interval, t_hit_record *rec)
+static inline void	get_uv_plane(t_hit_record *rec, t_plane *p)
 {
-	register double	t;
+	t_vec3	up;
+	t_vec3	tangent;
+	t_vec3	local;
+	double	u;
+	double	v;
 
-	t = vec3_dot(vec3_subtract(plane->position, r->orig), plane->normal) / \
-			vec3_dot(plane->normal, r->dir);
-	if (t >= interval.min && t <= interval.max)
+	if (fabs(p->normal.y) < 0.99)
+		up = (t_vec3){0, 1, 0};
+	else
+		up = (t_vec3){1, 0, 0};
+	tangent = vec3_unit(vec3_cross(up, p->normal));
+	local = vec3_subtract(rec->point, p->position);
+	u = vec3_dot(local, tangent);
+	v = vec3_dot(local, vec3_cross(p->normal, tangent));
+	if (p->material)
 	{
-		rec->t = t;
-		rec->point = ray_at(*r, rec->t);
-		rec->normal = plane->normal;
-		if (vec3_dot(r->dir, rec->normal) > 0)
-			return (0);
-		rec->normal = vec3_unit(rec->normal);
-		rec->front_face = (vec3_dot(r->dir, rec->normal) < 0);
-		return (1);
+		u *= p->material->scale * 0.1;
+		v *= p->material->scale * 0.1;
 	}
-	return (0);
+	rec->u = u - floor(u);
+	rec->v = v - floor(v);
 }
-*/
+
 char	hit_plane(t_plane *p, const t_ray *r, t_interval i, t_hit_record *rec)
 {
 	const double	denom = p->normal.x * r->dir.x + p->normal.y * r->dir.y + \
@@ -58,5 +61,6 @@ char	hit_plane(t_plane *p, const t_ray *r, t_interval i, t_hit_record *rec)
 		rec->normal = p->normal;
 	else
 		rec->normal = (t_vec3){-p->normal.x, -p->normal.y, -p->normal.z};
+	get_uv_plane(rec, p);
 	return (1);
 }

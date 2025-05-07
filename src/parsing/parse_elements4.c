@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements4.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:31:25 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/29 13:27:03 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:22:51 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	parse_hyperboloid(t_scene *scene, char *line)
 		return (invalid_size_error(parts));
 	if (!is_valid_size(parts[6], &hyp->c))
 		return (invalid_size_error(parts));
-	if (!is_valid_size(parts[7], &hyp->shape))
+	if (!is_valid_double_el_no_bordered(parts[7], &hyp->shape))
 		return (invalid_size_error(parts));
 	if (!parse_color_or_mat(parts[8], &hyp->color, &hyp->material, scene))
 		return (invalid_struct_error(HYPERBOLOID, parts));

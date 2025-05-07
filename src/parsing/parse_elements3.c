@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:00:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/06 13:05:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/06 14:46:59 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ static int	parse_mat_prop(char **parts, t_mat *mat, t_scene *scene, int nb_parts
 		return (material_item_error(6, mat->name));
 	if (parse_color(parts[9], &mat->emission_color) == 0)
 		return (0);
+	mat->scale = 1;
 	if (nb_parts >= 11 && is_valid_double_el_no_bordered(parts[10], &mat->scale) == 0)
 		return (material_item_error(10, mat->name));
 	if (nb_parts >= 12)

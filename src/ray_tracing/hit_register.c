@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/05 11:39:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/06 15:48:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,9 @@ char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record)
 				*hit_record = temp_hit_record;
 				hit_record->mat = plane->material;
 				hit_record->obj = plane_lst[i];
+				apply_normal_map(hit_record);
+				apply_roughness_map(hit_record);
+				apply_metallic_map(hit_record);
 				hit_record->color = get_hit_register_color(plane->material, plane->color, hit_record);
 			}
 		}

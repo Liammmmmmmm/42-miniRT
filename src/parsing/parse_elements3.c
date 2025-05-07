@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:00:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/05 11:30:14 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 13:58:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	parse_cylinder(t_scene *scene, char *line)
 {
 	char		**parts;
 	t_cylinder	*cyl;
+	int			nb_parts;
 
 	cyl = ft_calloc(sizeof(t_cylinder), 1);
 	if (!cyl)
@@ -25,7 +26,8 @@ int	parse_cylinder(t_scene *scene, char *line)
 	parts = ft_split_in_line(line, " ");
 	if (!parts)
 		return (print_error(strerror(errno)));
-	if (char_tab_len(parts) != 6)
+	nb_parts = char_tab_len(parts);
+	if (nb_parts < 6 || nb_parts > 8)
 		return (invalid_struct_error(CYLINDER, parts));
 	if (!parse_vector(parts[1], &cyl->position))
 		return (invalid_struct_error(CYLINDER, parts));
@@ -37,6 +39,13 @@ int	parse_cylinder(t_scene *scene, char *line)
 		return (invalid_size_error(parts));
 	if (!parse_color_or_mat(parts[5], &cyl->color, &cyl->material, scene))
 		return (invalid_struct_error(CYLINDER, parts));
+	cyl->material_top = NULL;
+	cyl->material_bot = NULL;
+	if (nb_parts > 6 && !parse_only_mat(parts[6], &cyl->material_top, scene))
+		return (invalid_struct_error(CYLINDER, parts));
+	if (nb_parts > 7 && !parse_only_mat(parts[7], &cyl->material_bot, scene))
+		return (invalid_struct_error(CYLINDER, parts));
+	cyl->orientation = vec3_unit(cyl->orientation);
 	free(parts);
 	return (1);
 }
@@ -91,13 +100,16 @@ static int	parse_mat_prop(char **parts, t_mat *mat, t_scene *scene, int nb_parts
 		return (material_item_error(6, mat->name));
 	if (parse_color(parts[9], &mat->emission_color) == 0)
 		return (0);
-	if (nb_parts >= 11)
-		mat->normal = get_texture(parts[10], scene);
-	if (nb_parts >= 11 && mat->normal == NULL)
+	mat->scale = 1;
+	if (nb_parts >= 11 && is_valid_double_el_no_bordered(parts[10], &mat->scale) == 0)
+		return (material_item_error(10, mat->name));
+	if (nb_parts >= 12)
+		mat->normal = get_texture(parts[11], scene);
+	if (nb_parts >= 12 && mat->normal == NULL)
 		return (material_item_error(7, mat->name));
 	mat->normal_intensity = 1;
-	if (nb_parts >= 12 && is_valid_double_el_no_bordered(parts[11], &mat->normal_intensity) == 0)
-		return (material_item_error(9, parts[11]));
+	if (nb_parts >= 13 && is_valid_double_el_no_bordered(parts[12], &mat->normal_intensity) == 0)
+		return (material_item_error(9, parts[12]));
 	return (1);
 }
 
@@ -112,7 +124,7 @@ int	parse_material(t_scene *scene, char *line)
 	if (!parts)
 		return (print_error(strerror(errno)));
 	nb_parts = char_tab_len(parts);
-	if (nb_parts < 10 || nb_parts > 12)
+	if (nb_parts < 10 || nb_parts > 13)
 		return (invalid_struct_error(MATERIAL, parts));
 	valid_name = is_valid_variable_name_mat(parts[1], scene);
 	if (valid_name == -1)

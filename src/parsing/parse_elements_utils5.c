@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements_utils5.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:41:31 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 17:27:04 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:56:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,22 @@ inline int	parse_ambient_light_skybox(t_scene *scene, char **parts)
 			scene->amb_light.skybox_t = NULL;
 	}
 	return (1);
+}
+
+int	parse_only_mat(char *str, t_mat **mat, t_scene *scene)
+{
+	int	res;
+
+	if (contains_var_chars(str))
+	{
+		res = is_valid_variable_name_mat(str, scene);
+		if (res == 0)
+			*mat = get_material(str, scene);
+		else if (res == 1)
+			return (material_item_error(0, str));
+		else
+			return (material_item_error(1, str));
+		return (1);
+	}
+	return (0);
 }

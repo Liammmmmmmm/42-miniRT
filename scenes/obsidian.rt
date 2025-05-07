@@ -5,8 +5,8 @@ tex roughness assets/textures/obsidian/obsidian_roughness.bmp
 tex back assets/textures/mountain_skybox.bmp
 
 # MATERIALS
-#	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color normal_map
-mat	MATERIAL                      color             0.0            roughness      3.486          1.000000       1.0                 0.000000            255,255,255    normal
+#	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color scale normal_map
+mat	MATERIAL                      color             0.0            roughness      3.486          1.000000       1.0                 0.000000            255,255,255    10     normal
 
 A	0.2								255,255,255 back
 

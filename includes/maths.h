@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/05 11:38:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 10:02:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ double	fresnel_schlick_f(double cos_theta, double f0);
 int		iclamp(int min, int val, int max);
 int		imin(int i1, int i2);
 int		imax(int i1, int i2);
+double	clamp_double(double v);
 
 
 #endif

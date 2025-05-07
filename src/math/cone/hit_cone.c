@@ -3,14 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cone.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:49:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/25 19:08:51 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/07 15:34:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "maths.h"
+#include "minirt.h"
+
+static inline void	get_cone_lateral_uv(t_hit_record *rec, t_cone *cone)
+{
+	t_vec3			right;
+	const t_vec3	rel = vec3_subtract(rec->point, cone->position);
+
+	if (fabs(cone->orientation.y) < 0.99)
+		right = vec3_unit(vec3_cross((t_vec3){0, 1, 0}, cone->orientation));
+	else
+		right = vec3_unit(vec3_cross((t_vec3){1, 0, 0}, cone->orientation));
+	rec->u = clamp_double((atan2(vec3_dot(rel, vec3_cross(cone->orientation, \
+		right)), vec3_dot(rel, right)) + PI_D) / (2.0 * PI_D));
+
+	rec->v = clamp_double((vec3_dot(vec3_subtract(rec->point, cone->position), cone->orientation) / (cone->height)));
+	if (rec->mat && rec->mat->scale != 1)
+	{
+		rec->u *= rec->mat->scale;
+		rec->v *= rec->mat->scale;
+		rec->u = modf(rec->u, &(double){0});
+		rec->v = modf(rec->v, &(double){0});
+	}
+}
+
+static inline void get_cone_cap_uv(t_hit_record *rec, t_cone *cone)
+{
+	t_vec3			right;
+	const t_vec3	rel = vec3_subtract(rec->point, vec3_add(cone->position, \
+		vec3_multiply_scalar(cone->orientation, cone->height * 0.5)));
+
+	if (fabs(cone->orientation.y) < 0.99)
+		right = vec3_unit(vec3_cross((t_vec3){0, 1, 0}, cone->orientation));
+	else
+		right = vec3_unit(vec3_cross((t_vec3){1, 0, 0}, cone->orientation));
+	rec->u = clamp_double((vec3_dot(rel, right) / cone->diameter) + 0.5);
+	rec->v = clamp_double((vec3_dot(rel, vec3_cross(cone->orientation, right)) / cone->diameter) + 0.5);
+	if (rec->mat && rec->mat->scale != 1)
+	{
+		rec->u *= rec->mat->scale;
+		rec->v *= rec->mat->scale;
+		rec->u = modf(rec->u, &(double){0});
+		rec->v = modf(rec->v, &(double){0});
+	}
+}
 
 static inline char	handle_cone_hit(t_cone *cone, t_ray *r, t_hit_record *rec, \
 	t_quadratic *q)
@@ -30,6 +73,8 @@ static inline char	handle_cone_hit(t_cone *cone, t_ray *r, t_hit_record *rec, \
 	rec->t = q->t_hit;
 	rec->point = p;
 	rec->normal = set_normal_face(r, &normal, rec);
+	rec->mat = cone->material;
+	get_cone_lateral_uv(rec, cone);
 	return (1);
 }
 
@@ -57,6 +102,11 @@ static inline char	cone_cap(t_cone *cone, t_ray *r, t_interval interval, \
 	rec->point = hit_point;
 	rec->normal = normal;
 	rec->front_face = (vec3_dot(r->dir, rec->normal) < 0);
+	rec->part = TOP_CAP;
+	rec->mat = cone->material_top;
+	if (rec->mat == NULL)
+		rec->mat = cone->material;
+	get_cone_cap_uv(rec, cone);
 	return (1);
 }
 

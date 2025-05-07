@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/05 10:24:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 11:19:14 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct s_mat
 	double	ao_value;
 	double	emission_strength;
 	t_color	emission_color;
+	double	scale;
 	t_tex	*normal;
 	double	normal_intensity;
 }	t_mat;
@@ -210,6 +211,7 @@ typedef struct s_cone
 	double	diameter;
 	double	height;
 	t_mat	*material;
+	t_mat	*material_top;
 	t_color	color;
 }	t_cone;
 
@@ -220,6 +222,8 @@ typedef struct s_cylinder
 	double	diameter;
 	double	height;
 	t_mat	*material;
+	t_mat	*material_top;
+	t_mat	*material_bot;
 	t_color	color;
 }	t_cylinder;
 
@@ -244,6 +248,13 @@ typedef struct s_object
 	t_objects	type;
 }	t_object;
 
+typedef enum e_obj_part
+{
+	DEFAULT,
+	TOP_CAP,
+	BOTTOM_CAP
+}	t_obj_part;
+
 typedef	struct s_hit_record
 {
 	t_object	*obj;
@@ -255,6 +266,7 @@ typedef	struct s_hit_record
 	t_color		color;
 	double		u;
 	double		v;
+	t_obj_part	part;
 }	t_hit_record;
 
 typedef struct s_obj_lst

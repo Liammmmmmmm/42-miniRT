@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/05 11:07:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 13:59:40 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ int		valid_elements_amount(char **lines);
 int		free_scene(t_scene *scene, char **lines);
 int		parse_elements(t_scene *scene, char **lines, int ln_amount);
 
+t_mat	*get_material(char *str, t_scene *scene);
 int		is_valid_double_el(char *str, double *co);
 int		is_valid_double_el_no_bordered(char *str, double *co);
 int		is_valid_size(char *str, double *co);
@@ -177,6 +178,7 @@ int		parse_color(char *color, t_color *store);
 int		parse_vector(char *str, t_vec3 *vec);
 int		parse_vector_normalized(char *str, t_vec3 *vec);
 int		parse_color_or_mat(char *str, t_color *store, t_mat **mat, t_scene *scene);
+int		parse_only_mat(char *str, t_mat **mat, t_scene *scene);
 int		parse_color_or_tex(char *str, t_color *store, t_tex **tex, t_scene *scene);
 int		parse_double_b_or_tex(char *str, double *d, t_tex **tex, t_scene *scene);
 int		parse_double_or_tex(char *str, double *d, t_tex **tex, t_scene *scene);

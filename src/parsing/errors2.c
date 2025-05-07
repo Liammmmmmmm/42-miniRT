@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:05:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/05 11:08:51 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/06 13:04:17 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int	material_item_error(int error, char *part)
 			part);
 	else if (error == 9)
 		ft_dprintf(2, RED"[Error]"NC" Invalid normal intensity: `%s'\n", part);
+	else if (error == 10)
+		ft_dprintf(2, RED"[Error]"NC" Invalid scale: `%s'\n", part);
 	return (0);
 }
 

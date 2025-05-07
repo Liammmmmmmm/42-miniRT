@@ -18,3 +18,7 @@ callgrind.out*
 out
 
 assets/fonts/fontdecon*.ttf
+
+assets/textures/primitives/
+assets/textures/Water_001_NORM.bmp
+assets/textures/brown_photostudio_02_2k_greyscale.bmp

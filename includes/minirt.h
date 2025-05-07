@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/05/07 18:37:15 by madelvin         ###   ########.fr       */
@@ -112,6 +112,20 @@ int		print_error(char *err);
 ║                                    UTILS                                     ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
+void	print_light(t_light *light);
+void	print_cone(t_cone *cone);
+void	print_cylinder(t_cylinder *cylinder);
+void	print_plane(t_plane *plane);
+void	print_sphere(t_sphere *sphere);
+void	print_hyperboloid(t_hyperboloid *hyp);
+void	print_objects(t_scene *scene);
+
+void	print_color(t_color color);
+void	print_vec3(t_vec3 vec);
+void	print_mat_color(t_mat *mat, t_color color);
+void	print_tex_color_text(t_tex *tex, t_color color, char *txt);
+void	print_tex_double_text(t_tex *tex, double value, char *txt);
+
 void	print_scene(t_scene *scene);
 void	print_progress_bar(size_t actual, size_t max);
 int		char_tab_len(char **tab);
@@ -170,6 +184,7 @@ int		valid_elements_amount(char **lines);
 int		free_scene(t_scene *scene, char **lines);
 int		parse_elements(t_scene *scene, char **lines, int ln_amount);
 
+t_mat	*get_material(char *str, t_scene *scene);
 int		is_valid_double_el(char *str, double *co);
 int		is_valid_double_el_no_bordered(char *str, double *co);
 int		is_valid_size(char *str, double *co);
@@ -178,6 +193,7 @@ int		parse_color(char *color, t_color *store);
 int		parse_vector(char *str, t_vec3 *vec);
 int		parse_vector_normalized(char *str, t_vec3 *vec);
 int		parse_color_or_mat(char *str, t_color *store, t_mat **mat, t_scene *scene);
+int		parse_only_mat(char *str, t_mat **mat, t_scene *scene);
 int		parse_color_or_tex(char *str, t_color *store, t_tex **tex, t_scene *scene);
 int		parse_double_b_or_tex(char *str, double *d, t_tex **tex, t_scene *scene);
 int		parse_double_or_tex(char *str, double *d, t_tex **tex, t_scene *scene);

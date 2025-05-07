@@ -1,0 +1,15 @@
+# MATERIALS
+#	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color normal_map
+mat	mat_sphere                    255,255,255       0.000000       0.000000       1.450000       0.000000       1.0                 0.000000            255,255,255
+tex skybox assets/textures/skybox_apocalypse_ocean.bmp
+
+# SPHERES
+#	origin                                          diameter       material
+sp	   0.000000,    5.000000,    1.550000          3.000000       mat_sphere           
+
+C	    0.000000,  -10.500000,    3.000000          0.000000,    1.000000,   -0.000000             30
+
+# AMBIENT
+#	strength             color
+A	1.000000             255,255,255 skybox
+# A	1.000000             255,255,255

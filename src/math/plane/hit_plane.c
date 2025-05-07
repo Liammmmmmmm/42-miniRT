@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   hit_plane.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:53:12 by madelvin          #+#    #+#             */
 /*   Updated: 2025/05/05 13:31:29 by madelvin         ###   ########.fr       */
@@ -30,8 +30,11 @@ static inline void	get_uv_plane(t_hit_record *rec, t_plane *p)
 	local = vec3_subtract(rec->point, p->position);
 	u = vec3_dot(local, tangent);
 	v = vec3_dot(local, vec3_cross(p->normal, tangent));
-	u /= 80;
-	v /= 80;
+	if (p->material)
+	{
+		u *= p->material->scale * 0.1;
+		v *= p->material->scale * 0.1;
+	}
 	rec->u = u - floor(u);
 	rec->v = v - floor(v);
 }

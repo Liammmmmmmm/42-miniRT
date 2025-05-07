@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   hit_sphere.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:47:38 by madelvin          #+#    #+#             */
 /*   Updated: 2025/05/05 16:26:36 by madelvin         ###   ########.fr       */
@@ -12,28 +12,20 @@
 
 #include "minirt.h"
 
-static inline double	clamp(double v)
-{
-	if (v < 0)
-		return (0);
-	else if (v > 1)
-		return (1);
-	return (v);
-}
-
 static inline void	get_sphere_uv(t_hit_record *rec, t_sphere *sphere)
 {
-	rec->u = clamp((atan2((-rec->point.z + sphere->position.z)
+	rec->u = clamp_double((atan2((-rec->point.z + sphere->position.z)
 					/ sphere->radius, (rec->point.x - sphere->position.x)
 					/ sphere->radius) + PI_D) / (2 * PI_D));
-	rec->v = clamp(acos((-rec->point.y + sphere->position.y)
+	rec->v = clamp_double(acos((-rec->point.y + sphere->position.y)
 				/ sphere->radius) / PI_D);
-	rec->u *= 4;
-	rec->v *= 4;
-	while (rec->u > 1)
-		rec->u -= 1;
-	while (rec->v > 1)
-		rec->v -= 1;
+	if (sphere->material && sphere->material->scale != 1)
+	{
+		rec->u *= sphere->material->scale;
+		rec->v *= sphere->material->scale;
+		rec->u = modf(rec->u, &(double){0});
+		rec->v = modf(rec->v, &(double){0});
+	}
 }
 
 char	hit_sphere(t_sphere *sp, t_ray *r, t_interval i, t_hit_record *rec)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   material_default.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/27 16:04:24 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:53:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ t_ray_data	material_default(t_mat_manager *mat_man)
 	ray.orig = mat_man->hit_record.point;
 	ray_data = ray_color(mat_man->minirt, ray, mat_man->depth - 1, \
 		&bounce_hit);
-	if (bounce_hit)
-	{
+	// if (bounce_hit)
+	// {
 		if (ray_data.mat_type != EMISSIVE)
 			mat_man->color = color_multiply(mat_man->color, ray_data.color);
 		else
 			mat_man->color = color_add_clamp(ray_data.color, \
 				color_multiply(mat_man->color, ray_data.color));
-	}
+	// }
 	return ((t_ray_data){mat_man->color, DEFFAULT});
 }

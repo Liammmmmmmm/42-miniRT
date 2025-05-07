@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
 #    Updated: 2025/05/07 17:47:09 by madelvin         ###   ########.fr        #
@@ -76,7 +76,7 @@ UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_float
 					render.c layout.c list_objects.c materials_dropdown.c selected_object.c
 
 DEBUG_DIR			= src/debug/
-DEBUG_FILE			= print_scene.c
+DEBUG_FILE			= print_scene.c print_utils.c print_obj1.c print_obj2.c
 
 EVENT_DIR			= src/events/
 EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c  key_render.c  mouse_common.c  mouse_controls.c  mouse_render.c
@@ -102,7 +102,7 @@ MAT_FILE			= material_default.c material_manager.c material_mix.c \
 					emissive.c utils.c
 
 MATH_DIR			= src/math/
-MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/vec3_length.c \
+MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/vec3_length.c vector/vec3_lerp.c \
 					vector/vec3_utils.c vector/vec3_random.c vector/vec3_operation_scalar.c normal/normal.c \
 					color/color_operation.c color/color_utils.c ft_dmin.c plane/hit_plane.c sphere/hit_sphere.c random.c \
 					matrix/matrix.c matrix/matrix_calc.c angle/angle_math.c matrix/matrix3.c fresnel_schlick.c \

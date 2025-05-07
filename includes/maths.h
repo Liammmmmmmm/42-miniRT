@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
 /*   Updated: 2025/05/05 20:58:54 by madelvin         ###   ########.fr       */
@@ -25,6 +25,7 @@ t_vec3	vec3_divide_scalar(const t_vec3 v, double t);
 t_vec3	vec3_add_scalar(t_vec3 vec, double t);
 t_vec3	vec3_subtract_scalar(t_vec3 vec, double t);
 t_vec3	vec3_sqrt(t_vec3 v);
+t_vec3	vec3_lerp(t_vec3 a, t_vec3 b, double t);
 
 /*	Length and squared length calculation	*/
 double	vec3_length(const t_vec3 v);
@@ -124,6 +125,7 @@ double	fresnel_schlick_f(double cos_theta, double f0);
 int		iclamp(int min, int val, int max);
 int		imin(int i1, int i2);
 int		imax(int i1, int i2);
+double	clamp_double(double v);
 
 
 #endif

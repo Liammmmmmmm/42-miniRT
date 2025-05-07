@@ -76,16 +76,6 @@ int	parse_color(char *color, t_color *store)
 	return (1);
 }
 
-static int	is_valid_co(char *str, double *co)
-{
-	if (is_valid_float(str))
-	{
-		*co = ft_atod(str);
-		return (1);
-	}
-	return (0);
-}
-
 int	parse_vector(char *str, t_vec3 *vec)
 {
 	char	**co;
@@ -98,9 +88,9 @@ int	parse_vector(char *str, t_vec3 *vec)
 		free(co);
 		return (print_error("Vector must have 3 coordinates : <x,y,z>"));
 	}
-	if (!is_valid_co(co[0], &vec->x)
-		|| !is_valid_co(co[1], &vec->y)
-		|| !is_valid_co(co[2], &vec->z))
+	if (!is_valid_double_el_no_bordered(co[0], &vec->x)
+		|| !is_valid_double_el_no_bordered(co[1], &vec->y)
+		|| !is_valid_double_el_no_bordered(co[2], &vec->z))
 	{
 		free(co);
 		return (print_error("Invalid vector format. Expected format: x,y,z"));

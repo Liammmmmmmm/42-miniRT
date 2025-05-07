@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:31:25 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 15:31:24 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 16:07:36 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	parse_cone(t_scene *scene, char *line)
 	if (!parse_color_or_mat(parts[5], &cone->color, &cone->material, scene))
 		return (invalid_struct_error(CONE, parts));
 	cone->material_top = NULL;
-	if (!parse_only_mat(parts[6], &cone->material_top, scene))
+	if (nb_parts > 6 && !parse_only_mat(parts[6], &cone->material_top, scene))
 		return (invalid_struct_error(CONE, parts));
 	cone->orientation = vec3_unit(cone->orientation);
 	free(parts);

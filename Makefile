@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/05 11:38:19 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/05/07 17:25:12 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_float
 					render.c layout.c list_objects.c materials_dropdown.c selected_object.c
 
 DEBUG_DIR			= src/debug/
-DEBUG_FILE			= print_scene.c
+DEBUG_FILE			= print_scene.c print_utils.c print_obj1.c print_obj2.c
 
 EVENT_DIR			= src/events/
 EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c  key_render.c  mouse_common.c  mouse_controls.c  mouse_render.c

@@ -12,7 +12,7 @@ tex     skybox assets/textures/brown_photostudio_02_2k_greyscale.bmp
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission ior   emission_strength   emission_color
-mat	marble                        marble_diff       0.000000       marble_rough   1.450000       0.000000     1     0.000000            255,255,255     1    marble_normal     1 # 0.405
+mat	marble                        marble_diff       0.000000       marble_rough   1.450000       0.000000     1     0.000000            255,255,255     0.41    marble_normal     1 # 0.405
 mat	bronze                        bronze_diff       bronze_metal   bronze_rough   1.450000       0.000000     1     0.000000            255,255,255     1    bronze_normal     10
 
 # SPHERES

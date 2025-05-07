@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/07 17:18:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 18:37:15 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <errno.h>
 # include <math.h>
 # include "bmp_parsing.h"
+# include "obj_parsing.h"
 # include "material.h"
 # include "ui.h"
 
@@ -126,7 +127,7 @@ void	print_tex_color_text(t_tex *tex, t_color color, char *txt);
 void	print_tex_double_text(t_tex *tex, double value, char *txt);
 
 void	print_scene(t_scene *scene);
-
+void	print_progress_bar(size_t actual, size_t max);
 int		char_tab_len(char **tab);
 char	**free_ret_null(char **fre);
 
@@ -210,6 +211,7 @@ int		parse_texture(t_scene *scene, char *line);
 int		parse_material(t_scene *scene, char *line);
 int		parse_cone(t_scene *scene, char *line);
 int		parse_hyperboloid(t_scene *scene, char *line);
+int		parse_obj_custom(t_scene *scene, char *line);
 
 void	bump_to_normal(t_tex_img *bump);
 
@@ -293,5 +295,7 @@ void		neighbor_upscale(t_minirt *minirt);
 void		lanczos3_upscale(t_minirt *minirt);
 void		bicubic_upscale(t_minirt *minirt);
 void		no_upscaling(t_minirt *minirt);
+
+int		parse_obj(char *file, t_custom_object *obj);
 
 #endif

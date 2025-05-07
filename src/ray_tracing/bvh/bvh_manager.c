@@ -6,13 +6,12 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 10:36:30 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 18:31:54 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bvh.h"
-#include "structs.h"
-#include "maths.h"
+#include "minirt.h"
 #include <math.h>
 
 void	split_bvh_node(t_bvh *bvh, uint32_t index, uint32_t start, \
@@ -72,6 +71,9 @@ uint32_t	build_bvh(t_bvh *bvh, uint32_t start, uint32_t count)
 
 	node = init_bvh_node(bvh, start, count);
 	index = bvh->bvh_nodes_used++;
+	if (node.is_leaf)
+		bvh->actual++;
+	print_progress_bar(bvh->actual, bvh->size);
 	bvh->bvh_nodes[index] = node;
 	if (!node.is_leaf)
 		split_bvh_node(bvh, index, start, count);
@@ -82,12 +84,15 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 {
 	uint32_t		i;
 	uint32_t		j;
+	uint32_t		k;
+	t_object		*obj;
 	const uint32_t	count = count_object(obj_list, obj_c);
 
+	printf("\nStarting building bvh :\n");
 	ft_bzero(bvh, sizeof(t_bvh));
 	if (count == 0)
 		return ;
-	if (init_bvh_malloc(bvh, obj_c) == 1)
+	if (init_bvh_malloc(bvh, count) == 1)
 		return ;
 	bvh->valid = 1;
 	i = 0;
@@ -100,9 +105,26 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 			bvh->prim_indices[i] = i;
 			bvh->obj_list[i++] = &obj_list[j];
 		}
+		if (obj_list[j].type == CUSTOM)
+		{
+			k = 0;
+			while (k < ((t_custom_object *)obj_list[j].object)->triangle_count)
+			{
+				obj = malloc(sizeof(t_triangle));
+				((t_custom_object *)obj_list[j].object)->triangles[k].material = ((t_custom_object *)obj_list[j].object)->material;
+				obj->object = &((t_custom_object *)obj_list[j].object)->triangles[k++];
+				obj->type = TRIANGLE;
+				bvh->prim_indices[i] = i;
+				bvh->obj_list[i++] = obj;
+			}
+		}
 		j++;
 	}
+	bvh->actual = 0;
+	bvh->size = count;
+	print_progress_bar(0, count);
 	build_bvh(bvh, 0, count);
+	printf("\nEnd building bvh\n\n");
 }
 
 char	hit_bvh(t_bvh *bvh, uint32_t node_index, t_ray *ray, \

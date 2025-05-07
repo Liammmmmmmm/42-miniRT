@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:29:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/29 13:16:31 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:30:52 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,20 @@ void	free_tex_mat(t_scene *scene)
 
 void	free_bvh_obj_lst(t_scene *scene)
 {
+	uint32_t	i;
+
 	if (scene->obj_lst.light_nb != 0)
 		free(scene->obj_lst.light_lst);
 	if (scene->obj_lst.plane_nb != 0)
 		free(scene->obj_lst.plane_lst);
 	if (scene->bvh.valid == 1)
 	{
+		i = 0;
+		while (i < scene->bvh.size)
+		{
+			free(scene->bvh.obj_list[i]);
+			i++;
+		}
 		free(scene->bvh.bvh_nodes);
 		free(scene->bvh.obj_list);
 		free(scene->bvh.prim_indices);
@@ -53,6 +61,8 @@ int	free_scene(t_scene *scene, char **lines)
 		i = -1;
 		while (++i < scene->el_amount)
 		{
+			if (scene->elements[i].type == CUSTOM)
+				free(((t_custom_object *)scene->elements[i].object)->triangles);
 			free(scene->elements[i].object);
 			scene->elements[i].object = NULL;
 			scene->elements[i].type = NULL_OBJ;
@@ -75,6 +85,7 @@ static int	cmp_elements(t_scene *scene, char *line)
 		|| (cmp_type("cy", line) && parse_cylinder(scene, line))
 		|| (cmp_type("co", line) && parse_cone(scene, line))
 		|| (cmp_type("hb", line) && parse_hyperboloid(scene, line))
+		|| (cmp_type("cu", line) && parse_obj_custom(scene, line))
 		|| (cmp_type("A", line) && parse_ambiant_light(scene, line))
 		|| (cmp_type("C", line) && parse_camera(scene, line))
 		|| (cmp_type("L", line) && parse_light(scene, line))

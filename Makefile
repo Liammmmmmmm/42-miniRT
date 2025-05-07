@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/07 17:25:12 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/05/07 17:47:09 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,9 @@ SRC_FILE			= main.c
 UTILS_DIR			= src/utils/
 UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					bmp/bmp_extract_color.c bmp/bmp_extract_pixel.c \
-					bump_to_normal.c
+					bump_to_normal.c obj/obj_parser.c obj/obj_parser_utils.c \
+					obj/obj_extract_value.c obj/obj_extract_value2.c progress_bar.c \
+					obj/obj_ear_clipping.c obj/obj_triangle_extract.c
 
 UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c conversions.c color_picker.c float_input.c
@@ -105,7 +107,7 @@ MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/
 					color/color_operation.c color/color_utils.c ft_dmin.c plane/hit_plane.c sphere/hit_sphere.c random.c \
 					matrix/matrix.c matrix/matrix_calc.c angle/angle_math.c matrix/matrix3.c fresnel_schlick.c \
 					cylinder/hit_cylinder.c quadratique/quadratique.c quadratique/quadratique_hyperboloid.c \
-					cone/hit_cone.c valid_t.c clamp_int.c hyperboloid/hit_hyperboloid.c
+					cone/hit_cone.c valid_t.c clamp_int.c hyperboloid/hit_hyperboloid.c triangle/hit_triangle.c
 
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
@@ -160,7 +162,8 @@ REMAKE   = libft/includes/libft.h libft/includes/ft_printf.h \
 		libft/includes/get_next_line.h libft/Makefile  Makefile \
 		includes/bmp_parsing.h includes/bvh.h includes/font.h includes/font_structs.h \
 		includes/material.h includes/maths.h includes/minirt.h \
-		includes/mlx_base.h includes/mlx_components.h includes/structs.h includes/ui.h includes/utils.h
+		includes/mlx_base.h includes/mlx_components.h includes/structs.h includes/ui.h \
+		includes/utils.h includes/obj_parsing.h
 
 # NORMINETTE
 NORM_RET = $(RED)[ERROR]$(BOLD) Norminette Disable$(NC)

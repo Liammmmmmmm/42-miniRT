@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 10:02:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/05 20:58:54 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ char	hit_plane(t_plane *plane, const t_ray *r, \
 char	hit_cylinder(t_cylinder *cylinder, t_ray *r, t_interval interval, \
 	t_hit_record *rec);
 char	hit_cone(t_cone *cone, t_ray *ray, t_interval interval,
+		t_hit_record *rec);
+char	hit_triangle(t_triangle *t, t_ray *r, t_interval i, \
 		t_hit_record *rec);
 char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record);
 char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hit_record);

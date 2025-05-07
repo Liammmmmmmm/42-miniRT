@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/07 11:19:14 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/07 17:08:52 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,19 @@ typedef struct s_quadratic
 	double  oo;
 }	t_quadratic;
 
+typedef struct s_moller
+{
+	t_vec3	e1;
+	t_vec3	e2;
+	t_vec3	h;
+	t_vec3	s;
+	t_vec3	q;
+	float	f;
+	float	u;
+	float	v;
+	float	t;
+}	t_moller;
+
 typedef struct s_amb_light
 {
 	double	ratio;
@@ -227,6 +240,60 @@ typedef struct s_cylinder
 	t_color	color;
 }	t_cylinder;
 
+typedef struct s_vertex
+{
+	t_vec3	pos;
+	t_vec3	normal;
+	double	u;
+	double	v;
+	double	angle;
+}	t_vertex;
+
+typedef struct s_triangle
+{
+	t_vertex	v0;
+	t_vertex	v1;
+	t_vertex	v2;
+	t_vec3		center;
+	t_mat		*material;
+	t_color		color;
+}	t_triangle;
+
+typedef struct s_face
+{
+	size_t	*v_idx;
+	size_t	*vt_idx;
+	size_t	*vn_idx;
+	size_t	vertex_count;
+}	t_face;
+
+typedef struct s_obj_temp
+{
+	t_vec3	*v;
+	t_vec3	*vt;
+	t_vec3	*vn;
+	t_face	*face;
+	size_t	v_count;
+	size_t	vn_count;
+	size_t	vt_count;
+	size_t	face_count;
+	char	*name;
+}	t_obj_temp;
+
+typedef struct s_custom_object
+{
+	char		*name;
+	t_triangle	*triangles;
+	size_t		triangle_count;
+	t_vec3		position;
+	t_vec3		orientation;
+	double		scale;
+	t_mat		*material;
+	t_color		color;
+	int			index;
+}	t_custom_object;
+
+
 typedef enum e_objects
 {
 	NULL_OBJ,
@@ -239,7 +306,9 @@ typedef enum e_objects
 	PLANE,
 	CYLINDER,
 	CONE,
-	HYPERBOLOID
+	HYPERBOLOID,
+	TRIANGLE,
+	CUSTOM
 }	t_objects;
 
 typedef struct s_object
@@ -301,7 +370,9 @@ typedef struct s_bvh
 	t_object	**obj_list;
 	uint32_t	*closest_t;
 	uint32_t	node_index;
-	char		valid;
+	char		valid; 
+	uint32_t	size;
+	uint32_t	actual;
 }	t_bvh;
 
 typedef struct s_axis
@@ -434,6 +505,7 @@ typedef struct s_minirt
 	t_stats		stats;
 	t_viewport	viewport;
 	t_controls	controls;
+	t_custom_object	obj;
 }	t_minirt;
 
 typedef struct s_upscale_data

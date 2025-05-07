@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:31:37 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/29 13:29:41 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/05 20:53:13 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 #include "maths.h"
 #include "bvh.h"
 #include <math.h>
+
+static inline t_aabb compute_triangle_bounds(t_triangle *t)
+{
+	t_vec3 min = vec3_min(t->v0.pos, vec3_min(t->v1.pos, t->v2.pos));
+	t_vec3 max = vec3_max(t->v0.pos, vec3_max(t->v1.pos, t->v2.pos));
+	return (t_aabb){ min, max };
+}
 
 static inline t_aabb compute_hyperboloid_bounds(t_hyperboloid *hyp) {
     const t_vec3 axis = vec3_unit(hyp->orientation);
@@ -103,6 +110,8 @@ inline t_aabb	compute_object_bounds(t_object *obj)
 		return (compute_cone_bounds(obj->object));
 	if (obj->type == HYPERBOLOID)
 		return (compute_hyperboloid_bounds(obj->object));
+	if (obj->type == TRIANGLE)
+		return (compute_triangle_bounds(obj->object));
 	return (compute_cylinder_bounds(obj->object));
 }
 

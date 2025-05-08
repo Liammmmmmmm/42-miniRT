@@ -168,6 +168,47 @@ static inline void	refracted_ray_itt(t_minirt *minirt, t_ray *ray, t_hit_record 
 		refracted_value_itt(ray, hit_record, throughput, eta);
 }
 
+static inline void	default_mat_itt(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record, t_fcolor *throughput, t_fcolor *accumulated_color)
+{
+	t_vec3 direction = vec3_add(hit_record->normal, vec3_random_unit());
+	if (fabs(direction.x) < 1e-8 && fabs(direction.y) < 1e-8 && fabs(direction.z) < 1e-8)
+		direction = hit_record->normal; // A changer plus tard selon le materiau, la on revoie juste une direction rand en mode materiau mat
+
+	ray->dir = direction;
+	*accumulated_color = add_fcolor(*accumulated_color,
+		multiply_fcolor(multiply_fcolor(color_to_fcolor(hit_record->color), *throughput), compute_light_v2(hit_record, minirt))
+	);
+	*throughput = multiply_fcolor(*throughput, color_to_fcolor(hit_record->color));
+}
+
+static inline void	dielectric_mat_itt(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record, t_fcolor *throughput, t_fcolor *accumulated_color)
+{
+	if (hit_record->mat->ior > 0)
+	{
+		if (get_reflect_value_v2(ray, hit_record) >= random_double())
+			reflected_dielectric_color_itt(ray, hit_record, throughput);
+		else
+		{
+			if (hit_record->mat->transmission == 1.0)
+				refracted_ray_itt(minirt, ray, hit_record, throughput);
+			else if (hit_record->mat->transmission == 1.0)
+				default_mat_itt(minirt, ray, hit_record, throughput, accumulated_color);
+			else
+			{
+				if (hit_record->mat->transmission < random_double())
+					default_mat_itt(minirt, ray, hit_record, throughput, accumulated_color);
+				else
+					refracted_ray_itt(minirt, ray, hit_record, throughput);
+			}
+		}
+	}
+	else
+	{
+		default_mat_itt(minirt, ray, hit_record, throughput, accumulated_color);
+	}
+}
+
+
 t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 {
 	t_fcolor		accumulated_color;
@@ -195,75 +236,21 @@ t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 					);
 				}
 
-				// roulette russe metallic entre 0 et 1
-				if (hit_record.mat->metallic_value == 1.0) // Metallic
-				{
+				if (hit_record.mat->metallic_value == 1.0)
 					metallic_color_itt(&ray, &hit_record, &throughput);
-				}
-				else  // Dielectrique
+				else if (hit_record.mat->metallic_value == 0.0)
+					dielectric_mat_itt(minirt, &ray, &hit_record, &throughput, &accumulated_color);
+				else
 				{
-					if (hit_record.mat->ior > 0)
-					{
-						if (hit_record.mat->transmission == 1.0)
-						{
-							const double	f = get_reflect_value_v2(&ray, &hit_record);
-
-							if (f >= random_double())
-								reflected_dielectric_color_itt(&ray, &hit_record, &throughput);
-							else
-								refracted_ray_itt(minirt, &ray, &hit_record, &throughput);
-						}
-						else
-						{		
-							const double	f = get_reflect_value_v2(&ray, &hit_record);
-
-							if (f >= random_double())
-								reflected_dielectric_color_itt(&ray, &hit_record, &throughput);
-							else
-							{
-								t_vec3			direction;
-
-								direction = vec3_add(hit_record.normal, vec3_random_unit());
-								if (fabs(direction.x) < 1e-8 && fabs(direction.y) < 1e-8 && \
-										fabs(direction.z) < 1e-8)
-									direction = hit_record.normal;
-								ray.dir = direction;
-
-								accumulated_color = add_fcolor(accumulated_color,
-									multiply_fcolor(multiply_fcolor(color_to_fcolor(hit_record.color), throughput), compute_light_v2(&hit_record, minirt))
-								);
-								throughput = multiply_fcolor(throughput, color_to_fcolor(hit_record.color));
-
-							}
-
-						}
-					}
+					if (hit_record.mat->metallic_value > random_double())
+						metallic_color_itt(&ray, &hit_record, &throughput);
 					else
-					{
-						t_vec3 direction = vec3_add(hit_record.normal, vec3_random_unit());
-						if (fabs(direction.x) < 1e-8 && fabs(direction.y) < 1e-8 && fabs(direction.z) < 1e-8)
-							direction = hit_record.normal; // A changer plus tard selon le materiau, la on revoie juste une direction rand en mode materiau mat
-		
-						ray.dir = direction;
-						accumulated_color = add_fcolor(accumulated_color,
-							multiply_fcolor(multiply_fcolor(color_to_fcolor(hit_record.color), throughput), compute_light_v2(&hit_record, minirt))
-						);
-						throughput = multiply_fcolor(throughput, color_to_fcolor(hit_record.color));
-					}
+						dielectric_mat_itt(minirt, &ray, &hit_record, &throughput, &accumulated_color);
 				}
-
 			}
 			else
 			{
-				t_vec3 direction = vec3_add(hit_record.normal, vec3_random_unit());
-				if (fabs(direction.x) < 1e-8 && fabs(direction.y) < 1e-8 && fabs(direction.z) < 1e-8)
-					direction = hit_record.normal; // A changer plus tard selon le materiau, la on revoie juste une direction rand en mode materiau mat
-
-				ray.dir = direction;
-				accumulated_color = add_fcolor(accumulated_color,
-					multiply_fcolor(multiply_fcolor(color_to_fcolor(hit_record.color), throughput), compute_light_v2(&hit_record, minirt))
-				);
-				throughput = multiply_fcolor(throughput, color_to_fcolor(hit_record.color));
+				default_mat_itt(minirt, &ray, &hit_record, &throughput, &accumulated_color);
 			}
 		}
 		else

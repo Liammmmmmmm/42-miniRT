@@ -1,10 +1,10 @@
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color normal_map
-mat emissive  					  255,255,255       0.0            0.0            1.460          0.0            1.0                 1.0                 255,255,255
+mat emissive  					  255,255,255       0.0            0.0            1.460          0.0            1.0                 1                 255,255,255
 
 
-A	0.1										255,255,255 0,0,0
+A	0.0									255,255,255 255,255,255
 
 C	-2,0.2,-2	1,0,1 50
 

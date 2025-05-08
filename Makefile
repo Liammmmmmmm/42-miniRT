@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/07 17:47:09 by madelvin         ###   ########.fr        #
+#    Updated: 2025/05/08 11:48:48 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c  key_render.c  m
 RAY_TRACING_DIR		= src/ray_tracing/
 RAY_TRACING_FILE	= render.c hit_register.c focus.c light.c bvh/bvh_manager.c bvh/bvh_math.c \
 					bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_print.c bvh/bvh_draw.c bvh/bvh_draw_utils.c \
-					setup_scene_obj.c ray_color.c background.c viewport.c
+					setup_scene_obj.c ray_color.c background.c viewport.c path_trace.c
 
 TEXTURES_DIR		= src/ray_tracing/textures/
 TEXTURES_FILE		= get_solid_texture.c

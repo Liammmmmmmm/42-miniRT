@@ -96,7 +96,7 @@ static int	parse_mat_prop(char **parts, t_mat *mat, t_scene *scene, int nb_parts
 	if (parse_double_b_or_tex(parts[7], &mat->ao_value, &mat->ao_tex,
 			scene) == 0)
 		return (material_item_error(8, mat->name));
-	if (is_valid_double_el(parts[8], &mat->emission_strength) == 0)
+	if (is_valid_size(parts[8], &mat->emission_strength) == 0)
 		return (material_item_error(6, mat->name));
 	if (parse_color(parts[9], &mat->emission_color) == 0)
 		return (0);

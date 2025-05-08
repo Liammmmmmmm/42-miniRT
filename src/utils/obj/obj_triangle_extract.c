@@ -42,7 +42,7 @@ int	extract_all_triangle(t_obj_temp *obj, t_triangle **out, \
 
 	*triangle_count = 0;
 	size = 0;
-	vector_init(&v, sizeof(t_triangle), 2);
+	vector_init(&v, sizeof(t_triangle), 1);
 	printf("\nStart parsing obj :"YELLOW" %s\n"NC, file);
 	i = 0;
 	while (i < obj->face_count)

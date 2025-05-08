@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:10:05 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/23 11:55:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/08 12:24:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ typedef struct s_hsv_color
 
 typedef struct s_fcolor
 {
-	float	r;
-	float	g;
-	float	b;
+	double	r;
+	double	g;
+	double	b;
 }	t_fcolor;
 
 /**

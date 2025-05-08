@@ -38,3 +38,13 @@ inline double	get_reflect_value(t_mat_manager *mat_man)
 		)
 	);
 }
+
+inline double	get_reflect_value_v2(t_ray *ray_in, t_hit_record *hit_record)
+{
+	return (fresnel_schlick_f(
+			get_cos_theta(ray_in->dir, hit_record->normal),
+			powf((hit_record->mat->ior - 1)
+				/ (hit_record->mat->ior + 1), 2)
+		)
+	);
+}

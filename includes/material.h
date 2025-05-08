@@ -61,4 +61,7 @@ double	get_reflect_value(t_mat_manager *mat_man);
 
 double get_cos_theta(t_vec3 dir_in, t_vec3 normal);
 
+double	get_reflect_value_v2(t_ray *ray_in, t_hit_record *hit_record);
+
+
 #endif

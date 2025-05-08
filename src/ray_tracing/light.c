@@ -115,3 +115,31 @@ t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt)
 	light_color.b = ft_dmin(light_color.b, 255);
 	return ((t_color){light_color.r, light_color.g, light_color.b});
 }
+
+
+// a refaire mieux plus tard, la on passe genre du long color au f color c'est pas opti
+t_fcolor	compute_light_v2(t_hit_record *hit_record, t_minirt *minirt)
+{
+	t_lcolor	light_color;
+	t_vec3		view_dir;
+	t_light		*light;
+	int			i;
+
+	// light_color = compute_ambient(minirt);
+	light_color = (t_lcolor){0, 0, 0};
+	apply_ao_map(hit_record, &light_color);
+	view_dir = vec3_unit(vec3_subtract(minirt->scene.camera.position, \
+		hit_record->point));
+	i = 0;
+	while (i < minirt->scene.obj_lst.light_nb)
+	{
+		light = (t_light *)minirt->scene.obj_lst.light_lst[i]->object;
+		if (check_hit(minirt, hit_record->point, light->position) == 0)
+			add_light(&light_color, hit_record, light, view_dir);
+		i++;
+	}
+	// light_color.r = ft_dmin(light_color.r, 255);
+	// light_color.g = ft_dmin(light_color.g, 255);
+	// light_color.b = ft_dmin(light_color.b, 255);
+	return ((t_fcolor){light_color.r / 255.0, light_color.g / 255.0, light_color.b / 255.0});
+}

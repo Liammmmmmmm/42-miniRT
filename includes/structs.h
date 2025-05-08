@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/07 17:08:52 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/08 12:39:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,20 +280,6 @@ typedef struct s_obj_temp
 	char	*name;
 }	t_obj_temp;
 
-typedef struct s_custom_object
-{
-	char		*name;
-	t_triangle	*triangles;
-	size_t		triangle_count;
-	t_vec3		position;
-	t_vec3		orientation;
-	double		scale;
-	t_mat		*material;
-	t_color		color;
-	int			index;
-}	t_custom_object;
-
-
 typedef enum e_objects
 {
 	NULL_OBJ,
@@ -316,6 +302,20 @@ typedef struct s_object
 	void		*object;
 	t_objects	type;
 }	t_object;
+
+typedef struct s_custom_object
+{
+	char		*name;
+	t_triangle	*triangles;
+	t_object	*obj_list;
+	size_t		triangle_count;
+	t_vec3		position;
+	t_vec3		orientation;
+	double		scale;
+	t_mat		*material;
+	t_color		color;
+	int			index;
+}	t_custom_object;
 
 typedef enum e_obj_part
 {
@@ -410,8 +410,10 @@ typedef struct s_mlx
 typedef struct s_screen
 {
 	t_lsc_point	*render;
+	t_fcolor	*float_render;
 	int			sample;
 	int			last_sample_am;
+	ssize_t		last_sample_time;
 	int			spp; // sample per pixel
 	t_bool		start_render;
 	t_bool		pause_render;

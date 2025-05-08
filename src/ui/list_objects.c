@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_objects.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:56:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/29 15:28:40 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/08 09:36:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 const char	*get_object_name(t_objects obj)
 {
-	static const char	*objects[12] = {"NULL Object", "Texture", "Material",
+	static const char	*objects[14] = {"NULL Object", "Texture", "Material",
 		"Ambiant light", "Camera", "Light", "Sphere", "Plane", "Cylinder",
-		"Cone", "Hyperboloid"};
+		"Cone", "Hyperboloid", "Triangle", "Custom object"};
 
 	return (objects[(int)obj]);
 }
@@ -38,8 +38,13 @@ void	draw_object(t_img *img, t_ttf *ttf, t_minirt *minirt, int i)
 		draw_box_2d(img, (t_point2){301, i1}, (t_point2){600, i2}, 0x433366);
 	else
 		draw_box_2d(img, (t_point2){301, i1}, (t_point2){600, i2}, 0x3D3943);
-	draw_string(img, ttf, get_object_name(minirt->scene.elements[i].type),
-	(t_point2){.x = 320, .y = i2 - 20 + ((get_height(ttf)) * 0.5)});
+	if (minirt->scene.elements[i].type == CUSTOM
+		&& ((t_custom_object *)minirt->scene.elements[i].object)->name)
+		draw_string(img, ttf, ((t_custom_object *)minirt->scene.elements[i].object)->name,
+			(t_point2){.x = 320, .y = i2 - 20 + ((get_height(ttf)) * 0.5)});
+	else
+		draw_string(img, ttf, get_object_name(minirt->scene.elements[i].type),
+			(t_point2){.x = 320, .y = i2 - 20 + ((get_height(ttf)) * 0.5)});
 	img->height = tmp;
 }
 

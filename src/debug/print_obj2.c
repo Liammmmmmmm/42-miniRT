@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:16:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/07 17:23:32 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/08 09:29:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@ void	print_hyperboloid(t_hyperboloid *hyp)
 	printf("    c: " BLUE "%.2f" NC "\n", hyp->c);
 	printf("    shape: " BLUE "%.2f" NC "\n", hyp->shape);
 	print_mat_color(hyp->material, hyp->color);
+	printf("\n");
+}
+
+void	print_custom_obj(t_custom_object *obj)
+{
+	printf("  " YELLOW "Custom object %d: `%s'\n"NC, obj->index, obj->name);
+	printf("    Position: ");
+	print_vec3(obj->position);
+	printf("\n    Orientation: ");
+	print_vec3(obj->orientation);
+	printf("\n    Scale: " BLUE "%.2f" NC "\n", obj->scale);
+	printf("    Triangle amount: " BLUE "%zu" NC "\n", obj->triangle_count);
+	print_mat_color(obj->material, obj->color);
 	printf("\n");
 }
 
@@ -50,6 +63,8 @@ void	print_objects(t_scene *scene)
 			print_cone((t_cone *)obj->object);
 		else if (obj->type == HYPERBOLOID)
 			print_hyperboloid((t_hyperboloid *)obj->object);
+		else if (obj->type == CUSTOM)
+			print_custom_obj((t_custom_object *)obj->object);
 		else
 			printf("  " RED "Unknown object type!\n" NC);
 	}

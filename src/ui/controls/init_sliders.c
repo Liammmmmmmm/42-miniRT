@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_sliders.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:13:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 18:21:22 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/08 10:58:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	init_focal_sliders_value(t_minirt *minirt)
 	minirt->controls.sliders[2].min = 0;
 	minirt->controls.sliders[2].max = 180;
 	minirt->controls.sliders[2].value = &minirt->controls.values.fov;
-	minirt->controls.values.gamma = 800;
-	minirt->controls.sliders[3].min = 0;
-	minirt->controls.sliders[3].max = 1000;
+	minirt->controls.values.gamma = 22;
+	minirt->controls.sliders[3].min = 1;
+	minirt->controls.sliders[3].max = 50;
 	minirt->controls.sliders[3].value = &minirt->controls.values.gamma;
-	minirt->controls.values.upscaling_ratio = 50;
+	minirt->controls.values.upscaling_ratio = 100;
 	minirt->controls.sliders[4].min = 0;
 	minirt->controls.sliders[4].max = 100;
 	minirt->controls.sliders[4].value

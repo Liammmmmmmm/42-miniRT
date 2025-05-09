@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/07 17:08:52 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/09 13:18:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,10 +165,9 @@ typedef struct s_amb_light
 
 typedef struct s_ray_data
 {
-	t_color		color;
-	t_mat_type	mat_type;
+	t_fcolor	*power;
+	t_fcolor	*accumulation;
 }	t_ray_data;
-
 
 typedef struct s_camera
 {
@@ -280,20 +279,6 @@ typedef struct s_obj_temp
 	char	*name;
 }	t_obj_temp;
 
-typedef struct s_custom_object
-{
-	char		*name;
-	t_triangle	*triangles;
-	size_t		triangle_count;
-	t_vec3		position;
-	t_vec3		orientation;
-	double		scale;
-	t_mat		*material;
-	t_color		color;
-	int			index;
-}	t_custom_object;
-
-
 typedef enum e_objects
 {
 	NULL_OBJ,
@@ -316,6 +301,20 @@ typedef struct s_object
 	void		*object;
 	t_objects	type;
 }	t_object;
+
+typedef struct s_custom_object
+{
+	char		*name;
+	t_triangle	*triangles;
+	t_object	*obj_list;
+	size_t		triangle_count;
+	t_vec3		position;
+	t_vec3		orientation;
+	double		scale;
+	t_mat		*material;
+	t_color		color;
+	int			index;
+}	t_custom_object;
 
 typedef enum e_obj_part
 {
@@ -410,8 +409,10 @@ typedef struct s_mlx
 typedef struct s_screen
 {
 	t_lsc_point	*render;
+	t_fcolor	*float_render;
 	int			sample;
 	int			last_sample_am;
+	ssize_t		last_sample_time;
 	int			spp; // sample per pixel
 	t_bool		start_render;
 	t_bool		pause_render;
@@ -495,6 +496,9 @@ typedef struct s_controls
 	t_float_input	*float_input;
 	t_ttf			font[1];
 	t_ui_infos		ui_infos;
+	int				selected_x;
+	int				selected_y;
+	t_vec3			traced_ray[11];
 }	t_controls;
 
 typedef struct s_minirt
@@ -527,14 +531,5 @@ typedef struct s_btn_param
 	t_minirt	*minirt;
 	int			action;
 }	t_btn_param;
-
-typedef struct s_mat_manager
-{
-	t_hit_record	hit_record;
-	t_ray			ray_in;
-	t_minirt		*minirt;
-	t_color			color;
-	int				depth;
-}	t_mat_manager;
 
 #endif

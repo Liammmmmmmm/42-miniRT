@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/28 13:09:58 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/08 10:30:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ int	init_render(t_minirt *minirt)
 
 	minirt->screen.render = malloc(sizeof(t_lsc_point) * WIN_WIDTH * WIN_HEIGHT)
 		;
-	if (!minirt->screen.render)
+	minirt->screen.float_render = malloc(sizeof(t_fcolor) * WIN_WIDTH * WIN_HEIGHT);
+	if (!minirt->screen.render || !minirt->screen.render)
 		return (0);
 	i = 0;
 	while (i < WIN_WIDTH * WIN_HEIGHT)
@@ -92,6 +93,7 @@ int	init_render(t_minirt *minirt)
 		minirt->screen.render[i].x = i % WIN_WIDTH;
 		minirt->screen.render[i].y = i / WIN_WIDTH;
 		ft_bzero(&minirt->screen.render[i].color, sizeof(t_color));
+		ft_bzero(&minirt->screen.float_render[i], sizeof(t_fcolor));
 		i++;
 	}
 	minirt->stats.frame = 0;

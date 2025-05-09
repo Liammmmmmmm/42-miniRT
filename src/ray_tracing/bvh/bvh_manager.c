@@ -85,7 +85,6 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	uint32_t		i;
 	uint32_t		j;
 	uint32_t		k;
-	t_object		*obj;
 	const uint32_t	count = count_object(obj_list, obj_c);
 
 	printf("\nStarting building bvh :\n");
@@ -110,12 +109,11 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 			k = 0;
 			while (k < ((t_custom_object *)obj_list[j].object)->triangle_count)
 			{
-				obj = malloc(sizeof(t_triangle));
-				((t_custom_object *)obj_list[j].object)->triangles[k].material = ((t_custom_object *)obj_list[j].object)->material;
-				obj->object = &((t_custom_object *)obj_list[j].object)->triangles[k++];
-				obj->type = TRIANGLE;
+				((t_triangle *)(((t_custom_object *)obj_list[j].object)->obj_list[k]).object)->material = ((t_custom_object *)obj_list[j].object)->material;
+				((t_triangle *)(((t_custom_object *)obj_list[j].object)->obj_list[k]).object)->color = ((t_custom_object *)obj_list[j].object)->color;
 				bvh->prim_indices[i] = i;
-				bvh->obj_list[i++] = obj;
+				bvh->obj_list[i++] = &((t_custom_object *)obj_list[j].object)->obj_list[k];
+				k++;
 			}
 		}
 		j++;

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/07 18:37:15 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:15:47 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,13 +275,22 @@ void	render(t_minirt *minirt);
 ║                                  RAY TRACING                                 ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-t_ray_data	ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit);
 t_color		get_background_color(t_minirt *minirt, t_ray ray);
 t_viewport	init_viewport(t_minirt *minirt);
 t_vec3		defocus_disk_sample(t_minirt *minirt);
 t_color		compute_light(t_hit_record *hit_record, t_minirt *minirt);
 t_color		get_solid_texture(t_vec3 point, double scale);
 int			init_plane_light_lst(t_minirt *minirt);
+
+
+
+// V2 
+
+t_fcolor	compute_light_v2(t_hit_record *hit_record, t_minirt *minirt);
+t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth);
+
+void	debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth);
+
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    EDIT MOD                                  ║
@@ -295,6 +304,7 @@ void		neighbor_upscale(t_minirt *minirt);
 void		lanczos3_upscale(t_minirt *minirt);
 void		bicubic_upscale(t_minirt *minirt);
 void		no_upscaling(t_minirt *minirt);
+void		no_upscaling_float(t_minirt *minirt);
 
 int		parse_obj(char *file, t_custom_object *obj);
 

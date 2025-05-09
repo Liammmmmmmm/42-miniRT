@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:40:53 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 19:05:18 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/08 12:57:12 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,30 @@ int	init_tmp_obj(t_obj_temp *tmp, char *file)
 	tmp->face = malloc(sizeof(t_face) * tmp->face_count);
 	if (!tmp->face || !tmp->v || !tmp->vn || !tmp->vt)
 	{
-		free(tmp->vn);
-		free(tmp->v);
-		free(tmp->vt);
-		free(tmp->vn);
 		print_error("malloc error in obj parser");
+		tmp->name = NULL;
 		return (1);
+	}
+	return (0);
+}
+
+int	setup_obj_lst(t_custom_object *obj)
+{
+	size_t	i;
+
+	obj->obj_list = malloc(sizeof(t_object) * obj->triangle_count);
+	if (obj->obj_list == NULL)
+	{
+		free(obj->triangles);
+		print_error("Error of malloc in setup obj lst");
+		return (1);
+	}
+	i  = 0;
+	while (i < obj->triangle_count)
+	{
+		obj->obj_list[i].object = &obj->triangles[i];
+		obj->obj_list[i].type = TRIANGLE;
+		i++;
 	}
 	return (0);
 }
@@ -102,11 +120,13 @@ int	parse_obj(char *file, t_custom_object *obj)
 		free(tmp.name);
 		printf(RED"[Error]"NC" Error of parsing in object :"YELLOW"%s"NC"\n", \
 			file);
-		return (1);
+		return (0);
 	}
 	free(tmp.v);
 	free(tmp.vn);
 	free(tmp.vt);
 	ft_free_tab_face(tmp.face, tmp.face_count);
+	if (setup_obj_lst(obj) == 1)
+		return (0);
 	return (1);
 }

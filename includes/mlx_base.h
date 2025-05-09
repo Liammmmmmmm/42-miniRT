@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:10:05 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/23 11:55:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/08 12:24:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ typedef struct s_hsv_color
 
 typedef struct s_fcolor
 {
-	float	r;
-	float	g;
-	float	b;
+	double	r;
+	double	g;
+	double	b;
 }	t_fcolor;
 
 /**
@@ -90,8 +90,8 @@ typedef struct s_point
 {
 	int32_t	x;		/* X-coordinate of the point on the screen. */
 	int32_t	y;		/* Y-coordinate of the point on the screen. */
-	double		z;		/* Depth of the point. */
-	int			color;	/* Color of the point. */
+	double	z;		/* Depth of the point. */
+	int		color;	/* Color of the point. */
 }	t_point;
 
 void		put_pixel_image_alpha(t_img *img, int x, int y, t_color_alpha color)

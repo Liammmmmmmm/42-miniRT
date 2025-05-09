@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:07:24 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/20 17:01:57 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/09 17:28:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	init_pitch_matrix(double matrix[3][3], t_calc_trigo trigo_calcs)
 void	init_perspective_matrix(double matrix[4][4], t_minirt *minirt)
 {
 	const double	fov_rad = minirt->scene.camera.fov * (PI_D / 180.0);
-	const double	aspect = (double)WIN_WIDTH / (double)WIN_HEIGHT;
+	const double	aspect = (double)minirt->scene.win_width / (double)minirt->scene.win_height;
 	const double	f = 1.0 / tan(fov_rad * 0.5);
 	const double	znear = 0.1;
 	const double	zfar = 1000.0;

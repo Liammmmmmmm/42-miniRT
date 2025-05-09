@@ -23,8 +23,8 @@ static inline void	get_cone_lateral_uv(t_hit_record *rec, t_cone *cone)
 		right = vec3_unit(vec3_cross((t_vec3){1, 0, 0}, cone->orientation));
 	rec->u = clamp_double((atan2(vec3_dot(rel, vec3_cross(cone->orientation, \
 		right)), vec3_dot(rel, right)) + PI_D) / (2.0 * PI_D));
-
-	rec->v = clamp_double((vec3_dot(vec3_subtract(rec->point, cone->position), cone->orientation) / (cone->height)));
+	rec->v = clamp_double((vec3_dot(vec3_subtract(rec->point, cone->position),
+					cone->orientation) / (cone->height)));
 	if (rec->mat && rec->mat->scale != 1)
 	{
 		rec->u *= rec->mat->scale;
@@ -34,7 +34,7 @@ static inline void	get_cone_lateral_uv(t_hit_record *rec, t_cone *cone)
 	}
 }
 
-static inline void get_cone_cap_uv(t_hit_record *rec, t_cone *cone)
+static inline void	get_cone_cap_uv(t_hit_record *rec, t_cone *cone)
 {
 	t_vec3			right;
 	const t_vec3	rel = vec3_subtract(rec->point, vec3_add(cone->position, \
@@ -45,7 +45,8 @@ static inline void get_cone_cap_uv(t_hit_record *rec, t_cone *cone)
 	else
 		right = vec3_unit(vec3_cross((t_vec3){1, 0, 0}, cone->orientation));
 	rec->u = clamp_double((vec3_dot(rel, right) / cone->diameter) + 0.5);
-	rec->v = clamp_double((vec3_dot(rel, vec3_cross(cone->orientation, right)) / cone->diameter) + 0.5);
+	rec->v = clamp_double((vec3_dot(rel, vec3_cross(cone->orientation, right))
+				/ cone->diameter) + 0.5);
 	if (rec->mat && rec->mat->scale != 1)
 	{
 		rec->u *= rec->mat->scale;
@@ -81,9 +82,8 @@ static inline char	handle_cone_hit(t_cone *cone, t_ray *r, t_hit_record *rec, \
 static inline char	cone_cap(t_cone *cone, t_ray *r, t_interval interval, \
 	t_hit_record *rec)
 {
-	const t_vec3	cap_center = vec3_add(cone->position, \
-							vec3_multiply_scalar(vec3_unit(cone->orientation), \
-							cone->height));
+	const t_vec3	cap_c = vec3_add(cone->position, \
+		vec3_multiply_scalar(vec3_unit(cone->orientation), cone->height));
 	const t_vec3	normal = vec3_unit(cone->orientation);
 	const double	denom = vec3_dot(r->dir, normal);
 	double			t;
@@ -91,12 +91,11 @@ static inline char	cone_cap(t_cone *cone, t_ray *r, t_interval interval, \
 
 	if (fabs(denom) < 1e-6)
 		return (0);
-	t = vec3_dot(vec3_subtract(cap_center, r->orig), normal) / denom;
+	t = vec3_dot(vec3_subtract(cap_c, r->orig), normal) / denom;
 	if (t < interval.min || t > interval.max)
 		return (0);
 	hit_point = ray_at(*r, t);
-	if (vec3_length(vec3_subtract(hit_point, cap_center)) > \
-			(cone->diameter * 0.5))
+	if (vec3_length(vec3_subtract(hit_point, cap_c)) > (cone->diameter * 0.5))
 		return (0);
 	rec->t = t;
 	rec->point = hit_point;

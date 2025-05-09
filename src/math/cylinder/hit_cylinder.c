@@ -13,49 +13,6 @@
 #include "minirt.h"
 #include <math.h>
 
-static inline void	get_cylinder_lateral_uv(t_hit_record *rec, t_cylinder *cyl)
-{
-	t_vec3			right;
-	const t_vec3	rel = vec3_subtract(rec->point, cyl->position);
-
-	if (fabs(cyl->orientation.y) < 0.99)
-		right = vec3_unit(vec3_cross((t_vec3){0, 1, 0}, cyl->orientation));
-	else
-		right = vec3_unit(vec3_cross((t_vec3){1, 0, 0}, cyl->orientation));
-	rec->u = clamp_double((atan2(vec3_dot(rel, vec3_cross(cyl->orientation, \
-		right)), vec3_dot(rel, right)) + PI_D) / (2.0 * PI_D));
-
-	rec->v = clamp_double((vec3_dot(vec3_subtract(rec->point, cyl->position), cyl->orientation) / (cyl->height)) + 0.5);
-	if (rec->mat && rec->mat->scale != 1)
-	{
-		rec->u *= rec->mat->scale;
-		rec->v *= rec->mat->scale;
-		rec->u = modf(rec->u, &(double){0});
-		rec->v = modf(rec->v, &(double){0});
-	}
-}
-
-static inline void get_cylinder_cap_uv(t_hit_record *rec, t_cylinder *cyl, int top)
-{
-	t_vec3			right;
-	const t_vec3	rel = vec3_subtract(rec->point, vec3_add(cyl->position, \
-		vec3_multiply_scalar(cyl->orientation, cyl->height * 0.5 * top)));
-
-	if (fabs(cyl->orientation.y) < 0.99)
-		right = vec3_unit(vec3_cross((t_vec3){0, 1, 0}, cyl->orientation));
-	else
-		right = vec3_unit(vec3_cross((t_vec3){1, 0, 0}, cyl->orientation));
-	rec->u = clamp_double((vec3_dot(rel, right) / cyl->diameter) + 0.5);
-	rec->v = clamp_double((vec3_dot(rel, vec3_cross(cyl->orientation, right)) / cyl->diameter) + 0.5);
-	if (rec->mat && rec->mat->scale != 1)
-	{
-		rec->u *= rec->mat->scale;
-		rec->v *= rec->mat->scale;
-		rec->u = modf(rec->u, &(double){0});
-		rec->v = modf(rec->v, &(double){0});
-	}
-}
-
 static inline char	handle_cylinder_hit(t_cylinder *cyl, t_ray *r,
 t_hit_record *rec, t_quadratic *q)
 {
@@ -112,22 +69,20 @@ static inline char	cylinder_cap_bottom(t_ray *r, t_cylinder *cyl,
 static inline char	cylinder_cap_top(t_ray *r, t_cylinder *cyl,
 	t_interval interval, t_hit_record *rec)
 {
-	const t_vec3	plane_origin = vec3_add(cyl->position,
-			vec3_multiply_scalar(vec3_unit(cyl->orientation),
-				cyl->height * 0.5));
+	const t_vec3	pl_o = vec3_add(cyl->position, \
+		vec3_multiply_scalar(vec3_unit(cyl->orientation), cyl->height * 0.5));
 	const double	denom = vec3_dot(r->dir, cyl->orientation);
 	t_vec3			hit_point;
 	double			t;
 
 	if (fabs(denom) < 1e-6)
 		return (0);
-	t = -vec3_dot(vec3_subtract(r->orig, plane_origin),
+	t = -vec3_dot(vec3_subtract(r->orig, pl_o),
 			cyl->orientation) / denom;
 	if (t < interval.min || t > interval.max)
 		return (0);
 	hit_point = ray_at(*r, t);
-	if (vec3_length(vec3_subtract(hit_point, plane_origin)) > \
-			cyl->diameter * 0.5)
+	if (vec3_length(vec3_subtract(hit_point, pl_o)) > cyl->diameter * 0.5)
 		return (0);
 	rec->t = t;
 	rec->point = hit_point;
@@ -141,25 +96,38 @@ static inline char	cylinder_cap_top(t_ray *r, t_cylinder *cyl,
 	return (1);
 }
 
+static inline char	init_axe_value(t_cylinder *cyl)
+{
+	if (cyl->orientation.x == 0 && cyl->orientation.y == 0 && \
+		cyl->orientation.z == 0)
+		cyl->orientation.y = 1;
+	return (0);
+}
+
 char	hit_cylinder(t_cylinder *cyl, t_ray *r, t_interval interval,
 	t_hit_record *rec)
 {
-	t_quadratic	q;
-	int			hit_cap_bottom;
-	int			hit_cap_top;
+	t_quadratic		q;
+	t_hit_record	tmp_rec;
+	char			hit_any;
 
-	rec->u = 0;
-	rec->v = 0;
-	if (cyl->orientation.x == 0 && cyl->orientation.y == 0 && \
-			cyl->orientation.z == 0)
-		cyl->orientation.y = 1;
-	if (!init_cylinder_quadratic(&q, cyl, r) || !valid_t(&q, interval))
-		return (0);
-	if (handle_cylinder_hit(cyl, r, rec, &q))
-		return (1);
-	hit_cap_bottom = cylinder_cap_bottom(r, cyl, interval, rec);
-	hit_cap_top = cylinder_cap_top(r, cyl, interval, rec);
-	if (!(hit_cap_bottom || hit_cap_top))
+	hit_any = init_axe_value(cyl);
+	if (init_cylinder_quadratic(&q, cyl, r) && valid_t(&q, interval))
+		if (handle_cylinder_hit(cyl, r, rec, &q))
+			hit_any = 1;
+	if (cylinder_cap_bottom(r, cyl, interval, &tmp_rec) && \
+		(!hit_any || tmp_rec.t < rec->t))
+	{
+		*rec = tmp_rec;
+		hit_any = 1;
+	}
+	if (cylinder_cap_top(r, cyl, interval, &tmp_rec) && \
+		(!hit_any || tmp_rec.t < rec->t))
+	{
+		*rec = tmp_rec;
+		hit_any = 1;
+	}
+	if (!hit_any)
 		return (0);
 	rec->front_face = (vec3_dot(r->dir, rec->normal) < 0);
 	rec->normal = set_normal_face(r, &rec->normal, rec);

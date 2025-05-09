@@ -12,11 +12,11 @@
 
 #include "minirt.h"
 
-
-static void	interpolate_normal(t_hit_record *rec, t_triangle *t, float u, float v)
+static void	interpolate_normal(t_hit_record *rec, t_triangle *t, float u,
+	float v)
 {
-	t_vec3  n;
-	float   w;
+	t_vec3	n;
+	float	w;
 
 	w = 1.0f - u - v;
 	n.x = w * t->v0.normal.x + u * t->v1.normal.x + v * t->v2.normal.x;
@@ -27,7 +27,9 @@ static void	interpolate_normal(t_hit_record *rec, t_triangle *t, float u, float 
 
 static int	is_parallel(t_moller *m)
 {
-	float	a = vec3_dot(m->e1, m->h);
+	float	a;
+
+	a = vec3_dot(m->e1, m->h);
 	if (fabsf(a) < 1e-6)
 		return (1);
 	m->f = 1.0f / a;

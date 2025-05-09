@@ -103,6 +103,8 @@ char	hit_hyperboloid(t_hyperboloid *hyp, t_ray *r, t_interval interval, t_hit_re
 t_vec3	set_normal_face(const t_ray *r, const t_vec3 *outward_normal, t_hit_record	*hit_record);
 t_vec3	ray_at(t_ray r, double t);
 
+void	get_cylinder_cap_uv(t_hit_record *rec, t_cylinder *cyl, int top);
+void	get_cylinder_lateral_uv(t_hit_record *rec, t_cylinder *cyl);
 
 char	valid_t(t_quadratic *q, t_interval i);
 

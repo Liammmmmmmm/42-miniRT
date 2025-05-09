@@ -41,12 +41,11 @@ inline char	init_sphere_quadratic(t_quadratic *q, t_sphere *s, t_ray *r)
 
 inline char	init_cylinder_quadratic(t_quadratic *q, t_cylinder *cyl, t_ray *r)
 {
-	const t_vec3	axis = vec3_unit(cyl->orientation);
 	const t_vec3	oc = vec3_subtract(r->orig, cyl->position);
 	const double	radius = cyl->diameter * 0.5;
 
-	q->dd = vec3_dot(r->dir, axis);
-	q->oo = vec3_dot(oc, axis);
+	q->dd = vec3_dot(r->dir, cyl->orientation);
+	q->oo = vec3_dot(oc, cyl->orientation);
 	q->a = vec3_dot(r->dir, r->dir) - q->dd * q->dd;
 	q->b = 2.0 * (vec3_dot(r->dir, oc) - q->dd * q->oo);
 	q->c = vec3_dot(oc, oc) - q->oo * q->oo - radius * radius;
@@ -55,12 +54,11 @@ inline char	init_cylinder_quadratic(t_quadratic *q, t_cylinder *cyl, t_ray *r)
 
 inline char	init_cone_quadratic(t_quadratic *q, t_cone *cone, t_ray *r)
 {
-	const t_vec3	axis = vec3_unit(cone->orientation);
 	const t_vec3	oc = vec3_subtract(r->orig, cone->position);
 	const double	k = pow((cone->diameter * 0.5) / cone->height, 2);
 
-	q->dd = vec3_dot(r->dir, axis);
-	q->oo = vec3_dot(oc, axis);
+	q->dd = vec3_dot(r->dir, cone->orientation);
+	q->oo = vec3_dot(oc, cone->orientation);
 	q->a = vec3_dot(r->dir, r->dir) - (1.0 + k) * q->dd * q->dd;
 	q->b = 2.0 * (vec3_dot(r->dir, oc) - (1.0 + k) * q->dd * q->oo);
 	q->c = vec3_dot(oc, oc) - (1.0 + k) * q->oo * q->oo;

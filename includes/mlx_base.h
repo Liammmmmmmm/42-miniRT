@@ -90,8 +90,8 @@ typedef struct s_point
 {
 	int32_t	x;		/* X-coordinate of the point on the screen. */
 	int32_t	y;		/* Y-coordinate of the point on the screen. */
-	double		z;		/* Depth of the point. */
-	int			color;	/* Color of the point. */
+	double	z;		/* Depth of the point. */
+	int		color;	/* Color of the point. */
 }	t_point;
 
 void		put_pixel_image_alpha(t_img *img, int x, int y, t_color_alpha color)

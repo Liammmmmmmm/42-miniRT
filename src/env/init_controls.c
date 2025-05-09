@@ -16,4 +16,6 @@ void	init_controls(t_minirt *minirt)
 {
 	ft_bzero(&minirt->controls.keydown, sizeof(t_keydown));
 	minirt->controls.open_controls = KEY_C;
+	minirt->controls.selected_x = -1;
+	minirt->controls.selected_y = -1;
 }

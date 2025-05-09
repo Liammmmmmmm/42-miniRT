@@ -497,6 +497,9 @@ typedef struct s_controls
 	t_float_input	*float_input;
 	t_ttf			font[1];
 	t_ui_infos		ui_infos;
+	int				selected_x;
+	int				selected_y;
+	t_vec3			traced_ray[11];
 }	t_controls;
 
 typedef struct s_minirt

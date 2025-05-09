@@ -223,6 +223,7 @@ t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 	{
 		if (hit_register_all(minirt, &ray, &hit_record) == 1)
 		{
+			// ray.orig = vec3_add(hit_record.point, vec3_multiply_scalar(ray.dir, -1e-4));
 			ray.orig = hit_record.point;
 
 			if (hit_record.mat)
@@ -260,6 +261,84 @@ t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 					multiply_scalar_fcolor(color_to_fcolor(get_background_color(minirt, ray)), minirt->scene.amb_light.ratio),
 					throughput)
 			); // accumulated += throughtput * background * ambiant;
+			break ;
+		}
+		
+		bounce++;
+	}
+	return (accumulated_color);
+}
+
+
+
+
+
+t_fcolor	debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth)
+{
+	t_fcolor		accumulated_color;
+	t_fcolor		throughput;
+	t_hit_record	hit_record; 
+	int				bounce;
+
+	bounce = 0;
+	accumulated_color = (t_fcolor) {0.0, 0.0, 0.0};
+	throughput = (t_fcolor) {1.0, 1.0, 1.0};
+	while (bounce < max_depth && bounce < 10)
+	{
+		minirt->controls.traced_ray[bounce] = ray.orig;
+		printf("hit : ");
+		print_vec3(minirt->controls.traced_ray[bounce]);
+		printf(" - dir: ");
+		print_vec3(ray.dir);
+		printf("\n");
+
+		if (hit_register_all(minirt, &ray, &hit_record) == 1)
+		{
+			// ray.orig = vec3_add(hit_record.point, vec3_multiply_scalar(ray.dir, -1e-4));
+			ray.orig = hit_record.point;
+
+			if (hit_record.mat)
+			{
+				
+				if (hit_record.mat->emission_strength > 0)
+				{
+					accumulated_color = add_fcolor(
+						accumulated_color,
+						multiply_fcolor(multiply_scalar_fcolor(color_to_fcolor(hit_record.mat->emission_color), hit_record.mat->emission_strength), throughput)
+					);
+				}
+
+				if (hit_record.mat->metallic_value == 1.0)
+					metallic_color_itt(&ray, &hit_record, &throughput);
+				else if (hit_record.mat->metallic_value == 0.0)
+					dielectric_mat_itt(minirt, &ray, &hit_record, &throughput, &accumulated_color);
+				else
+				{
+					if (hit_record.mat->metallic_value > random_double())
+						metallic_color_itt(&ray, &hit_record, &throughput);
+					else
+						dielectric_mat_itt(minirt, &ray, &hit_record, &throughput, &accumulated_color);
+				}
+			}
+			else
+			{
+				default_mat_itt(minirt, &ray, &hit_record, &throughput, &accumulated_color);
+			}
+		}
+		else
+		{
+			accumulated_color = add_fcolor(accumulated_color, 
+				multiply_fcolor(
+					multiply_scalar_fcolor(color_to_fcolor(get_background_color(minirt, ray)), minirt->scene.amb_light.ratio),
+					throughput)
+			); // accumulated += throughtput * background * ambiant;
+			minirt->controls.traced_ray[bounce + 1] = vec3_add(ray.orig, vec3_multiply_scalar(ray.dir, 4));
+			printf("skybox : ");
+			print_vec3(minirt->controls.traced_ray[bounce + 1]);
+			printf(" - dir: ");
+			print_vec3(ray.dir);
+			printf("\n");
+
 			break ;
 		}
 		

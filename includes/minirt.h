@@ -290,6 +290,8 @@ int			init_plane_light_lst(t_minirt *minirt);
 t_fcolor	compute_light_v2(t_hit_record *hit_record, t_minirt *minirt);
 t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth);
 
+t_fcolor	debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth);
+
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    EDIT MOD                                  ║

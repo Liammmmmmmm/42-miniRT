@@ -38,6 +38,12 @@ int	mousedown_render(int key, int x, int y, t_minirt *minirt)
 			put_render_to_frame(minirt);
 		set_selected_object(minirt, minirt->controls.ui_infos.selected_object);
 	}
+	else if (key == RIGHT_CLICK)
+	{
+		minirt->controls.selected_x = x;
+		minirt->controls.selected_y = y;
+		printf("new selected : %d %d\n", minirt->controls.selected_x, minirt->controls.selected_y);
+	}
 	return (0);
 }
 

@@ -3,48 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   dielectric.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:30:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 16:39:54 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:20:07 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "material.h"
 
-inline t_ray_data	reflected_dielectric_color(t_mat_manager *mat_man)
+static inline void	reflected_dielectric_color(t_ray *ray,
+	t_hit_record *hit_record)
 {
 	t_vec3	direction;
 
-	direction = vec3_subtract(mat_man->ray_in.dir, \
-		vec3_multiply_scalar(mat_man->hit_record.normal, 2 * \
-			vec3_dot(mat_man->ray_in.dir, mat_man->hit_record.normal)));
-	if (mat_man->hit_record.mat->roughness_value > 0.0)
-		direction = vec3_add(vec3_unit(direction), vec3_multiply_scalar(\
-			vec3_random_unit(), mat_man->hit_record.mat->roughness_value));
-	mat_man->ray_in.dir = vec3_unit(direction);
-	mat_man->ray_in.orig = mat_man->hit_record.point;
-	return ((t_ray_data){ray_color(mat_man->minirt, mat_man->ray_in, \
-		mat_man->depth - 1, NULL).color, DEFFAULT});
+	direction = vec3_subtract(
+			ray->dir,
+			vec3_multiply_scalar(
+				hit_record->normal,
+				2 * vec3_dot(ray->dir, hit_record->normal)
+				)
+			);
+	direction = vec3_unit(direction);
+	if (hit_record->mat->roughness_value > 0.0)
+		direction = vec3_add(
+				direction,
+				vec3_multiply_scalar(
+					vec3_random_unit(),
+					hit_record->mat->roughness_value
+					)
+				);
+	ray->dir = direction;
 }
 
-inline double	get_reflect_value(t_mat_manager *mat_man)
+// In order to implement specular map just multiply 
+// get_reflect_value(ray, hit_record) by the specular value
+//
+inline void	dielectric_mat(t_minirt *minirt, t_ray *ray,
+	t_hit_record *hit_record, t_ray_data data)
 {
-	return (fresnel_schlick_f(
-			get_cos_theta(mat_man->ray_in.dir, mat_man->hit_record.normal),
-			powf((mat_man->hit_record.mat->ior - 1)
-				/ (mat_man->hit_record.mat->ior + 1), 2)
-		)
-	);
-}
-
-inline double	get_reflect_value_v2(t_ray *ray_in, t_hit_record *hit_record)
-{
-	return (fresnel_schlick_f(
-			get_cos_theta(ray_in->dir, hit_record->normal),
-			powf((hit_record->mat->ior - 1)
-				/ (hit_record->mat->ior + 1), 2)
-		)
-	);
+	if (hit_record->mat->ior > 0)
+	{
+		if (get_reflect_value(ray, hit_record) >= random_double())
+			reflected_dielectric_color(ray, hit_record);
+		else
+		{
+			if (hit_record->mat->transmission == 1.0)
+				refracted_ray(minirt, ray, hit_record, data.power);
+			else if (hit_record->mat->transmission == 1.0)
+				default_mat(minirt, ray, hit_record, data);
+			else
+			{
+				if (hit_record->mat->transmission < random_double())
+					default_mat(minirt, ray, hit_record, data);
+				else
+					refracted_ray(minirt, ray, hit_record, data.power);
+			}
+		}
+	}
+	else
+		default_mat(minirt, ray, hit_record, data);
 }

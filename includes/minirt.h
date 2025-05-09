@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/08 12:57:12 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:15:47 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,7 +275,6 @@ void	render(t_minirt *minirt);
 ║                                  RAY TRACING                                 ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-t_ray_data	ray_color(t_minirt *minirt, t_ray ray, int depth, char	*hit);
 t_color		get_background_color(t_minirt *minirt, t_ray ray);
 t_viewport	init_viewport(t_minirt *minirt);
 t_vec3		defocus_disk_sample(t_minirt *minirt);
@@ -290,7 +289,7 @@ int			init_plane_light_lst(t_minirt *minirt);
 t_fcolor	compute_light_v2(t_hit_record *hit_record, t_minirt *minirt);
 t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth);
 
-t_fcolor	debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth);
+void	debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth);
 
 
 /*═════════════════════════════════════════════════════════════════════════════╗

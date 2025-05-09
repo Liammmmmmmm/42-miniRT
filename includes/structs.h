@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/08 12:39:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 13:18:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,10 +165,9 @@ typedef struct s_amb_light
 
 typedef struct s_ray_data
 {
-	t_color		color;
-	t_mat_type	mat_type;
+	t_fcolor	*power;
+	t_fcolor	*accumulation;
 }	t_ray_data;
-
 
 typedef struct s_camera
 {
@@ -532,14 +531,5 @@ typedef struct s_btn_param
 	t_minirt	*minirt;
 	int			action;
 }	t_btn_param;
-
-typedef struct s_mat_manager
-{
-	t_hit_record	hit_record;
-	t_ray			ray_in;
-	t_minirt		*minirt;
-	t_color			color;
-	int				depth;
-}	t_mat_manager;
 
 #endif

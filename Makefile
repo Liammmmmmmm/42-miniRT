@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/08 11:48:48 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/05/09 14:40:01 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c  key_render.c  m
 RAY_TRACING_DIR		= src/ray_tracing/
 RAY_TRACING_FILE	= render.c hit_register.c focus.c light.c bvh/bvh_manager.c bvh/bvh_math.c \
 					bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_print.c bvh/bvh_draw.c bvh/bvh_draw_utils.c \
-					setup_scene_obj.c ray_color.c background.c viewport.c path_trace.c
+					setup_scene_obj.c background.c viewport.c path_trace.c
 
 TEXTURES_DIR		= src/ray_tracing/textures/
 TEXTURES_FILE		= get_solid_texture.c
@@ -96,15 +96,12 @@ ENV_DIR				= src/env/
 ENV_FILE			= init_mlx.c init_controls.c init_ui.c
 
 MAT_DIR				= src/material/
-MAT_FILE			= material_default.c material_manager.c material_mix.c \
-					reflection_math.c refraction_math.c \
-					dielectric_non_transmissive.c dielectric_transmissive.c dielectric.c metallic.c \
-					emissive.c utils.c
+MAT_FILE			= utils.c dielectric.c material_default.c metallic.c refraction.c
 
 MATH_DIR			= src/math/
 MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/vec3_length.c vector/vec3_lerp.c \
 					vector/vec3_utils.c vector/vec3_random.c vector/vec3_operation_scalar.c normal/normal.c \
-					color/color_operation.c color/color_utils.c ft_dmin.c plane/hit_plane.c sphere/hit_sphere.c random.c \
+					color/color_operation.c color/fcolor_operation.c color/color_utils.c ft_dmin.c plane/hit_plane.c sphere/hit_sphere.c random.c \
 					matrix/matrix.c matrix/matrix_calc.c angle/angle_math.c matrix/matrix3.c fresnel_schlick.c \
 					cylinder/hit_cylinder.c quadratique/quadratique.c quadratique/quadratique_hyperboloid.c \
 					cone/hit_cone.c valid_t.c clamp_int.c hyperboloid/hit_hyperboloid.c triangle/hit_triangle.c

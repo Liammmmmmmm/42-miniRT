@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/05 20:58:54 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/09 12:23:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ t_color	color_scale(t_color c1, double ratio);
 t_color	color_multiply(t_color c1, t_color c2);
 
 t_color	color_add_clamp(t_color c1, t_color c2);
+
+t_fcolor	color_to_fcolor(t_color color);
+t_fcolor	multiply_scalar_fcolor(t_fcolor c1, double c);
+t_fcolor	multiply_fcolor(t_fcolor c1, t_fcolor c2);
+t_fcolor	add_fcolor(t_fcolor c1, t_fcolor c2);
 
 t_vec3	vec3_random();
 t_vec3	vec3_random_unit();

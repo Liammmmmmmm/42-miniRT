@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 16:17:48 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:42:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,20 @@ void	apply_metallic_map(t_hit_record *hit)
 	hit->mat->metallic_value = map.r / 255.0; // potentiellement remplacer map.r par (map.r + map.g + map.b) / 3 pour une secu en plus
 }
 
+void	apply_ao_map(t_hit_record *hit)
+{
+	t_color	map;
+
+	if (hit->mat == NULL || hit->mat->ao_tex == NULL || hit->mat->ao_tex->img.pixel_data == NULL)
+		return ;
+	else
+	{
+		map = hit->mat->ao_tex->img.pixel_data[hit->mat->ao_tex->img.width * (int)(hit->v * hit->mat->ao_tex->img.height) + (int)(hit->u * hit->mat->ao_tex->img.width)];
+		hit->mat->ao_value = map.r / 255.0;
+	}
+}
+
+
 char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hit_record)
 {
 	t_hit_record	temp_hit_record;
@@ -132,10 +146,11 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 				apply_normal_map(hit_record);
 				apply_roughness_map(hit_record);
 				apply_metallic_map(hit_record);
+				apply_ao_map(hit_record);
 				hit_record->color = get_hit_register_color(((t_sphere *)obj->object)->material, ((t_sphere *)obj->object)->color, hit_record);
 			}
 		}
-		if (obj->type == CYLINDER && hit_cylinder(((t_cylinder *)obj->object), ray, interval, &temp_hit_record))
+		else if (obj->type == CYLINDER && hit_cylinder(((t_cylinder *)obj->object), ray, interval, &temp_hit_record))
 		{
 			if (temp_hit_record.t < closest_t)
 			{
@@ -146,6 +161,7 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 					apply_normal_map(hit_record);
 					apply_roughness_map(hit_record);
 					apply_metallic_map(hit_record);
+					apply_ao_map(hit_record);
 					if (hit_record->part == TOP_CAP && ((t_cylinder *)obj->object)->material_top)
 						hit_record->color = get_hit_register_color(((t_cylinder *)obj->object)->material_top, ((t_cylinder *)obj->object)->color, hit_record);
 					else if (hit_record->part == BOTTOM_CAP && ((t_cylinder *)obj->object)->material_bot)
@@ -154,7 +170,7 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 						hit_record->color = get_hit_register_color(((t_cylinder *)obj->object)->material, ((t_cylinder *)obj->object)->color, hit_record);
 			}
 		}
-		if (obj->type == CONE && hit_cone(((t_cone *)obj->object), ray, interval, &temp_hit_record))
+		else if (obj->type == CONE && hit_cone(((t_cone *)obj->object), ray, interval, &temp_hit_record))
 		{
 			if (temp_hit_record.t < closest_t)
 			{
@@ -165,13 +181,14 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 					apply_normal_map(hit_record);
 					apply_roughness_map(hit_record);
 					apply_metallic_map(hit_record);
+					apply_ao_map(hit_record);
 					if (hit_record->part == TOP_CAP && ((t_cone *)obj->object)->material_top)
 						hit_record->color = get_hit_register_color(((t_cone *)obj->object)->material_top, ((t_cone *)obj->object)->color, hit_record);
 					else
 						hit_record->color = get_hit_register_color(((t_cone *)obj->object)->material, ((t_cone *)obj->object)->color, hit_record);
 			}
 		}
-		if (obj->type == HYPERBOLOID && hit_hyperboloid(((t_hyperboloid *)obj->object), ray, interval, &temp_hit_record))
+		else if (obj->type == HYPERBOLOID && hit_hyperboloid(((t_hyperboloid *)obj->object), ray, interval, &temp_hit_record))
 		{
 			if (temp_hit_record.t < closest_t)
 			{
@@ -183,10 +200,11 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 				apply_normal_map(hit_record);
 				apply_roughness_map(hit_record);
 				apply_metallic_map(hit_record);
+				apply_ao_map(hit_record);
 				hit_record->color = get_hit_register_color(((t_hyperboloid *)obj->object)->material, ((t_hyperboloid *)obj->object)->color, hit_record);
 			}
 		}
-		if (obj->type == TRIANGLE && hit_triangle(((t_triangle *)obj->object), ray, interval, &temp_hit_record))
+		else if (obj->type == TRIANGLE && hit_triangle(((t_triangle *)obj->object), ray, interval, &temp_hit_record))
 		{
 			if (temp_hit_record.t < closest_t)
 			{
@@ -204,6 +222,7 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 				apply_normal_map(hit_record);
 				apply_roughness_map(hit_record);
 				apply_metallic_map(hit_record);
+				apply_ao_map(hit_record);
 				hit_record->color = get_hit_register_color(hit_record->mat, ((t_triangle *)obj->object)->color, hit_record);
 			}
 		}

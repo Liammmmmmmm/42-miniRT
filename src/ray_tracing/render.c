@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/08 12:34:51 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 15:15:51 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,6 @@
 #include <math.h>
 
 void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
-{
-	t_color			color;
-	const t_uint	tpi = minirt->viewport.render_w * minirt->viewport.render_h;
-	t_uint			i;
-	t_ray			ray;
-	char			bounce_hit;
-
-	bounce_hit = 0;
-	i = 0;
-	while (i < tpi)
-	{
-		if (minirt->scene.camera.defocus_angle <= 0)
-			ray.orig = minirt->scene.camera.position;
-		else
-			ray.orig = defocus_disk_sample(minirt);
-		ray.dir = vec3_subtract(vec3_add(vec3_add(minirt->viewport.pixel00_loc,
-						vec3_multiply_scalar(minirt->viewport.pixel_delta_u,
-							(i % minirt->viewport.render_w) + offset.x)),
-					vec3_multiply_scalar(minirt->viewport.pixel_delta_v,
-						(i / minirt->viewport.render_w) + offset.y)), ray.orig);
-		color = ray_color(minirt, ray, 10, &bounce_hit).color;
-		minirt->screen.render[i].color.r += color.r * minirt->viewport.gamma;
-		minirt->screen.render[i].color.g += color.g * minirt->viewport.gamma;
-		minirt->screen.render[i].color.b += color.b * minirt->viewport.gamma;
-		i++;
-	}
-}
-
-void	calc_one_sample_v2(t_minirt *minirt, t_vec3 offset)
 {
 	t_fcolor			color;
 	const t_uint	tpi = minirt->viewport.render_w * minirt->viewport.render_h;
@@ -82,7 +53,7 @@ void	calc_one_sample_v2(t_minirt *minirt, t_vec3 offset)
 						vec3_multiply_scalar(minirt->viewport.pixel_delta_u, minirt->controls.selected_x + offset.x)),
 					vec3_multiply_scalar(minirt->viewport.pixel_delta_v, minirt->controls.selected_y + offset.y)), ray.orig);
 		
-		color = debug_path_trace(minirt, ray, 8);
+		debug_path_trace(minirt, ray, 8);
 
 	}
 }
@@ -94,7 +65,7 @@ void	draw_pixels(t_minirt *minirt)
 	minirt->screen.last_sample_time = get_cpu_time();
 	offset = vec3_random();
 	// calc_one_sample(minirt, offset);
-	calc_one_sample_v2(minirt, offset);
+	calc_one_sample(minirt, offset);
 	minirt->screen.sample++;
 	minirt->screen.last_sample_am = minirt->screen.sample;
 	put_render_to_frame(minirt);

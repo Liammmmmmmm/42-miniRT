@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:29:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/08 12:46:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 17:23:02 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ static int	cmp_elements(t_scene *scene, char *line)
 		|| (cmp_type("L", line) && parse_light(scene, line))
 		|| (cmp_type("l", line) && parse_light(scene, line))
 		|| (cmp_type("tex", line) && parse_texture(scene, line))
-		|| (cmp_type("mat", line) && parse_material(scene, line)))
+		|| (cmp_type("mat", line) && parse_material(scene, line))
+		|| (cmp_type("W", line) && parse_win_size(scene, line)))
 		return (1);
 	else if (!valid)
 		ft_dprintf(2, RED"[Error]"NC" Invalid parameters for `%s'\n", line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:21:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/05 19:02:21 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/09 17:21:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	invalid_struct_error(t_objects type, char **splited)
 		print_error(ERR_MATERIAL_FORMAT);
 	else if (type == TEXTURE)
 		print_error(ERR_TEXTURE_FORMAT);
+	else if (type == WINDOW)
+		print_error(ERR_WINDOW_FORMAT);
 	free(splited);
 	return (0);
 }

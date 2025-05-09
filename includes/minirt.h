@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 15:15:47 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 17:22:39 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,7 @@ int		parse_double_or_tex(char *str, double *d, t_tex **tex, t_scene *scene);
 t_tex	*get_texture(char *str, t_scene *scene);
 void	get_texture_image(t_tex *tex, char *filename);
 int		is_extension(char *filename, char *extension);
+int		is_valid_positive_int(char *str, int *res);
 
 int		parse_ambiant_light(t_scene *scene, char *line);
 int		parse_camera(t_scene *scene, char *line);
@@ -212,6 +213,7 @@ int		parse_material(t_scene *scene, char *line);
 int		parse_cone(t_scene *scene, char *line);
 int		parse_hyperboloid(t_scene *scene, char *line);
 int		parse_obj_custom(t_scene *scene, char *line);
+int		parse_win_size(t_scene *scene, char *line);
 
 void	bump_to_normal(t_tex_img *bump);
 

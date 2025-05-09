@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:41:31 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/07 13:56:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 17:20:12 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,18 @@ int	parse_only_mat(char *str, t_mat **mat, t_scene *scene)
 		return (1);
 	}
 	return (0);
+}
+
+/**
+ * This function isn't protected against overflows
+ */
+int	is_valid_positive_int(char *str, int *res)
+{
+	int	tmp;
+
+	tmp = ft_atoi(str);
+	if (tmp < 0)
+		return (0);
+	*res = tmp;
+	return (1);
 }

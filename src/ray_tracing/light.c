@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:27:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/09 15:43:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 16:45:02 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ t_color	compute_light(t_hit_record *hit_record, t_minirt *minirt)
 	return ((t_color){light_color.r, light_color.g, light_color.b});
 }
 
-
-// a refaire mieux plus tard, la on passe genre du long color au f color c'est pas opti
 t_fcolor	compute_light_v2(t_hit_record *hit_record, t_minirt *minirt)
 {
 	t_lcolor	light_color;

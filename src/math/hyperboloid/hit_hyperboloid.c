@@ -38,13 +38,22 @@ static inline void	get_hyperboloid_uv(t_hit_record *rec, t_hyperboloid *hyper)
 
 static t_vec3	compute_normal(t_hyperboloid *hyp, t_vec3 to_p, t_vec3 axis)
 {
-	const double	proj = vec3_dot(to_p, axis);
-	const t_vec3	radial = vec3_subtract(to_p,
-			vec3_multiply_scalar(axis, proj));
+	t_vec3	tmp;
+	t_vec3	u;
+	t_vec3	v;
 
-	return (vec3_unit((t_vec3){2.0 * radial.x / (hyp->a * hyp->a), \
-		2.0 * radial.y / (hyp->b * hyp->b), \
-		-2.0 * proj / (hyp->c * hyp->c)}));
+	if (fabs(axis.y) < 0.99)
+		tmp = (t_vec3){0, 1, 0};
+	else
+		tmp = (t_vec3){1, 0, 0};
+	u = vec3_unit(vec3_cross(tmp, axis));
+	v = vec3_cross(axis, u);
+
+	return (vec3_unit(vec3_add(vec3_add(
+			vec3_multiply_scalar(u, 2.0 * vec3_dot(to_p, u) / (hyp->a * hyp->a)),
+			vec3_multiply_scalar(v, 2.0 * vec3_dot(to_p, v) / (hyp->b * hyp->b))),
+			vec3_multiply_scalar(axis, -2.0 * vec3_dot(to_p, axis) / (hyp->c * hyp->c))
+		)));
 }
 
 char	handle_hyperboloid_hit(t_hyperboloid *hyp, t_ray *r,

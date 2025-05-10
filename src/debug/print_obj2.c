@@ -35,7 +35,8 @@ void	print_custom_obj(t_custom_object *obj)
 	print_vec3(obj->position);
 	printf("\n    Orientation: ");
 	print_vec3(obj->orientation);
-	printf("\n    Scale: " BLUE "%.2f" NC "\n", obj->scale);
+	printf("\n    Scale: " BLUE "%.2f, %.2f, %.2f" NC "\n", obj->scale.x, \
+		obj->scale.y, obj->scale.z);
 	printf("    Triangle amount: " BLUE "%zu" NC "\n", obj->triangle_count);
 	print_mat_color(obj->material, obj->color);
 	printf("\n");

@@ -121,15 +121,21 @@ def is_custom(obj):
     return obj.type == 'MESH' and obj.name.lower().startswith("cu_")
 
 def get_custom_info(obj):
-    location = tuple(round(coord, 10) for coord in (obj.location.x, obj.location.z, -obj.location.y))  # Inversion Y/Z
-    normal = obj.matrix_world.to_3x3() @ mathutils.Vector((0.0, 0.0, 1.0))
-    normal = tuple(round(n, 10) for n in (normal.x, normal.z, -normal.y))
-    scale = round((obj.scale.x + obj.scale.y + obj.scale.z) / 3, 10)
+    location = tuple(round(coord, 10) for coord in (obj.location.x, obj.location.z, -obj.location.y))
+
+    # Orientation réelle dans le monde (transforme le vecteur avant)
+    orientation_vec = obj.matrix_world.to_3x3() @ mathutils.Vector((0.0, 0.0, 1.0))
+    orientation_vec = orientation_vec.normalized()
+    orientation = tuple(round(coord, 10) for coord in (orientation_vec.x, orientation_vec.z, -orientation_vec.y))
+    scale_x = obj.scale.x
+    scale_y = obj.scale.y
+    scale_z = obj.scale.z
     material = obj.active_material.name if obj.active_material else "None"
     name = obj.name.lower()
-    return location, normal, scale, material, name
+    return location, orientation, scale_x, scale_y, scale_z, material, name
 
-# Geometry extractors
+
+
 def get_sphere_info(obj):
     location = tuple(round(coord, 10) for coord in (obj.location.x, obj.location.z, -obj.location.y))  # Inversé Y et Z
     diameter = max(obj.dimensions)
@@ -265,10 +271,11 @@ with open(output_file_path, 'w') as file:
                              f"{ori[0]:>12.6f},{ori[1]:>12.6f},{ori[2]:>12.6f}             "
                              f"{dia:<15.6f}{h:<15.6f}{mat:<20}\n")
         elif is_custom(obj):
-            loc, ori, scale, mat, name = get_custom_info(obj)
+            loc, ori, scale_x, scale_y, scale_z, mat, name = get_custom_info(obj)
             custom.append(f"cu\t{loc[0]:>12.6f},{loc[1]:>12.6f},{loc[2]:>12.6f}      "
-                             f"{ori[0]:>12.6f},{ori[1]:>12.6f},{ori[2]:>12.6f}             "
-                             f"{scale:<15.6f}{name:<20}{mat:<20}\n")
+                             f"{ori[0]:>12.6f},{ori[1]:>12.6f},{ori[2]:>12.6f}         "
+                             f"{scale_x:>12.6f},{scale_y:>12.6f},{scale_z:>12.6f}"
+                             f"{name:>17}{mat:>19}\n")
 
     if spheres:
         file.write("\n# SPHERES\n#\t    origin                                      diameter       material\n")
@@ -286,7 +293,7 @@ with open(output_file_path, 'w') as file:
         file.write("\n# CAMERA\n#\t    origin                                      orientation                                    field of view\n")
         file.writelines(cameras)
     if custom:
-        file.write("\n# CUSTOM\n#\t    origin                                      orientation                                    scale          path                material\n")
+        file.write("\n# CUSTOM\n#\t    origin                                      orientation                                    scale                                     path                material\n")
         file.writelines(custom)
 
     ambient_color, ambient_strength = get_world_background_info()

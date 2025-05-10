@@ -102,7 +102,7 @@ int	parse_obj_custom(t_scene *scene, char *line)
 		return (invalid_struct_error(CUSTOM, parts));
 	if (!parse_vector_normalized(parts[2], &obj->orientation))
 		return (invalid_struct_error(CUSTOM, parts));
-	if (!is_valid_size(parts[3], &obj->scale))
+	if (!parse_vector(parts[3], &obj->scale))
 		return (invalid_size_error(parts));
 	if (!parse_obj(parts[4], obj))
 		return (invalid_size_error(parts)); // a changer

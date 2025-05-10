@@ -24,7 +24,8 @@ void	get_value_face(char *line, t_obj_temp *tmp, char *error);
 char	count_obj_data(const char *filename, t_obj_temp *tmp, size_t *size);
 void	ft_free_tab_face(t_face *tab, size_t i);
 void	ft_free_tab_triangle(t_triangle **tab, size_t i);
-int		extract_all_triangle(t_obj_temp *obj, t_triangle **out, size_t *triangle_count, const char *file);
-long	ear_clipping(t_vertex *vertices, size_t vertex_count, t_vector *v);
+int		extract_all_triangle(t_obj_temp *tmp, t_custom_object *obj, const char *file);
+long	ear_clipping(t_vertex *vertices, size_t vertex_count, t_vector *v, \
+	t_custom_object *obj);
 
 #endif

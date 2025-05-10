@@ -310,7 +310,7 @@ typedef struct s_custom_object
 	size_t		triangle_count;
 	t_vec3		position;
 	t_vec3		orientation;
-	double		scale;
+	t_vec3		scale;
 	t_mat		*material;
 	t_color		color;
 	int			index;

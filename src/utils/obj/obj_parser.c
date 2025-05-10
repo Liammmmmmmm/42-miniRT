@@ -110,7 +110,7 @@ int	parse_obj(char *file, t_custom_object *obj)
 	ft_bzero(&tmp, sizeof(t_obj_temp));
 	if (count_obj_data(file, &tmp, &size) || init_tmp_obj(&tmp, file) || \
 		extract_obj_data(&tmp, &size) || \
-		extract_all_triangle(&tmp, &obj->triangles, &obj->triangle_count, file))
+		extract_all_triangle(&tmp, obj, file))
 	{
 		free(tmp.v);
 		free(tmp.vn);

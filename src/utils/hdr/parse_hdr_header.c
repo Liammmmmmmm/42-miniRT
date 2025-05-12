@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:08:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/12 16:07:58 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/12 16:47:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,6 @@ int	get_hdr_size(t_hdr *hdr, t_bin *bin, int index)
 	read_width_or_height(hdr, bin, index);
 	if (hdr->width == 0 || hdr->height == 0)
 		return (-1);
-	return (0);
+	move_index_end(bin, &index);
+	return (index + 1);
 }

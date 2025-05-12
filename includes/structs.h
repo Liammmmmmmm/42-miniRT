@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 17:21:52 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/12 09:19:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,6 +373,7 @@ typedef struct s_bvh
 	char		valid; 
 	uint32_t	size;
 	uint32_t	actual;
+	int			normal_mode;
 }	t_bvh;
 
 typedef struct s_axis

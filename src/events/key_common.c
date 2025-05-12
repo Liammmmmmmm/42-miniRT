@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:29:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/22 18:30:27 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/12 09:19:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ void	keydown_common(int key, t_minirt *minirt)
 		put_render_to_frame(minirt);
 		mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win,
 			minirt->mlx.img.img, 0, 0);
+	}
+	else if (key == KEY_N)
+	{
+		minirt->scene.bvh.normal_mode = !minirt->scene.bvh.normal_mode;
+		minirt->screen.sample = 0;
 	}
 }
 

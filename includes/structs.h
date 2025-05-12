@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 13:18:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 17:21:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,7 +293,8 @@ typedef enum e_objects
 	CONE,
 	HYPERBOLOID,
 	TRIANGLE,
-	CUSTOM
+	CUSTOM,
+	WINDOW
 }	t_objects;
 
 typedef struct s_object
@@ -395,6 +396,8 @@ typedef struct s_scene
 	t_camera	camera;
 	double		ior_all;
 	t_bvh		bvh;
+	int			win_width;
+	int			win_height;
 }	t_scene;
 
 typedef struct s_mlx

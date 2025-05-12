@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:15:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 13:49:17 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 17:09:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define ERR_CONE_FORMAT "Invalid cone. Expected: co "BLUE"<x,y,z> <x,y,z> <diameter> <height> <r,g,b|material> [top_material]"NC
 # define ERR_MATERIAL_FORMAT "Invalid material. Expected: mat "BLUE"<name> <albedo> <metallic> <roughness> <ior> <transmission> <emission_strength> <emission_color> [tex_scale] [normal_map] [normal_intensity]"NC
 # define ERR_TEXTURE_FORMAT "Invalid texture. Expected: tex "BLUE"<name> <filepath>"NC
+# define ERR_WINDOW_FORMAT "Invalid window size. Expected: W "BLUE"<width> <height>"NC
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 15:15:51 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 17:28:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void	draw_pixels(t_minirt *minirt)
 		t_point		p1;
 		t_point		p2;
 		i = 1;
-		points[0][0] = WIN_WIDTH / 2;
-		points[0][1] = WIN_HEIGHT / 2;
+		points[0][0] = minirt->scene.win_width / 2;
+		points[0][1] = minirt->scene.win_height / 2;
 		
 		while (i < 11)
 		{

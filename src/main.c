@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/08 10:57:32 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 17:31:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ int	main(int argc, char **argv)
 	ft_bzero(&minirt, sizeof(t_minirt));
 	if (parse_scene(&minirt, argv[1]) == 0)
 		return (1);
+	if (minirt.scene.win_height == -1 || minirt.scene.win_width == -1)
+	{
+		minirt.scene.win_width = WIN_WIDTH;
+		minirt.scene.win_height = WIN_HEIGHT;
+	}
 	if (!init_ui(&minirt))
 		return (clean(&minirt));
 	if (!init_mlx(&minirt))

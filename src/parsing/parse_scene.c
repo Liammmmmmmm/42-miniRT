@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:20:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/29 13:15:44 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/09 17:13:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	parse_scene(t_minirt *minirt, char *filename)
 	int		ln_amount;
 	char	**lines;
 
+	minirt->scene.win_width = -1;
+	minirt->scene.win_height = -1;
 	if (!is_valid_extension(filename))
 		return (print_error("Invalid file extension. Expected a '.rt' file."));
 	ln_amount = count_valid_lines(filename);

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/08 10:30:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/09 17:31:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,17 @@ int	init_mlx(t_minirt *minirt)
 	mlx->mlx = mlx_init();
 	if (!mlx->mlx)
 		return (free_mlx_error(minirt));
-	mlx->render_win = mlx_new_window(mlx->mlx, WIN_WIDTH, WIN_HEIGHT, "miniRT");
-	mlx->img.img = mlx_new_image(mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
+	mlx->render_win = mlx_new_window(mlx->mlx, minirt->scene.win_width, minirt->scene.win_height, "miniRT");
+	mlx->img.img = mlx_new_image(mlx->mlx, minirt->scene.win_width, minirt->scene.win_height);
 	if (!mlx->img.img || !mlx->render_win)
 		return (free_mlx_error(minirt));
 	mlx->img.img_str = mlx_get_data_addr(mlx->img.img, &mlx->img.bits,
 			&mlx->img.size_line, &mlx->img.endian);
 	if (!mlx->img.img_str)
 		return (free_mlx_error(minirt));
-	mlx->img.width = WIN_WIDTH;
-	mlx->img.width4 = WIN_WIDTH * 4;
-	mlx->img.height = WIN_HEIGHT;
+	mlx->img.width = minirt->scene.win_width;
+	mlx->img.width4 = minirt->scene.win_width * 4;
+	mlx->img.height = minirt->scene.win_height;
 	init_controls(minirt);
 	return (init_controls_mlx(minirt));
 }
@@ -82,16 +82,16 @@ int	init_render(t_minirt *minirt)
 {
 	int	i;
 
-	minirt->screen.render = malloc(sizeof(t_lsc_point) * WIN_WIDTH * WIN_HEIGHT)
+	minirt->screen.render = malloc(sizeof(t_lsc_point) * minirt->scene.win_width * minirt->scene.win_height)
 		;
-	minirt->screen.float_render = malloc(sizeof(t_fcolor) * WIN_WIDTH * WIN_HEIGHT);
+	minirt->screen.float_render = malloc(sizeof(t_fcolor) * minirt->scene.win_width * minirt->scene.win_height);
 	if (!minirt->screen.render || !minirt->screen.render)
 		return (0);
 	i = 0;
-	while (i < WIN_WIDTH * WIN_HEIGHT)
+	while (i < minirt->scene.win_width * minirt->scene.win_height)
 	{
-		minirt->screen.render[i].x = i % WIN_WIDTH;
-		minirt->screen.render[i].y = i / WIN_WIDTH;
+		minirt->screen.render[i].x = i % minirt->scene.win_width;
+		minirt->screen.render[i].y = i / minirt->scene.win_width;
 		ft_bzero(&minirt->screen.render[i].color, sizeof(t_color));
 		ft_bzero(&minirt->screen.float_render[i], sizeof(t_fcolor));
 		i++;

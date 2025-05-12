@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_draw_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 18:42:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/18 13:18:47 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/09 17:28:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ void	project_vertex(t_minirt *minirt, t_vec3 v, int *x, int *y)
 	vector_multiply_matrix_3x3(mat, vec);
 	init_perspective_matrix(persp, minirt);
 	vector_multiply_matrix_4x4(persp, vec);
-	*x = ((vec[0] / vec[3]) + 1) * 0.5 * WIN_WIDTH;
-	*y = (1 - (vec[1] / vec[3])) * 0.5 * WIN_HEIGHT;
+	*x = ((vec[0] / vec[3]) + 1) * 0.5 * minirt->scene.win_width;
+	*y = (1 - (vec[1] / vec[3])) * 0.5 * minirt->scene.win_height;
 }
 
 void	init_box_vertices(t_vec3 *v, t_vec3 min, t_vec3 max)

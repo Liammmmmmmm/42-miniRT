@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:31:25 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/05 20:00:07 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/09 17:22:22 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,23 @@ int	parse_obj_custom(t_scene *scene, char *line)
 		return (invalid_size_error(parts)); // a changer
 	if (!parse_color_or_mat(parts[5], &obj->color, &obj->material, scene))
 		return (invalid_struct_error(CUSTOM, parts));
+	free(parts);
+	return (1);
+}
+
+int	parse_win_size(t_scene *scene, char *line)
+{
+	char			**parts;
+
+	parts = ft_split_in_line(line, " ");
+	if (!parts)
+		return (print_error(strerror(errno)));
+	if (char_tab_len(parts) != 3)
+		return (invalid_struct_error(WINDOW, parts));
+	if (!is_valid_positive_int(parts[1], &scene->win_width))
+		return (invalid_struct_error(WINDOW, parts));
+	if (!is_valid_positive_int(parts[2], &scene->win_height))
+		return (invalid_struct_error(WINDOW, parts));
 	free(parts);
 	return (1);
 }

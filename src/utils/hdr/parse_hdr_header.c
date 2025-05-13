@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:08:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/12 16:47:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 11:16:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	cmp_prop(char *prop, char *test)
 {
 	int	i;
 
+	i = 0;
 	while (prop[i])
 	{
 		if (test[i] != prop[i])
@@ -42,7 +43,7 @@ int	cmp_prop(char *prop, char *test)
 	return (0);
 }
 
-void	move_index_end(t_bin *bin, int *index)
+void	move_index_end(t_bin *bin, size_t *index)
 {
 	while (*index < bin->size && bin->data[*index])
 		(*index)++;
@@ -50,10 +51,10 @@ void	move_index_end(t_bin *bin, int *index)
 
 int	parse_hdr_header(t_hdr *hdr, t_bin *bin)
 {
-	int	index;
-	int	have_format;
+	size_t	index;
+	int		have_format;
 
-	hdr->exposure = 1.0;
+	hdr->exposure = 0.0;
 	hdr->gamma = 1.0;
 	index = get_line_bin(bin, (size_t)-1);
 	if (index == (size_t)-1
@@ -63,6 +64,7 @@ int	parse_hdr_header(t_hdr *hdr, t_bin *bin)
 	have_format = 0;
 	while (index != (size_t)-1 && bin->data[index])
 	{
+		ft_printf("line : %s\n",(char *)&bin->data[index]);
 		if (cmp_prop("FORMAT", (char *)&bin->data[index]))
 		{
 			have_format = 1;
@@ -74,6 +76,7 @@ int	parse_hdr_header(t_hdr *hdr, t_bin *bin)
 		{
 			if (is_valid_float((char *)&bin->data[index + 10]))
 				hdr->exposure = ft_atof((char *)&bin->data[index + 10]);
+			ft_printf("Exposure : %f", hdr->exposure);
 		}
 		else if (cmp_prop("GAMMA", (char *)&bin->data[index]))
 		{
@@ -106,7 +109,7 @@ void	read_width_or_height(t_hdr *hdr, t_bin *bin, int index)
 	}
 }
 
-int	get_hdr_size(t_hdr *hdr, t_bin *bin, int index)
+int	get_hdr_size(t_hdr *hdr, t_bin *bin, size_t index)
 {
 	hdr->dir_x = 1;
 	hdr->dir_y = 1;

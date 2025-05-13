@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 15:37:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 11:56:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ static inline t_fcolor	add_skybox(t_minirt *minirt, t_ray *ray,
 	if (hit_record->mat)
 	{
 		return (add_fcolor(*data.accumulation, multiply_fcolor(\
-multiply_scalar_fcolor(color_to_fcolor(get_background_color(minirt, *ray)), \
+multiply_scalar_fcolor(get_background_color(minirt, *ray), \
 minirt->scene.amb_light.ratio * hit_record->mat->ao_value), *data.power)));
 	}
 	return (add_fcolor(*data.accumulation, multiply_fcolor(\
-	multiply_scalar_fcolor(color_to_fcolor(get_background_color(minirt, *ray)),
+	multiply_scalar_fcolor(get_background_color(minirt, *ray),
 					minirt->scene.amb_light.ratio), *data.power)));
 }
 

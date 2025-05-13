@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/09 14:40:01 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/05/13 09:15:46 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,6 +123,9 @@ FONT_PARS_FILE		= free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c 
 FONT_REND_DIR		= src/utils/font/rendering/
 FONT_REND_FILE		= draw_glyph_outline.c draw_string.c basic_slope.c tesselate_bezier.c rasterization.c
 
+HDR_PARSING_DIR		= src/utils/hdr/
+HDR_PARSING_FILE	= parse_hdr.c parse_hdr_header.c parse_hdr_data.c
+
 EDIT_MOD_DIR		= src/edition_mod/
 EDIT_MOD_FILE		= select_obj.c
 
@@ -145,7 +148,8 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(FONT_REND_DIR), $(FONT_REND_FILE)) \
 			$(addprefix $(ENV_DIR), $(ENV_FILE)) \
 			$(addprefix $(EDIT_MOD_DIR), $(EDIT_MOD_FILE)) \
-			$(addprefix $(UPSCALING_DIR), $(UPSCALING_FILE))
+			$(addprefix $(UPSCALING_DIR), $(UPSCALING_FILE)) \
+			$(addprefix $(HDR_PARSING_DIR), $(HDR_PARSING_FILE))
 
 # Source files bonus
 SRCS_BONUS = 

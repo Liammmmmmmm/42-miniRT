@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:41:31 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 17:20:12 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 12:22:19 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,11 @@ inline int	parse_ambient_light_skybox(t_scene *scene, char **parts)
 				&scene->amb_light.skybox_t, scene))
 			return (invalid_struct_error(AMBIANT_LIGHT, parts));
 		scene->amb_light.have_skybox = 1;
-		if (scene->amb_light.skybox_t
+		if (scene->amb_light.skybox_t && scene->amb_light.skybox_t->type == IMAGE
 			&& !scene->amb_light.skybox_t->img.pixel_data)
+			scene->amb_light.skybox_t = NULL;
+		if (scene->amb_light.skybox_t && scene->amb_light.skybox_t->type == HDR
+			&& !scene->amb_light.skybox_t->hdr.pixels)
 			scene->amb_light.skybox_t = NULL;
 	}
 	return (1);

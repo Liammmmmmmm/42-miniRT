@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:21:41 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/12 16:47:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 09:23:50 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	parse_hdr(t_hdr *hdr, char *filename)
 		print_err_hdr("Can't get the size of the image. Is the file corrupted ?");
 		return (0);
 	}
-	hdr->pixels = malloc(hdr->width * hdr->height * sizeof(t_rgbe));
+	hdr->pixels = ft_calloc(hdr->width * hdr->height, sizeof(t_rgbe));
 	if (!hdr->pixels)
 	{
 		free(bin.data);
@@ -56,7 +56,7 @@ int	parse_hdr(t_hdr *hdr, char *filename)
 	if (read_hdr_data(hdr, &bin, (size_t)index) == -1)
 	{
 		free(bin.data);
-		free(hdr->pixels);
+		// free(hdr->pixels);
 		print_err_hdr("Failed to read pixels.");
 		return (0);
 	}
@@ -66,9 +66,9 @@ int	parse_hdr(t_hdr *hdr, char *filename)
 
 
 
-int main()
-{
-	t_hdr hdr;
+// int main()
+// {
+// 	t_hdr hdr;
 
-	printf("Retours : %d\n", parse_hdr(&hdr, "brown_photostudio_02_2k_greyscale.hdr"));
-}
+// 	printf("Retours : %d\n", parse_hdr(&hdr, "brown_photostudio_02_2k_greyscale.hdr"));
+// }

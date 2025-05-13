@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:00:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 15:40:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 12:05:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	parse_texture(t_scene *scene, char *line)
 	ft_strlcpy(scene->textures[i].name, parts[1], 21);
 	scene->textures[i].type = IMAGE;
 	get_texture_image(&scene->textures[i], parts[2]);
-	if (ft_strnstr(parts[1], "bump", 20))
+	if (ft_strnstr(parts[1], "bump", 20) && scene->textures[i].type == IMAGE)
 		bump_to_normal(&scene->textures[i].img);
 	free(parts);
 	i++;

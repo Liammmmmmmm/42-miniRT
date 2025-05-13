@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/08 11:03:58 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 11:29:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,42 @@ void	put_ext_image_to_frame(t_tex_img *img, t_img *img_buff)
 	}
 }
 
+void	put_hdr_to_frame(t_hdr *img, t_img *img_buff, t_minirt *minirt)
+{
+	int			i;
+	int			total;
+	t_sc_point	pt;
+	const int	red_ratio = 1;
+	double		scale;
+
+	i = 0;
+	total = img->height * img->width;
+	while (i < total)
+	{
+		if (img->exposure == 0)
+			scale = ldexp(1.0, img->pixels[i].e - 128);
+		else
+			scale = ldexp(1.0, img->pixels[i].e - 128) * powf(2.0, img->exposure);
+
+		pt.x = (i % img->width) / red_ratio;
+		pt.y = (i / img->width) / red_ratio;
+
+		if (img->gamma == 1.0)
+			pt.color = (t_color){iclamp(0, img->pixels[i].r * scale, 255), iclamp(0, img->pixels[i].g * scale, 255), iclamp(0, img->pixels[i].b * scale, 255)};
+		else
+		{
+			double gamma_corr = 1.0 / (img->gamma);
+			pt.color.r = pow(img->pixels[i].r / 255.0, gamma_corr) * 255;
+			pt.color.g = pow(img->pixels[i].g / 255.0, gamma_corr) * 255;
+			pt.color.b = pow(img->pixels[i].b / 255.0, gamma_corr) * 255;
+		}
+		put_sp_image(img_buff, &pt);
+		i++;
+	}
+	
+	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
+}
+
 void	put_render_to_frame(t_minirt *minirt)
 {
 	if (minirt->controls.values.upscaling_ratio == 100)
@@ -50,6 +86,7 @@ void	render_frame(t_minirt *minirt)
 	render(minirt);
 	render_bvh(minirt);
 	render_ui(minirt);
+	// put_hdr_to_frame(&minirt->hdr, &minirt->mlx.img, minirt);
 	draw_selected_object(minirt);
 	minirt->stats.frame += 1;
 }

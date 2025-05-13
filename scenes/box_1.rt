@@ -1,5 +1,5 @@
 # tex texture1 assets/textures/earth_daymap_2k.bmp
-tex skybox assets/textures/brown_photostudio_02_2k_greyscale.bmp
+tex skybox assets/textures/brown_photostudio_02_2k_greyscale.hdr
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color normal_map

@@ -34,7 +34,7 @@ t_color	get_hit_register_color(t_mat *mat, t_color color, t_hit_record *hit, t_b
 			if (!mat->color_tex->img.pixel_data || !mat->color_tex->img.width || !mat->color_tex->img.height)
 				return (get_solid_texture(hit->point, 2));
 			else
-				return (mat->color_tex->img.pixel_data[mat->color_tex->img.width * (int)(hit->v * mat->color_tex->img.height) + (int)(hit->u * mat->color_tex->img.width)]);
+				return (mat->color_tex->img.pixel_data[(mat->color_tex->img.width)* (int)(hit->v * (mat->color_tex->img.height - 1)) + (int)(hit->u * (mat->color_tex->img.width - 1))]);
 		}
 		else
 			return (mat->color_value);
@@ -48,13 +48,17 @@ void	apply_normal_map(t_hit_record *hit)
 
 	if (hit->mat == NULL || hit->mat->normal == NULL || hit->mat->normal->img.pixel_data == NULL)
 		return ;
-	
+	// 	printf("y = %d | x = %d\n image size: %dx%d\n result: %d\n", (int)(hit->v * hit->mat->normal->img.height), (int)(hit->u * hit->mat->normal->img.width), hit->mat->normal->img.height, hit->mat->normal->img.width, (hit->mat->normal->img.width - 1 )
+	// * (int)(hit->v * 
+	// 	(hit->mat->normal->img.height - 1)) + 
+	// 	(int)(hit->u *
+	// 		 (hit->mat->normal->img.width - 1)));
 	map = hit->mat->normal->img.pixel_data[
-		hit->mat->normal->img.width 
+		(hit->mat->normal->img.width)
 		* (int)(hit->v * 
-			hit->mat->normal->img.height) + 
+			(hit->mat->normal->img.height - 1)) + 
 			(int)(hit->u *
-				 hit->mat->normal->img.width)];
+				 (hit->mat->normal->img.width - 1))];
 	
 	t_vec3 normal_map;
 	normal_map.x = (map.r / 127.5f) - 1.0f;
@@ -94,7 +98,7 @@ void	apply_roughness_map(t_hit_record *hit)
 
 	if (hit->mat == NULL || hit->mat->roughness_tex == NULL || hit->mat->roughness_tex->img.pixel_data == NULL)
 		return ;
-	map = hit->mat->roughness_tex->img.pixel_data[hit->mat->roughness_tex->img.width * (int)(hit->v * hit->mat->roughness_tex->img.height) + (int)(hit->u * hit->mat->roughness_tex->img.width)];
+	map = hit->mat->roughness_tex->img.pixel_data[(hit->mat->roughness_tex->img.width) * (int)(hit->v * (hit->mat->roughness_tex->img.height - 1)) + (int)(hit->u * (hit->mat->roughness_tex->img.width - 1))];
 	hit->mat->roughness_value = map.r / 255.0; // potentiellement remplacer map.r par (map.r + map.g + map.b) / 3 pour une secu en plus
 }
 
@@ -104,7 +108,7 @@ void	apply_metallic_map(t_hit_record *hit)
 
 	if (hit->mat == NULL || hit->mat->metallic_tex == NULL || hit->mat->metallic_tex->img.pixel_data == NULL)
 		return ;
-	map = hit->mat->metallic_tex->img.pixel_data[hit->mat->metallic_tex->img.width * (int)(hit->v * hit->mat->metallic_tex->img.height) + (int)(hit->u * hit->mat->metallic_tex->img.width)];
+	map = hit->mat->metallic_tex->img.pixel_data[(hit->mat->roughness_tex->img.width) * (int)(hit->v * (hit->mat->roughness_tex->img.height - 1)) + (int)(hit->u * (hit->mat->roughness_tex->img.width - 1))];
 	hit->mat->metallic_value = map.r / 255.0; // potentiellement remplacer map.r par (map.r + map.g + map.b) / 3 pour une secu en plus
 }
 
@@ -116,7 +120,7 @@ void	apply_ao_map(t_hit_record *hit)
 		return ;
 	else
 	{
-		map = hit->mat->ao_tex->img.pixel_data[hit->mat->ao_tex->img.width * (int)(hit->v * hit->mat->ao_tex->img.height) + (int)(hit->u * hit->mat->ao_tex->img.width)];
+		map = hit->mat->ao_tex->img.pixel_data[(hit->mat->roughness_tex->img.width) * (int)(hit->v * (hit->mat->roughness_tex->img.height - 1)) + (int)(hit->u * (hit->mat->roughness_tex->img.width - 1))];
 		hit->mat->ao_value = map.r / 255.0;
 	}
 }

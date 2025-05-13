@@ -38,7 +38,7 @@ void	init_focal_sliders_value(t_minirt *minirt)
 	minirt->controls.sliders[2].min = 0;
 	minirt->controls.sliders[2].max = 180;
 	minirt->controls.sliders[2].value = &minirt->controls.values.fov;
-	minirt->controls.values.gamma = 22;
+	minirt->controls.values.gamma = 10;
 	minirt->controls.sliders[3].min = 1;
 	minirt->controls.sliders[3].max = 50;
 	minirt->controls.sliders[3].value = &minirt->controls.values.gamma;

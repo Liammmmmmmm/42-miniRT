@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dielectric.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:30:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 16:20:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 14:34:09 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,8 @@ static inline void	reflected_dielectric_color(t_ray *ray,
 			);
 	direction = vec3_unit(direction);
 	if (hit_record->mat->roughness_value > 0.0)
-		direction = vec3_add(
-				direction,
-				vec3_multiply_scalar(
-					vec3_random_unit(),
-					hit_record->mat->roughness_value
-					)
-				);
+			direction = ggx_sample_hemisphere(hit_record->normal, \
+				hit_record->mat->roughness_value);
 	ray->dir = direction;
 }
 

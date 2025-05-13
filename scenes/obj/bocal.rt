@@ -20,7 +20,7 @@ mat   bocal2 255,255,255  0.0  			 0  			1.450 1.0  			 1.0  				 0.0   				 220
 # mat   co-r   231,95,104   0.0  			 1  			1.400 0.0  			 1.0  				 0.0   				 220,220,220
 
 # L   -1,1,1 1 255,0,0
-# cu	2,2,2 1,1,1 1 assets/test7.obj mat_0_1
+# cu	0,0,0 1,1,1 1 assets/test7.obj mat_0_1
 
 cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/coral-red.obj cor
 cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/coral-green.obj cog

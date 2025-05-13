@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 18:24:24 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/12 10:59:21 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	render_ui(t_minirt *minirt)
 	while (++i < minirt->controls.nb_sliders)
 		display_slider_int(&minirt->mlx.img_controls,
 			minirt->controls.sliders[i]);
+
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.controls_win,
 		minirt->mlx.img_controls.img, 0, 0);
 }

@@ -6,26 +6,11 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:08:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/13 11:16:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 14:02:50 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hdr_parsing.h"
-
-size_t	get_line_bin(t_bin *bin, size_t current_index)
-{
-	size_t	tmp;
-
-	current_index++;
-	tmp = current_index;
-	if (current_index >= bin->size)
-		return ((size_t)-1);
-	while (tmp < bin->size && bin->data[tmp] && bin->data[tmp] != '\n')
-		tmp++;
-	if (bin->data[tmp] == '\n')
-		bin->data[tmp] = '\0';
-	return (current_index);
-}
 
 int	cmp_prop(char *prop, char *test)
 {
@@ -43,10 +28,27 @@ int	cmp_prop(char *prop, char *test)
 	return (0);
 }
 
-void	move_index_end(t_bin *bin, size_t *index)
+int	parse_prop_hdr_header(t_hdr *hdr, t_bin *bin, size_t index,
+	int *have_format)
 {
-	while (*index < bin->size && bin->data[*index])
-		(*index)++;
+	if (cmp_prop("FORMAT", (char *)&bin->data[index]))
+	{
+		*have_format = 1;
+		if (ft_strcmp("FORMAT=32-bit_rle_rgbe", (char *)&bin->data[index]) != 0)
+			return (print_err_hdr("Unsuported hdr format, only support "
+					"'32-bit_rle_rgbe'"));
+	}
+	else if (cmp_prop("EXPOSURE", (char *)&bin->data[index]))
+	{
+		if (is_valid_float((char *)&bin->data[index + 10]))
+			hdr->exposure = ft_atof((char *)&bin->data[index + 10]);
+	}
+	else if (cmp_prop("GAMMA", (char *)&bin->data[index]))
+	{
+		if (is_valid_float((char *)&bin->data[index + 7]))
+			hdr->exposure = ft_atof((char *)&bin->data[index + 7]);
+	}
+	return (0);
 }
 
 int	parse_hdr_header(t_hdr *hdr, t_bin *bin)
@@ -56,41 +58,24 @@ int	parse_hdr_header(t_hdr *hdr, t_bin *bin)
 
 	hdr->exposure = 0.0;
 	hdr->gamma = 1.0;
-	index = get_line_bin(bin, (size_t)-1);
-	if (index == (size_t)-1
+	index = get_line_bin(bin, (size_t)(-1));
+	if (index == (size_t)(-1)
 		|| (ft_strcmp("#?RADIANCE", (char *)&bin->data[index]) != 0
 			&& ft_strcmp("#?RGBE", (char *)&bin->data[index]) != 0))
 		return (print_err_hdr("Invalid hdr file: not an hdr."));
 	have_format = 0;
-	while (index != (size_t)-1 && bin->data[index])
+	while (index != (size_t)(-1) && bin->data[index])
 	{
-		ft_printf("line : %s\n",(char *)&bin->data[index]);
-		if (cmp_prop("FORMAT", (char *)&bin->data[index]))
-		{
-			have_format = 1;
-			if (ft_strcmp("FORMAT=32-bit_rle_rgbe", (char *)&bin->data[index]) != 0)
-				return (print_err_hdr("Unsuported hdr format, only support '32-bit_rle_rgbe'"));
-			
-		}
-		else if (cmp_prop("EXPOSURE", (char *)&bin->data[index]))
-		{
-			if (is_valid_float((char *)&bin->data[index + 10]))
-				hdr->exposure = ft_atof((char *)&bin->data[index + 10]);
-			ft_printf("Exposure : %f", hdr->exposure);
-		}
-		else if (cmp_prop("GAMMA", (char *)&bin->data[index]))
-		{
-			if (is_valid_float((char *)&bin->data[index + 7]))
-				hdr->exposure = ft_atof((char *)&bin->data[index + 7]);
-		}
+		if (parse_prop_hdr_header(hdr, bin, index, &have_format) == -1)
+			return (-1);
 		move_index_end(bin, &index);
 		index = get_line_bin(bin, index);
 	}
-	if (index == (size_t)-1)
+	if (index == (size_t)(-1))
 		return (-1);
 	if (have_format)
 		return (index + 1);
-	return (print_err_hdr("Unsuported hdr format, only support '32-bit_rle_rgbe'"));
+	return (print_err_hdr("FORMAT not found, is the file corrupted ?"));
 }
 
 void	read_width_or_height(t_hdr *hdr, t_bin *bin, int index)
@@ -116,7 +101,7 @@ int	get_hdr_size(t_hdr *hdr, t_bin *bin, size_t index)
 	hdr->width = 0;
 	hdr->height = 0;
 	index = get_line_bin(bin, index - 1);
-	if (index == (size_t)-1 || ft_strlen((char *)&bin->data[index]) < 9)
+	if (index == (size_t)(-1) || ft_strlen((char *)&bin->data[index]) < 9)
 		return (-1);
 	read_width_or_height(hdr, bin, index);
 	index += 3;

@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/13 09:15:46 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/05/13 15:16:49 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -124,7 +124,7 @@ FONT_REND_DIR		= src/utils/font/rendering/
 FONT_REND_FILE		= draw_glyph_outline.c draw_string.c basic_slope.c tesselate_bezier.c rasterization.c
 
 HDR_PARSING_DIR		= src/utils/hdr/
-HDR_PARSING_FILE	= parse_hdr.c parse_hdr_header.c parse_hdr_data.c
+HDR_PARSING_FILE	= parse_hdr.c parse_hdr_header.c parse_hdr_data.c parse_hdr_utils.c hdr_set_pixel.c
 
 EDIT_MOD_DIR		= src/edition_mod/
 EDIT_MOD_FILE		= select_obj.c

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:37:08 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/13 12:18:58 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 15:32:51 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ t_fcolor	get_background_color(t_minirt *minirt, t_ray ray)
 	else
 	{
 		ray.dir = vec3_unit(ray.dir);
-		v = 0.5 + ray.dir.y * 0.5;
-		u = 0.5 + atan2(ray.dir.x, ray.dir.z) / (2 * PI_D);
+		// v = 0.5 + ray.dir.y * 0.5;
+		// u = 0.5 + atan2(ray.dir.x, ray.dir.z) / (2 * PI_D);
+		v = 0.5 + asin(ray.dir.y) / PI_D;
+		u = 0.5 - atan2(ray.dir.z, ray.dir.x) / (2.0 * PI_D);
 		if (minirt->scene.amb_light.skybox_t->type == IMAGE)
 		{
 			i = minirt->scene.amb_light.skybox_t->img.width

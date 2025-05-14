@@ -1,5 +1,5 @@
 tex texture2 assets/textures/non.bmp
-tex skybox assets/textures/sunflowers_puresky_2k.bmp
+tex skybox assets/textures/sunflowers_puresky_2k.hdr
 tex	water_normal	assets/textures/Water_001_NORM.bmp
 
 # MATERIALS

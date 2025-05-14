@@ -7,11 +7,11 @@ tex		bronze_rough		assets/textures/primitives/Metal047B_2K-PNG_Roughness.bmp
 tex		marble_diff			assets/textures/primitives/Tiles074_2K-PNG_Color.bmp
 tex		marble_normal		assets/textures/primitives/Tiles074_2K-PNG_NormalGL.bmp
 tex		marble_rough		assets/textures/primitives/Tiles074_2K-PNG_Roughness.bmp
-tex     skybox assets/textures/brown_photostudio_02_2k_greyscale.bmp
+tex     skybox assets/textures/brown_photostudio_02_2k_greyscale.hdr
 
 
 # MATERIALS
-#	name                          color             metallic       roughness      ior            transmission ior   emission_strength   emission_color
+#	name                          color             metallic       roughness      ior            transmission ao    emission_strength   emission_color
 mat	marble                        marble_diff       0.000000       marble_rough   1.450000       0.000000     1     0.000000            255,255,255     0.41    marble_normal     1 # 0.405
 mat	bronze                        bronze_diff       bronze_metal   bronze_rough   1.450000       0.000000     1     0.000000            255,255,255     2    bronze_normal     10
 

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:30:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/14 14:47:16 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:47:02 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,21 @@ static inline void	reflected_dielectric_color(t_ray *ray,
 	t_hit_record *hit_record)
 {
 	t_vec3	direction;
+	t_vec3	micro_normal;
 
+	if (hit_record->mat->roughness_value > 0.0)
+		micro_normal = ggx_sample_hemisphere(hit_record->normal,
+				hit_record->mat->roughness_value);
+	else
+		micro_normal = hit_record->normal;
 	direction = vec3_subtract(
 			ray->dir,
 			vec3_multiply_scalar(
-				hit_record->normal,
-				2 * vec3_dot(ray->dir, hit_record->normal)
+				micro_normal,
+				2 * vec3_dot(ray->dir, micro_normal)
 				)
 			);
-	direction = vec3_unit(direction);
-	if (hit_record->mat->roughness_value > 0.0)
-			direction = ggx_sample_hemisphere(direction, \
-				hit_record->mat->roughness_value);
-	ray->dir = direction;
+	ray->dir = vec3_unit(direction);
 }
 
 // In order to implement specular map just multiply 
@@ -46,7 +48,7 @@ inline void	dielectric_mat(t_minirt *minirt, t_ray *ray,
 		{
 			if (hit_record->mat->transmission == 1.0)
 				refracted_ray(minirt, ray, hit_record, data.power);
-			else if (hit_record->mat->transmission == 1.0)
+			else if (hit_record->mat->transmission == 0.0)
 				default_mat(minirt, ray, hit_record, data);
 			else
 			{

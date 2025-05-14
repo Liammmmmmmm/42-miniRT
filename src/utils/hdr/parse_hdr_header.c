@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:08:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/13 14:02:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 17:09:36 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ int	parse_prop_hdr_header(t_hdr *hdr, t_bin *bin, size_t index,
 	}
 	else if (cmp_prop("EXPOSURE", (char *)&bin->data[index]))
 	{
-		if (is_valid_float((char *)&bin->data[index + 10]))
-			hdr->exposure = ft_atof((char *)&bin->data[index + 10]);
+		if (is_valid_float((char *)&bin->data[index + 9]))
+			hdr->exposure = ft_atof((char *)&bin->data[index + 9]);
 	}
 	else if (cmp_prop("GAMMA", (char *)&bin->data[index]))
 	{
-		if (is_valid_float((char *)&bin->data[index + 7]))
-			hdr->exposure = ft_atof((char *)&bin->data[index + 7]);
+		if (is_valid_float((char *)&bin->data[index + 6]))
+			hdr->gamma = ft_atof((char *)&bin->data[index + 6]);
 	}
 	return (0);
 }

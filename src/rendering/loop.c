@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/13 11:29:29 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 17:16:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	put_hdr_to_frame(t_hdr *img, t_img *img_buff, t_minirt *minirt)
 			scale = ldexp(1.0, img->pixels[i].e - 128) * powf(2.0, img->exposure);
 
 		pt.x = (i % img->width) / red_ratio;
-		pt.y = (i / img->width) / red_ratio;
+		pt.y = img->height - 1 - (i / img->width) / red_ratio;
 
 		if (img->gamma == 1.0)
 			pt.color = (t_color){iclamp(0, img->pixels[i].r * scale, 255), iclamp(0, img->pixels[i].g * scale, 255), iclamp(0, img->pixels[i].b * scale, 255)};
@@ -86,7 +86,8 @@ void	render_frame(t_minirt *minirt)
 	render(minirt);
 	render_bvh(minirt);
 	render_ui(minirt);
-	// put_hdr_to_frame(&minirt->hdr, &minirt->mlx.img, minirt);
-	draw_selected_object(minirt);
+	// minirt->scene.amb_light.skybox_t->hdr.exposure = (minirt->controls.values.gamma - 25) / 10.0;
+	// put_hdr_to_frame(&minirt->scene.amb_light.skybox_t->hdr, &minirt->mlx.img, minirt);
+
 	minirt->stats.frame += 1;
 }

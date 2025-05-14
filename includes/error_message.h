@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_message.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:15:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/09 17:09:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 14:34:50 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,5 @@
 # define ERR_MATERIAL_FORMAT "Invalid material. Expected: mat "BLUE"<name> <albedo> <metallic> <roughness> <ior> <transmission> <emission_strength> <emission_color> [tex_scale] [normal_map] [normal_intensity]"NC
 # define ERR_TEXTURE_FORMAT "Invalid texture. Expected: tex "BLUE"<name> <filepath>"NC
 # define ERR_WINDOW_FORMAT "Invalid window size. Expected: W "BLUE"<width> <height>"NC
-
 
 #endif

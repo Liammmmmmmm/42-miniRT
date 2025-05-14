@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:30:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/14 14:14:34 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:47:16 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static inline void	reflected_dielectric_color(t_ray *ray,
 			);
 	direction = vec3_unit(direction);
 	if (hit_record->mat->roughness_value > 0.0)
-			direction = ggx_sample_hemisphere(hit_record->normal, \
+			direction = ggx_sample_hemisphere(direction, \
 				hit_record->mat->roughness_value);
 	ray->dir = direction;
 }

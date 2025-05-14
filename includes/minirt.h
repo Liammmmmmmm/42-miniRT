@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/13 11:49:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 11:46:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,9 +281,11 @@ t_fcolor	get_background_color(t_minirt *minirt, t_ray ray);
 t_viewport	init_viewport(t_minirt *minirt);
 t_vec3		defocus_disk_sample(t_minirt *minirt);
 t_color		compute_light(t_hit_record *hit_record, t_minirt *minirt);
-t_color		get_solid_texture(t_vec3 point, double scale);
+t_fcolor	get_solid_texture(t_vec3 p, t_color c1, t_color c2, double scale);
+t_fcolor	get_solid_texture_default(t_vec3 point, double scale);
 int			init_plane_light_lst(t_minirt *minirt);
 
+t_fcolor	get_hdr_pixel(t_hdr *hdr, int x, int y);
 
 
 // V2 

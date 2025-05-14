@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 17:25:59 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:49:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,9 @@ int	parse_ambiant_light(t_scene *scene, char *line)
 	if (!parts)
 		return (print_error(strerror(errno)));
 	if (!parse_ambient_light_ratio_and_color(scene, parts))
-	{
-		free(parts);
 		return (0);
-	}
 	if (!parse_ambient_light_skybox(scene, parts))
-	{
-		free(parts);
 		return (0);
-	}
 	free(parts);
 	return (1);
 }

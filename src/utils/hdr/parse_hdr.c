@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:21:41 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/13 13:51:58 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 12:15:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	parse_hdr(t_hdr *hdr, char *filename)
 	if (!hdr)
 		return (-1);
 	if (!read_bin_file(&bin, filename))
-		return (print_err_hdr_free("Failed to read the file.", NULL));
+		return (print_err_hdr_free("Failed to read the file.", &(t_bin){0, 0}));
 	ft_bzero(hdr, sizeof(t_hdr));
 	index = parse_hdr_header(hdr, &bin);
 	if (index == -1)

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/12 09:40:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 11:52:58 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,92 @@
 #include "bvh.h"
 #include <math.h>
 
+t_fcolor	get_hdr_pixel(t_hdr *hdr, int x, int y)
+{
+	double	scale;
+	double	gamma_corr;
 
-t_color	get_hit_register_color(t_mat *mat, t_color color, t_hit_record *hit, t_bvh *bvh)
+	if (hdr->exposure == 0)
+		scale = ldexp(1.0, hdr->pixels[y * hdr->width + x].e - 128);
+	else
+		scale = ldexp(1.0, hdr->pixels[y * hdr->width + x].e - 128) * powf(2.0, hdr->exposure);
+	if (hdr->gamma == 1.0)
+		return ((t_fcolor){
+			.r = hdr->pixels[y * hdr->width + x].r * scale / 255.0,
+			.g = hdr->pixels[y * hdr->width + x].g * scale / 255.0,
+			.b = hdr->pixels[y * hdr->width + x].b * scale / 255.0
+		});
+	else
+	{
+		gamma_corr = 1.0 / (hdr->gamma);
+		return ((t_fcolor){
+			.r = pow(hdr->pixels[y * hdr->width + x].r * scale / 255.0, gamma_corr),
+			.g = pow(hdr->pixels[y * hdr->width + x].g * scale / 255.0, gamma_corr),
+			.b = pow(hdr->pixels[y * hdr->width + x].b * scale / 255.0, gamma_corr)
+		});
+	}
+}
+
+t_fcolor	clamp_fcolor(t_fcolor color)
+{
+	return ((t_fcolor){
+		.r = clamp_double(color.r),
+		.g = clamp_double(color.g),
+		.b = clamp_double(color.b)
+	});
+}
+
+t_fcolor	get_tex_color(t_tex *tex, double u, double v, t_vec3 hit_point)
+{
+	if (tex->type == IMAGE)
+	{
+		if (!tex->img.pixel_data || !tex->img.width || !tex->img.height)
+			return (get_solid_texture_default(hit_point, 2));
+		else
+			return (color_to_fcolor(tex->img.pixel_data[tex->img.width * (int)(v * (tex->img.height - 1)) + (int)(u * (tex->img.width - 1))]));
+	}
+	else if (tex->type == CHECKER_LOCAL)
+	{
+		int	a;
+		int	b;
+
+		a = floor(u * tex->checker.scale);
+		b = floor(v * tex->checker.scale);
+		if ((a + b) % 2 == 0)
+			return (color_to_fcolor(tex->checker.c1));
+		return (color_to_fcolor(tex->checker.c2));
+	}
+	else if (tex->type == CHECKER_GLOBAL)
+		return (get_solid_texture(hit_point, tex->checker.c1, tex->checker.c2, tex->checker.scale));
+	else if (tex->type == HDR)
+	{
+		if (!tex->hdr.pixels || !tex->hdr.width || !tex->hdr.height)
+			return (get_solid_texture_default(hit_point, 2));
+		else
+			return (get_hdr_pixel(&tex->hdr, (u * (tex->img.width - 1)), (v * (tex->img.height - 1))));
+	}
+	return ((t_fcolor){0.0, 0.0, 0.0});
+}
+
+
+t_fcolor	get_hit_register_color(t_mat *mat, t_color color, t_hit_record *hit, t_bvh *bvh)
 {
 	if (bvh->normal_mode)
 	{
-		return ((t_color){
-			.r = (hit->normal.x + 1) * 127.5,
-			.g = (hit->normal.z + 1) * 127.5,
-			.b = (hit->normal.y + 1) * 127.5
+		return ((t_fcolor){
+			.r = (hit->normal.x + 1) * 0.5,
+			.g = (hit->normal.z + 1) * 0.5,
+			.b = (hit->normal.y + 1) * 0.5
 		});
 	}
 	if (mat)
 	{
 		if (mat->color_tex)
-		{
-			if (!mat->color_tex->img.pixel_data || !mat->color_tex->img.width || !mat->color_tex->img.height)
-				return (get_solid_texture(hit->point, 2));
-			else
-				return (mat->color_tex->img.pixel_data[mat->color_tex->img.width * (int)(hit->v * mat->color_tex->img.height) + (int)(hit->u * mat->color_tex->img.width)]);
-		}
+			return (get_tex_color(mat->color_tex, hit->u, hit->v, hit->point));
 		else
-			return (mat->color_value);
+			return (color_to_fcolor(mat->color_value));
 	}
-	return (color);
+	return (color_to_fcolor(color));
 }
 
 void	apply_normal_map(t_hit_record *hit)
@@ -90,35 +152,23 @@ void	apply_normal_map(t_hit_record *hit)
 
 void	apply_roughness_map(t_hit_record *hit)
 {
-	t_color	map;
-
-	if (hit->mat == NULL || hit->mat->roughness_tex == NULL || hit->mat->roughness_tex->img.pixel_data == NULL)
+	if (hit->mat == NULL || hit->mat->roughness_tex == NULL)
 		return ;
-	map = hit->mat->roughness_tex->img.pixel_data[hit->mat->roughness_tex->img.width * (int)(hit->v * hit->mat->roughness_tex->img.height) + (int)(hit->u * hit->mat->roughness_tex->img.width)];
-	hit->mat->roughness_value = map.r / 255.0; // potentiellement remplacer map.r par (map.r + map.g + map.b) / 3 pour une secu en plus
+	hit->mat->roughness_value = get_tex_color(hit->mat->roughness_tex, hit->u, hit->v, hit->point).r;
 }
 
 void	apply_metallic_map(t_hit_record *hit)
 {
-	t_color	map;
-
-	if (hit->mat == NULL || hit->mat->metallic_tex == NULL || hit->mat->metallic_tex->img.pixel_data == NULL)
+	if (hit->mat == NULL || hit->mat->metallic_tex == NULL)
 		return ;
-	map = hit->mat->metallic_tex->img.pixel_data[hit->mat->metallic_tex->img.width * (int)(hit->v * hit->mat->metallic_tex->img.height) + (int)(hit->u * hit->mat->metallic_tex->img.width)];
-	hit->mat->metallic_value = map.r / 255.0; // potentiellement remplacer map.r par (map.r + map.g + map.b) / 3 pour une secu en plus
+	hit->mat->metallic_value = get_tex_color(hit->mat->metallic_tex, hit->u, hit->v, hit->point).r;
 }
 
 void	apply_ao_map(t_hit_record *hit)
 {
-	t_color	map;
-
-	if (hit->mat == NULL || hit->mat->ao_tex == NULL || hit->mat->ao_tex->img.pixel_data == NULL)
+	if (hit->mat == NULL || hit->mat->ao_tex == NULL)
 		return ;
-	else
-	{
-		map = hit->mat->ao_tex->img.pixel_data[hit->mat->ao_tex->img.width * (int)(hit->v * hit->mat->ao_tex->img.height) + (int)(hit->u * hit->mat->ao_tex->img.width)];
-		hit->mat->ao_value = map.r / 255.0;
-	}
+	hit->mat->ao_value = get_tex_color(hit->mat->ao_tex, hit->u, hit->v, hit->point).r;
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:33:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 16:19:59 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 10:43:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static inline void	refracted_value(t_ray *ray, t_hit_record *hit_record,
 					)
 				);
 	ray->dir = direction;
-	*power = multiply_fcolor(*power, color_to_fcolor(hit_record->color));
+	*power = multiply_fcolor(*power, hit_record->color);
 }
 
 inline void	refracted_ray(t_minirt *minirt, t_ray *ray,

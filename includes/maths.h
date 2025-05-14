@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/09 12:23:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 10:43:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_fcolor	color_to_fcolor(t_color color);
 t_fcolor	multiply_scalar_fcolor(t_fcolor c1, double c);
 t_fcolor	multiply_fcolor(t_fcolor c1, t_fcolor c2);
 t_fcolor	add_fcolor(t_fcolor c1, t_fcolor c2);
+t_fcolor	sub_fcolor(t_fcolor c1, t_fcolor c2);
 
 t_vec3	vec3_random();
 t_vec3	vec3_random_unit();
@@ -122,7 +123,7 @@ t_vec3	matrix3_dot_vec3(double matrix[3][3], const t_vec3 v);
 /**
  * `F = F0​+(1−F0​)(1−cos(θ))^5`
  */
-t_color	fresnel_schlick_color(double cos_theta, t_color f0);
+t_fcolor	fresnel_schlick_color(double cos_theta, t_fcolor f0);
 
 /**
  * `F = F0​+(1−F0​)(1−cos(θ))^5`

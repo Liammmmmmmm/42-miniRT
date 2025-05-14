@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:42:13 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 14:32:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 10:43:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ inline void	metallic_color(t_ray *ray, t_hit_record	*hit_record,
 	ray->dir = direction;
 	*power = multiply_fcolor(
 			*power,
-			color_to_fcolor(fresnel_schlick_color(cos_theta, hit_record->color))
+			fresnel_schlick_color(cos_theta, hit_record->color)
 			);
 }

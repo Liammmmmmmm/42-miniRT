@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/14 13:33:07 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:30:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ typedef enum e_tex_type
 	IMAGE,
 	HDR,
 	COLOR,
-	CHECKERBOARD_LOCAL,
-	CHECKERBOARD_GLOBAL,
+	CHECKER_LOCAL,
+	CHECKER_GLOBAL,
 }	t_tex_type;
 
 typedef struct s_tex_img
@@ -104,12 +104,20 @@ typedef struct s_tex_img
 	t_color		*pixel_data;
 }	t_tex_img;
 
+typedef struct s_checker
+{
+	double	scale;
+	t_color	c1;
+	t_color	c2;
+}	t_checker;
+
 typedef struct s_tex
 {
 	char		name[21];
 	t_tex_type	type;
 	t_tex_img	img;
 	t_hdr		hdr;
+	t_checker	checker;
 }	t_tex;
 
 typedef struct s_mat
@@ -337,7 +345,7 @@ typedef	struct s_hit_record
 	double		t;
 	t_mat		*mat;
 	char		front_face;
-	t_color		color;
+	t_fcolor	color;
 	double		u;
 	double		v;
 	t_obj_part	part;
@@ -518,7 +526,6 @@ typedef struct s_minirt
 	t_stats		stats;
 	t_viewport	viewport;
 	t_controls	controls;
-	t_custom_object	obj;
 }	t_minirt;
 
 typedef struct s_upscale_data

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:05:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/06 13:04:17 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 10:05:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,9 @@ int	texture_item_error(int error, char *part)
 		ft_dprintf(2, RED"[Error]"NC" Texture not found: `%s'\n", part);
 	else if (error == 1)
 		ft_dprintf(2, RED"[Error]"NC" Invalid texture name: `%s'\n", part);
+	else if (error == 2)
+		ft_dprintf(2, RED"[Error]"NC" Invalid checker scale: `%s'\n", part);
+	else if (error == 3)
+		ft_dprintf(2, RED"[Error]"NC" Invalid checker color: `%s'\n", part);
 	return (0);
 }

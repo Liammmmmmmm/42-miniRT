@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:00:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/13 12:05:28 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 11:43:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,13 @@ int	parse_texture(t_scene *scene, char *line)
 	static int	i = 0;
 	char		**parts;
 	int			valid_name;
+	int			parts_nb;
 
 	parts = ft_split_in_line(line, " ");
 	if (!parts)
 		return (print_error(strerror(errno)));
-	if (char_tab_len(parts) != 3)
+	parts_nb = char_tab_len(parts);
+	if (parts_nb < 3)
 		return (invalid_struct_error(TEXTURE, parts));
 	valid_name = is_valid_variable_name_tex(parts[1], scene);
 	if (valid_name == -1)
@@ -69,10 +71,43 @@ int	parse_texture(t_scene *scene, char *line)
 	else if (valid_name == 0)
 		return (texture_error(2, parts));
 	ft_strlcpy(scene->textures[i].name, parts[1], 21);
-	scene->textures[i].type = IMAGE;
-	get_texture_image(&scene->textures[i], parts[2]);
-	if (ft_strnstr(parts[1], "bump", 20) && scene->textures[i].type == IMAGE)
-		bump_to_normal(&scene->textures[i].img);
+
+	if (ft_strcmp(parts[2], "image") == 0)
+	{
+		if (parts_nb != 4)
+			return (invalid_struct_error(TEXTURE, parts));
+		scene->textures[i].type = IMAGE;
+		get_texture_image(&scene->textures[i], parts[3]);
+		if (ft_strnstr(parts[1], "bump", 20) && scene->textures[i].type == IMAGE)
+			bump_to_normal(&scene->textures[i].img);
+	}
+	else if (ft_strcmp(parts[2], "checker_local") == 0)
+	{
+		if (parts_nb != 6)
+			return (invalid_struct_error(TEXTURE, parts));
+		scene->textures[i].type = CHECKER_LOCAL;
+		if (is_valid_size(parts[3], &scene->textures[i].checker.scale) == 0)
+			return (texture_item_error(3, parts[3]));
+		if (parse_color(parts[4], &scene->textures[i].checker.c1) == 0)
+			return (texture_item_error(4, parts[4]));
+		if (parse_color(parts[5], &scene->textures[i].checker.c2) == 0)
+			return (texture_item_error(4, parts[5]));
+	}
+	else if (ft_strcmp(parts[2], "checker_global") == 0)
+	{
+		if (parts_nb != 6)
+			return (invalid_struct_error(TEXTURE, parts));
+		scene->textures[i].type = CHECKER_GLOBAL;
+		if (is_valid_size(parts[3], &scene->textures[i].checker.scale) == 0)
+			return (texture_item_error(3, parts[3]));
+		if (parse_color(parts[4], &scene->textures[i].checker.c1) == 0)
+			return (texture_item_error(4, parts[4]));
+		if (parse_color(parts[5], &scene->textures[i].checker.c2) == 0)
+			return (texture_item_error(4, parts[5]));
+	}
+	
+	
+	
 	free(parts);
 	i++;
 	return (1);

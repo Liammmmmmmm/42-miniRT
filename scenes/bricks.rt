@@ -1,8 +1,8 @@
-tex color assets/textures/bricks/Brick_Wall_017_basecolor.bmp
-tex normal assets/textures/bricks/Brick_Wall_017_normal.bmp
-tex roughness assets/textures/bricks/Brick_Wall_017_roughness.bmp
-tex ao assets/textures/bricks/Brick_Wall_017_ambientOcclusion.bmp
-tex back assets/textures/sunflowers_puresky_2k.hdr
+tex color     image   assets/textures/bricks/Brick_Wall_017_basecolor.bmp
+tex normal    image   assets/textures/bricks/Brick_Wall_017_normal.bmp
+tex roughness image   assets/textures/bricks/Brick_Wall_017_roughness.bmp
+tex ao        image   assets/textures/bricks/Brick_Wall_017_ambientOcclusion.bmp
+tex back      image   assets/textures/sunflowers_puresky_2k.hdr
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color scale normal_map

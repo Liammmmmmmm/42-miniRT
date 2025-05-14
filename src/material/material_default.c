@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/09 16:19:56 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 10:40:20 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ inline void	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 			*data.accumulation,
 			multiply_fcolor(
 				multiply_fcolor(
-					color_to_fcolor(hit_record->color),
+					hit_record->color,
 					*data.power
 					),
 				compute_light_v2(hit_record, minirt)
@@ -33,6 +33,6 @@ inline void	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 			);
 	*data.power = multiply_fcolor(
 			*data.power,
-			color_to_fcolor(hit_record->color)
+			hit_record->color
 			);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 17:28:27 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 14:19:20 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	draw_pixels(t_minirt *minirt)
 
 	minirt->screen.last_sample_time = get_cpu_time();
 	offset = vec3_random();
-	// calc_one_sample(minirt, offset);
 	calc_one_sample(minirt, offset);
 	minirt->screen.sample++;
 	minirt->screen.last_sample_am = minirt->screen.sample;

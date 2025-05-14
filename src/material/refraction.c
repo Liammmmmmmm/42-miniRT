@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:33:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/13 14:34:06 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:17:46 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static inline void	refracted_value(t_ray *ray, t_hit_record *hit_record,
 			);
 	direction = vec3_unit(direction);
 	if (hit_record->mat->roughness_value > 0.0)
-			direction = ggx_sample_hemisphere(hit_record->normal, \
+			direction = ggx_sample_hemisphere(direction, \
 				hit_record->mat->roughness_value);
 	ray->dir = direction;
 	*power = multiply_fcolor(*power, color_to_fcolor(hit_record->color));

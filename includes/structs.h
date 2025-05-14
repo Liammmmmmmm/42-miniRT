@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/14 10:40:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 14:30:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -526,7 +526,6 @@ typedef struct s_minirt
 	t_stats		stats;
 	t_viewport	viewport;
 	t_controls	controls;
-	t_custom_object	obj;
 }	t_minirt;
 
 typedef struct s_upscale_data

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/14 11:52:58 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/14 14:30:17 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,25 +318,6 @@ char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record)
 				apply_roughness_map(hit_record);
 				apply_metallic_map(hit_record);
 				hit_record->color = get_hit_register_color(plane->material, plane->color, hit_record, &minirt->scene.bvh);
-			}
-		}
-		i++;
-	}
-	i = 0;
-	while ((size_t)i < minirt->obj.triangle_count)
-	{
-		// printf("%f\n", minirt->obj.triangles[i].v0.pos.x);
-		t_triangle triangle = minirt->obj.triangles[i];
-		if (hit_triangle(&triangle, ray, (t_interval){0.001, 1000}, &temp_hit_record))
-		{
-			if (hit == 0 || temp_hit_record.t < hit_record->t)
-			{
-				hit = 1;
-				*hit_record = temp_hit_record;
-				hit_record->mat = NULL;
-				hit_record->color.r = (hit_record->normal.x + 1) * 127.5;
-				hit_record->color.g = (hit_record->normal.y + 1) * 127.5;
-				hit_record->color.b = (hit_record->normal.z + 1) * 127.5;
 			}
 		}
 		i++;

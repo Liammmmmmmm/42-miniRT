@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   metallic.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:42:13 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 14:32:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 14:34:03 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,8 @@ inline void	metallic_color(t_ray *ray, t_hit_record	*hit_record,
 			);
 	direction = vec3_unit(direction);
 	if (hit_record->mat->roughness_value > 0.0)
-		direction = vec3_add(
-				direction,
-				vec3_multiply_scalar(
-					vec3_random_unit(),
-					hit_record->mat->roughness_value
-					)
-				);
+			direction = ggx_sample_hemisphere(hit_record->normal, \
+				hit_record->mat->roughness_value);
 	ray->dir = direction;
 	*power = multiply_fcolor(
 			*power,

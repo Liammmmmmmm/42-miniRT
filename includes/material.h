@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   material.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:32:20 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/09 14:40:51 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 14:20:25 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,7 @@ void	dielectric_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 double	get_cos_theta(t_vec3 dir_in, t_vec3 normal);
 double	get_reflect_value(t_ray *ray_in, t_hit_record *hit_record);
 
+double	ggx_distribution(double cos_theta, double roughness);
+t_vec3 ggx_sample_hemisphere(t_vec3 normal, double roughness);
 
 #endif

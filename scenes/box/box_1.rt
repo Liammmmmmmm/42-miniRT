@@ -1,12 +1,12 @@
 # tex texture1 assets/textures/earth_daymap_2k.bmp
-tex skybox assets/textures/brown_photostudio_02_2k_greyscale.bmp
+tex skybox assets/textures/brown_photostudio_02_2k_greyscale.hdr
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color normal_map
 mat	mat_green                       0,204,  0       0.000000       1.000000       1.450000       0.000000    	1   				0.000000            255,255,255
 mat	mat_red                       204,  0,  0       0.000000       1.000000       1.450000       0.000000    	1  					0.000000            255,255,255
 mat	mat_white                     204,204,204       0.000000       1.000000       1.450000     	 0.000000     	1  					0.000000            255,255,255
-mat	mat_sphere                    255,255,255       0.000000       0.000000       1.450000     	 0.000000     	1  					0.000000            255,255,255
+mat	mat_sphere                    255,255,255       1.000000       0.000000       1.450000     	 0.000000     	1  					0.000000            255,255,255
 
 A	1										255,255,255 skybox
 

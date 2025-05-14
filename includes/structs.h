@@ -17,6 +17,7 @@
 # include "mlx_base.h"
 # include "mlx_components.h"
 # include "font.h"
+# include "hdr_parsing.h"
 
 typedef unsigned char t_bool;
 typedef unsigned char t_uchar;
@@ -90,7 +91,10 @@ typedef struct s_ray
 typedef enum e_tex_type
 {
 	IMAGE,
+	HDR,
 	COLOR,
+	CHECKERBOARD_LOCAL,
+	CHECKERBOARD_GLOBAL,
 }	t_tex_type;
 
 typedef struct s_tex_img
@@ -105,6 +109,7 @@ typedef struct s_tex
 	char		name[21];
 	t_tex_type	type;
 	t_tex_img	img;
+	t_hdr		hdr;
 }	t_tex;
 
 typedef struct s_mat

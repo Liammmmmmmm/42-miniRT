@@ -36,7 +36,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 							(i % minirt->viewport.render_w) + offset.x)),
 					vec3_multiply_scalar(minirt->viewport.pixel_delta_v,
 						(i / minirt->viewport.render_w) + offset.y)), ray.orig);
-		color = path_trace(minirt, ray, 8);
+		color = path_trace(minirt, ray, 2);
 		minirt->screen.float_render[i].r += color.r;
 		minirt->screen.float_render[i].g += color.g;
 		minirt->screen.float_render[i].b += color.b;
@@ -120,7 +120,7 @@ void	render(t_minirt *minirt)
 	t_uint	tpix;
 	t_uint	i;
 
-	if (!minirt->screen.start_render || minirt->screen.pause_render)
+	if (!minirt->screen.start_render || minirt->screen.pause_render || minirt->screen.sample == 500)
 		return ;
 	if (minirt->screen.sample == 0)
 	{

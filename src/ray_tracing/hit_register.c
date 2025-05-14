@@ -110,13 +110,17 @@ void	apply_normal_map(t_hit_record *hit)
 
 	if (hit->mat == NULL || hit->mat->normal == NULL || hit->mat->normal->img.pixel_data == NULL)
 		return ;
-	
+	// 	printf("y = %d | x = %d\n image size: %dx%d\n result: %d\n", (int)(hit->v * hit->mat->normal->img.height), (int)(hit->u * hit->mat->normal->img.width), hit->mat->normal->img.height, hit->mat->normal->img.width, (hit->mat->normal->img.width - 1 )
+	// * (int)(hit->v * 
+	// 	(hit->mat->normal->img.height - 1)) + 
+	// 	(int)(hit->u *
+	// 		 (hit->mat->normal->img.width - 1)));
 	map = hit->mat->normal->img.pixel_data[
-		hit->mat->normal->img.width 
+		(hit->mat->normal->img.width)
 		* (int)(hit->v * 
-			hit->mat->normal->img.height) + 
+			(hit->mat->normal->img.height - 1)) + 
 			(int)(hit->u *
-				 hit->mat->normal->img.width)];
+				 (hit->mat->normal->img.width - 1))];
 	
 	t_vec3 normal_map;
 	normal_map.x = (map.r / 127.5f) - 1.0f;

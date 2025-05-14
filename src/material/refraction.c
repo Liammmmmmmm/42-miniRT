@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   refraction.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:33:08 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/05/14 10:43:26 by lilefebv         ###   ########lyon.fr   */
@@ -49,13 +49,8 @@ static inline void	refracted_value(t_ray *ray, t_hit_record *hit_record,
 			);
 	direction = vec3_unit(direction);
 	if (hit_record->mat->roughness_value > 0.0)
-		direction = vec3_add(
-				vec3_unit(direction),
-				vec3_multiply_scalar(
-					vec3_random_unit(),
-					hit_record->mat->roughness_value
-					)
-				);
+			direction = ggx_sample_hemisphere(direction, \
+				hit_record->mat->roughness_value);
 	ray->dir = direction;
 	*power = multiply_fcolor(*power, hit_record->color);
 }

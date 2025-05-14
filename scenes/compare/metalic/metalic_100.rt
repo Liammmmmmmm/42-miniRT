@@ -5,7 +5,7 @@ tex		ground_r   assets/textures/paper/roughness_paper.bmp
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength     emission_color   scale      normal_map      normal_intensity
-mat		sphere					  204,158, 51		1			   0.2			  1.450000		 0				1					0						255,255,255
+mat		sphere					  204,158, 51		1			   0.2			  1.450000		 1				1					0						255,255,255
 mat		ground					  ground_tex		0			   ground_r	      0				 0				1					0						255,255,255		1		  ground_nor	1
 
 # SPHERES
@@ -18,7 +18,7 @@ cu	    0.000000,    0.000000,   -0.000000          0.000000,   -0.000000,   1.00
 
 # CAMERA
 #	    origin                                      orientation                                    field of view
-C	   11.870000,    2.765630,    1.760000         -0.979195,   -0.146083,   -0.140846             14             
+C	   11.870000,    2.765630,    1.760000         -0.979195,   -0.146083,   -0.140846             14            
 
 
 # AMBIENT

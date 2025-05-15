@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/14 15:39:21 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/15 20:48:28 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static inline void	material_manager_v3(t_minirt *minirt, t_ray *ray,
 	t_hit_record *hit_record, t_ray_data data)
 {
 	if (!hit_record->mat)
-		return default_mat(minirt, ray, hit_record, data);
+		return (default_mat(minirt, ray, hit_record, data));
 	if (hit_record->mat->emission_strength > 0)
 	{
 		*data.accumulation = add_fcolor(*data.accumulation,
@@ -61,6 +61,8 @@ t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 	{
 		if (hit_register_all(minirt, &ray, &hit_record) == 1)
 		{
+			if (minirt->scene.bvh.normal_mode)
+				return (hit_record.color);
 			ray.orig = hit_record.point;
 			material_manager_v3(minirt, &ray, &hit_record,
 				(t_ray_data){&power, &accumulation});

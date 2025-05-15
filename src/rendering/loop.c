@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/15 11:40:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/15 21:31:05 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,6 @@ void	render_frame(t_minirt *minirt)
 	render_ui(minirt);
 	// minirt->scene.amb_light.skybox_t->hdr.exposure = (minirt->controls.values.gamma - 25) / 10.0;
 	// put_hdr_to_frame(&minirt->scene.amb_light.skybox_t->hdr, &minirt->mlx.img, minirt);
-
+	draw_selected_object(minirt);
 	minirt->stats.frame += 1;
 }

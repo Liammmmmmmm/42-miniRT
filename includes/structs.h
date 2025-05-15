@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/14 14:30:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/15 10:51:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -412,6 +412,8 @@ typedef struct s_scene
 	t_bvh		bvh;
 	int			win_width;
 	int			win_height;
+	int			render_width;
+	int			render_height;
 }	t_scene;
 
 typedef struct s_mlx
@@ -425,7 +427,7 @@ typedef struct s_mlx
 
 typedef struct s_screen
 {
-	t_lsc_point	*render;
+	int			*render;
 	t_fcolor	*float_render;
 	int			sample;
 	int			last_sample_am;

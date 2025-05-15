@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/05 18:37:57 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:09:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 		minirt->scene.el_amount);
 	init_plane_light_lst(minirt);
 	vp->gamma = sqrt(minirt->controls.values.gamma / 1000.0);
-	vp->render_w = (int)(minirt->mlx.img.width
-			* (minirt->controls.values.upscaling_ratio / 100.0f) + 0.5f);
-	vp->render_h = (int)(minirt->mlx.img.height
-			* (minirt->controls.values.upscaling_ratio / 100.0f) + 0.5f);
+	vp->render_w = minirt->scene.render_width;
+	vp->render_h = minirt->scene.render_height;
 	vp->height = 2 * tan((minirt->controls.values.fov * PI_D / 180) / 2)
 		* minirt->scene.camera.focus_dist;
 	vp->width = vp->height * ((float)vp->render_w / vp->render_h);

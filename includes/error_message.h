@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_message.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:15:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/14 14:34:50 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/15 10:43:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@
 # define ERR_CONE_FORMAT "Invalid cone. Expected: co "BLUE"<x,y,z> <x,y,z> <diameter> <height> <r,g,b|material> [top_material]"NC
 # define ERR_MATERIAL_FORMAT "Invalid material. Expected: mat "BLUE"<name> <albedo> <metallic> <roughness> <ior> <transmission> <emission_strength> <emission_color> [tex_scale] [normal_map] [normal_intensity]"NC
 # define ERR_TEXTURE_FORMAT "Invalid texture. Expected: tex "BLUE"<name> <filepath>"NC
-# define ERR_WINDOW_FORMAT "Invalid window size. Expected: W "BLUE"<width> <height>"NC
+# define ERR_WINDOW_FORMAT "Invalid window size. Expected: W "BLUE"<width_win> <height_win> [width_render] [height_render]"NC
 
 #endif

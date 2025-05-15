@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/14 17:16:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/15 11:40:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ void	put_hdr_to_frame(t_hdr *img, t_img *img_buff, t_minirt *minirt)
 
 void	put_render_to_frame(t_minirt *minirt)
 {
-	if (minirt->controls.values.upscaling_ratio == 100)
-		no_upscaling_float(minirt);//no_upscaling(minirt);
-	else if (minirt->controls.values.upscaling_selected == 0)
-		neighbor_upscale(minirt);
-	else if (minirt->controls.values.upscaling_selected == 1)
-		bilinear_upscale(minirt);
-	else if (minirt->controls.values.upscaling_selected == 2)
-		bicubic_upscale(minirt);
+	// if (minirt->controls.values.upscaling_ratio == 100)
+	put_render_to_buff(minirt);//no_upscaling(minirt);
+	// else if (minirt->controls.values.upscaling_selected == 0)
+	// 	neighbor_upscale(minirt);
+	// else if (minirt->controls.values.upscaling_selected == 1)
+	// 	bilinear_upscale(minirt);
+	// else if (minirt->controls.values.upscaling_selected == 2)
+	// 	bicubic_upscale(minirt);
 }
 
 void	render_frame(t_minirt *minirt)

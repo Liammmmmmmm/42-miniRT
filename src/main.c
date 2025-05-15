@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/13 12:02:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/15 11:55:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	main(int argc, char **argv)
 	{
 		minirt.scene.win_width = WIN_WIDTH;
 		minirt.scene.win_height = WIN_HEIGHT;
+		minirt.scene.render_width = WIN_WIDTH;
+		minirt.scene.render_height = WIN_HEIGHT;
 	}
 	if (!init_ui(&minirt))
 		return (clean(&minirt));

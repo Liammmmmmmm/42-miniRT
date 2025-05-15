@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/14 14:19:20 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:15:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 							(i % minirt->viewport.render_w) + offset.x)),
 					vec3_multiply_scalar(minirt->viewport.pixel_delta_v,
 						(i / minirt->viewport.render_w) + offset.y)), ray.orig);
-		color = path_trace(minirt, ray, 2);
+		color = path_trace(minirt, ray, 5);
 		minirt->screen.float_render[i].r += color.r;
 		minirt->screen.float_render[i].g += color.g;
 		minirt->screen.float_render[i].b += color.b;
@@ -67,7 +67,7 @@ void	draw_pixels(t_minirt *minirt)
 	calc_one_sample(minirt, offset);
 	minirt->screen.sample++;
 	minirt->screen.last_sample_am = minirt->screen.sample;
-	put_render_to_frame(minirt);
+	put_render_to_buff(minirt);
 
 	if (minirt->controls.selected_x != -1 && minirt->controls.selected_y != -1)
 	{
@@ -117,21 +117,17 @@ void	draw_pixels(t_minirt *minirt)
 
 void	render(t_minirt *minirt)
 {
-	t_uint	tpix;
 	t_uint	i;
 
-	if (!minirt->screen.start_render || minirt->screen.pause_render || minirt->screen.sample == 500)
+	if (!minirt->screen.start_render || minirt->screen.pause_render)
 		return ;
 	if (minirt->screen.sample == 0)
 	{
 		i = -1;
 		minirt->viewport = init_viewport(minirt);
-		tpix = minirt->viewport.render_w * minirt->viewport.render_h;
-		while (++i < tpix)
-		{
-			ft_bzero(&minirt->screen.render[i].color, sizeof(t_lcolor));
-			ft_bzero(&minirt->screen.float_render[i], sizeof(t_fcolor));
-		}
+
+		ft_izero(minirt->screen.render, minirt->scene.win_width * minirt->scene.win_height);
+		ft_bzero(minirt->screen.float_render, sizeof(t_fcolor) * minirt->viewport.render_w * minirt->viewport.render_h);
 	}
 	draw_pixels(minirt);
 	if (minirt->screen.sample == minirt->screen.spp)

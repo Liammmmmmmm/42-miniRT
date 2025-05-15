@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:00:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/14 11:43:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/15 10:46:30 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,8 @@ int	parse_texture(t_scene *scene, char *line)
 		if (parse_color(parts[5], &scene->textures[i].checker.c2) == 0)
 			return (texture_item_error(4, parts[5]));
 	}
-	
-	
-	
+	else
+		return (invalid_struct_error(TEXTURE, parts));
 	free(parts);
 	i++;
 	return (1);

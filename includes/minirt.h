@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/14 11:46:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/15 14:12:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "obj_parsing.h"
 # include "material.h"
 # include "ui.h"
+# include "ppm.h"
 
 # define PI_D 3.1415926535897
 
@@ -130,6 +131,9 @@ void	print_scene(t_scene *scene);
 void	print_progress_bar(size_t actual, size_t max);
 int		char_tab_len(char **tab);
 char	**free_ret_null(char **fre);
+void	ft_izero(int *pointer, size_t n);
+
+void	export_ppm_p6_minirt(const char *filename, t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                   PARSING                                    ║
@@ -271,6 +275,8 @@ int		init_render(t_minirt *minirt);
 
 int		calc_gradiant_color(int color_a, int color_b, float ratio);
 void	put_render_to_frame(t_minirt *minirt);
+void	put_render_to_buff(t_minirt *minirt);
+void	copy_buff_to_image(t_minirt *minirt);
 void	render(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗

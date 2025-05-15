@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:56:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/08 09:36:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/15 11:44:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	get_clicked_object(t_minirt *minirt, int mouse_y)
 	int	i2;
 
 	i = -1;
-	put_render_to_frame(minirt);
+	copy_buff_to_image(minirt);
 	while (++i < minirt->scene.el_amount)
 	{
 		i1 = 31 + i * 40 - minirt->controls.ui_infos.objects_scroll_offset;

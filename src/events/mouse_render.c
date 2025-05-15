@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_render.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:42:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 16:49:07 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:43:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int	mousedown_render(int key, int x, int y, t_minirt *minirt)
 				|| minirt->controls.ui_infos.selected_object->type == LIGHT)
 			&& item_null == 0)
 		{
-			put_render_to_frame(minirt);
+			copy_buff_to_image(minirt);
 			mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win,
 				minirt->mlx.img.img, 0, 0);
 		}
 		else if (minirt->controls.ui_infos.selected_object != NULL
 			&& item_null == 0)
-			put_render_to_frame(minirt);
+			copy_buff_to_image(minirt);
 		set_selected_object(minirt, minirt->controls.ui_infos.selected_object);
 	}
 	else if (key == RIGHT_CLICK)

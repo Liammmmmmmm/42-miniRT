@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/13 15:16:49 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/05/15 14:26:36 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,11 +33,11 @@ ERASE    = \033[2K\r
 ERASE2   = $(ERASE)\033[F$(ERASE)
 
 # Compiler and flags
-CC       = cc
-CFLAGS   = -Wall -Wextra -Werror
+CC       = gcc
+CFLAGS   = -Wall -Wextra #-Werror
 LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm
 DEBUG_FLAGS = -g3
-FAST_FLAGS = -O3 -flto -march=native -funroll-loops
+FAST_FLAGS = -O3 -flto -march=native -mtune=native -funroll-loops -ffast-math -falign-functions=32 -falign-loops=16
 
 ifeq ($(MAKECMDGOALS), debug)
 	CFLAGS += $(DEBUG_FLAGS)
@@ -126,6 +126,9 @@ FONT_REND_FILE		= draw_glyph_outline.c draw_string.c basic_slope.c tesselate_bez
 HDR_PARSING_DIR		= src/utils/hdr/
 HDR_PARSING_FILE	= parse_hdr.c parse_hdr_header.c parse_hdr_data.c parse_hdr_utils.c hdr_set_pixel.c
 
+PPM_DIR				= src/utils/ppm/
+PPM_FILE			= export_ppm.c
+
 EDIT_MOD_DIR		= src/edition_mod/
 EDIT_MOD_FILE		= select_obj.c
 
@@ -149,6 +152,7 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(ENV_DIR), $(ENV_FILE)) \
 			$(addprefix $(EDIT_MOD_DIR), $(EDIT_MOD_FILE)) \
 			$(addprefix $(UPSCALING_DIR), $(UPSCALING_FILE)) \
+			$(addprefix $(PPM_DIR), $(PPM_FILE)) \
 			$(addprefix $(HDR_PARSING_DIR), $(HDR_PARSING_FILE))
 
 # Source files bonus

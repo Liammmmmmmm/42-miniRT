@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:31:25 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/09 17:22:22 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/15 11:46:19 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,16 +114,32 @@ int	parse_obj_custom(t_scene *scene, char *line)
 
 int	parse_win_size(t_scene *scene, char *line)
 {
-	char			**parts;
+	char	**parts;
+	int		nb_parts;
 
 	parts = ft_split_in_line(line, " ");
 	if (!parts)
 		return (print_error(strerror(errno)));
-	if (char_tab_len(parts) != 3)
+	nb_parts = char_tab_len(parts);
+	if (nb_parts != 3 && nb_parts != 5)
 		return (invalid_struct_error(WINDOW, parts));
 	if (!is_valid_positive_int(parts[1], &scene->win_width))
 		return (invalid_struct_error(WINDOW, parts));
 	if (!is_valid_positive_int(parts[2], &scene->win_height))
+		return (invalid_struct_error(WINDOW, parts));
+	if (nb_parts == 5)
+	{
+		if (!is_valid_positive_int(parts[3], &scene->render_width))
+			return (invalid_struct_error(WINDOW, parts));
+		if (!is_valid_positive_int(parts[4], &scene->render_height))
+			return (invalid_struct_error(WINDOW, parts));
+	}
+	else
+	{
+		scene->render_width = scene->win_width;
+		scene->render_height = scene->win_height;
+	}
+	if (scene->render_width < 2 || scene->render_height < 2 || scene->win_width < 10 || scene->win_height < 10)
 		return (invalid_struct_error(WINDOW, parts));
 	free(parts);
 	return (1);

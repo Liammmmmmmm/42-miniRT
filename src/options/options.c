@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 09:54:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/16 12:37:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 14:57:39 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	init_default_options(t_minirt *minirt)
 {
-	// Probleme avec no display, comment on quitte le programme sans attendre la fin des samples ?
 	minirt->options.no_display = 0;
 	minirt->options.auto_export = 0;
 	minirt->options.max_samples = 100000;

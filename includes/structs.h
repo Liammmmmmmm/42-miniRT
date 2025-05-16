@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/16 13:28:46 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 15:31:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -521,12 +521,30 @@ typedef struct s_controls
 	t_vec3			traced_ray[11];
 }	t_controls;
 
+typedef struct s_obj_anim
+{
+	t_bool		enabled;
+	t_objects	obj;
+	t_uint		obj_num;
+	t_uint		frames;
+	t_vec3		*points;
+	t_vec3		*orientations;
+}	t_obj_anim;
+
+typedef struct s_animation
+{
+	t_bool		enabled;
+	t_uint		nb_objects;
+	t_obj_anim	*objects
+}	t_animation;
+
 typedef struct s_options
 {
-	int		no_display;
-	int		max_samples;
-	int		auto_export;
-	char	*output_dir;
+	t_bool		no_display;
+	t_bool		auto_export;
+	int			max_samples;
+	char		*output_dir;
+	t_animation	anim;
 }	t_options;
 
 typedef struct s_minirt

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/15 14:12:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 12:52:46 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
+
+# define MAX_WIN_SIZE 32767
 
 // Control window
 # define CWIN_WIDTH 600

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/15 14:12:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 11:19:10 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef enum e_keys
 # define ERR_F "Invalid format for"
 
 int		print_error(char *err);
+int		print_error1(char *err);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    UTILS                                     ║
@@ -134,6 +135,12 @@ char	**free_ret_null(char **fre);
 void	ft_izero(int *pointer, size_t n);
 
 void	export_ppm_p6_minirt(const char *filename, t_minirt *minirt);
+
+char	*empty_static_string(void);
+
+
+int		parse_options(t_minirt *minirt, int argc, char **argv);
+
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                   PARSING                                    ║

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/15 10:51:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 10:59:08 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -520,6 +520,14 @@ typedef struct s_controls
 	t_vec3			traced_ray[11];
 }	t_controls;
 
+typedef struct s_options
+{
+	int		no_display;
+	int		max_samples;
+	int		auto_export;
+	char	*output_dir;
+}	t_options;
+
 typedef struct s_minirt
 {
 	t_scene		scene;
@@ -528,6 +536,7 @@ typedef struct s_minirt
 	t_stats		stats;
 	t_viewport	viewport;
 	t_controls	controls;
+	t_options	options;
 }	t_minirt;
 
 typedef struct s_upscale_data

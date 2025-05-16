@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/15 11:55:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 11:22:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ int	main(int argc, char **argv)
 	t_minirt	minirt;
 
 	if (argc < 2)
-		return (print_error1("Missing scene file. Usage: ./miniRT <scene.rt>"));
-	if (argc > 2)
-		return (print_error1("Too many arguments. Usage: ./miniRT <scene.rt>"));
+		return (print_error1("Missing scene file. Usage: ./miniRT <scene.rt> [options]"));
 	ft_bzero(&minirt, sizeof(t_minirt));
+	if (!parse_options(&minirt, argc, argv))
+		return (1);
 	if (parse_scene(&minirt, argv[1]) == 0)
 		return (1);
 	if (minirt.scene.win_height == -1 || minirt.scene.win_width == -1)

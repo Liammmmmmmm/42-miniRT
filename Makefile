@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/15 20:42:36 by madelvin         ###   ########.fr        #
+#    Updated: 2025/05/16 11:26:25 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -135,6 +135,9 @@ EDIT_MOD_FILE		= select_obj.c
 UPSCALING_DIR		= src/upscaling/
 UPSCALING_FILE		= bilinear.c bicubic.c neighbor.c no_upscaling.c
 
+OPTIONS_DIR			= src/options/
+OPTIONS_FILE		= options.c
+
 M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
 			$(addprefix $(DEBUG_DIR), $(DEBUG_FILE)) \
@@ -153,7 +156,8 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(EDIT_MOD_DIR), $(EDIT_MOD_FILE)) \
 			$(addprefix $(UPSCALING_DIR), $(UPSCALING_FILE)) \
 			$(addprefix $(PPM_DIR), $(PPM_FILE)) \
-			$(addprefix $(HDR_PARSING_DIR), $(HDR_PARSING_FILE))
+			$(addprefix $(HDR_PARSING_DIR), $(HDR_PARSING_FILE)) \
+			$(addprefix $(OPTIONS_DIR), $(OPTIONS_FILE))
 
 # Source files bonus
 SRCS_BONUS = 

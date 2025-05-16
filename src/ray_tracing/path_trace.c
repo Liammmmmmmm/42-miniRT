@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_trace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/15 20:48:28 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/16 11:24:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 	{
 		if (hit_register_all(minirt, &ray, &hit_record) == 1)
 		{
-			if (minirt->scene.bvh.normal_mode)
+			if (minirt->scene.bvh.normal_mode) // A deplacer pour pas bouffer de perf
 				return (hit_record.color);
 			ray.orig = hit_record.point;
 			material_manager_v3(minirt, &ray, &hit_record,

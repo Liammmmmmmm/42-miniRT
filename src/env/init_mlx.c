@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/15 10:56:51 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 11:25:38 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	init_render(t_minirt *minirt)
 	minirt->stats.frame = 0;
 	minirt->screen.start_render = 1;
 	minirt->screen.pause_render = 0;
-	minirt->screen.spp = 100000;
+	minirt->screen.spp = minirt->options.max_samples;
 	minirt->screen.sample = 0;
 	init_font(minirt);
 	init_buttons(minirt);

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:29:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/15 14:11:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 11:15:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	keydown_common(int key, t_minirt *minirt)
 		// Export
 		char *filename;
 
-		filename = ft_sprintf("minirt_export_SCENE_NAME.SAMPLES.%d.%u.ppm", minirt->screen.sample, (unsigned int)get_cpu_time());
+		filename = ft_sprintf("%sminirt_export_SCENE_NAME.SAMPLES.%d.%u.ppm", minirt->options.output_dir, minirt->screen.sample, (unsigned int)get_cpu_time());
 		if (filename)
 			export_ppm_p6_minirt(filename, minirt);
 	}

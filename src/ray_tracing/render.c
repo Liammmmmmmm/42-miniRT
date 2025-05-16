@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/15 16:15:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 11:26:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 	const t_uint	tpi = minirt->viewport.render_w * minirt->viewport.render_h;
 	t_uint			i;
 	t_ray			ray;
-	char			bounce_hit;
 
-	bounce_hit = 0;
 	i = 0;
 	while (i < tpi)
 	{
@@ -117,13 +115,10 @@ void	draw_pixels(t_minirt *minirt)
 
 void	render(t_minirt *minirt)
 {
-	t_uint	i;
-
 	if (!minirt->screen.start_render || minirt->screen.pause_render)
 		return ;
 	if (minirt->screen.sample == 0)
 	{
-		i = -1;
 		minirt->viewport = init_viewport(minirt);
 
 		ft_izero(minirt->screen.render, minirt->scene.win_width * minirt->scene.win_height);
@@ -132,6 +127,14 @@ void	render(t_minirt *minirt)
 	draw_pixels(minirt);
 	if (minirt->screen.sample == minirt->screen.spp)
 	{
+		if (minirt->options.auto_export)
+		{
+			char *filename;
+
+			filename = ft_sprintf("%sminirt_export_SCENE_NAME.SAMPLES.%d.%u.ppm", minirt->options.output_dir, minirt->screen.sample, (unsigned int)get_cpu_time());
+			if (filename)
+				export_ppm_p6_minirt(filename, minirt);
+		}
 		minirt->screen.sample = 0;
 		minirt->screen.start_render = 0;
 	}

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/16 11:26:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 13:38:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	draw_pixels(t_minirt *minirt)
 	minirt->screen.last_sample_am = minirt->screen.sample;
 	put_render_to_buff(minirt);
 
+	if (minirt->options.no_display)
+		return ;
 	if (minirt->controls.selected_x != -1 && minirt->controls.selected_y != -1)
 	{
 		int	points[11][2];
@@ -119,9 +121,10 @@ void	render(t_minirt *minirt)
 		return ;
 	if (minirt->screen.sample == 0)
 	{
+		minirt->screen.first_sample_time = get_cpu_time();
 		minirt->viewport = init_viewport(minirt);
-
-		ft_izero(minirt->screen.render, minirt->scene.win_width * minirt->scene.win_height);
+		if (!minirt->options.no_display)
+			ft_izero(minirt->screen.render, minirt->scene.win_width * minirt->scene.win_height);
 		ft_bzero(minirt->screen.float_render, sizeof(t_fcolor) * minirt->viewport.render_w * minirt->viewport.render_h);
 	}
 	draw_pixels(minirt);

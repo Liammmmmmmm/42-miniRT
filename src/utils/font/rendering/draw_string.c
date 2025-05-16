@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:42:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/23 11:27:49 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 13:35:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	draw_string(t_img *img, t_ttf *ttf, const char *str, t_point2 pos)
 	const int		strl = ft_sstrlen(str);
 	int				i;
 
+	if (!str)
+		return ;
 	i = -1;
 	while (++i < strl)
 	{

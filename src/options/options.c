@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 09:54:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/16 11:53:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 12:37:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ int	parse_options(t_minirt *minirt, int argc, char **argv)
 		else if (is_max_samples_option(minirt, argv[i], &i))
 		{
 			if (i == 0)
-				return (0);	
+				return (0);
 		}
 		else if (is_out_dir_option(minirt, argv[i], &i))
 		{
 			if (i == 0)
-				return (0);	
+				return (0);
 		}
 		else
 		{
@@ -100,6 +100,5 @@ int	parse_options(t_minirt *minirt, int argc, char **argv)
 			return (0);
 		}		
 	}
-	printf("options : no display=%d, auto export=%d, max_samples=%d\n", minirt->options.no_display, minirt->options.auto_export, minirt->options.max_samples);
 	return (1);
 }

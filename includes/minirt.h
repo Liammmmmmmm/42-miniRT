@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/16 11:19:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 15:24:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ void	export_ppm_p6_minirt(const char *filename, t_minirt *minirt);
 char	*empty_static_string(void);
 
 
+
+int		is_animate_option(t_minirt *minirt, char *argvi, int *y);
 int		parse_options(t_minirt *minirt, int argc, char **argv);
 
 
@@ -195,6 +197,8 @@ int		valid_elements_amount(char **lines);
 int		free_scene(t_scene *scene, char **lines);
 int		parse_elements(t_scene *scene, char **lines, int ln_amount);
 
+t_objects	get_object_type(char *str);
+
 t_mat	*get_material(char *str, t_scene *scene);
 int		is_valid_double_el(char *str, double *co);
 int		is_valid_double_el_no_bordered(char *str, double *co);
@@ -212,6 +216,7 @@ t_tex	*get_texture(char *str, t_scene *scene);
 void	get_texture_image(t_tex *tex, char *filename);
 int		is_extension(char *filename, char *extension);
 int		is_valid_positive_int(char *str, int *res);
+
 
 int		parse_ambiant_light(t_scene *scene, char *line);
 int		parse_camera(t_scene *scene, char *line);

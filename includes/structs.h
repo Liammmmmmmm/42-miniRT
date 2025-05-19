@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/16 15:31:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 15:26:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -523,7 +523,6 @@ typedef struct s_controls
 
 typedef struct s_obj_anim
 {
-	t_bool		enabled;
 	t_objects	obj;
 	t_uint		obj_num;
 	t_uint		frames;
@@ -531,11 +530,24 @@ typedef struct s_obj_anim
 	t_vec3		*orientations;
 }	t_obj_anim;
 
+typedef struct s_bezier3
+{
+	t_vec3	p1;
+	t_vec3	p2;
+	t_vec3	pc;
+}	t_bezier3;
+
+typedef struct s_tmp_obj_anim
+{
+	t_vec3		*points;
+	int			*frames;
+}	t_tmp_obj_anim;
+
 typedef struct s_animation
 {
 	t_bool		enabled;
 	t_uint		nb_objects;
-	t_obj_anim	*objects
+	t_obj_anim	*objects;
 }	t_animation;
 
 typedef struct s_options

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 09:54:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/16 14:57:39 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 15:24:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,11 @@ int	parse_options(t_minirt *minirt, int argc, char **argv)
 				return (0);
 		}
 		else if (is_out_dir_option(minirt, argv[i], &i))
+		{
+			if (i == 0)
+				return (0);
+		}
+		else if (is_animate_option(minirt, argv[i], &i))
 		{
 			if (i == 0)
 				return (0);

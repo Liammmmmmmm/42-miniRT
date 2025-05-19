@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/16 11:26:25 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/05/19 15:29:12 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -112,7 +112,7 @@ PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
 					tranform_line.c verify_elements.c parse_elements.c \
 					parse_elements2.c parse_elements3.c parse_elements_utils.c \
 					parse_elements_utils2.c parse_elements_utils3.c parse_elements_utils4.c \
-					parse_elements_utils5.c get_texture.c parse_elements4.c
+					parse_elements_utils5.c parse_elements_utils6.c get_texture.c parse_elements4.c
 
 FONT_PARS_DIR		= src/utils/font/parsing/
 FONT_PARS_FILE		= free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c read_cmap.c \
@@ -136,7 +136,7 @@ UPSCALING_DIR		= src/upscaling/
 UPSCALING_FILE		= bilinear.c bicubic.c neighbor.c no_upscaling.c
 
 OPTIONS_DIR			= src/options/
-OPTIONS_FILE		= options.c
+OPTIONS_FILE		= options.c animation.c 
 
 M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \

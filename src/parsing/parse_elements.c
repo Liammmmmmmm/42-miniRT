@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:29:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 17:23:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 13:46:40 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	free_tex_mat(t_scene *scene)
 void	free_bvh_obj_lst(t_scene *scene)
 {
 
-	if (scene->obj_lst.light_nb != 0)
+	if (scene->obj_lst.light_nb != 0 && scene->obj_lst.light_lst)
 		free(scene->obj_lst.light_lst);
-	if (scene->obj_lst.plane_nb != 0)
+	if (scene->obj_lst.plane_nb != 0 && scene->obj_lst.plane_lst)
 		free(scene->obj_lst.plane_lst);
 	if (scene->bvh.valid == 1)
 	{
@@ -56,6 +56,7 @@ int	free_scene(t_scene *scene, char **lines)
 		{
 			if (scene->elements[i].type == CUSTOM)
 			{
+				free(((t_custom_object *)scene->elements[i].object)->name);
 				free(((t_custom_object *)scene->elements[i].object)->triangles);
 				free(((t_custom_object *)scene->elements[i].object)->obj_list);
 			}

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:40:53 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/08 12:57:12 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:41:11 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ int	parse_obj(char *file, t_custom_object *obj)
 	free(tmp.v);
 	free(tmp.vn);
 	free(tmp.vt);
+	if (tmp.name)
+		obj->name = tmp.name;
 	ft_free_tab_face(tmp.face, tmp.face_count);
 	if (setup_obj_lst(obj) == 1)
 		return (0);

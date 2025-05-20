@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:32:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 19:02:09 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:37:07 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	add_single_triangle(long *e, t_vertex *vertices, t_vector *v, \
 	t_triangle	t;
 
 	t = (t_triangle){vertices[0], vertices[1], vertices[2], (t_vec3){0, 0, 0}, \
-		NULL, (t_color){0, 0, 0}};
+		NULL, (t_color){0, 0, 0}, obj};
 	compute_triangle_center(&t);
 	add_position_scale(&t, obj);
 	if (vector_add(v, &t) == -1)
@@ -76,7 +76,7 @@ long	ear_clipping(t_vertex *vertices, size_t vertex_count, t_vector *v, \
 	{
 		t = (t_triangle){vertices[(0 + vertex_count - 1) % vertex_count], \
 			vertices[0], vertices[(0 + 1) % vertex_count], (t_vec3){0, 0, 0}, \
-			NULL, (t_color){0, 0, 0}};
+			NULL, (t_color){0, 0, 0}, obj};
 		compute_triangle_center(&t);
 		add_position_scale(&t, obj);
 		vector_add(v, &t);

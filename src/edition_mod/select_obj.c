@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   select_obj.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:20:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/15 11:43:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 13:42:39 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_object	*select_object(t_minirt *minirt, int x, int y)
 {
 	t_ray			ray;
 	t_hit_record	hit_record;
+	int				i;
 
 	x = (int)(x * (minirt->controls.values.upscaling_ratio / 100.0f) + 0.5f);
 	y = (int)(y * (minirt->controls.values.upscaling_ratio / 100.0f) + 0.5f);
@@ -29,6 +30,18 @@ t_object	*select_object(t_minirt *minirt, int x, int y)
 			ray.orig);
 	if (hit_register_all(minirt, &ray, &hit_record) == 0)
 		return (NULL);
+	if (hit_record.obj->type == TRIANGLE && ((t_triangle *)hit_record.obj)->obj != NULL)
+	{
+		i = 0;
+		while (i < minirt->scene.el_amount)
+		{
+			if ((minirt->scene.elements[i].type == CUSTOM) && \
+				((t_custom_object *)minirt->scene.elements[i].object) == \
+				((t_triangle *)hit_record.obj->object)->obj)
+					return (&minirt->scene.elements[i]);
+			i++;
+		}
+	}
 	return (hit_record.obj);
 }
 

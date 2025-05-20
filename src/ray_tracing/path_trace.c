@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/15 20:48:28 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:48:55 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,19 @@ t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 		}
 	}
 	return (accumulation);
+}
+
+t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
+{
+	t_fcolor		accumulation;
+	t_fcolor		power;
+	t_hit_record	hit_record;
+
+	if (hit_register_all(minirt, &ray, &hit_record) == 1)
+		return (hit_record.color);
+	else
+		return (add_skybox(minirt, &ray, &hit_record,
+				(t_ray_data){&power, &accumulation}));
 }
 
 void	debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth)

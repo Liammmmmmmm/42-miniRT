@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/20 10:15:12 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 12:18:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -410,6 +410,7 @@ typedef struct s_scene
 	t_camera	camera;
 	double		ior_all;
 	t_bvh		bvh;
+	t_bool		build_bvh;
 	int			win_width;
 	int			win_height;
 	int			render_width;

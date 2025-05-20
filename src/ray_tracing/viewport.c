@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/15 11:09:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 12:30:30 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,13 @@ static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 {
 	ft_bzero(vp, sizeof(t_viewport));
 	init_camera_values(minirt);
-	init_bvh(&minirt->scene.bvh, minirt->scene.elements,
-		minirt->scene.el_amount);
+	if (minirt->scene.build_bvh)
+	{
+		// SECURE ICI, la fonction en dessous fait un invalid free
+		// free_bvh_obj_lst(&minirt->scene);
+		init_bvh(&minirt->scene.bvh, minirt->scene.elements,
+			minirt->scene.el_amount);
+	}
 	init_plane_light_lst(minirt);
 	vp->gamma = sqrt(minirt->controls.values.gamma / 1000.0);
 	vp->render_w = minirt->scene.render_width;

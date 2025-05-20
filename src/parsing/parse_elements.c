@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:29:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 17:23:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 12:31:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	free_tex_mat(t_scene *scene)
 	{
 		i = -1;
 		while (++i < scene->tex_amount)
+		{
 			free(scene->textures[i].img.pixel_data);
+			free(scene->textures[i].hdr.pixels);
+		}
 		free(scene->textures);
 		scene->textures = NULL;
 	}
@@ -99,6 +102,7 @@ int	parse_elements(t_scene *scene, char **lines, int ln_amount)
 {
 	int	i;
 
+	scene->build_bvh = 1;
 	scene->el_amount = 0;
 	scene->elements = ft_calloc(sizeof(t_object), ln_amount - 2
 			- scene->tex_amount - scene->mat_amount);

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/20 11:34:08 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 12:23:36 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	draw_pixels(t_minirt *minirt)
 	minirt->screen.sample_total_anim++;
 	minirt->screen.last_sample_am = minirt->screen.sample;
 	put_render_to_buff(minirt);
-	printf("Sample %d - %zums\n", minirt->screen.sample, get_cpu_time() - minirt->screen.last_sample_time);
+
 	if (minirt->options.no_display)
 		return ;
 		
@@ -199,7 +199,7 @@ void	check_sample_amount(t_minirt *minirt)
 			printf("Start image export\n");
 			if (filename)
 				export_ppm_p6_minirt(filename, minirt);
-			printf("Finish image export\n");
+			free(filename);
 		}
 		minirt->screen.sample = 0;
 		minirt->screen.start_render = 0;

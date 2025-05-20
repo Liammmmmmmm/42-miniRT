@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/12 09:25:01 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 12:26:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	const uint32_t	count = count_object(obj_list, obj_c);
 	const int		normal_mode = bvh->normal_mode;
 	
-	printf("\nStarting building bvh :\n");
+	printf("\nBuilding BVH:\n");
 	ft_bzero(bvh, sizeof(t_bvh));
 	if (count == 0)
 		return ;
@@ -124,7 +124,6 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	bvh->normal_mode = normal_mode;
 	print_progress_bar(0, count);
 	build_bvh(bvh, 0, count);
-	printf("\nEnd building bvh\n\n");
 }
 
 char	hit_bvh(t_bvh *bvh, uint32_t node_index, t_ray *ray, \

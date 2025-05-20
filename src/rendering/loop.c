@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/20 11:57:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 11:59:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,8 @@ int	exit_if_anim_finished(t_minirt *minirt)
 	char	*txt;
 	ssize_t	time;
 
+	if (!minirt->options.anim.enabled)
+		return (0);
 	if (minirt->options.anim.frame_i == minirt->options.anim.frames)
 	{
 		printf("Every frames have been generated\n");

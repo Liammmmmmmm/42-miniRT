@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/20 12:23:36 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 14:20:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 							(i % minirt->viewport.render_w) + offset.x)),
 					vec3_multiply_scalar(minirt->viewport.pixel_delta_v,
 						(i / minirt->viewport.render_w) + offset.y)), ray.orig);
-		color = path_trace(minirt, ray, 5);
+		color = path_trace(minirt, ray, 2);
 		minirt->screen.float_render[i].r += color.r;
 		minirt->screen.float_render[i].g += color.g;
 		minirt->screen.float_render[i].b += color.b;

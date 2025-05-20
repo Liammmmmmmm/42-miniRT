@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/20 12:27:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 13:39:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,16 @@ void	export_ppm_p6_minirt(const char *filename, t_minirt *minirt);
 
 char	*empty_static_string(void);
 
+int		tesselate_everything(int tab_size, t_tmp_obj_anim *pts, t_obj_anim *obj);
+int		get_frame_index_of_created_point(t_tmp_obj_anim *pts, int index);
+void	tessellate_straight_line(t_vec3 *output, uint32_t output_size, t_vec3 p1, t_vec3 p2);
+void	tessellate_bezier3(t_vec3 *output, uint32_t output_size, t_bezier3 b);
 
+void	debug_print_animation(t_animation *anim);
+int		anim_print_error_f(char **parts, char *err);
 void	free_anim(t_animation *anim);
+int		parse_movement_points(char *str, t_obj_anim *obj);
+int		parse_one_anim_obj(char *str, t_obj_anim *obj);
 int		is_animate_option(t_minirt *minirt, char *argvi, int *y);
 int		parse_options(t_minirt *minirt, int argc, char **argv);
 

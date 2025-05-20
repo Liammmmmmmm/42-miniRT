@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/16 14:17:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 11:57:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,11 +136,81 @@ void	no_display_infos(t_minirt *minirt)
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
 }
 
+void	no_display_infos_anim(t_minirt *minirt)
+{
+	char	*txt;
+	char	*tmp;
+	char	*tmp2;
+	ssize_t	time;
+	setcolor(&minirt->mlx.img, 0x0);
+	minirt->controls.font[0].size = 40;
+	minirt->controls.font[0].color = 0xFFFFFF;
+	txt = ft_sprintf("Frame %u/%u  Sample %d/%d", minirt->options.anim.frame_i + 1, minirt->options.anim.frames, minirt->screen.sample, minirt->screen.spp);
+	draw_string(&minirt->mlx.img, &minirt->controls.font[0], txt, (t_point2){20, 50});
+	free(txt);
+	minirt->controls.font[0].size = 28;
+	if (minirt->screen.sample_total_anim)
+	{
+		time = get_cpu_time();
+		tmp = get_time_dhmsms(time - minirt->screen.first_sample_time);
+		tmp2 = get_time_dhmsms(((time - minirt->screen.first_sample_time) / minirt->screen.sample_total_anim) * (minirt->screen.spp * minirt->options.anim.frames - minirt->screen.sample_total_anim));
+		txt = ft_sprintf("Elapsed time %s\nAverage: %ums/sample\nEstimated left time: %s", tmp, (t_uint)((time - minirt->screen.first_sample_time) / minirt->screen.sample_total_anim), tmp2);
+		free(tmp);
+		free(tmp2);
+		draw_string(&minirt->mlx.img, &minirt->controls.font[0], txt, (t_point2){20, 90});
+		free(txt);
+	}
+	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
+}
+
+int	exit_if_anim_finished(t_minirt *minirt)
+{
+	char	*txt;
+	ssize_t	time;
+
+	if (minirt->options.anim.frame_i == minirt->options.anim.frames)
+	{
+		printf("Every frames have been generated\n");
+		time = get_cpu_time() - minirt->screen.first_sample_time;
+		txt = get_time_dhmsms(time);
+		if (txt)
+			printf("%d samples and %u frames generated in %zums (%s)\n",
+				minirt->screen.sample_total_anim, minirt->options.anim.frames,
+				time, txt);
+		free(txt);
+		mlx_loop_end(minirt->mlx.mlx);
+		return (1);
+	}
+	return (0);
+}
+
 void	render_frame(t_minirt *minirt)
 {
+	static t_bool	skip = 0;
+
+	check_sample_amount(minirt);
+	if (exit_if_anim_finished(minirt))
+		return ;
 	if (minirt->options.no_display)
-		no_display_infos(minirt);
+	{
+		if (minirt->options.anim.enabled)
+			no_display_infos_anim(minirt);
+		else
+			no_display_infos(minirt);
+		if (minirt->screen.sample == 0 && skip == 0)
+		{
+			skip = 1;
+			return ;
+		}
+	}
 	render(minirt);
+	if (minirt->options.no_display)
+	{
+		if (minirt->options.anim.enabled)
+			no_display_infos_anim(minirt);
+		else
+			no_display_infos(minirt);
+	}
 	if (!minirt->options.no_display)
 	{
 		render_bvh(minirt);
@@ -148,4 +218,5 @@ void	render_frame(t_minirt *minirt)
 		draw_selected_object(minirt);
 	}
 	minirt->stats.frame += 1;
+	skip = 0;
 }

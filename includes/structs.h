@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/19 15:26:29 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 10:15:12 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -430,6 +430,7 @@ typedef struct s_screen
 	int			*render;
 	t_fcolor	*float_render;
 	int			sample;
+	int			sample_total_anim;
 	int			last_sample_am;
 	ssize_t		last_sample_time;
 	ssize_t		first_sample_time;
@@ -548,6 +549,8 @@ typedef struct s_animation
 	t_bool		enabled;
 	t_uint		nb_objects;
 	t_obj_anim	*objects;
+	t_uint		frame_i;
+	t_uint		frames;
 }	t_animation;
 
 typedef struct s_options

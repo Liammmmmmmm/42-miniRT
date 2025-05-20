@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/19 15:24:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 11:23:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	export_ppm_p6_minirt(const char *filename, t_minirt *minirt);
 char	*empty_static_string(void);
 
 
-
+void	free_anim(t_animation *anim);
 int		is_animate_option(t_minirt *minirt, char *argvi, int *y);
 int		parse_options(t_minirt *minirt, int argc, char **argv);
 
@@ -290,6 +290,8 @@ void	put_render_to_frame(t_minirt *minirt);
 void	put_render_to_buff(t_minirt *minirt);
 void	copy_buff_to_image(t_minirt *minirt);
 void	render(t_minirt *minirt);
+
+void	check_sample_amount(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                  RAY TRACING                                 ║

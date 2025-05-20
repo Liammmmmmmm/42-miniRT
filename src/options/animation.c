@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:00:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/19 15:44:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 10:00:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,10 +234,12 @@ int	parse_movement_points(char *str, t_obj_anim *obj)
 	int				tab_size;
 	int				res;
 
+	printf("OEOE : %s\n", str);
 	parts = ft_split_in_line(str, " ");
 	if (!parts)
 		return (print_error("Malloc error"));
 	tab_size = char_tab_len(parts);
+	printf("OEOE2 : %d\n", tab_size);
 	if (tab_size < 2)
 		return (anim_print_error_f(parts, "Not enough movement points"));
 	points.points = ft_calloc(tab_size, sizeof(t_vec3));
@@ -271,7 +273,7 @@ int	parse_object_points(char *str, t_obj_anim *obj)
 		free(parts);
 		return (0);
 	}
-	// if (!parse_object_points(parts[1], obj))
+	// if (!parse_orientation_points(parts[1], obj))
 	// {
 	// 	free(parts);
 	// 	return (0);
@@ -329,7 +331,7 @@ int	animate_option_parsing(char *str, t_animation *anim)
 	int		tab_size;
 	int		i;
 
-	parts = ft_split_in_line(str, "-");
+	parts = ft_split_in_line(str, ";");
 	if (!parts)
 		return (print_error("Malloc error"));
 	tab_size = char_tab_len(parts);
@@ -346,6 +348,16 @@ int	animate_option_parsing(char *str, t_animation *anim)
 		}
 	}
 	debug_print_animation(anim);
+	i = -1;
+	while (++i < tab_size)
+	{
+		if (i != 0 && anim->frames != anim->objects[i].frames)
+		{
+			free_anim(anim);
+			return (anim_print_error_f(parts, "Every object should have the same amount of frame"));
+		}
+		anim->frames = anim->objects[i].frames;
+	}
 	free(parts);
 	return (1);
 }

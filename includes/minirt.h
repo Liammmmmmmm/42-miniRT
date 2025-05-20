@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/16 12:52:46 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:49:27 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,8 +300,8 @@ t_fcolor	get_hdr_pixel(t_hdr *hdr, int x, int y);
 
 t_fcolor	compute_light_v2(t_hit_record *hit_record, t_minirt *minirt);
 t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth);
-
-void	debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth);
+t_fcolor	path_trace_normal(t_minirt *minirt, t_ray ray);
+void		debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth);
 
 
 /*═════════════════════════════════════════════════════════════════════════════╗

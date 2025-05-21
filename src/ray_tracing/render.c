@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/20 14:20:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 09:35:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void	init_animated_items(t_minirt *minirt)
 		if (minirt->options.anim.objects[i].obj == CAMERA)
 		{
 			minirt->scene.camera.position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
+			minirt->scene.camera.orientation = minirt->options.anim.objects[i].orientations[minirt->options.anim.frame_i];
 		}
 		else
 		{
@@ -144,37 +145,36 @@ void	init_animated_items(t_minirt *minirt)
 						if (minirt->scene.elements[y].type == SPHERE)
 						{
 							((t_sphere *)minirt->scene.elements[y].object)->position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-							
+							// ((t_sphere *)minirt->scene.elements[y].object)-> = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
 						}
 						else if (minirt->scene.elements[y].type == PLANE)
 						{
 							((t_plane *)minirt->scene.elements[y].object)->position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-							
+							((t_plane *)minirt->scene.elements[y].object)->normal = minirt->options.anim.objects[i].orientations[minirt->options.anim.frame_i];
 						}
 						else if (minirt->scene.elements[y].type == CYLINDER)
 						{
 							((t_cylinder *)minirt->scene.elements[y].object)->position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-							
+							((t_cylinder *)minirt->scene.elements[y].object)->orientation = minirt->options.anim.objects[i].orientations[minirt->options.anim.frame_i];
 						}
 						else if (minirt->scene.elements[y].type == CONE)
 						{
 							((t_cone *)minirt->scene.elements[y].object)->position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-							
+							((t_cone *)minirt->scene.elements[y].object)->orientation = minirt->options.anim.objects[i].orientations[minirt->options.anim.frame_i];
 						}
 						else if (minirt->scene.elements[y].type == HYPERBOLOID)
 						{
 							((t_hyperboloid *)minirt->scene.elements[y].object)->position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-							
+							((t_hyperboloid *)minirt->scene.elements[y].object)->orientation = minirt->options.anim.objects[i].orientations[minirt->options.anim.frame_i];
 						}
 						else if (minirt->scene.elements[y].type == CUSTOM)
 						{
 							((t_custom_object *)minirt->scene.elements[y].object)->position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-							
+							((t_custom_object *)minirt->scene.elements[y].object)->orientation = minirt->options.anim.objects[i].orientations[minirt->options.anim.frame_i];
 						}
 						else if (minirt->scene.elements[y].type == LIGHT)
 						{
 							((t_light *)minirt->scene.elements[y].object)->position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-							
 						}
 					}
 					obj_num++;

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:25:52 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/20 13:30:58 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 10:45:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	debug_print_animation(t_animation *anim)
 		printf("Object : %s.%u\n", get_object_name(obj.obj), obj.obj_num);
 		while (++y < (int)obj.frames)
 		{
-			printf("  Frame %d : Pos -> %f,%f,%f\n", y, obj.points[y].x, obj.points[y].y, obj.points[y].z);
+			printf("  Frame %d : Pos -> %f,%f,%f  Orientation -> %f,%f,%f\n", y, obj.points[y].x, obj.points[y].y, obj.points[y].z, obj.orientations[y].x, obj.orientations[y].y, obj.orientations[y].z);
 			
 		}
 	}

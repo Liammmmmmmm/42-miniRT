@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/20 14:05:29 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/05/21 10:45:43 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ ERASE2   = $(ERASE)\033[F$(ERASE)
 
 # Compiler and flags
 CC       = cc
-CFLAGS   = -Wall -Wextra -Werror
+CFLAGS   = -Wall -Wextra #-Werror
 LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm
 DEBUG_FLAGS = -g3
 FAST_FLAGS = -O3 -flto -march=native -mtune=native -funroll-loops -ffast-math -falign-functions=32 -falign-loops=16
@@ -43,6 +43,7 @@ ifeq ($(MAKECMDGOALS), debug)
 	CFLAGS += $(DEBUG_FLAGS)
 endif
 ifeq ($(MAKECMDGOALS), fast)
+	CC     = gcc
 	CFLAGS += $(FAST_FLAGS)
 endif
 
@@ -136,7 +137,7 @@ UPSCALING_DIR		= src/upscaling/
 UPSCALING_FILE		= bilinear.c bicubic.c neighbor.c no_upscaling.c
 
 OPTIONS_DIR			= src/options/
-OPTIONS_FILE		= options.c animation.c  animation_err.c  animation_move_points.c  animation_parse.c  animation_tesselate.c 
+OPTIONS_FILE		= options.c animation.c animation_err.c animation_move_points.c animation_parse.c animation_tesselate.c animation_rotations.c animation_auto_rota.c
 
 M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \

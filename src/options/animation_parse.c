@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:38:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/20 13:39:14 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 10:37:51 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,17 @@ int	parse_object_points(char *str, t_obj_anim *obj)
 		free(parts);
 		return (0);
 	}
-
-	
-	// a partir de maintenant les erreurs doivent free orientations et points
-
-	
-	// if (!parse_orientation_points(parts[1], obj))
-	// {
-	// 	free(parts);
-	// 	return (0);
-	// }
+	if (tab_size == 2 && !parse_orientation_points(parts[1], obj))
+	{
+		free(obj->orientations);
+		free(obj->points);
+		obj->orientations = NULL;
+		obj->points = NULL;
+		free(parts);
+		return (0);
+	}
+	else if (tab_size == 1)
+		set_auto_orientation_points(obj);
 	free(parts);
 	return (1);
 }

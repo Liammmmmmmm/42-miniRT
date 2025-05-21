@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:00:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 12:48:19 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 13:40:49 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,7 @@ int	animate_option_parsing(char *str, t_animation *anim)
 int	is_animate_option(t_minirt *minirt, char *argvi, int *y)
 {
 	if (ft_strcmp(argvi, "--animate") == 0)
-	{
-		*y = 0;
-		return (print_error1("Animate option need a value"));
-	}
+		return (print_error_sy("Animate option need a value", y));
 	else if (ft_strncmp(argvi, "--animate=", 10) == 0)
 	{
 		if (ft_strlen(argvi + 10) > 16)
@@ -78,8 +75,7 @@ int	is_animate_option(t_minirt *minirt, char *argvi, int *y)
 			}
 			return (1);
 		}
-		*y = 0;
-		return (print_error1("Invalid animation value"));
+		return (print_error_sy("Invalid animation value", y));
 	}
 	return (0);
 }

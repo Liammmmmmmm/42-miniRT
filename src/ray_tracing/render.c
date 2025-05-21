@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 11:11:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 13:42:49 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,75 +114,6 @@ void	draw_pixels(t_minirt *minirt)
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win,
 		minirt->mlx.img.img, 0, 0);
 	printf("Sample %d - %zums\n", minirt->screen.sample, get_cpu_time() - minirt->screen.last_sample_time);
-}
-
-void	init_animated_items(t_minirt *minirt)
-{
-	t_uint	i;
-	int		y;
-	t_uint	obj_num;
-
-	if (!minirt->options.anim.enabled || minirt->options.anim.frame_i > minirt->options.anim.frames)
-		return ;
-	i = (t_uint)-1;
-	while (++i < minirt->options.anim.nb_objects)
-	{
-		if (minirt->options.anim.objects[i].obj == CAMERA)
-		{
-			minirt->scene.camera.position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-			minirt->scene.camera.orientation = minirt->options.anim.objects[i].orientations[minirt->options.anim.frame_i];
-		}
-		else
-		{
-			obj_num = 0;
-			y = -1;
-			while (++y < minirt->scene.el_amount)
-			{
-				if (minirt->scene.elements[y].type == minirt->options.anim.objects[i].obj)
-				{
-					if (obj_num == minirt->options.anim.objects[i].obj_num)
-					{
-						if (minirt->scene.elements[y].type == SPHERE)
-						{
-							((t_sphere *)minirt->scene.elements[y].object)->position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-							// ((t_sphere *)minirt->scene.elements[y].object)-> = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-						}
-						else if (minirt->scene.elements[y].type == PLANE)
-						{
-							((t_plane *)minirt->scene.elements[y].object)->position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-							((t_plane *)minirt->scene.elements[y].object)->normal = minirt->options.anim.objects[i].orientations[minirt->options.anim.frame_i];
-						}
-						else if (minirt->scene.elements[y].type == CYLINDER)
-						{
-							((t_cylinder *)minirt->scene.elements[y].object)->position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-							((t_cylinder *)minirt->scene.elements[y].object)->orientation = minirt->options.anim.objects[i].orientations[minirt->options.anim.frame_i];
-						}
-						else if (minirt->scene.elements[y].type == CONE)
-						{
-							((t_cone *)minirt->scene.elements[y].object)->position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-							((t_cone *)minirt->scene.elements[y].object)->orientation = minirt->options.anim.objects[i].orientations[minirt->options.anim.frame_i];
-						}
-						else if (minirt->scene.elements[y].type == HYPERBOLOID)
-						{
-							((t_hyperboloid *)minirt->scene.elements[y].object)->position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-							((t_hyperboloid *)minirt->scene.elements[y].object)->orientation = minirt->options.anim.objects[i].orientations[minirt->options.anim.frame_i];
-						}
-						else if (minirt->scene.elements[y].type == CUSTOM)
-						{
-							((t_custom_object *)minirt->scene.elements[y].object)->position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-							((t_custom_object *)minirt->scene.elements[y].object)->orientation = minirt->options.anim.objects[i].orientations[minirt->options.anim.frame_i];
-						}
-						else if (minirt->scene.elements[y].type == LIGHT)
-						{
-							((t_light *)minirt->scene.elements[y].object)->position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
-						}
-						minirt->scene.build_bvh = 1;
-					}
-					obj_num++;
-				}
-			}
-		}
-	}
 }
 
 void	check_sample_amount(t_minirt *minirt)

@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/21 12:30:20 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/05/21 13:58:52 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ EVENT_DIR			= src/events/
 EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c  key_render.c  mouse_common.c  mouse_controls.c  mouse_render.c
 
 RAY_TRACING_DIR		= src/ray_tracing/
-RAY_TRACING_FILE	= render.c hit_register.c focus.c light.c bvh/bvh_manager.c bvh/bvh_math.c \
+RAY_TRACING_FILE	= render.c init_animated_items.c hit_register.c focus.c light.c bvh/bvh_manager.c bvh/bvh_math.c \
 					bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_print.c bvh/bvh_draw.c bvh/bvh_draw_utils.c \
 					setup_scene_obj.c background.c viewport.c path_trace.c
 

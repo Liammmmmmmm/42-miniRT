@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/14 14:30:17 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 14:07:50 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,13 +272,6 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 			{
 				hit_anything = 1;
 				*hit_record = temp_hit_record;
-				// hit_record->mat = NULL;
-				// hit_record->color.r = hit_record->u * 255;
-				// hit_record->color.g = hit_record->v * 255;
-				// hit_record->color.b = 0;
-				// hit_record->color.r = (hit_record->normal.x + 1) * 127.5;
-				// hit_record->color.g = (hit_record->normal.y + 1) * 127.5;
-				// hit_record->color.b = (hit_record->normal.z + 1) * 127.5;
 				hit_record->obj = obj;
 				hit_record->mat = ((t_triangle *)obj->object)->material;
 				apply_normal_map(hit_record);

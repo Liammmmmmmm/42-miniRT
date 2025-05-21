@@ -6,11 +6,12 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:25:52 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 10:45:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 13:35:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "options.h"
+#include "utils.h"
 
 void	free_anim(t_animation *anim)
 {
@@ -27,6 +28,12 @@ void	free_anim(t_animation *anim)
 	free(anim->objects);
 }
 
+int	print_error_sy(char *err, int *y)
+{
+	*y = 0;
+	return (print_error1(err));
+}
+
 int	anim_print_error_f(char **parts, char *err)
 {
 	free(parts);
@@ -38,7 +45,7 @@ void	debug_print_animation(t_animation *anim)
 	int			i;
 	int			y;
 	t_obj_anim	obj;
-	
+
 	i = -1;
 	while (++i < (int)anim->nb_objects)
 	{
@@ -47,8 +54,10 @@ void	debug_print_animation(t_animation *anim)
 		printf("Object : %s.%u\n", get_object_name(obj.obj), obj.obj_num);
 		while (++y < (int)obj.frames)
 		{
-			printf("  Frame %d : Pos -> %f,%f,%f  Orientation -> %f,%f,%f\n", y, obj.points[y].x, obj.points[y].y, obj.points[y].z, obj.orientations[y].x, obj.orientations[y].y, obj.orientations[y].z);
-			
+			printf("  Frame %d : Pos -> %f,%f,%f  Orientation -> %f,%f,%f\n",
+				y, obj.points[y].x, obj.points[y].y, obj.points[y].z,
+				obj.orientations[y].x, obj.orientations[y].y,
+				obj.orientations[y].z);
 		}
 	}
 }

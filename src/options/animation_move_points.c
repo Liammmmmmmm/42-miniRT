@@ -6,13 +6,17 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:32:56 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/20 13:36:12 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 12:59:33 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "options.h"
+#include <errno.h>
+#include <string.h>
+#include "utils.h"
+#include "parsing.h"
 
-int	parse_point_frame(char *str, t_tmp_obj_anim *pts, int i)
+static int	parse_point_frame(char *str, t_tmp_obj_anim *pts, int i)
 {
 	char	**co;
 	int		tab_size;
@@ -22,11 +26,13 @@ int	parse_point_frame(char *str, t_tmp_obj_anim *pts, int i)
 		return (print_error(strerror(errno)));
 	tab_size = char_tab_len(co);
 	if (tab_size != 3 && tab_size != 4)
-		return (anim_print_error_f(co, "Animation point must have 3 coordinates, and can have a frame index : <x,y,z[,F]>"));
+		return (anim_print_error_f(co, "Animation point must have 3 coordinates"
+				", and can have a frame index : <x,y,z[,F]>"));
 	if (!is_valid_double_el_no_bordered(co[0], &pts->points[i].x)
 		|| !is_valid_double_el_no_bordered(co[1], &pts->points[i].y)
 		|| !is_valid_double_el_no_bordered(co[2], &pts->points[i].z))
-		return (anim_print_error_f(co, "Invalid vector format. Expected format: x,y,z"));
+		return (anim_print_error_f(co, "Invalid vector format. Expected format:"
+				" x,y,z"));
 	pts->frames[i] = -1;
 	if (tab_size == 4)
 	{
@@ -37,7 +43,23 @@ int	parse_point_frame(char *str, t_tmp_obj_anim *pts, int i)
 	return (1);
 }
 
-int	compute_movement_pts(int tab_size, t_tmp_obj_anim *pts, t_obj_anim *obj)
+static int	alloc_and_tesselate(int tab_size, t_tmp_obj_anim *pts,
+	t_obj_anim *obj)
+{
+	obj->points = ft_calloc(obj->frames, sizeof(t_vec3));
+	obj->orientations = ft_calloc(obj->frames, sizeof(t_vec3));
+	if (!obj->orientations || !obj->points || !tesselate_everything(tab_size,
+			pts, obj))
+	{
+		free(obj->orientations);
+		free(obj->points);
+		return (0);
+	}
+	return (1);
+}
+
+static int	compute_movement_pts(int tab_size, t_tmp_obj_anim *pts,
+	t_obj_anim *obj)
 {
 	int	i;
 	int	last_frame;
@@ -57,18 +79,11 @@ int	compute_movement_pts(int tab_size, t_tmp_obj_anim *pts, t_obj_anim *obj)
 		last_frame = pts->frames[i];
 	}
 	obj->frames = pts->frames[tab_size - 1] + 1;
-	obj->points = ft_calloc(obj->frames, sizeof(t_vec3));
-	obj->orientations = ft_calloc(obj->frames, sizeof(t_vec3));
-	if (!obj->orientations || !obj->points || !tesselate_everything(tab_size, pts, obj))
-	{
-		free(obj->orientations);
-		free(obj->points);
-		return (0);
-	}
-	return (1);
+	return (alloc_and_tesselate(tab_size, pts, obj));
 }
 
-int	parse_and_compute_pts(char **parts, int tab_size, t_tmp_obj_anim *pts, t_obj_anim *obj)
+static int	parse_and_compute_pts(char **parts, int tab_size,
+	t_tmp_obj_anim *pts, t_obj_anim *obj)
 {
 	int	i;
 

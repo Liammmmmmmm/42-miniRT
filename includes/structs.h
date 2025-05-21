@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/20 12:18:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 12:22:19 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "mlx_components.h"
 # include "font.h"
 # include "hdr_parsing.h"
+# include "basic_structs.h"
 
 typedef unsigned char t_bool;
 typedef unsigned char t_uchar;
@@ -68,19 +69,6 @@ typedef struct s_calc_trigo
 	double	sin_roll;
 	double	cos_roll;
 }	t_calc_trigo;
-
-typedef struct s_vec3
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_vec3;
-
-typedef	struct s_interval
-{
-	double	min;
-	double	max;
-}	t_interval;
 
 typedef struct s_ray
 {
@@ -531,19 +519,6 @@ typedef struct s_obj_anim
 	t_vec3		*points;
 	t_vec3		*orientations;
 }	t_obj_anim;
-
-typedef struct s_bezier3
-{
-	t_vec3	p1;
-	t_vec3	p2;
-	t_vec3	pc;
-}	t_bezier3;
-
-typedef struct s_tmp_obj_anim
-{
-	t_vec3		*points;
-	int			*frames;
-}	t_tmp_obj_anim;
 
 typedef struct s_animation
 {

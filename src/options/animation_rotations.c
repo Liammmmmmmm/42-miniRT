@@ -6,13 +6,18 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 08:52:01 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 09:49:52 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 13:01:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "options.h"
+#include "maths.h"
+#include <errno.h>
+#include <string.h>
+#include "utils.h"
+#include "parsing.h"
 
-int	parse_point_orientation(char *str, t_tmp_obj_anim *pts, int i)
+static int	parse_point_orientation(char *str, t_tmp_obj_anim *pts, int i)
 {
 	char	**co;
 	int		tab_size;
@@ -22,38 +27,43 @@ int	parse_point_orientation(char *str, t_tmp_obj_anim *pts, int i)
 		return (print_error(strerror(errno)));
 	tab_size = char_tab_len(co);
 	if (tab_size != 4)
-		return (anim_print_error_f(co, "Orientation point must have 3 coordinates and a frame index : <x,y,z,F>"));
+		return (anim_print_error_f(co, "Orientation point must have 3 "
+				"coordinates and a frame index : <x,y,z,F>"));
 	if (!is_valid_double_el_no_bordered(co[0], &pts->points[i].x)
 		|| !is_valid_double_el_no_bordered(co[1], &pts->points[i].y)
 		|| !is_valid_double_el_no_bordered(co[2], &pts->points[i].z))
-		return (anim_print_error_f(co, "Invalid vector format. Expected format: x,y,z"));
+		return (anim_print_error_f(co, "Invalid vector format. Expected format:"
+				" x,y,z"));
 	if (!is_valid_positive_int(co[3], &pts->frames[i]))
 		return (anim_print_error_f(co, "Invalid frame index."));
 	free(co);
+	pts->points[i] = vec3_unit(pts->points[i]);
 	return (1);
 }
 
-void	get_every_frame_orientation(int tab_size, t_tmp_obj_anim *pts, t_obj_anim *obj)
+static void	get_every_frame_orientation(int tab_size, t_tmp_obj_anim *pts,
+	t_obj_anim *obj)
 {
 	int		i;
 	t_vec3	p1;
 	t_vec3	p2;
 	int		frame1;
 	int		frame2;
-	
+
 	i = 0;
 	while (++i < tab_size)
 	{
-		
 		p1 = pts->points[i - 1];
 		frame1 = pts->frames[i - 1];
 		p2 = pts->points[i];
 		frame2 = pts->frames[i];
-		tessellate_straight_line(&obj->orientations[frame1], frame2 - frame1, p1, p2);
+		tessellate_straight_line(&obj->orientations[frame1], frame2 - frame1,
+			p1, p2);
 	}
 }
 
-int	compute_orientation_pts(int tab_size, t_tmp_obj_anim *pts, t_obj_anim *obj)
+static int	compute_orientation_pts(int tab_size, t_tmp_obj_anim *pts,
+	t_obj_anim *obj)
 {
 	int	i;
 	int	last_frame;
@@ -61,7 +71,8 @@ int	compute_orientation_pts(int tab_size, t_tmp_obj_anim *pts, t_obj_anim *obj)
 	if (pts->frames[0] != 0)
 		return (print_error("First point must be the frame 0"));
 	if (pts->frames[tab_size - 1] != (int)obj->frames - 1)
-		return (print_error("Last movement and orientation points must have the same frame index"));
+		return (print_error("Last movement and orientation points must have the"
+				" same frame index"));
 	i = -1;
 	last_frame = 0;
 	while (++i < tab_size)
@@ -74,7 +85,8 @@ int	compute_orientation_pts(int tab_size, t_tmp_obj_anim *pts, t_obj_anim *obj)
 	return (1);
 }
 
-int	parse_and_compute_orientation_pts(char **parts, int tab_size, t_tmp_obj_anim *pts, t_obj_anim *obj)
+static int	parse_and_compute_orientation_pts(char **parts, int tab_size,
+	t_tmp_obj_anim *pts, t_obj_anim *obj)
 {
 	int	i;
 

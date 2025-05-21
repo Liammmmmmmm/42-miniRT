@@ -6,17 +6,37 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:00:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/20 13:39:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 12:48:19 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "options.h"
+#include "utils.h"
+
+int	check_every_elements_same_frames_am(int tab_size, t_animation *anim)
+{
+	int	i;
+
+	i = -1;
+	while (++i < tab_size)
+	{
+		if (i != 0 && anim->frames != anim->objects[i].frames)
+		{
+			free_anim(anim);
+			return (print_error("Every object should have the same amount of "
+					"frame"));
+		}
+		anim->frames = anim->objects[i].frames;
+	}
+	return (1);
+}
 
 int	animate_option_parsing(char *str, t_animation *anim)
 {
 	char	**parts;
 	int		tab_size;
 	int		i;
+	int		res;
 
 	parts = ft_split_in_line(str, ";");
 	if (!parts)
@@ -34,26 +54,16 @@ int	animate_option_parsing(char *str, t_animation *anim)
 			return (0);
 		}
 	}
-	debug_print_animation(anim);
-	i = -1;
-	while (++i < tab_size)
-	{
-		if (i != 0 && anim->frames != anim->objects[i].frames)
-		{
-			free_anim(anim);
-			return (anim_print_error_f(parts, "Every object should have the same amount of frame"));
-		}
-		anim->frames = anim->objects[i].frames;
-	}
+	res = check_every_elements_same_frames_am(tab_size, anim);
 	free(parts);
-	return (1);
+	return (res);
 }
 
 int	is_animate_option(t_minirt *minirt, char *argvi, int *y)
 {
 	if (ft_strcmp(argvi, "--animate") == 0)
 	{
-		*y = 0;		
+		*y = 0;
 		return (print_error1("Animate option need a value"));
 	}
 	else if (ft_strncmp(argvi, "--animate=", 10) == 0)
@@ -62,7 +72,10 @@ int	is_animate_option(t_minirt *minirt, char *argvi, int *y)
 		{
 			minirt->options.anim.enabled = 1;
 			if (!animate_option_parsing(argvi + 10, &minirt->options.anim))
+			{
+				minirt->options.anim.enabled = 0;
 				*y = 0;
+			}
 			return (1);
 		}
 		*y = 0;

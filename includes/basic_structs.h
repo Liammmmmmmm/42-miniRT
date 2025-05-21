@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   animation_auto_rota.c                              :+:      :+:    :+:   */
+/*   basic_structs.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 10:01:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 12:58:39 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/05/21 12:21:20 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/05/21 12:22:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "options.h"
-#include "maths.h"
+#ifndef BASIC_STRUCTS_H
+# define BASIC_STRUCTS_H
 
-void	set_auto_orientation_points(t_obj_anim *obj)
+typedef struct s_vec3
 {
-	t_uint	i;
+	double	x;
+	double	y;
+	double	z;
+}	t_vec3;
 
-	i = (t_uint)-1;
-	while (++i < obj->frames)
-	{
-		if (i != obj->frames - 1)
-			obj->orientations[i] = vec3_unit(vec3_subtract(obj->points[i + 1],
-						obj->points[i]));
-		else
-			obj->orientations[i] = obj->orientations[i - 1];
-	}
-}
+typedef	struct s_interval
+{
+	double	min;
+	double	max;
+}	t_interval;
+
+#endif

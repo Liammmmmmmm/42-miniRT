@@ -6,12 +6,13 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/20 11:09:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 12:42:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "bmp_parsing.h"
+#include "options.h"
 
 int	render_next_frame(t_minirt *minirt)
 {
@@ -71,6 +72,8 @@ int	main(int argc, char **argv)
 	if (!init_render(&minirt))
 		return (clean(&minirt));
 	print_scene(&minirt.scene);
+	if (minirt.options.anim.enabled)
+		debug_print_animation(&minirt.options.anim);
 	events(&minirt);
 	mlx_loop_hook(minirt.mlx.mlx, render_next_frame, &minirt);
 	mlx_loop(minirt.mlx.mlx);

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:41:31 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/14 12:48:55 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/19 12:38:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,19 @@ int	parse_only_mat(char *str, t_mat **mat, t_scene *scene)
 }
 
 /**
- * This function isn't protected against overflows
+ * This function isn't protected against every overflows
  */
-int	is_valid_positive_int(char *str, int *res)
-{
-	int	tmp;
-
-	tmp = ft_atoi(str);
-	if (tmp < 0)
-		return (0);
-	*res = tmp;
-	return (1);
-}
+ int	is_valid_positive_int(char *str, int *co)
+ {
+	 int	i;
+ 
+	 i = -1;
+	 while (str[++i])
+		 if (!ft_isdigit(str[i]))
+			 return (0);
+	 if (i > 10)
+		 return (0);
+	 *co = ft_atoi(str);
+	 return (1);
+ }
+ 

@@ -35,7 +35,7 @@ cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/rock.obj ro1
 cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/ground.obj ground
 cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/meduse.obj meduse
 cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/glass.obj bocal
-cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/glass2.obj bocal2
+# cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/glass2.obj bocal2
 
 A	0.9										220,220,220 skybox
 C	0.8,1.1,2 -0.5,-0.5,-1 80

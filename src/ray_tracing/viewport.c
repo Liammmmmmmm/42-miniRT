@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/15 11:09:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 11:11:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,18 @@ static void	init_camera_values(t_minirt *minirt)
 
 static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 {
+	t_vec3	up;
+
 	ft_bzero(vp, sizeof(t_viewport));
 	init_camera_values(minirt);
-	init_bvh(&minirt->scene.bvh, minirt->scene.elements,
-		minirt->scene.el_amount);
+	if (minirt->scene.build_bvh)
+	{
+		// SECURE ICI, la fonction en dessous fait un invalid free
+		// free_bvh_obj_lst(&minirt->scene);
+		init_bvh(&minirt->scene.bvh, minirt->scene.elements,
+			minirt->scene.el_amount);
+		minirt->scene.build_bvh = 0;
+	}
 	init_plane_light_lst(minirt);
 	vp->gamma = sqrt(minirt->controls.values.gamma / 1000.0);
 	vp->render_w = minirt->scene.render_width;
@@ -37,8 +45,11 @@ static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 	vp->height = 2 * tan((minirt->controls.values.fov * PI_D / 180) / 2)
 		* minirt->scene.camera.focus_dist;
 	vp->width = vp->height * ((float)vp->render_w / vp->render_h);
-	*u = vec3_unit(vec3_cross((t_vec3){0, 1, 0},
-				vec3_negate(minirt->scene.camera.orientation)));
+	up = (t_vec3){0, 1, 0};
+	if (fabs(minirt->scene.camera.orientation.y) > 0.999)
+		up = (t_vec3){1, 0, 0};
+	*u = vec3_unit(vec3_cross(up, vec3_negate(minirt->scene.camera.orientation))
+		);
 }
 
 static void	init_viewport_vectors(t_minirt *minirt, t_viewport *vp, t_vec3 u)

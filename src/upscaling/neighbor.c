@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:02:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/15 10:57:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 10:40:58 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 // 			src_index = d.sw * d.sh - 1;
 // 		p.x = render[i].x;
 // 		p.y = render[i].y;
-// 		p.color = (t_color){ render[src_index].color.r / d.divide, \
+// 		p.color = (t_color){ render[src_index].color.r / d.divide,
 // 			render[src_index].color.g / d.divide,
 // 			render[src_index].color.b / d.divide};
 // 		put_sp_image(&minirt->mlx.img, &p);

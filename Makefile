@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/15 20:42:36 by madelvin         ###   ########.fr        #
+#    Updated: 2025/05/21 13:58:52 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,8 @@ ifeq ($(MAKECMDGOALS), debug)
 	CFLAGS += $(DEBUG_FLAGS)
 endif
 ifeq ($(MAKECMDGOALS), fast)
+	CC     = gcc
+	CFLAGS   = -Wall -Wextra
 	CFLAGS += $(FAST_FLAGS)
 endif
 
@@ -82,7 +84,7 @@ EVENT_DIR			= src/events/
 EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c  key_render.c  mouse_common.c  mouse_controls.c  mouse_render.c
 
 RAY_TRACING_DIR		= src/ray_tracing/
-RAY_TRACING_FILE	= render.c hit_register.c focus.c light.c bvh/bvh_manager.c bvh/bvh_math.c \
+RAY_TRACING_FILE	= render.c init_animated_items.c hit_register.c focus.c light.c bvh/bvh_manager.c bvh/bvh_math.c \
 					bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_print.c bvh/bvh_draw.c bvh/bvh_draw_utils.c \
 					setup_scene_obj.c background.c viewport.c path_trace.c
 
@@ -112,7 +114,7 @@ PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
 					tranform_line.c verify_elements.c parse_elements.c \
 					parse_elements2.c parse_elements3.c parse_elements_utils.c \
 					parse_elements_utils2.c parse_elements_utils3.c parse_elements_utils4.c \
-					parse_elements_utils5.c get_texture.c parse_elements4.c
+					parse_elements_utils5.c parse_elements_utils6.c get_texture.c parse_elements4.c
 
 FONT_PARS_DIR		= src/utils/font/parsing/
 FONT_PARS_FILE		= free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c read_cmap.c \
@@ -135,6 +137,9 @@ EDIT_MOD_FILE		= select_obj.c
 UPSCALING_DIR		= src/upscaling/
 UPSCALING_FILE		= bilinear.c bicubic.c neighbor.c no_upscaling.c
 
+OPTIONS_DIR			= src/options/
+OPTIONS_FILE		= options.c animation.c animation_err.c animation_move_points.c animation_parse.c animation_tesselate.c animation_rotations.c animation_auto_rota.c
+
 M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
 			$(addprefix $(DEBUG_DIR), $(DEBUG_FILE)) \
@@ -153,7 +158,8 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(EDIT_MOD_DIR), $(EDIT_MOD_FILE)) \
 			$(addprefix $(UPSCALING_DIR), $(UPSCALING_FILE)) \
 			$(addprefix $(PPM_DIR), $(PPM_FILE)) \
-			$(addprefix $(HDR_PARSING_DIR), $(HDR_PARSING_FILE))
+			$(addprefix $(HDR_PARSING_DIR), $(HDR_PARSING_FILE)) \
+			$(addprefix $(OPTIONS_DIR), $(OPTIONS_FILE))
 
 # Source files bonus
 SRCS_BONUS = 

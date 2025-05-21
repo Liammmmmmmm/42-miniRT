@@ -1,6 +1,6 @@
 # tex texture1 assets/textures/earth_daymap_2k.bmp
 tex texture2 image assets/textures/non.bmp
-tex skybox image assets/textures/mountain_skybox.bmp
+tex skybox   image assets/textures/mountain_skybox.bmp
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color normal_map

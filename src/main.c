@@ -6,12 +6,13 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/16 13:03:38 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:42:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "bmp_parsing.h"
+#include "options.h"
 
 int	render_next_frame(t_minirt *minirt)
 {
@@ -42,6 +43,7 @@ int	clean(t_minirt *minirt)
 	free(minirt->screen.render);
 	free(minirt->screen.float_render);
 	free_ttf(&minirt->controls.font[0]);
+	free_anim(&minirt->options.anim);
 	return (1);
 }
 
@@ -50,10 +52,10 @@ int	main(int argc, char **argv)
 	t_minirt	minirt;
 
 	if (argc < 2)
-		return (print_error1("Missing scene file. Usage: ./miniRT <scene.rt>"));
-	if (argc > 2)
-		return (print_error1("Too many arguments. Usage: ./miniRT <scene.rt>"));
+		return (print_error1("Missing scene file. Usage: ./miniRT <scene.rt> [options]"));
 	ft_bzero(&minirt, sizeof(t_minirt));
+	if (!parse_options(&minirt, argc, argv))
+		return (1);
 	if (parse_scene(&minirt, argv[1]) == 0)
 		return (1);
 	if (minirt.scene.win_height == -1 || minirt.scene.win_width == -1)
@@ -70,6 +72,8 @@ int	main(int argc, char **argv)
 	if (!init_render(&minirt))
 		return (clean(&minirt));
 	print_scene(&minirt.scene);
+	if (minirt.options.anim.enabled)
+		debug_print_animation(&minirt.options.anim);
 	events(&minirt);
 	mlx_loop_hook(minirt.mlx.mlx, render_next_frame, &minirt);
 	mlx_loop(minirt.mlx.mlx);

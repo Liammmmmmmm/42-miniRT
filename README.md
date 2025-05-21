@@ -26,6 +26,12 @@ Courte description
 		- [Lights](#lights)
 		- [Bounding Volume Hierarchie (BVH)](#bounding-volume-hierarchie-bvh)
 		- [Control UI](#control-ui)
+		- [Basics options + animate option](#basics-options--animate-option)
+			- [`--max-samples=x`](#--max-samplesx)
+			- [`--output-dir=/dir_example/`](#--output-dirdir_example)
+			- [`--auto-export`](#--auto-export)
+			- [`--no-display`](#--no-display)
+			- [`--animate=""`](#--animate)
 	- [Installation](#installation)
 	- [Resources](#resources)
 	- [PARTIE RANDOM A VIRER UN JOUR](#partie-random-a-virer-un-jour)
@@ -113,6 +119,110 @@ Doing UI in c is not an easy thing, from text displaying to custom reusable cont
 Explication ttf
 Description des différents composants et utilisation de l'ui
 
+
+</details>
+
+### Basics options + animate option
+
+GIF D'UNE ANIMATION
+
+<details>
+	<summary><strong>See more about it</strong></summary>
+	<br>
+
+Differents options are available in our miniRT, basics ones and more complex ones.
+
+#### `--max-samples=x`
+
+Sets the maximum number of samples for a render.
+
+#### `--output-dir=/dir_example/`
+
+Specifies the output directory where rendered images are saved, to avoid cluttering the home directory.
+
+#### `--auto-export`
+
+Automatically exports the current frame once the maximum number of samples is reached.
+
+#### `--no-display`
+
+Disables the image preview and replaces it with a minimal UI displaying useful information such as average time per sample and estimated time remaining.
+
+#### `--animate=""`
+
+Defines an animation for the scene and generates all frames accordingly.
+
+---
+
+> How to Create an Animation
+
+To create an animation, start by setting the `--animate` flag:
+
+```bash
+--animate=""
+```
+
+Then specify the parameters:
+
+**1. Select the Object to Animate**
+
+You must first indicate which object to animate:
+
+* `C:` → animates the **camera**
+* `sp:` → animates the **first sphere** in the scene
+* `co.3:` → animates the **fourth cone** (index starts at 0)
+
+**2. Define the Trajectory**
+
+You must provide at least two points with frame indices to define the animation path.
+
+Example:
+
+```
+C:x1,y1,z1,0 x2,y2,z2,60
+```
+
+In this example, the camera will move from `(x1,y1,z1)` at frame 0 to `(x2,y2,z2)` at frame 60. Intermediate frames are linearly interpolated (lerped) between the two positions.
+
+You can also define more complex paths:
+
+```
+C:x1,y1,z1,0 x2,y2,z2,60 x3,y3,z3,120
+```
+
+Here, the camera moves from point 1 to point 2 in 60 frames, then from point 2 to point 3 in another 60 frames.
+
+To create **Bezier curves**, insert control points (points **without** a frame index):
+
+```
+C:x1,y1,z1,0 x2,y2,z2 x3,y3,z3,120
+```
+
+In this example, `x2,y2,z2` is a control point, creating a Bezier curve between the start and end points.
+
+You can define **as many points and segments** as you like.
+
+**3. Define Orientation (Optional)**
+
+You can also specify the orientation (rotation) of the object over time:
+
+```
+C:x1,y1,z1,0 x2,y2,z2 x3,y3,z3,120|1,0,0,0 0,0,1,120
+```
+
+After the `|` symbol, orientation keyframes are defined in the format `x,y,z,frame`. Here, the camera will rotate from `(1,0,0)` at frame 0 to `(0,0,1)` at frame 120, interpolating between them. x,y,z form a unit vector wich is the direction where the object is oriented to
+
+Like position, you can define multiple rotation keyframes.
+
+---
+
+**Important Notes**
+
+* The `--animate` option works for any object (not just the camera).
+* You can animate multiple objects in the same scene. For example: `C:animation_properties;sp:animation_properties` will animate the camera and a sphere
+* For a proper animation rendering workflow, you **should use** both `--max-samples` and `--auto-export`.
+  * Without `--auto-export`, each frame will be computed but **not** saved.
+  * Without `--max-samples`, each frame will take 100 000 samples to be saved
 
 </details>
 

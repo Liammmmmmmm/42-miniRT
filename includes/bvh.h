@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   bvh.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:11:47 by madelvin          #+#    #+#             */
 /*   Updated: 2025/05/20 13:41:58 by madelvin         ###   ########.fr       */
@@ -14,6 +14,8 @@
 # define BVH_H
 
 # include "structs.h"
+
+void			free_bvh_obj_lst(t_scene *scene);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                             BVH CONSTRUCTION                                ║

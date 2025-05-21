@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   material.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:32:20 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/13 14:20:25 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:37:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ double	get_cos_theta(t_vec3 dir_in, t_vec3 normal);
 double	get_reflect_value(t_ray *ray_in, t_hit_record *hit_record);
 
 double	ggx_distribution(double cos_theta, double roughness);
-t_vec3 ggx_sample_hemisphere(t_vec3 normal, double roughness);
+t_vec3	ggx_sample_hemisphere(t_vec3 normal, double roughness);
 
 #endif

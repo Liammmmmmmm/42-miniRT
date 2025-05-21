@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   no_upscaling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/15 21:19:59 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:16:17 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void	copy_buff_to_image(t_minirt *minirt)
 	int	i;
 	int	tpx;
 	
+	if (minirt->options.no_display)
+		return ;
 	i = -1;
 	tpx = minirt->scene.win_height * minirt->scene.win_width;
 	while (++i < tpx)
@@ -103,6 +105,8 @@ void	put_render_to_buff(t_minirt *minirt)
 	int	i;
 	int	divide;
 
+	if (minirt->options.no_display)
+		return ;
 	divide = minirt->screen.last_sample_am;
 	if (divide == 0)
 		divide = 1;

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/20 13:15:05 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:22:19 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "mlx_components.h"
 # include "font.h"
 # include "hdr_parsing.h"
+# include "basic_structs.h"
 
 typedef unsigned char t_bool;
 typedef unsigned char t_uchar;
@@ -68,19 +69,6 @@ typedef struct s_calc_trigo
 	double	sin_roll;
 	double	cos_roll;
 }	t_calc_trigo;
-
-typedef struct s_vec3
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_vec3;
-
-typedef	struct s_interval
-{
-	double	min;
-	double	max;
-}	t_interval;
 
 typedef struct s_ray
 {
@@ -411,6 +399,7 @@ typedef struct s_scene
 	t_camera	camera;
 	double		ior_all;
 	t_bvh		bvh;
+	t_bool		build_bvh;
 	int			win_width;
 	int			win_height;
 	int			render_width;
@@ -431,8 +420,10 @@ typedef struct s_screen
 	int			*render;
 	t_fcolor	*float_render;
 	int			sample;
+	int			sample_total_anim;
 	int			last_sample_am;
 	ssize_t		last_sample_time;
+	ssize_t		first_sample_time;
 	int			spp; // sample per pixel
 	t_bool		start_render;
 	t_bool		pause_render;
@@ -521,6 +512,33 @@ typedef struct s_controls
 	t_vec3			traced_ray[11];
 }	t_controls;
 
+typedef struct s_obj_anim
+{
+	t_objects	obj;
+	t_uint		obj_num;
+	t_uint		frames;
+	t_vec3		*points;
+	t_vec3		*orientations;
+}	t_obj_anim;
+
+typedef struct s_animation
+{
+	t_bool		enabled;
+	t_uint		nb_objects;
+	t_obj_anim	*objects;
+	t_uint		frame_i;
+	t_uint		frames;
+}	t_animation;
+
+typedef struct s_options
+{
+	t_bool		no_display;
+	t_bool		auto_export;
+	int			max_samples;
+	char		*output_dir;
+	t_animation	anim;
+}	t_options;
+
 typedef struct s_minirt
 {
 	t_scene		scene;
@@ -529,6 +547,7 @@ typedef struct s_minirt
 	t_stats		stats;
 	t_viewport	viewport;
 	t_controls	controls;
+	t_options	options;
 }	t_minirt;
 
 typedef struct s_upscale_data

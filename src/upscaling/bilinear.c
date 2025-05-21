@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 19:39:11 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/15 10:57:24 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 10:40:49 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@
 // 		y1 = d->y + 1;
 // 	else
 // 		y1 = d->y;	
-// 	c[0] = (t_color){d->minirt->screen.render[d->y * d->sw + d->x].color.r / \
+// 	c[0] = (t_color){d->minirt->screen.render[d->y * d->sw + d->x].color.r /
 // 		d->divide, d->minirt->screen.render[d->y * d->sw + d->x].color.g / d->divide,
 // 		d->minirt->screen.render[d->y * d->sw + d->x].color.b / d->divide};
-// 	c[1] = (t_color){d->minirt->screen.render[d->y * d->sw + x1].color.r / \
+// 	c[1] = (t_color){d->minirt->screen.render[d->y * d->sw + x1].color.r /
 // 		d->divide,d->minirt->screen.render[d->y * d->sw + x1].color.g / d->divide,
 // 		d->minirt->screen.render[d->y * d->sw + x1].color.b / d->divide};
-// 	c[2] = (t_color){d->minirt->screen.render[y1 * d->sw + d->x].color.r / \
+// 	c[2] = (t_color){d->minirt->screen.render[y1 * d->sw + d->x].color.r /
 // 		d->divide,d->minirt->screen.render[y1 * d->sw + d->x].color.g / d->divide,
 // 		d->minirt->screen.render[y1 * d->sw + d->x].color.b / d->divide};
-// 	c[3] = (t_color){d->minirt->screen.render[y1 * d->sw + x1].color.r / \
+// 	c[3] = (t_color){d->minirt->screen.render[y1 * d->sw + x1].color.r /
 // 		d->divide,d->minirt->screen.render[y1 * d->sw + x1].color.g / d->divide,
 // 		d->minirt->screen.render[y1 * d->sw + x1].color.b / d->divide};
 // 	p.x = d->minirt->screen.render[i].x;

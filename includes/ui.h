@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:22:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 13:49:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 13:27:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 // }	t_ui_param;
 
 void	draw_box_2d(t_img *img, t_point2 p1, t_point2 p2, int color);
+void	setcolor(t_img *img, uint32_t color);
 
 int		init_ui(t_minirt *minirt);
 

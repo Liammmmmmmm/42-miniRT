@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_controls.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:38:41 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 16:46:47 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/21 11:16:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,13 @@ int	keydown_controls(int key, t_minirt *minirt)
 			return (0);
 	i = -1;
 	while (++i < minirt->controls.nb_float_input)
+	{
 		if (float_input_type(&minirt->controls.float_input[i], key))
+		{
+			minirt->scene.build_bvh = 1;
 			return (0);
+		}
+	}
 	return (0);
 }
 

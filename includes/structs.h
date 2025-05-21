@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/05/21 12:22:19 by lilefebv         ###   ########lyon.fr   */
@@ -251,12 +251,13 @@ typedef struct s_vertex
 
 typedef struct s_triangle
 {
-	t_vertex	v0;
-	t_vertex	v1;
-	t_vertex	v2;
-	t_vec3		center;
-	t_mat		*material;
-	t_color		color;
+	t_vertex				v0;
+	t_vertex				v1;
+	t_vertex				v2;
+	t_vec3					center;
+	t_mat					*material;
+	t_color					color;
+	struct s_custom_object	*obj;
 }	t_triangle;
 
 typedef struct s_face

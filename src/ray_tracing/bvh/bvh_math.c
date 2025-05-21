@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:31:37 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/05 20:53:13 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:42:59 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,75 @@
 #include "bvh.h"
 #include <math.h>
 
-static inline t_aabb compute_triangle_bounds(t_triangle *t)
+static inline void	set_vertex(t_aabb *aabb, t_vertex *verts)
 {
-	t_vec3 min = vec3_min(t->v0.pos, vec3_min(t->v1.pos, t->v2.pos));
-	t_vec3 max = vec3_max(t->v0.pos, vec3_max(t->v1.pos, t->v2.pos));
-	return (t_aabb){ min, max };
+	size_t	j;
+	t_vec3	p;
+
+	j = 0;
+	while (j < 3)
+	{
+		p = verts[j].pos;
+		if (p.x < aabb->min.x)
+			aabb->min.x = p.x;
+		if (p.y < aabb->min.y)
+			aabb->min.y = p.y;
+		if (p.z < aabb->min.z)
+			aabb->min.z = p.z;
+		if (p.x > aabb->max.x)
+			aabb->max.x = p.x;
+		if (p.y > aabb->max.y)
+			aabb->max.y = p.y;
+		if (p.z > aabb->max.z)
+			aabb->max.z = p.z;
+	j++;
+	}
 }
 
-static inline t_aabb compute_hyperboloid_bounds(t_hyperboloid *hyp) {
-    const t_vec3 axis = vec3_unit(hyp->orientation);
-    const t_vec3 half_height_vec = vec3_multiply_scalar(axis, hyp->height * 0.5);
-    
-    // Points extrêmes le long de l'axe
-    t_vec3 bottom = vec3_subtract(hyp->position, half_height_vec);
-    t_vec3 top = vec3_add(hyp->position, half_height_vec);
-    
-    // Rayon maximal dans le plan perpendiculaire à l'axe
-    double z_max = hyp->height * 0.5;
-    double term = sqrt(1.0 + (z_max * z_max) / (hyp->c * hyp->c));
-    double r_max = fmax(hyp->a, hyp->b) * term;
-    
-    // Extension perpendiculaire à l'axe
-    t_vec3 r_vec = {
-        .x = r_max * sqrt(1.0 - axis.x * axis.x),
-        .y = r_max * sqrt(1.0 - axis.y * axis.y),
-        .z = r_max * sqrt(1.0 - axis.z * axis.z)
-    };
-    
-    // Calcul des min/max
-    t_vec3 min = vec3_min(bottom, top);
-    t_vec3 max = vec3_max(bottom, top);
-    
-    min = vec3_subtract(min, r_vec);
-    max = vec3_add(max, r_vec);
-    
-    return (t_aabb){min, max};
+static inline t_aabb	compute_custom_obj(t_custom_object *obj)
+{
+	t_aabb		aabb;
+	t_vertex	verts[3];
+	size_t		i;
+
+	i = 0;
+	if (!obj || obj->triangle_count == 0 || !obj->triangles)
+		return ((t_aabb){.min = {0, 0, 0}, .max = {0, 0, 0}});
+	aabb.min = obj->triangles[0].v0.pos;
+	aabb.max = obj->triangles[0].v0.pos;
+	while (i < obj->triangle_count)
+	{
+		verts[0] = obj->triangles[i].v0;
+		verts[1] = obj->triangles[i].v1;
+		verts[2] = obj->triangles[i].v2;
+		set_vertex(&aabb, verts);
+		i++;
+	}
+	return (aabb);
+}
+
+static inline t_aabb	compute_triangle_bounds(t_triangle *t)
+{
+	return ((t_aabb){vec3_min(t->v0.pos, vec3_min(t->v1.pos, t->v2.pos)), \
+	vec3_max(t->v0.pos, vec3_max(t->v1.pos, t->v2.pos))});
+}
+
+static inline t_aabb	compute_hyperboloid_bounds(t_hyperboloid *hyp)
+{
+	const t_vec3	axis = vec3_unit(hyp->orientation);
+	const t_vec3	half_height_vec = vec3_multiply_scalar(axis, \
+		hyp->height * 0.5);
+	const double	r_max = fmax(hyp->a, hyp->b) * (sqrt(1.0 + \
+		((hyp->height * 0.5) * (hyp->height * 0.5)) / (hyp->c * hyp->c)));
+	const t_vec3	r_vec = {r_max * sqrt(1.0 - axis.x * axis.x), r_max * \
+		sqrt(1.0 - axis.y * axis.y), r_max * sqrt(1.0 - axis.z * axis.z)};
+	t_aabb			aabb;
+
+	aabb.min = vec3_subtract(vec3_min(vec3_subtract(hyp->position, \
+	half_height_vec), vec3_add(hyp->position, half_height_vec)), r_vec);
+	aabb.max = vec3_add(vec3_max(vec3_subtract(hyp->position, \
+	half_height_vec), vec3_add(hyp->position, half_height_vec)), r_vec);
+	return (aabb);
 }
 
 static inline t_aabb	compute_cylinder_bounds(t_cylinder *cyl)
@@ -110,6 +144,8 @@ inline t_aabb	compute_object_bounds(t_object *obj)
 		return (compute_cone_bounds(obj->object));
 	if (obj->type == HYPERBOLOID)
 		return (compute_hyperboloid_bounds(obj->object));
+	if (obj->type == CUSTOM)
+		return (compute_custom_obj(obj->object));
 	if (obj->type == TRIANGLE)
 		return (compute_triangle_bounds(obj->object));
 	return (compute_cylinder_bounds(obj->object));

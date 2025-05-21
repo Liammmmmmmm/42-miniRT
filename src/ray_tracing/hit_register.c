@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   hit_register.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
 /*   Updated: 2025/05/21 14:07:50 by lilefebv         ###   ########lyon.fr   */

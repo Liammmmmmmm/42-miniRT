@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:58:05 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 18:33:51 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:40:06 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,10 @@ void	get_value_name(char *line, char **out, char *error)
 {
 	if (*error != 0 || ft_strncmp(line, "o ", 2) != 0)
 		return ;
-	if (out != NULL)
+	if (*out != NULL)
 		return ;
 	*out = ft_strdup(line + 2);
-	if (out == NULL)
+	if (*out == NULL)
 	{
 		*error = 1;
 		return ;

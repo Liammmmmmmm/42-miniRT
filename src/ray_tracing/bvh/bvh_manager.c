@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
 /*   Updated: 2025/05/21 10:49:58 by lilefebv         ###   ########lyon.fr   */

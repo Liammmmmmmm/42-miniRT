@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:11:47 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/20 12:29:39 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 13:41:58 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void			free_bvh_obj_lst(t_scene *scene);
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                             BVH CONSTRUCTION                                ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
-t_aabb			compute_object_bounds(t_object *obj);
 uint32_t		build_bvh(t_bvh *bvh, uint32_t start, uint32_t count);
 void			init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c);
 void			qsort_axis(uint32_t *arr, t_interval inter, t_bvh *bvh,

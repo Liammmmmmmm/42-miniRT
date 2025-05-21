@@ -77,6 +77,15 @@ t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 	return (accumulation);
 }
 
+t_fcolor	path_trace_normal(t_minirt *minirt, t_ray ray)
+{
+	t_hit_record	hit_record;
+
+	if (hit_register_all(minirt, &ray, &hit_record) == 1)
+		return (hit_record.color);
+	return (t_fcolor){0, 0, 0};
+}
+
 void	debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 {
 	t_fcolor		accumulated_color;

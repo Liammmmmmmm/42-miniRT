@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/05/16 14:16:11 by lilefebv         ###   ########lyon.fr   */
@@ -60,6 +60,10 @@ int	init_mlx(t_minirt *minirt)
 {
 	t_mlx	*mlx;
 
+	if (minirt->scene.win_height > MAX_WIN_SIZE)
+		minirt->scene.win_height = MAX_WIN_SIZE;
+	if (minirt->scene.win_width > MAX_WIN_SIZE)
+		minirt->scene.win_width = MAX_WIN_SIZE;
 	mlx = &minirt->mlx;
 	mlx->mlx = mlx_init();
 	if (!mlx->mlx)

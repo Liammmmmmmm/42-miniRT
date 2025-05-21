@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 09:35:52 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 11:11:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void	init_animated_items(t_minirt *minirt)
 						{
 							((t_light *)minirt->scene.elements[y].object)->position = minirt->options.anim.objects[i].points[minirt->options.anim.frame_i];
 						}
+						minirt->scene.build_bvh = 1;
 					}
 					obj_num++;
 				}

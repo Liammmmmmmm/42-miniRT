@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/20 14:04:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 11:11:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 		// free_bvh_obj_lst(&minirt->scene);
 		init_bvh(&minirt->scene.bvh, minirt->scene.elements,
 			minirt->scene.el_amount);
+		minirt->scene.build_bvh = 0;
 	}
 	init_plane_light_lst(minirt);
 	vp->gamma = sqrt(minirt->controls.values.gamma / 1000.0);

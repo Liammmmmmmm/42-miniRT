@@ -5,8 +5,8 @@ tex wall2n image assets/textures/cube/brick.bmp
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength     emission_color   scale      normal_map      normal_intensity
-mat	mat_top                       93, 93, 93       0.000000        1.000000       0.0000       0.000000    	1   				0.000000            255,255,255        1
-mat	mat_bot                       36, 36, 36        0.000000       1.000000       0.0000       0.000000    	1  					0.000000            255,255,255        1
+mat	mat_top                       93, 93, 93       0.000000        1.000000       0.0000         0.000000    	1   				0.000000            255,255,255        1
+mat	mat_bot                       36, 36, 36        0.000000       1.000000       0.0000         0.000000    	1  					0.000000            255,255,255        1
 mat	mat_w1                        wall1   		    0.000000       1.000000       0.0000     	 0.000000     	1  					0.000000            255,255,255        1 wall1n   1
 mat	mat_w2                        wall2    		    0.000000       1.000000       0.0000     	 0.000000     	1  					0.000000            255,255,255        1 wall2n   1
 mat	mat_light                     255,255,255       0.000000       0.000000       0.0000     	 0.000000     	1  					15.000000           255,255,255        1
@@ -28,4 +28,4 @@ C       34.816000, 6.126592, 30.920000 -0.0, 0.000000, -1  45
 #	strength             color
 
 A	1.000000             0, 0, 0 0,0,0
-W 800 400
+W 384 216 3840 2160

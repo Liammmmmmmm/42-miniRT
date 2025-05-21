@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   slider_int.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:47:09 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/20 15:52:34 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:06:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	display_slider_int(t_img *img, const t_int_slider slider)
 		}
 		i++;
 	}
-	draw_filled_circle(slider.x + ((*slider.value - slider.min) * \
+	draw_filled_circle((t_circle){slider.x + ((*slider.value - slider.min) * \
 		slider.width / (slider.max - slider.min)), slider.y + slider.height / \
-		2, 7, img, slider.point_color);
+		2, 7}, img, slider.point_color);
 }
 
 int	slider_mouse_down(t_int_slider *slider, int mouse_x, int mouse_y)

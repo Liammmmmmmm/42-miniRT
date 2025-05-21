@@ -3,46 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   editable_text.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:19:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 18:44:00 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:44:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx_components.h"
 
-void	display_text_input(t_img *img, t_text_input *text_input, t_ttf *ttf)
+static void	draw_box(t_img *img, t_text_input *text_input)
 {
-	int			i;
-	int			j;
-	t_point2	start;
-	int			br_color;
+	int	br_color;
+	int	i;
+	int	j;
 
 	if (text_input->is_focused)
 		br_color = text_input->border_color_focus;
 	else
 		br_color = text_input->border_color;
-	i = text_input->x;
-	while (i <= text_input->x + text_input->width)
+	i = text_input->x - 1;
+	while (++i <= text_input->x + text_input->width)
 	{
 		put_pixel_image(img, i, text_input->y, br_color);
 		put_pixel_image(img, i, text_input->y + text_input->height, br_color);
-		i++;
 	}
-	i = text_input->y + 1;
-	while (i < text_input->y + text_input->height)
+	i = text_input->y;
+	while (++i < text_input->y + text_input->height)
 	{
 		put_pixel_image(img, text_input->x, i, br_color);
 		put_pixel_image(img, text_input->x + text_input->width, i, br_color);
-		j = text_input->x + 1;
-		while (j < text_input->x + text_input->width)
-		{
+		j = text_input->x;
+		while (++j < text_input->x + text_input->width)
 			put_pixel_image(img, j, i, text_input->background_color);
-			j++;
-		}
-		i++;
 	}
+}
+
+void	display_text_input(t_img *img, t_text_input *text_input, t_ttf *ttf)
+{
+	t_point2	start;
+
+	draw_box(img, text_input);
 	if (text_input->text[0])
 	{
 		start.x = text_input->x + text_input->padding_left;

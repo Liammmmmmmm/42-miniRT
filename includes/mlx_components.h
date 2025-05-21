@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:34:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/27 15:02:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 16:05:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,11 +146,8 @@ int		string_size(char *str);
  */
 void	char_to_img(t_img *img, unsigned char font[96][5], t_point p, char c);
 
-void	draw_circle(int xc, int yc, int x, int y, t_img *img, int color);
-void	circle_bres(int xc, int yc, int r, t_img *img, int color);
-void	draw_circle_comp(int xc, int yc, int x, int y, t_img *img, int color);
-void	circle_bres_comp(int xc, int yc, int r, t_img *img, int color);
-void	draw_filled_circle(int xc, int yc, int r, t_img *img, int color);
+void	circle_bres(t_circle c, t_img *img, int color);
+void	draw_filled_circle(t_circle c, t_img *img, int color);
 
 void	display_slider_int(t_img *img, const t_int_slider slider);
 int		slider_mouse_down(t_int_slider *slider, int mouse_x, int mouse_y);

@@ -1,4 +1,4 @@
-tex skybox assets/textures/mountain_skybox.bmp
+tex skybox image assets/textures/mountain_skybox.bmp
 
 # gold color 255,227,157
 

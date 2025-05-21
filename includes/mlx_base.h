@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:10:05 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/08 12:24:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 16:33:22 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,26 @@ typedef struct s_point
 	int		color;	/* Color of the point. */
 }	t_point;
 
+typedef struct s_draw_circle
+{
+	int	xc;
+	int	yc;
+	int	x;
+	int	y;
+}	t_draw_circle;
+
+typedef struct s_circle
+{
+	int	xc;
+	int	yc;
+	int	r;
+}	t_circle;
+
 void		put_pixel_image_alpha(t_img *img, int x, int y, t_color_alpha color)
 ;
 
 int			color_to_int(t_color color);
+void		color_to_hex(char *dest, t_color color);
 t_color		int_to_color(int color);
 
 void		draw_vertical_line(t_img *img, uint32_t x, uint32_t y1,

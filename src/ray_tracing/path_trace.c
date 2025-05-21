@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/16 11:24:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 14:26:56 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 	{
 		if (hit_register_all(minirt, &ray, &hit_record) == 1)
 		{
-			if (minirt->scene.bvh.normal_mode) // A deplacer pour pas bouffer de perf
-				return (hit_record.color);
 			ray.orig = hit_record.point;
 			material_manager_v3(minirt, &ray, &hit_record,
 				(t_ray_data){&power, &accumulation});

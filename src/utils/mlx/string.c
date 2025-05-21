@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 14:38:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/16 19:16:16 by delmath          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:12:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@ void	char_to_img(t_img *img, unsigned char font[96][5], t_point p, char c)
 	}
 }
 
+static void	set_text_color(char *str, int *i, t_point *p)
+{
+	if (*(str + 1) == '#' && *(str + 2))
+	{
+		*i = 0;
+		while (ft_strchr("0123456789ABCDEF", str[2 + *i]) && *i < 6)
+			(*i)++;
+		p->color = ft_atoi_base_limited(str + 2, "0123456789ABCDEF", 6);
+		str = str + *i + 1;
+	}
+}
+
 void	string_to_img(t_img *img, unsigned char font[96][5], t_point p, \
 	char *str)
 {
@@ -40,21 +52,9 @@ void	string_to_img(t_img *img, unsigned char font[96][5], t_point p, \
 	while (*str)
 	{
 		if (*str == '\033' && *(str + 1))
-		{
-			if (*(str + 1) == '#' && *(str + 2))
-			{
-				i = 0;
-				while (ft_strchr("0123456789ABCDEF", str[2 + i]) && i < 6)
-					i++;
-				p.color = ft_atoi_base_limited(str + 2, "0123456789ABCDEF", 6);
-				str = str + i + 1;
-			}
-		}
+			set_text_color(str, &i, &p);
 		else if (*str == '\n')
-		{
-			p.x = xstart;
-			p.y += 14;
-		}
+			p = (t_point){.x = xstart, .y = p.y = 14};
 		else
 		{
 			char_to_img(img, font, p, *str);

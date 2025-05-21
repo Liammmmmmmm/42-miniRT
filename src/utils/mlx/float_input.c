@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 13:51:54 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 15:39:28 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/21 16:53:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,18 @@ int	ft_get_n_size(int n)
 	return (nsize);
 }
 
+static void	set_float_to_buff_init(int *i, double *n, char *s,
+	const long long scale)
+{
+	*i = 0;
+	if (*n < 0)
+	{
+		s[(*i)++] = '-';
+		*n = -*n;
+	}
+	*n = *n + 0.5 / scale;
+}
+
 int	set_float_to_buff(double n, char *s)
 {
 	int				i;
@@ -63,13 +75,7 @@ int	set_float_to_buff(double n, char *s)
 	const int		decimals = 6;
 	const long long	scale = pow_10(decimals);
 
-	i = 0;
-	if (n < 0)
-	{
-		s[i++] = '-';
-		n = -n;
-	}
-	n = n + 0.5 / scale;
+	set_float_to_buff_init(&i, &n, s, scale);
 	int_part = (long long)n;
 	frac_part = (long long)((n - int_part) * scale);
 	set_integer_to_buff(int_part, &i, s);
@@ -89,41 +95,44 @@ int	set_float_to_buff(double n, char *s)
 	return (i);
 }
 
-void	display_float_input(t_img *img, t_float_input *input, t_ttf *ttf)
+static void	draw_float_input_box(t_img *img, t_float_input *input)
 {
-	int			i;
-	int			j;
-	t_point2	start;
-	int			br_color;
+	int	i;
+	int	j;
+	int	br_color;
 
 	if (input->is_focused)
 		br_color = input->border_color_focus;
 	else
 		br_color = input->border_color;
-	i = input->x;
-	while (i <= input->x + input->width)
+	i = input->x - 1;
+	while (++i <= input->x + input->width)
 	{
 		put_pixel_image(img, i, input->y, br_color);
 		put_pixel_image(img, i, input->y + input->height, br_color);
-		i++;
 	}
-	i = input->y + 1;
-	while (i < input->y + input->height)
+	i = input->y;
+	while (++i < input->y + input->height)
 	{
 		put_pixel_image(img, input->x, i, br_color);
 		put_pixel_image(img, input->x + input->width, i, br_color);
-		j = input->x + 1;
-		while (j < input->x + input->width)
-		{
+		j = input->x;
+		while (++j < input->x + input->width)
 			put_pixel_image(img, j, i, input->background_color);
-			j++;
-		}
-		i++;
 	}
-	if (input->number && !input->is_focused && *input->number != input->last_displayed)
+}
+
+void	display_float_input(t_img *img, t_float_input *input, t_ttf *ttf)
+{
+	t_point2	start;
+
+	draw_float_input_box(img, input);
+	if (input->number && !input->is_focused
+		&& *input->number != input->last_displayed)
 	{
 		input->last_displayed = *input->number;
-		input->cursor_pos = set_float_to_buff(input->last_displayed, input->text);
+		input->cursor_pos
+			= set_float_to_buff(input->last_displayed, input->text);
 	}
 	if (input->text[0])
 	{
@@ -145,7 +154,8 @@ int	float_input_focus(t_float_input *input, int mouse_x, int mouse_y)
 	if (input->number)
 	{
 		input->last_displayed = *input->number;
-		input->cursor_pos = set_float_to_buff(input->last_displayed, input->text);
+		input->cursor_pos
+			= set_float_to_buff(input->last_displayed, input->text);
 	}
 	input->is_focused = 0;
 	return (0);
@@ -218,4 +228,3 @@ int	float_input_type(t_float_input *input, int key)
 	}
 	return (0);
 }
-

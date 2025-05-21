@@ -3,91 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   draw_circles.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 14:45:43 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 21:06:24 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:04:56 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "mlx_base.h"
 
-void	draw_circle(int xc, int yc, int x, int y, t_img *img, int color)
+static void	draw_circle(t_draw_circle c, t_img *img, int color)
 {
-	put_pixel_image(img, xc + x, yc + y, color);
-	put_pixel_image(img, xc - x, yc + y, color);
-	put_pixel_image(img, xc + x, yc - y, color);
-	put_pixel_image(img, xc - x, yc - y, color);
-	put_pixel_image(img, xc + y, yc + x, color);
-	put_pixel_image(img, xc - y, yc + x, color);
-	put_pixel_image(img, xc + y, yc - x, color);
-	put_pixel_image(img, xc - y, yc - x, color);
+	put_pixel_image(img, c.xc + c.x, c.yc + c.y, color);
+	put_pixel_image(img, c.xc - c.x, c.yc + c.y, color);
+	put_pixel_image(img, c.xc + c.x, c.yc - c.y, color);
+	put_pixel_image(img, c.xc - c.x, c.yc - c.y, color);
+	put_pixel_image(img, c.xc + c.y, c.yc + c.x, color);
+	put_pixel_image(img, c.xc - c.y, c.yc + c.x, color);
+	put_pixel_image(img, c.xc + c.y, c.yc - c.x, color);
+	put_pixel_image(img, c.xc - c.y, c.yc - c.x, color);
 }
 
-void	circle_bres(int xc, int yc, int r, t_img *img, int color)
+void	circle_bres(t_circle c, t_img *img, int color)
 {
-	int x = 0, y = r;
-	int d = 3 - 2 * r;
-	draw_circle(xc, yc, x, y, img, color);
-	while (y >= x)
+	int	x;
+	int	d;
+
+	x = 0;
+	d = 3 - 2 * c.r;
+	draw_circle((t_draw_circle){c.xc, c.yc, x, c.r}, img, color);
+	while (c.r >= x)
 	{
-		if (d > 0) {
-			y--; 
-			d = d + 4 * (x - y) + 10;
+		if (d > 0)
+		{
+			c.r--;
+			d = d + 4 * (x - c.r) + 10;
 		}
 		else
 			d = d + 4 * x + 6;
 		x++;
-		draw_circle(xc, yc, x, y, img, color);
-    }
+		draw_circle((t_draw_circle){c.xc, c.yc, x, c.r}, img, color);
+	}
 }
 
-void	draw_circle_comp(int xc, int yc, int x, int y, t_img *img, int color)
-{
-	put_pixel_image(img, xc + x, yc + y, color);
-	put_pixel_image(img, xc - x, yc + y, color);
-	put_pixel_image(img, xc + x, yc - y, color);
-	put_pixel_image(img, xc - x, yc - y, color);
-	put_pixel_image(img, xc + y, yc + x, color);
-	put_pixel_image(img, xc - y, yc + x, color);
-	put_pixel_image(img, xc + y, yc - x, color);
-	put_pixel_image(img, xc - y, yc - x, color);
-}
-
-void	circle_bres_comp(int xc, int yc, int r, t_img *img, int color)
-{
-	int x = 0, y = r;
-	int d = 3 - 2 * r;
-	draw_circle_comp(xc, yc, x, y, img, color);
-	while (y >= x)
-	{
-		if (d > 0) {
-			y--; 
-			d = d + 4 * (x - y) + 10;
-		}
-		else
-			d = d + 4 * x + 6;
-		x++;
-		draw_circle_comp(xc, yc, x, y, img, color);
-    }
-}
-
-void	draw_filled_circle(int xc, int yc, int r, t_img *img, int color)
+void	draw_filled_circle(t_circle c, t_img *img, int color)
 {
 	int	y;
 	int	x;
 
-	y = -r;
-	while (y <= r)
+	y = -c.r;
+	while (y <= c.r)
 	{
-		x = -r;
-		while (x <= r)
+		x = -c.r;
+		while (x <= c.r)
 		{
-			if (x * x + y * y <= r * r)
-				put_pixel_image(img, xc + x, yc + y, color);
+			if (x * x + y * y <= c.r * c.r)
+				put_pixel_image(img, c.xc + x, c.yc + y, color);
 			x++;
 		}
 		y++;
 	}
 }
-

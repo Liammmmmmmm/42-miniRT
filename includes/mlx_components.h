@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:34:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/22 07:47:14 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/22 11:17:25 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ int		color_picker_release(t_color_picker *cp);
 int		color_picker_action(t_color_picker *cp, int mouse_x, int mouse_y);
 int		color_picker_mouse_move(t_color_picker *cp, int mouse_x, int mouse_y);
 int		color_picker_type(t_color_picker *cp, int key);
+void	link_color_picker(t_color_picker *cp, t_color *color_var);
 
 int		set_float_to_buff(double n, char *s);
 void	display_float_input(t_img *img, t_float_input *input, t_ttf *ttf);

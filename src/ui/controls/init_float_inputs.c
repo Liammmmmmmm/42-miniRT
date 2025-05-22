@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_float_inputs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 13:42:29 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 18:21:34 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:53:38 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	base_tiers_float_input(t_float_input *input)
 
 int	init_float_inputs(t_minirt *minirt)
 {
-	minirt->controls.nb_float_input = 3;
+	minirt->controls.nb_float_input = 8;
 	minirt->controls.float_input = ft_calloc(minirt->controls.nb_float_input,
 			sizeof(t_float_input));
 	if (!minirt->controls.float_input)
@@ -40,6 +40,23 @@ int	init_float_inputs(t_minirt *minirt)
 	base_tiers_float_input(&minirt->controls.float_input[2]);
 	minirt->controls.float_input[2].x = 520;
 	minirt->controls.float_input[2].y = 510;
+	base_tiers_float_input(&minirt->controls.float_input[3]);
+	minirt->controls.float_input[3].x = 325;
+	minirt->controls.float_input[3].y = 610;
+	base_tiers_float_input(&minirt->controls.float_input[4]);
+	minirt->controls.float_input[4].x = 420;
+	minirt->controls.float_input[4].y = 610;
+	base_tiers_float_input(&minirt->controls.float_input[5]);
+	minirt->controls.float_input[5].x = 520;
+	minirt->controls.float_input[5].y = 610;
+	base_tiers_float_input(&minirt->controls.float_input[6]);
+	minirt->controls.float_input[6].x = 400;
+	minirt->controls.float_input[6].y = 905;
+	minirt->controls.float_input[6].width = 170;
+	base_tiers_float_input(&minirt->controls.float_input[7]);
+	minirt->controls.float_input[7].x = 400;
+	minirt->controls.float_input[7].y = 935;
+	minirt->controls.float_input[7].width = 170;
 	return (1);
 }
 

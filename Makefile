@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/22 07:48:31 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/05/22 09:49:43 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,7 @@ RENDERING_DIR		= src/rendering/
 RENDERING_FILE		= pixel.c loop.c
 
 ENV_DIR				= src/env/
-ENV_FILE			= init_mlx.c init_controls.c init_ui.c
+ENV_FILE			= init_mlx.c init_controls.c init_ui.c set_dependant_values.c
 
 MAT_DIR				= src/material/
 MAT_FILE			= utils.c dielectric.c material_default.c metallic.c refraction.c

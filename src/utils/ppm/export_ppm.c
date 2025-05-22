@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_ppm.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:22:35 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/22 08:06:00 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/22 12:59:03 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ static void	put_image_to_buf(int tpx, int fd, t_minirt *minirt,
 	i = -1;
 	while (++i < tpx)
 	{
-		buf[i] = pow(clamp_double(minirt->screen.float_render[i].r / \
+		buf[i * 3] = pow(clamp_double(minirt->screen.float_render[i].r / \
 			divide), gamma_corr) * 255;
-		buf[i + 1] = pow(clamp_double(minirt->screen.float_render[i].g / \
+		buf[i * 3 + 1] = pow(clamp_double(minirt->screen.float_render[i].g / \
 			divide), gamma_corr) * 255;
-		buf[i + 2] = pow(clamp_double(minirt->screen.float_render[i].b / \
+		buf[i * 3 + 2] = pow(clamp_double(minirt->screen.float_render[i].b / \
 			divide), gamma_corr) * 255;
 	}
 	write(fd, (char *)buf, tpx * 3);

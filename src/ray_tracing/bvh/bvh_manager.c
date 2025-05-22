@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/21 10:49:58 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/22 14:32:48 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 		}
 		if (obj_list[j].type == CUSTOM)
 		{
+			ft_update_obj_position((t_custom_object *)obj_list[j].object);
 			k = 0;
 			while (k < ((t_custom_object *)obj_list[j].object)->triangle_count)
 			{

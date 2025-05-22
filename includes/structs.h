@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 12:22:19 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/22 15:00:01 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,7 +312,9 @@ typedef struct s_custom_object
 	t_object	*obj_list;
 	size_t		triangle_count;
 	t_vec3		position;
+	t_vec3		prev_position;
 	t_vec3		orientation;
+	t_vec3		prev_orientation;
 	t_vec3		scale;
 	t_mat		*material;
 	t_color		color;

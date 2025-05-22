@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:42:24 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 18:28:18 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/22 14:53:14 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@ void	ft_free_tab_triangle(t_triangle **tab, size_t i);
 int		extract_all_triangle(t_obj_temp *tmp, t_custom_object *obj, const char *file);
 long	ear_clipping(t_vertex *vertices, size_t vertex_count, t_vector *v, \
 	t_custom_object *obj);
+t_vec3	rotate_around_axis(t_vec3 v, t_vec3 axis, float angle);
+void	ft_update_obj_position(t_custom_object *obj);
 
 #endif

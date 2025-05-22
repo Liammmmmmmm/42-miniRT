@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   obj_ear_clipping.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:32:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/22 07:49:44 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/22 14:52:12 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "obj_parsing.h"
 
-static inline t_vec3	rotate_around_axis(t_vec3 v, t_vec3 axis, float angle)
+inline t_vec3	rotate_around_axis(t_vec3 v, t_vec3 axis, float angle)
 {
 	const float	cos_theta = cos(angle);
 	const float	sin_theta = sin(angle);

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/21 14:44:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/22 08:26:20 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,64 +209,55 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 		{			
 			if (temp_hit_record.t >= closest_t)
 				continue ;
-			hit_anything = 1;
-			closest_t = temp_hit_record.t;
-			*hit_record = temp_hit_record;
-			hit_record->mat = ((t_sphere *)obj->object)->material;
+			temp_hit_record.mat = ((t_sphere *)obj->object)->material;
 		}
 		else if (obj->type == CYLINDER && hit_cylinder(((t_cylinder *)obj->object), ray, interval, &temp_hit_record))
 		{
 			if (temp_hit_record.t >= closest_t)
 				continue ;
-			hit_anything = 1;
-			closest_t = temp_hit_record.t;
-			*hit_record = temp_hit_record;
-			if (hit_record->part == TOP_CAP && ((t_cylinder *)obj->object)->material_top)
-				hit_record->mat = ((t_cylinder *)obj->object)->material_top;
-			else if (hit_record->part == BOTTOM_CAP && ((t_cylinder *)obj->object)->material_bot)
-				hit_record->mat = ((t_cylinder *)obj->object)->material_bot;
+			if (temp_hit_record.part == TOP_CAP && ((t_cylinder *)obj->object)->material_top)
+				temp_hit_record.mat = ((t_cylinder *)obj->object)->material_top;
+			else if (temp_hit_record.part == BOTTOM_CAP && ((t_cylinder *)obj->object)->material_bot)
+				temp_hit_record.mat = ((t_cylinder *)obj->object)->material_bot;
 			else
-				hit_record->mat = ((t_cylinder *)obj->object)->material;
+				temp_hit_record.mat = ((t_cylinder *)obj->object)->material;
 		}
 		else if (obj->type == CONE && hit_cone(((t_cone *)obj->object), ray, interval, &temp_hit_record))
 		{
 			if (temp_hit_record.t >= closest_t)
 				continue ;
-			hit_anything = 1;
-			closest_t = temp_hit_record.t;
-			*hit_record = temp_hit_record;			
-			if (hit_record->part == TOP_CAP && ((t_cone *)obj->object)->material_top)
-				hit_record->mat = ((t_cone *)obj->object)->material_top;
+			if (temp_hit_record.part == TOP_CAP && ((t_cone *)obj->object)->material_top)
+				temp_hit_record.mat = ((t_cone *)obj->object)->material_top;
 			else
-				hit_record->mat = ((t_cone *)obj->object)->material;
+				temp_hit_record.mat = ((t_cone *)obj->object)->material;
 		}
 		else if (obj->type == HYPERBOLOID && hit_hyperboloid(((t_hyperboloid *)obj->object), ray, interval, &temp_hit_record))
 		{
 			if (temp_hit_record.t >= closest_t)
 				continue ;
-			hit_anything = 1;
-			closest_t = temp_hit_record.t;
-			*hit_record = temp_hit_record;
-			hit_record->mat = ((t_hyperboloid *)obj->object)->material;
+			temp_hit_record.mat = ((t_hyperboloid *)obj->object)->material;
 		}
 		else if (obj->type == TRIANGLE && hit_triangle(((t_triangle *)obj->object), ray, interval, &temp_hit_record))
 		{
 			if (temp_hit_record.t >= closest_t)
 				continue ;
-			hit_anything = 1;
-			*hit_record = temp_hit_record;
-			hit_record->mat = ((t_triangle *)obj->object)->material;
+			temp_hit_record.mat = ((t_triangle *)obj->object)->material;
 		}
 		else
 			continue ;
-		apply_normal_map(hit_record);
-		apply_roughness_map(hit_record);
-		apply_metallic_map(hit_record);
-		apply_ao_map(hit_record);
-		hit_record->obj = obj;
-		hit_record->color = get_hit_register_color(hit_record->mat, get_obj_color(obj), hit_record, bvh);
+		hit_anything = 1;
+		closest_t = temp_hit_record.t;
 	}
-	return (hit_anything);
+	if (!hit_anything)
+		return (0);
+	*hit_record = temp_hit_record;
+	apply_normal_map(hit_record);
+	apply_roughness_map(hit_record);
+	apply_metallic_map(hit_record);
+	apply_ao_map(hit_record);
+	hit_record->obj = obj;
+	hit_record->color = get_hit_register_color(hit_record->mat, get_obj_color(obj), hit_record, bvh);
+	return (1);
 }
 
 char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record)

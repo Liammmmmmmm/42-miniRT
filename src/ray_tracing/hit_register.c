@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/22 08:26:20 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/22 08:31:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,10 +247,10 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 			continue ;
 		hit_anything = 1;
 		closest_t = temp_hit_record.t;
+		*hit_record = temp_hit_record;
 	}
 	if (!hit_anything)
 		return (0);
-	*hit_record = temp_hit_record;
 	apply_normal_map(hit_record);
 	apply_roughness_map(hit_record);
 	apply_metallic_map(hit_record);

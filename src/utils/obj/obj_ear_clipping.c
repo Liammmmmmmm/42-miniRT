@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_ear_clipping.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:32:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/20 13:37:07 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/22 07:49:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static inline t_vec3	rotate_around_axis(t_vec3 v, t_vec3 axis, float angle)
 	const float	cos_theta = cos(angle);
 	const float	sin_theta = sin(angle);
 
-    return vec3_add(vec3_add(vec3_multiply_scalar(v, cos_theta), \
+	return (vec3_add(vec3_add(vec3_multiply_scalar(v, cos_theta), \
 		vec3_multiply_scalar(vec3_cross(axis, v), sin_theta)), \
-		vec3_multiply_scalar(axis, vec3_dot(axis, v) * (1 - cos_theta)));
+		vec3_multiply_scalar(axis, vec3_dot(axis, v) * (1 - cos_theta))));
 }
 
 static inline void	add_position_scale(t_triangle *t, t_custom_object *obj)
@@ -28,12 +28,12 @@ static inline void	add_position_scale(t_triangle *t, t_custom_object *obj)
 		obj->orientation);
 	const float		angle = acosf(vec3_dot((t_vec3){0.0, 0.0, 1.0}, \
 		obj->orientation));
-	
+
 	t->v0.pos = vec3_multiply(t->v0.pos, obj->scale);
 	t->v1.pos = vec3_multiply(t->v1.pos, obj->scale);
 	t->v2.pos = vec3_multiply(t->v2.pos, obj->scale);
 	if (!(angle < 0.0001))
-    {
+	{
 		t->v0.pos = rotate_around_axis(t->v0.pos, axis, angle);
 		t->v1.pos = rotate_around_axis(t->v1.pos, axis, angle);
 		t->v2.pos = rotate_around_axis(t->v2.pos, axis, angle);

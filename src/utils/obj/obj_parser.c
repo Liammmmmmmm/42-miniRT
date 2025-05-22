@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:40:53 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/20 13:41:11 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/22 07:51:36 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	setup_obj_lst(t_custom_object *obj)
 		print_error("Error of malloc in setup obj lst");
 		return (1);
 	}
-	i  = 0;
+	i = 0;
 	while (i < obj->triangle_count)
 	{
 		obj->obj_list[i].object = &obj->triangles[i];
@@ -118,8 +118,8 @@ int	parse_obj(char *file, t_custom_object *obj)
 		ft_free_tab_face(tmp.face, tmp.face_count);
 		free(tmp.face);
 		free(tmp.name);
-		printf(RED"[Error]"NC" Error of parsing in object :"YELLOW"%s"NC"\n", \
-			file);
+		ft_dprintf(2, RED"[Error]"NC" Error of parsing in object :"YELLOW"%s"
+			NC"\n", file);
 		return (0);
 	}
 	free(tmp.v);
@@ -128,7 +128,5 @@ int	parse_obj(char *file, t_custom_object *obj)
 	if (tmp.name)
 		obj->name = tmp.name;
 	ft_free_tab_face(tmp.face, tmp.face_count);
-	if (setup_obj_lst(obj) == 1)
-		return (0);
-	return (1);
+	return (!setup_obj_lst(obj));
 }

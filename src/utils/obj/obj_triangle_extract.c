@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_triangle_extract.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:32:02 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 19:04:55 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/22 07:49:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static long	clip_one_face(t_obj_temp *tmp, t_vector *v, size_t i, \
 	return (j);
 }
 
-int	extract_all_triangle(t_obj_temp *tmp, t_custom_object *obj, const char *file)
+int	extract_all_triangle(t_obj_temp *tmp, t_custom_object *obj,
+	const char *file)
 {
 	size_t		i;
 	size_t		size;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/16 14:16:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/22 08:51:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int	init_controls_mlx(t_minirt *minirt)
 	t_mlx	*mlx;
 
 	mlx = &minirt->mlx;
-	if (!minirt->options.no_display)
+	if (!minirt->options.no_display && !minirt->options.anim.enabled)
 		mlx->controls_win = mlx_new_window(mlx->mlx, CWIN_WIDTH, CWIN_HEIGHT,
 				"Controls");
 	mlx->img_controls.img = mlx_new_image(mlx->mlx, CWIN_WIDTH, CWIN_HEIGHT);
-	if (!mlx->img_controls.img || (!mlx->controls_win && !minirt->options.no_display))
+	if (!mlx->img_controls.img || (!mlx->controls_win && !minirt->options.no_display && !minirt->options.anim.enabled))
 		return (free_mlx_error(minirt));
 	mlx->img_controls.img_str = mlx_get_data_addr(mlx->img_controls.img,
 			&mlx->img_controls.bits,

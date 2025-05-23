@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 07:44:13 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/22 07:47:47 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/22 11:15:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,39 @@ static void	manage_input(t_float_input *input, int key)
 	}
 }
 
+void	replace_input_float_input(int *key)
+{
+	if (*key == ',')
+		*key = '.';
+	else if (*key == 65438)
+		*key = '0';
+	else if (*key == 65436)
+		*key = '1';
+	else if (*key == 65433)
+		*key = '2';
+	else if (*key == 65435)
+		*key = '3';
+	else if (*key == 65430)
+		*key = '4';
+	else if (*key == 65437)
+		*key = '5';
+	else if (*key == 65432)
+		*key = '6';
+	else if (*key == 65429)
+		*key = '7';
+	else if (*key == 65431)
+		*key = '8';
+	else if (*key == 65434)
+		*key = '9';
+	else if (*key == 65453)
+		*key = '-';
+}
+
 int	float_input_type(t_float_input *input, int key)
 {
 	if (input->is_focused)
 	{
-		if (key == ',')
-			key = '.';
+		replace_input_float_input(&key);
 		manage_input(input, key);
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:50:31 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 16:32:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/22 11:17:11 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,12 @@ void	init_color_picker(t_color_picker *cp, t_color *color_var)
 	cp->text_input.height = 30;
 	cp->text_input.width = 240;
 	init_color_picker2(cp, color_var);
+}
+
+void	link_color_picker(t_color_picker *cp, t_color *color_var)
+{
+	cp->color = color_var;
+	cp->hsv = rgb_to_hsv(color_to_int(*color_var));
+	cp->btn.background_color = color_to_int(*color_var);
+	color_to_hex(cp->text_input.text, *color_var);
 }

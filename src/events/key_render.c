@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_render.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:37:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 16:47:58 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/22 08:52:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	keydown_render(int key, t_minirt *minirt)
 	keydown_common(key, minirt);
 	if (key == minirt->controls.open_controls)
 	{
-		if (!minirt->mlx.controls_win)
+		if (!minirt->mlx.controls_win && !minirt->options.no_display && !minirt->options.anim.enabled)
 		{
 			minirt->mlx.controls_win = mlx_new_window(minirt->mlx.mlx,
 					CWIN_WIDTH, CWIN_HEIGHT, "Controls");

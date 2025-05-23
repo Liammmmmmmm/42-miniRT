@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 14:07:20 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/24 17:17:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/22 09:42:59 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	click_start_stop(void *vparam)
 		param->minirt->controls.buttons[0].disabled = 1;
 		param->minirt->controls.buttons[1].disabled = 0;
 		param->minirt->controls.buttons[2].disabled = 0;
+		set_dependant_values(param->minirt);
 	}
 	else if (param->action == 1)
 		stop_minirt(param->minirt);

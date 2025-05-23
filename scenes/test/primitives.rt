@@ -1,13 +1,13 @@
 # TEXTURES
 #tex	name			type		path
-tex		bronze_diff			assets/textures/primitives/Metal047B_2K-PNG_Color.bmp
-tex		bronze_metal		assets/textures/primitives/Metal047B_2K-PNG_Metalness.bmp
-tex		bronze_normal		assets/textures/primitives/Metal047B_2K-PNG_NormalGL.bmp
-tex		bronze_rough		assets/textures/primitives/Metal047B_2K-PNG_Roughness.bmp
-tex		marble_diff			assets/textures/primitives/Tiles074_2K-PNG_Color.bmp
-tex		marble_normal		assets/textures/primitives/Tiles074_2K-PNG_NormalGL.bmp
-tex		marble_rough		assets/textures/primitives/Tiles074_2K-PNG_Roughness.bmp
-tex     skybox assets/textures/brown_photostudio_02_2k_greyscale.hdr
+tex		bronze_diff		image   	assets/textures/primitives/Metal047B_2K-PNG_Color.bmp
+tex		bronze_metal	image   	assets/textures/primitives/Metal047B_2K-PNG_Metalness.bmp
+tex		bronze_normal	image   	assets/textures/primitives/Metal047B_2K-PNG_NormalGL.bmp
+tex		bronze_rough	image   	assets/textures/primitives/Metal047B_2K-PNG_Roughness.bmp
+tex		marble_diff		image   	assets/textures/primitives/Tiles074_2K-PNG_Color.bmp
+tex		marble_normal	image   	assets/textures/primitives/Tiles074_2K-PNG_NormalGL.bmp
+tex		marble_rough	image   	assets/textures/primitives/Tiles074_2K-PNG_Roughness.bmp
+tex     skybox          image       assets/textures/brown_photostudio_02_2k_greyscale.hdr
 
 
 # MATERIALS

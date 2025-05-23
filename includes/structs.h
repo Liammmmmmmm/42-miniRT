@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/22 15:00:01 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/23 09:14:49 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,6 +406,7 @@ typedef struct s_scene
 	int			win_height;
 	int			render_width;
 	int			render_height;
+	t_bool		have_win_el;
 }	t_scene;
 
 typedef struct s_mlx

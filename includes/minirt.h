@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 14:57:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/22 09:42:32 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef enum e_keys
 # define ERR_F "Invalid format for"
 
 void	init_animated_items(t_minirt *minirt);
+void	set_dependant_values(t_minirt *minirt);
 
 void	debug_ray(t_minirt *minirt);
 

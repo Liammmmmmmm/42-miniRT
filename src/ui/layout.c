@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:53:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 14:58:12 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 15:45:58 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -412,6 +412,31 @@ void	init_layout(t_img *img, t_minirt *minirt)
 		{
 			display_text_input(img, &minirt->controls.text_input[0], &minirt->controls.font[0]);
 
+			minirt->controls.font[0].size = 15;
+			draw_string(img, &minirt->controls.font[0], "Albedo", (t_point2){310, 360});
+			if (!minirt->controls.ui_infos.selected_material->color_tex)
+				display_color_picker(img, &minirt->controls.color_picker[1], &minirt->controls.font[0]);
+
+			draw_string(img, &minirt->controls.font[0], "Metallic", (t_point2){310, 410});
+			
+			/*
+
+			name
+			color/texture
+			metallic/texture
+			roughness/texture
+			ior
+			transmission/texture
+			ambient_occlusion/texture
+			emission_strength/texture
+			emission_color/texture
+			scale
+			normal_texture
+			normal_intensity
+
+			*/
+
+			
 			minirt->controls.font[0].size = 20;
 			display_tex_dropdown(minirt, &minirt->controls.dropdown[10]);
 			display_tex_dropdown(minirt, &minirt->controls.dropdown[9]);

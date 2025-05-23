@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 13:42:29 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 14:42:47 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 15:49:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,14 @@ void	base_two_tiers_float_input(t_float_input *input)
 	input->max_char = 9;
 }
 
+void	init_mat_float_input(t_minirt *minirt)
+{
+	// du 11 au 18 on a ceux pour le mat
+}
+
 int	init_float_inputs(t_minirt *minirt)
 {
-	minirt->controls.nb_float_input = 11;
+	minirt->controls.nb_float_input = 19;
 	minirt->controls.float_input = ft_calloc(minirt->controls.nb_float_input,
 			sizeof(t_float_input));
 	if (!minirt->controls.float_input)

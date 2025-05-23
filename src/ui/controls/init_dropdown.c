@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:13:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 14:28:20 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 15:47:08 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ void	init_tex_dropdown(t_minirt *minirt)
 	base_dropdown_tex(&minirt->controls.dropdown[8]);
 	base_dropdown_tex(&minirt->controls.dropdown[9]);
 	base_dropdown_tex(&minirt->controls.dropdown[10]);
-	minirt->controls.dropdown[3].y = 800;
-	minirt->controls.dropdown[4].y = 830;
-	minirt->controls.dropdown[5].y = 860;
-	minirt->controls.dropdown[6].y = 860;
-	minirt->controls.dropdown[7].y = 860;
-	minirt->controls.dropdown[8].y = 860;
-	minirt->controls.dropdown[9].y = 860;
-	minirt->controls.dropdown[10].y = 860;
+	minirt->controls.dropdown[3].y = 370;
+	minirt->controls.dropdown[4].y = 420;
+	minirt->controls.dropdown[5].y = 470;
+	minirt->controls.dropdown[6].y = 520;
+	minirt->controls.dropdown[7].y = 570;
+	minirt->controls.dropdown[8].y = 620;
+	minirt->controls.dropdown[9].y = 670;
+	minirt->controls.dropdown[10].y = 720;
 }
 
 int	init_dropdowns(t_minirt *minirt)

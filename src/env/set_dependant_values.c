@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:36:26 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/22 15:34:49 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 15:44:57 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,24 @@ void	set_dependant_values(t_minirt *minirt)
 	i = -1;
 	while (++i < minirt->scene.el_amount)
 	{
-		if (minirt->controls.ui_infos.selected_object[i].type == SPHERE)
-			set_values_sphere(minirt->controls.ui_infos.selected_object[i].object);
-		else if (minirt->controls.ui_infos.selected_object[i].type == CYLINDER)
-			set_values_cylinder(minirt->controls.ui_infos.selected_object[i].object);
-		else if (minirt->controls.ui_infos.selected_object[i].type == PLANE)
-			set_values_plane(minirt->controls.ui_infos.selected_object[i].object);
-		else if (minirt->controls.ui_infos.selected_object[i].type == LIGHT)
-			set_values_light(minirt->controls.ui_infos.selected_object[i].object);
-		else if (minirt->controls.ui_infos.selected_object[i].type == CONE)
-			set_values_cone(minirt->controls.ui_infos.selected_object[i].object);
-		else if (minirt->controls.ui_infos.selected_object[i].type == HYPERBOLOID)
-			set_values_hyperboloid(minirt->controls.ui_infos.selected_object[i].object);
+		if (minirt->controls.ui_infos.tab_selected == 0)
+		{
+			if (minirt->controls.ui_infos.selected_object[i].type == SPHERE)
+				set_values_sphere(minirt->controls.ui_infos.selected_object[i].object);
+			else if (minirt->controls.ui_infos.selected_object[i].type == CYLINDER)
+				set_values_cylinder(minirt->controls.ui_infos.selected_object[i].object);
+			else if (minirt->controls.ui_infos.selected_object[i].type == PLANE)
+				set_values_plane(minirt->controls.ui_infos.selected_object[i].object);
+			else if (minirt->controls.ui_infos.selected_object[i].type == LIGHT)
+				set_values_light(minirt->controls.ui_infos.selected_object[i].object);
+			else if (minirt->controls.ui_infos.selected_object[i].type == CONE)
+				set_values_cone(minirt->controls.ui_infos.selected_object[i].object);
+			else if (minirt->controls.ui_infos.selected_object[i].type == HYPERBOLOID)
+				set_values_hyperboloid(minirt->controls.ui_infos.selected_object[i].object);
+		}
+		else if (minirt->controls.ui_infos.tab_selected == 1)
+		{
+
+		}
 	}
 }

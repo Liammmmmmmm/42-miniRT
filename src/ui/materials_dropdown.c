@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   materials_dropdown.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:56:17 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 18:29:52 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/23 09:50:32 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	draw_dropdown_select_box(t_img *img, t_dropdown *dropdown, \
 		+ dropdown->height, dropdown->y + dropdown->deployed_height + 1);
 	draw_box_2d(img, (t_point2){dropdown->x + 1, dropdown->y + dropdown->height
 		+ 1}, (t_point2){dropdown->x + dropdown->width, dropdown->y
-		+ dropdown->deployed_height - dropdown->height}, UI_BACK_COLOR);
+		+ dropdown->deployed_height}, UI_BACK_COLOR);
 	i = -1;
 	draw_dropdown_object(img, minirt, dropdown, i);
 	while (++i < minirt->scene.mat_amount)

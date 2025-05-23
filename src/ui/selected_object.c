@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:45:58 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/22 15:23:08 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 09:39:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,27 @@ void	set_selected_hyperboloid(t_minirt *minirt, t_hyperboloid *obj)
 	link_float_input(&minirt->controls.float_input[10], &obj->c);
 	minirt->controls.float_input[6].y = 905;
 	minirt->controls.float_input[7].y = 935;
+	minirt->controls.float_input[8].y = 965;
+	minirt->controls.float_input[9].y = 995;
+	minirt->controls.float_input[10].y = 1025;
+}
+
+void	set_selected_custom(t_minirt *minirt, t_custom_object *obj)
+{
+	link_color_picker(&minirt->controls.color_picker[0], &obj->color);
+	minirt->controls.dropdown[0].selected = (void **)&obj->material;
+	link_float_input(&minirt->controls.float_input[0], &obj->position.x);
+	link_float_input(&minirt->controls.float_input[1], &obj->position.y);
+	link_float_input(&minirt->controls.float_input[2], &obj->position.z);
+	link_float_input(&minirt->controls.float_input[3], &obj->orientation.x);
+	link_float_input(&minirt->controls.float_input[4], &obj->orientation.y);
+	link_float_input(&minirt->controls.float_input[5], &obj->orientation.z);
+	link_float_input(&minirt->controls.float_input[6], &obj->scale.x);
+	link_float_input(&minirt->controls.float_input[7], &obj->scale.y);
+	link_float_input(&minirt->controls.float_input[8], &obj->scale.z);
+	minirt->controls.float_input[6].y = 905;
+	minirt->controls.float_input[7].y = 935;
+	minirt->controls.float_input[8].y = 965;
 }
 
 void	set_selected_light(t_minirt *minirt, t_light *obj)
@@ -98,7 +119,6 @@ void	set_selected_light(t_minirt *minirt, t_light *obj)
 	link_float_input(&minirt->controls.float_input[2], &obj->position.z);
 	link_float_input(&minirt->controls.float_input[6], &obj->brightness);
 	minirt->controls.float_input[6].y = 905;
-	minirt->controls.float_input[7].y = 935;
 }
 
 void	set_selected_object(t_minirt *minirt, t_object *obj)
@@ -117,4 +137,6 @@ void	set_selected_object(t_minirt *minirt, t_object *obj)
 		set_selected_cone(minirt, obj->object);
 	else if (obj->type == HYPERBOLOID)
 		set_selected_hyperboloid(minirt, obj->object);
+	else if (obj->type == CUSTOM)
+		set_selected_custom(minirt, obj->object);
 }

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:53:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/22 15:25:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 09:36:57 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,7 +343,56 @@ void	init_layout(t_img *img, t_minirt *minirt)
 			}
 			else if (minirt->controls.ui_infos.selected_object->type == CUSTOM)
 			{
+				draw_string(img, &minirt->controls.font[0], "Position", (t_point2){320, 490});
+				draw_string(img, &minirt->controls.font[0], "Orientation", (t_point2){320, 590});
+				if (!((t_hyperboloid *)minirt->controls.ui_infos.selected_object->object)->material)
+					draw_string(img, &minirt->controls.font[0], "Color", (t_point2){320, 690});
+				draw_string(img, &minirt->controls.font[0], "Material", (t_point2){320, 790});
+				draw_string(img, &minirt->controls.font[0], "Properties", (t_point2){320, 890});
 
+				// Position
+				minirt->controls.font[0].size = 20;
+				draw_string(img, &minirt->controls.font[0], "X", (t_point2){310, 526});
+				draw_string(img, &minirt->controls.font[0], "Y", (t_point2){405, 526});
+				draw_string(img, &minirt->controls.font[0], "Z", (t_point2){505, 526});
+				minirt->controls.font[0].size = 15;
+				display_float_input(img, &minirt->controls.float_input[0], &minirt->controls.font[0]);
+				display_float_input(img, &minirt->controls.float_input[1], &minirt->controls.font[0]);
+				display_float_input(img, &minirt->controls.float_input[2], &minirt->controls.font[0]);
+
+				// Orientation
+				minirt->controls.font[0].size = 20;
+				draw_string(img, &minirt->controls.font[0], "X", (t_point2){310, 626});
+				draw_string(img, &minirt->controls.font[0], "Y", (t_point2){405, 626});
+				draw_string(img, &minirt->controls.font[0], "Z", (t_point2){505, 626});
+				minirt->controls.font[0].size = 15;
+				display_float_input(img, &minirt->controls.float_input[3], &minirt->controls.font[0]);
+				display_float_input(img, &minirt->controls.float_input[4], &minirt->controls.font[0]);
+				display_float_input(img, &minirt->controls.float_input[5], &minirt->controls.font[0]);
+
+				// Color (without color picker bcs for render priority reasons it should be at the end)
+				minirt->controls.font[0].size = 20;
+
+				// Material
+				// Displayed at the end
+
+				// Size
+				draw_string(img, &minirt->controls.font[0], "Scale x", (t_point2){310, 920});
+				display_float_input(img, &minirt->controls.float_input[6], &minirt->controls.font[0]);
+
+				draw_string(img, &minirt->controls.font[0], "Scale y", (t_point2){310, 950});
+				display_float_input(img, &minirt->controls.float_input[7], &minirt->controls.font[0]);
+
+				draw_string(img, &minirt->controls.font[0], "Scale z", (t_point2){310, 980});
+				display_float_input(img, &minirt->controls.float_input[8], &minirt->controls.font[0]);
+
+
+				// A afficher : name, triangle count
+
+				// Last to render for render priority reasons (with the part that can appear on the others)
+				display_mat_dropdown(minirt, &minirt->controls.dropdown[0]);
+				if (!((t_hyperboloid *)minirt->controls.ui_infos.selected_object->object)->material)
+					display_color_picker(img, &minirt->controls.color_picker[0], &minirt->controls.font[0]);
 			}
 			// draw_string(img, &minirt->controls.font[0], "Props de l'objet", (t_point2){330, 750});
 			// draw_string(img, &minirt->controls.font[0], get_object_name(minirt->controls.ui_infos.selected_object->type), (t_point2){330, 800});

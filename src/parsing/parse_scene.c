@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:20:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 17:13:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 09:16:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,10 @@ int	count_tex_mat(t_scene *scene, char **lines)
 		else if (cmp_type("mat", lines[i]))
 			scene->mat_amount++;
 	}
+	i = -1;
+	while (lines[++i])
+		if (cmp_type("W", lines[i]))
+			scene->have_win_el = 1;
 	if (scene->tex_amount)
 		scene->textures = ft_calloc(scene->tex_amount, sizeof(t_tex));
 	if (scene->mat_amount)

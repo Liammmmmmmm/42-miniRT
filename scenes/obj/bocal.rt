@@ -22,19 +22,19 @@ mat   bocal2 255,255,255  0.0  			 0  			1.450 1.0  			 1.0  				 0.0   				 220
 # L   -1,1,1 1 255,0,0
 # cu	0,0,0 1,1,1 1 assets/test7.obj mat_0_1
 
-cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/coral-red.obj cor
-cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/coral-green.obj cog
-cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/coral-orange.obj coo
-cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/coral-purple.obj cop
-cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/coral-yellow.obj coy
-cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/coral-blue.obj cob
-cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/algue.obj alge
-cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/rock3.obj ro3
-cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/rock2.obj ro2
-cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/rock.obj ro1
-cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/ground.obj ground
+# cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/coral-red.obj cor
+# cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/coral-green.obj cog
+# cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/coral-orange.obj coo
+# cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/coral-purple.obj cop
+# cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/coral-yellow.obj coy
+# cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/coral-blue.obj cob
+# cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/algue.obj alge
+# cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/rock3.obj ro3
+# cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/rock2.obj ro2
+# cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/rock.obj ro1
+# cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/ground.obj ground
 cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/meduse.obj meduse
-cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/glass.obj bocal
+# cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/glass.obj bocal
 # cu	0,0,0 0,0,1 1,1,1 assets/obj/bocal/glass2.obj bocal2
 
 A	0.9										220,220,220 skybox

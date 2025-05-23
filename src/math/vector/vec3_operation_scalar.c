@@ -6,12 +6,13 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:45:57 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/27 17:42:26 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:17:25 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "maths.h"
 #include "structs.h"
+#include <math.h>
 
 inline t_vec3	vec3_multiply_scalar(const t_vec3 v, double t)
 {
@@ -33,4 +34,23 @@ inline t_vec3	vec3_subtract_scalar(t_vec3 vec, double t)
 inline t_vec3	vec3_add_scalar(t_vec3 vec, double t)
 {
 	return ((t_vec3){vec.x += t, vec.y += t, vec.z += t});
+}
+
+inline t_vec3	vec3_divide_safe(t_vec3 a, t_vec3 b, double	min)
+{
+	t_vec3	result;
+
+	if (fabs(b.x) < 0.00001f)
+		result.x = min;
+	else
+		result.x = a.x / b.x;
+	if (fabs(b.y) < 0.00001f)
+		result.y = min;
+	else
+		result.y = a.y / b.y;
+	if (fabs(b.z) < 0.00001f)
+		result.z = min;
+	else
+		result.z = a.z / b.z;
+	return (result);
 }

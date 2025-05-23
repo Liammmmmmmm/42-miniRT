@@ -6,61 +6,15 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:31:37 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/20 13:42:59 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/23 15:11:55 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "maths.h"
 #include "bvh.h"
+#include "obj_parsing.h"
 #include <math.h>
-
-static inline void	set_vertex(t_aabb *aabb, t_vertex *verts)
-{
-	size_t	j;
-	t_vec3	p;
-
-	j = 0;
-	while (j < 3)
-	{
-		p = verts[j].pos;
-		if (p.x < aabb->min.x)
-			aabb->min.x = p.x;
-		if (p.y < aabb->min.y)
-			aabb->min.y = p.y;
-		if (p.z < aabb->min.z)
-			aabb->min.z = p.z;
-		if (p.x > aabb->max.x)
-			aabb->max.x = p.x;
-		if (p.y > aabb->max.y)
-			aabb->max.y = p.y;
-		if (p.z > aabb->max.z)
-			aabb->max.z = p.z;
-	j++;
-	}
-}
-
-static inline t_aabb	compute_custom_obj(t_custom_object *obj)
-{
-	t_aabb		aabb;
-	t_vertex	verts[3];
-	size_t		i;
-
-	i = 0;
-	if (!obj || obj->triangle_count == 0 || !obj->triangles)
-		return ((t_aabb){.min = {0, 0, 0}, .max = {0, 0, 0}});
-	aabb.min = obj->triangles[0].v0.pos;
-	aabb.max = obj->triangles[0].v0.pos;
-	while (i < obj->triangle_count)
-	{
-		verts[0] = obj->triangles[i].v0;
-		verts[1] = obj->triangles[i].v1;
-		verts[2] = obj->triangles[i].v2;
-		set_vertex(&aabb, verts);
-		i++;
-	}
-	return (aabb);
-}
 
 static inline t_aabb	compute_triangle_bounds(t_triangle *t)
 {
@@ -145,7 +99,7 @@ inline t_aabb	compute_object_bounds(t_object *obj)
 	if (obj->type == HYPERBOLOID)
 		return (compute_hyperboloid_bounds(obj->object));
 	if (obj->type == CUSTOM)
-		return (compute_custom_obj(obj->object));
+		return (compute_custom_obj(obj->object, 0));
 	if (obj->type == TRIANGLE)
 		return (compute_triangle_bounds(obj->object));
 	return (compute_cylinder_bounds(obj->object));

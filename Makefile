@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/22 09:49:43 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/05/23 12:23:49 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					bmp/bmp_extract_color.c bmp/bmp_extract_pixel.c \
 					bump_to_normal.c obj/obj_parser.c obj/obj_parser_utils.c \
 					obj/obj_extract_value.c obj/obj_extract_value2.c progress_bar.c \
-					obj/obj_ear_clipping.c obj/obj_triangle_extract.c
+					obj/obj_ear_clipping.c obj/obj_triangle_extract.c obj/obj_utils.c
 
 UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c conversions.c color_picker.c color_picker2.c color_picker3.c float_input.c float_input2.c float_input3.c

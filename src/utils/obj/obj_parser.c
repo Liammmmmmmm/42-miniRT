@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:40:53 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/22 15:00:49 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/23 15:42:58 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,10 @@ int	setup_obj_lst(t_custom_object *obj)
 		obj->obj_list[i].type = TRIANGLE;
 		i++;
 	}
-	obj->prev_orientation = (t_vec3){0,0,0};
-	obj->prev_position = (t_vec3){0,0,0};
+	obj->prev_orientation = vec3_unit(obj->orientation);
+	obj->prev_position = obj->position;
+	obj->prev_scale = obj->scale;
+	obj->aabb = compute_custom_obj(obj, 1);
 	return (0);
 }
 

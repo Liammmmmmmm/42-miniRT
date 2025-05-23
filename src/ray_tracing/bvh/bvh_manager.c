@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/22 14:32:48 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:17:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,20 @@ uint32_t	build_bvh(t_bvh *bvh, uint32_t start, uint32_t count)
 	return (index);
 }
 
+void	update_obj_material(t_custom_object *obj)
+{
+	uint32_t	k;
+
+	k = 0;
+	while (k < obj->triangle_count)
+	{
+		// printf("J'update le material");
+		((t_triangle *)(obj->obj_list[k]).object)->material = obj->material;
+		((t_triangle *)(obj->obj_list[k]).object)->color = obj->color;
+		k++;
+	}
+}
+
 void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 {
 	uint32_t		i;
@@ -105,14 +119,13 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 			bvh->prim_indices[i] = i;
 			bvh->obj_list[i++] = &obj_list[j];
 		}
-		if (obj_list[j].type == CUSTOM)
+		else if (obj_list[j].type == CUSTOM)
 		{
-			ft_update_obj_position((t_custom_object *)obj_list[j].object);
+			ft_update_obj_position(obj_list[j].object);
+			update_obj_material(obj_list[j].object);
 			k = 0;
 			while (k < ((t_custom_object *)obj_list[j].object)->triangle_count)
 			{
-				((t_triangle *)(((t_custom_object *)obj_list[j].object)->obj_list[k]).object)->material = ((t_custom_object *)obj_list[j].object)->material;
-				((t_triangle *)(((t_custom_object *)obj_list[j].object)->obj_list[k]).object)->color = ((t_custom_object *)obj_list[j].object)->color;
 				bvh->prim_indices[i] = i;
 				bvh->obj_list[i++] = &((t_custom_object *)obj_list[j].object)->obj_list[k];
 				k++;
@@ -125,7 +138,7 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	bvh->normal_mode = normal_mode;
 	print_progress_bar(0, count);
 	build_bvh(bvh, 0, count);
-	printf("\n");
+	printf("\n\n");
 }
 
 char	hit_bvh(t_bvh *bvh, uint32_t node_index, t_ray *ray, \

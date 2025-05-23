@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:53:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 09:36:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 09:59:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,7 +345,7 @@ void	init_layout(t_img *img, t_minirt *minirt)
 			{
 				draw_string(img, &minirt->controls.font[0], "Position", (t_point2){320, 490});
 				draw_string(img, &minirt->controls.font[0], "Orientation", (t_point2){320, 590});
-				if (!((t_hyperboloid *)minirt->controls.ui_infos.selected_object->object)->material)
+				if (!((t_custom_object *)minirt->controls.ui_infos.selected_object->object)->material)
 					draw_string(img, &minirt->controls.font[0], "Color", (t_point2){320, 690});
 				draw_string(img, &minirt->controls.font[0], "Material", (t_point2){320, 790});
 				draw_string(img, &minirt->controls.font[0], "Properties", (t_point2){320, 890});
@@ -391,7 +391,7 @@ void	init_layout(t_img *img, t_minirt *minirt)
 
 				// Last to render for render priority reasons (with the part that can appear on the others)
 				display_mat_dropdown(minirt, &minirt->controls.dropdown[0]);
-				if (!((t_hyperboloid *)minirt->controls.ui_infos.selected_object->object)->material)
+				if (!((t_custom_object *)minirt->controls.ui_infos.selected_object->object)->material)
 					display_color_picker(img, &minirt->controls.color_picker[0], &minirt->controls.font[0]);
 			}
 			// draw_string(img, &minirt->controls.font[0], "Props de l'objet", (t_point2){330, 750});

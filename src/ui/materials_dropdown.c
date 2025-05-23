@@ -6,11 +6,12 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:56:17 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 09:50:32 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 10:24:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "bvh.h"
 
 void	draw_select_triangle(t_img *img, t_dropdown *dropdown)
 {
@@ -155,6 +156,8 @@ void	get_selected_mat_dropdown(t_minirt *minirt, t_dropdown *dropdown, \
 	if (!dropdown->selected)
 		return ;
 	stop_minirt(minirt);
+	// if (minirt->controls.ui_infos.selected_object->type == CUSTOM)
+	// 	update_obj_material(minirt->controls.ui_infos.selected_object->object);
 	i = -2;
 	while (++i < minirt->scene.mat_amount)
 	{

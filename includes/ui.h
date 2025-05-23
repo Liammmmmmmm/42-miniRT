@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:22:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 11:23:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 14:16:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,20 @@ void	clear_buttons(t_minirt *minirt);
 
 int		init_dropdowns(t_minirt *minirt);
 void	clear_dropdown(t_minirt *minirt);
-int		mouse_down_dropdown(t_minirt *minirt, int key, t_point2 pos, t_dropdown *dropdown);
 
 int		init_float_inputs(t_minirt *minirt);
 void	clear_float_inputs(t_minirt *minirt);
 
+void	draw_main_box(t_img *img, t_dropdown *dropdown);
+int		dropdown_common_define(t_dropdown *dropdown, int *i1, int *i2, int i);
+void	draw_dropdown_select_box(t_img *img, t_dropdown *dropdown);
+int		toggle_dropdown(int key, t_point2 pos, t_dropdown *dropdown);
+
 void	display_mat_dropdown(t_minirt *minirt, t_dropdown *dropdown);
+int		mouse_down_dropdown_mat(t_minirt *minirt, int key, t_point2 pos, t_dropdown *dropdown);
+
+void	display_tex_dropdown(t_minirt *minirt, t_dropdown *dropdown);
+int		mouse_down_dropdown_tex(t_minirt *minirt, int key, t_point2 pos, t_dropdown *d);
 
 void	change_tab(void *vparam);
 

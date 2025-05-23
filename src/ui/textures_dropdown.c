@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   materials_dropdown.c                               :+:      :+:    :+:   */
+/*   textures_dropdown.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:56:17 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 14:12:14 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 14:40:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "bvh.h"
 #include "ui.h"
 
-static void	draw_dropdown_mat(t_img *img, t_minirt *m, t_dropdown *d, int i)
+static void	draw_dropdown_tex(t_img *img, t_minirt *m, t_dropdown *d, int i)
 {
 	int	i1;
 	int	i2;
@@ -29,7 +29,7 @@ static void	draw_dropdown_mat(t_img *img, t_minirt *m, t_dropdown *d, int i)
 	p = (t_point2){d->x + d->width, i2};
 	if (i < 0 && d->selected && *d->selected == NULL)
 		draw_box_2d(img, (t_point2){d->x + 1, i1}, p, 0x353535);
-	else if (d->selected && &m->scene.materials[i] == *d->selected)
+	else if (d->selected && &m->scene.textures[i] == *d->selected)
 		draw_box_2d(img, (t_point2){d->x + 1, i1}, p, 0x353535);
 	else
 		draw_box_2d(img, (t_point2){d->x + 1, i1}, p, 0x0);
@@ -38,30 +38,30 @@ static void	draw_dropdown_mat(t_img *img, t_minirt *m, t_dropdown *d, int i)
 	if (i < 0)
 		draw_string(img, &m->controls.font[0], "None", p);
 	else
-		draw_string(img, &m->controls.font[0], m->scene.materials[i].name, p);
+		draw_string(img, &m->controls.font[0], m->scene.textures[i].name, p);
 	img->height = tmp;
 }
 
-static void	draw_dropdown_select_box_mat(t_img *img, t_dropdown *dropdown, \
+static void	draw_dropdown_select_box_tex(t_img *img, t_dropdown *dropdown, \
 	t_minirt *minirt)
 {
 	int	i;
 
 	draw_dropdown_select_box(img, dropdown);
 	i = -1;
-	draw_dropdown_mat(img, minirt, dropdown, i);
-	while (++i < minirt->scene.mat_amount)
+	draw_dropdown_tex(img, minirt, dropdown, i);
+	while (++i < minirt->scene.tex_amount)
 	{
-		draw_dropdown_mat(img, minirt, dropdown, i);
+		draw_dropdown_tex(img, minirt, dropdown, i);
 	}
 }
 
-void	display_mat_dropdown(t_minirt *minirt, t_dropdown *dropdown)
+void	display_tex_dropdown(t_minirt *minirt, t_dropdown *dropdown)
 {
 	minirt->controls.font[0].size = 20;
 	minirt->controls.font[0].color = 0xFFFFFF;
 	if (dropdown->active)
-		draw_dropdown_select_box_mat(&minirt->mlx.img_controls, dropdown, minirt);
+		draw_dropdown_select_box_tex(&minirt->mlx.img_controls, dropdown, minirt);
 	draw_main_box(&minirt->mlx.img_controls, dropdown);
 	if (!dropdown->selected || !*dropdown->selected)
 		draw_string(&minirt->mlx.img_controls, &minirt->controls.font[0],
@@ -69,11 +69,11 @@ void	display_mat_dropdown(t_minirt *minirt, t_dropdown *dropdown)
 			+ dropdown->height - 3});
 	else
 		draw_string(&minirt->mlx.img_controls, &minirt->controls.font[0],
-			((t_mat *)*dropdown->selected)->name, (t_point2){dropdown->x
+			((t_tex *)*dropdown->selected)->name, (t_point2){dropdown->x
 			+ 3, dropdown->y + dropdown->height - 3});
 }
 
-static void	get_selected_mat_dropdown(t_minirt *minirt, t_dropdown *dropdown, \
+static void	get_selected_tex_dropdown(t_minirt *minirt, t_dropdown *dropdown, \
 	int mouse_y)
 {
 	int	i;
@@ -85,7 +85,7 @@ static void	get_selected_mat_dropdown(t_minirt *minirt, t_dropdown *dropdown, \
 		return ;
 	stop_minirt(minirt);
 	i = -2;
-	while (++i < minirt->scene.mat_amount)
+	while (++i < minirt->scene.tex_amount)
 	{
 		i1 = dropdown->y + dropdown->height + 1 + (i + 1) * 25
 			- dropdown->scroll_offset;
@@ -96,17 +96,17 @@ static void	get_selected_mat_dropdown(t_minirt *minirt, t_dropdown *dropdown, \
 			if (i < 0)
 				*dropdown->selected = NULL;
 			else
-				*dropdown->selected = &minirt->scene.materials[i];
+				*dropdown->selected = &minirt->scene.textures[i];
 			return ;
 		}
 	}
 	minirt->controls.ui_infos.selected_object = NULL;
 }
 
-int	mouse_down_dropdown_mat(t_minirt *minirt, int key, t_point2 pos, \
+int	mouse_down_dropdown_tex(t_minirt *minirt, int key, t_point2 pos, \
 	t_dropdown *d)
 {
-	const int	max_scroll = imax(25 * (minirt->scene.mat_amount + 1)
+	const int	max_scroll = imax(25 * (minirt->scene.tex_amount + 1)
 			- (d->deployed_height - d->height), 0);
 
 	if (toggle_dropdown(key, pos, d))
@@ -121,7 +121,7 @@ int	mouse_down_dropdown_mat(t_minirt *minirt, int key, t_point2 pos, \
 		else if (key == SCROLL_UP)
 			d->scroll_offset = imax(d->scroll_offset - 15, 0);
 		else if (key == LEFT_CLICK)
-			get_selected_mat_dropdown(minirt, d, pos.y);
+			get_selected_tex_dropdown(minirt, d, pos.y);
 	}
 	else if (key == LEFT_CLICK)
 		d->active = 0;

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:41:18 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 11:24:49 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 14:31:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 							stop_minirt(minirt);
 						return ;
 					}
-					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
+					if (mouse_down_dropdown_mat(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
 						return ;
 					if (float_input_focus(&minirt->controls.float_input[0], x, y))
 						return ;
@@ -71,11 +71,11 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 							stop_minirt(minirt);
 						return ;
 					}
-					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
+					if (mouse_down_dropdown_mat(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
 						return ;
-					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[1]))
+					if (mouse_down_dropdown_mat(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[1]))
 						return ;
-					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[2]))
+					if (mouse_down_dropdown_mat(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[2]))
 						return ;
 					if (float_input_focus(&minirt->controls.float_input[0], x, y))
 						return ;
@@ -103,7 +103,7 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 							stop_minirt(minirt);
 						return ;
 					}
-					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
+					if (mouse_down_dropdown_mat(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
 						return ;
 					if (float_input_focus(&minirt->controls.float_input[0], x, y))
 						return ;
@@ -145,9 +145,9 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 							stop_minirt(minirt);
 						return ;
 					}
-					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
+					if (mouse_down_dropdown_mat(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
 						return ;
-					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[1]))
+					if (mouse_down_dropdown_mat(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[1]))
 						return ;
 					if (float_input_focus(&minirt->controls.float_input[0], x, y))
 						return ;
@@ -175,7 +175,7 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 							stop_minirt(minirt);
 						return ;
 					}
-					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
+					if (mouse_down_dropdown_mat(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
 						return ;
 					if (float_input_focus(&minirt->controls.float_input[0], x, y))
 						return ;
@@ -209,7 +209,7 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 							stop_minirt(minirt);
 						return ;
 					}
-					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
+					if (mouse_down_dropdown_mat(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
 						return ;
 					if (float_input_focus(&minirt->controls.float_input[0], x, y))
 						return ;
@@ -235,18 +235,18 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 			{
 				if (minirt->controls.ui_infos.selected_object->type != LIGHT)
 				{
-					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
+					if (mouse_down_dropdown_mat(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
 						return ;
 					if (minirt->controls.ui_infos.selected_object->type == CYLINDER)
 					{
-						if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[1]))
+						if (mouse_down_dropdown_mat(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[1]))
 							return ;
-						if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[2]))
+						if (mouse_down_dropdown_mat(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[2]))
 							return ;
 					}
 					else if (minirt->controls.ui_infos.selected_object->type == CONE)
 					{
-						if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[1]))
+						if (mouse_down_dropdown_mat(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[1]))
 							return ;
 					}
 				}
@@ -259,7 +259,22 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 			return ;
 		if (minirt->controls.ui_infos.selected_material)
 		{
-			
+			if (mouse_down_dropdown_tex(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[3]))
+				return ;
+			if (mouse_down_dropdown_tex(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[4]))
+				return ;
+			if (mouse_down_dropdown_tex(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[5]))
+				return ;
+			if (mouse_down_dropdown_tex(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[6]))
+				return ;
+			if (mouse_down_dropdown_tex(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[7]))
+				return ;
+			if (mouse_down_dropdown_tex(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[8]))
+				return ;
+			if (mouse_down_dropdown_tex(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[9]))
+				return ;
+			if (mouse_down_dropdown_tex(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[10]))
+				return ;
 		}
 	}
 }

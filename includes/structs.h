@@ -312,7 +312,9 @@ typedef struct s_custom_object
 	t_object	*obj_list;
 	size_t		triangle_count;
 	t_vec3		position;
+	t_vec3		prev_position;
 	t_vec3		orientation;
+	t_vec3		prev_orientation;
 	t_vec3		scale;
 	t_mat		*material;
 	t_color		color;

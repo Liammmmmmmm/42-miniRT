@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   float_input3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 07:44:13 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/22 11:15:52 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 16:25:43 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void	replace_input_float_input(int *key)
 		*key = '9';
 	else if (*key == 65453)
 		*key = '-';
+	else if (*key == 65439)
+		*key = '.';
 }
 
 int	float_input_type(t_float_input *input, int key)

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:53:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 09:59:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 11:23:59 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -403,7 +403,9 @@ void	init_layout(t_img *img, t_minirt *minirt)
 	{
 		draw_horizontal_line(img, 300, 300, img->width);
 		draw_horizontal_line(img, 780, 300, img->width);
-		draw_string(img, &minirt->controls.font[0], "Liste materiaux", (t_point2){330, 170});
+
+		draw_list_materials(minirt);
+
 		draw_string(img, &minirt->controls.font[0], "Preview mat\n(microRT)", (t_point2){370, 930});
 		
 		if (minirt->controls.ui_infos.selected_material)

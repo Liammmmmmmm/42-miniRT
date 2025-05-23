@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:22:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/16 13:27:28 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 11:23:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,12 @@ void	display_mat_dropdown(t_minirt *minirt, t_dropdown *dropdown);
 void	change_tab(void *vparam);
 
 void	set_selected_object(t_minirt *minirt, t_object *obj);
-
 int		mouse_down_obj(t_minirt *minirt, int key, int mouse_x, int mouse_y);
 void	draw_list_objects(t_minirt *minirt);
+
+void	set_selected_mat(t_minirt *minirt, t_mat *mat);
+int		mouse_down_mat(t_minirt *minirt, int key, int mouse_x, int mouse_y);
+void	draw_list_materials(t_minirt *minirt);
 
 void	init_layout(t_img *img, t_minirt *minirt);
 

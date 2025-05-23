@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:41:18 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 10:23:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 11:24:49 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,8 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 	}
 	else if (minirt->controls.ui_infos.tab_selected == 1)
 	{
-
+		if (mouse_down_mat(minirt, key, x, y))
+			return ;
 		if (minirt->controls.ui_infos.selected_material)
 		{
 			

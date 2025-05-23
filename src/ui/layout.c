@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:53:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 14:32:44 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 14:58:12 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -410,8 +410,9 @@ void	init_layout(t_img *img, t_minirt *minirt)
 		
 		if (minirt->controls.ui_infos.selected_material)
 		{
-			draw_string(img, &minirt->controls.font[0], "Prop du materiau", (t_point2){320, 540});
+			display_text_input(img, &minirt->controls.text_input[0], &minirt->controls.font[0]);
 
+			minirt->controls.font[0].size = 20;
 			display_tex_dropdown(minirt, &minirt->controls.dropdown[10]);
 			display_tex_dropdown(minirt, &minirt->controls.dropdown[9]);
 			display_tex_dropdown(minirt, &minirt->controls.dropdown[8]);

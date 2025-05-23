@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:38:41 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/22 09:53:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 15:18:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,28 @@ int	keydown_controls(int key, t_minirt *minirt)
 		{
 			stop_minirt(minirt);
 			minirt->scene.build_bvh = 1;
+			return (0);
+		}
+	}
+	if (minirt->controls.text_input[0].is_focused)
+	{
+		if (key == ' ')
+			key = '_';
+		if (!ft_isalnum(key) && key != '_' && key != 65288)
+			return (0);
+		if (text_input_type(&minirt->controls.text_input[0], key, minirt->controls.keydown.rshift || minirt->controls.keydown.lshift))
+		{
+			ft_strlcpy(minirt->controls.ui_infos.selected_material->name, minirt->controls.text_input[0].text, 21);
+			stop_minirt(minirt);
+			return (0);
+		}
+	}
+	i = 0;
+	while (++i < minirt->controls.nb_text_input)
+	{
+		if (text_input_type(&minirt->controls.text_input[i], key, minirt->controls.keydown.rshift || minirt->controls.keydown.lshift))
+		{
+			stop_minirt(minirt);
 			return (0);
 		}
 	}

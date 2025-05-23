@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 12:42:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 14:49:01 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	clean(t_minirt *minirt)
 	clear_sliders(minirt);
 	clear_dropdown(minirt);
 	clear_float_inputs(minirt);
+	clear_text_inputs(minirt);
 	free(minirt->screen.render);
 	free(minirt->screen.float_render);
 	free_ttf(&minirt->controls.font[0]);

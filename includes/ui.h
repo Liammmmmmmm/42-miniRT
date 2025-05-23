@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:22:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 14:16:29 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 14:48:53 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ void	clear_dropdown(t_minirt *minirt);
 
 int		init_float_inputs(t_minirt *minirt);
 void	clear_float_inputs(t_minirt *minirt);
+
+int		init_text_inputs(t_minirt *minirt);
+void	clear_text_inputs(t_minirt *minirt);
 
 void	draw_main_box(t_img *img, t_dropdown *dropdown);
 int		dropdown_common_define(t_dropdown *dropdown, int *i1, int *i2, int i);

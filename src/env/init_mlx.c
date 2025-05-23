@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/22 08:51:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 14:49:18 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ int	init_render(t_minirt *minirt)
 	init_cps(minirt);
 	init_dropdowns(minirt);
 	init_float_inputs(minirt);
+	init_text_inputs(minirt);
 	return (1);
 }

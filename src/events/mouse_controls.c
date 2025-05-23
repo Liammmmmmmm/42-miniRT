@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:41:18 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 14:31:27 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 15:00:07 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,8 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 			return ;
 		if (minirt->controls.ui_infos.selected_material)
 		{
+			if (text_input_focus(&minirt->controls.text_input[0], x, y))
+				return ;
 			if (mouse_down_dropdown_tex(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[3]))
 				return ;
 			if (mouse_down_dropdown_tex(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[4]))

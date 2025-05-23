@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 11:12:55 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 14:44:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -509,6 +509,8 @@ typedef struct s_controls
 	t_dropdown		*dropdown;
 	int				nb_float_input;
 	t_float_input	*float_input;
+	int				nb_text_input;
+	t_text_input	*text_input;
 	t_ttf			font[1];
 	t_ui_infos		ui_infos;
 	int				selected_x;

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 15:42:26 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/22 16:30:27 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,9 @@ typedef struct s_mat
 	t_tex	*roughness_tex;
 	double	roughness_value;
 	double	ior;
-	double	transmission;
+	double	transmission_value;
 	t_tex	*ao_tex;
+	t_tex	*transmission_map;
 	double	ao_value;
 	double	emission_strength;
 	t_color	emission_color;

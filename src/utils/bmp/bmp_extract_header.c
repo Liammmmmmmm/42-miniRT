@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:51:35 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/27 18:40:57 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:35:26 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,46 @@ int	error_and_return(char *message)
 	return (1);
 }
 
+static inline size_t	get_palette_bytes(size_t palette_end, size_t \
+	palette_start)
+{
+	if (palette_end > palette_start)
+		return (palette_end - palette_start);
+	return (0);
+}
+
 int	read_palette(t_bin *bin, size_t *i, t_bmp *bmp, size_t palette_entry_count)
 {
 	size_t	j;
+	size_t	palette_start;
+	size_t	palette_end;
 
 	j = 0;
+	palette_start = 14 + bmp->info.info_header_size;
+	palette_end = bmp->header.pixel_data_offset;
+	if (get_palette_bytes(palette_end, palette_start) < palette_entry_count * 4)
+		return (error_and_return("error: palette too small for expected color count\n"));
 	bmp->palette = malloc(palette_entry_count * sizeof(uint32_t));
-	if (bmp->palette == NULL)
-	{
-		return (\
-		error_and_return ("Error: unable to allocate memory for palette\n"));
-	}
-	*i += 21 * 4;
-	while (j < palette_entry_count && *i < bin->size)
+	if (!bmp->palette)
+		return (error_and_return("Error: unable to allocate memory for palette\n"));
+	*i = palette_start;
+	while (j < palette_entry_count && *i + 4 <= bin->size)
 	{
 		if (read_uint32_move_little(bin, i, &bmp->palette[j]))
 		{
 			free(bmp->palette);
-			return (error_and_return ("error: unable to read color\n"));
+			return (error_and_return("error: unable to read color\n"));
 		}
 		j++;
 	}
 	return (0);
 }
 
+
 int	read_header(t_bmp *bmp, size_t *i, t_bin *bin)
 {
 	if (read_uint16_move_little(bin, i, &bmp->header.signature) == -1 || \
-	(bmp->header.signature_c[0] == 'B' && bmp->header.signature_c[0] == 'M'))
+	!(bmp->header.signature_c[0] == 'B' && bmp->header.signature_c[1] == 'M'))
 		return (error_and_return ("error: unable to read signature\n"));
 	if (read_uint32_move_little(bin, i, &bmp->header.file_size) == -1)
 		return (error_and_return ("error: unable to read file size\n"));

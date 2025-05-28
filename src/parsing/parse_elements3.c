@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:00:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/15 10:46:30 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/22 16:30:29 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ static int	parse_mat_prop(char **parts, t_mat *mat, t_scene *scene, int nb_parts
 		return (material_item_error(3, mat->name));
 	if (is_valid_double_el_no_bordered(parts[5], &mat->ior) == 0)
 		return (material_item_error(4, mat->name));
-	if (is_valid_double_el(parts[6], &mat->transmission) == 0)
+	if (parse_double_b_or_tex(parts[6], &mat->transmission_value, &mat->transmission_map, scene) == 0)
 		return (material_item_error(5, mat->name));
 	mat->ao_value = 1.0;
 	if (parse_double_b_or_tex(parts[7], &mat->ao_value, &mat->ao_tex,

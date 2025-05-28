@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:26:28 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 17:12:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/28 18:11:20 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_valid_element(char *line)
 		|| cmp_type("L", line) || cmp_type("sp", line) || cmp_type("pl", line)
 		|| cmp_type("cy", line) || cmp_type("tex", line) || cmp_type("hb", line)
 		|| cmp_type("mat", line) || cmp_type("co", line) || cmp_type("cu", line)
-		|| cmp_type("W", line))
+		|| cmp_type("W", line) || cmp_type("dl", line))
 		return (1);
 	return (0);
 }

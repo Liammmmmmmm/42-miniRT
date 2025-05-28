@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_obj2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:16:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/08 09:29:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/28 17:55:04 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	print_objects(t_scene *scene)
 		obj = &scene->elements[i];
 		if (obj->type == LIGHT)
 			print_light((t_light *)obj->object);
+		if (obj->type == DIRECTIONAL_LIGHT)
+			print_dlight((t_dlight *)obj->object);
 		else if (obj->type == SPHERE)
 			print_sphere((t_sphere *)obj->object);
 		else if (obj->type == PLANE)

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:57:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/22 16:31:17 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:11:28 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,14 @@ void	print_mat(t_mat *material)
 	print_tex_double_text(material->ao_tex, material->ao_value,
 		"Ambient occlusion");
 	printf("    IOR: %.2f\n", material->ior);
-	print_tex_double_text(material->transmission_map, material->transmission_value,
-		"Transmission");
+	print_tex_double_text(material->transmission_tex, \
+		material->transmission_value, "Transmission");
 	printf("    Emission Strength: %.2f\n", material->emission_strength);
 	printf("    Emission Color: ");
-	print_color(material->emission_color);
+	printf("("YELLOW"%d, %d, %d"NC")\n", \
+			(int)(material->emission_color.r * 255), \
+			(int)(material->emission_color.g * 255), \
+			(int)(material->emission_color.b * 255));
 	printf("\n");
 	printf("    Texture scale: %.2f\n", material->scale);
 	if (material->normal)

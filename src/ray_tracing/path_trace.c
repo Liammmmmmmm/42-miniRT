@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_trace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 14:26:56 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/28 16:11:46 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static inline void	material_manager_v3(t_minirt *minirt, t_ray *ray,
 	{
 		*data.accumulation = add_fcolor(*data.accumulation,
 				multiply_fcolor(multiply_scalar_fcolor(
-				color_to_fcolor(hit_record->mat->emission_color),
+				hit_record->mat->emission_color,
 				hit_record->mat->emission_strength), *data.power));
 	}
 	if (hit_record->mat->metallic_value == 1.0)

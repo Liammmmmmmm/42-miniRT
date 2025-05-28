@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/28 14:51:10 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:28:06 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,9 +169,23 @@ void	apply_ao_map(t_hit_record *hit)
 
 void	apply_transmission_map(t_hit_record *hit)
 {
-	if (hit->mat == NULL || hit->mat->transmission_map == NULL)
+	if (hit->mat == NULL || hit->mat->transmission_tex == NULL)
 		return ;
-	hit->mat->transmission_value = get_tex_color(hit->mat->transmission_map, hit->u, hit->v, hit->point).r;
+	hit->mat->transmission_value = get_tex_color(hit->mat->transmission_tex, hit->u, hit->v, hit->point).r;
+}
+
+void	apply_emissive_map(t_hit_record *hit)
+{
+	if (hit->mat == NULL || hit->mat->emission_color_tex == NULL)
+		return ;
+	hit->mat->emission_color = get_tex_color(hit->mat->emission_color_tex, hit->u, hit->v, hit->point);
+}
+
+void	apply_emission_strength_map(t_hit_record *hit)
+{
+	if (hit->mat == NULL || hit->mat->emission_strength_tex == NULL)
+		return ;
+	hit->mat->emission_strength = get_tex_color(hit->mat->emission_strength_tex, hit->u, hit->v, hit->point).r;
 }
 
 static inline t_color	get_obj_color(t_object *obj)
@@ -263,6 +277,8 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hi
 	apply_metallic_map(hit_record);
 	apply_ao_map(hit_record);
 	apply_transmission_map(hit_record);
+	apply_emission_strength_map(hit_record);
+	apply_emissive_map(hit_record);
 	hit_record->obj = obj;
 	hit_record->color = get_hit_register_color(hit_record->mat, get_obj_color(obj), hit_record, bvh);
 	return (1);
@@ -296,7 +312,10 @@ char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record)
 				apply_normal_map(hit_record);
 				apply_roughness_map(hit_record);
 				apply_metallic_map(hit_record);
+				apply_ao_map(hit_record);
 				apply_transmission_map(hit_record);
+				apply_emission_strength_map(hit_record);
+				apply_emissive_map(hit_record);
 				hit_record->color = get_hit_register_color(plane->material, plane->color, hit_record, &minirt->scene.bvh);
 			}
 		}

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   materials_dropdown.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:56:17 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/27 18:29:52 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:24:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "bvh.h"
 
 void	draw_select_triangle(t_img *img, t_dropdown *dropdown)
 {
@@ -119,7 +120,7 @@ void	draw_dropdown_select_box(t_img *img, t_dropdown *dropdown, \
 		+ dropdown->height, dropdown->y + dropdown->deployed_height + 1);
 	draw_box_2d(img, (t_point2){dropdown->x + 1, dropdown->y + dropdown->height
 		+ 1}, (t_point2){dropdown->x + dropdown->width, dropdown->y
-		+ dropdown->deployed_height - dropdown->height}, UI_BACK_COLOR);
+		+ dropdown->deployed_height}, UI_BACK_COLOR);
 	i = -1;
 	draw_dropdown_object(img, minirt, dropdown, i);
 	while (++i < minirt->scene.mat_amount)
@@ -155,6 +156,8 @@ void	get_selected_mat_dropdown(t_minirt *minirt, t_dropdown *dropdown, \
 	if (!dropdown->selected)
 		return ;
 	stop_minirt(minirt);
+	// if (minirt->controls.ui_infos.selected_object->type == CUSTOM)
+	// 	update_obj_material(minirt->controls.ui_infos.selected_object->object);
 	i = -2;
 	while (++i < minirt->scene.mat_amount)
 	{

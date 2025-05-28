@@ -76,6 +76,12 @@ typedef struct s_ray
 	t_vec3	dir;	/* The direction of the ray. */
 }	t_ray;	/*	Add more section for future (length_squared for optimisation)	*/
 
+typedef struct s_aabb
+{
+	t_vec3	min;
+	t_vec3	max;
+}	t_aabb;
+
 typedef enum e_tex_type
 {
 	IMAGE,
@@ -247,7 +253,6 @@ typedef struct s_vertex
 	t_vec3	normal;
 	double	u;
 	double	v;
-	double	angle;
 }	t_vertex;
 
 typedef struct s_triangle
@@ -317,9 +322,11 @@ typedef struct s_custom_object
 	t_vec3		orientation;
 	t_vec3		prev_orientation;
 	t_vec3		scale;
+	t_vec3		prev_scale;
 	t_mat		*material;
 	t_color		color;
 	int			index;
+	t_aabb		aabb;
 }	t_custom_object;
 
 typedef enum e_obj_part
@@ -350,12 +357,6 @@ typedef struct s_obj_lst
 	t_object	**plane_lst;
 	int			plane_nb;
 }	t_obj_lst;
-
-typedef struct s_aabb
-{
-	t_vec3	min;
-	t_vec3	max;
-}	t_aabb;
 
 typedef struct s_bvh_node
 {
@@ -407,6 +408,7 @@ typedef struct s_scene
 	int			win_height;
 	int			render_width;
 	int			render_height;
+	t_bool		have_win_el;
 }	t_scene;
 
 typedef struct s_mlx

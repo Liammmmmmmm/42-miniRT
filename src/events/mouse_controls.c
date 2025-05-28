@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_controls.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:41:18 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/26 19:24:28 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:23:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minirt.h"
 
@@ -43,22 +42,215 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 		{
 			if (key == LEFT_CLICK)
 			{
-				int last_val = minirt->controls.color_picker[0].btn.background_color;
-				if (color_picker_action(&minirt->controls.color_picker[0], x, y))
+				if (minirt->controls.ui_infos.selected_object->type == SPHERE)
 				{
-					if (last_val != minirt->controls.color_picker[0].btn.background_color)
-						stop_minirt(minirt);
-					return ;
+					int last_val = minirt->controls.color_picker[0].btn.background_color;
+					if (color_picker_action(&minirt->controls.color_picker[0], x, y))
+					{
+						if (last_val != minirt->controls.color_picker[0].btn.background_color)
+							stop_minirt(minirt);
+						return ;
+					}
+					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[0], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[1], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[2], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[6], x, y))
+						return ;
 				}
-				if (float_input_focus(&minirt->controls.float_input[0], x, y))
-					return ;
-				if (float_input_focus(&minirt->controls.float_input[1], x, y))
-					return ;
-				if (float_input_focus(&minirt->controls.float_input[2], x, y))
-					return ;
+				else if (minirt->controls.ui_infos.selected_object->type == CYLINDER)
+				{
+					int last_val = minirt->controls.color_picker[0].btn.background_color;
+					if (color_picker_action(&minirt->controls.color_picker[0], x, y))
+					{
+						if (last_val != minirt->controls.color_picker[0].btn.background_color)
+							stop_minirt(minirt);
+						return ;
+					}
+					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
+						return ;
+					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[1]))
+						return ;
+					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[2]))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[0], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[1], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[2], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[3], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[4], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[5], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[6], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[7], x, y))
+						return ;
+				}
+				else if (minirt->controls.ui_infos.selected_object->type == PLANE)
+				{
+					int last_val = minirt->controls.color_picker[0].btn.background_color;
+					if (color_picker_action(&minirt->controls.color_picker[0], x, y))
+					{
+						if (last_val != minirt->controls.color_picker[0].btn.background_color)
+							stop_minirt(minirt);
+						return ;
+					}
+					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[0], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[1], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[2], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[3], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[4], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[5], x, y))
+						return ;
+				}
+				else if (minirt->controls.ui_infos.selected_object->type == LIGHT)
+				{
+					int last_val = minirt->controls.color_picker[0].btn.background_color;
+					if (color_picker_action(&minirt->controls.color_picker[0], x, y))
+					{
+						if (last_val != minirt->controls.color_picker[0].btn.background_color)
+							stop_minirt(minirt);
+						return ;
+					}
+					if (float_input_focus(&minirt->controls.float_input[0], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[1], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[2], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[6], x, y))
+						return ;
+				}
+				else if (minirt->controls.ui_infos.selected_object->type == CONE)
+				{
+					int last_val = minirt->controls.color_picker[0].btn.background_color;
+					if (color_picker_action(&minirt->controls.color_picker[0], x, y))
+					{
+						if (last_val != minirt->controls.color_picker[0].btn.background_color)
+							stop_minirt(minirt);
+						return ;
+					}
+					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
+						return ;
+					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[1]))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[0], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[1], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[2], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[3], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[4], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[5], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[6], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[7], x, y))
+						return ;
+				}
+				else if (minirt->controls.ui_infos.selected_object->type == HYPERBOLOID)
+				{
+					int last_val = minirt->controls.color_picker[0].btn.background_color;
+					if (color_picker_action(&minirt->controls.color_picker[0], x, y))
+					{
+						if (last_val != minirt->controls.color_picker[0].btn.background_color)
+							stop_minirt(minirt);
+						return ;
+					}
+					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[0], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[1], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[2], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[3], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[4], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[5], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[6], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[7], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[8], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[9], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[10], x, y))
+						return ;
+				}
+				else if (minirt->controls.ui_infos.selected_object->type == CUSTOM)
+				{
+					int last_val = minirt->controls.color_picker[0].btn.background_color;
+					if (color_picker_action(&minirt->controls.color_picker[0], x, y))
+					{
+						if (last_val != minirt->controls.color_picker[0].btn.background_color)
+							stop_minirt(minirt);
+						return ;
+					}
+					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[0], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[1], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[2], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[3], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[4], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[5], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[6], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[7], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[8], x, y))
+						return ;
+				}
 			}
-			if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
-				return ;
+			else if (key == SCROLL_DOWN || key == SCROLL_UP)
+			{
+				if (minirt->controls.ui_infos.selected_object->type != LIGHT)
+				{
+					if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[0]))
+						return ;
+					if (minirt->controls.ui_infos.selected_object->type == CYLINDER)
+					{
+						if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[1]))
+							return ;
+						if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[2]))
+							return ;
+					}
+					else if (minirt->controls.ui_infos.selected_object->type == CONE)
+					{
+						if (mouse_down_dropdown(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[1]))
+							return ;
+					}
+				}
+			}
 		}
 	}
 	else if (minirt->controls.ui_infos.tab_selected == 1)

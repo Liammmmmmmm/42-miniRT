@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:35:11 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 12:37:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/28 18:02:28 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int		is_valid_positive_int(char *str, int *res);
 int		parse_ambiant_light(t_scene *scene, char *line);
 int		parse_camera(t_scene *scene, char *line);
 int		parse_light(t_scene *scene, char *line);
+int		parse_dlight(t_scene *scene, char *line);
 int		parse_sphere(t_scene *scene, char *line);
 int		parse_plane(t_scene *scene, char *line);
 int		parse_cylinder(t_scene *scene, char *line);

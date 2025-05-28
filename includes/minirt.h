@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 16:19:51 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:55:54 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void	debug_ray(t_minirt *minirt);
 ║                                    UTILS                                     ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
+void	print_dlight(t_dlight *light);
 void	print_light(t_light *light);
 void	print_cone(t_cone *cone);
 void	print_cylinder(t_cylinder *cylinder);

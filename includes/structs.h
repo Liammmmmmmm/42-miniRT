@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 16:06:27 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:51:44 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,13 @@ typedef struct s_light
 	t_color	color;
 }	t_light;
 
+typedef struct s_dlight
+{
+	t_vec3	orientation;
+	double	brightness;
+	t_color	color;
+}	t_dlight;
+
 typedef struct s_hyperboloid
 {
 	t_vec3	position;
@@ -297,6 +304,7 @@ typedef enum e_objects
 	AMBIANT_LIGHT,
 	CAMERA,
 	LIGHT,
+	DIRECTIONAL_LIGHT,
 	SPHERE,
 	PLANE,
 	CYLINDER,

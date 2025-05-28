@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/23 12:23:49 by madelvin         ###   ########.fr        #
+#    Updated: 2025/05/23 16:39:17 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,9 @@ UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					obj/obj_ear_clipping.c obj/obj_triangle_extract.c obj/obj_utils.c
 
 UTILS_MLX_DIR		= src/utils/mlx/
-UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c conversions.c color_picker.c color_picker2.c color_picker3.c float_input.c float_input2.c float_input3.c
+UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c \
+					conversions.c color_picker.c color_picker2.c color_picker3.c float_input.c \
+					float_input2.c float_input3.c expr_float.c
 
 UI_DIR				= src/ui/
 UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_float_inputs.c \

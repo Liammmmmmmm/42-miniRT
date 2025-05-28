@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/22 16:36:24 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:51:10 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void	apply_ao_map(t_hit_record *hit)
 
 void	apply_transmission_map(t_hit_record *hit)
 {
-	if (hit->mat == NULL || hit->mat->ao_tex == NULL)
+	if (hit->mat == NULL || hit->mat->transmission_map == NULL)
 		return ;
 	hit->mat->transmission_value = get_tex_color(hit->mat->transmission_map, hit->u, hit->v, hit->point).r;
 }

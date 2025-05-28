@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:30:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/22 16:32:59 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:03:03 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ inline void	dielectric_mat(t_minirt *minirt, t_ray *ray,
 {
 	if (hit_record->mat->ior > 0)
 	{
-		if (get_reflect_value(ray, hit_record) >= random_double())
+		if (get_reflect_value(ray, hit_record) >= random_double() && hit_record->mat->ior != 1.0)
 			reflected_dielectric_color(ray, hit_record);
 		else
 		{

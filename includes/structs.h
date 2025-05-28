@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/22 16:30:27 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:06:27 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,23 +116,25 @@ typedef struct s_tex
 
 typedef struct s_mat
 {
-	char	name[21];
-	t_tex	*color_tex;
-	t_color	color_value;
-	t_tex	*metallic_tex;
-	double	metallic_value;
-	t_tex	*roughness_tex;
-	double	roughness_value;
-	double	ior;
-	double	transmission_value;
-	t_tex	*ao_tex;
-	t_tex	*transmission_map;
-	double	ao_value;
-	double	emission_strength;
-	t_color	emission_color;
-	double	scale;
-	t_tex	*normal;
-	double	normal_intensity;
+	char		name[21];
+	t_tex		*color_tex;
+	t_color		color_value;
+	t_tex		*metallic_tex;
+	double		metallic_value;
+	t_tex		*roughness_tex;
+	double		roughness_value;
+	double		ior;
+	double		transmission_value;
+	t_tex		*ao_tex;
+	t_tex		*transmission_tex;
+	double		ao_value;
+	double		emission_strength;
+	t_tex		*emission_strength_tex;
+	t_fcolor	emission_color;
+	t_tex		*emission_color_tex;
+	double		scale;
+	t_tex		*normal;
+	double		normal_intensity;
 }	t_mat;
 
 typedef struct s_quadratic

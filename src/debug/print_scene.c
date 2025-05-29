@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:57:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 16:11:28 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/29 12:31:30 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ void	print_global_info(t_scene *scene)
 {
 	printf("\n" RED "Ambient Light:\n" NC);
 	printf("  Ratio: " BLUE "%.2f" NC "\n", scene->amb_light.ratio);
-	printf("  Color: ");
-	print_color(scene->amb_light.color);
-	printf("\n");
 	printf("\n" RED "Camera:\n" NC);
 	printf("  Position: ");
 	print_vec3(scene->camera.position);

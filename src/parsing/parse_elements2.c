@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 18:00:46 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/29 12:30:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,17 @@ int	parse_ambiant_light(t_scene *scene, char *line)
 		return (print_error(strerror(errno)));
 	if (!parse_ambient_light_ratio_and_color(scene, parts))
 		return (0);
-	if (!parse_ambient_light_skybox(scene, parts))
-		return (0);
+	if (((scene->amb_light.skybox_t && scene->amb_light.skybox_t->type == IMAGE)
+		|| !scene->amb_light.skybox_t) && scene->amb_light.ratio < 0.0)
+	{
+		free(parts);
+		return (print_error(MSG_ERR_AMBIENT_LIGHT_RATIO));
+	}
+	else if (scene->amb_light.skybox_t && scene->amb_light.skybox_t->type == HDR)
+	{
+		scene->amb_light.skybox_t->hdr.exposure += scene->amb_light.ratio - 1;
+		scene->amb_light.ratio = 1;
+	}
 	free(parts);
 	return (1);
 }

@@ -1,7 +1,7 @@
-tex		skybox	 assets/textures/brown_photostudio_02_2k_greyscale.bmp  
-tex		ground_tex  assets/textures/paper/albedo_paper.bmp
-tex		ground_nor assets/textures/paper/paper_normal.bmp
-tex		ground_r   assets/textures/paper/roughness_paper.bmp
+tex		skybox	   image assets/textures/brown_photostudio_02_2k_greyscale.bmp  
+tex		ground_tex image assets/textures/paper/albedo_paper.bmp
+tex		ground_nor image assets/textures/paper/paper_normal.bmp
+tex		ground_r   image assets/textures/paper/roughness_paper.bmp
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength     emission_color   scale      normal_map      normal_intensity

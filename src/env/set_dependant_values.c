@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_dependant_values.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:36:26 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 15:44:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/29 11:17:00 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,35 +49,36 @@ void	set_values_hyperboloid(t_hyperboloid *obj)
 	obj->orientation = vec3_unit(obj->orientation);
 }
 
+void	set_values_mat(t_mat *mat)
+{
+	mat->emission_color = color_to_fcolor(mat->emission_color_tmp);
+	mat->metallic_value = clamp_double(mat->metallic_value);
+	mat->roughness_value = clamp_double(mat->roughness_value);
+}
+
 void	set_dependant_values(t_minirt *minirt)
 {
 	int	i;
 	
-	if (minirt->controls.ui_infos.selected_object == NULL)
-		return ;
 	i = -1;
 	while (++i < minirt->scene.el_amount)
 	{
-		if (minirt->controls.ui_infos.tab_selected == 0)
-		{
-			if (minirt->controls.ui_infos.selected_object[i].type == SPHERE)
-				set_values_sphere(minirt->controls.ui_infos.selected_object[i].object);
-			else if (minirt->controls.ui_infos.selected_object[i].type == CYLINDER)
-				set_values_cylinder(minirt->controls.ui_infos.selected_object[i].object);
-			else if (minirt->controls.ui_infos.selected_object[i].type == PLANE)
-				set_values_plane(minirt->controls.ui_infos.selected_object[i].object);
-			else if (minirt->controls.ui_infos.selected_object[i].type == LIGHT)
-				set_values_light(minirt->controls.ui_infos.selected_object[i].object);
-			else if (minirt->controls.ui_infos.selected_object[i].type == CONE)
-				set_values_cone(minirt->controls.ui_infos.selected_object[i].object);
-			else if (minirt->controls.ui_infos.selected_object[i].type == HYPERBOLOID)
-				set_values_hyperboloid(minirt->controls.ui_infos.selected_object[i].object);
-		else if (minirt->controls.ui_infos.selected_object[i].type == CUSTOM)
-			set_values_custom(minirt->controls.ui_infos.selected_object[i].object);
-		}
-		else if (minirt->controls.ui_infos.tab_selected == 1)
-		{
-
-		}
+		if (minirt->scene.elements[i].type == SPHERE)
+			set_values_sphere(minirt->scene.elements[i].object);
+		else if (minirt->scene.elements[i].type == CYLINDER)
+			set_values_cylinder(minirt->scene.elements[i].object);
+		else if (minirt->scene.elements[i].type == PLANE)
+			set_values_plane(minirt->scene.elements[i].object);
+		else if (minirt->scene.elements[i].type == LIGHT)
+			set_values_light(minirt->scene.elements[i].object);
+		else if (minirt->scene.elements[i].type == CONE)
+			set_values_cone(minirt->scene.elements[i].object);
+		else if (minirt->scene.elements[i].type == HYPERBOLOID)
+			set_values_hyperboloid(minirt->scene.elements[i].object);
+		else if (minirt->scene.elements[i].type == CUSTOM)
+			set_values_custom(minirt->scene.elements[i].object);
 	}
+	i = -1;
+	while (++i < minirt->scene.mat_amount)
+		set_values_mat(&minirt->scene.materials[i]);
 }

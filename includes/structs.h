@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 13:48:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/29 11:00:39 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct s_mat
 	double		emission_strength;
 	t_tex		*emission_strength_tex;
 	t_fcolor	emission_color;
+	t_color		emission_color_tmp;
 	t_tex		*emission_color_tex;
 	double		scale;
 	t_tex		*normal;

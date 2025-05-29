@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:53:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 17:27:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/29 10:21:21 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -427,16 +427,16 @@ void	init_layout(t_img *img, t_minirt *minirt)
 			display_float_input(img, &minirt->controls.float_input[13], &minirt->controls.font[0]);
 
 			draw_string(img, &minirt->controls.font[0], "Transmission", (t_point2){310, 560});
-			// add condition
-			display_float_input(img, &minirt->controls.float_input[14], &minirt->controls.font[0]);
+			if (!minirt->controls.ui_infos.selected_material->transmission_tex)
+				display_float_input(img, &minirt->controls.float_input[14], &minirt->controls.font[0]);
 
 			draw_string(img, &minirt->controls.font[0], "Ambiant occlusion", (t_point2){310, 610});
-			// add condition
-			display_float_input(img, &minirt->controls.float_input[15], &minirt->controls.font[0]);
+			if (!minirt->controls.ui_infos.selected_material->ao_tex)
+				display_float_input(img, &minirt->controls.float_input[15], &minirt->controls.font[0]);
 			
 			draw_string(img, &minirt->controls.font[0], "Emission", (t_point2){310, 660});
-			// add condition
-			display_float_input(img, &minirt->controls.float_input[16], &minirt->controls.font[0]);
+			if (!minirt->controls.ui_infos.selected_material->emission_strength_tex)
+				display_float_input(img, &minirt->controls.float_input[16], &minirt->controls.font[0]);
 
 
 			draw_string(img, &minirt->controls.font[0], "Scale", (t_point2){310, 740});
@@ -475,8 +475,8 @@ void	init_layout(t_img *img, t_minirt *minirt)
 
 			if (!minirt->controls.ui_infos.selected_material->color_tex)
 				display_color_picker(img, &minirt->controls.color_picker[1], &minirt->controls.font[0]);
-			// add condition
-			display_color_picker(img, &minirt->controls.color_picker[2], &minirt->controls.font[0]);
+			if (!minirt->controls.ui_infos.selected_material->emission_color_tex)
+				display_color_picker(img, &minirt->controls.color_picker[2], &minirt->controls.font[0]);
 			
 		}
 	}

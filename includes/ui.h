@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ui.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:22:47 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/05/23 14:48:53 by lilefebv         ###   ########lyon.fr   */
@@ -80,5 +80,7 @@ void	draw_list_materials(t_minirt *minirt);
 void	init_layout(t_img *img, t_minirt *minirt);
 
 void	render_ui(t_minirt *minirt);
+double	parse_expression(const char *expr);
+char	double_to_char20(double nb, char *buffer, int max);
 
 #endif

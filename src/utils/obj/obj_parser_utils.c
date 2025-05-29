@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:42:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/22 15:44:33 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:21:44 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,31 +85,39 @@ void	ft_free_tab_triangle(t_triangle **tab, size_t i)
 	free(tab);
 }
 
-
 static inline void	update_position_scale(t_triangle *t, t_custom_object *obj)
 {
-	const t_vec3	delta_pos = vec3_subtract(obj->position, obj->prev_position);
-	const float		angle = acosf(vec3_dot(obj->prev_orientation, obj->orientation));
-	t_vec3			rot_axis;
+	t_vec3	delta_scale;
 
-	rot_axis = vec3_cross(obj->prev_orientation, obj->orientation);
-	if (vec3_length(rot_axis) > 0.0001f && angle > 0.0001f)
-	{
-		rot_axis = vec3_unit(rot_axis);
-		t->v0.pos = rotate_around_axis(t->v0.pos, rot_axis, angle);
-		t->v1.pos = rotate_around_axis(t->v1.pos, rot_axis, angle);
-		t->v2.pos = rotate_around_axis(t->v2.pos, rot_axis, angle);
-	}
-	t->v0.pos = vec3_add(t->v0.pos, delta_pos);
-	t->v1.pos = vec3_add(t->v1.pos, delta_pos);
-	t->v2.pos = vec3_add(t->v2.pos, delta_pos);
+	t->v0.pos = vec3_subtract(t->v0.pos, obj->prev_position);
+	t->v1.pos = vec3_subtract(t->v1.pos, obj->prev_position);
+	t->v2.pos = vec3_subtract(t->v2.pos, obj->prev_position);
+	t->v0.pos = rotate_around_axis(t->v0.pos, obj->prev_orientation, -1.0f);
+	t->v1.pos = rotate_around_axis(t->v1.pos, obj->prev_orientation, -1.0f);
+	t->v2.pos = rotate_around_axis(t->v2.pos, obj->prev_orientation, -1.0f);
+	delta_scale = vec3_divide_safe(obj->scale, obj->prev_scale, MIN_SCALE);
+	t->v0.pos = vec3_multiply(t->v0.pos, delta_scale);
+	t->v1.pos = vec3_multiply(t->v1.pos, delta_scale);
+	t->v2.pos = vec3_multiply(t->v2.pos, delta_scale);
+	t->v0.pos = rotate_around_axis(t->v0.pos, obj->orientation, 1.0f);
+	t->v1.pos = rotate_around_axis(t->v1.pos, obj->orientation, 1.0f);
+	t->v2.pos = rotate_around_axis(t->v2.pos, obj->orientation, 1.0f);
+	t->v0.pos = vec3_add(t->v0.pos, obj->position);
+	t->v1.pos = vec3_add(t->v1.pos, obj->position);
+	t->v2.pos = vec3_add(t->v2.pos, obj->position);
 }
-
 
 void	ft_update_obj_position(t_custom_object *obj)
 {
 	size_t	i;
 
+	obj->orientation = vec3_unit(obj->orientation);
+	if (obj->scale.x < MIN_SCALE)
+		obj->scale.x = MIN_SCALE;
+	if (obj->scale.y < MIN_SCALE)
+		obj->scale.y = MIN_SCALE;
+	if (obj->scale.z < MIN_SCALE)
+		obj->scale.z = MIN_SCALE;
 	i = 0;
 	while (i < obj->triangle_count)
 	{
@@ -118,4 +126,6 @@ void	ft_update_obj_position(t_custom_object *obj)
 	}
 	obj->prev_orientation = obj->orientation;
 	obj->prev_position = obj->position;
+	obj->prev_scale = obj->scale;
+	obj->aabb = compute_custom_obj(obj, 1);
 }

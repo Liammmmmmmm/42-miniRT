@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/14 10:43:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 16:17:35 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_vec3	vec3_multiply(const t_vec3 u, const t_vec3 v);
 t_vec3	vec3_multiply_scalar(const t_vec3 v, double t);
 t_vec3	vec3_divide(t_vec3 a, t_vec3 b);
 t_vec3	vec3_divide_scalar(const t_vec3 v, double t);
+t_vec3	vec3_divide_safe(t_vec3 a, t_vec3 b, double	min);
 t_vec3	vec3_add_scalar(t_vec3 vec, double t);
 t_vec3	vec3_subtract_scalar(t_vec3 vec, double t);
 t_vec3	vec3_sqrt(t_vec3 v);

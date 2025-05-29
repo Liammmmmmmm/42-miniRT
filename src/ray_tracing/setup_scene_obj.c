@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 14:28:49 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 16:17:32 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/28 18:24:46 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	count_elements(t_minirt *minirt, int *light_count, int *plane_count)
 	{
 		if (minirt->scene.elements[i].type == LIGHT)
 			(*light_count)++;
+		if (minirt->scene.elements[i].type == DIRECTIONAL_LIGHT)
+			(*light_count)++;
 		else if (minirt->scene.elements[i].type == PLANE)
 			(*plane_count)++;
 		i++;
@@ -49,6 +51,9 @@ void	fill_obj_lists(t_minirt *minirt)
 	while (i < minirt->scene.el_amount)
 	{
 		if (minirt->scene.elements[i].type == LIGHT)
+			minirt->scene.obj_lst.light_lst[minirt->scene.obj_lst.light_nb++]
+				= &minirt->scene.elements[i];
+		if (minirt->scene.elements[i].type == DIRECTIONAL_LIGHT)
 			minirt->scene.obj_lst.light_lst[minirt->scene.obj_lst.light_nb++]
 				= &minirt->scene.elements[i];
 		else if (minirt->scene.elements[i].type == PLANE)
@@ -67,7 +72,7 @@ int	init_plane_light_lst(t_minirt *minirt)
 	count_elements(minirt, &light_c, &plane_c);
 	if (light_c != 0)
 	{
-		minirt->scene.obj_lst.light_lst = malloc(sizeof(t_light *) * light_c);
+		minirt->scene.obj_lst.light_lst = malloc(sizeof(t_object *) * light_c);
 		if (!minirt->scene.obj_lst.light_lst)
 		{
 			ft_dprintf(2, "malloc failed in init_plane_light_lst\n");
@@ -76,7 +81,7 @@ int	init_plane_light_lst(t_minirt *minirt)
 	}
 	if (plane_c != 0)
 	{
-		minirt->scene.obj_lst.plane_lst = malloc(sizeof(t_plane *) * plane_c);
+		minirt->scene.obj_lst.plane_lst = malloc(sizeof(t_object *) * plane_c);
 		if (!minirt->scene.obj_lst.plane_lst)
 		{
 			ft_dprintf(2, "malloc failed in init_plane_light_lst\n");

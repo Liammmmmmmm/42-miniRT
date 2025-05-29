@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:21:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 17:21:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/28 17:58:47 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	invalid_struct_error(t_objects type, char **splited)
 		print_error(ERR_CAMERA_FORMAT);
 	else if (type == LIGHT)
 		print_error(ERR_LIGHT_FORMAT);
+	else if (type == DIRECTIONAL_LIGHT)
+		print_error(ERR_DLIGHT_FORMAT);
 	else if (type == SPHERE)
 		print_error(ERR_SPHERE_FORMAT);
 	else if (type == PLANE)

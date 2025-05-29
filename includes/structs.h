@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/05/28 13:48:03 by lilefebv         ###   ########lyon.fr   */
@@ -76,6 +76,12 @@ typedef struct s_ray
 	t_vec3	dir;	/* The direction of the ray. */
 }	t_ray;	/*	Add more section for future (length_squared for optimisation)	*/
 
+typedef struct s_aabb
+{
+	t_vec3	min;
+	t_vec3	max;
+}	t_aabb;
+
 typedef enum e_tex_type
 {
 	IMAGE,
@@ -110,22 +116,25 @@ typedef struct s_tex
 
 typedef struct s_mat
 {
-	char	name[21];
-	t_tex	*color_tex;
-	t_color	color_value;
-	t_tex	*metallic_tex;
-	double	metallic_value;
-	t_tex	*roughness_tex;
-	double	roughness_value;
-	double	ior;
-	double	transmission;
-	t_tex	*ao_tex;
-	double	ao_value;
-	double	emission_strength;
-	t_color	emission_color;
-	double	scale;
-	t_tex	*normal;
-	double	normal_intensity;
+	char		name[21];
+	t_tex		*color_tex;
+	t_color		color_value;
+	t_tex		*metallic_tex;
+	double		metallic_value;
+	t_tex		*roughness_tex;
+	double		roughness_value;
+	double		ior;
+	double		transmission_value;
+	t_tex		*ao_tex;
+	t_tex		*transmission_tex;
+	double		ao_value;
+	double		emission_strength;
+	t_tex		*emission_strength_tex;
+	t_fcolor	emission_color;
+	t_tex		*emission_color_tex;
+	double		scale;
+	t_tex		*normal;
+	double		normal_intensity;
 }	t_mat;
 
 typedef struct s_quadratic
@@ -185,6 +194,13 @@ typedef struct s_light
 	double	brightness;
 	t_color	color;
 }	t_light;
+
+typedef struct s_dlight
+{
+	t_vec3	orientation;
+	double	brightness;
+	t_color	color;
+}	t_dlight;
 
 typedef struct s_hyperboloid
 {
@@ -246,7 +262,6 @@ typedef struct s_vertex
 	t_vec3	normal;
 	double	u;
 	double	v;
-	double	angle;
 }	t_vertex;
 
 typedef struct s_triangle
@@ -289,6 +304,7 @@ typedef enum e_objects
 	AMBIANT_LIGHT,
 	CAMERA,
 	LIGHT,
+	DIRECTIONAL_LIGHT,
 	SPHERE,
 	PLANE,
 	CYLINDER,
@@ -316,9 +332,11 @@ typedef struct s_custom_object
 	t_vec3		orientation;
 	t_vec3		prev_orientation;
 	t_vec3		scale;
+	t_vec3		prev_scale;
 	t_mat		*material;
 	t_color		color;
 	int			index;
+	t_aabb		aabb;
 }	t_custom_object;
 
 typedef enum e_obj_part
@@ -349,12 +367,6 @@ typedef struct s_obj_lst
 	t_object	**plane_lst;
 	int			plane_nb;
 }	t_obj_lst;
-
-typedef struct s_aabb
-{
-	t_vec3	min;
-	t_vec3	max;
-}	t_aabb;
 
 typedef struct s_bvh_node
 {

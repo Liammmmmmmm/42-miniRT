@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   material_default.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/14 10:40:20 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/28 18:22:50 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

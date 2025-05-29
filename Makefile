@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
 #    Updated: 2025/05/28 12:13:05 by lilefebv         ###   ########lyon.fr    #
@@ -67,10 +67,12 @@ UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					bmp/bmp_extract_color.c bmp/bmp_extract_pixel.c \
 					bump_to_normal.c obj/obj_parser.c obj/obj_parser_utils.c \
 					obj/obj_extract_value.c obj/obj_extract_value2.c progress_bar.c \
-					obj/obj_ear_clipping.c obj/obj_triangle_extract.c
+					obj/obj_ear_clipping.c obj/obj_triangle_extract.c obj/obj_utils.c
 
 UTILS_MLX_DIR		= src/utils/mlx/
-UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c conversions.c color_picker.c color_picker2.c color_picker3.c float_input.c float_input2.c float_input3.c
+UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c \
+					conversions.c color_picker.c color_picker2.c color_picker3.c float_input.c \
+					float_input2.c float_input3.c expr_float.c
 
 UI_DIR				= src/ui/
 UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_float_inputs.c controls/init_text_inputs.c \
@@ -79,7 +81,7 @@ UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_float
 					dropdown.c dropdown2.c materials_dropdown.c textures_dropdown.c 
 
 DEBUG_DIR			= src/debug/
-DEBUG_FILE			= print_scene.c print_utils.c print_obj1.c print_obj2.c debug_ray.c
+DEBUG_FILE			= print_scene.c print_utils.c print_obj1.c print_obj2.c print_obj3.c debug_ray.c
 
 EVENT_DIR			= src/events/
 EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c  key_render.c  mouse_common.c  mouse_controls.c  mouse_render.c
@@ -113,9 +115,9 @@ MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
 					tranform_line.c verify_elements.c parse_elements.c \
-					parse_elements2.c parse_elements3.c parse_elements_utils.c \
+					parse_elements2.c parse_elements3.c parse_elements4.c  parse_elements_utils.c \
 					parse_elements_utils2.c parse_elements_utils3.c parse_elements_utils4.c \
-					parse_elements_utils5.c parse_elements_utils6.c get_texture.c parse_elements4.c
+					parse_elements_utils5.c parse_elements_utils6.c get_texture.c parse_elements5.c
 
 FONT_PARS_DIR		= src/utils/font/parsing/
 FONT_PARS_FILE		= free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c read_cmap.c \

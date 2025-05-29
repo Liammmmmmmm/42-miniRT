@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:00:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/15 10:46:30 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/28 18:18:12 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,9 @@ int	parse_texture(t_scene *scene, char *line)
 
 static int	parse_mat_prop(char **parts, t_mat *mat, t_scene *scene, int nb_parts)
 {
+	t_color	tmp;
+
+	tmp = (t_color){0, 0, 0};
 	if (parse_color_or_tex(parts[2], &mat->color_value,
 			&mat->color_tex, scene) == 0)
 		return (0);
@@ -125,15 +128,15 @@ static int	parse_mat_prop(char **parts, t_mat *mat, t_scene *scene, int nb_parts
 		return (material_item_error(3, mat->name));
 	if (is_valid_double_el_no_bordered(parts[5], &mat->ior) == 0)
 		return (material_item_error(4, mat->name));
-	if (is_valid_double_el(parts[6], &mat->transmission) == 0)
+	if (parse_double_b_or_tex(parts[6], &mat->transmission_value, &mat->transmission_tex, scene) == 0)
 		return (material_item_error(5, mat->name));
 	mat->ao_value = 1.0;
 	if (parse_double_b_or_tex(parts[7], &mat->ao_value, &mat->ao_tex,
 			scene) == 0)
 		return (material_item_error(8, mat->name));
-	if (is_valid_size(parts[8], &mat->emission_strength) == 0)
+	if (parse_double_b_or_tex(parts[8], &mat->emission_strength, &mat->emission_strength_tex, scene) == 0)
 		return (material_item_error(6, mat->name));
-	if (parse_color(parts[9], &mat->emission_color) == 0)
+	if (parse_color_or_tex(parts[9], &tmp, &mat->emission_color_tex, scene) == 0)
 		return (0);
 	mat->scale = 1;
 	if (nb_parts >= 11 && is_valid_double_el_no_bordered(parts[10], &mat->scale) == 0)
@@ -145,6 +148,7 @@ static int	parse_mat_prop(char **parts, t_mat *mat, t_scene *scene, int nb_parts
 	mat->normal_intensity = 1;
 	if (nb_parts >= 13 && is_valid_double_el_no_bordered(parts[12], &mat->normal_intensity) == 0)
 		return (material_item_error(9, parts[12]));
+	mat->emission_color = color_to_fcolor(tmp);
 	return (1);
 }
 

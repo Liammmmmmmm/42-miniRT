@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements_utils6.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:48:01 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/19 12:38:40 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/28 18:06:19 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ t_objects	get_object_type(char *str)
 		return (CUSTOM);
 	if (ft_strcmp(str, "l") == 0 || ft_strcmp(str, "L") == 0)
 		return (LIGHT);
+	if (ft_strcmp(str, "dl") == 0)
+		return (DIRECTIONAL_LIGHT);
 	if (ft_strcmp(str, "tr") == 0)
 		return (TRIANGLE);
 	return (NULL_OBJ);

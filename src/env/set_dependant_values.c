@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   set_dependant_values.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:36:26 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/05/23 15:44:57 by lilefebv         ###   ########lyon.fr   */
@@ -39,6 +39,11 @@ void	set_values_cone(t_cone *obj)
 	obj->orientation = vec3_unit(obj->orientation);
 }
 
+void	set_values_custom(t_custom_object *obj)
+{
+	obj->orientation = vec3_unit(obj->orientation);
+}
+
 void	set_values_hyperboloid(t_hyperboloid *obj)
 {
 	obj->orientation = vec3_unit(obj->orientation);
@@ -48,6 +53,8 @@ void	set_dependant_values(t_minirt *minirt)
 {
 	int	i;
 	
+	if (minirt->controls.ui_infos.selected_object == NULL)
+		return ;
 	i = -1;
 	while (++i < minirt->scene.el_amount)
 	{
@@ -65,6 +72,8 @@ void	set_dependant_values(t_minirt *minirt)
 				set_values_cone(minirt->controls.ui_infos.selected_object[i].object);
 			else if (minirt->controls.ui_infos.selected_object[i].type == HYPERBOLOID)
 				set_values_hyperboloid(minirt->controls.ui_infos.selected_object[i].object);
+		else if (minirt->controls.ui_infos.selected_object[i].type == CUSTOM)
+			set_values_custom(minirt->controls.ui_infos.selected_object[i].object);
 		}
 		else if (minirt->controls.ui_infos.tab_selected == 1)
 		{

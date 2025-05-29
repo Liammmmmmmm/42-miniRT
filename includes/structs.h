@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 17:51:44 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:48:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -497,6 +497,7 @@ typedef struct s_ui_infos
 	t_object	*selected_object;
 	int			objects_scroll_offset;
 	t_mat		*selected_material;
+	int			materials_scroll_offset;
 }	t_ui_infos;
 
 typedef struct s_controls
@@ -515,11 +516,13 @@ typedef struct s_controls
 	int				nb_sliders;
 	t_int_slider	*sliders;
 	int				nb_color_picker;
-	t_color_picker	color_picker[1];
+	t_color_picker	color_picker[3];
 	int				nb_dropdown;
 	t_dropdown		*dropdown;
 	int				nb_float_input;
 	t_float_input	*float_input;
+	int				nb_text_input;
+	t_text_input	*text_input;
 	t_ttf			font[1];
 	t_ui_infos		ui_infos;
 	int				selected_x;

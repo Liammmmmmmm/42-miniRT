@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/28 18:03:22 by madelvin         ###   ########.fr        #
+#    Updated: 2025/05/28 12:13:05 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,9 +75,10 @@ UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_cir
 					float_input2.c float_input3.c expr_float.c
 
 UI_DIR				= src/ui/
-UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_float_inputs.c \
+UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_float_inputs.c controls/init_text_inputs.c \
 					controls/init_sliders.c controls/init_color_picker.c controls/init_dropdown.c \
-					render.c layout.c list_objects.c materials_dropdown.c selected_object.c
+					render.c layout.c list_objects.c list_materials.c selected_object.c selected_mat.c \
+					dropdown.c dropdown2.c materials_dropdown.c textures_dropdown.c 
 
 DEBUG_DIR			= src/debug/
 DEBUG_FILE			= print_scene.c print_utils.c print_obj1.c print_obj2.c print_obj3.c debug_ray.c

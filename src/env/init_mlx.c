@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/22 08:51:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 15:36:50 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	init_render(t_minirt *minirt)
 	ft_bzero(minirt->screen.float_render, sizeof(t_fcolor) * minirt->scene.render_width * minirt->scene.render_height);
 	minirt->stats.frame = 0;
 	minirt->screen.start_render = 1;
-	minirt->screen.pause_render = 0;
+	minirt->screen.pause_render = 1;
 	minirt->screen.spp = minirt->options.max_samples;
 	minirt->screen.sample = 0;
 	init_font(minirt);
@@ -109,5 +109,6 @@ int	init_render(t_minirt *minirt)
 	init_cps(minirt);
 	init_dropdowns(minirt);
 	init_float_inputs(minirt);
+	init_text_inputs(minirt);
 	return (1);
 }

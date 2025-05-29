@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:53:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 09:59:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/28 17:27:11 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -402,15 +402,86 @@ void	init_layout(t_img *img, t_minirt *minirt)
 	else if (minirt->controls.ui_infos.tab_selected == 1)
 	{
 		draw_horizontal_line(img, 300, 300, img->width);
-		draw_horizontal_line(img, 780, 300, img->width);
-		draw_string(img, &minirt->controls.font[0], "Liste materiaux", (t_point2){330, 170});
-		draw_string(img, &minirt->controls.font[0], "Preview mat\n(microRT)", (t_point2){370, 930});
+		draw_horizontal_line(img, 860, 300, img->width);
+
+		draw_list_materials(minirt);
+
+		draw_string(img, &minirt->controls.font[0], "Preview mat\n(microRT)", (t_point2){370, 960});
 		
 		if (minirt->controls.ui_infos.selected_material)
 		{
-			draw_string(img, &minirt->controls.font[0], "Prop du materiau", (t_point2){320, 540});
+			display_text_input(img, &minirt->controls.text_input[0], &minirt->controls.font[0]);
+
+			minirt->controls.font[0].size = 15;
+			draw_string(img, &minirt->controls.font[0], "Albedo", (t_point2){310, 360});
+
+			draw_string(img, &minirt->controls.font[0], "Metallic", (t_point2){310, 410});
+			if (!minirt->controls.ui_infos.selected_material->metallic_tex)
+				display_float_input(img, &minirt->controls.float_input[11], &minirt->controls.font[0]);
+
+			draw_string(img, &minirt->controls.font[0], "Roughness", (t_point2){310, 460});
+			if (!minirt->controls.ui_infos.selected_material->roughness_tex)
+				display_float_input(img, &minirt->controls.float_input[12], &minirt->controls.font[0]);
+			
+			draw_string(img, &minirt->controls.font[0], "IOR", (t_point2){310, 510});
+			display_float_input(img, &minirt->controls.float_input[13], &minirt->controls.font[0]);
+
+			draw_string(img, &minirt->controls.font[0], "Transmission", (t_point2){310, 560});
+			// add condition
+			display_float_input(img, &minirt->controls.float_input[14], &minirt->controls.font[0]);
+
+			draw_string(img, &minirt->controls.font[0], "Ambiant occlusion", (t_point2){310, 610});
+			// add condition
+			display_float_input(img, &minirt->controls.float_input[15], &minirt->controls.font[0]);
+			
+			draw_string(img, &minirt->controls.font[0], "Emission", (t_point2){310, 660});
+			// add condition
+			display_float_input(img, &minirt->controls.float_input[16], &minirt->controls.font[0]);
+
+
+			draw_string(img, &minirt->controls.font[0], "Scale", (t_point2){310, 740});
+			display_float_input(img, &minirt->controls.float_input[17], &minirt->controls.font[0]);
+
+			draw_string(img, &minirt->controls.font[0], "Normal", (t_point2){310, 790});
+			draw_string(img, &minirt->controls.font[0], "Map", (t_point2){360, 815});
+			draw_string(img, &minirt->controls.font[0], "Intensity", (t_point2){330, 845});
+			display_float_input(img, &minirt->controls.float_input[18], &minirt->controls.font[0]);
+			/*
+
+			name
+			color/texture
+			metallic/texture
+			roughness/texture
+			ior
+			transmission/texture
+			ambient_occlusion/texture
+			emission_strength/texture
+			emission_color/texture
+			scale
+			normal_texture
+			normal_intensity
+
+			*/
+			
+			minirt->controls.font[0].size = 20;
+			display_tex_dropdown(minirt, &minirt->controls.dropdown[10]);
+			display_tex_dropdown(minirt, &minirt->controls.dropdown[9]);
+			display_tex_dropdown(minirt, &minirt->controls.dropdown[8]);
+			display_tex_dropdown(minirt, &minirt->controls.dropdown[7]);
+			display_tex_dropdown(minirt, &minirt->controls.dropdown[6]);
+			display_tex_dropdown(minirt, &minirt->controls.dropdown[5]);
+			display_tex_dropdown(minirt, &minirt->controls.dropdown[4]);
+			display_tex_dropdown(minirt, &minirt->controls.dropdown[3]);
+
+			if (!minirt->controls.ui_infos.selected_material->color_tex)
+				display_color_picker(img, &minirt->controls.color_picker[1], &minirt->controls.font[0]);
+			// add condition
+			display_color_picker(img, &minirt->controls.color_picker[2], &minirt->controls.font[0]);
+			
 		}
 	}
+
+	
 	draw_box_2d(img, (t_point2){301, 0}, (t_point2){600, 30}, UI_BACK_COLOR);
 	draw_horizontal_line(img, 30, 300, img->width);
 }

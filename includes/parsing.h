@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:35:11 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 18:02:28 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/29 12:25:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,5 @@ void	bump_to_normal(t_tex_img *bump);
 
 int		parse_scene(t_minirt *minirt, char *filename);
 int		parse_ambient_light_ratio_and_color(t_scene *scene, char **parts);
-int		parse_ambient_light_skybox(t_scene *scene, char **parts);
 
 #endif

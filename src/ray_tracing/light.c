@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:27:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/28 18:34:10 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/29 12:22:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,6 @@ void	add_light(t_lcolor *light_color, t_hit_record *hit, t_light *light, \
 	light_color->r += light->color.r * light->brightness * SPEC_STRENGTH * spec;
 	light_color->g += light->color.g * light->brightness * SPEC_STRENGTH * spec;
 	light_color->b += light->color.b * light->brightness * SPEC_STRENGTH * spec;
-}
-
-t_lcolor	compute_ambient(t_minirt *minirt)
-{
-	t_lcolor	ambient;
-
-	ambient.r = minirt->scene.amb_light.color.r * minirt->scene.amb_light.ratio;
-	ambient.g = minirt->scene.amb_light.color.g * minirt->scene.amb_light.ratio;
-	ambient.b = minirt->scene.amb_light.color.b * minirt->scene.amb_light.ratio;
-	return (ambient);
 }
 
 t_fcolor	compute_light_v2(t_hit_record *hit_record, t_minirt *minirt)

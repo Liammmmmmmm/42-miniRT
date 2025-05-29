@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/29 11:00:39 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/29 12:31:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,8 +168,6 @@ typedef struct s_moller
 typedef struct s_amb_light
 {
 	double	ratio;
-	t_color	color;
-	t_bool	have_skybox;
 	t_color	skybox_c;
 	t_tex	*skybox_t;
 }	t_amb_light;

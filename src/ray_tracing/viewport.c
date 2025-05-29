@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/21 11:11:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/28 16:21:50 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	init_camera_values(t_minirt *minirt)
 static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 {
 	t_vec3	up;
+	// double	vectical_fov;
 
 	ft_bzero(vp, sizeof(t_viewport));
 	init_camera_values(minirt);
@@ -42,9 +43,13 @@ static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 	vp->gamma = sqrt(minirt->controls.values.gamma / 1000.0);
 	vp->render_w = minirt->scene.render_width;
 	vp->render_h = minirt->scene.render_height;
-	vp->height = 2 * tan((minirt->controls.values.fov * PI_D / 180) / 2)
-		* minirt->scene.camera.focus_dist;
-	vp->width = vp->height * ((float)vp->render_w / vp->render_h);
+	// vectical_fov = 2 * atan(tan(minirt->controls.values.fov * (PI_D / 180.0) / 2.0) / ((double)vp->render_w / (double)vp->render_h));
+	// printf("Horizontal fov : %d, vertical fov : %f\n", minirt->controls.values.fov, vectical_fov / PI_D * 180);
+	// vp->height = 2 * tan(vectical_fov / 2)
+	// 	* minirt->scene.camera.focus_dist;
+	// vp->width = vp->height * ((float)vp->render_w / vp->render_h);
+	vp->width = 2.0 * tan(minirt->controls.values.fov * (PI_D / 180.0) / 2.0) * minirt->scene.camera.focus_dist;
+	vp->height = vp->width / ((double)vp->render_w / (double)vp->render_h);
 	up = (t_vec3){0, 1, 0};
 	if (fabs(minirt->scene.camera.orientation.y) > 0.999)
 		up = (t_vec3){1, 0, 0};

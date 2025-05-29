@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:53:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 15:13:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/28 17:27:11 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -475,6 +475,7 @@ void	init_layout(t_img *img, t_minirt *minirt)
 
 			if (!minirt->controls.ui_infos.selected_material->color_tex)
 				display_color_picker(img, &minirt->controls.color_picker[1], &minirt->controls.font[0]);
+			// add condition
 			display_color_picker(img, &minirt->controls.color_picker[2], &minirt->controls.font[0]);
 			
 		}

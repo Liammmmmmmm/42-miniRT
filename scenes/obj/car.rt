@@ -1,0 +1,24 @@
+# MATERIALS
+#	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength     emission_color   scale      normal_map      normal_intensity
+
+# CYLINDERS
+#	    origin                                      orientation                                    diameter       height         material
+cy	   -1.487767,    4.565405,    1.351995         -0.184921,    0.000000,    0.000000             0.060700       0.369843       DefaultMaterial     
+cy	   -1.487767,    4.565405,    1.289125         -0.184921,    0.000000,    0.000000             0.060700       0.369843       DefaultMaterial     
+cy	   -1.487767,    4.565405,    1.225961         -0.184921,    0.000000,    0.000000             0.060700       0.369843       DefaultMaterial     
+
+# CAMERA
+#	    origin                                      orientation                                    field of view
+C	   13.187802,    3.665992,    6.452247         -0.897888,   -0.123601,   -0.422515             39             
+
+# CUSTOM
+#	    origin                                      orientation                                    scale                                     path                material
+cu	    0.000000,    0.000000,   -0.000000          0.000000,   -0.000000,    1.000000             0.007000,    0.007000,    0.007000       cu_oad.001      Polygon_1.001
+cu	    0.000000,    0.000000,   -0.000000          0.880704,   -0.000000,   -0.473666             1.000000,    1.000000,    1.000000cu_corvettez06_box_cut.002CARSKIN_CARBONFIBRE_PLACEHOLDER
+cu	    0.000000,    0.000000,  -10.440244          0.000000,   -0.000000,    1.000000             0.007000,    0.007000,    0.007000      cu_road.002      Polygon_1.003
+cu	    0.000000,    0.000000,   10.440244          0.000000,   -0.000000,    1.000000             0.007000,    0.007000,    0.007000      cu_road.003      Polygon_1.004
+cu	   -2.588072,    0.062871,    1.278085         -1.000000,   -0.000000,   -0.000000             2.926227,    2.926227,    2.926227 cu_cone_cone.002       Material.007
+
+# AMBIENT
+#	strength             color
+A	1.000000             12, 12, 12

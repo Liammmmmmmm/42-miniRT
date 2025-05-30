@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/29 12:31:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/30 18:11:48 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,6 +358,14 @@ typedef	struct s_hit_record
 	double		v;
 	t_obj_part	part;
 }	t_hit_record;
+
+typedef struct s_hit_register_data
+{
+	t_hit_record	hit_record;
+	char			is_light;
+	t_ray			*ray;
+	t_interval		interval;
+}	t_hit_register_data;
 
 typedef struct s_obj_lst
 {

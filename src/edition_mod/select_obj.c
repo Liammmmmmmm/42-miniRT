@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:20:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/20 13:42:39 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:28:48 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 
 t_object	*select_object(t_minirt *minirt, int x, int y)
 {
-	t_ray			ray;
-	t_hit_record	hit_record;
-	int				i;
+	t_ray				ray;
+	t_hit_record		hit_record;
+	t_hit_register_data	data;
+	int					i;
 
 	x = (int)(x * (minirt->controls.values.upscaling_ratio / 100.0f) + 0.5f);
 	y = (int)(y * (minirt->controls.values.upscaling_ratio / 100.0f) + 0.5f);
@@ -28,7 +29,11 @@ t_object	*select_object(t_minirt *minirt, int x, int y)
 					vec3_multiply_scalar(minirt->viewport.pixel_delta_u, x)),
 				vec3_multiply_scalar(minirt->viewport.pixel_delta_v, y)),
 			ray.orig);
-	if (hit_register_all(minirt, &ray, &hit_record) == 0)
+	data.hit_record.mat = NULL;
+	data.interval.max = 1000; // add la render distance
+	data.interval.min = 0.001; // add la render distance
+	data.is_light = 1;
+	if (hit_register_all(minirt, &data) == 0)
 		return (NULL);
 	if (hit_record.obj->type == TRIANGLE && ((t_triangle *)hit_record.obj)->obj != NULL)
 	{

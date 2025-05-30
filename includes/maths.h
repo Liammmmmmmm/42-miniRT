@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/23 16:17:35 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:11:42 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ t_fcolor	multiply_scalar_fcolor(t_fcolor c1, double c);
 t_fcolor	multiply_fcolor(t_fcolor c1, t_fcolor c2);
 t_fcolor	add_fcolor(t_fcolor c1, t_fcolor c2);
 t_fcolor	sub_fcolor(t_fcolor c1, t_fcolor c2);
+t_fcolor	clamp_fcolor(t_fcolor color);
+t_fcolor	clamp_fcolor_val(t_fcolor color, double min, double max);
 
 t_vec3	vec3_random();
 t_vec3	vec3_random_unit();
@@ -70,6 +72,7 @@ double	ft_dmin(double a, double b);
 double	ft_dmax(double a, double b);
 double	random_double();
 double	random_double_in_interval(double min, double max);
+double	clamp_double_val(double v, double min, double max);
 
 void	init_yaw_matrix(double matrix[3][3], t_calc_trigo trigo_calcs);
 void	init_roll_matrix(double matrix[3][3], t_calc_trigo trigo_calcs);
@@ -104,8 +107,8 @@ char	hit_cone(t_cone *cone, t_ray *ray, t_interval interval,
 		t_hit_record *rec);
 char	hit_triangle(t_triangle *t, t_ray *r, t_interval i, \
 		t_hit_record *rec);
-char	hit_register_all(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record);
-char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_ray *ray, t_hit_record *hit_record);
+char	hit_register_all(t_minirt *minirt, t_hit_register_data *data);
+char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_hit_register_data *data);
 char	hit_hyperboloid(t_hyperboloid *hyp, t_ray *r, t_interval interval, t_hit_record *rec);
 t_vec3	set_normal_face(const t_ray *r, const t_vec3 *outward_normal, t_hit_record	*hit_record);
 t_vec3	ray_at(t_ray r, double t);

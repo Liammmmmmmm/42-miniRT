@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   background.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:37:08 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/14 12:40:12 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/30 15:49:28 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-double		clamp_double_val(double v, double min, double max)
-{
-	if (v <= min)
-		return (min);
-	else if (v >= max)
-		return (max);
-	return (v);
-}
-
-t_fcolor	clamp_fcolor_val(t_fcolor color, double min, double max)
-{
-	return ((t_fcolor){
-		.r = clamp_double_val(color.r, min, max),
-		.g = clamp_double_val(color.g, min, max),
-		.b = clamp_double_val(color.b, min, max)
-	});
-}
 
 t_fcolor	get_background_color(t_minirt *minirt, t_ray ray)
 {

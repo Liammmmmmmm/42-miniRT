@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   no_upscaling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/16 13:16:17 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/29 17:56:59 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	put_render_to_buff(t_minirt *minirt)
 	int	y;
 	int	i;
 	int	divide;
+	double		gamma_corr;
 
 	if (minirt->options.no_display)
 		return ;
@@ -111,19 +112,40 @@ void	put_render_to_buff(t_minirt *minirt)
 	if (divide == 0)
 		divide = 1;
 	y = 0;
-	while (y < minirt->scene.win_height)
+	gamma_corr = 1.0 / (minirt->controls.values.gamma / 10.0);
+	if (gamma_corr == 1)
 	{
-		x = 0;
-		while (x < minirt->scene.win_width)
+		while (y < minirt->scene.win_height)
 		{
-			i = (int)((float)y / (minirt->scene.win_height - 1) * (minirt->scene.render_height - 1)) * minirt->scene.render_width + (int)((float)x / (minirt->scene.win_width - 1) * (minirt->scene.render_width - 1));
-			minirt->screen.render[y * (minirt->scene.win_width) + x] = ((int)(
-				((int)(clamp_double(minirt->screen.float_render[i].r / divide) * 255) << 16) + 
-				((int)(clamp_double(minirt->screen.float_render[i].g / divide) * 255) << 8) + 
-				(int)(clamp_double(minirt->screen.float_render[i].b / divide) * 255)));
-			x++;
+			x = 0;
+			while (x < minirt->scene.win_width)
+			{
+				i = (int)((float)y / (minirt->scene.win_height - 1) * (minirt->scene.render_height - 1)) * minirt->scene.render_width + (int)((float)x / (minirt->scene.win_width - 1) * (minirt->scene.render_width - 1));
+				minirt->screen.render[y * (minirt->scene.win_width) + x] = ((int)(
+					((int)(clamp_double(minirt->screen.float_render[i].r / divide) * 255) << 16) + 
+					((int)(clamp_double(minirt->screen.float_render[i].g / divide) * 255) << 8) + 
+					(int)(clamp_double(minirt->screen.float_render[i].b / divide) * 255)));
+				x++;
+			}
+			y++;
 		}
-		y++;
+	}
+	else
+	{
+		while (y < minirt->scene.win_height)
+		{
+			x = 0;
+			while (x < minirt->scene.win_width)
+			{
+				i = (int)((float)y / (minirt->scene.win_height - 1) * (minirt->scene.render_height - 1)) * minirt->scene.render_width + (int)((float)x / (minirt->scene.win_width - 1) * (minirt->scene.render_width - 1));
+				minirt->screen.render[y * (minirt->scene.win_width) + x] = ((int)(
+					((int)(pow(clamp_double(minirt->screen.float_render[i].r / divide) * 255, gamma_corr)) << 16) + 
+					((int)(pow(clamp_double(minirt->screen.float_render[i].g / divide) * 255, gamma_corr)) << 8) + 
+					(int)(pow(clamp_double(minirt->screen.float_render[i].b / divide) * 255, gamma_corr))));
+				x++;
+			}
+			y++;
+		}
 	}
 	copy_buff_to_image(minirt);
 }

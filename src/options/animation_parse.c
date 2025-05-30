@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   animation_parse.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:38:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 13:01:55 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/29 16:16:26 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ static int	parse_object_type_and_num(char *str, t_obj_anim *obj)
 		obj->obj_num = 0;
 	else
 		obj->obj_num = ft_atoi(parts[1]);
-	if (obj->obj_num < 0)
-		obj->obj_num = 0;
 	free(parts);
 	return (1);
 }

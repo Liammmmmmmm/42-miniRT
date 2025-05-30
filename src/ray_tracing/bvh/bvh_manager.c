@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/23 10:17:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/30 17:45:28 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,29 +141,28 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	printf("\n\n");
 }
 
-char	hit_bvh(t_bvh *bvh, uint32_t node_index, t_ray *ray, \
-	t_hit_record *hit_rec)
+char	hit_bvh(t_bvh *bvh, uint32_t node_index, t_hit_register_data *data)
 {
-	char			hit_anything;
-	char			hit_left;
-	char			hit_right;
-	t_hit_record	hit_tmp;
-	t_bvh_node		*node;
+	char				hit_anything;
+	t_hit_register_data	data_tmp;
+	char				hit_left;
+	char				hit_right;
+	t_bvh_node			*node;
 
-	hit_tmp.part = DEFAULT;
 	node = &bvh->bvh_nodes[node_index];
-	if (!intersect_aabb(ray, &node->node_bounds))
+	if (!intersect_aabb(data->ray, &node->node_bounds))
 		return (0);
 	hit_anything = 0;
 	if (node->is_leaf)
-		hit_anything = hit_register_bvh(bvh, node, ray, hit_rec);
+		hit_anything = hit_register_bvh(bvh, node, data);
 	else
 	{
-		hit_left = hit_bvh(bvh, node->left_child, ray, hit_rec);
-		hit_right = hit_bvh(bvh, node->right_child, ray, &hit_tmp);
+		data_tmp = *data;
+		hit_left = hit_bvh(bvh, node->left_child, data);
+		hit_right = hit_bvh(bvh, node->right_child, &data_tmp);
 		if (hit_right)
-			if ((hit_right && !hit_left) || (hit_tmp.t < hit_rec->t))
-				*hit_rec = hit_tmp;
+			if ((hit_right && !hit_left) || (data_tmp.hit_record.t < data->hit_record.t))
+				data->hit_record = data_tmp.hit_record;
 		hit_anything = hit_left || hit_right;
 	}
 	return (hit_anything);

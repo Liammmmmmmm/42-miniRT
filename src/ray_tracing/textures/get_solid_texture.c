@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_solid_texture.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 18:19:43 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/14 11:46:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/30 15:59:52 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

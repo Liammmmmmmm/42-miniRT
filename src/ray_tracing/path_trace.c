@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 18:22:13 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:55:02 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,28 @@ minirt->scene.amb_light.ratio * hit_record->mat->ao_value), *data.power)));
 
 t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 {
-	t_fcolor		accumulation;
-	t_fcolor		power;
-	t_hit_record	hit_record;
+	t_fcolor			accumulation;
+	t_fcolor			power;
+	t_hit_register_data	data;
 
 	accumulation = (t_fcolor){0.0, 0.0, 0.0};
 	power = (t_fcolor){1.0, 1.0, 1.0};
-	hit_record.mat = NULL;
+	data.hit_record.mat = NULL;
+	data.is_light = 0;
+	data.ray = &ray;
+	data.interval.min = 0.001; // add la render distance
+	data.interval.max = 1000; // add la render distance
 	while (--max_depth >= 0)
 	{
-		if (hit_register_all(minirt, &ray, &hit_record) == 1)
+		if (hit_register_all(minirt, &data) == 1)
 		{
-			ray.orig = hit_record.point;
-			material_manager_v3(minirt, &ray, &hit_record,
+			ray.orig = data.hit_record.point;
+			material_manager_v3(minirt, &ray, &data.hit_record,
 				(t_ray_data){&power, &accumulation});
 		}
 		else
 		{
-			accumulation = add_skybox(minirt, &ray, &hit_record,
+			accumulation = add_skybox(minirt, &ray, &data.hit_record,
 					(t_ray_data){&power, &accumulation});
 			break ;
 		}
@@ -77,19 +81,24 @@ t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 
 t_fcolor	path_trace_normal(t_minirt *minirt, t_ray ray)
 {
-	t_hit_record	hit_record;
+	t_hit_register_data	data;
 
-	if (hit_register_all(minirt, &ray, &hit_record) == 1)
-		return (hit_record.color);
+	data.hit_record.mat = NULL;
+	data.is_light = 0;
+	data.ray = &ray;
+	data.interval.min = 0.001; // add la render distance
+	data.interval.max = 1000; // add la render distance
+	if (hit_register_all(minirt, &data) == 1)
+		return (data.hit_record.color);
 	return (t_fcolor){0, 0, 0};
 }
 
 void	debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 {
-	t_fcolor		accumulated_color;
-	t_fcolor		power;
-	t_hit_record	hit_record;
-	int				bounce;
+	t_fcolor			accumulated_color;
+	t_fcolor			power;
+	t_hit_register_data	data;
+	int					bounce;
 
 	bounce = 0;
 	accumulated_color = (t_fcolor){0.0, 0.0, 0.0};
@@ -102,10 +111,10 @@ void	debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 		printf(" - dir: ");
 		print_vec3(ray.dir);
 		printf("\n");
-		if (hit_register_all(minirt, &ray, &hit_record) == 1)
+		if (hit_register_all(minirt, &data) == 1)
 		{
-			ray.orig = hit_record.point;
-			material_manager_v3(minirt, &ray, &hit_record,
+			ray.orig = data.hit_record.point;
+			material_manager_v3(minirt, &ray, &data.hit_record,
 				(t_ray_data){&power, &accumulated_color});
 		}
 		else

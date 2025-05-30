@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:51:35 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/28 15:35:26 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:58:02 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	read_palette(t_bin *bin, size_t *i, t_bmp *bmp, size_t palette_entry_count)
 	}
 	return (0);
 }
-
 
 int	read_header(t_bmp *bmp, size_t *i, t_bin *bin)
 {

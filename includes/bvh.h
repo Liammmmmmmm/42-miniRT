@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:11:47 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/23 10:11:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/30 16:17:13 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ float			get_axis_value(t_vec3 pos, int axis);
 ║                             BVH UTILISATION                                 ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 char			intersect_aabb(const t_ray *ray, const t_aabb *aabb);
-char			hit_bvh(t_bvh *bvh, uint32_t node_index, t_ray *ray, \
-	t_hit_record *hit_rec);
+char			hit_bvh(t_bvh *bvh, uint32_t node_index, t_hit_register_data *data);
 void			print_bvh(t_bvh *bvh, uint32_t node_index, int depth);
 void			render_bvh(t_minirt *minirt);
 

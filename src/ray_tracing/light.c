@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:27:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/29 12:22:27 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/05/30 18:11:55 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,30 +18,37 @@
 
 char	check_light_hit(t_minirt *minirt, t_vec3 origin, t_vec3 target)
 {
-	t_ray			shadow_ray;
-	t_hit_record	hit_record;
-	double			distance_to_target;
+	t_ray				shadow_ray;
+	t_hit_register_data	data;
+	double				distance_to_target;
 
+	data.is_light = 1;
+	data.ray = &shadow_ray;
+	data.hit_record.mat = NULL;
+	data.interval.max = 1000; // add la render distance
+	data.interval.min = 0.001; // add la render distance
 	shadow_ray.orig = origin;
 	shadow_ray.dir = vec3_unit(vec3_subtract(target, origin));
 	distance_to_target = vec3_length(vec3_subtract(target, origin));
-	if (hit_register_all(minirt, &shadow_ray, &hit_record))
-	{
-		if (hit_record.t < distance_to_target)
+	if (hit_register_all(minirt, &data))
+		if (data.hit_record.t < distance_to_target)
 			return (1);
-	}
 	return (0);
 }
 
 char	check_dlight_hit_dir(t_minirt *minirt, t_vec3 origin, t_vec3 direction)
 {
-	t_ray			shadow_ray;
-	t_hit_record	hit_record;
+	t_ray				shadow_ray;
+	t_hit_register_data	data;
 
 	shadow_ray.orig = origin;
 	shadow_ray.dir = vec3_unit(direction);
-
-	if (hit_register_all(minirt, &shadow_ray, &hit_record))
+	data.is_light = 1;
+	data.hit_record.mat = NULL;
+	data.ray = &shadow_ray;
+	data.interval.max = 1000; // add la render distance
+	data.interval.min = 0.001; // add la render distance
+	if (hit_register_all(minirt, &data))
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:20:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/30 16:28:48 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/31 10:55:22 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 t_object	*select_object(t_minirt *minirt, int x, int y)
 {
 	t_ray				ray;
-	t_hit_record		hit_record;
 	t_hit_register_data	data;
 	int					i;
 
@@ -33,21 +32,22 @@ t_object	*select_object(t_minirt *minirt, int x, int y)
 	data.interval.max = 1000; // add la render distance
 	data.interval.min = 0.001; // add la render distance
 	data.is_light = 1;
+	data.ray = &ray;
 	if (hit_register_all(minirt, &data) == 0)
 		return (NULL);
-	if (hit_record.obj->type == TRIANGLE && ((t_triangle *)hit_record.obj)->obj != NULL)
+	if (data.hit_record.obj->type == TRIANGLE && ((t_triangle *)data.hit_record.obj)->obj != NULL)
 	{
 		i = 0;
 		while (i < minirt->scene.el_amount)
 		{
 			if ((minirt->scene.elements[i].type == CUSTOM) && \
 				((t_custom_object *)minirt->scene.elements[i].object) == \
-				((t_triangle *)hit_record.obj->object)->obj)
+				((t_triangle *)data.hit_record.obj->object)->obj)
 					return (&minirt->scene.elements[i]);
 			i++;
 		}
 	}
-	return (hit_record.obj);
+	return (data.hit_record.obj);
 }
 
 void	draw_selected_object(t_minirt *minirt)

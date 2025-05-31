@@ -72,14 +72,5 @@ int	parse_bmp(char *file, t_tex_img *img)
 	img->height = bmp.info.height;
 	img->width = bmp.info.width;
 	img->pixel_data = bmp.pixel_data;
-	// for (size_t i = 0; i < img->height; i++)
-	// {
-	// 	for (size_t j = 0; j < img->width; j++)
-	// 	{
-	// 		printf("%d ", img->pixel_data[i * img->width + j].r);
-	// 	}
-	// 	printf("\n");
-	// }
-	// printf("\n\n\n\n\n");
 	return (0);
 }

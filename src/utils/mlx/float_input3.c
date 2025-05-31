@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "mlx_components.h"
+#include "structs.h"
 #include "ui.h"
 
 static int	is_valid_value(char key, char *buffer, int i)
@@ -28,9 +29,11 @@ static int	is_valid_value(char key, char *buffer, int i)
 
 static void	manage_input(t_float_input *input, int key)
 {
-	if (ft_isdigit(key) || key == '-' || key == '.' || key == '*' || key == '/' || key == '+')
+	if (ft_isdigit(key) || key == '-' || key == '.' || key == '*' || key == '/'
+		|| key == '+')
 	{
-		if (input->cursor_pos >= 16 || input->cursor_pos >= input->max_char || is_valid_value(key, input->text, input->cursor_pos))
+		if (input->cursor_pos >= 16 || input->cursor_pos >= input->max_char
+			|| is_valid_value(key, input->text, input->cursor_pos))
 			return ;
 		input->text[input->cursor_pos] = key;
 		input->cursor_pos++;
@@ -47,45 +50,28 @@ static void	manage_input(t_float_input *input, int key)
 		{
 			*input->number = parse_expression(input->text);
 			input->cursor_pos = set_float_to_buff(*input->number, input->text);
-			
 		}
 	}
 }
 
 void	replace_input_float_input(int *key)
 {
-	if (*key == ',')
-		*key = '.';
-	else if (*key == 65438)
-		*key = '0';
-	else if (*key == 65436)
-		*key = '1';
-	else if (*key == 65433)
-		*key = '2';
-	else if (*key == 65435)
-		*key = '3';
-	else if (*key == 65430)
-		*key = '4';
-	else if (*key == 65437)
-		*key = '5';
-	else if (*key == 65432)
-		*key = '6';
-	else if (*key == 65429)
-		*key = '7';
-	else if (*key == 65431)
-		*key = '8';
-	else if (*key == 65434)
-		*key = '9';
-	else if (*key == 65453)
-		*key = '-';
-	else if (*key == 65439)
-		*key = '.';
-	else if (*key == 65455)
-		*key = '/';
-	else if (*key == 65450)
-		*key = '*';
-	else if (*key == 65451)
-		*key = '+';
+	size_t					i;
+	static const t_key_map	map[16] = {{',', '.'},
+	{65438, '0'}, {65436, '1'}, {65433, '2'}, {65435, '3'}, {65430, '4'},
+	{65437, '5'}, {65432, '6'}, {65429, '7'}, {65431, '8'}, {65434, '9'},
+	{65453, '-'}, {65439, '.'}, {65455, '/'}, {65450, '*'}, {65451, '+'}};
+
+	i = 0;
+	while (i < sizeof(map) / sizeof(map[0]))
+	{
+		if (*key == map[i].from)
+		{
+			*key = map[i].to;
+			return ;
+		}
+		i++;
+	}
 }
 
 int	float_input_type(t_float_input *input, int key)

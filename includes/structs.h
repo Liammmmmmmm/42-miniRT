@@ -43,6 +43,12 @@ typedef struct s_lsc_point
 	t_lcolor	color;
 }	t_lsc_point;
 
+typedef struct s_key_map
+{
+	int from;
+	int to;
+} t_key_map;
+
 /**
  * @struct s_point
  * @brief Structure representing a point in 2D space with a color.

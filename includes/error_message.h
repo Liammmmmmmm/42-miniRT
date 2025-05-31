@@ -27,6 +27,9 @@
 # define ERR_CONE_FORMAT "Invalid cone. Expected: co "BLUE"<x,y,z> <x,y,z> <diameter> <height> <r,g,b|material> [top_material]"NC
 # define ERR_MATERIAL_FORMAT "Invalid material. Expected: mat "BLUE"<name> <albedo> <metallic> <roughness> <ior> <transmission> <emission_strength> <emission_color> [tex_scale] [normal_map] [normal_intensity]"NC
 # define ERR_TEXTURE_FORMAT "Invalid texture. Expected: tex "BLUE"<name> <filepath>"NC
-# define ERR_WINDOW_FORMAT "Invalid window size. Expected: W "BLUE"<width_win> <height_win> [width_render] [height_render]"NC
+# define ERR_BMP_PALETTE RED"Error: palette too small for expected color count"NC
+# define ERR_BMP_PALETTE_ALLOCATION RED"Error: unable to allocate memory for palette"NC
+# define ERR_BMP_PALETTE_READ_COLOR RED"Error: unable to read color"NC
+
 
 #endif

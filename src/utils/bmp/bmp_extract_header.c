@@ -12,6 +12,7 @@
 
 #include "structs.h"
 #include "bmp_parsing.h"
+#include "error_message.h"
 #include <stdio.h>
 
 int	error_and_return(char *message)
@@ -38,17 +39,17 @@ int	read_palette(t_bin *bin, size_t *i, t_bmp *bmp, size_t palette_entry_count)
 	palette_start = 14 + bmp->info.info_header_size;
 	palette_end = bmp->header.pixel_data_offset;
 	if (get_palette_bytes(palette_end, palette_start) < palette_entry_count * 4)
-		return (error_and_return("error: palette too small for expected color count\n"));
+		return (error_and_return(ERR_BMP_PALETTE"\n"));
 	bmp->palette = malloc(palette_entry_count * sizeof(uint32_t));
 	if (!bmp->palette)
-		return (error_and_return("Error: unable to allocate memory for palette\n"));
+		return (error_and_return(ERR_BMP_PALETTE_ALLOCATION"\n"));
 	*i = palette_start;
 	while (j < palette_entry_count && *i + 4 <= bin->size)
 	{
 		if (read_uint32_move_little(bin, i, &bmp->palette[j]))
 		{
 			free(bmp->palette);
-			return (error_and_return("error: unable to read color\n"));
+			return (error_and_return(ERR_BMP_PALETTE_READ_COLOR"\n"));
 		}
 		j++;
 	}

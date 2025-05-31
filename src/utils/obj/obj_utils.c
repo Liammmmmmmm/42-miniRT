@@ -35,34 +35,19 @@ static inline void	set_vertex(t_aabb *aabb, t_vertex *verts)
 			aabb->max.y = p.y;
 		if (p.z > aabb->max.z)
 			aabb->max.z = p.z;
-	j++;
+		j++;
 	}
 }
 
-// t_aabb	update_custom_obj_aabb(t_custom_object *obj)
-// {
-// 	t_vec3	delta = vec3_subtract(obj->position, obj->prev_position);
-// 	t_aabb	aabb;
-
-// 	aabb = obj->aabb;
-// 	aabb.max = vec3_divide(aabb.max, obj->prev_scale);
-// 	aabb.min = vec3_divide(aabb.min, obj->prev_scale);
-// 	aabb.max = vec3_multiply(aabb.max, obj->scale);
-// 	aabb.min = vec3_multiply(aabb.min, obj->scale);
-// 	aabb.min = vec3_add(aabb.min, delta);
-// 	aabb.max = vec3_add(aabb.max, delta);
-// 	return aabb;
-// }
-
 t_aabb	update_custom_obj_aabb(t_custom_object *obj)
 {
-	t_vec3	delta = vec3_subtract(obj->position, obj->prev_position);
-	t_aabb	aabb;
+	const t_vec3	delta = vec3_subtract(obj->position, obj->prev_position);
+	t_aabb			aabb;
 
 	aabb = obj->aabb;
 	aabb.min = vec3_add(aabb.min, delta);
 	aabb.max = vec3_add(aabb.max, delta);
-	return aabb;
+	return (aabb);
 }
 
 t_aabb	compute_custom_obj(t_custom_object *obj, char init)

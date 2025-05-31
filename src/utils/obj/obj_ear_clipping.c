@@ -23,30 +23,30 @@ inline t_vec3	rotate_around_axis(t_vec3 v, t_vec3 axis, float angle)
 		vec3_multiply_scalar(axis, vec3_dot(axis, v) * (1 - cos_theta))));
 }
 
-static inline void add_position_scale(t_triangle *t, t_custom_object *obj)
+static inline void	add_position_scale(t_triangle *t, t_custom_object *obj)
 {
-    const t_vec3 axis_raw = vec3_cross((t_vec3){0.0f, 0.0f, 1.0f}, obj->orientation);
-    const float angle = acosf(vec3_dot((t_vec3){0.0f, 0.0f, 1.0f}, obj->orientation));
-    t_vec3 axis;
+	const t_vec3	axis_raw = vec3_cross((t_vec3){0.0f, 0.0f, 1.0f},
+			obj->orientation);
+	const float		angle = acosf(vec3_dot((t_vec3){0.0f, 0.0f, 1.0f},
+				obj->orientation));
+	t_vec3			axis;
 
 	axis = axis_raw;
-    if (vec3_length(axis_raw) > 0.0001f)
-        axis = vec3_unit(axis_raw);
-    t->v0.pos = vec3_multiply(t->v0.pos, obj->scale);
-    t->v1.pos = vec3_multiply(t->v1.pos, obj->scale);
-    t->v2.pos = vec3_multiply(t->v2.pos, obj->scale);
-    if (angle > 0.0001f)
-    {
-        t->v0.pos = rotate_around_axis(t->v0.pos, axis, angle);
-        t->v1.pos = rotate_around_axis(t->v1.pos, axis, angle);
-        t->v2.pos = rotate_around_axis(t->v2.pos, axis, angle);
-    }
-
-    t->v0.pos = vec3_add(t->v0.pos, obj->position);
-    t->v1.pos = vec3_add(t->v1.pos, obj->position);
-    t->v2.pos = vec3_add(t->v2.pos, obj->position);
+	if (vec3_length(axis_raw) > 0.0001f)
+		axis = vec3_unit(axis_raw);
+	t->v0.pos = vec3_multiply(t->v0.pos, obj->scale);
+	t->v1.pos = vec3_multiply(t->v1.pos, obj->scale);
+	t->v2.pos = vec3_multiply(t->v2.pos, obj->scale);
+	if (angle > 0.0001f)
+	{
+		t->v0.pos = rotate_around_axis(t->v0.pos, axis, angle);
+		t->v1.pos = rotate_around_axis(t->v1.pos, axis, angle);
+		t->v2.pos = rotate_around_axis(t->v2.pos, axis, angle);
+	}
+	t->v0.pos = vec3_add(t->v0.pos, obj->position);
+	t->v1.pos = vec3_add(t->v1.pos, obj->position);
+	t->v2.pos = vec3_add(t->v2.pos, obj->position);
 }
-
 
 static inline void	compute_triangle_center(t_triangle *t)
 {

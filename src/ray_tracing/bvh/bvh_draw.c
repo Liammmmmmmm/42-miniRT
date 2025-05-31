@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 19:46:13 by delmath           #+#    #+#             */
-/*   Updated: 2025/05/16 11:59:11 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/05/31 12:17:01 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	render_bvh(t_minirt *minirt)
 		return ;
 	depth = 10;
 	start = 0;
-	
 	depth += start;
 	if (depth > 0 && start == 0)
 		draw_box(minirt, minirt->scene.bvh.bvh_nodes[0].node_bounds.min,

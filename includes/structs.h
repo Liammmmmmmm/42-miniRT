@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/30 18:11:48 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/02 10:59:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -570,6 +570,17 @@ typedef struct s_options
 	t_animation	anim;
 }	t_options;
 
+typedef struct s_micrort
+{
+	t_fcolor	*render;
+	t_camera	camera;
+	t_viewport	viewport;
+	t_object	obj_sp;
+	t_sphere	sphere;
+	t_uint		max_sample;
+	t_uint		sample;
+}	t_micrort;
+
 typedef struct s_minirt
 {
 	t_scene		scene;
@@ -579,6 +590,7 @@ typedef struct s_minirt
 	t_viewport	viewport;
 	t_controls	controls;
 	t_options	options;
+	t_micrort	micrort;
 }	t_minirt;
 
 typedef struct s_upscale_data

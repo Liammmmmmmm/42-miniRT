@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:56:17 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 14:40:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 11:57:40 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static void	get_selected_tex_dropdown(t_minirt *minirt, t_dropdown *dropdown, \
 	if (!dropdown->selected)
 		return ;
 	stop_minirt(minirt);
+	minirt->micrort.sample = 0;
 	i = -2;
 	while (++i < minirt->scene.tex_amount)
 	{

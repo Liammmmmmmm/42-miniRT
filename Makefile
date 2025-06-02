@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/05/31 12:27:28 by madelvin         ###   ########.fr        #
+#    Updated: 2025/06/02 11:23:15 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ SRC_FILE			= main.c
 UTILS_DIR			= src/utils/
 UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					bmp/bmp_extract_color.c bmp/bmp_extract_pixel.c \
-					bump_to_normal.c obj/obj_parser.c obj/obj_parser_utils.c \
+					bump_to_normal.c obj/obj_parser.c obj/obj_parser_utils.c obj/obj_parser_utils2.c \
 					obj/obj_extract_value.c obj/obj_extract_value2.c progress_bar.c \
 					obj/obj_ear_clipping.c obj/obj_triangle_extract.c obj/obj_utils.c
 
@@ -91,7 +91,7 @@ RAY_TRACING_FILE	= render.c init_animated_items.c focus.c light.c bvh/bvh_manage
 					bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_print.c bvh/bvh_draw.c bvh/bvh_draw_utils.c bvh/bvh_obj_bounds.c\
 					setup_scene_obj.c background.c viewport.c path_trace.c hit_register/apply_map.c hit_register/get_hdr_value.c \
 					hit_register/get_hit_color.c hit_register/get_tex_color.c hit_register/hit_register.c hit_register/hit_obj.c \
-					bvh/bvh_hit.c
+					bvh/bvh_hit.c micrort.c
 
 TEXTURES_DIR		= src/ray_tracing/textures/
 TEXTURES_FILE		= get_solid_texture.c
@@ -100,7 +100,7 @@ RENDERING_DIR		= src/rendering/
 RENDERING_FILE		= pixel.c loop.c
 
 ENV_DIR				= src/env/
-ENV_FILE			= init_mlx.c init_controls.c init_ui.c set_dependant_values.c
+ENV_FILE			= init_mlx.c init_controls.c init_ui.c set_dependant_values.c micrort_init.c
 
 MAT_DIR				= src/material/
 MAT_FILE			= utils.c dielectric.c material_default.c metallic.c refraction.c

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   path_trace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/30 17:55:02 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:37:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static inline void	material_manager_v3(t_minirt *minirt, t_ray *ray,
+inline void	material_manager_v3(t_minirt *minirt, t_ray *ray,
 	t_hit_record *hit_record, t_ray_data data)
 {
 	if (!hit_record->mat)
@@ -34,7 +34,7 @@ static inline void	material_manager_v3(t_minirt *minirt, t_ray *ray,
 		dielectric_mat(minirt, ray, hit_record, data);
 }
 
-static inline t_fcolor	add_skybox(t_minirt *minirt, t_ray *ray,
+inline t_fcolor	add_skybox(t_minirt *minirt, t_ray *ray,
 	t_hit_record *hit_record, t_ray_data data)
 {
 	if (hit_record->mat)

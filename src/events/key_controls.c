@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:38:41 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 15:18:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 14:56:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ int	keydown_controls(int key, t_minirt *minirt)
 		if (float_input_type(&minirt->controls.float_input[i], key))
 		{
 			stop_minirt(minirt);
+			if (key == 65293)
+				minirt->micrort.sample = 0;
+			if (minirt->controls.ui_infos.tab_selected == 0)
 			minirt->scene.build_bvh = 1;
 			return (0);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 17:55:54 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/02 11:51:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,15 @@ void	set_dependant_values(t_minirt *minirt);
 void	debug_ray(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
+║                                   MICRORT                                    ║
+╚═════════════════════════════════════════════════════════════════════════════*/
+
+int		init_micrort(t_minirt *minirt);
+void	put_micrort_to_image(t_minirt *minirt);
+void	render_micrort(t_minirt *minirt);
+
+
+/*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    UTILS                                     ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
@@ -218,7 +227,10 @@ t_fcolor	compute_light_v2(t_hit_record *hit_record, t_minirt *minirt);
 t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth);
 t_fcolor	path_trace_normal(t_minirt *minirt, t_ray ray);
 void		debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth);
-
+t_fcolor	add_skybox(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
+	t_ray_data data);
+void		material_manager_v3(t_minirt *minirt, t_ray *ray,
+		t_hit_record *hit_record, t_ray_data data);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    EDIT MOD                                  ║

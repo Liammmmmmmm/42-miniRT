@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   no_upscaling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/29 17:56:59 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/02 11:45:50 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,4 +148,26 @@ void	put_render_to_buff(t_minirt *minirt)
 		}
 	}
 	copy_buff_to_image(minirt);
+}
+
+void	put_micrort_to_image(t_minirt *minirt)
+{
+	int	i;
+	int	tpx;
+	int	divide;
+
+	divide = minirt->micrort.sample;
+	if (divide == 0)
+		divide = 1;
+	tpx = minirt->micrort.viewport.render_w * minirt->micrort.viewport.render_h;
+	i = 0;
+	while (i < tpx)
+	{
+		put_pixel_image(&minirt->mlx.img_controls, i % minirt->micrort.viewport.render_w + 301, i / minirt->micrort.viewport.render_w + 861, ((int)(
+			((int)(clamp_double(minirt->micrort.render[i].r / divide) * 255) << 16) + 
+			((int)(clamp_double(minirt->micrort.render[i].g / divide) * 255) << 8) + 
+			(int)(clamp_double(minirt->micrort.render[i].b / divide) * 255))));
+		i++;
+	}
+	
 }

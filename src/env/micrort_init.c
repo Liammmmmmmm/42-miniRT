@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:31:51 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/02 13:06:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 15:17:37 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ int	init_micrort(t_minirt *minirt)
 	minirt->micrort.sphere.radius = 1;
 	minirt->micrort.sphere.sqrt_radius = 1 * 1;
 	minirt->micrort.sphere.position = (t_vec3){0, 0, 0};
-	minirt->micrort.obj_sp.type = SPHERE;
-	minirt->micrort.obj_sp.object = &minirt->micrort.sphere;
 	minirt->micrort.max_sample = 16;
 	minirt->micrort.sample = 0;
 	return (1);

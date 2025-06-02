@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/02 10:59:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 15:17:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -575,7 +575,6 @@ typedef struct s_micrort
 	t_fcolor	*render;
 	t_camera	camera;
 	t_viewport	viewport;
-	t_object	obj_sp;
 	t_sphere	sphere;
 	t_uint		max_sample;
 	t_uint		sample;

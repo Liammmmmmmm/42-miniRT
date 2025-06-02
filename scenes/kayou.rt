@@ -7,9 +7,9 @@ tex back image assets/textures/mountain_skybox.bmp
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color normal_map
-mat	MATERIAL                      color             0.0            roughness      0              0.00000        1.0                 0.000000            255,255,255  1 normal
+mat	MATERIAL                      255,255,255             0.0            0      0              0.00000        1.0                 0.000000            255,255,255  1 normal 5
 
-A	0.2								255,255,255 back
+A	0.2								back
 
 C	3,1.5,0	 -1,-0.5,0 90
 

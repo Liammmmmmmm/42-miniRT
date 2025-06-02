@@ -41,6 +41,6 @@ cu	0,0,-0.3 0,0,1 1,1,1 assets/obj/bocal/glass.obj bocal
 # cu		-0.35,0.8,0.28 1,0,0 0.012,0.012,0.012	assets/obj/bocal/fish_1.obj fish
 # cu		-0.35,0.8,0.28 1,0,0 0.012,0.012,0.012	assets/obj/bocal/fish_2.obj fish
 
-A	0.9									 skybox
+A	0.9										skybox
 C	0,1,2 0,0,-1 80
 W 512 512

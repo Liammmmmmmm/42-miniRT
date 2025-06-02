@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:53:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/29 10:21:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 11:44:22 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -408,6 +408,8 @@ void	init_layout(t_img *img, t_minirt *minirt)
 
 		draw_string(img, &minirt->controls.font[0], "Preview mat\n(microRT)", (t_point2){370, 960});
 		
+		put_micrort_to_image(minirt);
+
 		if (minirt->controls.ui_infos.selected_material)
 		{
 			display_text_input(img, &minirt->controls.text_input[0], &minirt->controls.font[0]);

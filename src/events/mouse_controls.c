@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:41:18 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 14:25:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 14:17:11 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,14 +263,20 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 			if (color_picker_action(&minirt->controls.color_picker[1], x, y))
 			{
 				if (last_val != minirt->controls.color_picker[1].btn.background_color)
+				{
+					minirt->micrort.sample = 0;
 					stop_minirt(minirt);
+				}
 				return ;
 			}
 			last_val = minirt->controls.color_picker[2].btn.background_color;
 			if (color_picker_action(&minirt->controls.color_picker[2], x, y))
 			{
 				if (last_val != minirt->controls.color_picker[2].btn.background_color)
+				{
+					minirt->micrort.sample = 0;
 					stop_minirt(minirt);
+				}
 				return ;
 			}
 			if (text_input_focus(&minirt->controls.text_input[0], x, y))

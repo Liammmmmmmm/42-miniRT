@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:31:43 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 16:39:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 14:53:47 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,13 @@ t_hsv_color	rgb_to_hsv(int rgb)
 
 	if (delta == 0)
 		res.hue = 0;
-	else if (max == c.r)
+	else if (c.r >= c.g && c.r >= c.b)
+	{
 		res.hue = (int)(60 * fmodf((c.g - c.b) / delta, 6));
-	else if (max == c.g)
+		if (res.hue < 0)
+			res.hue += 360;
+	}
+	else if (c.g >= c.r && c.g >= c.b)
 		res.hue = (int)(60 * ((c.b - c.r) / delta + 2));
 	else
 		res.hue = (int)(60 * ((c.r - c.g) / delta + 4));

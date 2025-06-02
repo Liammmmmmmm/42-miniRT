@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 14:49:01 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 10:51:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	clean(t_minirt *minirt)
 	free(minirt->screen.float_render);
 	free_ttf(&minirt->controls.font[0]);
 	free_anim(&minirt->options.anim);
+	free(minirt->micrort.render);
 	return (1);
 }
 
@@ -67,6 +68,8 @@ int	main(int argc, char **argv)
 		minirt.scene.render_height = WIN_HEIGHT;
 	}
 	if (!init_ui(&minirt))
+		return (clean(&minirt));
+	if (!init_micrort(&minirt))
 		return (clean(&minirt));
 	if (!init_mlx(&minirt))
 		return (clean(&minirt));

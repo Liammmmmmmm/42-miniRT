@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:16:37 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/02 17:20:07 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:43:47 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_bvh_node	init_bvh_node(t_bvh *bvh, uint32_t start, uint32_t count)
 	node.node_bounds = bounds;
 	node.first_prim = start;
 	node.prim_count = count;
-	node.is_leaf = (count == 1);
+	node.is_leaf = (count <= 1);
 	node.left_child = 0;
 	node.right_child = 0;
 	return (node);

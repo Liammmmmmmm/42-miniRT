@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/02 16:23:56 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:47:00 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -403,7 +403,7 @@ typedef struct s_bvh
 {
 	uint32_t	*prim_indices;
 	t_bvh_node	*bvh_nodes;
-	uint16_t	bvh_nodes_used;	
+	uint32_t	bvh_nodes_used;	
 	t_object	**obj_list;
 	uint32_t	*closest_t;
 	uint32_t	node_index;

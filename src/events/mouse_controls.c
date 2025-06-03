@@ -6,11 +6,18 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:41:18 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/02 14:17:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 12:47:38 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+int	mouse_add_mat(int key, int x, int y)
+{
+	if (key == LEFT_CLICK && x > 300 && x <= 600 && y > 270 && y < 300)
+		return (1);
+	return (0);
+}
 
 void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 {
@@ -257,6 +264,8 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 	{
 		if (mouse_down_mat(minirt, key, x, y))
 			return ;
+		if (mouse_add_mat(key, x, y))
+			add_material(minirt);
 		if (minirt->controls.ui_infos.selected_material)
 		{
 			int last_val = minirt->controls.color_picker[1].btn.background_color;

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/02 11:51:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 13:15:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	init_animated_items(t_minirt *minirt);
 void	set_dependant_values(t_minirt *minirt);
 
 void	debug_ray(t_minirt *minirt);
+void	add_material(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                   MICRORT                                    ║

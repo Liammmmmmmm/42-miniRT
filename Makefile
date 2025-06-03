@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/02 11:23:15 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/06/03 14:03:16 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,7 @@ UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_cir
 
 UI_DIR				= src/ui/
 UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_float_inputs.c controls/init_text_inputs.c \
-					controls/init_sliders.c controls/init_color_picker.c controls/init_dropdown.c \
+					controls/init_sliders.c controls/init_color_picker.c controls/init_dropdown.c controls/add_material.c\
 					render.c layout.c list_objects.c list_materials.c selected_object.c selected_mat.c \
 					dropdown.c dropdown2.c materials_dropdown.c textures_dropdown.c 
 
@@ -215,9 +215,8 @@ nothing_to_be_done:
 	fi
 
 end_message:
-	@echo "$(WHITE)\n╔══════════════════════════════════════════════╗$(NC)"
-	@echo "$(WHITE)║ $(GREEN)> miniRT                                     $(WHITE)║$(NC)"
-	@echo "$(WHITE)╚══════════════════════════════════════════════╝$(NC)"
+	@echo ""
+	@./print_image 40 40 < assets/make_image/res
 	@echo "\n$(NORM_RET)";
 
 $(NAME) : $(MINILIBX) $(LIBFT) $(OBJ)

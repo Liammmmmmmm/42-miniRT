@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:53:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/02 11:44:22 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 13:25:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -401,12 +401,16 @@ void	init_layout(t_img *img, t_minirt *minirt)
 	}
 	else if (minirt->controls.ui_infos.tab_selected == 1)
 	{
+		draw_horizontal_line(img, 260, 300, img->width);
+		minirt->controls.font[0].size = 30;
+		draw_box_2d(img,  (t_point2){301, 261}, (t_point2){600, 300}, UI_BUTTON_BACK);
+		minirt->controls.font[0].color = 0;
+		draw_string(img, &minirt->controls.font[0], "Add a material", (t_point2){340, 290});
+		minirt->controls.font[0].color = 0xffffff;
 		draw_horizontal_line(img, 300, 300, img->width);
 		draw_horizontal_line(img, 860, 300, img->width);
 
 		draw_list_materials(minirt);
-
-		draw_string(img, &minirt->controls.font[0], "Preview mat\n(microRT)", (t_point2){370, 960});
 		
 		put_micrort_to_image(minirt);
 

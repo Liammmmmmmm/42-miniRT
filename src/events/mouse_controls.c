@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:41:18 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/03 12:47:38 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 16:56:20 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 	{
 		if (mouse_down_obj(minirt, key, x, y))
 			return ;
+		if (mouse_down_dropdown(key, (t_point2){x, y}, &minirt->controls.dropdown[11]))
+			return ;
+		if (key == LEFT_CLICK)
+		{
+			button_action(&minirt->controls.buttons[5], x, y, &minirt->controls.btn_clicked);
+			button_action(&minirt->controls.buttons[6], x, y, &minirt->controls.btn_clicked);
+		}
 		if (minirt->controls.ui_infos.selected_object)
 		{
 			if (key == LEFT_CLICK)
@@ -235,6 +242,24 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 					if (float_input_focus(&minirt->controls.float_input[7], x, y))
 						return ;
 					if (float_input_focus(&minirt->controls.float_input[8], x, y))
+						return ;
+				}
+				else if (minirt->controls.ui_infos.selected_object->type == DIRECTIONAL_LIGHT)
+				{
+					int last_val = minirt->controls.color_picker[0].btn.background_color;
+					if (color_picker_action(&minirt->controls.color_picker[0], x, y))
+					{
+						if (last_val != minirt->controls.color_picker[0].btn.background_color)
+							stop_minirt(minirt);
+						return ;
+					}
+					if (float_input_focus(&minirt->controls.float_input[3], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[4], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[5], x, y))
+						return ;
+					if (float_input_focus(&minirt->controls.float_input[6], x, y))
 						return ;
 				}
 			}

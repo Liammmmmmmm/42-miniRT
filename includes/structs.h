@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/02 15:17:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 11:03:24 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -511,6 +511,7 @@ typedef struct s_ui_infos
 	int			objects_scroll_offset;
 	t_mat		*selected_material;
 	int			materials_scroll_offset;
+	void		*add_object;
 }	t_ui_infos;
 
 typedef struct s_controls

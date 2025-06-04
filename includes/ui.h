@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ui.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:22:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 14:48:53 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 11:26:10 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ int		mouse_down_dropdown_mat(t_minirt *minirt, int key, t_point2 pos, t_dropdown
 
 void	display_tex_dropdown(t_minirt *minirt, t_dropdown *dropdown);
 int		mouse_down_dropdown_tex(t_minirt *minirt, int key, t_point2 pos, t_dropdown *d);
+
+void	display_dropdown(t_minirt *minirt, t_dropdown *dropdown);
+int		mouse_down_dropdown(int key, t_point2 pos, t_dropdown *d);
 
 void	change_tab(void *vparam);
 

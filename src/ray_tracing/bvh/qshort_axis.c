@@ -6,7 +6,7 @@
 /*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:11:31 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/04 15:13:45 by delmath          ###   ########.fr       */
+/*   Updated: 2025/06/04 15:15:23 by delmath          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,11 @@ void	insertion_sort_axis(uint32_t *arr, t_interval inter, t_bvh *bvh, int axis)
     }
 }
 
-uint32_t	select_pivot(uint32_t *arr, t_interval inter, t_bvh *bvh, int axis)
-{
-	int 		mid;
-	uint32_t	pivot;
-
-	mid = inter.min + (inter.max - inter.min) / 2;
-	if (compare_obj_axis_with_bvh(arr[(int)inter.min], arr[mid], bvh, axis) > 0)
-		swap_uint32(&arr[(int)inter.min], &arr[mid]);
-	if (compare_obj_axis_with_bvh(arr[(int)inter.min], arr[(int)inter.max], bvh, axis) > 0)
-		swap_uint32(&arr[(int)inter.min], &arr[(int)inter.max]);
-	if (compare_obj_axis_with_bvh(arr[mid], arr[(int)inter.max], bvh, axis) > 0)
-		swap_uint32(&arr[mid], &arr[(int)inter.max]);
-	pivot = arr[select_pivot(arr, inter, bvh, axis)];
-	swap_uint32(&arr[mid], &arr[(int)inter.max - 1]);
-	return (pivot);
-}
-
 void	qsort_axis(uint32_t *arr, t_interval inter, t_bvh *bvh, int axis)
 {
 	int			i;
 	int			j;
+	int			mid;
 	uint32_t	pivot;
 
 	while (inter.min < inter.max) 
@@ -73,7 +57,15 @@ void	qsort_axis(uint32_t *arr, t_interval inter, t_bvh *bvh, int axis)
 			insertion_sort_axis(arr, inter, bvh, axis);
 			return;
 		}
-		pivot = select_pivot(arr, inter, bvh, axis);
+		mid = inter.min + (inter.max - inter.min) / 2;
+		if (compare_obj_axis_with_bvh(arr[(int)inter.min], arr[mid], bvh, axis) > 0)
+			swap_uint32(&arr[(int)inter.min], &arr[mid]);
+		if (compare_obj_axis_with_bvh(arr[(int)inter.min], arr[(int)inter.max], bvh, axis) > 0)
+			swap_uint32(&arr[(int)inter.min], &arr[(int)inter.max]);
+		if (compare_obj_axis_with_bvh(arr[mid], arr[(int)inter.max], bvh, axis) > 0)
+			swap_uint32(&arr[mid], &arr[(int)inter.max]);
+		pivot = arr[mid];
+		swap_uint32(&arr[mid], &arr[(int)inter.max - 1]);
 		i = inter.min;
 		j = inter.max - 1;
 		while (1)

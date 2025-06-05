@@ -21,7 +21,9 @@ Courte description
 - [*mini***RT**](#minirt)
 	- [Content table](#content-table)
 	- [Features](#features)
-		- [Objects](#objects)
+		- [Path tracing \& material managment](#path-tracing--material-managment)
+		- [Primitives objects](#primitives-objects)
+		- [Custom objects](#custom-objects)
 		- [Textures](#textures)
 		- [Lights](#lights)
 		- [Bounding Volume Hierarchie (BVH)](#bounding-volume-hierarchie-bvh)
@@ -32,6 +34,7 @@ Courte description
 			- [`--auto-export`](#--auto-export)
 			- [`--no-display`](#--no-display)
 			- [`--animate=""`](#--animate)
+			- [`--standard-galactic-alphabet`](#--standard-galactic-alphabet)
 	- [Installation](#installation)
 	- [Resources](#resources)
 	- [PARTIE RANDOM A VIRER UN JOUR](#partie-random-a-virer-un-jour)
@@ -39,7 +42,18 @@ Courte description
 
 ## Features
 
-### Objects
+### Path tracing & material managment
+
+Illustrer d'une maniere ou d'une autre un peu tous les types de materiaux
+
+<details>
+	<summary><strong>See more about it</strong></summary>
+	<br>
+
+
+</details>
+
+### Primitives objects
 
 IMAGE POUR ILLUSTRER DANS LAQUELLE Y'A UNE LISTE DE TOUS LES OBJETS (J'aime bcp la maniere dont ils sont presentés sur le minirt de bwerner)
 
@@ -54,7 +68,17 @@ Our minirt implements mulitples elementals objects :
 - Cone
 - Hyperboloid
 
-In addition of these objects you can add .obj objects to describe much more complex objects
+</details>
+
+### Custom objects
+
+Giga image d'un modele 3d pour illustrer
+
+<details>
+	<summary><strong>See more about it</strong></summary>
+	<br>
+
+Parler vite fais de comment tu parse ca et tout
 
 </details>
 
@@ -72,17 +96,15 @@ In order to add realism to your scenes you can add multiple layer of textures :
 - Roughness map
 - Ambiant occlusion map
 - Normal & bump map
-
-*Maybe added later* :
 - transmission map
 - emission strength map
 - emission color map
 
 You can import your textures in bmp format (*maybe png later*)
-
-*Maybe later to* :
 - Local checkerboard texture (prends en parametre 2 couleurs, un "nombre de repetitions"/scale)
 - Global checkerboard texture (same mais pour faire une solid texture)
+
+*Maybe later to* :
 - Text texture (ce serait un truc tu passe 2 color (fond et text), un string, et le path vers un ttf et ca te gen une texture avec ca)
 
 
@@ -90,8 +112,15 @@ You can import your textures in bmp format (*maybe png later*)
 
 ### Lights
 
-Image avec differentes light de couleurs, et idealement le jour ou l'emissive marche un truc avec jsp un text emissif en mode enseigne
+Image avec differentes light de couleurs points/directionnals/emissive/ambiant a presenter idealement
 
+<details>
+	<summary><strong>See more about it</strong></summary>
+	<br>
+
+Decrire les differents types de light 2 catégories avec d'un coté les emissives et l'ambiant qui sont des lights "realistes" la ou les autre moins
+
+</details>
 
 ### Bounding Volume Hierarchie (BVH)
 
@@ -103,6 +132,7 @@ Image d'illustration
 
 More information
 Mathis tu gere ce truc x)
+Du coup peut etre parler de trucs comme le bvh itteratif avec la task pool, decrire le fonctionnement de creation et celui d'utilisation pour l'affichage
 
 </details>
 
@@ -118,7 +148,7 @@ Doing UI in c is not an easy thing, from text displaying to custom reusable cont
 
 Explication ttf
 Description des différents composants et utilisation de l'ui
-
+parler aussi un peu de micrort pour modifier les materiaux
 
 </details>
 
@@ -151,6 +181,10 @@ Disables the image preview and replaces it with a minimal UI displaying useful i
 #### `--animate=""`
 
 Defines an animation for the scene and generates all frames accordingly.
+
+#### `--standard-galactic-alphabet`
+
+If you can fluently read the standard galactic alphabet, this option is for you
 
 ---
 

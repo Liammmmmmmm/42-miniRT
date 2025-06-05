@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/02 15:17:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 10:39:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -568,6 +568,7 @@ typedef struct s_options
 	int			max_samples;
 	char		*output_dir;
 	t_animation	anim;
+	t_bool		sga;
 }	t_options;
 
 typedef struct s_micrort

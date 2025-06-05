@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:34:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/22 11:17:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 11:20:57 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,24 @@ typedef struct s_color_picker
 	t_text_input	text_input;
 }	t_color_picker;
 
+typedef struct s_dropdown_node
+{
+	void		*ref;
+	const char	*text;
+}	t_dropdown_node;
+
 typedef struct s_dropdown
 {
-	int		x;
-	int		y;
-	int		width;
-	int		height;
-	int 	deployed_height;
-	void	**selected;
-	t_bool	active;
-	int		scroll_offset;
+	int				x;
+	int				y;
+	int				width;
+	int				height;
+	int 			deployed_height;
+	void			**selected;
+	t_bool			active;
+	int				scroll_offset;
+	t_dropdown_node	*values;
+	int				val_amount;
 }	t_dropdown;
 
 void	put_pixel_image(t_img *img, int x, int y, int color);

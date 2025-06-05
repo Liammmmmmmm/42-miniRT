@@ -6,11 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/06/05 10:39:31 by lilefebv         ###   ########lyon.fr   */
-=======
-/*   Updated: 2025/06/04 11:03:24 by lilefebv         ###   ########lyon.fr   */
->>>>>>> a1fae46acd4ff7bc6488a3af1cc706a01d242539
+/*   Updated: 2025/06/05 11:10:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

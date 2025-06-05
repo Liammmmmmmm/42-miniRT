@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 16:50:19 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/04 17:30:32 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 10:02:56 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	rm_object(void *vparam)
 	while (i < minirt->scene.el_amount)
 	{
 		minirt->scene.elements[j] = minirt->scene.elements[i];
-		printf("%p %p\n", minirt->controls.ui_infos.selected_object, &minirt->scene.elements[i]);
 		if (&minirt->scene.elements[i] != minirt->controls.ui_infos.selected_object && removed == 0)
 			j++;
 		else

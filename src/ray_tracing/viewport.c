@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/28 16:21:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 15:27:49 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,17 @@
 static void	init_camera_values(t_minirt *minirt)
 {
 	minirt->scene.camera.fov = minirt->controls.values.fov;
-	minirt->scene.camera.focus_dist
-		= minirt->controls.values.focus_dist / 10.0;
-	minirt->scene.camera.defocus_angle
-		= minirt->controls.values.defocus_angle / 30.0;
 	minirt->scene.camera.orientation = vec3_unit(
 			minirt->scene.camera.orientation);
+	link_float_input(&minirt->controls.float_input[19], &minirt->scene.camera.position.x);
+	link_float_input(&minirt->controls.float_input[20], &minirt->scene.camera.position.y);
+	link_float_input(&minirt->controls.float_input[21], &minirt->scene.camera.position.z);
+	link_float_input(&minirt->controls.float_input[22], &minirt->scene.camera.orientation.x);
+	link_float_input(&minirt->controls.float_input[23], &minirt->scene.camera.orientation.y);
+	link_float_input(&minirt->controls.float_input[24], &minirt->scene.camera.orientation.z);
+	link_float_input(&minirt->controls.float_input[25], &minirt->scene.camera.defocus_angle);
+	link_float_input(&minirt->controls.float_input[26], &minirt->scene.camera.focus_dist);
+	link_float_input(&minirt->controls.float_input[27], &minirt->scene.amb_light.ratio);
 }
 
 static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)

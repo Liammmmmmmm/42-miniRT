@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:13:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/04 11:41:55 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 15:03:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ void	init_tex_dropdown(t_minirt *minirt)
 	minirt->controls.dropdown[8].y = 670;
 	minirt->controls.dropdown[9].y = 700;
 	minirt->controls.dropdown[10].y = 800;
+
+	base_dropdown_tex(&minirt->controls.dropdown[12]);
+	minirt->controls.dropdown[12].y = 340;
+	minirt->controls.dropdown[12].x = 100;
+	minirt->controls.dropdown[12].selected = (void **)&minirt->scene.amb_light.skybox_t;
 }
 
 void	init_choose_object(t_minirt *minirt)
@@ -82,7 +87,7 @@ void	init_choose_object(t_minirt *minirt)
 
 int	init_dropdowns(t_minirt *minirt)
 {
-	minirt->controls.nb_dropdown = 12;
+	minirt->controls.nb_dropdown = 13;
 	minirt->controls.dropdown = ft_calloc(minirt->controls.nb_dropdown, \
 		sizeof(t_dropdown));
 	if (!minirt->controls.dropdown)

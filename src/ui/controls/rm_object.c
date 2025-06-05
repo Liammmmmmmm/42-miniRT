@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 16:50:19 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/05 10:02:56 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 14:44:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,16 @@ void	rm_object(void *vparam)
 		if (&minirt->scene.elements[i] != minirt->controls.ui_infos.selected_object && removed == 0)
 			j++;
 		else
+		{
+			if (minirt->scene.elements[i].type == CUSTOM)
+			{
+				free(((t_custom_object *)minirt->scene.elements[i].object)->name);
+				free(((t_custom_object *)minirt->scene.elements[i].object)->obj_list);
+				free(((t_custom_object *)minirt->scene.elements[i].object)->triangles);
+			}
+			free(minirt->scene.elements[i].object);
 			removed = 1;
+		}
 		i++;
 	}
 	if (removed)

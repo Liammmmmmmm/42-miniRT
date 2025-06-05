@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_ppm.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:22:35 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/22 12:59:03 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:49:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	export_ppm_p6(const char *filename, int *pixels, int width, int height)
 		tmp[0] = (pixels[i] >> 16) & 0xFF;
 		tmp[1] = (pixels[i] >> 8) & 0xFF;
 		tmp[2] = pixels[i] & 0xFF;
-		write(fd, tmp, 3);
+		(void)!write(fd, tmp, 3);
 	}
 	close(fd);
 }
@@ -62,7 +62,7 @@ static void	put_image_to_buf(int tpx, int fd, t_minirt *minirt,
 		buf[i * 3 + 2] = pow(clamp_double(minirt->screen.float_render[i].b / \
 			divide), gamma_corr) * 255;
 	}
-	write(fd, (char *)buf, tpx * 3);
+	(void)!write(fd, (char *)buf, tpx * 3);
 }
 
 void	export_ppm_p6_minirt(const char *filename, t_minirt *minirt)

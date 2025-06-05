@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/05 11:10:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 16:04:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -530,7 +530,7 @@ typedef struct s_controls
 	int				nb_sliders;
 	t_int_slider	*sliders;
 	int				nb_color_picker;
-	t_color_picker	color_picker[3];
+	t_color_picker	color_picker[4];
 	int				nb_dropdown;
 	t_dropdown		*dropdown;
 	int				nb_float_input;
@@ -542,6 +542,7 @@ typedef struct s_controls
 	int				selected_x;
 	int				selected_y;
 	t_vec3			traced_ray[11];
+	double			max_bounces;
 }	t_controls;
 
 typedef struct s_obj_anim

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:22:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/04 11:26:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 11:42:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int		mouse_down_mat(t_minirt *minirt, int key, int mouse_x, int mouse_y);
 void	draw_list_materials(t_minirt *minirt);
 
 void	init_layout(t_img *img, t_minirt *minirt);
+void	draw_left_layout(t_img *img, t_minirt *minirt);
 
 void	render_ui(t_minirt *minirt);
 double	parse_expression(const char *expr);

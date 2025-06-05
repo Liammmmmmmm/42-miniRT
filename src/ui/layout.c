@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:53:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/04 16:55:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 11:42:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	init_layout(t_img *img, t_minirt *minirt)
 	
 	minirt->controls.font[0].size = 30;
 	minirt->controls.font[0].color = 0xFFFFFF;
+
+	draw_left_layout(img, minirt);
 	
 	if (minirt->controls.ui_infos.tab_selected == 0)
 	{

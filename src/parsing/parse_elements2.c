@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/29 12:30:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 15:30:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,6 @@ int	parse_ambiant_light(t_scene *scene, char *line)
 	{
 		free(parts);
 		return (print_error(MSG_ERR_AMBIENT_LIGHT_RATIO));
-	}
-	else if (scene->amb_light.skybox_t && scene->amb_light.skybox_t->type == HDR)
-	{
-		scene->amb_light.skybox_t->hdr.exposure += scene->amb_light.ratio - 1;
-		scene->amb_light.ratio = 1;
 	}
 	free(parts);
 	return (1);

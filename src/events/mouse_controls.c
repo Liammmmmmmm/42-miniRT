@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:41:18 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/04 16:56:20 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 16:00:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,29 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 
 		// Basics 4 sliders
 		slider_mouse_down(&minirt->controls.sliders[0], x, y);
-		slider_mouse_down(&minirt->controls.sliders[1], x, y);
-		slider_mouse_down(&minirt->controls.sliders[2], x, y);
-		slider_mouse_down(&minirt->controls.sliders[3], x, y);
-		slider_mouse_down(&minirt->controls.sliders[4], x, y);
-		slider_mouse_down(&minirt->controls.sliders[5], x, y);
+		// slider_mouse_down(&minirt->controls.sliders[1], x, y);
+		// slider_mouse_down(&minirt->controls.sliders[2], x, y);
+		// slider_mouse_down(&minirt->controls.sliders[3], x, y);
+		// slider_mouse_down(&minirt->controls.sliders[4], x, y);
+		// slider_mouse_down(&minirt->controls.sliders[5], x, y);
+		float_input_focus(&minirt->controls.float_input[19], x, y);
+		float_input_focus(&minirt->controls.float_input[20], x, y);
+		float_input_focus(&minirt->controls.float_input[21], x, y);
+		float_input_focus(&minirt->controls.float_input[22], x, y);
+		float_input_focus(&minirt->controls.float_input[23], x, y);
+		float_input_focus(&minirt->controls.float_input[24], x, y);
+		float_input_focus(&minirt->controls.float_input[25], x, y);
+		float_input_focus(&minirt->controls.float_input[26], x, y);
+		int last_val = minirt->controls.color_picker[3].btn.background_color;
+		if (color_picker_action(&minirt->controls.color_picker[3], x, y))
+		{
+			if (last_val != minirt->controls.color_picker[3].btn.background_color)
+				stop_minirt(minirt);
+			return ;
+		}
+		if (mouse_down_dropdown_tex(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[12]))
+			return ;
+		float_input_focus(&minirt->controls.float_input[27], x, y);
 	}
 	
 	if (minirt->controls.ui_infos.tab_selected == 0)

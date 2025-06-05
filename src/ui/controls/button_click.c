@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button_click.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 14:07:20 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 14:14:46 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:53:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	click_start_stop(void *vparam)
 	else if (param->action == 1)
 		stop_minirt(param->minirt);
 	else if (param->action == 2)
-		param->minirt->screen.pause_render \
+		param->minirt->screen.pause_render
 			= !param->minirt->screen.pause_render;
 }
 

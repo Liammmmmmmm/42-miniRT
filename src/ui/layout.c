@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:53:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/02 11:44:22 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 16:55:21 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	init_layout(t_img *img, t_minirt *minirt)
 		draw_horizontal_line(img, 300, 300, img->width);
 		draw_horizontal_line(img, 450, 300, img->width);
 		// draw_string(img, &minirt->controls.font[0], "Liste objets", (t_point2){350, 170});
-		draw_string(img, &minirt->controls.font[0], "Ajouter un objet", (t_point2){330, 380});
 
 		draw_list_objects(minirt);
 		
@@ -394,19 +393,53 @@ void	init_layout(t_img *img, t_minirt *minirt)
 				if (!((t_custom_object *)minirt->controls.ui_infos.selected_object->object)->material)
 					display_color_picker(img, &minirt->controls.color_picker[0], &minirt->controls.font[0]);
 			}
+			else if (minirt->controls.ui_infos.selected_object->type == DIRECTIONAL_LIGHT)
+			{
+				draw_string(img, &minirt->controls.font[0], "Orientation", (t_point2){320, 590});
+				draw_string(img, &minirt->controls.font[0], "Color", (t_point2){320, 690});
+				draw_string(img, &minirt->controls.font[0], "Properties", (t_point2){320, 890});
+
+				// Orientation
+				minirt->controls.font[0].size = 20;
+				draw_string(img, &minirt->controls.font[0], "X", (t_point2){310, 626});
+				draw_string(img, &minirt->controls.font[0], "Y", (t_point2){405, 626});
+				draw_string(img, &minirt->controls.font[0], "Z", (t_point2){505, 626});
+				minirt->controls.font[0].size = 15;
+				display_float_input(img, &minirt->controls.float_input[3], &minirt->controls.font[0]);
+				display_float_input(img, &minirt->controls.float_input[4], &minirt->controls.font[0]);
+				display_float_input(img, &minirt->controls.float_input[5], &minirt->controls.font[0]);
+
+				// Color (without color picker bcs for render priority reasons it should be at the end)
+				minirt->controls.font[0].size = 20;
+				draw_string(img, &minirt->controls.font[0], "Power", (t_point2){310, 920});
+				display_float_input(img, &minirt->controls.float_input[6], &minirt->controls.font[0]);
+
+				display_color_picker(img, &minirt->controls.color_picker[0], &minirt->controls.font[0]);
+			}
 			// draw_string(img, &minirt->controls.font[0], "Props de l'objet", (t_point2){330, 750});
 			// draw_string(img, &minirt->controls.font[0], get_object_name(minirt->controls.ui_infos.selected_object->type), (t_point2){330, 800});
 			// 
 		}
+		minirt->controls.font[0].size = 20;
+		draw_string(img, &minirt->controls.font[0], "Ajouter un objet", (t_point2){310, 325});
+		minirt->controls.font[0].color = 0;
+		display_button(img, minirt->controls.buttons[5], &minirt->controls.font[0]);
+		minirt->controls.font[0].color = 0xffffff;
+		display_button(img, minirt->controls.buttons[6], &minirt->controls.font[0]);
+		display_dropdown(minirt, &minirt->controls.dropdown[11]);
 	}
 	else if (minirt->controls.ui_infos.tab_selected == 1)
 	{
+		draw_horizontal_line(img, 260, 300, img->width);
+		minirt->controls.font[0].size = 30;
+		draw_box_2d(img,  (t_point2){301, 261}, (t_point2){600, 300}, UI_BUTTON_BACK);
+		minirt->controls.font[0].color = 0;
+		draw_string(img, &minirt->controls.font[0], "Add a material", (t_point2){340, 290});
+		minirt->controls.font[0].color = 0xffffff;
 		draw_horizontal_line(img, 300, 300, img->width);
 		draw_horizontal_line(img, 860, 300, img->width);
 
 		draw_list_materials(minirt);
-
-		draw_string(img, &minirt->controls.font[0], "Preview mat\n(microRT)", (t_point2){370, 960});
 		
 		put_micrort_to_image(minirt);
 

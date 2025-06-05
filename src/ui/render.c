@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/12 10:59:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 13:29:58 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	render_ui(t_minirt *minirt)
 	minirt->controls.font[0].size = 20;
 	minirt->controls.font[0].color = 0;
 	i = -1;
-	while (++i < minirt->controls.nb_buttons)
+	while (++i < 5)
 		display_button(&minirt->mlx.img_controls, minirt->controls.buttons[i],
 			&minirt->controls.font[0]);
 	i = -1;

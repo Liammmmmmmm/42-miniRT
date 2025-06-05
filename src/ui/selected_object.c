@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:45:58 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 09:39:28 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 15:50:38 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,17 @@ void	set_selected_light(t_minirt *minirt, t_light *obj)
 	minirt->controls.float_input[6].y = 905;
 }
 
+void	set_selected_directional_light(t_minirt *minirt, t_dlight *obj)
+{
+	link_color_picker(&minirt->controls.color_picker[0], &obj->color);
+	minirt->controls.dropdown[0].selected = NULL;
+	link_float_input(&minirt->controls.float_input[3], &obj->orientation.x);
+	link_float_input(&minirt->controls.float_input[4], &obj->orientation.y);
+	link_float_input(&minirt->controls.float_input[5], &obj->orientation.z);
+	link_float_input(&minirt->controls.float_input[6], &obj->brightness);
+	minirt->controls.float_input[6].y = 905;
+}
+
 void	set_selected_object(t_minirt *minirt, t_object *obj)
 {
 	if (!obj)
@@ -139,4 +150,6 @@ void	set_selected_object(t_minirt *minirt, t_object *obj)
 		set_selected_hyperboloid(minirt, obj->object);
 	else if (obj->type == CUSTOM)
 		set_selected_custom(minirt, obj->object);
+	else if (obj->type == DIRECTIONAL_LIGHT)
+		set_selected_directional_light(minirt, obj->object);
 }

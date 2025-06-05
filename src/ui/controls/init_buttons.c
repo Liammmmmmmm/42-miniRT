@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_buttons.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:55:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/30 17:59:35 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:58:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,27 @@ void	base_tab_btn(t_button *button, t_minirt *minirt, int action)
 	button->action = &change_tab;
 }
 
+void	add_rm_object_btn(t_button *button, t_button *button_rm, t_minirt *minirt)
+{
+	base_button(button, minirt);
+	button->width = 250;
+	button->x = 310;
+	button->y = 420;
+	button->text = ft_strdup("Ajouter");
+	button->action = &add_object;
+	base_button(button_rm, minirt);
+	button_rm->width = 24;
+	button_rm->x = 566;
+	button_rm->y = 420;
+	button_rm->background_color = 0xa83a32;
+	button_rm->background_color_on_click = 0x7a2721;
+	button_rm->text = ft_strdup("X");
+	button_rm->action = &rm_object;
+}
+
 int	init_buttons(t_minirt *minirt)
 {
-	minirt->controls.nb_buttons = 5;
+	minirt->controls.nb_buttons = 7;
 	minirt->controls.buttons = ft_calloc(minirt->controls.nb_buttons, \
 		sizeof(t_button));
 	if (!minirt->controls.buttons)
@@ -81,6 +99,7 @@ int	init_buttons(t_minirt *minirt)
 	minirt->controls.buttons[3].x = 310;
 	minirt->controls.buttons[4].x = 410;
 	minirt->controls.buttons[3].background_color = UI_SEP_COLOR;
+	add_rm_object_btn(&minirt->controls.buttons[5], &minirt->controls.buttons[6], minirt);
 	return (1);
 }
 

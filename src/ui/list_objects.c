@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:56:38 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/15 11:44:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 11:09:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 const char	*get_object_name(t_objects obj)
 {
-	static const char	*objects[14] = {"NULL Object", "Texture", "Material",
-		"Ambiant light", "Camera", "Light", "Sphere", "Plane", "Cylinder",
-		"Cone", "Hyperboloid", "Triangle", "Custom object"};
+	static const char	*objects[16] = {"NULL Object", "Texture", "Material",
+		"Ambiant light", "Camera", "Light", "Directional light", "Sphere",
+		"Plane", "Cylinder", "Cone", "Hyperboloid", "Triangle", "Custom object",
+		"Window"};
 
 	return (objects[(int)obj]);
 }

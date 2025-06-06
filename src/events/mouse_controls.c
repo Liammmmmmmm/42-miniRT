@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:41:18 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/05 16:00:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 15:45:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,13 @@ void	layout_mouse_down(int key, int x, int y, t_minirt *minirt)
 		}
 		if (mouse_down_dropdown_tex(minirt, key, (t_point2){x, y}, &minirt->controls.dropdown[12]))
 			return ;
+		if (mouse_down_dropdown(key, (t_point2){x, y}, &minirt->controls.dropdown[13]))
+			return ;
 		float_input_focus(&minirt->controls.float_input[27], x, y);
+		float_input_focus(&minirt->controls.float_input[28], x, y);
+		float_input_focus(&minirt->controls.float_input[29], x, y);
+		float_input_focus(&minirt->controls.float_input[30], x, y);
+		float_input_focus(&minirt->controls.float_input[31], x, y);
 	}
 	
 	if (minirt->controls.ui_infos.tab_selected == 0)

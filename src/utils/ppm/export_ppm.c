@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:22:35 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/05 13:49:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 14:27:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ static void	put_image_to_buf(int tpx, int fd, t_minirt *minirt,
 	i = -1;
 	while (++i < tpx)
 	{
-		buf[i * 3] = pow(clamp_double(minirt->screen.float_render[i].r / \
-			divide), gamma_corr) * 255;
-		buf[i * 3 + 1] = pow(clamp_double(minirt->screen.float_render[i].g / \
-			divide), gamma_corr) * 255;
-		buf[i * 3 + 2] = pow(clamp_double(minirt->screen.float_render[i].b / \
-			divide), gamma_corr) * 255;
+		buf[i * 3] = clamp_double(pow(minirt->screen.float_render[i].r / \
+			divide, gamma_corr)) * 255;
+		buf[i * 3 + 1] = clamp_double(pow(minirt->screen.float_render[i].g / \
+			divide, gamma_corr)) * 255;
+		buf[i * 3 + 2] = clamp_double(pow(minirt->screen.float_render[i].b / \
+			divide, gamma_corr)) * 255;
 	}
 	(void)!write(fd, (char *)buf, tpx * 3);
 }
@@ -77,7 +77,7 @@ void	export_ppm_p6_minirt(const char *filename, t_minirt *minirt)
 		ft_printf("Error creating file\n");
 		return ;
 	}
-	gamma_corr = 1.0 / (minirt->controls.values.gamma / 10.0);
+	gamma_corr = 1.0 / minirt->viewport.gamma;
 	ft_dprintf(fd, "P6\n%d %d\n255\n", minirt->scene.render_width,
 		minirt->scene.render_height);
 	tpx = minirt->scene.render_width * minirt->scene.render_height;

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:41:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/05 16:10:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 15:41:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	draw_left_layout(t_img *img, t_minirt *minirt)
 	draw_string(img, &minirt->controls.font[0], "Camera options", (t_point2){20, 170});
 	draw_string(img, &minirt->controls.font[0], "Ambiant", (t_point2){20, 320});
 	draw_string(img, &minirt->controls.font[0], "Ray tracing", (t_point2){20, 440});
+	draw_string(img, &minirt->controls.font[0], "Global", (t_point2){20, 560});
 
 	minirt->controls.font[0].size = 20;
 	draw_string(img, &minirt->controls.font[0], "X", (t_point2){10, 60});
@@ -37,6 +38,11 @@ void	draw_left_layout(t_img *img, t_minirt *minirt)
 	draw_string(img, &minirt->controls.font[0], "Power", (t_point2){10, 390});
 
 	draw_string(img, &minirt->controls.font[0], "Max bounces", (t_point2){10, 470});
+	draw_string(img, &minirt->controls.font[0], "Resolution", (t_point2){10, 500});
+
+	draw_string(img, &minirt->controls.font[0], "Gamma", (t_point2){10, 590});
+	if (minirt->scene.render_height < minirt->scene.win_height && minirt->scene.render_width < minirt->scene.win_width)
+		draw_string(img, &minirt->controls.font[0], "Upscaling", (t_point2){10, 620});
 	
 	minirt->controls.font[0].size = 15;
 	display_float_input(img, &minirt->controls.float_input[19], &minirt->controls.font[0]);
@@ -53,7 +59,13 @@ void	draw_left_layout(t_img *img, t_minirt *minirt)
 	display_float_input(img, &minirt->controls.float_input[27], &minirt->controls.font[0]);
 
 	display_float_input(img, &minirt->controls.float_input[28], &minirt->controls.font[0]);
+	display_float_input(img, &minirt->controls.float_input[29], &minirt->controls.font[0]);
+	display_float_input(img, &minirt->controls.float_input[30], &minirt->controls.font[0]);
 
+	display_float_input(img, &minirt->controls.float_input[31], &minirt->controls.font[0]);
+
+	if (minirt->scene.render_height < minirt->scene.win_height && minirt->scene.render_width < minirt->scene.win_width)
+		display_dropdown(minirt, &minirt->controls.dropdown[13]);
 	display_tex_dropdown(minirt, &minirt->controls.dropdown[12]);
 	if (!minirt->scene.amb_light.skybox_t)
 		display_color_picker(img, &minirt->controls.color_picker[3], &minirt->controls.font[0]);

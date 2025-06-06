@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 13:42:29 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/05 16:17:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 12:33:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,25 @@ void	ambiant_and_more(t_minirt *minirt)
 	minirt->controls.float_input[28].x = 140;
 	minirt->controls.float_input[28].y = 454;
 	minirt->controls.float_input[28].width = 150;
+	link_float_input(&minirt->controls.float_input[28], &minirt->controls.max_bounces);
+	base_tiers_float_input(&minirt->controls.float_input[29]);
+	minirt->controls.float_input[29].x = 140;
+	minirt->controls.float_input[29].y = 484;
+	link_float_input(&minirt->controls.float_input[29], &minirt->controls.res_render_x);
+	base_tiers_float_input(&minirt->controls.float_input[30]);
+	minirt->controls.float_input[30].x = 220;
+	minirt->controls.float_input[30].y = 484;
+	link_float_input(&minirt->controls.float_input[30], &minirt->controls.res_render_y);
+	base_tiers_float_input(&minirt->controls.float_input[31]);
+	minirt->controls.float_input[31].x = 100;
+	minirt->controls.float_input[31].y = 574;
+	minirt->controls.float_input[31].width = 190;
+	link_float_input(&minirt->controls.float_input[31], &minirt->viewport.gamma);
 }
 
 int	init_float_inputs(t_minirt *minirt)
 {
-	minirt->controls.nb_float_input = 29;
+	minirt->controls.nb_float_input = 32;
 	minirt->controls.float_input = ft_calloc(minirt->controls.nb_float_input,
 			sizeof(t_float_input));
 	if (!minirt->controls.float_input)

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/05 15:27:49 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 12:36:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 		minirt->scene.build_bvh = 0;
 	}
 	init_plane_light_lst(minirt);
-	vp->gamma = sqrt(minirt->controls.values.gamma / 1000.0);
+	vp->gamma = minirt->viewport.gamma;
 	vp->render_w = minirt->scene.render_width;
 	vp->render_h = minirt->scene.render_height;
 	// vectical_fov = 2 * atan(tan(minirt->controls.values.fov * (PI_D / 180.0) / 2.0) / ((double)vp->render_w / (double)vp->render_h));

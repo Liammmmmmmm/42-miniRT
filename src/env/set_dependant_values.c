@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:36:26 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/29 11:17:00 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 15:54:11 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ void	set_values_hyperboloid(t_hyperboloid *obj)
 	obj->orientation = vec3_unit(obj->orientation);
 }
 
+void	set_values_directional_light(t_dlight *obj)
+{
+	obj->orientation = vec3_unit(obj->orientation);
+}
+
 void	set_values_mat(t_mat *mat)
 {
 	mat->emission_color = color_to_fcolor(mat->emission_color_tmp);
@@ -77,6 +82,8 @@ void	set_dependant_values(t_minirt *minirt)
 			set_values_hyperboloid(minirt->scene.elements[i].object);
 		else if (minirt->scene.elements[i].type == CUSTOM)
 			set_values_custom(minirt->scene.elements[i].object);
+		else if (minirt->scene.elements[i].type == DIRECTIONAL_LIGHT)
+			set_values_directional_light(minirt->scene.elements[i].object);
 	}
 	i = -1;
 	while (++i < minirt->scene.mat_amount)

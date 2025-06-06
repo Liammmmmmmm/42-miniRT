@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:11:42 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 11:28:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 12:19:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	draw_material(t_img *img, t_ttf *ttf, t_minirt *minirt, int i)
 
 	i1 = 31 + i * 40 - minirt->controls.ui_infos.materials_scroll_offset;
 	i2 = 70 + i * 40 - minirt->controls.ui_infos.materials_scroll_offset;
-	if (i1 > 300 || i2 < 30)
+	if (i1 > 260 || i2 < 30)
 		return ;
 	tmp = img->height;
-	img->height = 300;
+	img->height = 260;
 	draw_horizontal_line(img, i2, 301, 600);
 	if (&minirt->scene.materials[i] == minirt->controls.ui_infos.selected_material)
 		draw_box_2d(img, (t_point2){301, i1}, (t_point2){600, i2}, 0x433366);
@@ -71,8 +71,8 @@ void	get_clicked_mat(t_minirt *minirt, int mouse_y)
 
 int	mouse_down_mat(t_minirt *minirt, int key, int mouse_x, int mouse_y)
 {
-	const int	max_scroll = imax(40 * (minirt->scene.mat_amount + 1) - 270, 0);
-	if (mouse_y > 300 || mouse_x < 300 || mouse_y < 30 || mouse_x > 600)
+	const int	max_scroll = imax(40 * (minirt->scene.mat_amount + 1) - 240, 0);
+	if (mouse_y > 260 || mouse_x < 300 || mouse_y < 30 || mouse_x > 600)
 		return (0);
 	if (key == SCROLL_DOWN)
 	{

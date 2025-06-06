@@ -520,6 +520,7 @@ typedef struct s_ui_infos
 	int			objects_scroll_offset;
 	t_mat		*selected_material;
 	int			materials_scroll_offset;
+	void		*add_object;
 }	t_ui_infos;
 
 typedef struct s_controls
@@ -577,6 +578,7 @@ typedef struct s_options
 	int			max_samples;
 	char		*output_dir;
 	t_animation	anim;
+	t_bool		sga;
 }	t_options;
 
 typedef struct s_micrort

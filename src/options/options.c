@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 09:54:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 13:38:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 10:38:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,23 @@ int	is_out_dir_option(t_minirt *minirt, char *argvi, int *y)
 	return (0);
 }
 
-int	check_every_option(t_minirt *minirt, char **argv, int i)
+int	basic_options(t_minirt *minirt, char **argv, int i)
 {
 	if (ft_strcmp(argv[i], "--no-display") == 0)
 		minirt->options.no_display = 1;
 	else if (ft_strcmp(argv[i], "--auto-export") == 0)
 		minirt->options.auto_export = 1;
+	else if (ft_strcmp(argv[i], "--standard-galactic-alphabet") == 0)
+		minirt->options.sga = 1;
+	else
+		return (0);
+	return (1);
+}
+
+int	check_every_option(t_minirt *minirt, char **argv, int i)
+{
+	if (basic_options(minirt, argv, i))
+		;
 	else if (is_max_samples_option(minirt, argv[i], &i))
 	{
 		if (i == 0)

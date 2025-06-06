@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:13:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 14:15:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 11:41:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,35 @@ void	init_tex_dropdown(t_minirt *minirt)
 	minirt->controls.dropdown[10].y = 800;
 }
 
+void	init_choose_object(t_minirt *minirt)
+{
+	base_dropdown(&minirt->controls.dropdown[11]);
+	minirt->controls.dropdown[11].y = 340;
+	minirt->controls.dropdown[11].selected = &minirt->controls.ui_infos.add_object;
+	minirt->controls.dropdown[11].val_amount = 7;
+	minirt->controls.dropdown[11].values = ft_calloc(
+		minirt->controls.dropdown[11].val_amount, sizeof(t_dropdown_node));
+	if (!minirt->controls.dropdown[11].values)
+		return ;
+	minirt->controls.dropdown[11].values[0].ref = (void *)SPHERE;
+	minirt->controls.dropdown[11].values[0].text = get_object_name(SPHERE);
+	minirt->controls.dropdown[11].values[1].ref = (void *)CYLINDER;
+	minirt->controls.dropdown[11].values[1].text = get_object_name(CYLINDER);
+	minirt->controls.dropdown[11].values[2].ref = (void *)CONE;
+	minirt->controls.dropdown[11].values[2].text = get_object_name(CONE);
+	minirt->controls.dropdown[11].values[3].ref = (void *)HYPERBOLOID;
+	minirt->controls.dropdown[11].values[3].text = get_object_name(HYPERBOLOID);
+	minirt->controls.dropdown[11].values[4].ref = (void *)PLANE;
+	minirt->controls.dropdown[11].values[4].text = get_object_name(PLANE);
+	minirt->controls.dropdown[11].values[5].ref = (void *)LIGHT;
+	minirt->controls.dropdown[11].values[5].text = get_object_name(LIGHT);
+	minirt->controls.dropdown[11].values[6].ref = (void *)DIRECTIONAL_LIGHT;
+	minirt->controls.dropdown[11].values[6].text = get_object_name(DIRECTIONAL_LIGHT);
+}
+
 int	init_dropdowns(t_minirt *minirt)
 {
-	minirt->controls.nb_dropdown = 11;
+	minirt->controls.nb_dropdown = 12;
 	minirt->controls.dropdown = ft_calloc(minirt->controls.nb_dropdown, \
 		sizeof(t_dropdown));
 	if (!minirt->controls.dropdown)
@@ -68,10 +94,19 @@ int	init_dropdowns(t_minirt *minirt)
 	base_dropdown(&minirt->controls.dropdown[2]);
 	minirt->controls.dropdown[2].y = 860;
 	init_tex_dropdown(minirt);
+	init_choose_object(minirt);
 	return (1);
 }
 
 void	clear_dropdown(t_minirt *minirt)
 {
+	int	i;
+
+	i = 0;
+	while (i < minirt->controls.nb_dropdown)
+	{
+		free(minirt->controls.dropdown[i].values);
+		i++;
+	}
 	free(minirt->controls.dropdown);
 }

@@ -38,6 +38,7 @@ CFLAGS   = -Wall -Wextra -Werror
 LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm
 DEBUG_FLAGS = -g3
 FAST_FLAGS = -O3 -flto -march=native -mtune=native -funroll-loops -ffast-math -falign-functions=32 -falign-loops=16
+# -O3 -march=native -mtune=native -flto -funsafe-math-optimizations -ffast-math -fomit-frame-pointer -funroll-loops -fno-exceptions -fno-rtti -fno-stack-protector -DNDEBUG -falign-functions=32 -falign-loops=16
 
 ifeq ($(MAKECMDGOALS), debug)
 	CFLAGS += $(DEBUG_FLAGS)
@@ -76,9 +77,9 @@ UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_cir
 
 UI_DIR				= src/ui/
 UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_float_inputs.c controls/init_text_inputs.c \
-					controls/init_sliders.c controls/init_color_picker.c controls/init_dropdown.c \
+					controls/init_sliders.c controls/init_color_picker.c controls/init_dropdown.c controls/add_material.c controls/add_object.c controls/rm_object.c \
 					render.c layout.c list_objects.c list_materials.c selected_object.c selected_mat.c \
-					dropdown.c dropdown2.c materials_dropdown.c textures_dropdown.c 
+					dropdown.c dropdown2.c materials_dropdown.c default_dropdown.c textures_dropdown.c 
 
 DEBUG_DIR			= src/debug/
 DEBUG_FILE			= print_scene.c print_utils.c print_obj1.c print_obj2.c print_obj3.c debug_ray.c
@@ -215,9 +216,8 @@ nothing_to_be_done:
 	fi
 
 end_message:
-	@echo "$(WHITE)\n╔══════════════════════════════════════════════╗$(NC)"
-	@echo "$(WHITE)║ $(GREEN)> miniRT                                     $(WHITE)║$(NC)"
-	@echo "$(WHITE)╚══════════════════════════════════════════════╝$(NC)"
+	@echo ""
+	@./print_image 40 40 < assets/make_image/res
 	@echo "\n$(NORM_RET)";
 
 $(NAME) : $(MINILIBX) $(LIBFT) $(OBJ)

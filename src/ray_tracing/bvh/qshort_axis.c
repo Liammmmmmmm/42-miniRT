@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   qshort_axis.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:11:31 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/04 15:15:23 by delmath          ###   ########.fr       */
+/*   Updated: 2025/06/06 17:10:58 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,23 @@ void	swap_uint32(uint32_t *a, uint32_t *b)
 
 void	insertion_sort_axis(uint32_t *arr, t_interval inter, t_bvh *bvh, int axis)
 {
-	int	i;
-	int	j;
+	int			i;
+	int			j;
+	uint32_t	key;
 
 	i = inter.min + 1;
-    while (i <= inter.max)
+	while (i <= inter.max)
 	{
-        uint32_t key = arr[i];
-        int j = i - 1;
-        
-        while (j >= inter.min && compare_obj_axis_with_bvh(arr[j], key, bvh, axis) > 0)
+		key = arr[i];
+		j = i - 1;
+		while (j >= inter.min && compare_obj_axis_with_bvh(arr[j], key, bvh, axis) > 0)
 		{
-            arr[j + 1] = arr[j];
-            j--;
-        }
-        arr[j + 1] = key;
+			arr[j + 1] = arr[j];
+			j--;
+		}
+		arr[j + 1] = key;
 		i++;
-    }
+	}
 }
 
 void	qsort_axis(uint32_t *arr, t_interval inter, t_bvh *bvh, int axis)

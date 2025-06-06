@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:21:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 17:58:47 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:34:24 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int	invalid_struct_error(t_objects type, char **splited)
 	else if (type == HYPERBOLOID)
 		print_error(ERR_HYPERBOLOID_FORMAT);
 	else if (type == CUSTOM)
-		print_error(ERR_HYPERBOLOID_FORMAT); //changer sa
+		print_error(ERR_CUSTOM_FORMAT);
 	else if (type == CYLINDER)
 		print_error(ERR_CYLINDER_FORMAT);
-	else if (type == CONE)
+	else if (type == CONE)	
 		print_error(ERR_CONE_FORMAT);
 	else if (type == MATERIAL)
 		print_error(ERR_MATERIAL_FORMAT);

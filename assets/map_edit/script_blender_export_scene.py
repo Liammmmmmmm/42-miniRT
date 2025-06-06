@@ -1,12 +1,16 @@
 import bpy
 import math
+import os
 import mathutils
 
-output_file_path = bpy.path.abspath("/home/madelvin/Documents/miniRT/scenes/aaa.rt")
+output_file_path = bpy.path.abspath("/home/madelvin/Documents/minirt/scenes/obj/windmill.rt")
+output_dir_obj = bpy.path.abspath("/home/madelvin/Documents/minirt/scenes/obj/")
+
+short_names = {}
+full_names = {}
 
 def get_material_info(material):
-    # Variables par défaut
-    color = (204, 204, 204)  # Valeur par défaut pour la couleur
+    color = (204, 204, 204)
     metallic = 0.0
     roughness = 0.5
     ior = 1.45
@@ -14,77 +18,101 @@ def get_material_info(material):
     ambient_occlusion = 1.0
     emission_strength = 0.0
     emission_color = (0, 0, 0)
-    scale = 1.0  # Valeur de scale par défaut
+    scale = 1.0
     normal_map = None
     normal_intensity = None
+    color_map = None
+    metallic_map = None
+    emission_strength_map = None
+    emission_color_map = None
+    transmission_map = None
+    ao_map = None
+    roughness_map = None
 
-    # Gestion des nodes
     if material.use_nodes and material.node_tree:
         for node in material.node_tree.nodes:
-            # Si le noeud est un BSDF Principled
             if node.type == 'BSDF_PRINCIPLED' and mat.users > 0:
-                # Color
-                color_map = None
                 if node.inputs['Base Color'].is_linked:
                     color_map = node.inputs['Base Color'].links[0].from_node.image.name
+                    for short, full in full_names.items():
+                        if os.path.splitext(full)[0] == os.path.splitext(color_map)[0]:
+                            color_map = short
+                            break
                 else:
                     c = node.inputs['Base Color'].default_value
                     color = tuple(int(c[i] * 255) for i in range(3))
 
-                # Metallic
-                metallic_map = None
                 if node.inputs['Metallic'].is_linked:
                     metallic_map = node.inputs['Metallic'].links[0].from_node.image.name
+                    for short, full in full_names.items():
+                        if os.path.splitext(full)[0] == os.path.splitext(metallic_map)[0]:
+                            metallic_map = short
+                            break
                 else:
                     metallic = node.inputs['Metallic'].default_value
 
-                # Roughness
-                roughness_map = None
                 if node.inputs['Roughness'].is_linked:
                     roughness_map = node.inputs['Roughness'].links[0].from_node.image.name
+                    for short, full in full_names.items():
+                        if os.path.splitext(full)[0] == os.path.splitext(roughness_map)[0]:
+                            roughness_map = short
+                            break
                 else:
                     roughness = node.inputs['Roughness'].default_value
 
-                # Transmission
-                transmission_map = None
                 if node.inputs['Transmission'].is_linked:
                     transmission_map = node.inputs['Transmission'].links[0].from_node.image.name
+                    for short, full in full_names.items():
+                        if os.path.splitext(full)[0] == os.path.splitext(transmission_map)[0]:
+                            transmission_map = short
+                            break
                 else:
                     transmission = node.inputs['Transmission'].default_value
 
-                # Ambient Occlusion
-                ao_map = None
                 if node.inputs.get('Ambient Occlusion', None):
                     if node.inputs['Ambient Occlusion'].is_linked:
                         ao_map = node.inputs['Ambient Occlusion'].links[0].from_node.image.name
+                        for short, full in full_names.items():
+                            if os.path.splitext(full)[0] == os.path.splitext(ao_map)[0]:
+                                ao_map = short
+                                break
                     else:
                         ambient_occlusion = node.inputs['Ambient Occlusion'].default_value
 
-                # Emission
-                emission_map = None
                 if node.inputs['Emission'].is_linked:
                     emission_map = node.inputs['Emission'].links[0].from_node.image.name
+                    for short, full in full_names.items():
+                        if os.path.splitext(full)[0] == os.path.splitext(emission_map)[0]:
+                            emission_map = short
+                            break
                 else:
                     c = node.inputs['Emission'].default_value
                     emission_color = tuple(int(c[i] * 255) for i in range(3))
                 
-                emission_strength = node.inputs['Emission Strength'].default_value
+                if node.inputs['Emission Strength'].is_linked:
+                    emission_strength_map = node.inputs['Emission Strength'].links[0].from_node.image.name
+                    for short, full in full_names.items():
+                        if os.path.splitext(full)[0] == os.path.splitext(emission_map)[0]:
+                            emission_map = short
+                            break
+                else:
+                    emission_strength = node.inputs['Emission Strength'].default_value
 
-            # Recherche d'une Normal Map : ici, on cherche un nœud "Normal Map"
             if node.type == 'TEX_IMAGE':
-                # Vérifier si cette image est connectée à un nœud "Normal Map"
                 for link in node.outputs:
                     if link.is_linked:
                         target_node = link.links[0].to_node
-                        if target_node.type == 'NORMAL_MAP':  # Vérifie si c'est un nœud de type "Normal Map"
+                        if target_node.type == 'NORMAL_MAP':
                             normal_map = node.image.name if node.image else None
-                            normal_intensity = target_node.inputs['Strength'].default_value  # Intensité normal map
+                            normal_intensity = target_node.inputs['Strength'].default_value
+                            for short, full in full_names.items():
+                                if os.path.splitext(full)[0] == os.path.splitext(normal_map)[0]:
+                                    normal_map = short
+                                    break
 
-            # MAPPING - gestion de scale
             if node.type == 'MAPPING' and node.inputs.get('Scale'):
-                scale = node.inputs['Scale'].default_value[0]  # Une seule valeur pour le scale
+                scale = node.inputs['Scale'].default_value[0]
 
-    # Retourne les informations du matériau
     return {
         'name': material.name.replace(' ', '_'),
         'color': color_map if color_map else color,
@@ -93,23 +121,56 @@ def get_material_info(material):
         'ior': ior,
         'transmission': transmission_map if transmission_map else transmission,
         'ambient_occlusion': ao_map if ao_map else ambient_occlusion,
-        'emission_strength': emission_strength,
-        'emission_color': emission_map if emission_map else emission_color,
+        'emission_strength': emission_strength_map if emission_strength_map else emission_strength,
+        'emission_color': emission_color_map if emission_color_map else emission_color,
         'scale': scale,
         'normal_map': normal_map,
         'normal_intensity': normal_intensity,
     }
 
+def format_value(val, width=15, float_precision=6):
+    """
+    Formate la valeur selon son type :
+    - float : format {:.6f} aligné à gauche avec largeur width
+    - tuple/list : converti en string "r, g, b" (limitée à 13 caractères)
+    - str : tronqué à width caractères
+    - None ou autre : chaîne vide
+    """
+    if val is None:
+        return " " * width
+    elif isinstance(val, (float, int)):
+        # Format flottant aligné à gauche sur width
+        return f"{val:<{width}.{float_precision}f}"
+    elif isinstance(val, (tuple, list)):
+        s = ", ".join(f"{v:.3f}" if isinstance(v, float) else str(v) for v in val)
+        return f"{s[:width]:<{width}}"
+    elif isinstance(val, str):
+        return f"{val[:width]:<{width}}"
+    else:
+        # Cas inattendu
+        return f"{str(val)[:width]:<{width}}"
 
-# Object filters
+def make_unique_short_name(name, max_len=10):
+    image_base = name
+    base = name[:max_len-3]  # on garde de la place pour suffixe
+    base = ''.join(c for c in base if c.isalnum() or c == '_')  # éviter les caractères bizarres
+    candidate = base
+    i = 1
+    while candidate in short_names:
+        candidate = f"{base[:max_len - len(str(i))]}{i}"
+        i += 1
+    short_names[candidate] = name
+    full_names[candidate] = image_base
+    return candidate
+
 def is_sphere(obj): 
-    return obj.type == 'MESH' and 'Sphere' in obj.name
+    return obj.type == 'MESH' and obj.name.lower().startswith("sp_")
 
 def is_plane(obj): 
-    return obj.type == 'MESH' and 'Plane' in obj.name
+    return obj.type == 'MESH' and obj.name.lower().startswith("pl_")
 
 def is_cylinder(obj): 
-    return obj.type == 'MESH' and 'Cylinder' in obj.name
+    return obj.type == 'MESH' and obj.name.lower().startswith("cy_")
 
 def is_pointlight(obj): 
     return obj.type == 'LIGHT' and obj.data.type == 'POINT'
@@ -122,18 +183,27 @@ def is_custom(obj):
 
 def get_custom_info(obj):
     location = tuple(round(coord, 10) for coord in (obj.location.x, obj.location.z, -obj.location.y))
-
-    # Orientation réelle dans le monde (transforme le vecteur avant)
-    orientation_vec = obj.matrix_world.to_3x3() @ mathutils.Vector((0.0, 0.0, 1.0))
+    orientation_vec = obj.matrix_world.to_3x3() @ mathutils.Vector((0.0, -1.0, 0.0))
     orientation_vec = orientation_vec.normalized()
     orientation = tuple(round(coord, 10) for coord in (orientation_vec.x, orientation_vec.z, -orientation_vec.y))
     scale_x = obj.scale.x
     scale_y = obj.scale.y
     scale_z = obj.scale.z
     material = obj.active_material.name if obj.active_material else "None"
-    name = obj.name.lower()
+    bpy.ops.object.select_all(action='DESELECT')
+    obj.select_set(True)
+    bpy.context.view_layer.objects.active = obj
+    export_path = os.path.join(output_dir_obj, f"{obj.name}.obj")
+    if not os.path.exists(export_path):
+        bpy.ops.export_scene.obj(
+            filepath=export_path,
+            use_selection=True,
+            use_materials=True,
+            axis_forward='-Z',
+            axis_up='Y'
+        )
+    name = export_path
     return location, orientation, scale_x, scale_y, scale_z, material, name
-
 
 
 def get_sphere_info(obj):
@@ -150,9 +220,9 @@ def get_plane_info(obj):
     return location, normal, material
 
 def get_cylinder_info(obj):
-    location = tuple(round(coord, 10) for coord in (obj.location.x, obj.location.z, -obj.location.y))  # Inversé Y et Z
+    location = tuple(round(coord, 10) for coord in (obj.location.x, obj.location.z, -obj.location.y))
     orientation = obj.matrix_world.to_3x3() @ mathutils.Vector((0.0, 0.0, 1.0))
-    orientation = tuple(round(n, 10) for n in (orientation.x, orientation.z, -orientation.y))  # Inversé Y et Z
+    orientation = tuple(round(n, 10) for n in (orientation.x, orientation.z, -orientation.y))
     diameter = obj.dimensions.x
     height = obj.dimensions.z
     material = obj.active_material.name if obj.active_material else "None"
@@ -183,65 +253,70 @@ def get_world_background_info():
     return (0, 0, 0), 0.0
 
 
-# Créer un matériau par défaut
 def create_default_material():
-    # Vérifier si le matériau existe déjà
     if "DefaultMaterial" not in bpy.data.materials:
-        # Créer un nouveau matériau par défaut
         default_mat = bpy.data.materials.new(name="DefaultMaterial")
         default_mat.use_nodes = True
-        # Optionnellement, tu peux modifier les propriétés du matériau ici
-        default_mat.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (1, 1, 1, 1)  # Blanc
-        default_mat.node_tree.nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.5  # Rouillé
+        default_mat.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (1, 1, 1, 1)
+        default_mat.node_tree.nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.5
     else:
         default_mat = bpy.data.materials["DefaultMaterial"]
-    
     return default_mat
 
-# Attribuer le matériau par défaut aux objets sans matériau
 def assign_default_material_to_objects():
     default_mat = create_default_material()
-
     for obj in bpy.context.scene.objects:
         if obj.type == 'MESH' and len(obj.data.materials) == 0:
-            # Si l'objet n'a pas de matériaux, lui attribuer le matériau par défaut
             obj.data.materials.append(default_mat)
 
-# Write to file
 with open(output_file_path, 'w') as file:
     assign_default_material_to_objects()
+    bpy.ops.object.select_all(action='DESELECT')
+
+    for obj in bpy.data.objects:
+        name = obj.name
+        if not name.startswith("cu_") and "cy_" not in name and "sp_" not in name:
+            old_name = obj.name
+            obj.name = "cu_" + obj.name
+
+    file.write("# TEXTURES\n")
+    file.write("#\tn   name  type   path\n")
+    for image in bpy.data.images:
+        if image.filepath:
+            abs_path = bpy.path.abspath(image.filepath)
+            if os.path.exists(abs_path):
+                short_name = make_unique_short_name(image.name)
+                line = f"tex {short_name} image {abs_path}"
+                file.write(line + "\n")
+    file.write("\n")
     file.write("# MATERIALS\n")
     file.write("#\tname                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength     emission_color   scale      normal_map      normal_intensity\n")
-    
     for mat in bpy.data.materials:
         if mat.name != 'Dots Stroke':
             info = get_material_info(mat)
-            
-            # Formattage de la ligne pour chaque matériau
+
             line = (
-                f"mat\t{info['name']:<30}"  # 35 caractères pour le nom
-                f"{', '.join(map(str, info['color']))[:13] if isinstance(info['color'], (tuple, list)) else info['color'][:13]:<18}"  # 18 caractères pour la couleur
-                f"{info['metallic']:<15.6f}"  # Le metallic, formatté en float
-                f"{info['roughness']:<15.6f}"  # Le roughness, formatté en float
-                f"{info['ior']:<15.6f}"  # L'IOR, formatté en float
-                f"{info['transmission']:<15.6f}"  # La transmission, formatté en float
-                f"{info['ambient_occlusion']:<20.6f}"  # Ambient occlusion, formatté en float
-                f"{info['emission_strength']:<22.6f}"  # Emission strength, formatté en float
-                f"{', '.join(map(str, info['emission_color'])) if isinstance(info['emission_color'], (tuple, list)) else info['emission_color']:<14}"  # Emission color
+                f"mat\t{format_value(info.get('name', ''), width=30, float_precision=0)}"
+                f"{format_value(info.get('color'), width=18)}"
+                f"{format_value(info.get('metallic'), width=15)}"
+                f"{format_value(info.get('roughness'), width=15)}"
+                f"{format_value(info.get('ior'), width=15)}"
+                f"{format_value(info.get('transmission'), width=15)}"
+                f"{format_value(info.get('ambient_occlusion'), width=20)}"
+                f"{format_value(info.get('emission_strength'), width=22)}"
+                f"{format_value(info.get('emission_color'), width=14)}"
             )
 
-            # Ajout du scale si disponible
-            if info['scale'] is not None:
-                line += f"   {info['scale']:.6f}"
-            
-            # Si un normal map existe, on ajoute le nom et l'intensité
-            if info['normal_map']:
-                line += f"   {info['normal_map'][:13]}   {info['normal_intensity']:.6f} "
-                
-            # Affichage de la ligne formattée dans le fichier
+            if info.get('scale') is not None:
+                line += f"   {format_value(info['scale'], width=10)}"
+
+            if info.get('normal_map'):
+                normal_map_str = str(info['normal_map'])[:13]
+                normal_intensity_str = format_value(info.get('normal_intensity'), width=10)
+                line += f"   {normal_map_str:<13}   {normal_intensity_str}"
+
             file.write(line + "\n")
-            
-    # Objects
+
     spheres, planes, cylinders, pointlights, cameras, custom = [], [], [], [], [], []
 
     for obj in bpy.context.scene.objects:
@@ -272,10 +347,13 @@ with open(output_file_path, 'w') as file:
                              f"{dia:<15.6f}{h:<15.6f}{mat:<20}\n")
         elif is_custom(obj):
             loc, ori, scale_x, scale_y, scale_z, mat, name = get_custom_info(obj)
-            custom.append(f"cu\t{loc[0]:>12.6f},{loc[1]:>12.6f},{loc[2]:>12.6f}      "
-                             f"{ori[0]:>12.6f},{ori[1]:>12.6f},{ori[2]:>12.6f}         "
-                             f"{scale_x:>12.6f},{scale_y:>12.6f},{scale_z:>12.6f}"
-                             f"{name:>17}{mat:>19}\n")
+            custom.append(
+                f"cu\t{loc[0]:>12.6f},{loc[1]:>12.6f},{loc[2]:>12.6f}      "
+                f"{ori[0]:>12.6f},{ori[1]:>12.6f},{ori[2]:>12.6f}         "
+                f"{scale_x:>12.6f},{scale_y:>12.6f},{scale_z:>12.6f}   "
+                f"{name:<40}"
+                f"{mat:>19}\n"
+            )
 
     if spheres:
         file.write("\n# SPHERES\n#\t    origin                                      diameter       material\n")
@@ -289,14 +367,13 @@ with open(output_file_path, 'w') as file:
     if pointlights:
         file.write("\n# LIGHTS\n#\t    origin                                      intensity          color\n")
         file.writelines(pointlights)
-    if cameras:
-        file.write("\n# CAMERA\n#\t    origin                                      orientation                                    field of view\n")
-        file.writelines(cameras)
     if custom:
         file.write("\n# CUSTOM\n#\t    origin                                      orientation                                    scale                                     path                material\n")
         file.writelines(custom)
+    if cameras:
+        file.write("\n# CAMERA\n#\t    origin                                      orientation                                    field of view\n")
+        file.writelines(cameras)
 
     ambient_color, ambient_strength = get_world_background_info()
     file.write("\n# AMBIENT\n#\tstrength             color\n")
     file.write(f"A\t{ambient_strength:<20.6f}{ambient_color[0]:>3},{ambient_color[1]:>3},{ambient_color[2]:>3}\n")
-    

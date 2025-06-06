@@ -6,79 +6,13 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/31 12:28:13 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:18:27 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bvh.h"
 #include "minirt.h"
 #include <math.h>
-
-void	split_bvh_node(t_bvh *bvh, uint32_t index, uint32_t start, \
-	uint32_t count)
-{
-	const t_aabb	bounds = bvh->bvh_nodes[index].node_bounds;
-	const t_vec3	extent = vec3_subtract(bounds.max, bounds.min);
-	int				axis;
-	uint32_t		left;
-	uint32_t		right;
-
-	if (extent.x > extent.y && extent.x > extent.z)
-		axis = 0;
-	else if (extent.y > extent.z)
-		axis = 1;
-	else
-		axis = 2;
-	qsort_axis(bvh->prim_indices + start, \
-		(t_interval){0, count - 1}, bvh, axis);
-	left = build_bvh(bvh, start, (start + count / 2) - start);
-	right = build_bvh(bvh, (start + count / 2), start + count - (start + \
-		count / 2));
-	bvh->bvh_nodes[index].left_child = left;
-	bvh->bvh_nodes[index].right_child = right;
-}
-
-t_bvh_node	init_bvh_node(t_bvh *bvh, uint32_t start, uint32_t count)
-{
-	t_bvh_node	node;
-	t_aabb		bounds;
-	t_aabb		b;
-	uint32_t	i;
-
-	bounds = \
-		compute_object_bounds(bvh->obj_list[bvh->prim_indices[start]]);
-	i = 0;
-	while (i < count)
-	{
-		b = compute_object_bounds(bvh->obj_list[bvh->prim_indices[start + i]]);
-		bounds.min = vec3_fmin(bounds.min, b.min);
-		bounds.max = vec3_fmax(bounds.max, b.max);
-		i++;
-	}
-	node.node_bounds = bounds;
-	node.first_prim = start;
-	node.prim_count = count;
-	node.is_leaf = (count == 1);
-	node.left_child = 0;
-	node.right_child = 0;
-	return (node);
-}
-
-uint32_t	build_bvh(t_bvh *bvh, uint32_t start, uint32_t count)
-{
-	t_bvh_node	node;
-	uint32_t	index;
-
-	node = init_bvh_node(bvh, start, count);
-	index = bvh->bvh_nodes_used++;
-	if (node.is_leaf)
-		bvh->actual++;
-	print_progress_bar(bvh->actual, bvh->size);
-	bvh->bvh_nodes[index] = node;
-	if (!node.is_leaf)
-		split_bvh_node(bvh, index, start, count);
-	return (index);
-}
 
 void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 {
@@ -96,7 +30,9 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	bvh->actual = 0;
 	bvh->size = count;
 	bvh->normal_mode = normal_mode;
+	bvh->bvh_nodes_used = 0;
 	print_progress_bar(0, count);
 	build_bvh(bvh, 0, count);
+	free(bvh->task_stack.data);
 	ft_printf("\n\n");
 }

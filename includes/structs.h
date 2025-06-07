@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/06/06 15:42:37 by lilefebv         ###   ########lyon.fr   */
@@ -388,6 +388,14 @@ typedef struct s_obj_lst
 	int			plane_nb;
 }	t_obj_lst;
 
+typedef struct s_bvh_task
+{
+	uint32_t	start;
+	uint32_t	count;
+	uint32_t	parent;
+	char		is_left;
+}	t_bvh_task;
+
 typedef struct s_bvh_node
 {
 	t_aabb		node_bounds;
@@ -402,7 +410,7 @@ typedef struct s_bvh
 {
 	uint32_t	*prim_indices;
 	t_bvh_node	*bvh_nodes;
-	uint16_t	bvh_nodes_used;	
+	uint32_t	bvh_nodes_used;	
 	t_object	**obj_list;
 	uint32_t	*closest_t;
 	uint32_t	node_index;
@@ -410,6 +418,7 @@ typedef struct s_bvh
 	uint32_t	size;
 	uint32_t	actual;
 	int			normal_mode;
+	t_vector	task_stack;
 }	t_bvh;
 
 typedef struct s_axis

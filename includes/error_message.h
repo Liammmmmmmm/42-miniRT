@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_message.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:15:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/02 09:40:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/03 17:34:03 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define ERR_PLANE_FORMAT "Invalid plane. Expected: pl "BLUE"<x,y,z> <x,y,z> <r,g,b|material>"NC
 # define ERR_CYLINDER_FORMAT "Invalid cylinder. Expected: cy "BLUE"<x,y,z> <x,y,z> <diameter> <height> <r,g,b|material> [top_material] [bottom_material]"NC
 # define ERR_HYPERBOLOID_FORMAT "Invalid hyperboloid. Expected: hb "BLUE"<x,y,z> <x,y,z> <height> <a> <b> <c> <shape> <r,g,b|material>"NC
+# define ERR_CUSTOM_FORMAT "Invalid 3d obj. Expected: cu "BLUE"<x,y,z> <x,y,z> <x,y,z> <r,g,b|material>"NC
 # define ERR_CONE_FORMAT "Invalid cone. Expected: co "BLUE"<x,y,z> <x,y,z> <diameter> <height> <r,g,b|material> [top_material]"NC
 # define ERR_MATERIAL_FORMAT "Invalid material. Expected: mat "BLUE"<name> <albedo> <metallic> <roughness> <ior> <transmission> <emission_strength> <emission_color> [tex_scale] [normal_map] [normal_intensity]"NC
 # define ERR_TEXTURE_FORMAT "Invalid texture. Expected: tex "BLUE"<name> <filepath>"NC

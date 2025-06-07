@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_extract_color.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:50:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/27 18:42:07 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:46:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	extract_32bpp_pixel(t_bin *bin, size_t *i, uint32_t *value)
 
 int	extract_pixel(t_bin *bin, size_t *i, t_bmp *bmp, uint32_t *value)
 {
+	*value = 0;
 	if (bmp->info.bpp == 1)
 		return (extract_palette_pixel(bin, i, value, bmp));
 	else if (bmp->info.bpp == 4)

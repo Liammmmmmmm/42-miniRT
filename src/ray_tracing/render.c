@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 15:07:30 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 10:25:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "material.h"
 #include <math.h>
 
-void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
+void	calc_one_sample(t_minirt *minirt, t_vec3 offset, int max_bounces)
 {
 	t_fcolor			color;
 	const t_uint	tpi = minirt->viewport.render_w * minirt->viewport.render_h;
@@ -38,7 +38,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 		if (minirt->scene.bvh.normal_mode)
 			color = path_trace_normal(minirt, ray);
 		else
-			color = path_trace(minirt, ray, 5);
+			color = path_trace(minirt, ray, max_bounces);
 		minirt->screen.float_render[i].r += color.r;
 		minirt->screen.float_render[i].g += color.g;
 		minirt->screen.float_render[i].b += color.b;
@@ -66,7 +66,7 @@ void	draw_pixels(t_minirt *minirt)
 
 	minirt->screen.last_sample_time = get_cpu_time();
 	offset = vec3_random();
-	calc_one_sample(minirt, offset);
+	calc_one_sample(minirt, offset, (int)minirt->controls.max_bounces);
 	minirt->screen.sample++;
 	minirt->screen.sample_total_anim++;
 	minirt->screen.last_sample_am = minirt->screen.sample;

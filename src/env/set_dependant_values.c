@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:36:26 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/04 15:54:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 11:45:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,34 @@ void	set_values_mat(t_mat *mat)
 	mat->roughness_value = clamp_double(mat->roughness_value);
 }
 
+void	general_scene_info(t_minirt *minirt)
+{
+	t_fcolor	*new_render;
+	minirt->scene.camera.orientation = vec3_unit(minirt->scene.camera.orientation);
+	minirt->controls.max_bounces = round(minirt->controls.max_bounces);
+	minirt->controls.res_render_x = round(minirt->controls.res_render_x);
+	minirt->controls.res_render_y = round(minirt->controls.res_render_y);
+	if ((int)minirt->controls.res_render_x != minirt->scene.render_width
+		|| (int)minirt->controls.res_render_y != minirt->scene.render_height)
+	{
+		minirt->scene.render_width = (int)minirt->controls.res_render_x;
+		minirt->scene.render_height = (int)minirt->controls.res_render_y;
+		new_render = malloc(sizeof(t_fcolor) * minirt->scene.render_width * minirt->scene.render_height);
+		if (new_render)
+		{
+			free(minirt->screen.float_render);
+			minirt->screen.float_render = new_render;
+		}
+	}
+	if ((!minirt->scene.amb_light.skybox_t || minirt->scene.amb_light.skybox_t->type != HDR) && minirt->scene.amb_light.ratio < 0)
+		minirt->scene.amb_light.ratio = 0;
+}
+
 void	set_dependant_values(t_minirt *minirt)
 {
 	int	i;
-	
+
+	general_scene_info(minirt);
 	i = -1;
 	while (++i < minirt->scene.el_amount)
 	{

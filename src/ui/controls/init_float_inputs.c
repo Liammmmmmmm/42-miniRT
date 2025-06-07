@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 13:42:29 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 14:33:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 12:33:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,68 @@ void	init_mat_float_input(t_minirt *minirt)
 	minirt->controls.float_input[18].width = 190;
 }
 
+void	init_camera_float_inputs(t_minirt *minirt)
+{
+	base_tiers_float_input(&minirt->controls.float_input[19]);
+	minirt->controls.float_input[19].x = 25;
+	minirt->controls.float_input[19].y = 44;
+	base_tiers_float_input(&minirt->controls.float_input[20]);
+	minirt->controls.float_input[20].x = 120;
+	minirt->controls.float_input[20].y = 44;
+	base_tiers_float_input(&minirt->controls.float_input[21]);
+	minirt->controls.float_input[21].x = 220;
+	minirt->controls.float_input[21].y = 44;
+
+	base_tiers_float_input(&minirt->controls.float_input[22]);
+	minirt->controls.float_input[22].x = 25;
+	minirt->controls.float_input[22].y = 114;
+	base_tiers_float_input(&minirt->controls.float_input[23]);
+	minirt->controls.float_input[23].x = 120;
+	minirt->controls.float_input[23].y = 114;
+	base_tiers_float_input(&minirt->controls.float_input[24]);
+	minirt->controls.float_input[24].x = 220;
+	minirt->controls.float_input[24].y = 114;
+
+	minirt->scene.camera.focus_dist = 1;
+	base_tiers_float_input(&minirt->controls.float_input[25]);
+	minirt->controls.float_input[25].x = 160;
+	minirt->controls.float_input[25].y = 214;
+	minirt->controls.float_input[25].width = 130;
+	base_tiers_float_input(&minirt->controls.float_input[26]);
+	minirt->controls.float_input[26].x = 160;
+	minirt->controls.float_input[26].y = 244;
+	minirt->controls.float_input[26].width = 130;
+}
+
+void	ambiant_and_more(t_minirt *minirt)
+{
+	base_tiers_float_input(&minirt->controls.float_input[27]);
+	minirt->controls.float_input[27].x = 100;
+	minirt->controls.float_input[27].y = 374;
+	minirt->controls.float_input[27].width = 190;
+	base_tiers_float_input(&minirt->controls.float_input[28]);
+	minirt->controls.float_input[28].x = 140;
+	minirt->controls.float_input[28].y = 454;
+	minirt->controls.float_input[28].width = 150;
+	link_float_input(&minirt->controls.float_input[28], &minirt->controls.max_bounces);
+	base_tiers_float_input(&minirt->controls.float_input[29]);
+	minirt->controls.float_input[29].x = 140;
+	minirt->controls.float_input[29].y = 484;
+	link_float_input(&minirt->controls.float_input[29], &minirt->controls.res_render_x);
+	base_tiers_float_input(&minirt->controls.float_input[30]);
+	minirt->controls.float_input[30].x = 220;
+	minirt->controls.float_input[30].y = 484;
+	link_float_input(&minirt->controls.float_input[30], &minirt->controls.res_render_y);
+	base_tiers_float_input(&minirt->controls.float_input[31]);
+	minirt->controls.float_input[31].x = 100;
+	minirt->controls.float_input[31].y = 574;
+	minirt->controls.float_input[31].width = 190;
+	link_float_input(&minirt->controls.float_input[31], &minirt->viewport.gamma);
+}
+
 int	init_float_inputs(t_minirt *minirt)
 {
-	minirt->controls.nb_float_input = 19;
+	minirt->controls.nb_float_input = 32;
 	minirt->controls.float_input = ft_calloc(minirt->controls.nb_float_input,
 			sizeof(t_float_input));
 	if (!minirt->controls.float_input)
@@ -115,6 +174,8 @@ int	init_float_inputs(t_minirt *minirt)
 	minirt->controls.float_input[10].x = 400;
 	minirt->controls.float_input[10].y = 1025;
 	init_mat_float_input(minirt);
+	init_camera_float_inputs(minirt);
+	ambiant_and_more(minirt);
 	return (1);
 }
 

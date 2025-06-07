@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/02 12:37:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 15:42:36 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,10 @@ inline t_fcolor	add_skybox(t_minirt *minirt, t_ray *ray,
 	{
 		return (add_fcolor(*data.accumulation, multiply_fcolor(\
 multiply_scalar_fcolor(get_background_color(minirt, *ray), \
-minirt->scene.amb_light.ratio * hit_record->mat->ao_value), *data.power)));
+hit_record->mat->ao_value), *data.power)));
 	}
-	return (add_fcolor(*data.accumulation, multiply_fcolor(\
-	multiply_scalar_fcolor(get_background_color(minirt, *ray),
-					minirt->scene.amb_light.ratio), *data.power)));
+	return (add_fcolor(*data.accumulation, multiply_fcolor(
+		get_background_color(minirt, *ray), *data.power)));
 }
 
 t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)

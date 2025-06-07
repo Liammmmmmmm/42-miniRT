@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/03 18:47:00 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:42:37 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,6 +320,13 @@ typedef enum e_objects
 	WINDOW
 }	t_objects;
 
+typedef enum e_upscalings
+{
+	NO_UPSCALING,
+	BILINEAR,
+	BICUBIC
+}	t_upscalings;
+
 typedef struct s_object
 {
 	void		*object;
@@ -478,7 +485,7 @@ typedef struct s_viewport
 	float	width;
 	int		render_w;
 	int		render_h;
-	float	gamma;
+	double	gamma;
 	t_vec3	u;
 	t_vec3	v;
 	t_vec3	pixel_delta_u;
@@ -539,7 +546,7 @@ typedef struct s_controls
 	int				nb_sliders;
 	t_int_slider	*sliders;
 	int				nb_color_picker;
-	t_color_picker	color_picker[3];
+	t_color_picker	color_picker[4];
 	int				nb_dropdown;
 	t_dropdown		*dropdown;
 	int				nb_float_input;
@@ -551,6 +558,10 @@ typedef struct s_controls
 	int				selected_x;
 	int				selected_y;
 	t_vec3			traced_ray[11];
+	double			max_bounces;
+	double			res_render_x;
+	double			res_render_y;
+	void			*selected_upscaling;
 }	t_controls;
 
 typedef struct s_obj_anim

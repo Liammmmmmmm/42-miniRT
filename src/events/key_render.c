@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:37:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 15:20:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 13:53:59 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	keydown_render(int key, t_minirt *minirt)
 		if (filename)
 			export_ppm_p6_minirt(filename, minirt);
 	}
+	else if (key == KEY_SPACE)
+		minirt->screen.pause_render = !minirt->screen.pause_render;
 	keydown_common(key, minirt);
 	if (key == minirt->controls.open_controls)
 	{

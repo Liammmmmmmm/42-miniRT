@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/04 16:50:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 15:34:57 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,7 @@ t_fcolor	get_solid_texture_default(t_vec3 point, double scale);
 int			init_plane_light_lst(t_minirt *minirt);
 
 t_fcolor	get_hdr_pixel(t_hdr *hdr, int x, int y);
+t_fcolor	get_hdr_pixel_skybox(t_minirt *minirt, t_hdr *hdr, int x, int y);
 
 
 // V2 

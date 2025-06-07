@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/02 11:45:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 14:26:19 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	no_upscaling_float(t_minirt *minirt)
 	if (divide == 0)
 		divide = 1;
 	i = 0;
-	gamma_corr = 1.0 / (minirt->controls.values.gamma / 10.0); // 1 gamma default, la correction est deja appliquee par l'écran ._.
+	gamma_corr = 1.0 / minirt->viewport.gamma;
 	tpix = minirt->mlx.img.width * minirt->mlx.img.height;
 	point.z = 0;
 	if (gamma_corr == 1.0)
@@ -77,9 +77,9 @@ void	no_upscaling_float(t_minirt *minirt)
 		point.x = i % minirt->mlx.img.width;
 		point.y = i / minirt->mlx.img.width;
 		
-		point.color.r = pow(clamp_double(minirt->screen.float_render[i].r / divide), gamma_corr) * 255;
-		point.color.g = pow(clamp_double(minirt->screen.float_render[i].g / divide), gamma_corr) * 255;
-		point.color.b = pow(clamp_double(minirt->screen.float_render[i].b / divide), gamma_corr) * 255;
+		point.color.r = clamp_double(pow(minirt->screen.float_render[i].r / divide, gamma_corr)) * 255;
+		point.color.g = clamp_double(pow(minirt->screen.float_render[i].g / divide, gamma_corr)) * 255;
+		point.color.b = clamp_double(pow(minirt->screen.float_render[i].b / divide, gamma_corr)) * 255;
 		put_sp_image(&minirt->mlx.img, &point);
 		i++;
 	}
@@ -112,7 +112,7 @@ void	put_render_to_buff(t_minirt *minirt)
 	if (divide == 0)
 		divide = 1;
 	y = 0;
-	gamma_corr = 1.0 / (minirt->controls.values.gamma / 10.0);
+	gamma_corr = 1.0 / minirt->viewport.gamma;
 	if (gamma_corr == 1)
 	{
 		while (y < minirt->scene.win_height)
@@ -139,9 +139,9 @@ void	put_render_to_buff(t_minirt *minirt)
 			{
 				i = (int)((float)y / (minirt->scene.win_height - 1) * (minirt->scene.render_height - 1)) * minirt->scene.render_width + (int)((float)x / (minirt->scene.win_width - 1) * (minirt->scene.render_width - 1));
 				minirt->screen.render[y * (minirt->scene.win_width) + x] = ((int)(
-					((int)(pow(clamp_double(minirt->screen.float_render[i].r / divide) * 255, gamma_corr)) << 16) + 
-					((int)(pow(clamp_double(minirt->screen.float_render[i].g / divide) * 255, gamma_corr)) << 8) + 
-					(int)(pow(clamp_double(minirt->screen.float_render[i].b / divide) * 255, gamma_corr))));
+					((int)(clamp_double(pow(minirt->screen.float_render[i].r / divide, gamma_corr)) * 255) << 16) + 
+					((int)(clamp_double(pow(minirt->screen.float_render[i].g / divide, gamma_corr)) * 255) << 8) + 
+					(int)(clamp_double(pow(minirt->screen.float_render[i].b / divide, gamma_corr)) * 255)));
 				x++;
 			}
 			y++;

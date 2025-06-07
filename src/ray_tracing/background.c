@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   background.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:37:08 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/30 15:49:28 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:43:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_fcolor	get_background_color(t_minirt *minirt, t_ray ray)
 	double	v;
 
 	if (minirt->scene.amb_light.skybox_t == NULL)
-		return (color_to_fcolor(minirt->scene.amb_light.skybox_c));
+		return (multiply_scalar_fcolor(color_to_fcolor(minirt->scene.amb_light.skybox_c), minirt->scene.amb_light.ratio));
 	else
 	{
 		ray.dir = vec3_unit(ray.dir);
@@ -30,10 +30,10 @@ t_fcolor	get_background_color(t_minirt *minirt, t_ray ray)
 			i = minirt->scene.amb_light.skybox_t->img.width
 				* (int)(v * minirt->scene.amb_light.skybox_t->img.height)
 				+ (int)(u * minirt->scene.amb_light.skybox_t->img.width);
-			return (color_to_fcolor(minirt->scene.amb_light.skybox_t->img.pixel_data[i]));
+			return (multiply_scalar_fcolor(color_to_fcolor(minirt->scene.amb_light.skybox_t->img.pixel_data[i]), minirt->scene.amb_light.ratio));
 		}
 		else if (minirt->scene.amb_light.skybox_t->type == HDR && minirt->scene.amb_light.skybox_t->hdr.pixels)
-			return (clamp_fcolor_val(get_hdr_pixel(&minirt->scene.amb_light.skybox_t->hdr, u * (minirt->scene.amb_light.skybox_t->hdr.width - 1), v * (minirt->scene.amb_light.skybox_t->hdr.height - 1)), 0.0, 16.0));
+			return (clamp_fcolor_val(get_hdr_pixel_skybox(minirt, &minirt->scene.amb_light.skybox_t->hdr, u * (minirt->scene.amb_light.skybox_t->hdr.width - 1), v * (minirt->scene.amb_light.skybox_t->hdr.height - 1)), 0.0, 16.0));
 		else
 		{
 			return ((t_fcolor){0.0, 0.0, 0.0});

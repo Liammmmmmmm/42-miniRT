@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:19:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 16:44:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 13:45:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	text_input_type(t_text_input *text_input, int key, int is_shift_down)
 			else
 				text_input->text[text_input->cursor_pos] = key;
 			text_input->cursor_pos++;
-			if (text_input->cursor_pos >= 256)
+			if (text_input->cursor_pos < 256)
 				text_input->text[text_input->cursor_pos] = 0;
 		}
 		else if (key == 65288 && text_input->cursor_pos > 0)

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:33:35 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/03/25 16:35:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 12:36:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,8 @@ void	init_controls(t_minirt *minirt)
 	minirt->controls.open_controls = KEY_C;
 	minirt->controls.selected_x = -1;
 	minirt->controls.selected_y = -1;
+	minirt->controls.max_bounces = 10;
+	minirt->controls.res_render_x = minirt->scene.render_width;
+	minirt->controls.res_render_y = minirt->scene.render_height;
+	minirt->viewport.gamma = 1.0;
 }

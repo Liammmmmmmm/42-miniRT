@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:20:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/31 10:55:22 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/10 16:58:08 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,13 @@ void	draw_selected_object(t_minirt *minirt)
 {
 	t_aabb	box;
 
-	if (minirt->controls.ui_infos.selected_object == NULL || \
-		minirt->controls.ui_infos.selected_object->type == NULL_OBJ || \
-		minirt->controls.ui_infos.selected_object->type == PLANE)
+	if (minirt->controls.ui_infos.selected_object == NULL ||
+		minirt->controls.ui_infos.selected_object->type == NULL_OBJ ||
+		minirt->controls.ui_infos.selected_object->type == PLANE ||
+		minirt->controls.ui_infos.selected_object->type == LIGHT ||
+		minirt->controls.ui_infos.selected_object->type == DIRECTIONAL_LIGHT ||
+		minirt->controls.ui_infos.selected_object->type == NULL_OBJ
+	)
 		return ;
 	box = compute_object_bounds(minirt->controls.ui_infos.selected_object);
 	copy_buff_to_image(minirt);

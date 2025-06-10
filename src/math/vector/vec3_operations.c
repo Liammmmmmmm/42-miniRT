@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec3_operations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:44:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/10 16:56:48 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/10 16:52:32 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

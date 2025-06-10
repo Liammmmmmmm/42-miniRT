@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:55:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/04 16:58:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 15:37:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	base_tab_btn(t_button *button, t_minirt *minirt, int action)
 	button->action = &change_tab;
 }
 
-void	add_rm_object_btn(t_button *button, t_button *button_rm, t_minirt *minirt)
+void	add_rm_object_btn(t_button *button, t_button *button_rm,
+	t_minirt *minirt)
 {
 	base_button(button, minirt);
 	button->width = 250;
@@ -99,21 +100,7 @@ int	init_buttons(t_minirt *minirt)
 	minirt->controls.buttons[3].x = 310;
 	minirt->controls.buttons[4].x = 410;
 	minirt->controls.buttons[3].background_color = UI_SEP_COLOR;
-	add_rm_object_btn(&minirt->controls.buttons[5], &minirt->controls.buttons[6], minirt);
+	add_rm_object_btn(&minirt->controls.buttons[5],
+		&minirt->controls.buttons[6], minirt);
 	return (1);
-}
-
-void	clear_buttons(t_minirt *minirt)
-{
-	int	i;
-
-	if (!minirt->controls.buttons)
-		return ;
-	i = -1;
-	while (++i < minirt->controls.nb_buttons)
-	{
-		free(minirt->controls.buttons[i].text);
-		free(minirt->controls.buttons[i].param);
-	}
-	free(minirt->controls.buttons);
 }

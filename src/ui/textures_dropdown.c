@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:56:17 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/02 11:57:40 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 15:12:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 static void	draw_dropdown_tex(t_img *img, t_minirt *m, t_dropdown *d, int i)
 {
-	int	i1;
-	int	i2;
-	int	tmp;
+	int			i1;
+	int			i2;
+	int			tmp;
 	t_point2	p;
 
 	if (dropdown_common_define(d, &i1, &i2, i) == 0)
@@ -61,7 +61,8 @@ void	display_tex_dropdown(t_minirt *minirt, t_dropdown *dropdown)
 	minirt->controls.font[0].size = 20;
 	minirt->controls.font[0].color = 0xFFFFFF;
 	if (dropdown->active)
-		draw_dropdown_select_box_tex(&minirt->mlx.img_controls, dropdown, minirt);
+		draw_dropdown_select_box_tex(&minirt->mlx.img_controls, dropdown,
+			minirt);
 	draw_main_box(&minirt->mlx.img_controls, dropdown);
 	if (!dropdown->selected || !*dropdown->selected)
 		draw_string(&minirt->mlx.img_controls, &minirt->controls.font[0],
@@ -92,14 +93,13 @@ static void	get_selected_tex_dropdown(t_minirt *minirt, t_dropdown *dropdown, \
 			- dropdown->scroll_offset;
 		i2 = dropdown->y + dropdown->height + 25 + (i + 1) * 25
 			- dropdown->scroll_offset;
-		if (mouse_y > i1 && mouse_y < i2)
-		{
-			if (i < 0)
-				*dropdown->selected = NULL;
-			else
-				*dropdown->selected = &minirt->scene.textures[i];
-			return ;
-		}
+		if (!(mouse_y > i1 && mouse_y < i2))
+			continue ;
+		if (i < 0)
+			*dropdown->selected = NULL;
+		else
+			*dropdown->selected = &minirt->scene.textures[i];
+		return ;
 	}
 	minirt->controls.ui_infos.selected_object = NULL;
 }

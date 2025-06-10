@@ -6,13 +6,13 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 12:48:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/03 13:20:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 15:24:38 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_mat	create_default_mat()
+t_mat	create_default_mat(void)
 {
 	t_mat	mat;
 

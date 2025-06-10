@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:13:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/05 16:00:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 15:07:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,11 @@ void	init_focal_sliders_value(t_minirt *minirt)
 	minirt->controls.sliders[0].width = 220;
 	minirt->controls.sliders[0].value = &minirt->controls.values.fov;
 	minirt->controls.values.gamma = 10;
-	// minirt->controls.sliders[3].min = 1;
-	// minirt->controls.sliders[3].max = 50;
-	// minirt->controls.sliders[3].value = &minirt->controls.values.gamma;
-	// minirt->controls.values.upscaling_ratio = 100;
-	// minirt->controls.sliders[4].min = 0;
-	// minirt->controls.sliders[4].max = 100;
-	// minirt->controls.sliders[4].value
-	// 	= &minirt->controls.values.upscaling_ratio;
-	// minirt->controls.sliders[5].min = 0;
-	// minirt->controls.sliders[5].max = 2;
-	// minirt->controls.sliders[5].value
-	// 	= &minirt->controls.values.upscaling_selected;
-	// minirt->controls.values.upscaling_selected = 0;
 }
 
 void	init_focal_sliders(t_minirt *minirt)
 {
 	base_slider(&minirt->controls.sliders[0]);
-	// base_slider(&minirt->controls.sliders[1]);
-	// base_slider(&minirt->controls.sliders[2]);
-	// base_slider(&minirt->controls.sliders[3]);
-	// base_slider(&minirt->controls.sliders[4]);
-	// base_slider(&minirt->controls.sliders[5]);
 	init_focal_sliders_value(minirt);
 }
 

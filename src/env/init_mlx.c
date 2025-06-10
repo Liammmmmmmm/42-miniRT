@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/06 10:17:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 15:10:02 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ int	init_mlx(t_minirt *minirt)
 		minirt->scene.win_width = 600;
 		minirt->scene.win_height = 190;
 	}
-	mlx->render_win = mlx_new_window(mlx->mlx, minirt->scene.win_width, minirt->scene.win_height, "miniRT");
-	mlx->img.img = mlx_new_image(mlx->mlx, minirt->scene.win_width, minirt->scene.win_height);
+	mlx->render_win = mlx_new_window(mlx->mlx, minirt->scene.win_width,
+		minirt->scene.win_height, "miniRT");
+	mlx->img.img = mlx_new_image(mlx->mlx, minirt->scene.win_width,
+		minirt->scene.win_height);
 	if (!mlx->img.img || !mlx->render_win)
 		return (free_mlx_error(minirt));
 	mlx->img.img_str = mlx_get_data_addr(mlx->img.img, &mlx->img.bits,
@@ -91,13 +93,18 @@ int	init_mlx(t_minirt *minirt)
 int	init_render(t_minirt *minirt)
 {
 	if (!minirt->options.no_display)
-		minirt->screen.render = malloc(sizeof(int) * minirt->scene.win_width * minirt->scene.win_height);
-	minirt->screen.float_render = malloc(sizeof(t_fcolor) * minirt->scene.render_width * minirt->scene.render_height);
-	if (!minirt->screen.float_render || (!minirt->screen.render && !minirt->options.no_display))
+		minirt->screen.render = malloc(sizeof(int) * minirt->scene.win_width * \
+		minirt->scene.win_height);
+	minirt->screen.float_render = malloc(sizeof(t_fcolor) * \
+	minirt->scene.render_width * minirt->scene.render_height);
+	if (!minirt->screen.float_render || (!minirt->screen.render
+			&& !minirt->options.no_display))
 		return (0);
 	if (!minirt->options.no_display)
-		ft_bzero(minirt->screen.render, sizeof(int) * minirt->scene.win_width * minirt->scene.win_height);
-	ft_bzero(minirt->screen.float_render, sizeof(t_fcolor) * minirt->scene.render_width * minirt->scene.render_height);
+		ft_bzero(minirt->screen.render, sizeof(int) * minirt->scene.win_width
+			* minirt->scene.win_height);
+	ft_bzero(minirt->screen.float_render, sizeof(t_fcolor)
+		* minirt->scene.render_width * minirt->scene.render_height);
 	minirt->stats.frame = 0;
 	minirt->screen.start_render = 1;
 	minirt->screen.pause_render = 0;

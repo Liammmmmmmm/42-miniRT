@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:22:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 15:43:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 16:57:19 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ int		mouse_down_custom(int key, int x, int y, t_minirt *minirt);
 int		mouse_down_directional_light(int x, int y, t_minirt *minirt);
 int		mouse_down_selected_object(int key, int x, int y, t_minirt *minirt);
 int		color_picker_stop_minirt(t_minirt *minirt, int x, int y,
+		t_color_picker *cp);
+int		color_picker_stop_minirt_mat(t_minirt *minirt, int x, int y,
 		t_color_picker *cp);
 void	float_input_position(t_minirt *minirt, int x, int y);
 void	float_input_orientation(t_minirt *minirt, int x, int y);

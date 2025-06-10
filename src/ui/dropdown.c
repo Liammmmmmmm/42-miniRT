@@ -6,18 +6,19 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:23:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 13:36:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 15:11:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ui.h"
 
-void	draw_triangle_point(t_img *img, t_dropdown *dropdown, int width, t_point2 p)
+void	draw_triangle_point(t_img *img, t_dropdown *dropdown, int width,
+	t_point2 p)
 {
 	while (width > 0)
 	{
-		draw_box_2d(img, (t_point2){p.x - width / 2, p.y}, (t_point2){p.x + width
-			/ 2, p.y + 1}, 0x0);
+		draw_box_2d(img, (t_point2){p.x - width / 2, p.y}, (t_point2){p.x
+			+ width / 2, p.y + 1}, 0x0);
 		width--;
 		if (dropdown->active)
 			p.y--;

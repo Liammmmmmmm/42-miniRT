@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:22:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 14:50:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 15:43:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,19 @@ void	clear_sliders(t_minirt *minirt);
 void	click_start_stop(void *vparam);
 void	clear_buttons(t_minirt *minirt);
 
+const char	*get_upscaling_name(t_upscalings up);
+void	init_choose_object(t_minirt *minirt);
+void	init_tex_dropdown(t_minirt *minirt);
+void	base_dropdown_tex(t_dropdown *dropdown);
+void	base_dropdown(t_dropdown *dropdown);
 int		init_dropdowns(t_minirt *minirt);
 void	clear_dropdown(t_minirt *minirt);
 
+void	ambiant_and_more(t_minirt *minirt);
+void	init_mat_float_input(t_minirt *minirt);
+void	mat_float_input(t_float_input *input);
+void	base_tiers_float_input(t_float_input *input);
+void	base_two_tiers_float_input(t_float_input *input);
 int		init_float_inputs(t_minirt *minirt);
 void	clear_float_inputs(t_minirt *minirt);
 
@@ -74,6 +84,11 @@ int		mouse_down_dropdown(int key, t_point2 pos, t_dropdown *d);
 
 void	change_tab(void *vparam);
 
+void	set_selected_hyperboloid(t_minirt *minirt, t_hyperboloid *obj);
+void	set_selected_cone(t_minirt *minirt, t_cone *obj);
+void	set_selected_cylinder(t_minirt *minirt, t_cylinder *obj);
+void	set_selected_plane(t_minirt *minirt, t_plane *obj);
+void	set_selected_sphere(t_minirt *minirt, t_sphere *obj);
 void	set_selected_object(t_minirt *minirt, t_object *obj);
 int		mouse_down_obj(t_minirt *minirt, int key, int mouse_x, int mouse_y);
 void	draw_list_objects(t_minirt *minirt);
@@ -111,7 +126,15 @@ void	float_input_orientation(t_minirt *minirt, int x, int y);
 int		manage_scroll_selected_object(int key, int x, int y, t_minirt *minirt);
 int		material_tab_events(int key, int x, int y, t_minirt *minirt);
 
-double	parse_expression(const char *expr);
+void	add_material(t_minirt *minirt);
+void	create_default_sphere(t_object *obj);
+void	create_default_cyl(t_object *obj);
+void	create_default_cone(t_object *obj);
+void	create_default_hyperboloid(t_object *obj);
+void	create_default_plane(t_object *obj);
+void	add_object(void *vparam);
+void	rm_object(void *vparam);
 
+double	parse_expression(const char *expr);
 
 #endif

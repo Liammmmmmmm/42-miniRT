@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:56:17 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/06 15:54:32 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 15:21:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 static void	draw_dropdown_select_box_def(t_img *img, t_dropdown *d, \
 	t_minirt *m)
 {
-	int	i;
-	int	i1;
-	int	i2;
-	int	tmp;
+	int			i;
+	int			i1;
+	int			i2;
+	int			tmp;
 	t_point2	p;
 
 	draw_dropdown_select_box(img, d);
@@ -46,8 +46,9 @@ static void	draw_dropdown_select_box_def(t_img *img, t_dropdown *d, \
 
 const char	*get_selected_text(t_dropdown *dropdown)
 {
-	int i = 0;
-	
+	int	i;
+
+	i = 0;
 	while (i < dropdown->val_amount)
 	{
 		if (dropdown->values[i].ref == *dropdown->selected)
@@ -59,12 +60,13 @@ const char	*get_selected_text(t_dropdown *dropdown)
 
 void	display_dropdown(t_minirt *minirt, t_dropdown *dropdown)
 {
-	const char *text = get_selected_text(dropdown);
+	const char	*text = get_selected_text(dropdown);
 
 	minirt->controls.font[0].size = 20;
 	minirt->controls.font[0].color = 0xFFFFFF;
 	if (dropdown->active)
-		draw_dropdown_select_box_def(&minirt->mlx.img_controls, dropdown, minirt);
+		draw_dropdown_select_box_def(&minirt->mlx.img_controls, dropdown,
+			minirt);
 	draw_main_box(&minirt->mlx.img_controls, dropdown);
 	if (!dropdown->selected || !text)
 		draw_string(&minirt->mlx.img_controls, &minirt->controls.font[0],
@@ -73,7 +75,7 @@ void	display_dropdown(t_minirt *minirt, t_dropdown *dropdown)
 	else
 		draw_string(&minirt->mlx.img_controls, &minirt->controls.font[0],
 			text, (t_point2){dropdown->x + 3,
-				dropdown->y + dropdown->height - 3});
+			dropdown->y + dropdown->height - 3});
 }
 
 static void	get_selected_dropdown(t_dropdown *dropdown, \

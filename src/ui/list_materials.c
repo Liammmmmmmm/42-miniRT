@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:11:42 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/03 12:19:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 15:14:10 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ void	draw_material(t_img *img, t_ttf *ttf, t_minirt *minirt, int i)
 	tmp = img->height;
 	img->height = 260;
 	draw_horizontal_line(img, i2, 301, 600);
-	if (&minirt->scene.materials[i] == minirt->controls.ui_infos.selected_material)
+	if (&minirt->scene.materials[i]
+		== minirt->controls.ui_infos.selected_material)
 		draw_box_2d(img, (t_point2){301, i1}, (t_point2){600, i2}, 0x433366);
 	else
 		draw_box_2d(img, (t_point2){301, i1}, (t_point2){600, i2}, 0x3D3943);
 	draw_string(img, ttf, minirt->scene.materials[i].name,
-			(t_point2){.x = 320, .y = i2 - 20 + ((get_height(ttf)) * 0.5)});
+		(t_point2){.x = 320, .y = i2 - 20 + ((get_height(ttf)) * 0.5)});
 	img->height = tmp;
 }
 
@@ -43,9 +44,8 @@ void	draw_list_materials(t_minirt *minirt)
 	minirt->controls.font[0].size = 30;
 	minirt->controls.font[0].color = 0xFFFFFF;
 	while (++i < minirt->scene.mat_amount)
-	{
-		draw_material(&minirt->mlx.img_controls, &minirt->controls.font[0], minirt, i);
-	}
+		draw_material(&minirt->mlx.img_controls, &minirt->controls.font[0],
+			minirt, i);
 }
 
 void	get_clicked_mat(t_minirt *minirt, int mouse_y)
@@ -61,8 +61,10 @@ void	get_clicked_mat(t_minirt *minirt, int mouse_y)
 		i2 = 70 + i * 40 - minirt->controls.ui_infos.materials_scroll_offset;
 		if (mouse_y > i1 && mouse_y < i2)
 		{
-			minirt->controls.ui_infos.selected_material = &minirt->scene.materials[i];
-			set_selected_mat(minirt, minirt->controls.ui_infos.selected_material);
+			minirt->controls.ui_infos.selected_material
+				= &minirt->scene.materials[i];
+			set_selected_mat(minirt,
+				minirt->controls.ui_infos.selected_material);
 			return ;
 		}
 	}
@@ -72,6 +74,7 @@ void	get_clicked_mat(t_minirt *minirt, int mouse_y)
 int	mouse_down_mat(t_minirt *minirt, int key, int mouse_x, int mouse_y)
 {
 	const int	max_scroll = imax(40 * (minirt->scene.mat_amount + 1) - 240, 0);
+
 	if (mouse_y > 260 || mouse_x < 300 || mouse_y < 30 || mouse_x > 600)
 		return (0);
 	if (key == SCROLL_DOWN)
@@ -90,4 +93,3 @@ int	mouse_down_mat(t_minirt *minirt, int key, int mouse_x, int mouse_y)
 		get_clicked_mat(minirt, mouse_y);
 	return (1);
 }
-

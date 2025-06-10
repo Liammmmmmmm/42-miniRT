@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:53:44 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 13:02:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 15:00:17 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ void	setcolor(t_img *img, uint32_t color)
 
 void	init_layout(t_img *img, t_minirt *minirt)
 {
-	t_ttf	*ttf = &minirt->controls.font[0];
+	t_ttf	*ttf;
 
+	ttf = &minirt->controls.font[0];
 	setcolor(img, UI_BACK_COLOR);
 	draw_vertical_line(img, 300, 0, img->height);
 	minirt->controls.font[0].size = 30;

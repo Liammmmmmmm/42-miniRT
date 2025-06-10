@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:41:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 13:02:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 14:59:51 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ void	draw_texts(t_img *img, t_minirt *minirt, t_ttf *ttf)
 
 void	draw_left_layout(t_img *img, t_minirt *minirt)
 {
-	t_ttf	*ttf = &minirt->controls.font[0];
+	t_ttf	*ttf;
 
+	ttf = &minirt->controls.font[0];
 	draw_texts(img, minirt, ttf);
 	minirt->controls.font[0].size = 15;
 	display_float_input(img, &minirt->controls.float_input[19], ttf);

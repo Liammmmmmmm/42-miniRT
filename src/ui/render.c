@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/04 13:29:58 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 15:15:53 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	render_ui(t_minirt *minirt)
 	while (++i < minirt->controls.nb_sliders)
 		display_slider_int(&minirt->mlx.img_controls,
 			minirt->controls.sliders[i]);
-
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.controls_win,
 		minirt->mlx.img_controls.img, 0, 0);
 }

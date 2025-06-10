@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/05 15:34:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 13:03:11 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ void	rm_object(void *vparam);
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
 int		init_micrort(t_minirt *minirt);
-void	put_micrort_to_image(t_minirt *minirt);
 void	render_micrort(t_minirt *minirt);
 
 

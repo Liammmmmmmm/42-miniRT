@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/05 11:43:05 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/06/10 14:49:34 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,9 @@ UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_cir
 UI_DIR				= src/ui/
 UI_FILE				= controls/button_click.c controls/init_buttons.c controls/init_float_inputs.c controls/init_text_inputs.c \
 					controls/init_sliders.c controls/init_color_picker.c controls/init_dropdown.c controls/add_material.c controls/add_object.c controls/rm_object.c \
-					render.c layout.c layout_left.c list_objects.c list_materials.c selected_object.c selected_mat.c \
+					render/layout.c render/layout_left.c render/material_tab.c render/object_prop2.c render/object_prop3.c render/object_prop.c render/objects_tab.c \
+					mouse_events/global.c mouse_events/materials.c mouse_events/objects2.c mouse_events/objects.c mouse_events/utils.c\
+					render.c list_objects.c list_materials.c selected_object.c selected_mat.c \
 					dropdown.c dropdown2.c materials_dropdown.c default_dropdown.c textures_dropdown.c 
 
 DEBUG_DIR			= src/debug/

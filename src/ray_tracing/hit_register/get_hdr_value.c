@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_hdr_value.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:13:39 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/05 15:39:40 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 20:17:47 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ t_fcolor	get_hdr_pixel_skybox(t_minirt *minirt, t_hdr *hdr, int x, int y)
 {
 	double			scale;
 	double			gamma_corr;
-	const double	exposure = hdr->exposure + minirt->scene.amb_light.ratio - 1;
+	const double	exposure
+		= hdr->exposure + minirt->scene.amb_light.ratio - 1;
 
 	if (exposure == 0)
 		scale = ldexp(1.0, hdr->pixels[y * hdr->width + x].e - 128);

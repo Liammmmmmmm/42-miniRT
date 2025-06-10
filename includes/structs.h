@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/06 15:42:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 20:28:01 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -495,6 +495,7 @@ typedef struct s_viewport
 	double	defocus_radius;
 	t_vec3	defocus_disk_u;
     t_vec3	defocus_disk_v;
+	int		max_bounces;
 }	t_viewport;
 
 typedef struct s_keydown

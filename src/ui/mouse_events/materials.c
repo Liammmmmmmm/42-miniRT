@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   materials.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:44:17 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 17:01:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 18:55:09 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	material_tab_dropdowns2(int key, int x, int y, t_minirt *minirt)
 int	material_tab_dropdowns(int key, int x, int y, t_minirt *minirt)
 {
 	if (color_picker_stop_minirt_mat(minirt, x, y,
-		&minirt->controls.color_picker[1]))
+			&minirt->controls.color_picker[1]))
 		return (1);
 	if (color_picker_stop_minirt_mat(minirt, x, y,
 			&minirt->controls.color_picker[2]))

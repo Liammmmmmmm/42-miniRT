@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 14:38:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 18:49:41 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:54:32 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	set_text_color(char *str, int *i, t_point *p)
 void	string_to_img(t_img *img, unsigned char font[96][5], t_point p, \
 	char *str)
 {
-	int	xstart; //fonction inutiliser
+	int	xstart;
 	int	i;
 
 	xstart = p.x;
@@ -61,7 +61,7 @@ void	string_to_img(t_img *img, unsigned char font[96][5], t_point p, \
 			p.x += 6;
 		}
 		str++;
-	}
+	}//fonction inutiliser
 }
 
 int	string_size(char *str)

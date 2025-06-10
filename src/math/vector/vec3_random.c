@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:35:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/08 20:23:55 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:41:09 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,4 @@ t_vec3	vec3_random_unit(void)
 		if (1e-160 < lensq && lensq <= 1.0)
 			return (vec3_divide_scalar(p, sqrt(lensq)));
 	}
-}
-
-t_vec3	vec3_random_on_hemisphere(const t_vec3 normal)
-{
-	t_vec3	on_unit_sphere;
-
-	on_unit_sphere = vec3_random_unit();
-	if (vec3_dot(on_unit_sphere, normal) >= 0.0)
-		return (on_unit_sphere);
-	return (vec3_negate(on_unit_sphere));
-}
-
-t_vec3	vec3_random_sample(void)
-{
-	return ((t_vec3){random_double() - 0.5, random_double() - 0.5, 0});
 }

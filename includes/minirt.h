@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 15:27:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 18:48:34 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,6 @@ void	export_ppm_p6_minirt(const char *filename, t_minirt *minirt);
 int		init_mlx(t_minirt *minirt);
 void	free_mlx(t_minirt *minirt);
 
-void	put_sp_image(t_img *img, t_sc_point *sp);
 void	put_pixel_image(t_img *img, int x, int y, int color);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
@@ -244,7 +243,6 @@ void		neighbor_upscale(t_minirt *minirt);
 void		lanczos3_upscale(t_minirt *minirt);
 void		bicubic_upscale(t_minirt *minirt);
 void		no_upscaling(t_minirt *minirt);
-void		no_upscaling_float(t_minirt *minirt);
 
 int		parse_obj(char *file, t_custom_object *obj);
 

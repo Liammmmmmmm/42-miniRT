@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pixel.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 14:30:43 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 13:20:12 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 18:39:11 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,4 @@ void	put_pixel_image_alpha(t_img *img, int x, int y, t_color_alpha color)
 {
 	put_pixel_image(img, x, y, calc_gradiant_color(get_pixel_color(img, x, y),
 			color.color, color.alpha));
-}
-
-void	put_sp_image(t_img *img, t_sc_point *sp)
-{
-	if (sp->x >= img->width || sp->y >= img->height)
-		return ;
-	((int *)img->img_str + (sp->x) + (img->width * sp->y))[0] = \
-		(int)((sp->color.r << 16) + (sp->color.g << 8) + sp->color.b);
 }

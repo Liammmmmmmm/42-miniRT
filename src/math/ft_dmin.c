@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:15:05 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/25 17:02:06 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:45:35 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,6 @@ inline double	ft_dmax(double a, double b)
 	if (a > b)
 		return (a);
 	return (b);
-}
-
-t_vec3	vec3_abs(t_vec3 v)
-{
-	return ((t_vec3){
-		fabs(v.x),
-		fabs(v.y),
-		fabs(v.z)
-	});
 }
 
 t_vec3	vec3_min(t_vec3 a, t_vec3 b)

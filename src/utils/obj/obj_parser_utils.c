@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:42:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/23 16:21:44 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:47:43 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,6 @@ void	ft_free_tab_face(t_face *tab, size_t i)
 		free(tab[c].v_idx);
 		free(tab[c].vn_idx);
 		free(tab[c].vt_idx);
-		c++;
-	}
-	free(tab);
-}
-
-void	ft_free_tab_triangle(t_triangle **tab, size_t i)
-{
-	size_t	c;
-
-	c = 0;
-	while (c < i)
-	{
-		free(tab[c]);
 		c++;
 	}
 	free(tab);

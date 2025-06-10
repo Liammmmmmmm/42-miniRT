@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/30 16:11:42 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:45:38 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,8 @@ t_vec3	vec3_subtract(register t_vec3 u, register t_vec3 v);
 t_vec3	vec3_add(const t_vec3 u, const t_vec3 v);
 t_vec3	vec3_multiply(const t_vec3 u, const t_vec3 v);
 t_vec3	vec3_multiply_scalar(const t_vec3 v, double t);
-t_vec3	vec3_divide(t_vec3 a, t_vec3 b);
 t_vec3	vec3_divide_scalar(const t_vec3 v, double t);
 t_vec3	vec3_divide_safe(t_vec3 a, t_vec3 b, double	min);
-t_vec3	vec3_add_scalar(t_vec3 vec, double t);
-t_vec3	vec3_subtract_scalar(t_vec3 vec, double t);
-t_vec3	vec3_sqrt(t_vec3 v);
 t_vec3	vec3_lerp(t_vec3 a, t_vec3 b, double t);
 
 /*	Length and squared length calculation	*/
@@ -42,17 +38,9 @@ t_vec3	vec3_fmin(t_vec3 a, t_vec3 b);
 /*	Utility functions	*/
 t_vec3	vec3_unit(const t_vec3 v);
 t_vec3	vec3_negate(const t_vec3 v);
-t_vec3	vec3_init(double x, double y, double z);
 t_vec3	vec3_random();
 
 double	ft_dmin(double a, double b);
-
-t_color	color_add(t_color c1, t_color c2);
-t_color	color_sub(t_color c1, t_color c2);
-t_color	color_scale(t_color c1, double ratio);
-t_color	color_multiply(t_color c1, t_color c2);
-
-t_color	color_add_clamp(t_color c1, t_color c2);
 
 t_fcolor	color_to_fcolor(t_color color);
 t_fcolor	multiply_scalar_fcolor(t_fcolor c1, double c);
@@ -64,8 +52,6 @@ t_fcolor	clamp_fcolor_val(t_fcolor color, double min, double max);
 
 t_vec3	vec3_random();
 t_vec3	vec3_random_unit();
-t_vec3	vec3_random_sample();
-t_vec3	vec3_random_on_hemisphere(const t_vec3 normal);
 t_vec3	vec3_random_in_interval(double min, double max);
 
 double	ft_dmin(double a, double b);
@@ -93,7 +79,6 @@ char	init_cone_quadratic(t_quadratic *q, t_cone *cone, t_ray *r);
 char	init_sphere_quadratic(t_quadratic *q, t_sphere *s, t_ray *r);
 char	init_hyperboloid_quadratic(t_quadratic *q, t_hyperboloid *h, t_ray *r);
 
-t_vec3	vec3_abs(t_vec3 v);
 t_vec3	vec3_min(t_vec3 a, t_vec3 b);
 t_vec3	vec3_max(t_vec3 a, t_vec3 b);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 14:38:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 16:12:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 18:49:41 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	set_text_color(char *str, int *i, t_point *p)
 void	string_to_img(t_img *img, unsigned char font[96][5], t_point p, \
 	char *str)
 {
-	int	xstart;
+	int	xstart; //fonction inutiliser
 	int	i;
 
 	xstart = p.x;

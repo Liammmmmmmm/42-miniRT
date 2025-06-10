@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:34:41 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/14 14:17:50 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:40:23 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,6 @@ inline double	get_reflect_value(t_ray *ray_in, t_hit_record *hit_record)
 				/ (hit_record->mat->ior + 1), 2)
 		)
 	);
-}
-
-inline double	ggx_distribution(double cos_theta, double roughness)
-{
-	const double	alpha = roughness * roughness;
-	const double	denom = cos_theta * cos_theta * (alpha - 1.0) + 1.0;
-	
-	return alpha / (PI_D * denom * denom);
 }
 
 inline t_vec3	ggx_sample_hemisphere(t_vec3 normal, double roughness)

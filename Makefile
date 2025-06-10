@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/10 15:46:30 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/06/10 18:50:04 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ ERASE    = \033[2K\r
 ERASE2   = $(ERASE)\033[F$(ERASE)
 
 # Compiler and flags
-CC       = cc
+CC       = gcc
 CFLAGS   = -Wall -Wextra -Werror
 LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm
 DEBUG_FLAGS = -g3
@@ -91,7 +91,7 @@ EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c  key_render.c  m
 
 RAY_TRACING_DIR		= src/ray_tracing/
 RAY_TRACING_FILE	= render.c init_animated_items.c focus.c light.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c \
-					bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_print.c bvh/bvh_draw.c bvh/bvh_draw_utils.c bvh/bvh_obj_bounds.c\
+					bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c bvh/bvh_draw_utils.c bvh/bvh_obj_bounds.c\
 					setup_scene_obj.c background.c viewport.c path_trace.c hit_register/apply_map.c hit_register/get_hdr_value.c \
 					hit_register/get_hit_color.c hit_register/get_tex_color.c hit_register/hit_register.c hit_register/hit_obj.c \
 					bvh/bvh_hit.c micrort.c bvh/bvh_build.c
@@ -111,7 +111,7 @@ MAT_FILE			= utils.c dielectric.c material_default.c metallic.c refraction.c
 MATH_DIR			= src/math/
 MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/vec3_length.c vector/vec3_lerp.c \
 					vector/vec3_utils.c vector/vec3_random.c vector/vec3_operation_scalar.c normal/normal.c \
-					color/color_operation.c color/fcolor_operation.c color/color_utils.c ft_dmin.c plane/hit_plane.c sphere/hit_sphere.c random.c \
+					color/fcolor_operation.c ft_dmin.c plane/hit_plane.c sphere/hit_sphere.c random.c \
 					matrix/matrix.c matrix/matrix_calc.c angle/angle_math.c matrix/matrix3.c fresnel_schlick.c \
 					cylinder/hit_cylinder.c quadratique/quadratique.c quadratique/quadratique_hyperboloid.c \
 					cone/hit_cone.c valid_t.c clamp_int.c hyperboloid/hit_hyperboloid.c triangle/hit_triangle.c \

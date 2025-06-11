@@ -6,110 +6,140 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:58:05 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/20 13:40:06 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/11 22:12:42 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	get_value_v(char *line, t_obj_temp *tmp, char *error)
+static char	*skip_space(char *str)
 {
-	t_vec3	vec;
-	char	**co;
-
-	if (*error != 0 || ft_strncmp(line, "v ", 2) != 0)
-		return ;
-	co = ft_split_in_line(line + 2, " ");
-	if (!co)
-	{
-		print_error("malloc error in obj parser");
-		*error = 1;
-		return ;
-	}
-	if (char_tab_len(co) != 3)
-	{
-		print_error("malloc error in obj parser");
-		free(co);
-		*error = 1;
-		return ;
-	}
-	vec.x = ft_atod(co[0]);
-	vec.y = ft_atod(co[1]);
-	vec.z = ft_atod(co[2]);
-	free(co);
-	tmp->v[tmp->v_count++] = vec;
-	return ;
+	while (*str == ' ' || *str == '\t')
+		str++;
+	return (str);
 }
 
-void	get_value_vn(char *line, t_obj_temp *tmp, char *error)
+static void parse_vec(char *line, t_vector *vec_array, int dim)
 {
-	t_vec3	vec;
-	char	**co;
+	t_vec3 v = {0};
+	char *ptr = line;
 
-	if (*error != 0 || ft_strncmp(line, "vn ", 3) != 0)
-		return ;
-	co = ft_split_in_line(line + 3, " ");
-	if (!co)
+	v.x = ft_atod(ptr);
+	ptr += ft_strlen_to(ptr, ' ') + 1;
+	v.y = ft_atod(ptr);
+	ptr += ft_strlen_to(ptr, ' ') + 1;
+	if (dim == 3)
+		v.z = ft_atod(ptr);
+	
+	if (dim == 2)
 	{
-		print_error("malloc error in obj parser");
-		*error = 1;
-		return ;
+		t_vec2 uv = {v.x, v.y};
+		vector_add(vec_array, &uv);
 	}
-	if (char_tab_len(co) != 3)
-	{
-		print_error("malloc error in obj parser");
-		free(co);
-		*error = 1;
-		return ;
-	}
-	vec.x = ft_atod(co[0]);
-	vec.y = ft_atod(co[1]);
-	vec.z = ft_atod(co[2]);
-	free(co);
-	tmp->vn[tmp->vn_count++] = vec;
-	return ;
+	else
+		vector_add(vec_array, &v);
 }
 
-void	get_value_vt(char *line, t_obj_temp *tmp, char *error)
+static int	parse_int_and_advance(char **line)
 {
-	t_vec3	uv;
-	char	**co;
+	int		val;
+	char	*p;
 
-	if (*error != 0 || ft_strncmp(line, "vt ", 3) != 0)
-		return ;
-	co = ft_split_in_line(line + 3, " ");
-	if (!co)
-	{
-		print_error("malloc error in obj parser");
-		*error = 1;
-		return ;
-	}
-	if (char_tab_len(co) < 2)
-	{
-		print_error("malloc error in obj parser");
-		free(co);
-		*error = 1;
-		return ;
-	}
-	uv.x = ft_atod(co[0]);
-	uv.y = ft_atod(co[1]);
-	uv.z = 0;
-	free(co);
-	tmp->vt[tmp->vt_count++] = uv;
-	return ;
+	p = *line;
+	val = ft_atoi(p);
+	if (*p == '+' || *p == '-')
+		p++;
+	while (ft_isdigit(*p))
+		p++;
+	*line = p;
+	return (val);
 }
 
-void	get_value_name(char *line, char **out, char *error)
+static void parse_face(char *line, t_vector *face_indices)
 {
-	if (*error != 0 || ft_strncmp(line, "o ", 2) != 0)
-		return ;
-	if (*out != NULL)
-		return ;
-	*out = ft_strdup(line + 2);
-	if (*out == NULL)
+    t_vector            corner_indices;
+    char                *ptr;
+    t_face_idx_triplet  triplet;
+
+    vector_init(&corner_indices, sizeof(t_face_idx_triplet), 4);
+    ptr = line;
+    while (*ptr)
+    {
+        ptr = skip_space(ptr);
+        if (!isdigit(*ptr) && *ptr != '-' && *ptr != '+')
+            break ;
+        triplet = (t_face_idx_triplet){0, 0, 0};
+        triplet.v_idx = parse_int_and_advance(&ptr);
+        if (*ptr == '/')
+        {
+            ptr++;
+            if (*ptr != '/')
+                triplet.vt_idx = parse_int_and_advance(&ptr);
+            if (*ptr == '/')
+            {
+                ptr++;
+                triplet.vn_idx = parse_int_and_advance(&ptr);
+            }
+        }
+        vector_add(&corner_indices, &triplet);
+    }
+    
+    if (corner_indices.num_elements >= 3)
+    {
+        for (size_t i = 1; i < corner_indices.num_elements - 1; ++i)
+        {
+            vector_add(face_indices, vector_get(&corner_indices, 0));
+            vector_add(face_indices, vector_get(&corner_indices, i));
+            vector_add(face_indices, vector_get(&corner_indices, i + 1));
+        }
+    }
+    free(corner_indices.data);
+}
+
+int read_file_to_temp_data(char *filepath, t_parser_temp_data *data)
+{
+	int		fd;
+	char	*line;
+	char	*name_start;
+	char	*name_end;
+
+	if (vector_init(&data->temp_positions, sizeof(t_vec3), 1024) == -1 ||
+		vector_init(&data->temp_normals, sizeof(t_vec3), 1024) == -1 ||
+		vector_init(&data->temp_uvs, sizeof(t_vec2), 1024) == -1 ||
+		vector_init(&data->temp_faces, sizeof(t_face_idx_triplet), 3072) == -1)
 	{
-		*error = 1;
-		return ;
+		print_error("Failed to init vector in read_file_to_temp_data");
+		return (1);
 	}
-	return ;
+	fd = open(filepath, O_RDONLY);
+	if (fd < 0)
+	{
+		print_error("Failed to open file.");
+		return (1);
+	}
+	data->object_name = NULL;
+	line = get_next_line(fd);
+	while (line)
+	{
+		if (strncmp(line, "v ", 2) == 0)
+			parse_vec(line + 2, &data->temp_positions, 3);
+		else if (ft_strncmp(line, "vn ", 3) == 0)
+			parse_vec(line + 3, &data->temp_normals, 3);
+		else if (ft_strncmp(line, "vt ", 3) == 0)
+			parse_vec(line + 3, &data->temp_uvs, 2);
+		else if (ft_strncmp(line, "f ", 2) == 0)
+			parse_face(line + 2, &data->temp_faces);
+		else if (ft_strncmp(line, "o ", 2) == 0 && !data->object_name)
+		{
+			name_start = skip_space(line + 2);
+			name_end = ft_strchr(name_start, '\n');
+			if (name_end)
+				*name_end = '\0';
+			data->object_name = ft_strdup(name_start);
+		}
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
+	return (0);
 }

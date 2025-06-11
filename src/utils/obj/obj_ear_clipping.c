@@ -6,22 +6,12 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:32:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/23 15:45:52 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/11 22:12:44 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "obj_parsing.h"
-
-inline t_vec3	rotate_around_axis(t_vec3 v, t_vec3 axis, float angle)
-{
-	const float	cos_theta = cos(angle);
-	const float	sin_theta = sin(angle);
-
-	return (vec3_add(vec3_add(vec3_multiply_scalar(v, cos_theta), \
-		vec3_multiply_scalar(vec3_cross(axis, v), sin_theta)), \
-		vec3_multiply_scalar(axis, vec3_dot(axis, v) * (1 - cos_theta))));
-}
 
 static inline void	add_position_scale(t_triangle *t, t_custom_object *obj)
 {

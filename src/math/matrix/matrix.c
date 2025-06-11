@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:07:24 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/09 17:28:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 16:28:53 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ void	init_perspective_matrix(double matrix[4][4], t_minirt *minirt)
 	const double	znear = 0.1;
 	const double	zfar = 1000.0;
 
-	matrix[0][0] = f / aspect;
+	matrix[0][0] = f;
 	matrix[0][1] = 0;
 	matrix[0][2] = 0;
 	matrix[0][3] = 0;
 	matrix[1][0] = 0;
-	matrix[1][1] = f;
+	matrix[1][1] = f * aspect;
 	matrix[1][2] = 0;
 	matrix[1][3] = 0;
 	matrix[2][0] = 0;

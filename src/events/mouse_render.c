@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:42:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/05 10:09:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 16:38:58 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	mousedown_render(int key, int x, int y, t_minirt *minirt)
 	minirt->controls.mlxr = (t_uint)x;
 	minirt->controls.mlyr = (t_uint)y;
 	mousedown_common(key, minirt);
-	if (key == LEFT_CLICK && minirt->scene.build_bvh == 0) // Ajout condition build BVH pour eviter un segfault dans le cas ou on clique sur un objet qu'on a supprimé precedamment
+	if (key == LEFT_CLICK && minirt->scene.build_bvh == 0)
 	{
 		item_null = (minirt->controls.ui_infos.selected_object == NULL);
 		minirt->controls.ui_infos.selected_object = select_object(minirt,

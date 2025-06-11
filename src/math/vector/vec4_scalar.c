@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec3_length.c                                      :+:      :+:    :+:   */
+/*   vec4_scalar.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 17:48:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/11 14:59:53 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/06/11 10:59:32 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/06/11 13:22:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
 #include "maths.h"
-#include <math.h>
+#include "vec4.h"
 
-inline double	vec3_length_squared(const t_vec3 v)
+inline t_vec4	vec4_multiply_scalar(t_vec4 v, double t)
 {
-	return (v.x * v.x + v.y * v.y + v.z * v.z);
+    return ((t_vec4){_mm256_mul_pd(v.data, _mm256_set1_pd(t))});
 }
 
-inline double	vec3_length(const t_vec3 v)
+inline t_vec4	vec4_divide_scalar(t_vec4 v, double t)
 {
-	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+    if (t == 0.0)
+        return ((t_vec4){_mm256_setzero_pd()});
+    return ((t_vec4){_mm256_div_pd(v.data, _mm256_set1_pd(t))});
 }

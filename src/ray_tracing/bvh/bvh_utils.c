@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:49:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/06 17:13:27 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:44:24 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,21 @@ uint32_t	count_object(t_object *obj_list, uint32_t obj_c)
 
 inline char	intersect_aabb(const t_ray *r, const t_aabb *b)
 {
-	register double	t1;
-	register double	t2;
-	register double	tmax;
-	register double	tmin;
+	double	t1;
+	double	tmax;
+	double	tmin;
 
 	t1 = fmin((b->min.x - r->orig.x) / r->dir.x, (b->max.x - r->orig.x)
 			/ r->dir.x);
-	t2 = fmin((b->min.y - r->orig.y) / r->dir.y, (b->max.y - r->orig.y)
-			/ r->dir.y);
-	tmin = fmax(t1, t2);
+	tmin = fmax(t1, fmin((b->min.y - r->orig.y) / r->dir.y,
+				(b->max.y - r->orig.y) / r->dir.y));
 	t1 = fmin((b->min.z - r->orig.z) / r->dir.z, (b->max.z - r->orig.z)
 			/ r->dir.z);
 	tmin = fmax(tmin, t1);
 	t1 = fmax((b->min.x - r->orig.x) / r->dir.x, (b->max.x - r->orig.x)
 			/ r->dir.x);
-	t2 = fmax((b->min.y - r->orig.y) / r->dir.y, (b->max.y - r->orig.y)
-			/ r->dir.y);
-	tmax = fmin(t1, t2);
+	tmax = fmin(t1, fmax((b->min.y - r->orig.y) / r->dir.y,
+				(b->max.y - r->orig.y) / r->dir.y));
 	t1 = fmax((b->min.z - r->orig.z) / r->dir.z, (b->max.z - r->orig.z)
 			/ r->dir.z);
 	tmax = fmin(tmax, t1);

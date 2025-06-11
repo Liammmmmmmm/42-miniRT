@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 20:37:23 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/11 12:45:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "material.h"
 #include <math.h>
 
-void	calc_one_sample_task(t_minirt *minirt, t_vec3 offset)
+void	calc_one_sample_task(t_minirt *minirt, t_vec3 offset, t_uint i, int max_bounces)
 {
 	t_fcolor		color;
 	t_ray			ray;
@@ -32,13 +32,13 @@ void	calc_one_sample_task(t_minirt *minirt, t_vec3 offset)
 	if (minirt->scene.bvh.normal_mode)
 		color = path_trace_normal(minirt, ray);
 	else
-		color = path_trace(minirt, ray, minirt->viewport.max_bounces);
+		color = path_trace(minirt, ray, max_bounces);
 	minirt->screen.float_render[i].r += color.r;
 	minirt->screen.float_render[i].g += color.g;
 	minirt->screen.float_render[i].b += color.b;
 }
 
-void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
+void	calc_one_sample(t_minirt *minirt, t_vec3 offset, int max_bounces)
 {
 	const t_uint	tpi = minirt->viewport.render_w * minirt->viewport.render_h;
 	t_uint			i;
@@ -47,7 +47,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset)
 	i = 0;
 	while (i < tpi)
 	{
-		calc_one_sample_task(minirt, offset);
+		calc_one_sample_task(minirt, offset, i, max_bounces);
 		i++;
 	}
 	if (minirt->controls.selected_x != -1 && minirt->controls.selected_y != -1)

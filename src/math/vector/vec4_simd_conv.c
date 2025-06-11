@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec3_length.c                                      :+:      :+:    :+:   */
+/*   vec4_simd_conv.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 17:48:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/11 14:59:53 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/06/11 10:05:27 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/06/11 13:22:50 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
 #include "maths.h"
-#include <math.h>
+#include "vec4.h"
 
-inline double	vec3_length_squared(const t_vec3 v)
+inline t_vec4	vec3_to_vec4(t_vec3 vec3)
 {
-	return (v.x * v.x + v.y * v.y + v.z * v.z);
+	return ((t_vec4){_mm256_set_pd(0.0, vec3.z, vec3.y, vec3.x)});
 }
 
-inline double	vec3_length(const t_vec3 v)
+inline t_vec3	vec4_to_vec3(t_vec4 v)
 {
-	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+	double	vals[4];
+
+	_mm256_storeu_pd(vals, v.data);
+	return ((t_vec3){vals[0], vals[1], vals[2]});
 }

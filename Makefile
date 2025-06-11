@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/11 15:58:24 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/06/11 17:37:04 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,7 @@ UI_FILE				= controls/button_click.c controls/init_buttons.c controls/clear_butt
 					render/layout.c render/layout_left.c render/material_tab.c render/object_prop2.c render/object_prop3.c render/object_prop.c render/objects_tab.c \
 					mouse_events/global.c mouse_events/materials.c mouse_events/objects2.c mouse_events/objects.c mouse_events/utils.c\
 					render.c list_objects.c list_materials.c selected_object.c selected_object2.c selected_mat.c \
-					dropdown.c dropdown2.c materials_dropdown.c default_dropdown.c textures_dropdown.c 
+					dropdown.c dropdown2.c materials_dropdown.c default_dropdown.c textures_dropdown.c
 
 DEBUG_DIR			= src/debug/
 DEBUG_FILE			= print_scene.c print_utils.c print_obj1.c print_obj2.c print_obj3.c debug_ray.c

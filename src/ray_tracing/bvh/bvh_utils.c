@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:49:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/11 15:43:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 15:44:24 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ uint32_t	count_object(t_object *obj_list, uint32_t obj_c)
 inline char	intersect_aabb(const t_ray *r, const t_aabb *b)
 {
 	double	t1;
-	double	t2;
 	double	tmax;
 	double	tmin;
 

@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec3_length.c                                      :+:      :+:    :+:   */
+/*   vec4_operations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 17:48:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/11 14:59:53 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/06/11 10:14:27 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/06/11 13:22:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
 #include "maths.h"
-#include <math.h>
+#include "vec4.h"
 
-inline double	vec3_length_squared(const t_vec3 v)
+inline t_vec4	vec4_add(t_vec4 u, t_vec4 v)
 {
-	return (v.x * v.x + v.y * v.y + v.z * v.z);
+	return ((t_vec4){_mm256_add_pd(u.data, v.data)});
 }
 
-inline double	vec3_length(const t_vec3 v)
+inline t_vec4	vec4_sub(t_vec4 u, t_vec4 v)
 {
-	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+	return ((t_vec4){_mm256_sub_pd(u.data, v.data)});
+}
+
+inline t_vec4	vec4_mul(t_vec4 u, t_vec4 v)
+{
+	return ((t_vec4){_mm256_mul_pd(u.data, v.data)});
+}
+
+inline t_vec4	vec4_div(t_vec4 u, t_vec4 v)
+{
+	return ((t_vec4){_mm256_div_pd(u.data, v.data)});
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_scene_obj.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 14:28:49 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/28 18:24:46 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/11 14:12:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,22 +6,12 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:32:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/23 15:45:52 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:40:28 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "obj_parsing.h"
-
-inline t_vec3	rotate_around_axis(t_vec3 v, t_vec3 axis, float angle)
-{
-	const float	cos_theta = cos(angle);
-	const float	sin_theta = sin(angle);
-
-	return (vec3_add(vec3_add(vec3_multiply_scalar(v, cos_theta), \
-		vec3_multiply_scalar(vec3_cross(axis, v), sin_theta)), \
-		vec3_multiply_scalar(axis, vec3_dot(axis, v) * (1 - cos_theta))));
-}
 
 static inline void	add_position_scale(t_triangle *t, t_custom_object *obj)
 {
@@ -64,7 +54,10 @@ char	add_single_triangle(long *e, t_vertex *vertices, t_vector *v, \
 	compute_triangle_center(&t);
 	add_position_scale(&t, obj);
 	if (vector_add(v, &t) == -1)
+	{
+		print_error("Vector add in add_single_triangle in ear_clipping.");
 		return (1);
+	}
 	(*e)++;
 	return (0);
 }
@@ -84,7 +77,11 @@ long	ear_clipping(t_vertex *vertices, size_t vertex_count, t_vector *v, \
 			NULL, (t_color){0, 0, 0}, obj};
 		compute_triangle_center(&t);
 		add_position_scale(&t, obj);
-		vector_add(v, &t);
+		if (vector_add(v, &t) == -1)
+		{
+			print_error("Vector add in ear_clipping.");
+			return (-1);
+		}
 		j = 0;
 		while (j < vertex_count - 1)
 		{

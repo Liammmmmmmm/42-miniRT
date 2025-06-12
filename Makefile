@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/11 17:37:04 by madelvin         ###   ########.fr        #
+#    Updated: 2025/06/11 21:46:37 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,9 +66,9 @@ SRC_FILE			= main.c
 UTILS_DIR			= src/utils/
 UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					bmp/bmp_extract_color.c bmp/bmp_extract_pixel.c \
-					bump_to_normal.c obj/obj_parser.c obj/obj_parser_utils.c obj/obj_parser_utils2.c \
-					obj/obj_extract_value.c obj/obj_extract_value2.c progress_bar.c \
-					obj/obj_ear_clipping.c obj/obj_triangle_extract.c obj/obj_utils.c
+					bump_to_normal.c progress_bar.c obj/obj_ear_clipping.c \
+					obj/obj_extract_value.c obj/obj_finilizer.c \
+					obj/obj_parser_utils.c obj/obj_parser.c obj/obj_utils.c obj/obj_vertex_cache.c 
 
 UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c \
@@ -87,7 +87,7 @@ DEBUG_DIR			= src/debug/
 DEBUG_FILE			= print_scene.c print_utils.c print_obj1.c print_obj2.c print_obj3.c debug_ray.c
 
 EVENT_DIR			= src/events/
-EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c  key_render.c  mouse_common.c  mouse_controls.c  mouse_render.c
+EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c key_render.c  mouse_common.c  mouse_controls.c  mouse_render.c
 
 RAY_TRACING_DIR		= src/ray_tracing/
 RAY_TRACING_FILE	= render.c init_animated_items.c focus.c light.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c \

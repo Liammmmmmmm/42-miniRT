@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements4.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:31:25 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/15 11:46:19 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 18:39:25 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,8 @@ int	parse_obj_custom(t_scene *scene, char *line)
 		return (invalid_struct_error(CUSTOM, parts));
 	if (!parse_vector(parts[3], &obj->scale))
 		return (invalid_size_error(parts));
-	if (!parse_obj(parts[4], obj))
-		return (invalid_size_error(parts)); // a changer
+	if (parse_obj(parts[4], obj))
+		return (print_error("aaaaaaaaa")); // a changer
 	if (!parse_color_or_mat(parts[5], &obj->color, &obj->material, scene))
 		return (invalid_struct_error(CUSTOM, parts));
 	free(parts);

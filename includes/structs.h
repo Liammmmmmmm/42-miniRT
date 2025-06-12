@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 20:28:01 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/11 21:19:53 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,6 +350,28 @@ typedef struct s_custom_object
 	int			index;
 	t_aabb		aabb;
 }	t_custom_object;
+
+typedef struct s_vec2
+{
+	double x;
+	double y;
+}	t_vec2;
+
+typedef struct s_vertex_indexed
+{
+	t_vec3	pos;
+	t_vec3	normal;
+	t_vec2	uv;
+}	t_vertex_indexed;
+
+typedef struct s_mesh
+{
+	t_vertex_indexed	*vertices;
+	uint32_t			*indices;
+	size_t				vertex_count;
+	size_t				index_count;
+	char				*name;
+}	t_mesh;
 
 typedef enum e_obj_part
 {

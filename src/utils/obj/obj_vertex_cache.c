@@ -30,6 +30,7 @@ static size_t	get_hash_map_size(size_t vertex_count)
 
 	if (vertex_count == 0)
 		return (1024);
+	size = vertex_count;
 	size--;
 	size |= size >> 1;
 	size |= size >> 2;

@@ -19,35 +19,45 @@ static char	*skip_space(char *str)
 	return (str);
 }
 
-static char parse_vec(char *line, t_vector *vec_array, int dim)
+static char parse_vec3(char *line, t_vector *vec_array)
 {
-	t_vec2	uv;
 	t_vec3	v;
 	char	*ptr;
 
-	v = (t_vec3){0, 0, 0};
 	ptr = line;
 	v.x = ft_atod(ptr);
 	ptr += ft_strlen_to(ptr, ' ') + 1;
 	v.y = ft_atod(ptr);
 	ptr += ft_strlen_to(ptr, ' ') + 1;
-	if (dim == 3)
-		v.z = ft_atod(ptr);
-	if (dim == 2)
+	v.z = ft_atod(ptr);
+	if (vector_add(vec_array, &v) == -1)
 	{
-		uv = (t_vec2){v.x, v.y};
-		if (vector_add(vec_array, &uv) == -1)
-		{
-			print_error("Vector add in parse_vec (uv).");
-			return (1);
-		}
+		print_error("Vector add in parse_vec (v).");
+		return (1);
 	}
-	else
-		if (vector_add(vec_array, &v) == -1)
-		{
-			print_error("Vector add in parse_vec (v).");
-			return (1);
-		}
+	return (0);
+}
+
+
+static char parse_vec2(char *line, t_vector *vec_array)
+{
+	t_vec2	uv;
+	char	*ptr;
+
+	ptr = line;
+	uv.x = ft_atod(ptr);
+	ptr += ft_strlen_to(ptr, ' ') + 1;
+	uv.y = ft_atod(ptr);
+	ptr += ft_strlen_to(ptr, ' ') + 1;
+	if (uv.x > 1 || uv.x < 0)
+		uv.x = uv.x - floor(uv.x);
+	if (uv.y > 1 || uv.y < 0)
+		uv.y = uv.y - floor(uv.y);
+	if (vector_add(vec_array, &uv) == -1)
+	{
+		print_error("Vector add in parse_vec (uv).");
+		return (1);
+	}
 	return (0);
 }
 
@@ -158,7 +168,7 @@ int read_file_to_temp_data(char *filepath, t_parser_temp_data *data)
 	{
 		if (strncmp(line, "v ", 2) == 0)
 		{
-			if (parse_vec(line + 2, &data->temp_positions, 3) == 1)
+			if (parse_vec3(line + 2, &data->temp_positions) == 1)
 			{
 				free(data->temp_positions.data);
 				free(data->temp_normals.data);
@@ -171,7 +181,7 @@ int read_file_to_temp_data(char *filepath, t_parser_temp_data *data)
 		}
 		else if (ft_strncmp(line, "vn ", 3) == 0)
 		{
-			if (parse_vec(line + 3, &data->temp_normals, 3) == 1)
+			if (parse_vec3(line + 3, &data->temp_normals) == 1)
 			{
 				free(data->temp_positions.data);
 				free(data->temp_normals.data);
@@ -184,7 +194,7 @@ int read_file_to_temp_data(char *filepath, t_parser_temp_data *data)
 		}
 		else if (ft_strncmp(line, "vt ", 3) == 0)
 		{
-			if (parse_vec(line + 3, &data->temp_uvs, 2) == 1)
+			if (parse_vec2(line + 3, &data->temp_uvs) == 1)
 			{
 				free(data->temp_positions.data);
 				free(data->temp_normals.data);
@@ -194,6 +204,7 @@ int read_file_to_temp_data(char *filepath, t_parser_temp_data *data)
 					free(data->object_name);
 				return (1);
 			}
+
 		}
 		else if (ft_strncmp(line, "f ", 2) == 0)
 		{

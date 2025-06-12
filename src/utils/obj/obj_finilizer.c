@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 20:54:41 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/11 21:01:12 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:46:34 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ int	flatten_mesh_to_object(t_custom_object *obj, t_mesh *mesh)
 	obj->triangles = malloc(sizeof(t_triangle) * obj->triangle_count);
 	obj->obj_list = malloc(sizeof(t_object) * obj->triangle_count);
 	if (!obj->triangles || !obj->obj_list)
+	{
+		if (obj->triangles)
+			free(obj->triangles);
 		return (1);
+	}
 	i = 0;
 	while (i < obj->triangle_count)
 	{

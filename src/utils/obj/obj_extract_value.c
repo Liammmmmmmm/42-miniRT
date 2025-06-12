@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:58:05 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/11 22:12:42 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:02:11 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,36 @@ static char	*skip_space(char *str)
 	return (str);
 }
 
-static void parse_vec(char *line, t_vector *vec_array, int dim)
+static char parse_vec(char *line, t_vector *vec_array, int dim)
 {
-	t_vec3 v = {0};
-	char *ptr = line;
+	t_vec2	uv;
+	t_vec3	v;
+	char	*ptr;
 
+	v = (t_vec3){0, 0, 0};
+	ptr = line;
 	v.x = ft_atod(ptr);
 	ptr += ft_strlen_to(ptr, ' ') + 1;
 	v.y = ft_atod(ptr);
 	ptr += ft_strlen_to(ptr, ' ') + 1;
 	if (dim == 3)
 		v.z = ft_atod(ptr);
-	
 	if (dim == 2)
 	{
-		t_vec2 uv = {v.x, v.y};
-		vector_add(vec_array, &uv);
+		uv = (t_vec2){v.x, v.y};
+		if (vector_add(vec_array, &uv) == -1)
+		{
+			print_error("Vector add in parse_vec (uv).");
+			return (1);
+		}
 	}
 	else
-		vector_add(vec_array, &v);
+		if (vector_add(vec_array, &v) == -1)
+		{
+			print_error("Vector add in parse_vec (v).");
+			return (1);
+		}
+	return (0);
 }
 
 static int	parse_int_and_advance(char **line)
@@ -55,18 +66,23 @@ static int	parse_int_and_advance(char **line)
 	return (val);
 }
 
-static void parse_face(char *line, t_vector *face_indices)
+static char parse_face(char *line, t_vector *face_indices)
 {
+	t_face_idx_triplet  triplet;
     t_vector            corner_indices;
     char                *ptr;
-    t_face_idx_triplet  triplet;
+	size_t				i;
 
-    vector_init(&corner_indices, sizeof(t_face_idx_triplet), 4);
+    if (vector_init(&corner_indices, sizeof(t_face_idx_triplet), 4) == -1)
+	{
+		print_error("Vector init in parse_face.");
+		return (1);
+	}
     ptr = line;
     while (*ptr)
     {
         ptr = skip_space(ptr);
-        if (!isdigit(*ptr) && *ptr != '-' && *ptr != '+')
+        if (!ft_isdigit(*ptr) && *ptr != '-' && *ptr != '+')
             break ;
         triplet = (t_face_idx_triplet){0, 0, 0};
         triplet.v_idx = parse_int_and_advance(&ptr);
@@ -81,19 +97,30 @@ static void parse_face(char *line, t_vector *face_indices)
                 triplet.vn_idx = parse_int_and_advance(&ptr);
             }
         }
-        vector_add(&corner_indices, &triplet);
+		if (vector_add(&corner_indices, &triplet) == -1)
+		{
+			print_error("Vector add in parse_face.");
+			free(corner_indices.data);
+			return (1);
+		}
     }
-    
-    if (corner_indices.num_elements >= 3)
-    {
-        for (size_t i = 1; i < corner_indices.num_elements - 1; ++i)
-        {
-            vector_add(face_indices, vector_get(&corner_indices, 0));
-            vector_add(face_indices, vector_get(&corner_indices, i));
-            vector_add(face_indices, vector_get(&corner_indices, i + 1));
-        }
+	if (corner_indices.num_elements >= 3)
+	{
+		i = 0;
+		while (++i < corner_indices.num_elements - 1)
+		{
+			if (vector_add(face_indices, vector_get(&corner_indices, 0)) == -1 \
+		|| vector_add(face_indices, vector_get(&corner_indices, i)) == -1 \
+		|| vector_add(face_indices, vector_get(&corner_indices, i + 1)) == -1)
+			{
+				print_error("Vector add in parse_face.");
+				free(corner_indices.data);
+				return (1);
+			}
+		}
     }
     free(corner_indices.data);
+	return (0);
 }
 
 int read_file_to_temp_data(char *filepath, t_parser_temp_data *data)
@@ -103,18 +130,26 @@ int read_file_to_temp_data(char *filepath, t_parser_temp_data *data)
 	char	*name_start;
 	char	*name_end;
 
+	fd = open(filepath, O_RDONLY);
+	if (fd < 0)
+	{
+		print_error("Failed to open file.");
+		return (1);
+	}
 	if (vector_init(&data->temp_positions, sizeof(t_vec3), 1024) == -1 ||
 		vector_init(&data->temp_normals, sizeof(t_vec3), 1024) == -1 ||
 		vector_init(&data->temp_uvs, sizeof(t_vec2), 1024) == -1 ||
 		vector_init(&data->temp_faces, sizeof(t_face_idx_triplet), 3072) == -1)
 	{
-		print_error("Failed to init vector in read_file_to_temp_data");
-		return (1);
-	}
-	fd = open(filepath, O_RDONLY);
-	if (fd < 0)
-	{
-		print_error("Failed to open file.");
+		if (data->temp_positions.data)
+			free(data->temp_positions.data);
+		if (data->temp_normals.data)
+			free(data->temp_normals.data);
+		if (data->temp_uvs.data)
+			free(data->temp_uvs.data);
+		if (data->temp_faces.data)
+			free(data->temp_faces.data);
+		print_error("Failed to init vector in read_file_to_temp_data.");
 		return (1);
 	}
 	data->object_name = NULL;
@@ -122,20 +157,64 @@ int read_file_to_temp_data(char *filepath, t_parser_temp_data *data)
 	while (line)
 	{
 		if (strncmp(line, "v ", 2) == 0)
-			parse_vec(line + 2, &data->temp_positions, 3);
+		{
+			if (parse_vec(line + 2, &data->temp_positions, 3) == 1)
+			{
+				free(data->temp_positions.data);
+				free(data->temp_normals.data);
+				free(data->temp_uvs.data);
+				free(data->temp_faces.data);
+				if (data->object_name)
+					free(data->object_name);
+				return (1);
+			}
+		}
 		else if (ft_strncmp(line, "vn ", 3) == 0)
-			parse_vec(line + 3, &data->temp_normals, 3);
+		{
+			if (parse_vec(line + 3, &data->temp_normals, 3) == 1)
+			{
+				free(data->temp_positions.data);
+				free(data->temp_normals.data);
+				free(data->temp_uvs.data);
+				free(data->temp_faces.data);
+				if (data->object_name)
+					free(data->object_name);
+				return (1);
+			}
+		}
 		else if (ft_strncmp(line, "vt ", 3) == 0)
-			parse_vec(line + 3, &data->temp_uvs, 2);
+		{
+			if (parse_vec(line + 3, &data->temp_uvs, 2) == 1)
+			{
+				free(data->temp_positions.data);
+				free(data->temp_normals.data);
+				free(data->temp_uvs.data);
+				free(data->temp_faces.data);
+				if (data->object_name)
+					free(data->object_name);
+				return (1);
+			}
+		}
 		else if (ft_strncmp(line, "f ", 2) == 0)
-			parse_face(line + 2, &data->temp_faces);
+		{
+			if (parse_face(line + 2, &data->temp_faces) == 1)
+			{
+				free(data->temp_positions.data);
+				free(data->temp_normals.data);
+				free(data->temp_uvs.data);
+				free(data->temp_faces.data);
+				if (data->object_name)
+					free(data->object_name);
+				return (1);
+			}
+		}
 		else if (ft_strncmp(line, "o ", 2) == 0 && !data->object_name)
 		{
 			name_start = skip_space(line + 2);
 			name_end = ft_strchr(name_start, '\n');
 			if (name_end)
 				*name_end = '\0';
-			data->object_name = ft_strdup(name_start);
+			data->object_name = ft_strdup(name_start); // a voir si c'est une erreur critique pour le moment balec
 		}
 		free(line);
 		line = get_next_line(fd);

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:32:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/11 22:12:44 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:40:28 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ char	add_single_triangle(long *e, t_vertex *vertices, t_vector *v, \
 	compute_triangle_center(&t);
 	add_position_scale(&t, obj);
 	if (vector_add(v, &t) == -1)
+	{
+		print_error("Vector add in add_single_triangle in ear_clipping.");
 		return (1);
+	}
 	(*e)++;
 	return (0);
 }
@@ -74,7 +77,11 @@ long	ear_clipping(t_vertex *vertices, size_t vertex_count, t_vector *v, \
 			NULL, (t_color){0, 0, 0}, obj};
 		compute_triangle_center(&t);
 		add_position_scale(&t, obj);
-		vector_add(v, &t);
+		if (vector_add(v, &t) == -1)
+		{
+			print_error("Vector add in ear_clipping.");
+			return (-1);
+		}
 		j = 0;
 		while (j < vertex_count - 1)
 		{

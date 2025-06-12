@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:42:51 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/12 15:24:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 16:27:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	print_err_png(char *err)
 	return (-1);
 }
 
-int	get_png_file(t_bin *bin)
+int	get_png_file(t_bin *bin, t_tex_img *img)
 {
 	t_png_info		png;
 	size_t			i;
@@ -29,6 +29,9 @@ int	get_png_file(t_bin *bin)
 	if (read_first_png_chunk(bin, &i, &png) == -1)
 		return (print_err_png(PNG_ERROR_GET_IHDR));
 	print_ihdr_chunk(&png);
+	
+	read_idat_chunks(bin, &i, img);
+
 	return (0);
 }
 
@@ -40,7 +43,7 @@ int	parse_png(char *filename, t_tex_img *img)
 		return (-1);
 	if (!read_bin_file(&bin, filename))
 		return (print_err_png("Error reading png file."));
-	if (get_png_file(&bin) == -1)
+	if (get_png_file(&bin, img) == -1)
 		return (-1);
 	free(bin.data);
 	return (0);

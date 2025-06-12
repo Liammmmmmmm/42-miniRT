@@ -6,13 +6,13 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:02:09 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/12 15:05:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 16:23:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "png_parser.h"
 
-int	cmp_chunk_name(char c[4], char t[4])
+int	is_chunk_name(char c[4], char t[4])
 {
 	if (c[0] == t[0] && c[1] == t[1] && c[2] == t[2] && c[3] == t[3])
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 10:01:15 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/12 15:30:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 16:23:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	read_first_png_chunk(t_bin *bin, size_t *i, t_png_info *png)
 		return (-1);
 	chunk_data.size = png_chunk.data_length;
 	chunk_data.data = png_chunk.data;
-	if (!cmp_chunk_name(png_chunk.type_c, "IHDR"))
+	if (!is_chunk_name(png_chunk.type_c, "IHDR"))
 		return (free_chunk_ret(&png_chunk));
 	if (read_uint32_move(&chunk_data, &y, &png->width) == -1)
 		return (free_chunk_ret(&png_chunk));

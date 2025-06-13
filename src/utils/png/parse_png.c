@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:42:51 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/12 16:27:46 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 16:34:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	get_png_file(t_bin *bin, t_tex_img *img)
 		return (print_err_png(PNG_ERROR_GET_IHDR));
 	print_ihdr_chunk(&png);
 	
-	read_idat_chunks(bin, &i, img);
+	read_idat_chunks(bin, &i, img, &png);
 
 	return (0);
 }

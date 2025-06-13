@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 10:01:15 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/12 16:23:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 16:40:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	get_png_header(t_bin *bin, size_t *i)
 	if (read_uint64_move_little(bin, i, &signature) == -1)
 		return (print_err_png("Error reading the png file"));
 	if (signature != PNG_SIGNATURE)
-		return (print_err_png("Wrong png signature"));	
+		return (print_err_png("Wrong png signature"));
 	return (0);
 }
 
@@ -27,6 +27,17 @@ static int	free_chunk_ret(t_png_chunk *png_chunk)
 {
 	free(png_chunk->data);
 	return (-1);
+}
+
+static int	read_ihdr2(t_bin *chunk_data, size_t *y, t_png_info *png)
+{
+	if (read_uint8_move(chunk_data, y, &png->compression) == -1)
+		return (-1);
+	if (read_uint8_move(chunk_data, y, &png->filter) == -1)
+		return (-1);
+	if (read_uint8_move(chunk_data, y, &png->interlace) == -1)
+		return (-1);
+	return (0);
 }
 
 int	read_first_png_chunk(t_bin *bin, size_t *i, t_png_info *png)
@@ -50,11 +61,7 @@ int	read_first_png_chunk(t_bin *bin, size_t *i, t_png_info *png)
 		return (free_chunk_ret(&png_chunk));
 	if (read_uint8_move(&chunk_data, &y, &png->color_type) == -1)
 		return (free_chunk_ret(&png_chunk));
-	if (read_uint8_move(&chunk_data, &y, &png->compression) == -1)
-		return (free_chunk_ret(&png_chunk));
-	if (read_uint8_move(&chunk_data, &y, &png->filter) == -1)
-		return (free_chunk_ret(&png_chunk));
-	if (read_uint8_move(&chunk_data, &y, &png->interlace) == -1)
+	if (read_ihdr2(&chunk_data, &y, png) == -1)
 		return (free_chunk_ret(&png_chunk));
 	free(png_chunk.data);
 	return (0);

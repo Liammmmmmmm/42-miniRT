@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 10:33:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/12 14:58:36 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 16:37:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,3 @@ int	get_png_chunk(t_bin *bin, size_t *i, t_png_chunk *chunk)
 	}
 	return (0);
 }
-

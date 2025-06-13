@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/13 17:42:03 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/13 17:44:08 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,6 @@ int		parse_obj(char *file, t_custom_object *obj);
 
 // importance sampling
 
-void	make_gray_color_map(t_scene *scene);
+void	make_grey_map(t_scene *scene);
 
 #endif

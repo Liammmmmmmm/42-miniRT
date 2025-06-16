@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 11:05:56 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 13:54:52 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/16 15:19:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,30 @@ int	decode_symbol_huffman_table(t_bit_stream *bs, t_huffman_lookup_entry *table,
 		return entry.symbol;
 	}
 
-	return (decode_symbol(code_lengths, codes, num_symbols, bs, 15));
+	uint16_t	code;
+	uint8_t		length;
+	uint8_t		bit;
+	size_t		i;
+
+	consume_bits(bs, MAX_LOOKUP_BITS);
+	length = MAX_LOOKUP_BITS;
+	code = reverse_bits(peek, MAX_LOOKUP_BITS);
+	while (++length <= 15)
+	{
+		bit = read_bits(bs, 1);
+		if (bit > 1)
+			return (print_err_png("T'as pas lu qu'un seul bit la"));
+		code = (code << 1) | bit;
+		i = 0;
+		while (i < num_symbols)
+		{
+			if (code_lengths[i] == length && codes[i] == code)
+				return ((int)i);
+			i++;
+		}
+	}
+	return (print_err_png("On est sorti de la boucle mon frere"));
+	// return (decode_symbol(code_lengths, codes, num_symbols, bs, 15));
 }
 
 int decode_code_lengths(uint8_t *code_lengths, size_t total_lengths,
@@ -373,7 +396,7 @@ int	calculate_scanline_bytes(uint32_t width, uint8_t bit_depth, uint8_t color_ty
 	return (bits_per_pixel * width + 7) / 8;
 }
 
-int	handle_dynamic_huffman_block(t_bit_stream *stream, t_png_info *infos, uint8_t *out_buf, size_t *output_len)
+int	handle_dynamic_huffman_block(t_bit_stream *stream, t_png_info *infos, uint8_t *out_buf, size_t *output_len, t_huffman_lookup_entry *table_lit, t_huffman_lookup_entry *table_dist)
 {
 	const uint32_t			hlit = read_bits(stream, 5) + 257;
 	const uint32_t			hdist = read_bits(stream, 5) + 1;
@@ -396,8 +419,6 @@ int	handle_dynamic_huffman_block(t_bit_stream *stream, t_png_info *infos, uint8_
 	generate_huffman_codes(all_code_lengths, codes_litlen, hlit, 15);
     generate_huffman_codes(all_code_lengths + hlit, codes_dist, hdist, 15);
 
-	t_huffman_lookup_entry *table_lit = malloc((1 << MAX_LOOKUP_BITS) * sizeof(t_huffman_lookup_entry));
-	t_huffman_lookup_entry *table_dist = malloc((1 << MAX_LOOKUP_BITS) * sizeof(t_huffman_lookup_entry));
 	// SECUR LE MALLOC
 	build_huffman_lookup_table(all_code_lengths, codes_litlen, hlit, table_lit);
 	build_huffman_lookup_table(all_code_lengths + hlit, codes_dist, hdist, table_dist);
@@ -527,6 +548,9 @@ int	read_deflate_headers(t_bit_stream *stream, t_png_info *infos)
 	uint8_t	bfinal;
 	uint8_t	btype;
 	uint8_t	*out_buf;
+	
+	t_huffman_lookup_entry *table_lit = malloc((1 << MAX_LOOKUP_BITS) * sizeof(t_huffman_lookup_entry));
+	t_huffman_lookup_entry *table_dist = malloc((1 << MAX_LOOKUP_BITS) * sizeof(t_huffman_lookup_entry));
 
 	int	bytes_per_line = calculate_scanline_bytes(infos->width, infos->depth, infos->color_type);
 	if (bytes_per_line < 0)
@@ -552,18 +576,25 @@ int	read_deflate_headers(t_bit_stream *stream, t_png_info *infos)
 			printf("[UNSUPPORTED FOR NOW] fixed huffman block\n");
 		else if (btype == 2)
 		{
-			if (handle_dynamic_huffman_block(stream, infos, out_buf, &output_len) == -1)
+			if (handle_dynamic_huffman_block(stream, infos, out_buf, &output_len, table_lit, table_dist) == -1)
 			{
 				free(out_buf);
+				free(table_lit);
+				free(table_dist);
 				return (print_err_png("failed to read dynamic huffman block"));
 			}
 		}
 		else
 		{
 			free(out_buf);
+			free(table_lit);
+			free(table_dist);
 			return (print_err_png("Invalid BTYPE"));
 		}
 	}
+
+	free(table_lit);
+	free(table_dist);
 
 	int bpp = get_bytes_per_pixel(infos->color_type, infos->depth);
 	if (bpp == -1)

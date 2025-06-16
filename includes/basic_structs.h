@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:21:20 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/11 14:30:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 15:06:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,13 @@ typedef	struct s_interval
 	double	min;
 	double	max;
 }	t_interval;
+
+typedef struct s_rgba
+{
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+	unsigned char	a;
+}	t_rgba;
 
 #endif

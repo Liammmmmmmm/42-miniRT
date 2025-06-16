@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:42:51 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/13 16:34:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/16 10:07:01 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ int	parse_png(char *filename, t_tex_img *img)
 int main()
 {
 	t_tex_img img;
-	printf("Return global : %d\n", parse_png("test.png", &img));
+	printf("Return global : %d\n", parse_png("minirt_export_SCENE_NAME.SAMPLES.15.3048083.png", &img));
 }

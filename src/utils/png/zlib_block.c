@@ -6,11 +6,17 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 10:56:15 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/13 10:58:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 17:06:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "png_parser.h"
+
+static int	print_err_free(t_zlib_block *z, char *err)
+{
+	free(z->deflate_data);
+	return (print_err_png(err));
+}
 
 int	get_zlib_block(t_bin *data, t_zlib_block *zlib_block)
 {
@@ -30,18 +36,10 @@ int	get_zlib_block(t_bin *data, t_zlib_block *zlib_block)
 		return (print_err_png(PNG_ERROR_MEM));
 	y = (uint32_t)(-1);
 	while (++y < zlib_block->deflate_size)
-	{
 		if (read_uint8_move(data, &i, &zlib_block->deflate_data[y]) == -1)
-		{
-			free(zlib_block->deflate_data);
-			return (print_err_png(PNG_ERROR_GET_ZLIB));
-		}
-	}
+			return (print_err_free(zlib_block, PNG_ERROR_GET_ZLIB));
 	if (read_uint32_move(data, &i, &zlib_block->adler32) == -1)
-	{
-		free(zlib_block->deflate_data);
-		return (print_err_png(PNG_ERROR_GET_ZLIB));
-	}
+		return (print_err_free(zlib_block, PNG_ERROR_GET_ZLIB));
 	return (0);
 }
 
@@ -52,6 +50,6 @@ int	check_zlib_flags(t_zlib_block *zlib_block)
 	if (((zlib_block->cmf << 8) | zlib_block->flg) % 31 != 0)
 		return (-1);
 	if (zlib_block->flg & 0x20)
-		return (-1);	
+		return (-1);
 	return (0);
 }

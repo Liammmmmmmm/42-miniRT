@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 11:05:56 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/13 16:47:53 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/16 10:21:53 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 /**
  * This file contains the knowledge of god.
- * Dont ask me to explain anything here, I have now idea of what I'm actually
- * doing and the few things I understand will vanish of my head in a few hours.
- * Good Luck brave warrior.
+ * From now, only me, god and an expert of the deflate compression can
+ * understand what's appening here.
+ * Here lie the sacred rites of Huffman and the dark art of bit peeking.
+ * Proceed with reverence. And breakpoints.
+ * 
+ * According to the ancient lore of RFC 1951:
+ * And on the 8th day, He said: "Let there be bitstreams," and lo, chaos was
+ * born.
+ * Good Luck brave warrior — abandon hope, ye who decode here.
  */
 
 void	read_code_lengh(uint8_t *code_length_codes, const uint32_t hclen,
@@ -61,7 +67,7 @@ void	count_code_lengths(const uint8_t *code_lengths, size_t num_symbols,
 	}
 }
 
-void generate_huffman_codes(const uint8_t *code_lengths, uint16_t *codes,
+void	generate_huffman_codes(const uint8_t *code_lengths, uint16_t *codes,
 	size_t num_symbols, size_t max_bits)
 {
 	uint16_t	bl_count[16];
@@ -336,41 +342,49 @@ int	handle_dynamic_huffman_block(t_png_bit_stream *stream, t_png_info *infos, ui
 	return (0);
 }
 
-int get_bytes_per_pixel(uint8_t color_type, uint8_t bit_depth)
+int	get_bytes_per_pixel(uint8_t color_type, uint8_t bit_depth)
 {
 	if (bit_depth != 8)
-		return -1;
-
-	switch (color_type)
-	{
-		case 0: return 1;
-		case 2: return 3;
-		case 3: return 1;
-		case 4: return 2;
-		case 6: return 4;
-		default: return -1;
-	}
+		return (-1);
+	if (color_type == 0)
+		return (1);
+	else if (color_type == 2)
+		return (3);
+	else if (color_type == 3)
+		return (1);
+	else if (color_type == 4)
+		return (2);
+	else if (color_type == 6)
+		return (4);
+	else
+		return (-1);
 }
 
-void apply_png_filter(uint8_t *image_data, uint32_t width, uint32_t height,
+void	apply_png_filter(uint8_t *image_data, uint32_t width, uint32_t height,
 	uint8_t bpp, uint32_t stride)
 {
-	for (uint32_t y = 0; y < height; y++)
+	uint32_t	y;
+
+	y = (uint32_t)(-1);
+	while (++y < height)
 	{
 		uint8_t *scanline = image_data + y * stride;
 		uint8_t filter_type = scanline[0];
 		uint8_t *cur = scanline + 1;
 		uint8_t *prev = (y == 0) ? NULL : (scanline - stride + 1);
 
-		switch (filter_type)
-		{
-			case 0: break;
-			case 1: png_filter_sub(cur, width * bpp, bpp); break;
-			case 2: png_filter_up(cur, prev, width * bpp); break;
-			case 3: png_filter_average(cur, prev, width * bpp, bpp); break;
-			case 4: png_filter_paeth(cur, prev, width * bpp, bpp); break;
-			default: printf("Invalid filter type: %d\n", filter_type); break;
-		}
+		if (filter_type == 0)
+			continue ;
+		else if (filter_type == 1)
+			png_filter_sub(cur, width * bpp, bpp);
+		else if (filter_type == 2)
+			png_filter_up(cur, prev, width * bpp);
+		else if (filter_type == 3)
+			png_filter_average(cur, prev, width * bpp, bpp);
+		else if (filter_type == 4)
+			png_filter_paeth(cur, prev, width * bpp, bpp);
+		else
+			printf("Invalid png filter type: %d\n", filter_type);
 	}
 }
 

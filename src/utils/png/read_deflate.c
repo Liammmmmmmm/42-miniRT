@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 11:05:56 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 17:29:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/16 18:27:07 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,187 +24,6 @@
  * born.
  * Good Luck brave warrior — abandon hope, ye who decode here.
  */
-
-void	read_code_lengh(uint8_t *code_length_codes, const uint32_t hclen,
-	t_bit_stream *stream)
-{
-	uint32_t				i;
-	static const uint8_t	code_length_order[19] = {
-		16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
-
-	i = 0;
-	while (i < 19)
-	{
-		code_length_codes[i] = 0;
-		i++;
-	}
-	i = 0;
-	while (i < hclen && i < 19)
-	{
-		code_length_codes[code_length_order[i]] = (uint8_t)read_bits(stream, 3);
-		i++;
-	}
-}
-
-void	count_code_lengths(const uint8_t *code_lengths, size_t num_symbols,
-	uint16_t *bl_count, size_t max_bits)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < num_symbols)
-	{
-		if (code_lengths[i] > 0)
-		{
-			if (code_lengths[i] > max_bits)
-			{
-				printf("Invalid code length: %u\n", code_lengths[i]);
-				continue ;
-			}
-			bl_count[code_lengths[i]]++;
-		}
-		i++;
-	}
-}
-
-void	generate_huffman_codes(const uint8_t *code_lengths, uint16_t *codes,
-	size_t num_symbols, size_t max_bits)
-{
-	uint16_t	bl_count[16];
-	uint16_t	next_code[16];
-	uint16_t	code;
-	size_t		i;
-	uint8_t		len;
-
-	ft_bzero(bl_count, sizeof(uint16_t) * 16);
-	ft_bzero(next_code, sizeof(uint16_t) * 16);
-	count_code_lengths(code_lengths, num_symbols, bl_count, max_bits);
-	i = 1;
-	code = 0;
-	while (i <= max_bits)
-	{
-		code = (code + bl_count[i - 1]) << 1;
-		next_code[i] = code;
-		i++;
-	}
-	i = 0;
-	while (i < num_symbols)
-	{
-		len = code_lengths[i];
-		if (len)
-			codes[i] = next_code[len]++;
-		i++;
-	}
-}
-
-uint32_t		decode_length(int sym, t_bit_stream *stream)
-{
-	static const uint16_t	length_base[29] = {
-		3, 4, 5, 6, 7, 8, 9, 10,
-		11, 13, 15, 17,
-		19, 23, 27, 31,
-		35, 43, 51, 59,
-		67, 83, 99, 115,
-		131, 163, 195, 227, 258
-	};
-	static const uint8_t	length_extra_bits[29] = {
-		0, 0, 0, 0, 0, 0, 0, 0,
-		1, 1, 1, 1,
-		2, 2, 2, 2,
-		3, 3, 3, 3,
-		4, 4, 4, 4,
-		5, 5, 5, 5, 0
-	};
-
-	if (sym < 257 || sym > 285)
-	{
-		printf("Invalid length symbol: %d\n", sym);
-		return (0);
-	}
-	int index = sym - 257;
-	uint32_t base = length_base[index];
-	uint8_t extra = length_extra_bits[index];
-	if (extra == 0)
-		return (base);
-	uint32_t extra_bits = read_bits(stream, extra);
-	return (base + extra_bits);
-}
-
-uint32_t decode_distance(int sym, t_bit_stream *stream)
-{
-	static const uint16_t	distance_base[30] = {
-		1, 2, 3, 4, 5, 7, 9, 13,
-		17, 25, 33, 49, 65, 97, 129, 193,
-		257, 385, 513, 769, 1025, 1537, 2049, 3073,
-		4097, 6145, 8193, 12289, 16385, 24577
-	};
-	static const uint8_t	distance_extra_bits[30] = {
-		0, 0, 0, 0, 1, 1, 2, 2,
-		3, 3, 4, 4, 5, 5, 6, 6,
-		7, 7, 8, 8, 9, 9, 10, 10,
-		11, 11, 12, 12, 13, 13
-	};
-
-	if (sym < 0 || sym > 29)
-	{
-		printf("Invalid distance symbol: %d\n", sym);
-		return (0);
-	}
-	uint32_t base = distance_base[sym];
-	uint8_t extra = distance_extra_bits[sym];
-	if (extra == 0)
-		return (base);
-	uint32_t extra_bits = read_bits(stream, extra);
-	return (base + extra_bits);
-}
-
-int decompress_huffman_data(t_bit_stream *stream,
-	uint8_t *litlen_lengths, uint16_t *litlen_codes, t_huffman_lookup_entry *litlen_table, uint32_t hlit,
-	uint8_t *dist_lengths, uint16_t *dist_codes, t_huffman_lookup_entry *dist_table, uint32_t hdist,
-	uint8_t *out, size_t *out_len)
-{
-	size_t		o;
-	int			sym;
-	int			dist_sym;
-	uint32_t	length;
-	uint32_t	distance;
-	uint32_t	i;
-
-	o = *out_len;
-	while (1)
-	{
-		sym = decode_symbol_huffman_table(stream, &((t_huffman_data){.code_lengths = litlen_lengths, .codes = litlen_codes, .num_symbols = hlit, .table = litlen_table}));
-		if (sym < 0)
-			return (print_err_png("Invalid symbol"));
-		if (sym < 256)
-			out[o++] = (uint8_t)sym;
-		else if (sym == 256)
-			break ;
-		else if (sym <= 285)
-		{
-			length = decode_length(sym, stream);
-
-			dist_sym = decode_symbol_huffman_table(stream, &((t_huffman_data){.code_lengths = dist_lengths, .codes = dist_codes, .num_symbols = hdist, .table = dist_table}));
-			if (dist_sym < 0)
-				return (print_err_png("Invalid dist symbol"));
-			distance = decode_distance(dist_sym, stream);
-			if (distance > o)
-				return (print_err_png("Invalid distance"));
-			i = 0;
-			while (i < length)
-			{
-				uint8_t c = out[o - distance];
-				out[o] = c;
-				o++;
-				i++;
-			}
-		}
-		else
-			return (print_err_png("Symbol inconnu"));
-	}
-	*out_len = o;
-	return 0;
-}
 
 int	calculate_scanline_bytes(uint32_t width, uint8_t bit_depth, uint8_t color_type)
 {
@@ -227,7 +46,7 @@ int	calculate_scanline_bytes(uint32_t width, uint8_t bit_depth, uint8_t color_ty
 	return (bits_per_pixel * width + 7) / 8;
 }
 
-int	handle_dynamic_huffman_block(t_bit_stream *stream, t_png_info *infos, uint8_t *out_buf, size_t *output_len, t_huffman_lookup_entry *table_lit, t_huffman_lookup_entry *table_dist)
+int	handle_dynamic_huffman_block(t_bit_stream *stream, t_png_info *infos, t_bin *out_buf, size_t *output_len, t_huffman_lookup_entry *table_lit, t_huffman_lookup_entry *table_dist)
 {
 	const uint32_t			hlit = read_bits(stream, 5) + 257;
 	const uint32_t			hdist = read_bits(stream, 5) + 1;
@@ -254,13 +73,16 @@ int	handle_dynamic_huffman_block(t_bit_stream *stream, t_png_info *infos, uint8_
 	uint16_t codes_litlen[hlit]; // Pareil je ferais les malloc quand j'aurais la foie
     uint16_t codes_dist[hdist];
 
-	t_huffman_data	hlit_data = (t_huffman_data){
+	t_huffman_table huffman_table;
+
+	huffman_table.hlit = (t_huffman_data){
 		.code_lengths = all_code_lengths,
 		.codes = codes_litlen,
 		.num_symbols = hlit,
 		.table = table_lit
 	};
-	t_huffman_data	hdist_data = (t_huffman_data){
+	
+	huffman_table.hdist = (t_huffman_data){
 		.code_lengths = all_code_lengths + hlit,
 		.codes = codes_dist,
 		.num_symbols = hdist,
@@ -269,13 +91,11 @@ int	handle_dynamic_huffman_block(t_bit_stream *stream, t_png_info *infos, uint8_
 
 	generate_huffman_codes(all_code_lengths, codes_litlen, hlit, MAX_CODE_LENGTH_DATA);
     generate_huffman_codes(all_code_lengths + hlit, codes_dist, hdist, MAX_CODE_LENGTH_DATA);
-
-	build_huffman_lookup_table(&hlit_data);
-	build_huffman_lookup_table(&hdist_data);
-
-	if (decompress_huffman_data(stream, all_code_lengths, codes_litlen, table_lit, hlit,
-		all_code_lengths + hlit, codes_dist, table_dist, hdist, out_buf, output_len) == -1)
-		return print_err_png("Failed to decompress Huffman data");
+	build_huffman_lookup_table(&huffman_table.hlit);
+	build_huffman_lookup_table(&huffman_table.hdist);
+	if (decompress_huffman_data(stream, &huffman_table, out_buf,
+			output_len) == -1)
+		return (print_err_png("Failed to decompress Huffman data"));
 	
 	return (0);
 }
@@ -397,23 +217,22 @@ int	read_deflate_headers(t_bit_stream *stream, t_png_info *infos)
 {
 	uint8_t	bfinal;
 	uint8_t	btype;
-	uint8_t	*out_buf;
+	t_bin	out_buf;
 	
 	t_huffman_lookup_entry *table_lit = malloc((1 << MAX_LOOKUP_BITS) * sizeof(t_huffman_lookup_entry));
 	t_huffman_lookup_entry *table_dist = malloc((1 << MAX_LOOKUP_BITS) * sizeof(t_huffman_lookup_entry));
 
 	int	bytes_per_line = calculate_scanline_bytes(infos->width, infos->depth, infos->color_type);
 	if (bytes_per_line < 0)
-		return print_err_png("Unsupported color type");
+		return (print_err_png("Unsupported color type"));
 
-	size_t	out_buf_size = infos->height * (1 + bytes_per_line);
-	out_buf = malloc(out_buf_size);
-	if (!out_buf)
-		return print_err_png("Memory allocation failed");
+	out_buf.size = infos->height * (1 + bytes_per_line);
+	out_buf.data = malloc(infos->height * (1 + bytes_per_line));
+	if (!out_buf.data)
+		return (print_err_png("Memory allocation failed"));
 
 	size_t	output_len = 0;
 
-		
 	bfinal = 0;
 	while (bfinal == 0)
 	{
@@ -426,9 +245,9 @@ int	read_deflate_headers(t_bit_stream *stream, t_png_info *infos)
 			printf("[UNSUPPORTED FOR NOW] fixed huffman block\n");
 		else if (btype == 2)
 		{
-			if (handle_dynamic_huffman_block(stream, infos, out_buf, &output_len, table_lit, table_dist) == -1)
+			if (handle_dynamic_huffman_block(stream, infos, &out_buf, &output_len, table_lit, table_dist) == -1)
 			{
-				free(out_buf);
+				free(out_buf.data);
 				free(table_lit);
 				free(table_dist);
 				return (print_err_png("failed to read dynamic huffman block"));
@@ -436,7 +255,7 @@ int	read_deflate_headers(t_bit_stream *stream, t_png_info *infos)
 		}
 		else
 		{
-			free(out_buf);
+			free(out_buf.data);
 			free(table_lit);
 			free(table_dist);
 			return (print_err_png("Invalid BTYPE"));
@@ -451,10 +270,10 @@ int	read_deflate_headers(t_bit_stream *stream, t_png_info *infos)
 		return print_err_png("Unsupported color type or bit depth");	
 
 	uint32_t stride = 1 + infos->width * bpp;
-	apply_png_filter(out_buf, infos->width, infos->height, bpp, stride);
+	apply_png_filter(out_buf.data, infos->width, infos->height, bpp, stride);
 
 
-	t_rgba *res = extract_rgba(out_buf, infos->width, infos->height, bpp, stride);
+	t_rgba *res = extract_rgba(out_buf.data, infos->width, infos->height, bpp, stride);
 	
 	if (res)
 		export_ppm("test.ppm", res, infos->width, infos->height);

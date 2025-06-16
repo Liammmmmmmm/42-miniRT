@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:24:36 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 17:53:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/16 17:55:53 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,25 @@ int	decode_code_lengths(uint8_t *code_lengths, uint32_t total_lengths,
 			return (-1);
 	}
 	return (0);
+}
+
+void	read_code_lengh(uint8_t *code_length_codes, const uint32_t hclen,
+	t_bit_stream *stream)
+{
+	uint32_t				i;
+	static const uint8_t	code_length_order[19] = {
+		16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
+
+	i = 0;
+	while (i < 19)
+	{
+		code_length_codes[i] = 0;
+		i++;
+	}
+	i = 0;
+	while (i < hclen && i < 19)
+	{
+		code_length_codes[code_length_order[i]] = (uint8_t)read_bits(stream, 3);
+		i++;
+	}
 }

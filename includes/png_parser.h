@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:45:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/13 16:48:18 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/16 10:59:51 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define PNG_ERROR_GET_ZLIB "Error while reading a zlib chunk"
 # define PNG_ERROR_GET_IHDR "Error while reading the IHDR chunk"
 # define PNG_ERROR_UNSUPORTED_CHUNK "Unsuported png format"
+
+# define MAX_LOOKUP_BITS 9
 
 typedef struct s_png_info
 {
@@ -58,14 +60,19 @@ typedef struct s_zlib_block
 	uint32_t	adler32;
 }	t_zlib_block;
 
-typedef struct s_png_bit_stream {
+typedef struct s_bit_stream {
 	uint8_t		*data_stream;
 	size_t		size;
 	size_t		byte_index;
 	uint32_t	bit_buffer;
 	uint8_t		bits_remaining;
-}	t_png_bit_stream;
+}	t_bit_stream;
 
+typedef struct s_huffman_lookup_entry
+{
+    int		symbol;
+    uint8_t	length;
+}	t_huffman_lookup_entry;
 
 void	png_filter_paeth(uint8_t *data, const uint8_t *prev, size_t len,
 	uint8_t bpp);
@@ -88,10 +95,30 @@ int	check_zlib_flags(t_zlib_block *zlib_block);
 int	is_chunk_name(char c[4], char t[4]);
 int	read_idat_chunks(t_bin *bin, size_t *i, t_tex_img *img, t_png_info *infos);
 
-void	init_bit_stream(t_png_bit_stream *bitstream, t_zlib_block *zlib);
+/**
+ * This function initialize a bitstream struct from a zlib block.
+ */
+void	init_bit_stream(t_bit_stream *bitstream, t_zlib_block *zlib);
 
-uint32_t	read_bits(t_png_bit_stream *bits, uint32_t bits_to_read);
+/**
+ * This function will return the n next bits of the bitstream, and actually
+ * move in the bitstream so that we don't read the sames bits again on the next
+ * call
+ */
+uint32_t	read_bits(t_bit_stream *bits, uint32_t n);
 
-int	read_deflate_headers(t_png_bit_stream *stream, t_png_info *infos);
+/**
+ * This function will return the n next bits of the bitstream like read bits,
+ * but without changing the cursor on the bitstream. You read but don't move.
+ */
+uint32_t	peek_bits(t_bit_stream *bs, uint32_t n);
+
+/**
+ * This function is the opposite of peak_bits. This on only change the "cursor"
+ * position in the bitstream.
+ */
+void		consume_bits(t_bit_stream *bs, uint32_t n);
+
+int	read_deflate_headers(t_bit_stream *stream, t_png_info *infos);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:32:24 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 10:03:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/16 10:29:50 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	read_idat_chunk(t_bin *data, t_tex_img *img, t_png_info *infos)
 {
 	t_zlib_block		zlib;
-	t_png_bit_stream	bitstream;
+	t_bit_stream	bitstream;
 
 	printf("Debut de la decompression\n");
 	if (get_zlib_block(data, &zlib) == -1)

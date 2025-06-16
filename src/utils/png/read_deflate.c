@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 11:05:56 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 15:19:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/16 17:18:01 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,52 +97,6 @@ void	generate_huffman_codes(const uint8_t *code_lengths, uint16_t *codes,
 	}
 }
 
-uint16_t reverse_bits(uint16_t code, uint8_t length)
-{
-	uint16_t reversed = 0;
-	for (uint8_t i = 0; i < length; i++)
-	{
-		reversed = (reversed << 1) | (code & 1);
-		code >>= 1;
-	}
-	return reversed;
-}
-
-void	build_huffman_lookup_table(
-	const uint8_t *code_lengths,
-	const uint16_t *codes,
-	size_t n_symbols,
-	t_huffman_lookup_entry *table)
-{
-	const size_t	table_size = 1 << MAX_LOOKUP_BITS;
-	size_t			i;
-	uint8_t			len;
-
-	i = 0;
-	while (i < table_size) {
-		table[i].symbol = -1;
-		table[i].length = 0;
-		i++;
-	}
-	i = (size_t)(-1);
-	while (++i < n_symbols)
-	{
-		len = code_lengths[i];
-		if (len == 0 || len > MAX_LOOKUP_BITS)
-			continue ;
-		uint16_t code = codes[i];
-		int fill_bits = MAX_LOOKUP_BITS - len;
-		uint16_t base = code << fill_bits;
-		uint16_t repeat_count = 1 << fill_bits;
-		for (uint16_t y = 0; y < repeat_count; y++) {
-			size_t index = reverse_bits(base | y, MAX_LOOKUP_BITS);
-			table[index].symbol = i;
-			table[index].length = len;
-		}
-	}
-}
-
-
 int	decode_symbol(const uint8_t *code_lengths, const uint16_t *codes, size_t num_symbols, t_bit_stream *stream, uint8_t max_code_length)
 {
 	uint16_t	code;
@@ -169,43 +123,6 @@ int	decode_symbol(const uint8_t *code_lengths, const uint16_t *codes, size_t num
 	return (print_err_png("On est sorti de la boucle"));
 }
 
-int	decode_symbol_huffman_table(t_bit_stream *bs, t_huffman_lookup_entry *table,
-	const uint8_t *code_lengths, const uint16_t *codes, size_t num_symbols)
-{
-	uint32_t peek = peek_bits(bs, MAX_LOOKUP_BITS);
-	t_huffman_lookup_entry entry = table[peek];
-
-	if (entry.length > 0)
-	{
-		consume_bits(bs, entry.length);
-		return entry.symbol;
-	}
-
-	uint16_t	code;
-	uint8_t		length;
-	uint8_t		bit;
-	size_t		i;
-
-	consume_bits(bs, MAX_LOOKUP_BITS);
-	length = MAX_LOOKUP_BITS;
-	code = reverse_bits(peek, MAX_LOOKUP_BITS);
-	while (++length <= 15)
-	{
-		bit = read_bits(bs, 1);
-		if (bit > 1)
-			return (print_err_png("T'as pas lu qu'un seul bit la"));
-		code = (code << 1) | bit;
-		i = 0;
-		while (i < num_symbols)
-		{
-			if (code_lengths[i] == length && codes[i] == code)
-				return ((int)i);
-			i++;
-		}
-	}
-	return (print_err_png("On est sorti de la boucle mon frere"));
-	// return (decode_symbol(code_lengths, codes, num_symbols, bs, 15));
-}
 
 int decode_code_lengths(uint8_t *code_lengths, size_t total_lengths,
 	const uint8_t *code_length_codes,
@@ -329,8 +246,8 @@ uint32_t decode_distance(int sym, t_bit_stream *stream)
 }
 
 int decompress_huffman_data(t_bit_stream *stream,
-	const uint8_t *litlen_lengths, const uint16_t *litlen_codes, t_huffman_lookup_entry *litlen_table, size_t hlit,
-	const uint8_t *dist_lengths, const uint16_t *dist_codes, t_huffman_lookup_entry *dist_table, size_t hdist,
+	uint8_t *litlen_lengths, uint16_t *litlen_codes, t_huffman_lookup_entry *litlen_table, uint32_t hlit,
+	uint8_t *dist_lengths, uint16_t *dist_codes, t_huffman_lookup_entry *dist_table, uint32_t hdist,
 	uint8_t *out, size_t *out_len)
 {
 	size_t		o;
@@ -343,7 +260,7 @@ int decompress_huffman_data(t_bit_stream *stream,
 	o = *out_len;
 	while (1)
 	{
-		sym = decode_symbol_huffman_table(stream, litlen_table, litlen_lengths, litlen_codes, hlit);
+		sym = decode_symbol_huffman_table(stream, &((t_huffman_data){.code_lengths = litlen_lengths, .codes = litlen_codes, .num_symbols = hlit, .table = litlen_table}));
 		if (sym < 0)
 			return (print_err_png("Invalid symbol"));
 		if (sym < 256)
@@ -353,7 +270,8 @@ int decompress_huffman_data(t_bit_stream *stream,
 		else if (sym <= 285)
 		{
 			length = decode_length(sym, stream);
-			dist_sym = decode_symbol_huffman_table(stream, dist_table, dist_lengths, dist_codes, hdist);
+
+			dist_sym = decode_symbol_huffman_table(stream, &((t_huffman_data){.code_lengths = dist_lengths, .codes = dist_codes, .num_symbols = hdist, .table = dist_table}));
 			if (dist_sym < 0)
 				return (print_err_png("Invalid dist symbol"));
 			distance = decode_distance(dist_sym, stream);
@@ -416,12 +334,24 @@ int	handle_dynamic_huffman_block(t_bit_stream *stream, t_png_info *infos, uint8_
 	uint16_t codes_litlen[hlit]; // Pareil je ferais les malloc quand j'aurais la foie
     uint16_t codes_dist[hdist];
 
+	t_huffman_data	hlit_data = (t_huffman_data){
+		.code_lengths = all_code_lengths,
+		.codes = codes_litlen,
+		.num_symbols = hlit,
+		.table = table_lit
+	};
+	t_huffman_data	hdist_data = (t_huffman_data){
+		.code_lengths = all_code_lengths + hlit,
+		.codes = codes_dist,
+		.num_symbols = hdist,
+		.table = table_dist
+	};
+
 	generate_huffman_codes(all_code_lengths, codes_litlen, hlit, 15);
     generate_huffman_codes(all_code_lengths + hlit, codes_dist, hdist, 15);
 
-	// SECUR LE MALLOC
-	build_huffman_lookup_table(all_code_lengths, codes_litlen, hlit, table_lit);
-	build_huffman_lookup_table(all_code_lengths + hlit, codes_dist, hdist, table_dist);
+	build_huffman_lookup_table(&hlit_data);
+	build_huffman_lookup_table(&hdist_data);
 
 	if (decompress_huffman_data(stream, all_code_lengths, codes_litlen, table_lit, hlit,
 		all_code_lengths + hlit, codes_dist, table_dist, hdist, out_buf, output_len) == -1)

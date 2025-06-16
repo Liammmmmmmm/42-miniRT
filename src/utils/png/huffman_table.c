@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:55:43 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 16:19:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/16 17:23:07 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static inline int	decode_symbol_huffman_fallback(t_bit_stream *bs,
 	consume_bits(bs, MAX_LOOKUP_BITS);
 	length = MAX_LOOKUP_BITS;
 	code = reverse_bits(peek, MAX_LOOKUP_BITS);
-	while (++length <= 15)
+	while (++length <= MAX_CODE_LENGTH_DATA)
 	{
 		bit = read_bits(bs, 1);
 		code = (code << 1) | bit;

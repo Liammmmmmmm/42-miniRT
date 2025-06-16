@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 11:05:56 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 17:18:01 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/16 17:29:57 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,93 +95,6 @@ void	generate_huffman_codes(const uint8_t *code_lengths, uint16_t *codes,
 			codes[i] = next_code[len]++;
 		i++;
 	}
-}
-
-int	decode_symbol(const uint8_t *code_lengths, const uint16_t *codes, size_t num_symbols, t_bit_stream *stream, uint8_t max_code_length)
-{
-	uint16_t	code;
-	uint8_t		length;
-	uint8_t		bit;
-	size_t		i;
-
-	length = 0;
-	code = 0;
-	while (++length <= max_code_length)
-	{
-		bit = read_bits(stream, 1);
-		if (bit > 1)
-			return (print_err_png("T'as pas lu qu'un seul bit la"));
-		code = (code << 1) | bit;
-		i = 0;
-		while (i < num_symbols)
-		{
-			if (code_lengths[i] == length && codes[i] == code)
-				return ((int)i);
-			i++;
-		}
-	}
-	return (print_err_png("On est sorti de la boucle"));
-}
-
-
-int decode_code_lengths(uint8_t *code_lengths, size_t total_lengths,
-	const uint8_t *code_length_codes,
-	const uint16_t *code_length_huffman_codes,
-	t_bit_stream *stream)
-{
-	size_t	i;
-	uint8_t	prev_length;
-	int		symbol;
-	int		repeat;
-	int		j;
-
-	i = 0;
-	prev_length = 0;
-	while (i < total_lengths)
-	{		
-		symbol = decode_symbol(code_length_codes, code_length_huffman_codes, 19, stream, 7);
-		if (symbol < 0)
-			return (-1);
-		if (symbol <= 15)
-		{
-			code_lengths[i++] = (uint8_t)symbol;
-			prev_length = (uint8_t)symbol;
-		}
-		else if (symbol == 16)
-		{
-			if (i == 0)
-				return (-1);
-			repeat = read_bits(stream, 2) + 3;
-			if (i + repeat > total_lengths)
-				return (-1);
-			j = -1;
-			while (++j < repeat)
-				code_lengths[i++] = prev_length;
-		}
-		else if (symbol == 17)
-		{
-			repeat = read_bits(stream, 3) + 3;
-			if (i + repeat > total_lengths)
-				return (-1);
-			j = -1;
-			while (++j < repeat)
-				code_lengths[i++] = 0;
-			prev_length = 0;
-		}
-		else if (symbol == 18)
-		{
-			repeat = read_bits(stream, 7) + 11;
-			if (i + repeat > total_lengths)
-				return (-1);
-			j = -1;
-			while (++j < repeat)
-				code_lengths[i++] = 0;
-			prev_length = 0;
-		}
-		else
-			return (-1);
-	}
-	return (0);
 }
 
 uint32_t		decode_length(int sym, t_bit_stream *stream)
@@ -324,11 +237,18 @@ int	handle_dynamic_huffman_block(t_bit_stream *stream, t_png_info *infos, uint8_
 
 	//printf("HLIT=%u HDIST=%u HCLEN=%u\n", hlit, hdist, hclen);
 	read_code_lengh(code_length_codes, hclen, stream);
-	generate_huffman_codes(code_length_codes, code_length_huffman_codes, 19, 7);
+	generate_huffman_codes(code_length_codes, code_length_huffman_codes, 19, MAX_CODE_LENGTH_TABLE);
 	
+	t_huffman_data	hclen_data = (t_huffman_data){
+		.code_lengths = code_length_codes,
+		.codes = code_length_huffman_codes,
+		.num_symbols = 19,
+		.table = NULL
+	};
+
 	uint8_t	all_code_lengths[hlit + hdist]; // Je ferais un joli malloc quand j'aurais la foie
 
-	if (decode_code_lengths(all_code_lengths, hlit + hdist, code_length_codes, code_length_huffman_codes, stream) == -1)
+	if (decode_code_lengths(all_code_lengths, hlit + hdist, &hclen_data, stream) == -1)
 		return print_err_png("Failed to decode code lengths");
 
 	uint16_t codes_litlen[hlit]; // Pareil je ferais les malloc quand j'aurais la foie
@@ -347,8 +267,8 @@ int	handle_dynamic_huffman_block(t_bit_stream *stream, t_png_info *infos, uint8_
 		.table = table_dist
 	};
 
-	generate_huffman_codes(all_code_lengths, codes_litlen, hlit, 15);
-    generate_huffman_codes(all_code_lengths + hlit, codes_dist, hdist, 15);
+	generate_huffman_codes(all_code_lengths, codes_litlen, hlit, MAX_CODE_LENGTH_DATA);
+    generate_huffman_codes(all_code_lengths + hlit, codes_dist, hdist, MAX_CODE_LENGTH_DATA);
 
 	build_huffman_lookup_table(&hlit_data);
 	build_huffman_lookup_table(&hdist_data);

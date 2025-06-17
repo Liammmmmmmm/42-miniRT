@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_parsing.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:42:24 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 13:59:52 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:17:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_bmp
 {
 	t_bmp_header	header;
 	t_bmp_info		info;
-	t_color			*pixel_data;
+	t_rgba			*pixel_data;
 	uint32_t		*palette;
 	uint32_t		palette_size;
 }	t_bmp;

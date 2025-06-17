@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grey_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:01:12 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/13 17:45:09 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:30:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ double	get_grey_value(t_scene *scene, size_t i)
 	}
 	else
 		return ( \
-	0.2126f * (double)(scene->amb_light.skybox_t->img.pixel_data[i].r / 255) \
-	+ 0.7152f * (double)(scene->amb_light.skybox_t->img.pixel_data[i].g / 255) \
-	+ 0.0722f * (double)(scene->amb_light.skybox_t->img.pixel_data[i].b / 255));
+	0.2126f * (double)(scene->amb_light.skybox_t->img.rgba[i].r / 255) \
+	+ 0.7152f * (double)(scene->amb_light.skybox_t->img.rgba[i].g / 255) \
+	+ 0.0722f * (double)(scene->amb_light.skybox_t->img.rgba[i].b / 255));
 }
 
 void	make_grey_map(t_scene *scene)

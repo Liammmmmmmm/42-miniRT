@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 18:07:57 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 12:13:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 13:23:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static inline int	repeat_code(t_bit_stream *stream, t_huffman_table *table,
 	uint32_t	distance;
 
 	length = decode_length(sym, stream);
-	if (out->cursor + length >= out->data.size)
+	if (out->cursor + length > out->data.size)
 		return (print_err_png("Corrupted png"));
 	dist_sym = decode_symbol_huffman_table(stream, &table->hdist);
 	if (dist_sym < 0)

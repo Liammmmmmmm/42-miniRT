@@ -6,11 +6,24 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 18:07:57 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 09:05:19 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 11:10:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "png_parser.h"
+
+/**
+ * This file contains the knowledge of god.
+ * From now, only me, god and an expert of the deflate compression can
+ * understand what's appening here.
+ * Here lie the sacred rites of Huffman and the dark art of bit peeking.
+ * Proceed with reverence. And breakpoints.
+ * 
+ * According to the ancient lore of RFC 1951:
+ * And on the 8th day, He said: "Let there be bitstreams," and lo, chaos was
+ * born.
+ * Good Luck brave warrior — abandon hope, ye who decode here.
+ */
 
 static inline int	repeat_code(t_bit_stream *stream, t_huffman_table *table,
 	t_bin_cursor *out, int sym)

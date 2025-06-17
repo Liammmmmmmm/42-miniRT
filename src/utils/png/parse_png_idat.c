@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:32:24 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 10:29:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 11:09:11 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 int	read_idat_chunk(t_bin *data, t_tex_img *img, t_png_info *infos)
 {
-	t_zlib_block		zlib;
+	t_zlib_block	zlib;
 	t_bit_stream	bitstream;
 
-	printf("Debut de la decompression\n");
 	if (get_zlib_block(data, &zlib) == -1)
 	{
 		free(data->data);
@@ -29,8 +28,10 @@ int	read_idat_chunk(t_bin *data, t_tex_img *img, t_png_info *infos)
 		free(zlib.deflate_data);
 		return (-1);
 	}
+	img->width = infos->width;
+	img->height = infos->height;
 	init_bit_stream(&bitstream, &zlib);
-	if (read_deflate_headers(&bitstream, infos) == -1)
+	if (read_deflate_headers(&bitstream, infos, img) == -1)
 	{
 		free(zlib.deflate_data);
 		return (-1);

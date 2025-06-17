@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:42:51 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 14:34:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 11:08:32 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ int	get_png_file(t_bin *bin, t_tex_img *img)
 		return (-1);
 	if (read_first_png_chunk(bin, &i, &png) == -1)
 		return (print_err_png(PNG_ERROR_GET_IHDR));
-	print_ihdr_chunk(&png);
-	
 	read_idat_chunks(bin, &i, img, &png);
-
 	return (0);
 }
 
@@ -47,10 +44,4 @@ int	parse_png(char *filename, t_tex_img *img)
 		return (-1);
 	free(bin.data);
 	return (0);
-}
-
-int main()
-{
-	t_tex_img img;
-	printf("Return global : %d\n", parse_png("minirt_export_SCENE_NAME.SAMPLES.15.3048083.png", &img));
 }

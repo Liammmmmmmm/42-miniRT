@@ -6,11 +6,24 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:24:36 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 17:55:53 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 11:10:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "png_parser.h"
+
+/**
+ * This file contains the knowledge of god.
+ * From now, only me, god and an expert of the deflate compression can
+ * understand what's appening here.
+ * Here lie the sacred rites of Huffman and the dark art of bit peeking.
+ * Proceed with reverence. And breakpoints.
+ * 
+ * According to the ancient lore of RFC 1951:
+ * And on the 8th day, He said: "Let there be bitstreams," and lo, chaos was
+ * born.
+ * Good Luck brave warrior — abandon hope, ye who decode here.
+ */
 
 static inline int	decode_symbol_micro_table(const uint8_t *code_lengths,
 	const uint16_t *codes, uint32_t num_symbols, t_bit_stream *stream)

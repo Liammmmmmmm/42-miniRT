@@ -6,11 +6,24 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:55:43 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 17:23:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 11:10:02 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "png_parser.h"
+
+/**
+ * This file contains the knowledge of god.
+ * From now, only me, god and an expert of the deflate compression can
+ * understand what's appening here.
+ * Here lie the sacred rites of Huffman and the dark art of bit peeking.
+ * Proceed with reverence. And breakpoints.
+ * 
+ * According to the ancient lore of RFC 1951:
+ * And on the 8th day, He said: "Let there be bitstreams," and lo, chaos was
+ * born.
+ * Good Luck brave warrior — abandon hope, ye who decode here.
+ */
 
 static inline uint16_t	reverse_bits(uint16_t code, uint8_t length)
 {
@@ -44,8 +57,6 @@ void	build_huffman_lookup_table(t_huffman_data *data)
 	const uint32_t	table_size = 1 << MAX_LOOKUP_BITS;
 	uint32_t		i;
 	uint8_t			len;
-	uint16_t		base;
-	uint16_t		repeat_count;
 
 	i = 0;
 	while (i < table_size)

@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   decode_data_utils.c                                :+:      :+:    :+:   */
+/*   decompress_data_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 18:01:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 18:06:17 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 11:10:20 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "png_parser.h"
+
+/**
+ * This file contains the knowledge of god.
+ * From now, only me, god and an expert of the deflate compression can
+ * understand what's appening here.
+ * Here lie the sacred rites of Huffman and the dark art of bit peeking.
+ * Proceed with reverence. And breakpoints.
+ * 
+ * According to the ancient lore of RFC 1951:
+ * And on the 8th day, He said: "Let there be bitstreams," and lo, chaos was
+ * born.
+ * Good Luck brave warrior — abandon hope, ye who decode here.
+ */
 
 uint32_t	decode_length(int sym, t_bit_stream *stream)
 {

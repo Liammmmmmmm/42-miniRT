@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 18:07:57 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 11:10:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 12:13:37 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static inline int	repeat_code(t_bit_stream *stream, t_huffman_table *table,
 	uint32_t	length;
 	int			dist_sym;
 	uint32_t	distance;
-	uint32_t	i;
 
 	length = decode_length(sym, stream);
 	if (out->cursor + length >= out->data.size)
@@ -42,7 +41,6 @@ static inline int	repeat_code(t_bit_stream *stream, t_huffman_table *table,
 	distance = decode_distance(dist_sym, stream);
 	if (distance > out->cursor)
 		return (print_err_png("Invalid distance"));
-	i = 0;
 	ft_memcpy(&out->data.data[out->cursor],
 		&out->data.data[out->cursor - distance],
 		length);

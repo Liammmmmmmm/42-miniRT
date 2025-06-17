@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/13 17:43:29 by madelvin         ###   ########.fr        #
+#    Updated: 2025/06/17 12:13:07 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -149,6 +149,12 @@ UPSCALING_FILE		= bilinear.c bicubic.c neighbor.c no_upscaling.c
 OPTIONS_DIR			= src/options/
 OPTIONS_FILE		= options.c animation.c animation_err.c animation_move_points.c animation_parse.c animation_tesselate.c animation_rotations.c animation_auto_rota.c
 
+PNG_DIR				= src/utils/png/
+PNG_FILE			= bit_stream.c dynamic_huffman_block.c parse_png_header.c png_filters.c decode_deflate_utils.c \
+					generate_huffman_codes.c parse_png_idat.c read_deflate.c decode_table.c huffman_table.c \
+					parse_png_utils.c zlib_block.c decompress_data.c parse_png.c png_debug.c decompress_data_utils.c \
+					parse_png_chunk.c png_filter.c
+
 M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
 			$(addprefix $(DEBUG_DIR), $(DEBUG_FILE)) \
@@ -168,7 +174,8 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(UPSCALING_DIR), $(UPSCALING_FILE)) \
 			$(addprefix $(PPM_DIR), $(PPM_FILE)) \
 			$(addprefix $(HDR_PARSING_DIR), $(HDR_PARSING_FILE)) \
-			$(addprefix $(OPTIONS_DIR), $(OPTIONS_FILE))
+			$(addprefix $(OPTIONS_DIR), $(OPTIONS_FILE)) \
+			$(addprefix $(PNG_DIR), $(PNG_FILE))
 
 # Source files bonus
 SRCS_BONUS = 

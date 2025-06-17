@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 10:56:15 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/13 17:06:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 14:05:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ int	get_zlib_block(t_bin *data, t_zlib_block *zlib_block)
 
 	i = 0;
 	if (read_uint8_move(data, &i, &zlib_block->cmf) == -1)
-		return (print_err_png(PNG_ERROR_GET_ZLIB));
+		return (print_err_png(PNG_ERROR_GET_ZLIB"1"));
 	if (read_uint8_move(data, &i, &zlib_block->flg) == -1)
-		return (print_err_png(PNG_ERROR_GET_ZLIB));
+		return (print_err_png(PNG_ERROR_GET_ZLIB"2"));
 	if (data->size < 6)
-		return (print_err_png(PNG_ERROR_GET_ZLIB));
+		return (print_err_png(PNG_ERROR_GET_ZLIB"3"));
 	zlib_block->deflate_size = data->size - 6;
 	zlib_block->deflate_data = malloc((data->size - 6) * sizeof(uint8_t));
 	if (!zlib_block->deflate_data)
@@ -37,9 +37,9 @@ int	get_zlib_block(t_bin *data, t_zlib_block *zlib_block)
 	y = (uint32_t)(-1);
 	while (++y < zlib_block->deflate_size)
 		if (read_uint8_move(data, &i, &zlib_block->deflate_data[y]) == -1)
-			return (print_err_free(zlib_block, PNG_ERROR_GET_ZLIB));
+			return (print_err_free(zlib_block, PNG_ERROR_GET_ZLIB"4"));
 	if (read_uint32_move(data, &i, &zlib_block->adler32) == -1)
-		return (print_err_free(zlib_block, PNG_ERROR_GET_ZLIB));
+		return (print_err_free(zlib_block, PNG_ERROR_GET_ZLIB"5"));
 	return (0);
 }
 

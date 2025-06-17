@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:35:56 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 10:46:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 14:16:40 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ uint32_t	peek_bits(t_bit_stream *bs, uint32_t n)
 {
 	if (bs->bits_remaining < n)
 		fill_bits(bs);
+	if (bs->bits_remaining == 0)
+		return (0);
 	if (bs->bits_remaining < n)
-		return (0xFFFFFFFF);
+		return (bs->bit_buffer & ((1U << bs->bits_remaining) - 1));
 	return (bs->bit_buffer & ((1U << n) - 1));
 }
 

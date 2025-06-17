@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:01:12 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/17 16:26:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 16:37:25 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,18 +109,6 @@ void calc_cdf_conditional_inv(t_scene *scene)
 	
 }
 
-void	calc_inverse_transform_sampling(t_scene *scene)
-{
-	double u1 = random_double();
-	double u2 = random_double();
-
-	// double y = u1 * (scene->amb_light.skybox_t->hdr.height - 1);
-	// double x = u2 * (scene->amb_light.skybox_t->hdr.width - 1);
-	double y = scene->amb_light.cdf_marginal_inverse[(int)(u1 * (scene->amb_light.skybox_t->hdr.height - 1))] * (scene->amb_light.skybox_t->hdr.height - 1);
-	double x = scene->amb_light.cdf_conditional_inverse[(int)(y * scene->amb_light.skybox_t->hdr.width + u2 * (scene->amb_light.skybox_t->hdr.width - 1))] * (scene->amb_light.skybox_t->hdr.width - 1);
-	scene->amb_light.DEBUG_INVERSE_SAMPLING[(int)(y * scene->amb_light.skybox_t->hdr.width + x)] += 1;
-}
-
 void	make_grey_map(t_scene *scene)
 {
 	size_t	i;
@@ -206,24 +194,9 @@ void	make_grey_map(t_scene *scene)
 	int z = 0;
 	while (z < 100000)
 	{
-		calc_inverse_transform_sampling(scene);
+		t_vec2 aa = calc_inverse_transform_sampling_uv(scene);
+		scene->amb_light.DEBUG_INVERSE_SAMPLING[(int)(aa.y * (scene->amb_light.skybox_t->hdr.height - 1) * scene->amb_light.skybox_t->hdr.width + aa.x * (scene->amb_light.skybox_t->hdr.width -1))] += 1;
 		z++;
 	}
-
-	int tpx = scene->amb_light.skybox_t->hdr.height * scene->amb_light.skybox_t->hdr.width;
-	// z = 0;
-	// int max = 1;
-	// while (z < tpx)
-	// {
-	// 	if (scene->amb_light.DEBUG_INVERSE_SAMPLING[z] > max)
-	// 		max = scene->amb_light.DEBUG_INVERSE_SAMPLING[z];
-	// 	z++;
-	// }
-	// z = 0;
-	// while (z < tpx)
-	// {
-	// 	scene->amb_light.DEBUG_INVERSE_SAMPLING[z] /= 25.0;
-	// 	z++;
-	// }
 	
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/13 17:44:08 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:38:14 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,7 @@ int		parse_obj(char *file, t_custom_object *obj);
 
 // importance sampling
 
+t_vec2	calc_inverse_transform_sampling_uv(t_scene *scene);
 void	make_grey_map(t_scene *scene);
 
 #endif

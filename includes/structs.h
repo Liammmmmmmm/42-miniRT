@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 15:01:07 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:07:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,7 @@ typedef struct s_amb_light
 	double	*cdf_marginal_inverse;
 	double	*pdf_conditional;
 	double	*cdf_conditional_inverse;
+	double	*DEBUG_INVERSE_SAMPLING;
 	double	column_average;
 }	t_amb_light;
 

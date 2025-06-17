@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 17:14:26 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:14:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,16 +141,16 @@ void	put_hdr_to_frame(t_hdr *img, t_img *img_buff, t_minirt *minirt)
 	int			total;
 	t_sc_point	pt;
 	const int	red_ratio = 1;
-	double		scale;
+//	double		scale;
 
 	i = 0;
 	total = img->height * img->width;
 	while (i < total)
 	{
-		if (img->exposure == 0)
-			scale = ldexp(1.0, img->pixels[i].e - 128);
-		else
-			scale = ldexp(1.0, img->pixels[i].e - 128) * powf(2.0, img->exposure);
+	//	if (img->exposure == 0)
+		//	scale = ldexp(1.0, img->pixels[i].e - 128);
+	//	else
+	//		scale = ldexp(1.0, img->pixels[i].e - 128) * powf(2.0, img->exposure);
 
 		pt.x = (i % img->width) / red_ratio;
 		pt.y = img->height - 1 - (i / img->width) / red_ratio;
@@ -164,7 +164,7 @@ void	put_hdr_to_frame(t_hdr *img, t_img *img_buff, t_minirt *minirt)
 		// 	pt.color.g = pow(img->pixels[i].g / 255.0, gamma_corr) * 255;
 		// 	pt.color.b = pow(img->pixels[i].b / 255.0, gamma_corr) * 255;
 		// }
-		pt.color.r = iclamp(0, minirt->scene.amb_light.cdf_conditional_inverse[i] * 255, 255);
+		pt.color.r = iclamp(0, minirt->scene.amb_light.DEBUG_INVERSE_SAMPLING[i] * 255, 255);
 		put_pixel_image(img_buff, pt.x, pt.y, rgb_to_int(iclamp(0, pt.color.r, 255), iclamp(0, pt.color.r, 255), iclamp(0, pt.color.r, 255)));
 		i++;
 	}

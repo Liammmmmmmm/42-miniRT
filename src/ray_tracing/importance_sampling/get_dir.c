@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:37:43 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 16:42:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 16:52:30 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,17 @@ t_vec2	calc_inverse_transform_sampling_uv(t_scene *scene)
 	return (n);
 }
 
-// t_vec3	calc_inverse_transform_sampling_dir(t_vec2 *uv)
-// {
-// 	t_vec3 n = 
-// 	return (n);
-// }
+t_vec3	calc_inverse_transform_sampling_dir(t_scene *scene)
+{
+	const t_vec2	uv = calc_inverse_transform_sampling_uv(scene);
+	t_vec3			n;
+	const float		theta = (uv.y - 0.5) * PI_D;
+	const float		phi = (0.5 - uv.x) * 2 * PI_D;
+
+	n = (t_vec3){
+		cos(theta) * cos(phi),
+		sin(theta),
+		cos(theta) * sin(phi)
+	};
+	return (n);
+}

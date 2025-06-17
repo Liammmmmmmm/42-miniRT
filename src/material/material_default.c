@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/17 15:15:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 16:43:08 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ inline void	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 	t_ray_data data)
 {
 	/*
-	ray->dir = le rayon de l'importance sampling
+	ray->dir = calc_inverse_transform_sampling_dir()
 
 	if (hit_register_all == 0)
 		on a rien tapé donc on renvoie la skybox;

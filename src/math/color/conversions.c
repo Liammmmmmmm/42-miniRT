@@ -1,37 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   basic_structs.h                                    :+:      :+:    :+:   */
+/*   conversions.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 12:21:20 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/13 15:06:26 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/06/17 12:25:19 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/06/17 12:25:39 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BASIC_STRUCTS_H
-# define BASIC_STRUCTS_H
+#include "maths.h"
 
-typedef struct s_vec3
+inline t_fcolor	color_to_fcolor(t_color color)
 {
-	double	x;
-	double	y;
-	double	z;
-}	t_vec3;
+	return ((t_fcolor){color.r / 255.0, color.g / 255.0, color.b / 255.0});
+}
 
-typedef	struct s_interval
+inline t_fcolor	rgba_to_fcolor(t_rgba color)
 {
-	double	min;
-	double	max;
-}	t_interval;
-
-typedef struct s_rgba
-{
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-	unsigned char	a;
-}	t_rgba;
-
-#endif
+	return ((t_fcolor){color.r / 255.0, color.g / 255.0, color.b / 255.0});
+}

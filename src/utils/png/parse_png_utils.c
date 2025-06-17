@@ -1,37 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   basic_structs.h                                    :+:      :+:    :+:   */
+/*   parse_png_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 12:21:20 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/13 15:06:26 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/06/12 15:02:09 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/06/12 16:23:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BASIC_STRUCTS_H
-# define BASIC_STRUCTS_H
+#include "png_parser.h"
 
-typedef struct s_vec3
+int	is_chunk_name(char c[4], char t[4])
 {
-	double	x;
-	double	y;
-	double	z;
-}	t_vec3;
-
-typedef	struct s_interval
-{
-	double	min;
-	double	max;
-}	t_interval;
-
-typedef struct s_rgba
-{
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-	unsigned char	a;
-}	t_rgba;
-
-#endif
+	if (c[0] == t[0] && c[1] == t[1] && c[2] == t[2] && c[3] == t[3])
+		return (1);
+	return (0);
+}

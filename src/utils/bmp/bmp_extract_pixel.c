@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_extract_pixel.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:50:32 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/27 18:41:58 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:18:36 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static inline int	allocate_pixel_data(t_bmp *bmp, size_t tpx)
 {
-	bmp->pixel_data = malloc(tpx * sizeof(t_color));
+	bmp->pixel_data = malloc(tpx * sizeof(t_rgba));
 	if (bmp->pixel_data == NULL)
 		return (error_and_return("error: unable to access memory\n"));
 	return (0);
@@ -33,7 +33,8 @@ static inline int	read_pixels_for_row(t_bin *bin, size_t *i, t_bmp *bmp, \
 		if (extract_pixel(bin, i, bmp, &color) == -1)
 			return (-1);
 		bmp->pixel_data[y * bmp->info.width + x] = \
-			(t_color){(color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF};
+			(t_rgba){(color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF,
+				(color >> 24) & 0xFF};
 		x++;
 	}
 	return (0);

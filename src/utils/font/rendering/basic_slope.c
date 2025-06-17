@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 15:02:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/11 09:30:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 16:30:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	draw_line(t_point *point_a, t_point *point_b, t_img *img, int c)
 
 	dx = point_b->x - point_a->x;
 	dy = point_b->y - point_a->y;
-	if (abs(dy) <= abs(dx))
+	if (ft_abs(dy) <= ft_abs(dx))
 	{
 		if (dx == 0)
 			return ;

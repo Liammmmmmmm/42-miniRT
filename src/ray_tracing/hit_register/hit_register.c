@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_register.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/31 12:08:23 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:48:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,22 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node,
 	t_hit_register_data *data)
 {
 	double	closest_t;
+	double	transparency;
 
 	init_hit_data(data, &closest_t);
 	if (!hit_loop(bvh, node, data, &closest_t))
 		return (0);
+	if (data->hit_record.mat && data->hit_record.mat->color_tex)
+	{
+		transparency = get_tex_transparency(data->hit_record.mat->color_tex, data->hit_record.u, data->hit_record.v);
+		if (transparency == 1)
+			return (0);
+		else if (transparency != 0)
+		{
+			if (random_double() < transparency)
+				return (0);
+		}
+	}
 	apply_all_map(&data->hit_record, data->is_light);
 	data->hit_record.color = get_hit_register_color(
 			data->hit_record.mat,

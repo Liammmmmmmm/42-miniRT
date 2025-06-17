@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:01:12 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/17 14:19:00 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:01:14 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ double	get_grey_value(t_scene *scene, size_t i)
 	}
 	else
 		return ( \
-	0.2126f * (double)(scene->amb_light.skybox_t->img.pixel_data[i].r / 255) \
-	+ 0.7152f * (double)(scene->amb_light.skybox_t->img.pixel_data[i].g / 255) \
-	+ 0.0722f * (double)(scene->amb_light.skybox_t->img.pixel_data[i].b / 255));
+	0.2126f * (double)(scene->amb_light.skybox_t->img.rgba[i].r / 255) \
+	+ 0.7152f * (double)(scene->amb_light.skybox_t->img.rgba[i].g / 255) \
+	+ 0.0722f * (double)(scene->amb_light.skybox_t->img.rgba[i].b / 255));
 }
 
 void calc_cdf_marginal_inv(t_scene *scene)

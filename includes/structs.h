@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 15:39:50 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:01:07 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ typedef struct s_tex_img
 {
 	uint32_t	width;
 	uint32_t	height;
-	t_color		*pixel_data;
+	t_rgba		*rgba;
 }	t_tex_img;
 
 typedef struct s_checker

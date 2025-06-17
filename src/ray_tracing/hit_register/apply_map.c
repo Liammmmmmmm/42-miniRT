@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:59:40 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/02 12:21:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 12:27:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ static void	init_tbn(double tbn[3][3], t_hit_record *hit)
 
 static void	apply_normal_map(t_hit_record *hit)
 {
-	t_color	map;
+	t_rgba	map;
 	double	tbn[3][3];
 	t_vec3	normal_map;
 
 	if (hit->mat == NULL || hit->mat->normal == NULL
-		|| hit->mat->normal->img.pixel_data == NULL)
+		|| hit->mat->normal->img.rgba == NULL)
 		return ;
-	map = hit->mat->normal->img.pixel_data[(hit->mat->normal->img.width)
+	map = hit->mat->normal->img.rgba[(hit->mat->normal->img.width)
 		* (int)(hit->v * (hit->mat->normal->img.height - 1))
 		+ (int)(hit->u * (hit->mat->normal->img.width - 1))];
 	normal_map.x = (map.r / 127.5f) - 1.0f;

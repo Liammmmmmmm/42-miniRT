@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:31:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/28 14:56:29 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:19:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ int	parse_bmp(char *file, t_tex_img *img)
 		free(bmp.palette);
 	img->height = bmp.info.height;
 	img->width = bmp.info.width;
-	img->pixel_data = bmp.pixel_data;
+	img->rgba = bmp.pixel_data;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/13 17:44:25 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/16 12:29:35 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,6 @@ int	parse_ambiant_light(t_scene *scene, char *line)
 	free(parts);
 	if (scene->amb_light.skybox_t)
 	{
-		if (scene->amb_light.skybox_t->type == HDR)
-			scene->amb_light.gray_scale = ft_calloc(scene->amb_light.skybox_t->hdr.width * scene->amb_light.skybox_t->hdr.height, sizeof(double));
-		else
-			scene->amb_light.gray_scale = ft_calloc(scene->amb_light.skybox_t->img.width * scene->amb_light.skybox_t->img.height, sizeof(double));
-		if (scene->amb_light.gray_scale == NULL)
-			return (0);
 		make_grey_map(scene);
 	}
 	return (1);

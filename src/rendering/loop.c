@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 18:48:35 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:14:26 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,40 +131,82 @@ int	exit_if_anim_finished(t_minirt *minirt)
 	return (0);
 }
 
+int rgb_to_int(unsigned char r, unsigned char g, unsigned char b) {
+    return (r << 16) | (g << 8) | b;
+}
+
+void	put_hdr_to_frame(t_hdr *img, t_img *img_buff, t_minirt *minirt)
+{
+	int			i;
+	int			total;
+	t_sc_point	pt;
+	const int	red_ratio = 1;
+	double		scale;
+
+	i = 0;
+	total = img->height * img->width;
+	while (i < total)
+	{
+		if (img->exposure == 0)
+			scale = ldexp(1.0, img->pixels[i].e - 128);
+		else
+			scale = ldexp(1.0, img->pixels[i].e - 128) * powf(2.0, img->exposure);
+
+		pt.x = (i % img->width) / red_ratio;
+		pt.y = img->height - 1 - (i / img->width) / red_ratio;
+
+		// if (img->gamma == 1.0)
+		// 	pt.color = (t_color){iclamp(0, img->pixels[i].r * scale, 255), iclamp(0, img->pixels[i].g * scale, 255), iclamp(0, img->pixels[i].b * scale, 255)};
+		// else
+		// {
+		// 	double gamma_corr = 1.0 / (img->gamma);
+		// 	pt.color.r = pow(img->pixels[i].r / 255.0, gamma_corr) * 255;
+		// 	pt.color.g = pow(img->pixels[i].g / 255.0, gamma_corr) * 255;
+		// 	pt.color.b = pow(img->pixels[i].b / 255.0, gamma_corr) * 255;
+		// }
+		pt.color.r = iclamp(0, minirt->scene.amb_light.cdf_conditional_inverse[i] * 255, 255);
+		put_pixel_image(img_buff, pt.x, pt.y, rgb_to_int(iclamp(0, pt.color.r, 255), iclamp(0, pt.color.r, 255), iclamp(0, pt.color.r, 255)));
+		i++;
+	}
+	
+	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win, minirt->mlx.img.img, 0, 0);
+}
+
 void	render_frame(t_minirt *minirt)
 {
-	static t_bool	skip = 0;
+	// static t_bool	skip = 0;
 
-	check_sample_amount(minirt);
-	if (exit_if_anim_finished(minirt))
-		return ;
-	if (minirt->options.no_display)
-	{
-		if (minirt->options.anim.enabled)
-			no_display_infos_anim(minirt);
-		else
-			no_display_infos(minirt);
-		if (minirt->screen.sample == 0 && skip == 0)
-		{
-			skip = 1;
-			return ;
-		}
-	}
-	render(minirt);
-	render_micrort(minirt);
-	if (minirt->options.no_display)
-	{
-		if (minirt->options.anim.enabled)
-			no_display_infos_anim(minirt);
-		else
-			no_display_infos(minirt);
-	}
-	if (!minirt->options.no_display)
-	{
-		render_bvh(minirt);
-		render_ui(minirt);
-		draw_selected_object(minirt);
-	}
-	minirt->stats.frame += 1;
-	skip = 0;
+	// check_sample_amount(minirt);
+	// if (exit_if_anim_finished(minirt))
+	// 	return ;
+	// if (minirt->options.no_display)
+	// {
+	// 	if (minirt->options.anim.enabled)
+	// 		no_display_infos_anim(minirt);
+	// 	else
+	// 		no_display_infos(minirt);
+	// 	if (minirt->screen.sample == 0 && skip == 0)
+	// 	{
+	// 		skip = 1;
+	// 		return ;
+	// 	}
+	// }
+	// render(minirt);
+	// render_micrort(minirt);
+	// if (minirt->options.no_display)
+	// {
+	// 	if (minirt->options.anim.enabled)
+	// 		no_display_infos_anim(minirt);
+	// 	else
+	// 		no_display_infos(minirt);
+	// }
+	// if (!minirt->options.no_display)
+	// {
+	// 	render_bvh(minirt);
+	// 	render_ui(minirt);
+	// 	draw_selected_object(minirt);
+	// }
+	// minirt->stats.frame += 1;
+	// skip = 0;
+	put_hdr_to_frame(&minirt->scene.amb_light.skybox_t->hdr, &minirt->mlx.img, minirt);
 }

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/13 15:54:40 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:39:50 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,13 @@ typedef struct s_amb_light
 	t_color	skybox_c;
 	t_tex	*skybox_t;
 	double	*gray_scale;
+	double	*raw_average;
+	double	*pdf_joint;
+	double	*pdf_marginal;
+	double	*cdf_marginal_inverse;
+	double	*pdf_conditional;
+	double	*cdf_conditional_inverse;
+	double	column_average;
 }	t_amb_light;
 
 typedef struct s_ray_data

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 10:52:19 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 12:22:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ typedef struct s_tex_img
 {
 	uint32_t	width;
 	uint32_t	height;
-	t_color		*pixel_data;
 	t_rgba		*rgba;
 }	t_tex_img;
 

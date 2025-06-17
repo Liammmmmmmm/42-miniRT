@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:32:24 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 11:09:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 14:09:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,12 @@ int	read_idat_chunks(t_bin *bin, size_t *i, t_tex_img *img, t_png_info *infos)
 		return (free_data_ret(&chunk_data));
 	if (chunk_data.data == NULL)
 		return (print_err_png(PNG_ERROR_CHUNK_DATA2));
+	if (!is_chunk_name(png_chunk.type_c, "IEND"))
+	{
+		free(chunk_data.data);
+		return (print_err_png(PNG_ERROR_UNSUPORTED_CHUNK));
+	}
 	if (read_idat_chunk(&chunk_data, img, infos) == -1)
 		return (print_err_png(PNG_ERROR_CHUNK_DATA2));
-	if (!is_chunk_name(png_chunk.type_c, "IEND"))
-		return (print_err_png(PNG_ERROR_UNSUPORTED_CHUNK));
 	return (0);
 }

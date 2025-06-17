@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/10 18:45:38 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:26:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_vec3	vec3_random();
 double	ft_dmin(double a, double b);
 
 t_fcolor	color_to_fcolor(t_color color);
+t_fcolor	rgba_to_fcolor(t_rgba color);
 t_fcolor	multiply_scalar_fcolor(t_fcolor c1, double c);
 t_fcolor	multiply_fcolor(t_fcolor c1, t_fcolor c2);
 t_fcolor	add_fcolor(t_fcolor c1, t_fcolor c2);

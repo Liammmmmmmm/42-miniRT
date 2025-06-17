@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_tex_color.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:04:42 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/31 11:12:55 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:50:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ t_fcolor	get_tex_color(t_tex *tex, double u, double v, t_vec3 hit_point)
 
 	if (tex->type == IMAGE)
 	{
-		if (!tex->img.pixel_data || !tex->img.width || !tex->img.height)
+		if (!tex->img.rgba || !tex->img.width || !tex->img.height)
 			return (get_solid_texture_default(hit_point, 2));
 		else
-			return (color_to_fcolor(tex->img.pixel_data[tex->img.width * \
+			return (rgba_to_fcolor(tex->img.rgba[tex->img.width * \
 		(int)(v * (tex->img.height - 1)) + (int)(u * (tex->img.width - 1))]));
 	}
 	else if (tex->type == CHECKER_LOCAL)
@@ -51,4 +51,17 @@ t_fcolor	get_tex_color(t_tex *tex, double u, double v, t_vec3 hit_point)
 	else if (tex->type == HDR)
 		get_hdr_value(tex, u, v, &hit_point);
 	return ((t_fcolor){0.0, 0.0, 0.0});
+}
+
+double	get_tex_transparency(t_tex *tex, double u, double v)
+{
+	if (tex->type == IMAGE)
+	{
+		if (!tex->img.rgba || !tex->img.width || !tex->img.height)
+			return (0.0);
+		else
+			return (1 - tex->img.rgba[tex->img.width * (int)(v * (tex->img.height \
+				- 1)) + (int)(u * (tex->img.width - 1))].a / 255.0);
+	}
+	return (0.0);
 }

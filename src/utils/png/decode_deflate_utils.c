@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 09:08:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 09:24:32 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 14:24:25 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,14 @@ t_rgba	*extract_rgba(uint8_t *image_data, t_png_info *infos,
 	y = (uint32_t)(-1);
 	while (++y < infos->height)
 	{
-		pixels = (image_data + y * stride) + 1;
+		pixels = (image_data + (infos->height - y - 1) * stride) + 1;
 		x = (uint32_t)(-1);
 		while (++x < infos->width)
 		{
 			out[y * infos->width + x] = (t_rgba){.r = pixels[x * bpp + 0],
 				.g = pixels[x * bpp + 1], .b = pixels[x * bpp + 2], .a = 255};
-			out[y * infos->width + x].a = pixels[x * bpp + 3];
+			if (bpp == 4)
+				out[y * infos->width + x].a = pixels[x * bpp + 3];
 		}
 	}
 	return (out);

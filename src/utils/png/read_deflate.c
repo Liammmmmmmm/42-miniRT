@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 11:05:56 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/16 18:27:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 09:41:00 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,7 @@
  * Good Luck brave warrior — abandon hope, ye who decode here.
  */
 
-int	calculate_scanline_bytes(uint32_t width, uint8_t bit_depth, uint8_t color_type)
-{
-	int channels;
-
-	if (color_type == 0)
-		channels = 1;
-	else if (color_type == 2)
-		channels = 3;
-	else if (color_type == 3)
-		channels = 1;
-	else if (color_type == 4)
-		channels = 2;
-	else if (color_type == 6)
-		channels = 4;
-	else
-		return (-1);
-
-	int bits_per_pixel = channels * bit_depth;
-	return (bits_per_pixel * width + 7) / 8;
-}
-
-int	handle_dynamic_huffman_block(t_bit_stream *stream, t_png_info *infos, t_bin *out_buf, size_t *output_len, t_huffman_lookup_entry *table_lit, t_huffman_lookup_entry *table_dist)
+int	handle_dynamic_huffman_block(t_bit_stream *stream, t_png_info *infos, t_bin_cursor *out_buf, t_huffman_lookup_entry *table_lit, t_huffman_lookup_entry *table_dist)
 {
 	const uint32_t			hlit = read_bits(stream, 5) + 257;
 	const uint32_t			hdist = read_bits(stream, 5) + 1;
@@ -93,131 +72,38 @@ int	handle_dynamic_huffman_block(t_bit_stream *stream, t_png_info *infos, t_bin 
     generate_huffman_codes(all_code_lengths + hlit, codes_dist, hdist, MAX_CODE_LENGTH_DATA);
 	build_huffman_lookup_table(&huffman_table.hlit);
 	build_huffman_lookup_table(&huffman_table.hdist);
-	if (decompress_huffman_data(stream, &huffman_table, out_buf,
-			output_len) == -1)
+	if (decompress_huffman_data(stream, &huffman_table, out_buf) == -1)
 		return (print_err_png("Failed to decompress Huffman data"));
 	
 	return (0);
-}
-
-int	get_bytes_per_pixel(uint8_t color_type, uint8_t bit_depth)
-{
-	if (bit_depth != 8)
-		return (-1);
-	if (color_type == 0)
-		return (1);
-	else if (color_type == 2)
-		return (3);
-	else if (color_type == 3)
-		return (1);
-	else if (color_type == 4)
-		return (2);
-	else if (color_type == 6)
-		return (4);
-	else
-		return (-1);
-}
-
-void	apply_png_filter(uint8_t *image_data, uint32_t width, uint32_t height,
-	uint8_t bpp, uint32_t stride)
-{
-	uint32_t	y;
-
-	y = (uint32_t)(-1);
-	while (++y < height)
-	{
-		uint8_t *scanline = image_data + y * stride;
-		uint8_t filter_type = scanline[0];
-		uint8_t *cur = scanline + 1;
-		uint8_t *prev = (y == 0) ? NULL : (scanline - stride + 1);
-
-		if (filter_type == 0)
-			continue ;
-		else if (filter_type == 1)
-			png_filter_sub(cur, width * bpp, bpp);
-		else if (filter_type == 2)
-			png_filter_up(cur, prev, width * bpp);
-		else if (filter_type == 3)
-			png_filter_average(cur, prev, width * bpp, bpp);
-		else if (filter_type == 4)
-			png_filter_paeth(cur, prev, width * bpp, bpp);
-		else
-			printf("Invalid png filter type: %d\n", filter_type);
-	}
 }
 
 #include <stdio.h>
 
 int export_ppm(const char *filename, const t_rgba *pixels, uint32_t width, uint32_t height)
 {
-    FILE *f = fopen(filename, "wb");
-    if (!f)
-    {
-        perror("fopen");
-        return -1;
-    }
-
-    // En-tête PPM binaire
-    fprintf(f, "P6\n%u %u\n255\n", width, height);
-
-    // Écriture des pixels : r,g,b (ignore alpha)
-    for (uint32_t i = 0; i < width * height; i++)
-    {
-        fputc(pixels[i].r, f);
-        fputc(pixels[i].g, f);
-        fputc(pixels[i].b, f);
-    }
-
-    fclose(f);
-    return 0;
+	FILE *f = fopen(filename, "wb");
+	if (!f)
+	{
+		perror("fopen");
+		return -1;
+	}
+	fprintf(f, "P6\n%u %u\n255\n", width, height);
+	for (uint32_t i = 0; i < width * height; i++)
+	{
+		fputc(pixels[i].r, f);
+		fputc(pixels[i].g, f);
+		fputc(pixels[i].b, f);
+	}
+	fclose(f);
+	return 0;
 }
-
-
-t_rgba *extract_rgba(const uint8_t *image_data, uint32_t width, uint32_t height,
-	uint8_t bpp, uint32_t stride)
-{
-	if (bpp == 3)
-		printf("Bpp 3 -> On gere");
-	else if (bpp == 4)
-		printf("Bpp 4 -> On gere");
-	else
-	{
-		fprintf(stderr, "extract_rgba: unsupported bpp %d\n", bpp);
-		return NULL;
-	}
-
-	t_rgba *out = malloc(width * height * sizeof(t_rgba));
-	if (!out)
-	{
-		perror("malloc");
-		return NULL;
-	}
-
-	for (uint32_t y = 0; y < height; y++)
-	{
-		const uint8_t *scanline = image_data + y * stride;
-		const uint8_t *pixels = scanline + 1;  // Skip filter byte
-		for (uint32_t x = 0; x < width; x++)
-		{
-			out[y * width + x].r = pixels[x * bpp + 0];
-			out[y * width + x].g = pixels[x * bpp + 1];
-			out[y * width + x].b = pixels[x * bpp + 2];
-			if (bpp == 4)
-				out[y * width + x].a = pixels[x * bpp + 3];
-			else
-				out[y * width + x].a = 255;
-		}
-	}
-	return out;
-}
-
-
 
 int	read_deflate_headers(t_bit_stream *stream, t_png_info *infos)
 {
-	uint8_t	bfinal;
-	uint8_t	btype;
-	t_bin	out_buf;
+	uint8_t			bfinal;
+	uint8_t			btype;
+	t_bin_cursor	out_buf;
 	
 	t_huffman_lookup_entry *table_lit = malloc((1 << MAX_LOOKUP_BITS) * sizeof(t_huffman_lookup_entry));
 	t_huffman_lookup_entry *table_dist = malloc((1 << MAX_LOOKUP_BITS) * sizeof(t_huffman_lookup_entry));
@@ -226,12 +112,12 @@ int	read_deflate_headers(t_bit_stream *stream, t_png_info *infos)
 	if (bytes_per_line < 0)
 		return (print_err_png("Unsupported color type"));
 
-	out_buf.size = infos->height * (1 + bytes_per_line);
-	out_buf.data = malloc(infos->height * (1 + bytes_per_line));
-	if (!out_buf.data)
+	out_buf.data.size = infos->height * (1 + bytes_per_line);
+	out_buf.data.data = malloc(infos->height * (1 + bytes_per_line));
+	if (!out_buf.data.data)
 		return (print_err_png("Memory allocation failed"));
 
-	size_t	output_len = 0;
+	out_buf.cursor = 0;
 
 	bfinal = 0;
 	while (bfinal == 0)
@@ -245,9 +131,9 @@ int	read_deflate_headers(t_bit_stream *stream, t_png_info *infos)
 			printf("[UNSUPPORTED FOR NOW] fixed huffman block\n");
 		else if (btype == 2)
 		{
-			if (handle_dynamic_huffman_block(stream, infos, &out_buf, &output_len, table_lit, table_dist) == -1)
+			if (handle_dynamic_huffman_block(stream, infos, &out_buf, table_lit, table_dist) == -1)
 			{
-				free(out_buf.data);
+				free(out_buf.data.data);
 				free(table_lit);
 				free(table_dist);
 				return (print_err_png("failed to read dynamic huffman block"));
@@ -255,7 +141,7 @@ int	read_deflate_headers(t_bit_stream *stream, t_png_info *infos)
 		}
 		else
 		{
-			free(out_buf.data);
+			free(out_buf.data.data);
 			free(table_lit);
 			free(table_dist);
 			return (print_err_png("Invalid BTYPE"));
@@ -270,10 +156,10 @@ int	read_deflate_headers(t_bit_stream *stream, t_png_info *infos)
 		return print_err_png("Unsupported color type or bit depth");	
 
 	uint32_t stride = 1 + infos->width * bpp;
-	apply_png_filter(out_buf.data, infos->width, infos->height, bpp, stride);
+	apply_png_filter(out_buf.data.data, infos, bpp, stride);
 
 
-	t_rgba *res = extract_rgba(out_buf.data, infos->width, infos->height, bpp, stride);
+	t_rgba *res = extract_rgba(out_buf.data.data, infos, bpp, stride);
 	
 	if (res)
 		export_ppm("test.ppm", res, infos->width, infos->height);

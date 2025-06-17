@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/11 15:58:24 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/06/13 17:43:29 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,9 +66,9 @@ SRC_FILE			= main.c
 UTILS_DIR			= src/utils/
 UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					bmp/bmp_extract_color.c bmp/bmp_extract_pixel.c \
-					bump_to_normal.c obj/obj_parser.c obj/obj_parser_utils.c obj/obj_parser_utils2.c \
-					obj/obj_extract_value.c obj/obj_extract_value2.c progress_bar.c \
-					obj/obj_ear_clipping.c obj/obj_triangle_extract.c obj/obj_utils.c
+					bump_to_normal.c progress_bar.c obj/obj_ear_clipping.c \
+					obj/obj_extract_value.c obj/obj_finilizer.c \
+					obj/obj_parser_utils.c obj/obj_parser.c obj/obj_utils.c obj/obj_vertex_cache.c 
 
 UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c \
@@ -81,13 +81,13 @@ UI_FILE				= controls/button_click.c controls/init_buttons.c controls/clear_butt
 					render/layout.c render/layout_left.c render/material_tab.c render/object_prop2.c render/object_prop3.c render/object_prop.c render/objects_tab.c \
 					mouse_events/global.c mouse_events/materials.c mouse_events/objects2.c mouse_events/objects.c mouse_events/utils.c\
 					render.c list_objects.c list_materials.c selected_object.c selected_object2.c selected_mat.c \
-					dropdown.c dropdown2.c materials_dropdown.c default_dropdown.c textures_dropdown.c 
+					dropdown.c dropdown2.c materials_dropdown.c default_dropdown.c textures_dropdown.c
 
 DEBUG_DIR			= src/debug/
 DEBUG_FILE			= print_scene.c print_utils.c print_obj1.c print_obj2.c print_obj3.c debug_ray.c
 
 EVENT_DIR			= src/events/
-EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c  key_render.c  mouse_common.c  mouse_controls.c  mouse_render.c
+EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c key_render.c  mouse_common.c  mouse_controls.c  mouse_render.c
 
 RAY_TRACING_DIR		= src/ray_tracing/
 RAY_TRACING_FILE	= render.c init_animated_items.c focus.c light.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c \
@@ -122,7 +122,8 @@ PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
 					tranform_line.c verify_elements.c parse_elements.c \
 					parse_elements2.c parse_elements3.c parse_elements4.c  parse_elements_utils.c \
 					parse_elements_utils2.c parse_elements_utils3.c parse_elements_utils4.c \
-					parse_elements_utils5.c parse_elements_utils6.c get_texture.c parse_elements5.c
+					parse_elements_utils5.c parse_elements_utils6.c get_texture.c parse_elements5.c \
+					grey_map.c
 
 FONT_PARS_DIR		= src/utils/font/parsing/
 FONT_PARS_FILE		= free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c read_cmap.c \

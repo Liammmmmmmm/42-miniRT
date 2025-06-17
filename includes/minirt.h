@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 18:48:34 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/13 17:44:08 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,5 +245,10 @@ void		bicubic_upscale(t_minirt *minirt);
 void		no_upscaling(t_minirt *minirt);
 
 int		parse_obj(char *file, t_custom_object *obj);
+
+
+// importance sampling
+
+void	make_grey_map(t_scene *scene);
 
 #endif

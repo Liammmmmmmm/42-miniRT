@@ -177,6 +177,7 @@ typedef struct s_amb_light
 	double	ratio;
 	t_color	skybox_c;
 	t_tex	*skybox_t;
+	double	*gray_scale;
 }	t_amb_light;
 
 typedef struct s_ray_data
@@ -351,6 +352,28 @@ typedef struct s_custom_object
 	int			index;
 	t_aabb		aabb;
 }	t_custom_object;
+
+typedef struct s_vec2
+{
+	double x;
+	double y;
+}	t_vec2;
+
+typedef struct s_vertex_indexed
+{
+	t_vec3	pos;
+	t_vec3	normal;
+	t_vec2	uv;
+}	t_vertex_indexed;
+
+typedef struct s_mesh
+{
+	t_vertex_indexed	*vertices;
+	uint32_t			*indices;
+	size_t				vertex_count;
+	size_t				index_count;
+	char				*name;
+}	t_mesh;
 
 typedef enum e_obj_part
 {

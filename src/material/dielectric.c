@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:30:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 14:03:03 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:30:32 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static inline void	reflected_dielectric_color(t_ray *ray,
 // In order to implement specular map just multiply 
 // get_reflect_value(ray, hit_record) by the specular value
 //
-inline void	dielectric_mat(t_minirt *minirt, t_ray *ray,
+inline char	dielectric_mat(t_minirt *minirt, t_ray *ray,
 	t_hit_record *hit_record, t_ray_data data)
 {
 	if (hit_record->mat->ior > 0)

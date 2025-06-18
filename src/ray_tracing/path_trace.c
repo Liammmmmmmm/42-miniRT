@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   path_trace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/05 15:42:36 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 17:32:50 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-inline void	material_manager_v3(t_minirt *minirt, t_ray *ray,
+inline char	material_manager_v3(t_minirt *minirt, t_ray *ray,
 	t_hit_record *hit_record, t_ray_data data)
 {
 	if (!hit_record->mat)
@@ -27,11 +27,14 @@ inline void	material_manager_v3(t_minirt *minirt, t_ray *ray,
 	if (hit_record->mat->metallic_value == 1.0)
 		metallic_color(ray, hit_record, data.power);
 	else if (hit_record->mat->metallic_value == 0.0)
-		dielectric_mat(minirt, ray, hit_record, data);
+		if (dielectric_mat(minirt, ray, hit_record, data) == 1)
+			return (1);
 	else if (hit_record->mat->metallic_value > random_double())
 		metallic_color(ray, hit_record, data.power);
 	else
-		dielectric_mat(minirt, ray, hit_record, data);
+		if (dielectric_mat(minirt, ray, hit_record, data) == 1)
+			return (1);
+	return (0);
 }
 
 inline t_fcolor	add_skybox(t_minirt *minirt, t_ray *ray,
@@ -65,8 +68,9 @@ t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 		if (hit_register_all(minirt, &data) == 1)
 		{
 			ray.orig = data.hit_record.point;
-			material_manager_v3(minirt, &ray, &data.hit_record,
-				(t_ray_data){&power, &accumulation});
+			if (material_manager_v3(minirt, &ray, &data.hit_record,
+				(t_ray_data){&power, &accumulation}) == 1)
+				break ;
 		}
 		else
 		{

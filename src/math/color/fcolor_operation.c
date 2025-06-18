@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fcolor_operation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:21:52 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 12:25:17 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 11:35:39 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

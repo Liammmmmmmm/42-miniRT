@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 16:07:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 12:06:19 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ typedef struct s_amb_light
 	double	*gray_scale;
 	double	*raw_average;
 	double	*pdf_joint;
+	double	*importance_map;
 	double	*pdf_marginal;
 	double	*cdf_marginal_inverse;
 	double	*pdf_conditional;

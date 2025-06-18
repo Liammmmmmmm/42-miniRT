@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 16:14:27 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/17 17:28:27 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,39 +174,39 @@ void	put_hdr_to_frame(t_hdr *img, t_img *img_buff, t_minirt *minirt)
 
 void	render_frame(t_minirt *minirt)
 {
-	// static t_bool	skip = 0;
+	static t_bool	skip = 0;
 
-	// check_sample_amount(minirt);
-	// if (exit_if_anim_finished(minirt))
-	// 	return ;
-	// if (minirt->options.no_display)
-	// {
-	// 	if (minirt->options.anim.enabled)
-	// 		no_display_infos_anim(minirt);
-	// 	else
-	// 		no_display_infos(minirt);
-	// 	if (minirt->screen.sample == 0 && skip == 0)
-	// 	{
-	// 		skip = 1;
-	// 		return ;
-	// 	}
-	// }
-	// render(minirt);
-	// render_micrort(minirt);
-	// if (minirt->options.no_display)
-	// {
-	// 	if (minirt->options.anim.enabled)
-	// 		no_display_infos_anim(minirt);
-	// 	else
-	// 		no_display_infos(minirt);
-	// }
-	// if (!minirt->options.no_display)
-	// {
-	// 	render_bvh(minirt);
-	// 	render_ui(minirt);
-	// 	draw_selected_object(minirt);
-	// }
-	// minirt->stats.frame += 1;
-	// skip = 0;
-	put_hdr_to_frame(&minirt->scene.amb_light.skybox_t->hdr, &minirt->mlx.img, minirt);
+	check_sample_amount(minirt);
+	if (exit_if_anim_finished(minirt))
+		return ;
+	if (minirt->options.no_display)
+	{
+		if (minirt->options.anim.enabled)
+			no_display_infos_anim(minirt);
+		else
+			no_display_infos(minirt);
+		if (minirt->screen.sample == 0 && skip == 0)
+		{
+			skip = 1;
+			return ;
+		}
+	}
+	render(minirt);
+	render_micrort(minirt);
+	if (minirt->options.no_display)
+	{
+		if (minirt->options.anim.enabled)
+			no_display_infos_anim(minirt);
+		else
+			no_display_infos(minirt);
+	}
+	if (!minirt->options.no_display)
+	{
+		render_bvh(minirt);
+		render_ui(minirt);
+		draw_selected_object(minirt);
+	}
+	minirt->stats.frame += 1;
+	skip = 0;
+	// put_hdr_to_frame(&minirt->scene.amb_light.skybox_t->hdr, &minirt->mlx.img, minirt);
 }

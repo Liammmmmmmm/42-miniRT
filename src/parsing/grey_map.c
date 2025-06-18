@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grey_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:01:12 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/17 16:37:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 12:38:30 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,26 @@
 
 double	get_grey_value(t_scene *scene, size_t i)
 {
-	double	scale;
+	double scale;
 
-	if (scene->amb_light.skybox_t->type == HDR)
-	{
+	if (scene->amb_light.skybox_t->type == HDR) {
 		if (scene->amb_light.skybox_t->hdr.exposure == 0)
 			scale = ldexp(1.0, scene->amb_light.skybox_t->hdr.pixels[i].e - 128);
 		else
 			scale = ldexp(1.0, scene->amb_light.skybox_t->hdr.pixels[i].e - 128) * powf(2.0, scene->amb_light.skybox_t->hdr.exposure);
+		
 		return (
-			0.2126f * (double)(scene->amb_light.skybox_t->hdr.pixels[i].r * scale) +
-			0.7152f * (double)(scene->amb_light.skybox_t->hdr.pixels[i].g * scale) +
-			0.0722f * (double)(scene->amb_light.skybox_t->hdr.pixels[i].b * scale));		
+			0.2126 * (scene->amb_light.skybox_t->hdr.pixels[i].r * scale) +
+			0.7152 * (scene->amb_light.skybox_t->hdr.pixels[i].g * scale) +
+			0.0722 * (scene->amb_light.skybox_t->hdr.pixels[i].b * scale)
+		);
+	} else {
+		return (
+			0.2126 * (scene->amb_light.skybox_t->img.rgba[i].r / 255.0) +
+			0.7152 * (scene->amb_light.skybox_t->img.rgba[i].g / 255.0) +
+			0.0722 * (scene->amb_light.skybox_t->img.rgba[i].b / 255.0)
+		);
 	}
-	else
-		return ( \
-	0.2126f * (double)(scene->amb_light.skybox_t->img.rgba[i].r / 255) \
-	+ 0.7152f * (double)(scene->amb_light.skybox_t->img.rgba[i].g / 255) \
-	+ 0.0722f * (double)(scene->amb_light.skybox_t->img.rgba[i].b / 255));
 }
 
 void calc_cdf_marginal_inv(t_scene *scene)
@@ -108,6 +110,53 @@ void calc_cdf_conditional_inv(t_scene *scene)
 	}
 	
 }
+
+void make_importance_map(t_scene *scene)
+{
+	int width = scene->amb_light.skybox_t->hdr.width;
+	int height = scene->amb_light.skybox_t->hdr.height;
+	int size = width * height;
+
+	// Étape 1 : Calculer la luminance (gray scale)
+	scene->amb_light.gray_scale = ft_calloc(size, sizeof(double));
+	double total_luminance = 0.0;
+
+	for (int i = 0; i < size; i++) {
+		scene->amb_light.gray_scale[i] = get_grey_value(scene, i);
+		total_luminance += scene->amb_light.gray_scale[i];
+	}
+
+	// Étape 2 : Importance map = normalisation
+	scene->amb_light.importance_map = ft_calloc(size, sizeof(double));
+	for (int i = 0; i < size; i++) {
+		scene->amb_light.importance_map[i] = scene->amb_light.gray_scale[i] / total_luminance;
+	}
+
+	// Étape 3 : PDF marginale (somme par ligne)
+	scene->amb_light.pdf_marginal = ft_calloc(height, sizeof(double));
+	for (int y = 0; y < height; y++) {
+		double sum = 0;
+		for (int x = 0; x < width; x++) {
+			sum += scene->amb_light.importance_map[y * width + x];
+		}
+		scene->amb_light.pdf_marginal[y] = sum;
+	}
+
+	// Étape 4 : PDF conditionnelle (ligne normalisée)
+	scene->amb_light.pdf_conditional = ft_calloc(size, sizeof(double));
+	for (int y = 0; y < height; y++) {
+		double marginal = scene->amb_light.pdf_marginal[y];
+		for (int x = 0; x < width; x++) {
+			int idx = y * width + x;
+			scene->amb_light.pdf_conditional[idx] = (marginal > 0) ? (scene->amb_light.importance_map[idx] / marginal) : 0;
+		}
+	}
+
+	// Étape 5 : construire les inverses de CDF
+	calc_cdf_marginal_inv(scene);
+	calc_cdf_conditional_inv(scene);
+}
+
 
 void	make_grey_map(t_scene *scene)
 {

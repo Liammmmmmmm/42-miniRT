@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grey_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:01:12 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/18 12:38:30 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:18:10 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ void	make_grey_map(t_scene *scene)
 		return ;
 		while (i < size)
 	{
-		scene->amb_light.pdf_joint[i] = scene->amb_light.gray_scale[i] / (scene->amb_light.column_average / 255);
+		scene->amb_light.pdf_joint[i] = scene->amb_light.gray_scale[i] / (scene->amb_light.column_average);
 		i++;
 	}
 	scene->amb_light.pdf_marginal = ft_calloc(scene->amb_light.skybox_t->hdr.height, sizeof(double));

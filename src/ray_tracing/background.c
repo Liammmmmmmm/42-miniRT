@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:37:08 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/17 12:26:18 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 11:50:17 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_fcolor	get_background_color(t_minirt *minirt, t_ray ray)
 			return (multiply_scalar_fcolor(rgba_to_fcolor(minirt->scene.amb_light.skybox_t->img.rgba[i]), minirt->scene.amb_light.ratio));
 		}
 		else if (minirt->scene.amb_light.skybox_t->type == HDR && minirt->scene.amb_light.skybox_t->hdr.pixels)
-			return (clamp_fcolor_val(get_hdr_pixel_skybox(minirt, &minirt->scene.amb_light.skybox_t->hdr, u * (minirt->scene.amb_light.skybox_t->hdr.width - 1), v * (minirt->scene.amb_light.skybox_t->hdr.height - 1)), 0.0, 16.0));
+			return (get_hdr_pixel_skybox(minirt, &minirt->scene.amb_light.skybox_t->hdr, u * (minirt->scene.amb_light.skybox_t->hdr.width - 1), v * (minirt->scene.amb_light.skybox_t->hdr.height - 1)));
 		else
 		{
 			return ((t_fcolor){0.0, 0.0, 0.0});

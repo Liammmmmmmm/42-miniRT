@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dielectric.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:30:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 17:30:32 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:44:57 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,17 @@ inline char	dielectric_mat(t_minirt *minirt, t_ray *ray,
 			if (hit_record->mat->transmission_value == 1.0)
 				refracted_ray(minirt, ray, hit_record, data.power);
 			else if (hit_record->mat->transmission_value == 0.0)
-				default_mat(minirt, ray, hit_record, data);
+				return (default_mat(minirt, ray, hit_record, data));
 			else
 			{
 				if (hit_record->mat->transmission_value < random_double())
-					default_mat(minirt, ray, hit_record, data);
+					return (default_mat(minirt, ray, hit_record, data));
 				else
 					refracted_ray(minirt, ray, hit_record, data.power);
 			}
 		}
 	}
 	else
-		default_mat(minirt, ray, hit_record, data);
+		return (default_mat(minirt, ray, hit_record, data));
+	return (0);
 }

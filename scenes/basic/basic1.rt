@@ -6,8 +6,8 @@ tex checkerr checker_local 2  13, 13, 13  250,250,250
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color normal_map
-mat	mat                           checker           checkerm       checkerr       000000      0.000000       1.0                 0.000000            255,255,255  6
-mat	mat2                          255,255,255       checkerm       checkerr       000000      0.000000       1.0                 0.000000            255,255,255  10
+mat	mat                           checker           0       checkerr       000000      0.000000       1.0                 0.000000            255,255,255  6
+mat	mat2                          255,255,255       0       checkerr       000000      0.000000       1.0                 0.000000            255,255,255  10
 
 A	1		 skybox
 

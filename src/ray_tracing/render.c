@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/11 12:45:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 14:27:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "bvh.h"
 #include "material.h"
 #include <math.h>
+
+extern int nb_sky;
 
 void	calc_one_sample_task(t_minirt *minirt, t_vec3 offset, t_uint i, int max_bounces)
 {
@@ -44,12 +46,14 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset, int max_bounces)
 	t_uint			i;
 	t_ray			ray;
 
+	nb_sky = 0;
 	i = 0;
 	while (i < tpi)
 	{
 		calc_one_sample_task(minirt, offset, i, max_bounces);
 		i++;
 	}
+	printf("Sur ce sample %d\n", nb_sky);
 	if (minirt->controls.selected_x != -1 && minirt->controls.selected_y != -1)
 	{
 		ft_bzero(minirt->controls.traced_ray, sizeof(t_vec3) * 11);

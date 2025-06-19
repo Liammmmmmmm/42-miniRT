@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 17:28:27 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:15:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ void	put_hdr_to_frame(t_hdr *img, t_img *img_buff, t_minirt *minirt)
 		// 	pt.color.g = pow(img->pixels[i].g / 255.0, gamma_corr) * 255;
 		// 	pt.color.b = pow(img->pixels[i].b / 255.0, gamma_corr) * 255;
 		// }
-		pt.color.r = iclamp(0, minirt->scene.amb_light.DEBUG_INVERSE_SAMPLING[i] * 255, 255);
+		pt.color.r = iclamp(0, minirt->scene.amb_light.pdf_joint[i] * 255, 255);
 		put_pixel_image(img_buff, pt.x, pt.y, rgb_to_int(iclamp(0, pt.color.r, 255), iclamp(0, pt.color.r, 255), iclamp(0, pt.color.r, 255)));
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_trace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 17:32:50 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/19 14:27:08 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,11 @@ inline char	material_manager_v3(t_minirt *minirt, t_ray *ray,
 	if (hit_record->mat->metallic_value == 1.0)
 		metallic_color(ray, hit_record, data.power);
 	else if (hit_record->mat->metallic_value == 0.0)
-		if (dielectric_mat(minirt, ray, hit_record, data) == 1)
-			return (1);
+		return (dielectric_mat(minirt, ray, hit_record, data));
 	else if (hit_record->mat->metallic_value > random_double())
 		metallic_color(ray, hit_record, data.power);
 	else
-		if (dielectric_mat(minirt, ray, hit_record, data) == 1)
-			return (1);
+		return (dielectric_mat(minirt, ray, hit_record, data));
 	return (0);
 }
 
@@ -49,6 +47,8 @@ hit_record->mat->ao_value), *data.power)));
 	return (add_fcolor(*data.accumulation, multiply_fcolor(
 		get_background_color(minirt, *ray), *data.power)));
 }
+
+int nb_sky = 0;
 
 t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 {
@@ -76,6 +76,7 @@ t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 		{
 			accumulation = add_skybox(minirt, &ray, &data.hit_record,
 					(t_ray_data){&power, &accumulation});
+			nb_sky++;
 			break ;
 		}
 	}

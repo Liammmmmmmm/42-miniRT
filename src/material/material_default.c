@@ -3,16 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   material_default.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/18 13:11:17 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/19 14:33:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "minirt.h"
 #include "material.h"
+
+static inline t_vec3	cos_weighted_sample_hemishphere(t_vec3 *normal)
+{
+	const double	r1 = random_double();
+	const double	r2 = random_double();
+	const double	r2_sqrt = sqrt(r2);
+	const double	phi = 2 * PI_D * r1;
+	t_vec3			local_dir;
+
+	local_dir.x = cos(phi) * r2_sqrt;
+	local_dir.y = sqrt(1 - r2);
+	local_dir.z = sin(phi) * r2_sqrt;
+
+	t_vec3 w = vec3_unit(*normal);
+	t_vec3 a = (fabs(w.y) < 0.999) ? (t_vec3){0, 1, 0} : (t_vec3){1, 0, 0};
+	t_vec3 u = vec3_unit(vec3_cross(a, w));
+	t_vec3 v = vec3_cross(w, u);
+
+	t_vec3 global_dir = vec3_add(
+		vec3_add(
+			vec3_multiply_scalar(u, local_dir.x),
+			vec3_multiply_scalar(w, local_dir.y)
+		),
+		vec3_multiply_scalar(v, local_dir.z)
+	);
+
+	return (vec3_unit(global_dir));
+}
 
 inline char	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 	t_ray_data data)
@@ -47,40 +75,29 @@ inline char	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 		int height = minirt->scene.amb_light.skybox_t->hdr.height;
 
 		// Convertit uv [0,1] en coordonnées d’image
-		int ix = (int)(uv.x * (float)width);
-		int iy = (int)(uv.y * (float)height);
+		int ix = (int)(uv.x * (float)(width - 1));
+		int iy = (int)(uv.y * (float)(height - 1));
 
-		// Clamp au cas où uv.x ou uv.y seraient à 1.0
-		if (ix >= width) ix = width - 1;
-		if (iy >= height) iy = height - 1;
+		float costheta = vec3_dot(hit_record->normal, ray->dir);
+		
+		if (costheta > 0)
+		{
+			float pdf = fmaxf(minirt->scene.amb_light.pdf_joint[iy * width + ix], 1e-6f);
+			t_fcolor radiance = get_background_color(minirt, *ray);
+			radiance = multiply_fcolor(radiance, *data.power);
+			// if (radiance.r > 1.0)
+			// printf("AV %f %f %f, PDF: %f, CT: %f\n", radiance.r, radiance.g, radiance.b, pdf, costheta);
+			radiance = multiply_scalar_fcolor(radiance, costheta / (pdf));
+			// printf("NX %f %f %f\n", radiance.r, radiance.g, radiance.b);
+			// printf("PDF : %f\n", pdf);
+			*data.accumulation = add_fcolor(*data.accumulation, radiance);
+		}
 
-		float pdf = minirt->scene.amb_light.pdf_joint[iy * width + ix];
-
-		pdf = fmaxf(pdf, 1e-6f);
-		// Pour éviter toute division par zéro
-		t_fcolor radiance = get_background_color(minirt, *ray);
-		radiance = multiply_scalar_fcolor(radiance, 1.0f / pdf);
-		radiance = multiply_fcolor(radiance, *data.power);
-		*data.accumulation = add_fcolor(*data.accumulation, radiance);
-		return (1);
-	}
-	/*
-	ray->dir = calc_inverse_transform_sampling_dir()
-
-	if (hit_register_all == 0)
-		on a rien tapé donc on renvoie la skybox;
-	else
-	{
-		il y a quelque chose sur la trajectoire de la light, donc on reprend
-		le systeme de base
-		  |
-		 \/
+		//printf("%f %f\n", pdf, pdf);
+		
+				return (1);
 	}
 
-	*/
-	ray->dir = vec3_add(hit_record->normal, vec3_random_unit());
-	if (fabs(ray->dir.x) < 1e-8 && fabs(ray->dir.y) < 1e-8
-		&& fabs(ray->dir.z) < 1e-8)
-		ray->dir = hit_record->normal;
+	ray->dir = cos_weighted_sample_hemishphere(&hit_record->normal);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:01:12 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/19 12:18:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 15:29:25 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ void	make_grey_map(t_scene *scene)
 	scene->amb_light.DEBUG_INVERSE_SAMPLING = ft_calloc(scene->amb_light.skybox_t->hdr.height * scene->amb_light.skybox_t->hdr.width, sizeof(double));
 	
 	int z = 0;
-	while (z < 100000)
+	while (z < 1000000)
 	{
 		t_vec2 aa = calc_inverse_transform_sampling_uv(scene);
 		scene->amb_light.DEBUG_INVERSE_SAMPLING[(int)(aa.y * (scene->amb_light.skybox_t->hdr.height - 1) * scene->amb_light.skybox_t->hdr.width + aa.x * (scene->amb_light.skybox_t->hdr.width -1))] += 1;

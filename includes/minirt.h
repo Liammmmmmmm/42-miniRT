@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/18 11:32:31 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:25:10 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ void	check_sample_amount(t_minirt *minirt);
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
 t_fcolor	get_background_color(t_minirt *minirt, t_ray ray);
+t_fcolor	get_background_color_clamp(t_minirt *minirt, t_ray ray);
 t_viewport	init_viewport(t_minirt *minirt);
 t_vec3		defocus_disk_sample(t_minirt *minirt);
 t_color		compute_light(t_hit_record *hit_record, t_minirt *minirt);

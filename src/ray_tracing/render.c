@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/19 14:27:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 16:53:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,14 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset, int max_bounces)
 {
 	const t_uint	tpi = minirt->viewport.render_w * minirt->viewport.render_h;
 	t_uint			i;
-	t_ray			ray;
 
-	nb_sky = 0;
+	printf("%f %f\n", offset.x, offset.y);
+
 	i = 0;
 	while (i < tpi)
 	{
 		calc_one_sample_task(minirt, offset, i, max_bounces);
 		i++;
-	}
-	printf("Sur ce sample %d\n", nb_sky);
-	if (minirt->controls.selected_x != -1 && minirt->controls.selected_y != -1)
-	{
-		ft_bzero(minirt->controls.traced_ray, sizeof(t_vec3) * 11);
-		if (minirt->scene.camera.defocus_angle <= 0)
-			ray.orig = minirt->scene.camera.position;
-		else
-			ray.orig = defocus_disk_sample(minirt);
-		ray.dir = vec3_subtract(vec3_add(vec3_add(minirt->viewport.pixel00_loc,
-						vec3_multiply_scalar(minirt->viewport.pixel_delta_u,
-							minirt->controls.selected_x + offset.x)),
-					vec3_multiply_scalar(minirt->viewport.pixel_delta_v,
-						minirt->controls.selected_y + offset.y)), ray.orig);
-		debug_path_trace(minirt, ray, 8);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/19 14:33:46 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/19 16:30:12 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,23 +79,28 @@ inline char	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 		int iy = (int)(uv.y * (float)(height - 1));
 
 		float costheta = vec3_dot(hit_record->normal, ray->dir);
+
+		// t_rgbe rgbe = minirt->scene.amb_light.skybox_t->hdr.pixels[iy * width + ix];
+		// printf("r:%u g:%u b:%u e:%u\n", rgbe.r, rgbe.g, rgbe.b, rgbe.e);
 		
-		if (costheta > 0)
+		if (costheta > random_double())
 		{
 			float pdf = fmaxf(minirt->scene.amb_light.pdf_joint[iy * width + ix], 1e-6f);
 			t_fcolor radiance = get_background_color(minirt, *ray);
+			if (hit_record->mat)
+				radiance = multiply_scalar_fcolor(radiance, hit_record->mat->ao_value);
 			radiance = multiply_fcolor(radiance, *data.power);
 			// if (radiance.r > 1.0)
 			// printf("AV %f %f %f, PDF: %f, CT: %f\n", radiance.r, radiance.g, radiance.b, pdf, costheta);
-			radiance = multiply_scalar_fcolor(radiance, costheta / (pdf));
+			radiance = multiply_scalar_fcolor(radiance, 1 / (pdf));
 			// printf("NX %f %f %f\n", radiance.r, radiance.g, radiance.b);
 			// printf("PDF : %f\n", pdf);
 			*data.accumulation = add_fcolor(*data.accumulation, radiance);
+			return (1);
 		}
 
 		//printf("%f %f\n", pdf, pdf);
 		
-				return (1);
 	}
 
 	ray->dir = cos_weighted_sample_hemishphere(&hit_record->normal);

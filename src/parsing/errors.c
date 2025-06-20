@@ -3,47 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:21:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/03 17:34:24 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:11:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include "error_message.h"
-
-int	invalid_struct_error(t_objects type, char **splited)
-{
-	if (type == AMBIANT_LIGHT)
-		print_error(ERR_AMBIENT_LIGHT_FORMAT);
-	else if (type == CAMERA)
-		print_error(ERR_CAMERA_FORMAT);
-	else if (type == LIGHT)
-		print_error(ERR_LIGHT_FORMAT);
-	else if (type == DIRECTIONAL_LIGHT)
-		print_error(ERR_DLIGHT_FORMAT);
-	else if (type == SPHERE)
-		print_error(ERR_SPHERE_FORMAT);
-	else if (type == PLANE)
-		print_error(ERR_PLANE_FORMAT);
-	else if (type == HYPERBOLOID)
-		print_error(ERR_HYPERBOLOID_FORMAT);
-	else if (type == CUSTOM)
-		print_error(ERR_CUSTOM_FORMAT);
-	else if (type == CYLINDER)
-		print_error(ERR_CYLINDER_FORMAT);
-	else if (type == CONE)	
-		print_error(ERR_CONE_FORMAT);
-	else if (type == MATERIAL)
-		print_error(ERR_MATERIAL_FORMAT);
-	else if (type == TEXTURE)
-		print_error(ERR_TEXTURE_FORMAT);
-	else if (type == WINDOW)
-		print_error(ERR_WINDOW_FORMAT);
-	free(splited);
-	return (0);
-}
 
 int	invalid_float_error(char **splited, int i)
 {
@@ -69,5 +36,12 @@ int	to_many_el_error(char *el)
 int	not_enough_el_error(char *el)
 {
 	ft_dprintf(2, RED"[Error]"NC" No element '%s'. Need at least one.\n", el);
+	return (0);
+}
+
+int	invalid_size_error(char **splited)
+{
+	print_error("Invalid size, must be a positive value.");
+	free(splited);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:41:31 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 12:29:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 14:22:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ inline int	parse_ambient_light_ratio_and_color(t_scene *scene, char **parts)
 		return (invalid_float_error(parts, 1));
 	scene->amb_light.ratio = ft_atod(parts[1]);
 	if (!parse_color_or_tex(parts[2], &scene->amb_light.skybox_c,
-		&scene->amb_light.skybox_t, scene))
+			&scene->amb_light.skybox_t, scene))
 		return (invalid_struct_error(AMBIANT_LIGHT, parts));
 	if (scene->amb_light.skybox_t && scene->amb_light.skybox_t->type == IMAGE
 		&& !scene->amb_light.skybox_t->img.rgba)

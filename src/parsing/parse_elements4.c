@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements4.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:31:25 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/11 18:39:25 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:24:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+static int	parse_cone2(t_scene *scene, char **parts, t_cone *cone,
+	int nb_parts)
+{
+	if (!is_valid_size(parts[4], &cone->height))
+		return (invalid_size_error(parts));
+	if (!parse_color_or_mat(parts[5], &cone->color, &cone->material, scene))
+		return (invalid_struct_error(CONE, parts));
+	cone->material_top = NULL;
+	if (nb_parts > 6 && !parse_only_mat(parts[6], &cone->material_top, scene))
+		return (invalid_struct_error(CONE, parts));
+	cone->orientation = vec3_unit(cone->orientation);
+}
 
 int	parse_cone(t_scene *scene, char *line)
 {
@@ -35,15 +48,25 @@ int	parse_cone(t_scene *scene, char *line)
 		return (invalid_struct_error(CONE, parts));
 	if (!is_valid_size(parts[3], &cone->diameter))
 		return (invalid_size_error(parts));
-	if (!is_valid_size(parts[4], &cone->height))
-		return (invalid_size_error(parts));
-	if (!parse_color_or_mat(parts[5], &cone->color, &cone->material, scene))
-		return (invalid_struct_error(CONE, parts));
-	cone->material_top = NULL;
-	if (nb_parts > 6 && !parse_only_mat(parts[6], &cone->material_top, scene))
-		return (invalid_struct_error(CONE, parts));
-	cone->orientation = vec3_unit(cone->orientation);
+	if (parse_cone2(scene, parts, cone, nb_parts) == 0)
+		return (0);
 	free(parts);
+	return (1);
+}
+
+static int	parse_hyperboloid2(t_scene *scene, char **parts, t_hyperboloid *hyp)
+{
+	if (!is_valid_size(parts[4], &hyp->a))
+		return (invalid_size_error(parts));
+	if (!is_valid_size(parts[5], &hyp->b))
+		return (invalid_size_error(parts));
+	if (!is_valid_size(parts[6], &hyp->c))
+		return (invalid_size_error(parts));
+	if (!is_valid_double_el_no_bordered(parts[7], &hyp->shape))
+		return (invalid_size_error(parts));
+	if (!parse_color_or_mat(parts[8], &hyp->color, &hyp->material, scene))
+		return (invalid_struct_error(HYPERBOLOID, parts));
+	hyp->orientation = vec3_unit(hyp->orientation);
 	return (1);
 }
 
@@ -68,17 +91,8 @@ int	parse_hyperboloid(t_scene *scene, char *line)
 		return (invalid_struct_error(HYPERBOLOID, parts));
 	if (!is_valid_size(parts[3], &hyp->height))
 		return (invalid_size_error(parts));
-	if (!is_valid_size(parts[4], &hyp->a))
-		return (invalid_size_error(parts));
-	if (!is_valid_size(parts[5], &hyp->b))
-		return (invalid_size_error(parts));
-	if (!is_valid_size(parts[6], &hyp->c))
-		return (invalid_size_error(parts));
-	if (!is_valid_double_el_no_bordered(parts[7], &hyp->shape))
-		return (invalid_size_error(parts));
-	if (!parse_color_or_mat(parts[8], &hyp->color, &hyp->material, scene))
-		return (invalid_struct_error(HYPERBOLOID, parts));
-	hyp->orientation = vec3_unit(hyp->orientation);
+	if (parse_hyperboloid2(scene, parts, hyp) == 0)
+		return (0);
 	free(parts);
 	return (1);
 }
@@ -104,43 +118,10 @@ int	parse_obj_custom(t_scene *scene, char *line)
 		return (invalid_struct_error(CUSTOM, parts));
 	if (!parse_vector(parts[3], &obj->scale))
 		return (invalid_size_error(parts));
-	if (parse_obj(parts[4], obj))
-		return (print_error("aaaaaaaaa")); // a changer
 	if (!parse_color_or_mat(parts[5], &obj->color, &obj->material, scene))
 		return (invalid_struct_error(CUSTOM, parts));
-	free(parts);
-	return (1);
-}
-
-int	parse_win_size(t_scene *scene, char *line)
-{
-	char	**parts;
-	int		nb_parts;
-
-	parts = ft_split_in_line(line, " ");
-	if (!parts)
-		return (print_error(strerror(errno)));
-	nb_parts = char_tab_len(parts);
-	if (nb_parts != 3 && nb_parts != 5)
-		return (invalid_struct_error(WINDOW, parts));
-	if (!is_valid_positive_int(parts[1], &scene->win_width))
-		return (invalid_struct_error(WINDOW, parts));
-	if (!is_valid_positive_int(parts[2], &scene->win_height))
-		return (invalid_struct_error(WINDOW, parts));
-	if (nb_parts == 5)
-	{
-		if (!is_valid_positive_int(parts[3], &scene->render_width))
-			return (invalid_struct_error(WINDOW, parts));
-		if (!is_valid_positive_int(parts[4], &scene->render_height))
-			return (invalid_struct_error(WINDOW, parts));
-	}
-	else
-	{
-		scene->render_width = scene->win_width;
-		scene->render_height = scene->win_height;
-	}
-	if (scene->render_width < 2 || scene->render_height < 2 || scene->win_width < 10 || scene->win_height < 10)
-		return (invalid_struct_error(WINDOW, parts));
+	if (parse_obj(parts[4], obj))
+		return (invalid_struct_error(CUSTOM, parts));
 	free(parts);
 	return (1);
 }

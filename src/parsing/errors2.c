@@ -6,18 +6,11 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:05:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/14 10:05:29 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 14:11:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-int	invalid_size_error(char **splited)
-{
-	print_error("Invalid size, must be a positive value.");
-	free(splited);
-	return (0);
-}
 
 int	texture_error(int error, char **parts)
 {
@@ -48,6 +41,14 @@ int	material_error(int error, char **parts)
 	return (0);
 }
 
+static void	mat_more_items(int error, char *part)
+{
+	if (error == 9)
+		ft_dprintf(2, RED"[Error]"NC" Invalid normal intensity: `%s'\n", part);
+	else if (error == 10)
+		ft_dprintf(2, RED"[Error]"NC" Invalid scale: `%s'\n", part);
+}
+
 int	material_item_error(int error, char *part)
 {
 	if (error == 0)
@@ -73,10 +74,7 @@ int	material_item_error(int error, char *part)
 	else if (error == 8)
 		ft_dprintf(2, RED"[Error]"NC" Invalid ambient occlusion for: `%s'\n",
 			part);
-	else if (error == 9)
-		ft_dprintf(2, RED"[Error]"NC" Invalid normal intensity: `%s'\n", part);
-	else if (error == 10)
-		ft_dprintf(2, RED"[Error]"NC" Invalid scale: `%s'\n", part);
+	mat_more_items(error, part);
 	return (0);
 }
 

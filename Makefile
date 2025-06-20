@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/20 13:46:00 by madelvin         ###   ########.fr        #
+#    Updated: 2025/06/20 14:44:24 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,7 +119,7 @@ MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/
 					cylinder/cylinder_uv.c color/fcolor_clamp.c color/conversions.c clamp_double.c
 
 PARSING_DIR			= src/parsing/
-PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
+PARSING_FILE		= parse_scene.c errors.c errors2.c errors3.c valid_line.c \
 					tranform_line.c verify_elements.c parse_elements.c \
 					parse_elements2.c parse_elements3.c parse_elements4.c  parse_elements_utils.c \
 					parse_elements_utils2.c parse_elements_utils3.c parse_elements_utils4.c \

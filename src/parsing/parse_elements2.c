@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 12:56:45 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:21:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	parse_ambiant_light(t_scene *scene, char *line)
 	if (!parse_ambient_light_ratio_and_color(scene, parts))
 		return (0);
 	if (((scene->amb_light.skybox_t && scene->amb_light.skybox_t->type == IMAGE)
-		|| !scene->amb_light.skybox_t) && scene->amb_light.ratio < 0.0)
+			|| !scene->amb_light.skybox_t) && scene->amb_light.ratio < 0.0)
 	{
 		free(parts);
 		return (print_error(MSG_ERR_AMBIENT_LIGHT_RATIO));

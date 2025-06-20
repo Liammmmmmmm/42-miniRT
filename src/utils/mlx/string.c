@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 14:38:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 18:54:32 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:48:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	string_to_img(t_img *img, unsigned char font[96][5], t_point p, \
 			p.x += 6;
 		}
 		str++;
-	}//fonction inutiliser
+	}
 }
 
 int	string_size(char *str)

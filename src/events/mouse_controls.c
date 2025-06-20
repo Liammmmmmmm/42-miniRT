@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:41:18 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 14:00:14 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 15:02:50 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ int	mouse_move_controls(int x, int y, t_minirt *minirt)
 		slider_mouse_move(&minirt->controls.sliders[i], x);
 	i = -1;
 	while (++i < minirt->controls.nb_color_picker)
-		color_picker_mouse_move(&minirt->controls.color_picker[i], x, y);	
+		color_picker_mouse_move(&minirt->controls.color_picker[i], x, y);
 	return (0);
 }

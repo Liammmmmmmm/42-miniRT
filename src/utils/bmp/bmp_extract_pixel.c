@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:50:32 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/17 12:18:36 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 14:48:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static inline int	read_pixels_for_row(t_bin *bin, size_t *i, t_bmp *bmp, \
 			return (-1);
 		bmp->pixel_data[y * bmp->info.width + x] = \
 			(t_rgba){(color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF,
-				(color >> 24) & 0xFF};
+			(color >> 24) & 0xFF};
 		x++;
 	}
 	return (0);

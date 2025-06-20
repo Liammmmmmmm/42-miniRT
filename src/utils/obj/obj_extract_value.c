@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_extract_value.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:58:05 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/12 16:02:11 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:47:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ int read_file_to_temp_data(char *filepath, t_parser_temp_data *data)
 			name_end = ft_strchr(name_start, '\n');
 			if (name_end)
 				*name_end = '\0';
-			data->object_name = ft_strdup(name_start); // a voir si c'est une erreur critique pour le moment balec
+			data->object_name = ft_strdup(name_start);
 		}
 		free(line);
 		line = get_next_line(fd);

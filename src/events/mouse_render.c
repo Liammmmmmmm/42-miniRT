@@ -6,40 +6,44 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:42:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/11 16:38:58 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 15:04:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	mousedown_render(int key, int x, int y, t_minirt *minirt)
+static void	select_object_lft(t_minirt *minirt)
 {
 	char	item_null;
 
+	item_null = (minirt->controls.ui_infos.selected_object == NULL);
+	minirt->controls.ui_infos.selected_object = select_object(minirt,
+			minirt->controls.mlxr, minirt->controls.mlyr);
+	if ((minirt->controls.ui_infos.selected_object == NULL
+			|| minirt->controls.ui_infos.selected_object->type == PLANE
+			|| minirt->controls.ui_infos.selected_object->type == LIGHT)
+		&& item_null == 0)
+	{
+		copy_buff_to_image(minirt);
+		mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win,
+			minirt->mlx.img.img, 0, 0);
+	}
+	set_selected_object(minirt, minirt->controls.ui_infos.selected_object);
+}
+
+int	mousedown_render(int key, int x, int y, t_minirt *minirt)
+{
 	minirt->controls.mlxr = (t_uint)x;
 	minirt->controls.mlyr = (t_uint)y;
 	mousedown_common(key, minirt);
 	if (key == LEFT_CLICK && minirt->scene.build_bvh == 0)
-	{
-		item_null = (minirt->controls.ui_infos.selected_object == NULL);
-		minirt->controls.ui_infos.selected_object = select_object(minirt,
-				minirt->controls.mlxr, minirt->controls.mlyr);
-		if ((minirt->controls.ui_infos.selected_object == NULL
-				|| minirt->controls.ui_infos.selected_object->type == PLANE
-				|| minirt->controls.ui_infos.selected_object->type == LIGHT)
-			&& item_null == 0)
-		{
-			copy_buff_to_image(minirt);
-			mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win,
-				minirt->mlx.img.img, 0, 0);
-		}
-		set_selected_object(minirt, minirt->controls.ui_infos.selected_object);
-	}
+		select_object_lft(minirt);
 	else if (key == RIGHT_CLICK)
 	{
 		minirt->controls.selected_x = x;
 		minirt->controls.selected_y = y;
-		printf("new selected : %d %d\n", minirt->controls.selected_x, minirt->controls.selected_y);
+		printf("new selected : %d %d\n", minirt->controls.selected_x,
+			minirt->controls.selected_y);
 	}
 	return (0);
 }

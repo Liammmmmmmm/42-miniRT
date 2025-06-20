@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 10:37:36 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 12:01:19 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,19 +239,13 @@ void		material_manager_v3(t_minirt *minirt, t_ray *ray,
 t_object	*select_object(t_minirt *minirt, int x, int y);
 void		draw_selected_object(t_minirt *minirt);
 
+
+
 void		bilinear_upscale(t_minirt *minirt);
 void		neighbor_upscale(t_minirt *minirt);
 void		lanczos3_upscale(t_minirt *minirt);
 void		bicubic_upscale(t_minirt *minirt);
 void		no_upscaling(t_minirt *minirt);
 
-int		parse_obj(char *file, t_custom_object *obj);
-
-
-// importance sampling
-
-t_vec2	calc_inverse_transform_sampling_uv(t_scene *scene);
-t_vec3	calc_inverse_transform_sampling_dir(const t_vec2 *uv);
-void	make_grey_map(t_scene *scene);
 
 #endif

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:29:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 12:29:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 12:56:05 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "importance_sampling.h"
 
 void	free_tex_mat(t_scene *scene)
 {
@@ -64,14 +65,15 @@ int	free_scene(t_scene *scene, char **lines)
 				free(((t_custom_object *)scene->elements[i].object)->obj_list);
 			}
 			free(scene->elements[i].object);
-			scene->elements[i].object = NULL;
-			scene->elements[i].type = NULL_OBJ;
+			scene->elements[i].object = NULL; //retirer sa
+			scene->elements[i].type = NULL_OBJ; //retirer sa
 		}
 		free(scene->elements);
 		scene->elements = NULL;
 	}
 	free_tex_mat(scene);
 	free_bvh_obj_lst(scene);
+	free_importance_sampling_malloc(scene);
 	return (0);
 }
 

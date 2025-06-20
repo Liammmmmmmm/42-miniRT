@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/18 12:06:19 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 13:11:54 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,8 @@ typedef struct s_amb_light
 	double	*pdf_conditional;
 	double	*cdf_conditional_inverse;
 	double	*DEBUG_INVERSE_SAMPLING;
+	double	*cdf_w;
+	double	*cdf_h;
 	double	column_average;
 }	t_amb_light;
 

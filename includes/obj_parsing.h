@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:42:24 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/11 21:44:59 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:01:15 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_cache_entry
 	struct s_cache_entry	*next;
 }	t_cache_entry;
 
+int		parse_obj(char *file, t_custom_object *obj);
 t_vec3	rotate_around_axis(t_vec3 v, t_vec3 axis, float angle);
 void	ft_update_obj_position(t_custom_object *obj);
 int		build_indexed_mesh(t_mesh *mesh, t_parser_temp_data *data);

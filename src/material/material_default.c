@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   material_default.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 10:57:47 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 12:55:40 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "minirt.h"
 #include "material.h"
+#include "importance_sampling.h"
 
 static inline t_vec3	cos_weighted_sample_hemishphere(t_vec3 *normal)
 {

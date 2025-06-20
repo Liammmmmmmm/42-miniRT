@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/17 16:42:27 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/06/20 12:57:03 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,8 +94,8 @@ RAY_TRACING_FILE	= render.c init_animated_items.c focus.c light.c bvh/bvh_manage
 					bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c bvh/bvh_draw_utils.c bvh/bvh_obj_bounds.c\
 					setup_scene_obj.c background.c viewport.c path_trace.c hit_register/apply_map.c hit_register/get_hdr_value.c \
 					hit_register/get_hit_color.c hit_register/get_tex_color.c hit_register/hit_register.c hit_register/hit_obj.c \
-					bvh/bvh_hit.c micrort.c bvh/bvh_build.c \
-					importance_sampling/get_dir.c
+					bvh/bvh_hit.c micrort.c bvh/bvh_build.c importance_sampling/get_dir.c importance_sampling/calc_pdf.c \
+					importance_sampling/calc_cdf.c importance_sampling/importance_sampling_manager.c importance_sampling/init_maloc_importance_sampling.c
 
 TEXTURES_DIR		= src/ray_tracing/textures/
 TEXTURES_FILE		= get_solid_texture.c
@@ -123,8 +123,7 @@ PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
 					tranform_line.c verify_elements.c parse_elements.c \
 					parse_elements2.c parse_elements3.c parse_elements4.c  parse_elements_utils.c \
 					parse_elements_utils2.c parse_elements_utils3.c parse_elements_utils4.c \
-					parse_elements_utils5.c parse_elements_utils6.c get_texture.c parse_elements5.c \
-					grey_map.c
+					parse_elements_utils5.c parse_elements_utils6.c get_texture.c parse_elements5.c
 
 FONT_PARS_DIR		= src/utils/font/parsing/
 FONT_PARS_FILE		= free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c read_cmap.c \
@@ -192,7 +191,8 @@ REMAKE   = libft/includes/libft.h libft/includes/ft_printf.h \
 		includes/bmp_parsing.h includes/bvh.h includes/font.h includes/font_structs.h \
 		includes/material.h includes/maths.h includes/minirt.h \
 		includes/mlx_base.h includes/mlx_components.h includes/structs.h includes/ui.h \
-		includes/utils.h includes/obj_parsing.h includes/hit_register.h
+		includes/utils.h includes/obj_parsing.h includes/hit_register.h \
+		includes/importance_sampling.h
 
 # NORMINETTE
 NORM_RET = $(RED)[ERROR]$(BOLD) Norminette Disable$(NC)

@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/20 12:57:03 by madelvin         ###   ########.fr        #
+#    Updated: 2025/06/20 13:46:00 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,7 +123,8 @@ PARSING_FILE		= parse_scene.c errors.c errors2.c valid_line.c \
 					tranform_line.c verify_elements.c parse_elements.c \
 					parse_elements2.c parse_elements3.c parse_elements4.c  parse_elements_utils.c \
 					parse_elements_utils2.c parse_elements_utils3.c parse_elements_utils4.c \
-					parse_elements_utils5.c parse_elements_utils6.c get_texture.c parse_elements5.c
+					parse_elements_utils5.c parse_elements_utils6.c get_texture.c parse_elements5.c \
+					free_scene.c
 
 FONT_PARS_DIR		= src/utils/font/parsing/
 FONT_PARS_FILE		= free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c read_cmap.c \

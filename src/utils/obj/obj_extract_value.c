@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_extract_value.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:58:05 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 14:47:52 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:02:18 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static char parse_vec3(char *line, t_vector *vec_array)
 	}
 	return (0);
 }
-
 
 static char parse_vec2(char *line, t_vector *vec_array)
 {

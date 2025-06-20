@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   metallic.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:42:13 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/20 14:41:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 18:54:50 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 inline void	metallic_color(t_ray *ray, t_hit_record *hit_record,
 	t_fcolor *power)
 {
-	t_vec3	direction;
-	t_vec3	micro_normal;
-	const	double cos_theta = get_cos_theta(ray->dir, hit_record->normal);
+	t_vec3			direction;
+	t_vec3			micro_normal;
+	const double	cos_theta = get_cos_theta(ray->dir, hit_record->normal);
 
 	if (hit_record->mat->roughness_value > 0.0)
 		micro_normal = ggx_sample_hemisphere(hit_record->normal,

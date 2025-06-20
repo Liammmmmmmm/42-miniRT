@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dielectric.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:30:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 10:31:22 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 18:56:49 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ inline void	dielectric_mat(t_minirt *minirt, t_ray *ray,
 {
 	if (hit_record->mat->ior > 0)
 	{
-		if (get_reflect_value(ray, hit_record) >= random_double() && hit_record->mat->ior != 1.0)
+		if (get_reflect_value(ray, hit_record) >= random_double()
+			&& hit_record->mat->ior != 1.0)
 			reflected_dielectric_color(ray, hit_record);
 		else
 		{

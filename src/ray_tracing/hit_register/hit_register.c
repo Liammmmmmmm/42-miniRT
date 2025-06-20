@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_register.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/17 13:48:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 14:43:54 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 
 static void	init_hit_data(t_hit_register_data *data, double *closest_t)
 {
-	data->interval.min = 0.001;
-	data->interval.max = 1000;
 	*closest_t = 1000;
 	data->hit_record.part = DEFAULT;
 }
@@ -57,7 +55,8 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node,
 		return (0);
 	if (data->hit_record.mat && data->hit_record.mat->color_tex)
 	{
-		transparency = get_tex_transparency(data->hit_record.mat->color_tex, data->hit_record.u, data->hit_record.v);
+		transparency = get_tex_transparency(data->hit_record.mat->color_tex,
+				data->hit_record.u, data->hit_record.v);
 		if (transparency == 1)
 			return (0);
 		else if (transparency != 0)
@@ -87,7 +86,7 @@ static void	hit_all_planes(t_minirt *minirt, t_hit_register_data *data,
 	while (i < minirt->scene.obj_lst.plane_nb)
 	{
 		plane = (t_plane *)plane_lst[i]->object;
-		if (hit_plane(plane, data->ray, (t_interval){0.001, 1000}, tmp))
+		if (hit_plane(plane, data->ray, tmp))
 		{
 			if (*hit == 0 || tmp->t < data->hit_record.t)
 			{

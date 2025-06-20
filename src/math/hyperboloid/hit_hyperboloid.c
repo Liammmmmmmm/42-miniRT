@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_hyperboloid.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:50:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 12:47:19 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:01:49 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,10 @@ static t_vec3	compute_normal(t_hyperboloid *hyp, t_vec3 to_p, t_vec3 axis)
 		tmp = (t_vec3){1, 0, 0};
 	u = vec3_unit(vec3_cross(tmp, axis));
 	v = vec3_cross(axis, u);
-
-	return (vec3_unit(vec3_add(vec3_add(
-			vec3_multiply_scalar(u, 2.0 * vec3_dot(to_p, u) / (hyp->a * hyp->a)),
-			vec3_multiply_scalar(v, 2.0 * vec3_dot(to_p, v) / (hyp->b * hyp->b))),
-			vec3_multiply_scalar(axis, -2.0 * vec3_dot(to_p, axis) / (hyp->c * hyp->c))
+	return (vec3_unit(vec3_add(vec3_add(\
+vec3_multiply_scalar(u, 2.0 * vec3_dot(to_p, u) / (hyp->a * hyp->a)), \
+vec3_multiply_scalar(v, 2.0 * vec3_dot(to_p, v) / (hyp->b * hyp->b))), \
+vec3_multiply_scalar(axis, -2.0 * vec3_dot(to_p, axis) / (hyp->c * hyp->c)) \
 		)));
 }
 
@@ -75,8 +74,8 @@ char	handle_hyperboloid_hit(t_hyperboloid *hyp, t_ray *r,
 	return (1);
 }
 
-char	hit_hyperboloid(t_hyperboloid *hyp, t_ray *r, t_interval interval,
-	t_hit_record *rec)
+char	hit_hyperboloid(t_hyperboloid *hyp, t_ray *r, t_hit_record *rec,
+	double interval_max)
 {
 	t_quadratic	q;
 	char		hit_anything;
@@ -86,16 +85,16 @@ char	hit_hyperboloid(t_hyperboloid *hyp, t_ray *r, t_interval interval,
 	if (!init_hyperboloid_quadratic(&q, hyp, r))
 		return (0);
 	hit_anything = 0;
-	if (q.t0 > interval.min && q.t0 < interval.max)
+	if (q.t0 > IT_MIN && q.t0 < interval_max)
 	{
 		q.t_hit = q.t0;
 		if (handle_hyperboloid_hit(hyp, r, rec, &q))
 		{
 			hit_anything = 1;
-			interval.max = q.t0;
+			interval_max = q.t0;
 		}
 	}
-	if (q.t1 > interval.min && q.t1 < interval.max)
+	if (q.t1 > IT_MIN && q.t1 < interval_max)
 	{
 		q.t_hit = q.t1;
 		if (handle_hyperboloid_hit(hyp, r, rec, &q))

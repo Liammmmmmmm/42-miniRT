@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 15:13:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 19:05:10 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@
 // Control window
 # define CWIN_WIDTH 600
 # define CWIN_HEIGHT 1080
+
+# define IT_MAX 1000
+# define IT_MIN 0.001
 
 # define MIN_SCALE 1e-3
 
@@ -211,6 +214,7 @@ void	put_render_to_frame(t_minirt *minirt);
 void	put_render_to_buff(t_minirt *minirt);
 void	copy_buff_to_image(t_minirt *minirt);
 void	render(t_minirt *minirt);
+void	calc_one_sample(t_minirt *minirt, t_vec3 offset, int max_bounces);
 
 void	check_sample_amount(t_minirt *minirt);
 
@@ -222,7 +226,6 @@ t_fcolor	get_background_color(t_minirt *minirt, t_ray ray);
 t_fcolor	get_background_color_clamp(t_minirt *minirt, t_ray ray);
 t_viewport	init_viewport(t_minirt *minirt);
 t_vec3		defocus_disk_sample(t_minirt *minirt);
-t_color		compute_light(t_hit_record *hit_record, t_minirt *minirt);
 t_fcolor	get_solid_texture(t_vec3 p, t_color c1, t_color c2, double scale);
 t_fcolor	get_solid_texture_default(t_vec3 point, double scale);
 int			init_plane_light_lst(t_minirt *minirt);
@@ -234,6 +237,13 @@ t_fcolor	get_hdr_pixel_skybox(t_minirt *minirt, t_hdr *hdr, int x, int y);
 // V2 
 
 t_fcolor	compute_light_v2(t_hit_record *hit_record, t_minirt *minirt);
+char		check_plight_hit(t_minirt *minirt, t_vec3 origin, t_vec3 target);
+void		add_plight(t_lcolor *light_color, t_hit_record *hit,
+	t_light *light, t_vec3 view_dir);
+char		check_dlight_hit_dir(t_minirt *minirt, t_vec3 origin, t_vec3 direction);
+void		add_dlight(t_lcolor *light_color, t_hit_record *hit, t_dlight *light,
+	t_vec3 view_dir);
+
 t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth);
 t_fcolor	path_trace_normal(t_minirt *minirt, t_ray ray);
 void		debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth);
@@ -250,6 +260,7 @@ t_object	*select_object(t_minirt *minirt, int x, int y);
 void		draw_selected_object(t_minirt *minirt);
 
 
+int			free_mlx_error(t_minirt *minirt);
 
 void		bilinear_upscale(t_minirt *minirt);
 void		neighbor_upscale(t_minirt *minirt);

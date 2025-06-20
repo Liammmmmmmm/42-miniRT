@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/17 12:26:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 16:37:29 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,26 +83,22 @@ char	init_hyperboloid_quadratic(t_quadratic *q, t_hyperboloid *h, t_ray *r);
 t_vec3	vec3_min(t_vec3 a, t_vec3 b);
 t_vec3	vec3_max(t_vec3 a, t_vec3 b);
 
-char	hit_sphere(t_sphere *sphere, t_ray *r, \
-	t_interval interval, t_hit_record *rec);
-char	hit_plane(t_plane *plane, const t_ray *r, \
-	t_interval interval, t_hit_record *rec);
-char	hit_cylinder(t_cylinder *cylinder, t_ray *r, t_interval interval, \
-	t_hit_record *rec);
-char	hit_cone(t_cone *cone, t_ray *ray, t_interval interval,
-		t_hit_record *rec);
-char	hit_triangle(t_triangle *t, t_ray *r, t_interval i, \
-		t_hit_record *rec);
+char	hit_sphere(t_sphere *sphere, t_ray *r, t_hit_record *rec);
+char	hit_plane(t_plane *plane, const t_ray *r, t_hit_record *rec);
+char	hit_cylinder(t_cylinder *cylinder, t_ray *r, t_hit_record *rec);
+char	hit_cone(t_cone *cone, t_ray *ray, t_hit_record *rec);
+char	hit_triangle(t_triangle *t, t_ray *r, t_hit_record *rec);
 char	hit_register_all(t_minirt *minirt, t_hit_register_data *data);
 char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_hit_register_data *data);
-char	hit_hyperboloid(t_hyperboloid *hyp, t_ray *r, t_interval interval, t_hit_record *rec);
+char	hit_hyperboloid(t_hyperboloid *hyp, t_ray *r, t_hit_record *rec,
+	double interval_max);
 t_vec3	set_normal_face(const t_ray *r, const t_vec3 *outward_normal, t_hit_record	*hit_record);
 t_vec3	ray_at(t_ray r, double t);
 
 void	get_cylinder_cap_uv(t_hit_record *rec, t_cylinder *cyl, int top);
 void	get_cylinder_lateral_uv(t_hit_record *rec, t_cylinder *cyl);
 
-char	valid_t(t_quadratic *q, t_interval i);
+char	valid_t(t_quadratic *q);
 
 // MATRIX
 

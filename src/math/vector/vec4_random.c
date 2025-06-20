@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec4_random.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:35:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/11 13:22:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 18:59:07 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,17 @@
 
 t_vec4	vec4_random(void)
 {
-	return ((t_vec4){_mm256_set_pd(0.0, random_double(), random_double(), random_double())});
+	return ((t_vec4){_mm256_set_pd(0.0, random_double(), random_double(),
+			random_double())});
 }
 
 t_vec4	vec4_random_in_interval(double min, double max)
 {
 	return ((t_vec4){_mm256_set_pd(0.0,
-		random_double_in_interval(min, max),
-		random_double_in_interval(min, max),
-		random_double_in_interval(min, max)
-	)});
+			random_double_in_interval(min, max),
+			random_double_in_interval(min, max),
+			random_double_in_interval(min, max)
+		)});
 }
 
 t_vec4	vec4_random_unit(void)

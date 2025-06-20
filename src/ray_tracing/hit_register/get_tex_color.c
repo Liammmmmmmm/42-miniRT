@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_tex_color.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:04:42 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/17 13:50:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 16:30:30 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ double	get_tex_transparency(t_tex *tex, double u, double v)
 		if (!tex->img.rgba || !tex->img.width || !tex->img.height)
 			return (0.0);
 		else
-			return (1 - tex->img.rgba[tex->img.width * (int)(v * (tex->img.height \
-				- 1)) + (int)(u * (tex->img.width - 1))].a / 255.0);
+			return (1 - tex->img.rgba[tex->img.width * (int)(v \
+		* (tex->img.height - 1)) + (int)(u * (tex->img.width - 1))].a / 255.0);
 	}
 	return (0.0);
 }

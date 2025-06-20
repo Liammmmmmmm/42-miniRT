@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_sphere.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:47:38 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/05 16:26:36 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:37:20 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static inline void	get_sphere_uv(t_hit_record *rec, t_sphere *sphere)
 	}
 }
 
-char	hit_sphere(t_sphere *sp, t_ray *r, t_interval i, t_hit_record *rec)
+char	hit_sphere(t_sphere *sp, t_ray *r, t_hit_record *rec)
 {
 	t_quadratic	q;
 	t_vec3		outward;
 
-	if (!init_sphere_quadratic(&q, sp, r) || !valid_t(&q, i))
+	if (!init_sphere_quadratic(&q, sp, r) || !valid_t(&q))
 		return (0);
 	rec->t = q.t_hit;
 	rec->point = ray_at(*r, rec->t);

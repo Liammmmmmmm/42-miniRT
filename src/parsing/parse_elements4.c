@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements4.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:31:25 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 14:24:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 16:38:17 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static int	parse_cone2(t_scene *scene, char **parts, t_cone *cone,
 	if (nb_parts > 6 && !parse_only_mat(parts[6], &cone->material_top, scene))
 		return (invalid_struct_error(CONE, parts));
 	cone->orientation = vec3_unit(cone->orientation);
+	return (1);
 }
 
 int	parse_cone(t_scene *scene, char *line)

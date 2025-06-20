@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/06 12:36:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 16:45:07 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,31 @@
 
 static void	init_camera_values(t_minirt *minirt)
 {
+	t_float_input	*fl_in;
+
 	minirt->scene.camera.fov = minirt->controls.values.fov;
 	minirt->scene.camera.orientation = vec3_unit(
 			minirt->scene.camera.orientation);
-	link_float_input(&minirt->controls.float_input[19], &minirt->scene.camera.position.x);
-	link_float_input(&minirt->controls.float_input[20], &minirt->scene.camera.position.y);
-	link_float_input(&minirt->controls.float_input[21], &minirt->scene.camera.position.z);
-	link_float_input(&minirt->controls.float_input[22], &minirt->scene.camera.orientation.x);
-	link_float_input(&minirt->controls.float_input[23], &minirt->scene.camera.orientation.y);
-	link_float_input(&minirt->controls.float_input[24], &minirt->scene.camera.orientation.z);
-	link_float_input(&minirt->controls.float_input[25], &minirt->scene.camera.defocus_angle);
-	link_float_input(&minirt->controls.float_input[26], &minirt->scene.camera.focus_dist);
-	link_float_input(&minirt->controls.float_input[27], &minirt->scene.amb_light.ratio);
+	fl_in = minirt->controls.float_input;
+	link_float_input(&fl_in[19], &minirt->scene.camera.position.x);
+	link_float_input(&fl_in[20], &minirt->scene.camera.position.y);
+	link_float_input(&fl_in[21], &minirt->scene.camera.position.z);
+	link_float_input(&fl_in[22], &minirt->scene.camera.orientation.x);
+	link_float_input(&fl_in[23], &minirt->scene.camera.orientation.y);
+	link_float_input(&fl_in[24], &minirt->scene.camera.orientation.z);
+	link_float_input(&fl_in[25], &minirt->scene.camera.defocus_angle);
+	link_float_input(&fl_in[26], &minirt->scene.camera.focus_dist);
+	link_float_input(&fl_in[27], &minirt->scene.amb_light.ratio);
 }
 
 static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 {
 	t_vec3	up;
-	// double	vectical_fov;
 
 	ft_bzero(vp, sizeof(t_viewport));
 	init_camera_values(minirt);
 	if (minirt->scene.build_bvh)
 	{
-		// SECURE ICI, la fonction en dessous fait un invalid free
-		// free_bvh_obj_lst(&minirt->scene);
 		init_bvh(&minirt->scene.bvh, minirt->scene.elements,
 			minirt->scene.el_amount);
 		minirt->scene.build_bvh = 0;
@@ -48,18 +48,14 @@ static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 	vp->gamma = minirt->viewport.gamma;
 	vp->render_w = minirt->scene.render_width;
 	vp->render_h = minirt->scene.render_height;
-	// vectical_fov = 2 * atan(tan(minirt->controls.values.fov * (PI_D / 180.0) / 2.0) / ((double)vp->render_w / (double)vp->render_h));
-	// printf("Horizontal fov : %d, vertical fov : %f\n", minirt->controls.values.fov, vectical_fov / PI_D * 180);
-	// vp->height = 2 * tan(vectical_fov / 2)
-	// 	* minirt->scene.camera.focus_dist;
-	// vp->width = vp->height * ((float)vp->render_w / vp->render_h);
-	vp->width = 2.0 * tan(minirt->controls.values.fov * (PI_D / 180.0) / 2.0) * minirt->scene.camera.focus_dist;
+	vp->width = 2.0 * tan(minirt->controls.values.fov * (PI_D / 180.0) / 2.0)
+		* minirt->scene.camera.focus_dist;
 	vp->height = vp->width / ((double)vp->render_w / (double)vp->render_h);
 	up = (t_vec3){0, 1, 0};
 	if (fabs(minirt->scene.camera.orientation.y) > 0.999)
 		up = (t_vec3){1, 0, 0};
-	*u = vec3_unit(vec3_cross(up, vec3_negate(minirt->scene.camera.orientation))
-		);
+	*u \
+	= vec3_unit(vec3_cross(up, vec3_negate(minirt->scene.camera.orientation)));
 }
 
 static void	init_viewport_vectors(t_minirt *minirt, t_viewport *vp, t_vec3 u)

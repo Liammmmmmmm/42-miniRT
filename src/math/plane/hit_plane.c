@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   hit_plane.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:53:12 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/05 13:31:29 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:37:13 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "maths.h"
+#include "minirt.h"
 #include <math.h>
 
 static inline void	get_uv_plane(t_hit_record *rec, t_plane *p)
@@ -39,7 +40,7 @@ static inline void	get_uv_plane(t_hit_record *rec, t_plane *p)
 	rec->v = v - floor(v);
 }
 
-char	hit_plane(t_plane *p, const t_ray *r, t_interval i, t_hit_record *rec)
+char	hit_plane(t_plane *p, const t_ray *r, t_hit_record *rec)
 {
 	const double	denom = p->normal.x * r->dir.x + p->normal.y * r->dir.y + \
 		p->normal.z * r->dir.z;
@@ -49,7 +50,7 @@ char	hit_plane(t_plane *p, const t_ray *r, t_interval i, t_hit_record *rec)
 
 	if (fabs(denom) < 1e-8)
 		return (0);
-	if (t < i.min || t > i.max)
+	if (t < IT_MIN || t > IT_MAX)
 		return (0);
 	rec->t = t;
 	rec->point.x = r->orig.x + t * r->dir.x;

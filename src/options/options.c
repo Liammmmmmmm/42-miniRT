@@ -3,23 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   options.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 09:54:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/05 10:38:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 17:17:44 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "options.h"
 #include "utils.h"
-
-void	init_default_options(t_minirt *minirt)
-{
-	minirt->options.no_display = 0;
-	minirt->options.auto_export = 0;
-	minirt->options.max_samples = 100000;
-	minirt->options.output_dir = empty_static_string();
-}
 
 int	is_max_samples_option(t_minirt *minirt, char *argvi, int *y)
 {
@@ -109,7 +101,10 @@ int	parse_options(t_minirt *minirt, int argc, char **argv)
 {
 	int	i;
 
-	init_default_options(minirt);
+	minirt->options.no_display = 0;
+	minirt->options.auto_export = 0;
+	minirt->options.max_samples = 100000;
+	minirt->options.output_dir = empty_static_string();
 	i = 1;
 	while (++i < argc)
 	{

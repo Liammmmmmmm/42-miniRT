@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:34:41 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 18:40:23 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 18:57:26 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ inline double	get_reflect_value(t_ray *ray_in, t_hit_record *hit_record)
 
 inline t_vec3	ggx_sample_hemisphere(t_vec3 normal, double roughness)
 {
-	t_vec3 tangent;
+	t_vec3	tangent;
 	double	u2;
 	double	phi;
 	double	cos_theta;
@@ -52,12 +52,12 @@ inline t_vec3	ggx_sample_hemisphere(t_vec3 normal, double roughness)
 	tangent = vec3_unit(vec3_cross(normal, (t_vec3){1.0, 0.0, 0.0}));
 	if (vec3_length_squared(tangent) < 0.0001)
 		tangent = vec3_unit(vec3_cross(normal, (t_vec3){0.0, 1.0, 0.0}));
-	return vec3_add(
-		vec3_multiply_scalar(normal, cos_theta),
-		vec3_add(
-			vec3_multiply_scalar(tangent, cos(phi) * sin_theta),
-			vec3_multiply_scalar((vec3_unit(vec3_cross(normal, tangent))), \
-			sin(phi) * sin_theta)
-		)
-	);
+	return (vec3_add(
+			vec3_multiply_scalar(normal, cos_theta),
+			vec3_add(
+				vec3_multiply_scalar(tangent, cos(phi) * sin_theta),
+				vec3_multiply_scalar((vec3_unit(vec3_cross(normal, tangent))),
+					sin(phi) * sin_theta)
+			)
+		));
 }

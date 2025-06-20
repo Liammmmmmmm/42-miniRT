@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/20 15:20:09 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/06/20 19:04:01 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,12 +90,11 @@ EVENT_DIR			= src/events/
 EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c key_render.c  mouse_common.c  mouse_controls.c  mouse_render.c
 
 RAY_TRACING_DIR		= src/ray_tracing/
-RAY_TRACING_FILE	= render.c init_animated_items.c focus.c light.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c \
-					bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c bvh/bvh_draw_utils.c bvh/bvh_obj_bounds.c\
-					setup_scene_obj.c background.c viewport.c path_trace.c hit_register/apply_map.c hit_register/get_hdr_value.c \
-					hit_register/get_hit_color.c hit_register/get_tex_color.c hit_register/hit_register.c hit_register/hit_obj.c \
-					bvh/bvh_hit.c micrort.c bvh/bvh_build.c importance_sampling/get_dir.c importance_sampling/calc_pdf.c \
-					importance_sampling/calc_cdf.c importance_sampling/importance_sampling_manager.c importance_sampling/init_maloc_importance_sampling.c
+RAY_TRACING_FILE	= render.c init_animated_items.c focus.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c \
+					bvh/bvh_draw_utils.c bvh/bvh_obj_bounds.c setup_scene_obj.c background.c viewport.c path_trace.c hit_register/apply_map.c hit_register/get_hdr_value.c \
+					hit_register/get_hit_color.c hit_register/get_tex_color.c hit_register/hit_register.c hit_register/hit_obj.c bvh/bvh_hit.c micrort.c bvh/bvh_build.c \
+					importance_sampling/get_dir.c importance_sampling/calc_pdf.c importance_sampling/calc_cdf.c importance_sampling/importance_sampling_manager.c \
+					importance_sampling/init_maloc_importance_sampling.c calc_sample.c light/d_light.c light/p_light.c light/light_manager.c
 
 TEXTURES_DIR		= src/ray_tracing/textures/
 TEXTURES_FILE		= get_solid_texture.c

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 13:11:54 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:00:07 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -411,7 +411,6 @@ typedef struct s_hit_register_data
 	t_hit_record	hit_record;
 	char			is_light;
 	t_ray			*ray;
-	t_interval		interval;
 }	t_hit_register_data;
 
 typedef struct s_obj_lst

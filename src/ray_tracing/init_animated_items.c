@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:42:35 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/22 14:19:35 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:06:36 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ static void	find_item(t_minirt *minirt, t_uint i, t_uint *obj_num, int y)
 				*get_obj_rot(&minirt->scene.elements[y]) = minirt->\
 			options.anim.objects[i].orientations[minirt->options.anim.frame_i];
 			minirt->scene.build_bvh = 1;
-			printf("%s\n", ((t_custom_object *)minirt->scene.elements[y].object)->name);
+			printf("%s\n",
+				((t_custom_object *)minirt->scene.elements[y].object)->name);
 		}
 		(*obj_num)++;
 	}

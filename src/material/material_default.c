@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 12:55:40 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:41:20 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static inline void	importance_sampling(t_minirt *minirt, t_ray *ray,
 	float				pdf;
 	t_fcolor			radiance;
 
-	data_tmp.interval = (t_interval){0.001, 1000};
 	data_tmp.is_light = 1;
 	data_tmp.ray = ray;
 	ray->dir = calc_inverse_transform_sampling_dir(&uv);

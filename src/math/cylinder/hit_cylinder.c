@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cylinder.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 16:54:11 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 15:06:08 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 14:41:10 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_hit_record *rec, t_quadratic *q)
 }
 
 static inline char	cylinder_cap_bottom(t_ray *r, t_cylinder *cyl,
-	t_interval interval, t_hit_record *rec)
+	t_hit_record *rec)
 {
 	const t_vec3	plane_origin = vec3_subtract(cyl->position, \
 		vec3_multiply_scalar(vec3_unit(cyl->orientation), cyl->height * 0.5));
@@ -48,7 +48,7 @@ static inline char	cylinder_cap_bottom(t_ray *r, t_cylinder *cyl,
 	if (fabs(d) < 1e-6)
 		return (0);
 	t = -vec3_dot(vec3_subtract(r->orig, plane_origin), cyl->orientation) / d;
-	if (t < interval.min || t > interval.max)
+	if (t < IT_MIN || t > IT_MAX)
 		return (0);
 	hit_point = ray_at(*r, t);
 	if (vec3_length(vec3_subtract(hit_point, plane_origin)) > \
@@ -67,7 +67,7 @@ static inline char	cylinder_cap_bottom(t_ray *r, t_cylinder *cyl,
 }
 
 static inline char	cylinder_cap_top(t_ray *r, t_cylinder *cyl,
-	t_interval interval, t_hit_record *rec)
+	t_hit_record *rec)
 {
 	const t_vec3	pl_o = vec3_add(cyl->position, \
 		vec3_multiply_scalar(vec3_unit(cyl->orientation), cyl->height * 0.5));
@@ -79,7 +79,7 @@ static inline char	cylinder_cap_top(t_ray *r, t_cylinder *cyl,
 		return (0);
 	t = -vec3_dot(vec3_subtract(r->orig, pl_o),
 			cyl->orientation) / denom;
-	if (t < interval.min || t > interval.max)
+	if (t < IT_MIN || t > IT_MAX)
 		return (0);
 	hit_point = ray_at(*r, t);
 	if (vec3_length(vec3_subtract(hit_point, pl_o)) > cyl->diameter * 0.5)
@@ -104,24 +104,23 @@ static inline char	init_axe_value(t_cylinder *cyl)
 	return (0);
 }
 
-char	hit_cylinder(t_cylinder *cyl, t_ray *r, t_interval interval,
-	t_hit_record *rec)
+char	hit_cylinder(t_cylinder *cyl, t_ray *r,	t_hit_record *rec)
 {
 	t_quadratic		q;
 	t_hit_record	tmp_rec;
 	char			hit_any;
 
 	hit_any = init_axe_value(cyl);
-	if (init_cylinder_quadratic(&q, cyl, r) && valid_t(&q, interval))
+	if (init_cylinder_quadratic(&q, cyl, r) && valid_t(&q))
 		if (handle_cylinder_hit(cyl, r, rec, &q))
 			hit_any = 1;
-	if (cylinder_cap_bottom(r, cyl, interval, &tmp_rec) && \
+	if (cylinder_cap_bottom(r, cyl, &tmp_rec) && \
 		(!hit_any || tmp_rec.t < rec->t))
 	{
 		*rec = tmp_rec;
 		hit_any = 1;
 	}
-	if (cylinder_cap_top(r, cyl, interval, &tmp_rec) && \
+	if (cylinder_cap_top(r, cyl, &tmp_rec) && \
 		(!hit_any || tmp_rec.t < rec->t))
 	{
 		*rec = tmp_rec;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cone.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:49:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 15:34:52 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 14:40:19 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,7 @@ static inline char	handle_cone_hit(t_cone *cone, t_ray *r, t_hit_record *rec, \
 	return (1);
 }
 
-static inline char	cone_cap(t_cone *cone, t_ray *r, t_interval interval, \
-	t_hit_record *rec)
+static inline char	cone_cap(t_cone *cone, t_ray *r, t_hit_record *rec)
 {
 	const t_vec3	cap_c = vec3_add(cone->position, \
 		vec3_multiply_scalar(vec3_unit(cone->orientation), cone->height));
@@ -92,7 +91,7 @@ static inline char	cone_cap(t_cone *cone, t_ray *r, t_interval interval, \
 	if (fabs(denom) < 1e-6)
 		return (0);
 	t = vec3_dot(vec3_subtract(cap_c, r->orig), normal) / denom;
-	if (t < interval.min || t > interval.max)
+	if (t < IT_MIN || t > IT_MAX)
 		return (0);
 	hit_point = ray_at(*r, t);
 	if (vec3_length(vec3_subtract(hit_point, cap_c)) > (cone->diameter * 0.5))
@@ -109,7 +108,7 @@ static inline char	cone_cap(t_cone *cone, t_ray *r, t_interval interval, \
 	return (1);
 }
 
-char	hit_cone(t_cone *cone, t_ray *r, t_interval interval, t_hit_record *rec)
+char	hit_cone(t_cone *cone, t_ray *r, t_hit_record *rec)
 {
 	t_quadratic	q;
 	int			hit_cap;
@@ -117,11 +116,11 @@ char	hit_cone(t_cone *cone, t_ray *r, t_interval interval, t_hit_record *rec)
 	if (cone->orientation.x == 0 && cone->orientation.y == 0 && \
 		cone->orientation.z == 0)
 		cone->orientation.y = 1;
-	if (!init_cone_quadratic(&q, cone, r) || !valid_t(&q, interval))
+	if (!init_cone_quadratic(&q, cone, r) || !valid_t(&q))
 		return (0);
 	if (handle_cone_hit(cone, r, rec, &q))
 		return (1);
-	hit_cap = cone_cap(cone, r, interval, rec);
+	hit_cap = cone_cap(cone, r, rec);
 	if (!hit_cap)
 		return (0);
 	rec->front_face = (vec3_dot(r->dir, rec->normal) < 0);

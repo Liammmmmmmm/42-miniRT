@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/02 10:51:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 18:54:33 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "bmp_parsing.h"
 #include "options.h"
+#include "error_message.h"
 
 int	render_next_frame(t_minirt *minirt)
 {
@@ -54,7 +55,7 @@ int	main(int argc, char **argv)
 	t_minirt	minirt;
 
 	if (argc < 2)
-		return (print_error1("Missing scene file. Usage: ./miniRT <scene.rt> [options]"));
+		return (print_error1(ERR_MAIN));
 	ft_bzero(&minirt, sizeof(t_minirt));
 	if (!parse_options(&minirt, argc, argv))
 		return (1);

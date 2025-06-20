@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:33:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/14 16:42:19 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 18:56:31 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static inline t_vec3	refracted_v(const t_vec3 uv, const t_vec3 n, double ri)
 				vec3_multiply_scalar(
 					n,
 					fmin(vec3_dot(vec3_negate(uv), n), 1.0)
-					)	
+					)
 				),
 			ri
 			);
@@ -49,7 +49,7 @@ static inline void	refracted_value(t_ray *ray, t_hit_record *hit_record,
 			);
 	direction = vec3_unit(direction);
 	if (hit_record->mat->roughness_value > 0.0)
-			direction = ggx_sample_hemisphere(direction, \
+		direction = ggx_sample_hemisphere(direction, \
 				hit_record->mat->roughness_value);
 	ray->dir = direction;
 	*power = multiply_fcolor(*power, hit_record->color);

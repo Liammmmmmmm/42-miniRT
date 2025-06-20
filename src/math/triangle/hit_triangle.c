@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:27:26 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/07 13:10:44 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:37:38 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ static int	get_uv(t_moller *m, t_ray *r, t_triangle *t)
 	return (1);
 }
 
-static int	compute_t(t_moller *m, t_interval i)
+static int	compute_t(t_moller *m)
 {
 	m->t = m->f * vec3_dot(m->e2, m->q);
-	if (m->t < i.min || m->t > i.max)
+	if (m->t < IT_MIN || m->t > IT_MAX)
 		return (0);
 	return (1);
 }
 
-char	hit_triangle(t_triangle *t, t_ray *r, t_interval i, t_hit_record *rec)
+char	hit_triangle(t_triangle *t, t_ray *r, t_hit_record *rec)
 {
 	t_moller	m;
 
@@ -68,7 +68,7 @@ char	hit_triangle(t_triangle *t, t_ray *r, t_interval i, t_hit_record *rec)
 		return (0);
 	if (!get_uv(&m, r, t))
 		return (0);
-	if (!compute_t(&m, i))
+	if (!compute_t(&m))
 		return (0);
 	rec->t = m.t;
 	rec->point = ray_at(*r, m.t);

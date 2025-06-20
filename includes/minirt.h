@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 12:01:19 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:13:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,16 @@ typedef enum e_keys
 # define ERR_F "Invalid format for"
 
 void	init_animated_items(t_minirt *minirt);
+
+void	set_values_cone(t_cone *obj);
+void	set_values_light(t_light *obj);
+void	set_values_plane(t_plane *obj);
+void	set_values_cylinder(t_cylinder *obj);
+void	set_values_sphere(t_sphere *obj);
+void	set_values_directional_light(t_dlight *obj);
+void	set_values_hyperboloid(t_hyperboloid *obj);
+void	set_values_custom(t_custom_object *obj);
+void	set_values_mat(t_mat *mat);
 void	set_dependant_values(t_minirt *minirt);
 
 void	debug_ray(t_minirt *minirt);

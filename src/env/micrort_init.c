@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:31:51 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/05 14:17:40 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 15:10:08 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 	vp->gamma = 1.0;
 	vp->render_w = 299;
 	vp->render_h = 219;
-	vp->width = 2.0 * tan(70 * (PI_D / 180.0) / 2.0) * minirt->micrort.camera.focus_dist;
+	vp->width = 2.0 * tan(70 * (PI_D / 180.0) / 2.0)
+		* minirt->micrort.camera.focus_dist;
 	vp->height = vp->width / ((double)vp->render_w / (double)vp->render_h);
 	up = (t_vec3){0, 1, 0};
 	if (fabs(minirt->micrort.camera.orientation.y) > 0.999)
 		up = (t_vec3){1, 0, 0};
-	*u = vec3_unit(vec3_cross(up, vec3_negate(minirt->micrort.camera.orientation)));
+	*u = vec3_unit(vec3_cross(up,
+				vec3_negate(minirt->micrort.camera.orientation)));
 }
 
 static void	init_viewport_vectors(t_minirt *minirt, t_viewport *vp, t_vec3 u)

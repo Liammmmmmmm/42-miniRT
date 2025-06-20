@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_obj2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:16:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/28 17:55:04 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:08:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,19 @@ void	print_custom_obj(t_custom_object *obj)
 	printf("\n");
 }
 
+int	print_obj_part2(t_object *obj)
+{
+	if (obj->type == CONE)
+		print_cone((t_cone *)obj->object);
+	else if (obj->type == HYPERBOLOID)
+		print_hyperboloid((t_hyperboloid *)obj->object);
+	else if (obj->type == CUSTOM)
+		print_custom_obj((t_custom_object *)obj->object);
+	else
+		return (0);
+	return (1);
+}
+
 void	print_objects(t_scene *scene)
 {
 	int			i;
@@ -62,12 +75,8 @@ void	print_objects(t_scene *scene)
 			print_plane((t_plane *)obj->object);
 		else if (obj->type == CYLINDER)
 			print_cylinder((t_cylinder *)obj->object);
-		else if (obj->type == CONE)
-			print_cone((t_cone *)obj->object);
-		else if (obj->type == HYPERBOLOID)
-			print_hyperboloid((t_hyperboloid *)obj->object);
-		else if (obj->type == CUSTOM)
-			print_custom_obj((t_custom_object *)obj->object);
+		else if (print_obj_part2(obj))
+			;
 		else
 			printf("  " RED "Unknown object type!\n" NC);
 	}

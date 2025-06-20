@@ -6,33 +6,11 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 15:10:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 15:19:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-void	free_mlx(t_minirt *minirt)
-{
-	if (minirt->mlx.img.img)
-		mlx_destroy_image(minirt->mlx.mlx, minirt->mlx.img.img);
-	if (minirt->mlx.img_controls.img)
-		mlx_destroy_image(minirt->mlx.mlx, minirt->mlx.img_controls.img);
-	if (minirt->mlx.render_win)
-		mlx_destroy_window(minirt->mlx.mlx, minirt->mlx.render_win);
-	if (minirt->mlx.controls_win)
-		mlx_destroy_window(minirt->mlx.mlx, minirt->mlx.controls_win);
-	if (minirt->mlx.mlx)
-		mlx_destroy_display(minirt->mlx.mlx);
-	free(minirt->mlx.mlx);
-}
-
-int	free_mlx_error(t_minirt *minirt)
-{
-	print_error(strerror(errno));
-	free_mlx(minirt);
-	return (0);
-}
 
 int	init_controls_mlx(t_minirt *minirt)
 {
@@ -43,7 +21,8 @@ int	init_controls_mlx(t_minirt *minirt)
 		mlx->controls_win = mlx_new_window(mlx->mlx, CWIN_WIDTH, CWIN_HEIGHT,
 				"Controls");
 	mlx->img_controls.img = mlx_new_image(mlx->mlx, CWIN_WIDTH, CWIN_HEIGHT);
-	if (!mlx->img_controls.img || (!mlx->controls_win && !minirt->options.no_display && !minirt->options.anim.enabled))
+	if (!mlx->img_controls.img || (!mlx->controls_win
+			&& !minirt->options.no_display && !minirt->options.anim.enabled))
 		return (free_mlx_error(minirt));
 	mlx->img_controls.img_str = mlx_get_data_addr(mlx->img_controls.img,
 			&mlx->img_controls.bits,
@@ -53,6 +32,24 @@ int	init_controls_mlx(t_minirt *minirt)
 	mlx->img_controls.width = CWIN_WIDTH;
 	mlx->img_controls.width4 = CWIN_WIDTH * 4;
 	mlx->img_controls.height = CWIN_HEIGHT;
+	return (1);
+}
+
+static int	init_mlx_img_win(t_minirt *minirt, t_mlx *mlx)
+{
+	mlx->render_win = mlx_new_window(mlx->mlx, minirt->scene.win_width,
+			minirt->scene.win_height, "miniRT");
+	mlx->img.img = mlx_new_image(mlx->mlx, minirt->scene.win_width,
+			minirt->scene.win_height);
+	if (!mlx->img.img || !mlx->render_win)
+		return (free_mlx_error(minirt));
+	mlx->img.img_str = mlx_get_data_addr(mlx->img.img, &mlx->img.bits,
+			&mlx->img.size_line, &mlx->img.endian);
+	if (!mlx->img.img_str)
+		return (free_mlx_error(minirt));
+	mlx->img.width = minirt->scene.win_width;
+	mlx->img.width4 = minirt->scene.win_width * 4;
+	mlx->img.height = minirt->scene.win_height;
 	return (1);
 }
 
@@ -73,21 +70,21 @@ int	init_mlx(t_minirt *minirt)
 		minirt->scene.win_width = 600;
 		minirt->scene.win_height = 190;
 	}
-	mlx->render_win = mlx_new_window(mlx->mlx, minirt->scene.win_width,
-		minirt->scene.win_height, "miniRT");
-	mlx->img.img = mlx_new_image(mlx->mlx, minirt->scene.win_width,
-		minirt->scene.win_height);
-	if (!mlx->img.img || !mlx->render_win)
-		return (free_mlx_error(minirt));
-	mlx->img.img_str = mlx_get_data_addr(mlx->img.img, &mlx->img.bits,
-			&mlx->img.size_line, &mlx->img.endian);
-	if (!mlx->img.img_str)
-		return (free_mlx_error(minirt));
-	mlx->img.width = minirt->scene.win_width;
-	mlx->img.width4 = minirt->scene.win_width * 4;
-	mlx->img.height = minirt->scene.win_height;
+	if (init_mlx_img_win(minirt, mlx) == 0)
+		return (0);
 	init_controls(minirt);
 	return (init_controls_mlx(minirt));
+}
+
+void	init_ui_components(t_minirt *minirt)
+{
+	init_font(minirt);
+	init_buttons(minirt);
+	init_sliders(minirt);
+	init_cps(minirt);
+	init_dropdowns(minirt);
+	init_float_inputs(minirt);
+	init_text_inputs(minirt);
 }
 
 int	init_render(t_minirt *minirt)
@@ -110,12 +107,6 @@ int	init_render(t_minirt *minirt)
 	minirt->screen.pause_render = 0;
 	minirt->screen.spp = minirt->options.max_samples;
 	minirt->screen.sample = 0;
-	init_font(minirt);
-	init_buttons(minirt);
-	init_sliders(minirt);
-	init_cps(minirt);
-	init_dropdowns(minirt);
-	init_float_inputs(minirt);
-	init_text_inputs(minirt);
+	init_ui_components(minirt);
 	return (1);
 }

@@ -6,35 +6,11 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:01:12 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/19 15:29:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 11:10:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-double	get_grey_value(t_scene *scene, size_t i)
-{
-	double scale;
-
-	if (scene->amb_light.skybox_t->type == HDR) {
-		if (scene->amb_light.skybox_t->hdr.exposure == 0)
-			scale = ldexp(1.0, scene->amb_light.skybox_t->hdr.pixels[i].e - 128);
-		else
-			scale = ldexp(1.0, scene->amb_light.skybox_t->hdr.pixels[i].e - 128) * powf(2.0, scene->amb_light.skybox_t->hdr.exposure);
-		
-		return (
-			0.2126 * (scene->amb_light.skybox_t->hdr.pixels[i].r * scale) +
-			0.7152 * (scene->amb_light.skybox_t->hdr.pixels[i].g * scale) +
-			0.0722 * (scene->amb_light.skybox_t->hdr.pixels[i].b * scale)
-		);
-	} else {
-		return (
-			0.2126 * (scene->amb_light.skybox_t->img.rgba[i].r / 255.0) +
-			0.7152 * (scene->amb_light.skybox_t->img.rgba[i].g / 255.0) +
-			0.0722 * (scene->amb_light.skybox_t->img.rgba[i].b / 255.0)
-		);
-	}
-}
 
 void calc_cdf_marginal_inv(t_scene *scene)
 {

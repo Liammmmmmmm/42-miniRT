@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 10:31:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 10:37:36 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,7 @@ int		parse_obj(char *file, t_custom_object *obj);
 // importance sampling
 
 t_vec2	calc_inverse_transform_sampling_uv(t_scene *scene);
-t_vec3	calc_inverse_transform_sampling_dir(t_vec2 *uv);
+t_vec3	calc_inverse_transform_sampling_dir(const t_vec2 *uv);
 void	make_grey_map(t_scene *scene);
 
 #endif

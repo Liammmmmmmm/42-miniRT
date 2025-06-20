@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:30:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/19 11:44:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 10:31:22 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static inline void	reflected_dielectric_color(t_ray *ray,
 // In order to implement specular map just multiply 
 // get_reflect_value(ray, hit_record) by the specular value
 //
-inline char	dielectric_mat(t_minirt *minirt, t_ray *ray,
+inline void	dielectric_mat(t_minirt *minirt, t_ray *ray,
 	t_hit_record *hit_record, t_ray_data data)
 {
 	if (hit_record->mat->ior > 0)
@@ -49,17 +49,16 @@ inline char	dielectric_mat(t_minirt *minirt, t_ray *ray,
 			if (hit_record->mat->transmission_value == 1.0)
 				refracted_ray(minirt, ray, hit_record, data.power);
 			else if (hit_record->mat->transmission_value == 0.0)
-				return (default_mat(minirt, ray, hit_record, data));
+				default_mat(minirt, ray, hit_record, data);
 			else
 			{
 				if (hit_record->mat->transmission_value < random_double())
-					return (default_mat(minirt, ray, hit_record, data));
+					default_mat(minirt, ray, hit_record, data);
 				else
 					refracted_ray(minirt, ray, hit_record, data.power);
 			}
 		}
 	}
 	else
-		return (default_mat(minirt, ray, hit_record, data));
-	return (0);
+		default_mat(minirt, ray, hit_record, data);
 }

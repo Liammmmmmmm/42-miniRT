@@ -1,4 +1,4 @@
-ltex color     image   assets/textures/leaf/FL03lef1.png
+tex color     image   assets/textures/leaf/FL03lef1.png
 tex back      image   assets/textures/sunflowers_puresky_2k.hdr
 
 # MATERIALS

@@ -6,17 +6,17 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/19 16:25:32 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 10:31:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-inline char	material_manager_v3(t_minirt *minirt, t_ray *ray,
+inline void	material_manager_v3(t_minirt *minirt, t_ray *ray,
 	t_hit_record *hit_record, t_ray_data data)
 {
 	if (!hit_record->mat)
-		return (default_mat(minirt, ray, hit_record, data));
+		default_mat(minirt, ray, hit_record, data);
 	if (hit_record->mat->emission_strength > 0)
 	{
 		*data.accumulation = add_fcolor(*data.accumulation,
@@ -27,12 +27,11 @@ inline char	material_manager_v3(t_minirt *minirt, t_ray *ray,
 	if (hit_record->mat->metallic_value == 1.0)
 		metallic_color(ray, hit_record, data.power);
 	else if (hit_record->mat->metallic_value == 0.0)
-		return (dielectric_mat(minirt, ray, hit_record, data));
+		dielectric_mat(minirt, ray, hit_record, data);
 	else if (hit_record->mat->metallic_value > random_double())
 		metallic_color(ray, hit_record, data.power);
 	else
-		return (dielectric_mat(minirt, ray, hit_record, data));
-	return (0);
+		dielectric_mat(minirt, ray, hit_record, data);
 }
 
 inline t_fcolor	add_skybox(t_minirt *minirt, t_ray *ray,
@@ -68,9 +67,7 @@ t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 		if (hit_register_all(minirt, &data) == 1)
 		{
 			ray.orig = data.hit_record.point;
-			if (material_manager_v3(minirt, &ray, &data.hit_record,
-				(t_ray_data){&power, &accumulation}) == 1)
-				break ;
+			material_manager_v3(minirt, &ray, &data.hit_record, (t_ray_data){&power, &accumulation});
 		}
 		else
 		{

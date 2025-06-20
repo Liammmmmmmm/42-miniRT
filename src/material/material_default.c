@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/19 16:30:12 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 10:29:57 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ static inline t_vec3	cos_weighted_sample_hemishphere(t_vec3 *normal)
 	return (vec3_unit(global_dir));
 }
 
-inline char	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
+
+
+inline void	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 	t_ray_data data)
 {
 	t_hit_register_data	data_tmp;
@@ -71,38 +73,19 @@ inline char	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 	ray->dir = calc_inverse_transform_sampling_dir(&uv);
 	if (hit_register_all(minirt, &data_tmp) == 0)
 	{
-		int width = minirt->scene.amb_light.skybox_t->hdr.width;
-		int height = minirt->scene.amb_light.skybox_t->hdr.height;
-
-		// Convertit uv [0,1] en coordonnées d’image
-		int ix = (int)(uv.x * (float)(width - 1));
-		int iy = (int)(uv.y * (float)(height - 1));
-
 		float costheta = vec3_dot(hit_record->normal, ray->dir);
-
-		// t_rgbe rgbe = minirt->scene.amb_light.skybox_t->hdr.pixels[iy * width + ix];
-		// printf("r:%u g:%u b:%u e:%u\n", rgbe.r, rgbe.g, rgbe.b, rgbe.e);
-		
-		if (costheta > random_double())
+		float pdf = minirt->scene.amb_light.pdf_joint[(int)(uv.y * (minirt->scene.amb_light.skybox_t->hdr.height - 1) * minirt->scene.amb_light.skybox_t->hdr.width + uv.x * (minirt->scene.amb_light.skybox_t->hdr.width - 1))];
+		if (pdf > 0)
 		{
-			float pdf = fmaxf(minirt->scene.amb_light.pdf_joint[iy * width + ix], 1e-6f);
 			t_fcolor radiance = get_background_color(minirt, *ray);
 			if (hit_record->mat)
 				radiance = multiply_scalar_fcolor(radiance, hit_record->mat->ao_value);
 			radiance = multiply_fcolor(radiance, *data.power);
-			// if (radiance.r > 1.0)
-			// printf("AV %f %f %f, PDF: %f, CT: %f\n", radiance.r, radiance.g, radiance.b, pdf, costheta);
-			radiance = multiply_scalar_fcolor(radiance, 1 / (pdf));
-			// printf("NX %f %f %f\n", radiance.r, radiance.g, radiance.b);
-			// printf("PDF : %f\n", pdf);
+			radiance = multiply_scalar_fcolor(radiance, costheta / (pdf));
 			*data.accumulation = add_fcolor(*data.accumulation, radiance);
-			return (1);
+			*data.power = multiply_scalar_fcolor(*data.power, 1 - costheta);
 		}
-
-		//printf("%f %f\n", pdf, pdf);
-		
 	}
 
 	ray->dir = cos_weighted_sample_hemishphere(&hit_record->normal);
-	return (0);
 }

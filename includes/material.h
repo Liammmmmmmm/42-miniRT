@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   material.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:32:20 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/17 17:32:25 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/20 10:30:12 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ t_vec3	reflection_vec(const t_vec3 uv, const t_vec3 n);
  */
 void	metallic_color(t_ray *ray, t_hit_record	*hit_record, t_fcolor *power);
 
-char	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
+void	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 	t_ray_data data);
 void	refracted_ray(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 	t_fcolor *power);
-char	dielectric_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
+void	dielectric_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 	t_ray_data data);
 
 	

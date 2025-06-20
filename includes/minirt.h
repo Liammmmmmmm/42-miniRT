@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/19 16:25:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/20 10:31:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ t_fcolor	path_trace_normal(t_minirt *minirt, t_ray ray);
 void		debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth);
 t_fcolor	add_skybox(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 	t_ray_data data);
-char		material_manager_v3(t_minirt *minirt, t_ray *ray,
+void		material_manager_v3(t_minirt *minirt, t_ray *ray,
 		t_hit_record *hit_record, t_ray_data data);
 
 /*═════════════════════════════════════════════════════════════════════════════╗

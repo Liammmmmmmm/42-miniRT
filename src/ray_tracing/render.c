@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 12:08:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 13:30:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,6 @@ void	put_render_to_buff_upscaling(t_minirt *minirt)
 		bilinear_upscale(minirt);
 	else if ((long)minirt->controls.selected_upscaling == 2)
 		bicubic_upscale(minirt);
-		
-	// else if (minirt->controls.values.upscaling_selected == 0)
-	// 	neighbor_upscale(minirt);
-	// else if (minirt->controls.values.upscaling_selected == 1)
-	// 	bilinear_upscale(minirt);
-	// else if (minirt->controls.values.upscaling_selected == 2)
-	// 	bicubic_upscale(minirt);
 }
 
 void	draw_pixels(t_minirt *minirt)

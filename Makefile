@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/23 10:36:38 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/06/23 13:25:41 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,7 +100,7 @@ TEXTURES_DIR		= src/ray_tracing/textures/
 TEXTURES_FILE		= get_solid_texture.c
 
 RENDERING_DIR		= src/rendering/
-RENDERING_FILE		= pixel.c loop.c
+RENDERING_FILE		= pixel.c loop.c no_display.c
 
 ENV_DIR				= src/env/
 ENV_FILE			= init_mlx.c free_mlx.c init_controls.c init_ui.c set_dependant_values.c micrort_init.c set_dependant_values_objs.c set_dependant_values_objs2.c

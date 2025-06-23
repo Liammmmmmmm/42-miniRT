@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 12:01:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 14:17:33 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,10 @@ void	render(t_minirt *minirt);
 void	calc_one_sample(t_minirt *minirt, t_vec3 offset, int max_bounces);
 
 void	check_sample_amount(t_minirt *minirt);
+
+void	no_display_infos_anim(t_minirt *minirt);
+void	no_display_infos(t_minirt *minirt);
+char	*get_time_dhmsms(ssize_t time);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                  RAY TRACING                                 ║

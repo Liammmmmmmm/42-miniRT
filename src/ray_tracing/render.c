@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 13:30:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 14:26:25 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,15 @@ void	auto_export(t_minirt *minirt)
 	if (minirt->options.anim.enabled && minirt->options.anim.frame_i
 		< minirt->options.anim.frames)
 		filename \
-	= ft_sprintf("%sminirt_export_SCENE_NAME.FRAME.%u.SAMPLES.%d.%u.ppm",
-			minirt->options.output_dir, minirt->options.anim.frame_i,
-			minirt->screen.sample, (unsigned int)get_cpu_time());
+	= ft_sprintf("%sminirt_export_%s.FRAME.%u.SAMPLES.%d.%u.ppm",
+			minirt->options.output_dir, minirt->scene.name,
+			minirt->options.anim.frame_i, minirt->screen.sample,
+			(unsigned int)get_cpu_time());
 	else
 		filename \
-	= ft_sprintf("%sminirt_export_SCENE_NAME.SAMPLES.%d.%u.ppm",
-			minirt->options.output_dir, minirt->screen.sample,
-			(unsigned int)get_cpu_time());
+	= ft_sprintf("%sminirt_export_%s.SAMPLES.%d.%u.ppm",
+			minirt->options.output_dir, minirt->scene.name,
+			minirt->screen.sample, (unsigned int)get_cpu_time());
 	printf("Start image export\n");
 	if (filename)
 		export_ppm_p6_minirt(filename, minirt);

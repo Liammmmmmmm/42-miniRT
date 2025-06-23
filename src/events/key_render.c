@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:37:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 15:04:56 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 14:25:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	export_scene(t_minirt *minirt)
 {
 	char	*filename;
 
-	filename = ft_sprintf("%sminirt_export_SCENE_NAME.SAMPLES.%d.%u.ppm",
-			minirt->options.output_dir, minirt->screen.sample,
-			(unsigned int)get_cpu_time());
+	filename = ft_sprintf("%sminirt_export_%s.SAMPLES.%d.%u.ppm",
+			minirt->options.output_dir, minirt->scene.name,
+			minirt->screen.sample, (unsigned int)get_cpu_time());
 	if (filename)
 		export_ppm_p6_minirt(filename, minirt);
 }

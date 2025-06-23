@@ -6,20 +6,37 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:20:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/23 09:16:27 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 14:25:01 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	is_valid_extension(char *filename)
+static void	save_scene_name(char *filename, t_minirt *minirt)
+{
+	int		i;
+	char	*last;
+
+	last = ft_strrchr(filename, '/') + 1;
+	if (last)
+		filename = last;
+	last = ft_strrchr(filename, '.');
+	*last = '\0';
+	ft_strlcpy(minirt->scene.name, filename, 20);
+	*last = '.';
+}
+
+static int	is_valid_extension(char *filename, t_minirt *minirt)
 {
 	int	i;
 
 	i = ft_strlen(filename);
 	if (filename[i - 3] == '.' && filename[i - 2] == 'r'
 		&& filename[i - 1] == 't')
+	{
+		save_scene_name(filename, minirt);
 		return (1);
+	}
 	return (0);
 }
 
@@ -87,7 +104,7 @@ int	parse_scene(t_minirt *minirt, char *filename)
 
 	minirt->scene.win_width = -1;
 	minirt->scene.win_height = -1;
-	if (!is_valid_extension(filename))
+	if (!is_valid_extension(filename, minirt))
 		return (print_error("Invalid file extension. Expected a '.rt' file."));
 	ln_amount = count_valid_lines(filename);
 	if (ln_amount == 0)

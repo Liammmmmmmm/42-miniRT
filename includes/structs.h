@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 12:48:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 14:08:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -473,6 +473,7 @@ typedef struct s_axis
 
 typedef struct s_scene
 {
+	char		name[20];
 	t_tex		*textures;
 	int			tex_amount;
 	t_mat		*materials;

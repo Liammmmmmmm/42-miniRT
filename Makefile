@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/23 13:25:41 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/06/23 18:00:55 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,9 @@ UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					bmp/bmp_extract_color.c bmp/bmp_extract_pixel.c \
 					bump_to_normal.c progress_bar.c obj/obj_ear_clipping.c \
 					obj/obj_extract_value.c obj/obj_finilizer.c \
-					obj/obj_parser_utils.c obj/obj_parser.c obj/obj_utils.c obj/obj_vertex_cache.c 
+					obj/obj_parser_utils.c obj/obj_parser.c obj/obj_utils.c \
+					obj/obj_vertex_cache.c obj/obj_extract_value_utils.c obj/obj_parse_face.c \
+					obj/obj_vertex_cache_utils.c obj/obj_vertex_utils.c print_error.c
 
 UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c \

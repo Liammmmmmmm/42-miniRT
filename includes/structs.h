@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 14:08:29 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 17:40:50 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,11 +348,42 @@ typedef enum e_upscalings
 	BICUBIC
 }	t_upscalings;
 
+typedef struct s_face_idx_triplet
+{
+	int	v_idx;
+	int	vt_idx;
+	int	vn_idx;
+}	t_face_idx_triplet;
+
+typedef struct s_parser_temp_data
+{
+	t_vector	temp_positions;
+	t_vector	temp_normals;
+	t_vector	temp_uvs;
+	t_vector	temp_faces;
+	char		*object_name;
+}	t_parser_temp_data;
+
+typedef struct s_cache_entry
+{
+	t_face_idx_triplet		key;
+	uint32_t				value;
+	struct s_cache_entry	*next;
+}	t_cache_entry;
+
 typedef struct s_object
 {
 	void		*object;
 	t_objects	type;
 }	t_object;
+
+typedef struct s_mesh_build_data
+{
+	t_vector			*vertices;
+	t_vector			*indices;
+	t_cache_entry		**cache;
+	size_t				map_size;
+}	t_mesh_build_data;
 
 typedef struct s_custom_object
 {

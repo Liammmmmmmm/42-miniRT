@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 18:54:33 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 18:01:23 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,6 @@
 int	render_next_frame(t_minirt *minirt)
 {
 	render_frame(minirt);
-	return (1);
-}
-
-int	print_error(char *err)
-{
-	ft_dprintf(2, RED"[Error]"NC" %s\n", err);
-	return (0);
-}
-
-int	print_error1(char *err)
-{
-	ft_dprintf(2, RED"[Error]"NC" %s\n", err);
 	return (1);
 }
 
@@ -50,6 +38,26 @@ int	clean(t_minirt *minirt)
 	return (1);
 }
 
+int	init_all(t_minirt *minirt)
+{
+	if (minirt->scene.win_height == -1 || minirt->scene.win_width == -1)
+	{
+		minirt->scene.win_width = WIN_WIDTH;
+		minirt->scene.win_height = WIN_HEIGHT;
+		minirt->scene.render_width = WIN_WIDTH;
+		minirt->scene.render_height = WIN_HEIGHT;
+	}
+	if (!init_ui(minirt))
+		return (clean(minirt));
+	if (!init_micrort(minirt))
+		return (clean(minirt));
+	if (!init_mlx(minirt))
+		return (clean(minirt));
+	if (!init_render(minirt))
+		return (clean(minirt));
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_minirt	minirt;
@@ -61,21 +69,8 @@ int	main(int argc, char **argv)
 		return (1);
 	if (parse_scene(&minirt, argv[1]) == 0)
 		return (1);
-	if (minirt.scene.win_height == -1 || minirt.scene.win_width == -1)
-	{
-		minirt.scene.win_width = WIN_WIDTH;
-		minirt.scene.win_height = WIN_HEIGHT;
-		minirt.scene.render_width = WIN_WIDTH;
-		minirt.scene.render_height = WIN_HEIGHT;
-	}
-	if (!init_ui(&minirt))
-		return (clean(&minirt));
-	if (!init_micrort(&minirt))
-		return (clean(&minirt));
-	if (!init_mlx(&minirt))
-		return (clean(&minirt));
-	if (!init_render(&minirt))
-		return (clean(&minirt));
+	if (init_all(&minirt))
+		return (1);
 	print_scene(&minirt.scene);
 	if (minirt.options.anim.enabled)
 		debug_print_animation(&minirt.options.anim);
@@ -83,4 +78,5 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(minirt.mlx.mlx, render_next_frame, &minirt);
 	mlx_loop(minirt.mlx.mlx);
 	clean(&minirt);
+	return (0);
 }

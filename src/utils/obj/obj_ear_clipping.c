@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:32:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/12 15:40:28 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:18:13 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,26 +62,32 @@ char	add_single_triangle(long *e, t_vertex *vertices, t_vector *v, \
 	return (0);
 }
 
+char	init_triangle(t_vertex *vertices, size_t vertex_count, t_vector *v, \
+	t_custom_object *obj)
+{
+	t_triangle	t;
+
+	t = (t_triangle){vertices[(0 + vertex_count - 1) % vertex_count], \
+		vertices[0], vertices[(0 + 1) % vertex_count], (t_vec3){0, 0, 0}, \
+		NULL, (t_color){0, 0, 0}, obj};
+	compute_triangle_center(&t);
+	add_position_scale(&t, obj);
+	if (vector_add(v, &t) == -1)
+		return (print_error1("Vector add in ear_clipping."));
+	return (0);
+}
+
 long	ear_clipping(t_vertex *vertices, size_t vertex_count, t_vector *v, \
 	t_custom_object *obj)
 {
 	long		e;
 	size_t		j;
-	t_triangle	t;
 
 	e = 0;
 	while (vertex_count > 3)
 	{
-		t = (t_triangle){vertices[(0 + vertex_count - 1) % vertex_count], \
-			vertices[0], vertices[(0 + 1) % vertex_count], (t_vec3){0, 0, 0}, \
-			NULL, (t_color){0, 0, 0}, obj};
-		compute_triangle_center(&t);
-		add_position_scale(&t, obj);
-		if (vector_add(v, &t) == -1)
-		{
-			print_error("Vector add in ear_clipping.");
+		if (init_triangle(vertices, vertex_count, v, obj))
 			return (-1);
-		}
 		j = 0;
 		while (j < vertex_count - 1)
 		{

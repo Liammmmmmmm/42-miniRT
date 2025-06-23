@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   obj_parser_ref.h                                   :+:      :+:    :+:   */
+/*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 18:05:39 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/11 18:28:40 by madelvin         ###   ########.fr       */
+/*   Created: 2025/06/23 17:59:22 by madelvin          #+#    #+#             */
+/*   Updated: 2025/06/23 18:01:49 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	OBJ_PARSER_REF_H
-# define OBJ_PARSER_REF_H
+#include "utils.h"
 
-# include "structs.h"
+int	print_error(char *err)
+{
+	ft_dprintf(2, RED"[Error]"NC" %s\n", err);
+	return (0);
+}
 
-t_aabb	compute_custom_obj(t_custom_object *obj, char init);
-t_aabb	update_custom_obj_aabb(t_custom_object *obj);
-t_aabb	compute_custom_obj(t_custom_object *obj, char init);
-
-
-#endif
+int	print_error1(char *err)
+{
+	ft_dprintf(2, RED"[Error]"NC" %s\n", err);
+	return (1);
+}

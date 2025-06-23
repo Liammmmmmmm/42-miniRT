@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:22:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/11 22:20:43 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:55:02 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include "obj_parsing.h"
 #include "maths.h"
 
-inline void *vector_get(t_vector *vector, size_t index)
+inline void	*vector_get(t_vector *vector, size_t index)
 {
-    if (!vector || index >= vector->num_elements)
-        return (NULL);
-    return ((char *)vector->data + (index * vector->element_size));
+	if (!vector || index >= vector->num_elements)
+		return (NULL);
+	return ((char *)vector->data + (index * vector->element_size));
 }
 
 static inline void	set_vertex(t_aabb *aabb, t_vertex *verts)

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:50:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/05 13:46:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 14:51:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	extract_palette_pixel(t_bin *bin, size_t *i, uint32_t *value, t_bmp *bmp)
 	if (palette_index < bmp->info.nb_color)
 		*value = bmp->palette[palette_index];
 	else
-		*value = 0;
+		*value = (255 << 24);
 	return (0);
 }
 
@@ -40,7 +40,7 @@ int	extract_16bpp_pixel(t_bin *bin, size_t *i, uint32_t *value)
 	r = ((raw_pixel >> 11) & 0x1F) << 3;
 	g = ((raw_pixel >> 5) & 0x3F) << 2;
 	b = (raw_pixel & 0x1F) << 3;
-	*value = ((r << 16) | (g << 8) | b);
+	*value = ((255 << 24) | (r << 16) | (g << 8) | b);
 	return (0);
 }
 
@@ -56,7 +56,7 @@ int	extract_24bpp_pixel(t_bin *bin, size_t *i, uint32_t *value)
 		return (1);
 	if (read_uint8_move(bin, i, &r) == -1)
 		return (1);
-	*value = ((r << 16) | (g << 8) | b);
+	*value = ((255 << 24) | (r << 16) | (g << 8) | b);
 	return (0);
 }
 

@@ -6,9 +6,9 @@ tex back      image   assets/textures/sunflowers_puresky_2k.hdr
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color scale normal_map
-mat	MATERIAL                      255,255,255             0.0            0      0.000000       0.000000       1                 0.000000            255,255,255    1     normal 100
+mat	MATERIAL                      color             0.0            roughness      0.000000       0.000000       1                   0.000000            255,255,255    4     normal 1
 
-A	0								 back
+A	0    back
 
 C	3,0,-3	 -1,0,1 90
 

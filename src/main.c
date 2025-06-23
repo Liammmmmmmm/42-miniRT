@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 18:01:23 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 18:59:59 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ int	clean(t_minirt *minirt)
 
 int	init_all(t_minirt *minirt)
 {
+	minirt->rand = (uint32_t)get_cpu_time();
+	if (minirt->rand == 0)
+		minirt->rand = 1;
 	if (minirt->scene.win_height == -1 || minirt->scene.win_width == -1)
 	{
 		minirt->scene.win_width = WIN_WIDTH;

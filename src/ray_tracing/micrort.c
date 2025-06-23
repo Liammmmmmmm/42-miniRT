@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:52:16 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 17:03:56 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 18:36:43 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	render_micrort(t_minirt *minirt)
 	* minirt->micrort.viewport.render_w * minirt->micrort.viewport.render_h);
 	if (minirt->micrort.sample < minirt->micrort.max_sample)
 	{
-		offset = vec3_random();
+		offset = vec3_random(&minirt->rand);
 		calc_one_sample_micrort(minirt, offset);
 		minirt->micrort.sample++;
 	}

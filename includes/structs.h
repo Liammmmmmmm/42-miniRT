@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 17:40:50 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:14:11 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -444,6 +444,7 @@ typedef	struct s_hit_record
 	double		u;
 	double		v;
 	t_obj_part	part;
+	uint64_t	*rand;
 }	t_hit_record;
 
 typedef struct s_hit_register_data
@@ -687,6 +688,7 @@ typedef struct s_minirt
 	t_controls	controls;
 	t_options	options;
 	t_micrort	micrort;
+	uint64_t	rand;
 }	t_minirt;
 
 typedef struct s_upscale_data

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   material_default.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/23 09:37:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 19:14:39 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 #include "material.h"
 #include "importance_sampling.h"
 
-static inline t_vec3	cos_weighted_sample_hemishphere(t_vec3 *normal)
+static inline t_vec3	cos_weighted_sample_hemishphere(t_vec3 *normal,
+	uint64_t *rand)
 {
-	const double	r1 = random_double();
-	const double	r2 = random_double();
+	const double	r1 = random_double(rand);
+	const double	r2 = random_double(rand);
 	const double	phi = 2 * PI_D * r1;
 	t_vec3			local_dir;
 	t_vec3			u;
@@ -40,7 +41,8 @@ static inline void	importance_sampling(t_minirt *minirt, t_ray *ray,
 	t_hit_record *hit_record, t_ray_data data)
 {
 	t_hit_register_data	data_tmp;
-	const t_vec2		uv = calc_inverse_transform_sampling_uv(&minirt->scene);
+	const t_vec2		uv
+		= calc_inverse_transform_sampling_uv(&minirt->scene, &minirt->rand);
 	float				costheta;
 	float				pdf;
 	t_fcolor			radiance;
@@ -84,5 +86,6 @@ inline void	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 			);
 	if (minirt->scene.amb_light.pdf_joint)
 		importance_sampling(minirt, ray, hit_record, data);
-	ray->dir = cos_weighted_sample_hemishphere(&hit_record->normal);
+	ray->dir
+		= cos_weighted_sample_hemishphere(&hit_record->normal, &minirt->rand);
 }

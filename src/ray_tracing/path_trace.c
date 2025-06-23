@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_trace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 09:47:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 18:47:05 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 inline void	material_manager_v3(t_minirt *minirt, t_ray *ray,
 	t_hit_record *hit_record, t_ray_data data)
 {
+	hit_record->rand = &minirt->rand;
 	if (!hit_record->mat)
 		return (default_mat(minirt, ray, hit_record, data));
 	if (hit_record->mat->emission_strength > 0)
@@ -28,7 +29,7 @@ inline void	material_manager_v3(t_minirt *minirt, t_ray *ray,
 		metallic_color(ray, hit_record, data.power);
 	else if (hit_record->mat->metallic_value == 0.0)
 		dielectric_mat(minirt, ray, hit_record, data);
-	else if (hit_record->mat->metallic_value > random_double())
+	else if (hit_record->mat->metallic_value > random_double(&minirt->rand))
 		metallic_color(ray, hit_record, data.power);
 	else
 		dielectric_mat(minirt, ray, hit_record, data);

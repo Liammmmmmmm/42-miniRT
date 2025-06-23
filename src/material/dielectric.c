@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:30:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 18:56:49 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:19:09 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include "material.h"
 
 static inline void	reflected_dielectric_color(t_ray *ray,
-	t_hit_record *hit_record)
+	t_hit_record *hit_record, uint64_t *rand)
 {
 	t_vec3	direction;
 	t_vec3	micro_normal;
 
 	if (hit_record->mat->roughness_value > 0.0)
 		micro_normal = ggx_sample_hemisphere(hit_record->normal,
-				hit_record->mat->roughness_value);
+				hit_record->mat->roughness_value, rand);
 	else
 		micro_normal = hit_record->normal;
 	direction = vec3_subtract(
@@ -42,9 +42,9 @@ inline void	dielectric_mat(t_minirt *minirt, t_ray *ray,
 {
 	if (hit_record->mat->ior > 0)
 	{
-		if (get_reflect_value(ray, hit_record) >= random_double()
+		if (get_reflect_value(ray, hit_record) >= random_double(&minirt->rand)
 			&& hit_record->mat->ior != 1.0)
-			reflected_dielectric_color(ray, hit_record);
+			reflected_dielectric_color(ray, hit_record, &minirt->rand);
 		else
 		{
 			if (hit_record->mat->transmission_value == 1.0)
@@ -53,7 +53,8 @@ inline void	dielectric_mat(t_minirt *minirt, t_ray *ray,
 				default_mat(minirt, ray, hit_record, data);
 			else
 			{
-				if (hit_record->mat->transmission_value < random_double())
+				if (hit_record->mat->transmission_value
+						< random_double(&minirt->rand))
 					default_mat(minirt, ray, hit_record, data);
 				else
 					refracted_ray(minirt, ray, hit_record, data.power);

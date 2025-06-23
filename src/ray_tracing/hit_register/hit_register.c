@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 14:43:54 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:15:58 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	hit_loop(t_bvh *bvh, t_bvh_node *node,
 }
 
 char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node,
-	t_hit_register_data *data)
+	t_hit_register_data *data, uint64_t *rand)
 {
 	double	closest_t;
 	double	transparency;
@@ -61,7 +61,7 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node,
 			return (0);
 		else if (transparency != 0)
 		{
-			if (random_double() < transparency)
+			if (random_double(rand) < transparency)
 				return (0);
 		}
 	}
@@ -112,7 +112,7 @@ char	hit_register_all(t_minirt *minirt, t_hit_register_data *data)
 	hit = 0;
 	tmp.part = DEFAULT;
 	if (minirt->scene.bvh.valid == 1)
-		hit = hit_bvh(&minirt->scene.bvh, 0, data);
+		hit = hit_bvh(&minirt->scene.bvh, 0, data, &minirt->rand);
 	hit_all_planes(minirt, data, &tmp, &hit);
 	return (hit);
 }

@@ -6,19 +6,28 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:32:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/04/08 20:22:30 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:23:16 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "maths.h"
 #include <math.h>
 
-double	random_double(void)
+uint64_t	xorshift_rand(uint64_t *rand)
 {
-	return (rand() / (RAND_MAX + 1.0));
+	*rand ^= *rand << 13;
+	*rand ^= *rand >> 7;
+	*rand ^= *rand << 17;
+	return (*rand);
 }
 
-double	random_double_in_interval(double min, double max)
+double	random_double(uint64_t *rand)
 {
-	return (min + (rand() / ((double)RAND_MAX / (max - min))));
+	return (xorshift_rand(rand) >> 11) * (1.0 / 9007199254740992.0);
+}
+
+double	random_double_in_interval(double min, double max, uint64_t *rand)
+{
+	return (min + random_double(rand) * (max - min));
 }

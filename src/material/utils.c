@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:34:41 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 18:57:26 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:14:47 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ inline double	get_reflect_value(t_ray *ray_in, t_hit_record *hit_record)
 	);
 }
 
-inline t_vec3	ggx_sample_hemisphere(t_vec3 normal, double roughness)
+inline t_vec3	ggx_sample_hemisphere(t_vec3 normal, double roughness,
+	uint64_t *rand)
 {
 	t_vec3	tangent;
 	double	u2;
@@ -44,8 +45,8 @@ inline t_vec3	ggx_sample_hemisphere(t_vec3 normal, double roughness)
 	double	cos_theta;
 	double	sin_theta;
 
-	u2 = (double)rand() / RAND_MAX;
-	phi = 2.0 * PI_D * ((double)rand() / RAND_MAX);
+	u2 = random_double(rand);
+	phi = 2.0 * PI_D * random_double(rand);
 	cos_theta = sqrt((1.0 - u2) / (1.0 + ((roughness * roughness) * \
 	(roughness * roughness) - 1.0) * u2));
 	sin_theta = sqrt(1.0 - cos_theta * cos_theta);

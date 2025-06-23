@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/23 13:03:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 19:15:36 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_vec3	vec3_fmin(t_vec3 a, t_vec3 b);
 /*	Utility functions	*/
 t_vec3	vec3_unit(const t_vec3 v);
 t_vec3	vec3_negate(const t_vec3 v);
-t_vec3	vec3_random();
+t_vec3	vec3_random(uint64_t *rand);
 
 double	ft_dmin(double a, double b);
 
@@ -51,14 +51,15 @@ t_fcolor	sub_fcolor(t_fcolor c1, t_fcolor c2);
 t_fcolor	clamp_fcolor(t_fcolor color);
 t_fcolor	clamp_fcolor_val(t_fcolor color, double min, double max);
 
-t_vec3	vec3_random();
-t_vec3	vec3_random_unit();
-t_vec3	vec3_random_in_interval(double min, double max);
+t_vec3	vec3_random(uint64_t *rand);
+t_vec3	vec3_random_unit(uint64_t *rand);
+t_vec3	vec3_random_in_interval(double min, double max, uint64_t *rand);
 
 double	ft_dmin(double a, double b);
 double	ft_dmax(double a, double b);
-double	random_double();
-double	random_double_in_interval(double min, double max);
+
+double	random_double(uint64_t *rand);
+double	random_double_in_interval(double min, double max, uint64_t *rand);
 double	clamp_double_val(double v, double min, double max);
 float	clampf(float x, float min, float max);
 
@@ -90,7 +91,6 @@ char	hit_cylinder(t_cylinder *cylinder, t_ray *r, t_hit_record *rec);
 char	hit_cone(t_cone *cone, t_ray *ray, t_hit_record *rec);
 char	hit_triangle(t_triangle *t, t_ray *r, t_hit_record *rec);
 char	hit_register_all(t_minirt *minirt, t_hit_register_data *data);
-char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node, t_hit_register_data *data);
 char	hit_hyperboloid(t_hyperboloid *hyp, t_ray *r, t_hit_record *rec,
 	double interval_max);
 t_vec3	set_normal_face(const t_ray *r, const t_vec3 *outward_normal, t_hit_record	*hit_record);

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 11:59:32 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 12:55:11 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 18:31:09 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	init_all_malloc_importance_sampling(t_scene	*scene, int width,
 void	simulate_importance_sampling_debug(t_scene *scene, int width,
 	int height);
 void	free_unused_malloc_importance_sampling(t_scene *scene);
-t_vec2	calc_inverse_transform_sampling_uv(t_scene *scene);
+t_vec2	calc_inverse_transform_sampling_uv(t_scene *scene, uint32_t *rand);
 t_vec3	calc_inverse_transform_sampling_dir(const t_vec2 *uv);
 void	free_importance_sampling_malloc(t_scene *scene);
 

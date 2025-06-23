@@ -6,22 +6,22 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:25:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/04/08 20:59:31 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:15:53 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "maths.h"
 
-t_vec3	random_in_unit_disk(void)
+t_vec3	random_in_unit_disk(uint64_t *rand)
 {
 	t_vec3	p;
 
 	p.z = 0;
 	while (1)
 	{
-		p.x = random_double_in_interval(-1, 1);
-		p.y = random_double_in_interval(-1, 1);
+		p.x = random_double_in_interval(-1, 1, rand);
+		p.y = random_double_in_interval(-1, 1, rand);
 		if (vec3_length_squared(p) < 1)
 			return (p);
 	}
@@ -32,7 +32,7 @@ t_vec3	defocus_disk_sample(t_minirt *minirt)
 {
 	t_vec3	random_point;
 
-	random_point = random_in_unit_disk();
+	random_point = random_in_unit_disk(&minirt->rand);
 	return (vec3_add(\
 		minirt->scene.camera.position, \
 		vec3_add(vec3_multiply_scalar(minirt->viewport.defocus_disk_u, \

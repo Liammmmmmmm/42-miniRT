@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:35:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/23 19:17:13 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:33:22 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 t_vec3	vec3_random(uint64_t *rand)
 {
 	return ((t_vec3){random_double(rand), random_double(rand),
-			random_double(rand)});
+		random_double(rand)});
 }
 
 t_vec3	vec3_random_in_interval(double min, double max, uint64_t *rand)

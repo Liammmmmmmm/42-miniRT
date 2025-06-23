@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:30:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 19:19:09 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:33:32 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ inline void	dielectric_mat(t_minirt *minirt, t_ray *ray,
 			else
 			{
 				if (hit_record->mat->transmission_value
-						< random_double(&minirt->rand))
+					< random_double(&minirt->rand))
 					default_mat(minirt, ray, hit_record, data);
 				else
 					refracted_ray(minirt, ray, hit_record, data.power);

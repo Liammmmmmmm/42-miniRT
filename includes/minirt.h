@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 14:17:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 19:29:42 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@
 # define IT_MIN 0.001
 
 # define MIN_SCALE 1e-3
+
+# define SCALE_FACTOR_HP (1.0 / 9007199254740992.0)
 
 typedef enum e_mouse_buttons
 {

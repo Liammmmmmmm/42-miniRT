@@ -6,25 +6,13 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/19 15:33:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 11:27:22 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "bvh.h"
 #include "bmp_parsing.h"
-
-void	put_render_to_frame(t_minirt *minirt)
-{
-	// if (minirt->controls.values.upscaling_ratio == 100)
-	put_render_to_buff(minirt);//no_upscaling(minirt);
-	// else if (minirt->controls.values.upscaling_selected == 0)
-	// 	neighbor_upscale(minirt);
-	// else if (minirt->controls.values.upscaling_selected == 1)
-	// 	bilinear_upscale(minirt);
-	// else if (minirt->controls.values.upscaling_selected == 2)
-	// 	bicubic_upscale(minirt);
-}
 
 char	*get_time_dhmsms(ssize_t time)
 {

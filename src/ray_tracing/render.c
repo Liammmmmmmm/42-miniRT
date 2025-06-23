@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 09:26:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 12:08:57 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,23 @@
 #include "bvh.h"
 #include "material.h"
 #include <math.h>
+
+void	put_render_to_buff_upscaling(t_minirt *minirt)
+{
+	if ((long)minirt->controls.selected_upscaling == 0)
+		put_render_to_buff(minirt);
+	else if ((long)minirt->controls.selected_upscaling == 1)
+		bilinear_upscale(minirt);
+	else if ((long)minirt->controls.selected_upscaling == 2)
+		bicubic_upscale(minirt);
+		
+	// else if (minirt->controls.values.upscaling_selected == 0)
+	// 	neighbor_upscale(minirt);
+	// else if (minirt->controls.values.upscaling_selected == 1)
+	// 	bilinear_upscale(minirt);
+	// else if (minirt->controls.values.upscaling_selected == 2)
+	// 	bicubic_upscale(minirt);
+}
 
 void	draw_pixels(t_minirt *minirt)
 {
@@ -25,7 +42,7 @@ void	draw_pixels(t_minirt *minirt)
 	minirt->screen.sample++;
 	minirt->screen.sample_total_anim++;
 	minirt->screen.last_sample_am = minirt->screen.sample;
-	put_render_to_buff(minirt);
+	put_render_to_buff_upscaling(minirt);
 	if (minirt->options.no_display)
 		return ;
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win,

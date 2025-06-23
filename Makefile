@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/20 19:04:01 by madelvin         ###   ########.fr        #
+#    Updated: 2025/06/23 10:36:38 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -144,7 +144,7 @@ EDIT_MOD_DIR		= src/edition_mod/
 EDIT_MOD_FILE		= select_obj.c
 
 UPSCALING_DIR		= src/upscaling/
-UPSCALING_FILE		= bilinear.c bicubic.c neighbor.c no_upscaling.c
+UPSCALING_FILE		= bilinear.c bicubic.c utils.c no_upscaling.c
 
 OPTIONS_DIR			= src/options/
 OPTIONS_FILE		= options.c animation.c animation_err.c animation_move_points.c animation_parse.c animation_tesselate.c animation_rotations.c animation_auto_rota.c

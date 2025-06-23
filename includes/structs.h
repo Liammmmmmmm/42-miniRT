@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 17:00:07 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:48:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,15 @@ typedef struct s_aabb
 	t_vec3	min;
 	t_vec3	max;
 }	t_aabb;
+
+typedef struct s_interpolate_pixel_bicubic
+{
+	float	v[4];
+	float	wx[4];
+	float	wy[4];
+	int		x[4];
+	int		y[4];
+}	t_interpolate_pixel_bicubic;
 
 typedef enum e_tex_type
 {

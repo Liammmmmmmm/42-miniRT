@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 19:05:10 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:01:05 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,6 +262,14 @@ void		draw_selected_object(t_minirt *minirt);
 
 int			free_mlx_error(t_minirt *minirt);
 
+
+t_color		render_float_to_color(t_fcolor *color, int divide);
+int			render_float_to_int(t_fcolor *color, int divide);
+int			render_float_to_int_gamma(t_fcolor *color, double gamma_corr,
+	int divide);
+void		copy_buff_to_image(t_minirt *minirt);
+
+void		init_upscale_struct(t_upscale_data *d, t_minirt *minirt);
 void		bilinear_upscale(t_minirt *minirt);
 void		neighbor_upscale(t_minirt *minirt);
 void		lanczos3_upscale(t_minirt *minirt);

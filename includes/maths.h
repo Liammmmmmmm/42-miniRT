@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 16:37:29 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:03:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ double	ft_dmax(double a, double b);
 double	random_double();
 double	random_double_in_interval(double min, double max);
 double	clamp_double_val(double v, double min, double max);
+float	clampf(float x, float min, float max);
 
 void	init_yaw_matrix(double matrix[3][3], t_calc_trigo trigo_calcs);
 void	init_roll_matrix(double matrix[3][3], t_calc_trigo trigo_calcs);

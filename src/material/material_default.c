@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   material_default.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 14:41:20 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 09:37:11 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,7 @@ inline void	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 			*data.power,
 			hit_record->color
 			);
+	if (minirt->scene.amb_light.pdf_joint)
+		importance_sampling(minirt, ray, hit_record, data);
 	ray->dir = cos_weighted_sample_hemishphere(&hit_record->normal);
 }

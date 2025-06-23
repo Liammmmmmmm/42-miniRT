@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 16:51:35 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/23 09:26:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	draw_pixels(t_minirt *minirt)
 	put_render_to_buff(minirt);
 	if (minirt->options.no_display)
 		return ;
-	if (minirt->controls.selected_x != -1 && minirt->controls.selected_y != -1)
-		debug_ray(minirt);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win,
 		minirt->mlx.img.img, 0, 0);
 	printf("Sample %d - %zums\n", minirt->screen.sample, get_cpu_time()

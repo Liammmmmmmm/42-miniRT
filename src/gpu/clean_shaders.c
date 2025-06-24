@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_error.c                                      :+:      :+:    :+:   */
+/*   clean_shaders.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/23 17:59:22 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/24 15:06:30 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/06/24 16:28:59 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/06/24 17:01:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "gpu.h"
+#include "minirt.h"
 
-int	print_error(char *err)
+void	clean_shaders(t_shader_data *shader_data)
 {
-	ft_dprintf(2, RED"[Error]"NC" %s\n", err);
-	return (0);
-}
-
-int	print_error1(char *err)
-{
-	ft_dprintf(2, RED"[Error]"NC" %s\n", err);
-	return (1);
-}
-
-int	print_errorm1(char *err)
-{
-	ft_dprintf(2, RED"[Error]"NC" %s\n", err);
-	return (-1);
+	glDeleteBuffers(1, &shader_data->ssbo);
+	glDeleteProgram(shader_data->program);
+	glfwDestroyWindow(shader_data->window);
+	glfwTerminate();
 }

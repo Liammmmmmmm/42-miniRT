@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_error.c                                      :+:      :+:    :+:   */
+/*   gpu_struct.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/23 17:59:22 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/24 15:06:30 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/06/24 15:19:55 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/06/24 16:27:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#ifndef GPU_STRUCT_H
+# define GPU_STRUCT_H
 
-int	print_error(char *err)
-{
-	ft_dprintf(2, RED"[Error]"NC" %s\n", err);
-	return (0);
-}
+#include <GLFW/glfw3.h>
 
-int	print_error1(char *err)
+typedef struct s_shader_data
 {
-	ft_dprintf(2, RED"[Error]"NC" %s\n", err);
-	return (1);
-}
+	GLFWwindow	*window;
+	GLuint		program;
+	GLuint		ssbo;
+}	t_shader_data;
 
-int	print_errorm1(char *err)
-{
-	ft_dprintf(2, RED"[Error]"NC" %s\n", err);
-	return (-1);
-}
+#endif

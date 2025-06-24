@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 17:40:50 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:27:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "font.h"
 # include "hdr_parsing.h"
 # include "basic_structs.h"
+# include "gpu_struct.h"
 
 typedef unsigned char t_bool;
 typedef unsigned char t_uchar;
@@ -679,14 +680,15 @@ typedef struct s_micrort
 
 typedef struct s_minirt
 {
-	t_scene		scene;
-	t_mlx		mlx;
-	t_screen	screen;
-	t_stats		stats;
-	t_viewport	viewport;
-	t_controls	controls;
-	t_options	options;
-	t_micrort	micrort;
+	t_scene			scene;
+	t_mlx			mlx;
+	t_screen		screen;
+	t_stats			stats;
+	t_viewport		viewport;
+	t_controls		controls;
+	t_options		options;
+	t_micrort		micrort;
+	t_shader_data	shaders_data;
 }	t_minirt;
 
 typedef struct s_upscale_data

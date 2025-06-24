@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_shader.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/24 10:02:30 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/24 17:13:17 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "gpu.h"
 #include "minirt.h"
 #include "bmp_parsing.h"
 #include "options.h"
@@ -55,6 +56,9 @@ int	init_all(t_minirt *minirt)
 		return (clean(minirt));
 	if (!init_render(minirt))
 		return (clean(minirt));
+	if (init_shader(&minirt->shaders_data, minirt->scene.render_width,
+		minirt->scene.render_height) == -1)
+		return (clean(minirt));
 	return (0);
 }
 
@@ -78,5 +82,6 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(minirt.mlx.mlx, render_next_frame, &minirt);
 	mlx_loop(minirt.mlx.mlx);
 	clean(&minirt);
+	clean_shaders(&minirt.shaders_data);
 	return (0);
 }

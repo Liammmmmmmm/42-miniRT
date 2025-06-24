@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
+/*   render_gpu.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/24 16:37:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/24 17:07:37 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "gpu.h"
 #include "minirt.h"
 #include "bvh.h"
 #include "material.h"
@@ -27,14 +28,10 @@ void	put_render_to_buff_upscaling(t_minirt *minirt)
 
 void	draw_pixels(t_minirt *minirt)
 {
-	t_vec3	offset;
-
 	minirt->screen.last_sample_time = get_cpu_time();
-	offset = vec3_random();
-	calc_one_sample(minirt, offset, (int)minirt->controls.max_bounces);
-	minirt->screen.sample++;
-	minirt->screen.sample_total_anim++;
-	minirt->screen.last_sample_am = minirt->screen.sample;
+	printf("Test compute gpu\n");
+	compute_frame_gpu(minirt);
+	printf("OKKK\n");
 	put_render_to_buff_upscaling(minirt);
 	if (minirt->options.no_display)
 		return ;

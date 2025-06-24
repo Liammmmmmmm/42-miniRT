@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 09:47:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/24 09:19:02 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,37 @@ t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 	data.hit_record.mat = NULL;
 	data.is_light = 0;
 	data.ray = &ray;
+	float sigma_t = 0.1; // volume density
+	float t_scatter = -logf(random_double()) / sigma_t;
 	while (--max_depth >= 0)
 	{
 		if (hit_register_all(minirt, &data) == 1)
 		{
-			ray.orig = data.hit_record.point;
-			material_manager_v3(minirt, &ray, &data.hit_record,
-				(t_ray_data){&power, &accumulation});
+			float t_surface = data.hit_record.t;
+
+			if (t_scatter < t_surface)
+			{
+				// Volume scattering event
+				t_vec3 scatter_point = vec3_add(ray.orig, vec3_multiply_scalar(ray.dir, t_scatter));
+				t_vec3 new_dir = vec3_random_unit(); // diffusion isotrope
+
+				// Atténuation due à la traversée du volume
+				float T = expf(-sigma_t * t_scatter);
+				power = multiply_scalar_fcolor(power, T);
+
+				ray.orig = scatter_point;
+				ray.dir = new_dir;
+				continue; // rebond dans le volume
+			}
+			else
+			{
+				float T = expf(-sigma_t * t_surface);
+				power = multiply_scalar_fcolor(power, T);
+
+				ray.orig = data.hit_record.point;
+				material_manager_v3(minirt, &ray, &data.hit_record,
+					(t_ray_data){&power, &accumulation});
+			}
 		}
 		else
 		{

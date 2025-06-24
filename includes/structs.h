@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 17:40:50 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:45:13 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -502,6 +502,28 @@ typedef struct s_axis
 	double	max;
 }	t_axis;
 
+typedef struct s_photon
+{
+    t_vec3		position;
+    t_fcolor	power;
+} t_photon;
+
+typedef struct s_kd_node
+{
+	t_photon			*photon;
+	struct s_kd_node	*left;
+	struct s_kd_node	*right;
+	int					axis;
+}	t_kd_node;
+
+typedef struct s_kd_tree
+{
+	t_kd_node	*root;
+	t_photon	*photons;
+	t_kd_node   *nodes;
+	size_t		photon_count;
+} t_kd_tree;
+
 typedef struct s_scene
 {
 	char		name[20];
@@ -522,6 +544,7 @@ typedef struct s_scene
 	int			render_width;
 	int			render_height;
 	t_bool		have_win_el;
+	t_kd_tree	photon_map;
 }	t_scene;
 
 typedef struct s_mlx

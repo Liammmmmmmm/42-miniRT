@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/23 18:00:55 by madelvin         ###   ########.fr        #
+#    Updated: 2025/06/24 15:57:07 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,10 @@ INCLUDES = -I includes/ -I $(LIBFTDIR)includes/ -I $(MINILIBXDIR)
 # Source files mandatory
 SRC_DIR				= src/
 SRC_FILE			= main.c
+
+CAUSTIC_DIR			= src/caustic/
+CAUSTIC_FILE		= kd_tree/kd_tree_build_utils.c kd_tree/kd_tree_build.c kd_tree/kd_tree_delete.c kd_tree/kd_tree_print.c \
+					caustic_manager.c trace_photon_path.c
 
 UTILS_DIR			= src/utils/
 UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
@@ -177,7 +181,8 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(PPM_DIR), $(PPM_FILE)) \
 			$(addprefix $(HDR_PARSING_DIR), $(HDR_PARSING_FILE)) \
 			$(addprefix $(OPTIONS_DIR), $(OPTIONS_FILE)) \
-			$(addprefix $(PNG_DIR), $(PNG_FILE))
+			$(addprefix $(PNG_DIR), $(PNG_FILE)) \
+			$(addprefix $(CAUSTIC_DIR), $(CAUSTIC_FILE))
 
 # Source files bonus
 SRCS_BONUS = 
@@ -194,7 +199,7 @@ REMAKE   = libft/includes/libft.h libft/includes/ft_printf.h \
 		includes/material.h includes/maths.h includes/minirt.h \
 		includes/mlx_base.h includes/mlx_components.h includes/structs.h includes/ui.h \
 		includes/utils.h includes/obj_parsing.h includes/hit_register.h \
-		includes/importance_sampling.h
+		includes/importance_sampling.h includes/caustic.h
 
 # NORMINETTE
 NORM_RET = $(RED)[ERROR]$(BOLD) Norminette Disable$(NC)

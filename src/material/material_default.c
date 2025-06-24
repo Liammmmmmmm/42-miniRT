@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   material_default.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/23 09:37:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/24 17:56:54 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,3 +86,13 @@ inline void	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 		importance_sampling(minirt, ray, hit_record, data);
 	ray->dir = cos_weighted_sample_hemishphere(&hit_record->normal);
 }
+
+inline char	default_mat_photon(t_hit_record *hit_record, t_fcolor *power)
+{
+	*power = multiply_fcolor(
+			*power,
+			hit_record->color
+			);
+	return (1);		
+}
+

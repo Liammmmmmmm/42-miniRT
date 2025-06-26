@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/24 17:31:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/06/26 12:47:19 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	init_ssbo(t_shader_data *shader_data, size_t render_width,
 	glGenBuffers(1, &shader_data->ssbo);
 	glBindBuffer(GL_SHADER_STORAGE_BUFFER, shader_data->ssbo);
 	glBufferData(GL_SHADER_STORAGE_BUFFER,
-		render_height * render_width * sizeof(float) * 3, NULL,
+		render_height * render_width * sizeof(float) * 4, NULL,
 		GL_DYNAMIC_COPY);
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, shader_data->ssbo);
 }

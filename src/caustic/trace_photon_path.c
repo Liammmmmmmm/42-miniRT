@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:56:26 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/24 16:45:00 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:55:17 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "material.h"
 #include "maths.h"
 
-inline char	material_manager_v3_phothon(t_minirt *minirt, t_ray *ray,
+char	material_manager_v3_phothon(t_minirt *minirt, t_ray *ray,
 	t_hit_record *hit_record, t_fcolor *power)
 {
 	char	return_value;
@@ -48,6 +48,8 @@ char	trace_single_photon_path(t_minirt *minirt, t_vec3 light_position,
     data.is_light = 1;
     data.ray = &ray;
     depth = 0;
+	photon_out->i = 0;
+	photon_out->initial = light_position;
     while (depth < 10)
     {
         if (hit_register_all(minirt, &data) == 1)
@@ -56,6 +58,29 @@ char	trace_single_photon_path(t_minirt *minirt, t_vec3 light_position,
 			if (material_manager_v3_phothon(minirt, &ray, &data.hit_record,
 				&photon_power))
 			{
+				if (depth == 0)
+					photon_out->p0 = data.hit_record.point;
+				if (depth == 1)
+					photon_out->p1 = data.hit_record.point;
+				if (depth == 2)
+					photon_out->p2 = data.hit_record.point;
+				if (depth == 3)
+					photon_out->p3 = data.hit_record.point;
+				if (depth == 4)
+					photon_out->p4 = data.hit_record.point;
+				if (depth == 5)
+					photon_out->p5 = data.hit_record.point;
+				if (depth == 6)
+					photon_out->p6 = data.hit_record.point;
+				if (depth == 7)
+					photon_out->p7 = data.hit_record.point;
+				if (depth == 8)
+					photon_out->p8 = data.hit_record.point;
+				if (depth == 9)
+					photon_out->p9 = data.hit_record.point;
+				if (depth == 10)
+					photon_out->p10 = data.hit_record.point;
+				photon_out->i = depth;
 				photon_out->position = data.hit_record.point;
 				photon_out->power = photon_power;
 				return (1);
@@ -63,6 +88,28 @@ char	trace_single_photon_path(t_minirt *minirt, t_vec3 light_position,
         }
         else
 			return (0);
+		if (depth == 0)
+			photon_out->p0 = data.hit_record.point;
+		if (depth == 1)
+			photon_out->p1 = data.hit_record.point;
+		if (depth == 2)
+			photon_out->p2 = data.hit_record.point;
+		if (depth == 3)
+			photon_out->p3 = data.hit_record.point;
+		if (depth == 4)
+			photon_out->p4 = data.hit_record.point;
+		if (depth == 5)
+			photon_out->p5 = data.hit_record.point;
+		if (depth == 6)
+			photon_out->p6 = data.hit_record.point;
+		if (depth == 7)
+			photon_out->p7 = data.hit_record.point;
+		if (depth == 8)
+			photon_out->p8 = data.hit_record.point;
+		if (depth == 9)
+			photon_out->p9 = data.hit_record.point;
+		if (depth == 10)
+			photon_out->p10 = data.hit_record.point;
         depth++;
     }
 	return (0);

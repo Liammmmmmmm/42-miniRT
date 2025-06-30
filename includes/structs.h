@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/24 16:45:13 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:54:41 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -506,6 +506,19 @@ typedef struct s_photon
 {
     t_vec3		position;
     t_fcolor	power;
+	t_vec3		initial;
+	t_vec3		p0;
+	t_vec3		p1;
+	t_vec3		p2;
+	t_vec3		p3;
+	t_vec3		p4;
+	t_vec3		p5;
+	t_vec3		p6;
+	t_vec3		p7;
+	t_vec3		p8;
+	t_vec3		p9;
+	t_vec3		p10;
+	int			i;
 } t_photon;
 
 typedef struct s_kd_node
@@ -710,6 +723,7 @@ typedef struct s_minirt
 	t_controls	controls;
 	t_options	options;
 	t_micrort	micrort;
+	int			i;
 }	t_minirt;
 
 typedef struct s_upscale_data

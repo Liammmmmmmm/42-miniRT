@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/24 17:07:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 18:30:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	render(t_minirt *minirt)
 				* minirt->scene.win_height);
 		ft_bzero(minirt->screen.float_render, sizeof(t_fcolor)
 			* minirt->viewport.render_w * minirt->viewport.render_h);
+		convert_scene(&minirt->scene, &minirt->viewport, &minirt->shaders_data.scene);
 	}
 	draw_pixels(minirt);
 }

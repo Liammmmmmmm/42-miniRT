@@ -6,15 +6,15 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:37:43 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 19:16:11 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:24:25 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vec2	calc_inverse_transform_sampling_uv(t_scene *scene, uint64_t *rand)
+t_vec2	calc_inverse_transform_sampling_uv(t_scene *scene)
 {
-	const t_vec2	r = (t_vec2){random_double(rand), random_double(rand)};
+	const t_vec2	r = (t_vec2){random_double(), random_double()};
 	t_vec2			n;
 
 	n.y = scene->amb_light.cdf_marginal_inverse[

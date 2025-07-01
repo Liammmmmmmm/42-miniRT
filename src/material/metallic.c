@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:42:13 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 18:46:08 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:04:04 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ inline void	metallic_color(t_ray *ray, t_hit_record *hit_record,
 
 	if (hit_record->mat->roughness_value > 0.0)
 		micro_normal = ggx_sample_hemisphere(hit_record->normal,
-				hit_record->mat->roughness_value, hit_record->rand);
+				hit_record->mat->roughness_value);
 	else
 		micro_normal = hit_record->normal;
 	direction = vec3_subtract(

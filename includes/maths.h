@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/23 19:15:36 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:46:45 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_vec3	vec3_fmin(t_vec3 a, t_vec3 b);
 /*	Utility functions	*/
 t_vec3	vec3_unit(const t_vec3 v);
 t_vec3	vec3_negate(const t_vec3 v);
-t_vec3	vec3_random(uint64_t *rand);
+t_vec3	vec3_random();
 
 double	ft_dmin(double a, double b);
 
@@ -51,15 +51,15 @@ t_fcolor	sub_fcolor(t_fcolor c1, t_fcolor c2);
 t_fcolor	clamp_fcolor(t_fcolor color);
 t_fcolor	clamp_fcolor_val(t_fcolor color, double min, double max);
 
-t_vec3	vec3_random(uint64_t *rand);
-t_vec3	vec3_random_unit(uint64_t *rand);
-t_vec3	vec3_random_in_interval(double min, double max, uint64_t *rand);
+t_vec3	vec3_random();
+t_vec3	vec3_random_unit();
+t_vec3	vec3_random_in_interval(double min, double max);
 
 double	ft_dmin(double a, double b);
 double	ft_dmax(double a, double b);
 
-double	random_double(uint64_t *rand);
-double	random_double_in_interval(double min, double max, uint64_t *rand);
+double	random_double();
+double	random_double_in_interval(double min, double max);
 double	clamp_double_val(double v, double min, double max);
 float	clampf(float x, float min, float max);
 

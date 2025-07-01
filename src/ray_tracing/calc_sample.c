@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:49:52 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 16:51:06 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:32:50 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,23 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset, int max_bounces)
 	t_uint			i;
 
 	i = 0;
-	while (i < tpi)
+	if (minirt->screen.sample == 0 || (get_cpu_time() \
+	- minirt->screen.first_sample_time) / minirt->screen.sample
+		> SAMPLE_PROGRESS_BAR_TIME)
 	{
-		calc_one_sample_task(minirt, offset, i, max_bounces);
-		i++;
+		print_progress_bar(0, tpi);
+		while (i < tpi)
+		{
+			calc_one_sample_task(minirt, offset, i++, max_bounces);
+			print_progress_bar(i, tpi);
+		}
+		if (get_cpu_time() - minirt->screen.last_sample_time
+			< SAMPLE_PROGRESS_BAR_TIME)
+			write_no_err(1, "\r\e[K", 4);
+		else
+			write_no_err(1, " ", 1);
 	}
+	else
+		while (i < tpi)
+			calc_one_sample_task(minirt, offset, i++, max_bounces);
 }

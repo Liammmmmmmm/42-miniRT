@@ -28,7 +28,25 @@ double	random_double(void)
 	return ((xorshift_rand(&rand) >> 11) * SCALE_FACTOR_HP);
 }
 
+double random_double_neg(void)
+{
+    return (rand() / (RAND_MAX / 2.0)) - 1.0;
+}
+
 double	random_double_in_interval(double min, double max)
 {
 	return (min + random_double() * (max - min));
+}
+
+t_vec3	random_in_unit_sphere(void)
+{
+	t_vec3	p;
+
+	while (1)
+	{
+		p \
+	= (t_vec3){random_double_neg(), random_double_neg(), random_double_neg()};
+		if (vec3_length_squared(p) < 1)
+			return (p);
+	}
 }

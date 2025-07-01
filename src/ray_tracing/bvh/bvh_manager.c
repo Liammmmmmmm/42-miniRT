@@ -34,5 +34,6 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	print_progress_bar(0, count);
 	build_bvh(bvh, 0, count);
 	free(bvh->task_stack.data);
+	print_progress_bar(count, count);
 	ft_printf("\n\n");
 }

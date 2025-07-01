@@ -66,6 +66,10 @@ INCLUDES = -I includes/ -I $(LIBFTDIR)includes/ -I $(MINILIBXDIR)
 SRC_DIR				= src/
 SRC_FILE			= main.c
 
+CAUSTIC_DIR			= src/caustic/
+CAUSTIC_FILE		= kd_tree/kd_tree_build_utils.c kd_tree/kd_tree_build.c kd_tree/kd_tree_destroy.c kd_tree/kd_tree_print.c \
+					caustic_manager.c trace_photon_path.c
+
 UTILS_DIR			= src/utils/
 UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					bmp/bmp_extract_color.c bmp/bmp_extract_pixel.c \
@@ -73,7 +77,7 @@ UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					obj/obj_extract_value.c obj/obj_finilizer.c \
 					obj/obj_parser_utils.c obj/obj_parser.c obj/obj_utils.c \
 					obj/obj_vertex_cache.c obj/obj_extract_value_utils.c obj/obj_parse_face.c \
-					obj/obj_vertex_cache_utils.c obj/obj_vertex_utils.c print_error.c
+					obj/obj_vertex_cache_utils.c obj/obj_vertex_utils.c print_error.c print_warn.c
 
 UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c \
@@ -180,7 +184,8 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(PPM_DIR), $(PPM_FILE)) \
 			$(addprefix $(HDR_PARSING_DIR), $(HDR_PARSING_FILE)) \
 			$(addprefix $(OPTIONS_DIR), $(OPTIONS_FILE)) \
-			$(addprefix $(PNG_DIR), $(PNG_FILE))
+			$(addprefix $(PNG_DIR), $(PNG_FILE)) \
+			$(addprefix $(CAUSTIC_DIR), $(CAUSTIC_FILE))
 
 # Source files bonus
 SRCS_BONUS = 
@@ -197,7 +202,7 @@ REMAKE   = libft/includes/libft.h libft/includes/ft_printf.h \
 		includes/material.h includes/maths.h includes/minirt.h \
 		includes/mlx_base.h includes/mlx_components.h includes/structs.h includes/ui.h \
 		includes/utils.h includes/obj_parsing.h includes/hit_register.h \
-		includes/importance_sampling.h
+		includes/importance_sampling.h includes/caustic.h
 
 # NORMINETTE
 NORM_RET = $(RED)[ERROR]$(BOLD) Norminette Disable$(NC)

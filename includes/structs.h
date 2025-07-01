@@ -219,6 +219,9 @@ typedef struct s_light
 	t_vec3	position;
 	double	brightness;
 	t_color	color;
+	size_t	shadow_sample;
+	float	radius;
+	double	shadow_factor;
 }	t_light;
 
 typedef struct s_dlight
@@ -502,6 +505,41 @@ typedef struct s_axis
 	double	max;
 }	t_axis;
 
+typedef struct s_photon
+{
+    t_vec3		position;
+    t_fcolor	power;
+	t_vec3		initial;
+	t_vec3		p0;
+	t_vec3		p1;
+	t_vec3		p2;
+	t_vec3		p3;
+	t_vec3		p4;
+	t_vec3		p5;
+	t_vec3		p6;
+	t_vec3		p7;
+	t_vec3		p8;
+	t_vec3		p9;
+	t_vec3		p10;
+	int			i;
+} t_photon;
+
+typedef struct s_kd_node
+{
+	t_photon			*photon;
+	struct s_kd_node	*left;
+	struct s_kd_node	*right;
+	int					axis;
+}	t_kd_node;
+
+typedef struct s_kd_tree
+{
+	t_kd_node	*root;
+	t_photon	*photons;
+	t_kd_node   *nodes;
+	size_t		photon_count;
+} t_kd_tree;
+
 typedef struct s_scene
 {
 	char		name[20];
@@ -522,6 +560,7 @@ typedef struct s_scene
 	int			render_width;
 	int			render_height;
 	t_bool		have_win_el;
+	t_kd_tree	photon_map;
 }	t_scene;
 
 typedef struct s_mlx
@@ -687,6 +726,7 @@ typedef struct s_minirt
 	t_controls	controls;
 	t_options	options;
 	t_micrort	micrort;
+	int			i;
 }	t_minirt;
 
 typedef struct s_upscale_data

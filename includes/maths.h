@@ -52,8 +52,10 @@ t_fcolor	clamp_fcolor(t_fcolor color);
 t_fcolor	clamp_fcolor_val(t_fcolor color, double min, double max);
 
 t_vec3	vec3_random();
+t_vec3	vec3_random_neg();
 t_vec3	vec3_random_unit();
 t_vec3	vec3_random_in_interval(double min, double max);
+t_vec3	random_in_unit_sphere(void);
 
 double	ft_dmin(double a, double b);
 double	ft_dmax(double a, double b);

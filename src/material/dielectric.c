@@ -64,3 +64,31 @@ inline void	dielectric_mat(t_minirt *minirt, t_ray *ray,
 	else
 		default_mat(minirt, ray, hit_record, data);
 }
+
+inline char	dielectric_mat_photon(t_minirt *minirt, t_ray *ray,
+	t_hit_record *hit_record, t_fcolor *power)
+{
+	if (hit_record->mat->ior > 0)
+	{
+		if (get_reflect_value(ray, hit_record) >= random_double()
+			&& hit_record->mat->ior != 1.0)
+			reflected_dielectric_color(ray, hit_record);
+		else
+		{
+			if (hit_record->mat->transmission_value == 1.0)
+				refracted_ray(minirt, ray, hit_record, power);
+			else if (hit_record->mat->transmission_value == 0.0)
+				return (default_mat_photon(hit_record, power));
+			else
+			{
+				if (hit_record->mat->transmission_value < random_double())
+					return (default_mat_photon(hit_record, power));
+				else
+					refracted_ray(minirt, ray, hit_record, power);
+			}
+		}
+	}
+	else
+		return (default_mat_photon(hit_record, power));
+	return (0);
+}

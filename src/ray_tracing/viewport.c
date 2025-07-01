@@ -6,11 +6,12 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 16:45:07 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:11:43 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "caustic.h"
 #include "bvh.h"
 
 static void	init_camera_values(t_minirt *minirt)
@@ -45,6 +46,7 @@ static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 		minirt->scene.build_bvh = 0;
 	}
 	init_plane_light_lst(minirt);
+	// caustic_manager(minirt, 1000000);
 	vp->gamma = minirt->viewport.gamma;
 	vp->render_w = minirt->scene.render_width;
 	vp->render_h = minirt->scene.render_height;

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/01 17:36:35 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:10:57 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@
 # define IT_MIN 0.001
 
 # define MIN_SCALE 1e-3
+
+# define SCALE_FACTOR_HP (1.0 / 9007199254740992.0)
+
+# ifndef RANDOM_SEED
+#  define RANDOM_SEED 42
+# endif
 
 # define PROGRESS_BAR_SIZE 50
 # define SAMPLE_PROGRESS_BAR_TIME 5000

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/01 13:56:26 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:03:59 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static inline void	importance_sampling(t_minirt *minirt, t_ray *ray,
 	t_hit_record *hit_record, t_ray_data data)
 {
 	t_hit_register_data	data_tmp;
-	const t_vec2		uv = calc_inverse_transform_sampling_uv(&minirt->scene);
+	const t_vec2		uv
+		= calc_inverse_transform_sampling_uv(&minirt->scene);
 	float				costheta;
 	float				pdf;
 	t_fcolor			radiance;

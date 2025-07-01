@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:32:20 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/24 16:40:04 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:03:14 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ t_vec3	reflection_vec(const t_vec3 uv, const t_vec3 n);
  * • `I` : the direction of the ray hitting the object
  * • `N` : normal of the point
  */
-void	metallic_color(t_ray *ray, t_hit_record	*hit_record, t_fcolor *power);
-
+void	metallic_color(t_ray *ray, t_hit_record *hit_record,
+	t_fcolor *power);
 void	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 	t_ray_data data);
 void	refracted_ray(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/01 18:01:34 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/01 19:25:58 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,13 @@ typedef struct s_mat
 	t_tex		*normal;
 	double		normal_intensity;
 }	t_mat;
+
+typedef struct s_range
+{
+	int	start;
+	int	end;
+	int	median;
+}	t_range;
 
 typedef struct s_quadratic
 {
@@ -539,6 +546,22 @@ typedef struct s_kd_tree
 	t_kd_node   *nodes;
 	size_t		photon_count;
 } t_kd_tree;
+
+typedef struct s_kd_build_task
+{
+	int			start;
+	int			end;
+	int			depth;
+	t_kd_node	**parent; 
+}	t_kd_build_task;
+
+typedef struct s_kd_task_data
+{
+	t_kd_build_task	task;
+	t_kd_build_task	*stack;
+	int				*stack_top;
+}	t_kd_task_data;
+
 
 typedef struct s_scene
 {

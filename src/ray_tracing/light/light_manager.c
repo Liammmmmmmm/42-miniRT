@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:27:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 19:06:26 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:21:38 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,23 @@
 #include "minirt.h"
 #include <math.h>
 
+static inline char	try_to_add_plight(t_light *light, t_minirt *minirt,
+	t_hit_record *hit_record)
+{
+	if (light->radius == 0 || light->shadow_sample <= 1)
+	{
+		light->shadow_factor = 1;
+		return (!check_plight_hit(minirt, hit_record->point, light->position));
+	}
+	compute_shadow_factor(minirt, hit_record->point, light);
+	if (light->shadow_factor > 0.0)
+		return (1);
+	return (0);
+}
+
 static void	add_all_light_contribution(t_hit_record *hit_record,
 	t_minirt *minirt, t_vec3 view_dir, t_lcolor *light_color)
 {
-	t_light		*light;
 	t_dlight	*dlight;
 	int			i;
 
@@ -28,12 +41,10 @@ static void	add_all_light_contribution(t_hit_record *hit_record,
 	while (i < minirt->scene.obj_lst.light_nb)
 	{
 		if (minirt->scene.obj_lst.light_lst[i]->type == LIGHT)
-		{
-			light = (t_light *)minirt->scene.obj_lst.light_lst[i]->object;
-			if (check_plight_hit(minirt, hit_record->point, light->position)
-				== 0)
-				add_plight(light_color, hit_record, light, view_dir);
-		}
+			if (try_to_add_plight(\
+	(t_light *)minirt->scene.obj_lst.light_lst[i]->object, minirt, hit_record))
+				add_plight(light_color, hit_record, \
+	(t_light *)minirt->scene.obj_lst.light_lst[i]->object, view_dir);
 		if (minirt->scene.obj_lst.light_lst[i]->type == DIRECTIONAL_LIGHT)
 		{
 			dlight = (t_dlight *)minirt->scene.obj_lst.light_lst[i]->object;

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/02 17:18:27 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:37:20 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	print_progress_bar(0, count);
 	build_bvh(bvh, 0, count);
 	free(bvh->task_stack.data);
+	print_progress_bar(count, count);
 	ft_printf("\n\n");
 }

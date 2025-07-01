@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/23 13:03:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 16:00:57 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ t_fcolor	clamp_fcolor(t_fcolor color);
 t_fcolor	clamp_fcolor_val(t_fcolor color, double min, double max);
 
 t_vec3	vec3_random();
+t_vec3	vec3_random_neg();
 t_vec3	vec3_random_unit();
 t_vec3	vec3_random_in_interval(double min, double max);
+t_vec3	random_in_unit_sphere(void);
 
 double	ft_dmin(double a, double b);
 double	ft_dmax(double a, double b);

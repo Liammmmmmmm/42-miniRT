@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/06/24 15:57:07 by madelvin         ###   ########.fr        #
+#    Updated: 2025/07/01 13:09:35 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,7 @@ SRC_DIR				= src/
 SRC_FILE			= main.c
 
 CAUSTIC_DIR			= src/caustic/
-CAUSTIC_FILE		= kd_tree/kd_tree_build_utils.c kd_tree/kd_tree_build.c kd_tree/kd_tree_delete.c kd_tree/kd_tree_print.c \
+CAUSTIC_FILE		= kd_tree/kd_tree_build_utils.c kd_tree/kd_tree_build.c kd_tree/kd_tree_destroy.c kd_tree/kd_tree_print.c \
 					caustic_manager.c trace_photon_path.c
 
 UTILS_DIR			= src/utils/
@@ -74,7 +74,7 @@ UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					obj/obj_extract_value.c obj/obj_finilizer.c \
 					obj/obj_parser_utils.c obj/obj_parser.c obj/obj_utils.c \
 					obj/obj_vertex_cache.c obj/obj_extract_value_utils.c obj/obj_parse_face.c \
-					obj/obj_vertex_cache_utils.c obj/obj_vertex_utils.c print_error.c
+					obj/obj_vertex_cache_utils.c obj/obj_vertex_utils.c print_error.c print_warn.c
 
 UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c \

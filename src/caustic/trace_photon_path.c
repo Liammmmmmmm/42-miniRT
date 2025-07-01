@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:56:26 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/30 15:55:17 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:57:26 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	trace_single_photon_path(t_minirt *minirt, t_vec3 light_position,
 				photon_out->i = depth;
 				photon_out->position = data.hit_record.point;
 				photon_out->power = photon_power;
-				return (1);
+				return (depth != 0);
 			}
         }
         else

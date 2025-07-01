@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:28:30 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/23 16:51:42 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:00:57 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ char	parse_face(char *line, t_vector *face_indices)
 			return (1);
 		}
 	}
+	free(corner_indices.data);
 	return (0);
 }

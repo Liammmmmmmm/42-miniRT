@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:29:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/30 15:52:05 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:41:19 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,23 +62,20 @@ char    kd_tree_build(t_kd_tree *tree, t_vector *photons_vector)
     int current_node_idx;
 
     if (!tree || !photons_vector || photons_vector->num_elements == 0)
-        return (print_error("Données de photons invalides pour kd_tree_build."));
+        return (print_error1("Invalid photon data."));
     tree->photons = malloc(photons_vector->num_elements * sizeof(t_photon));
     if (!tree->photons)
-        return (print_error("Échec d'allocation pour le tableau de photons."));
-        
+        return (print_error1("Failed to allocate photon array."));
     tree->nodes = malloc(photons_vector->num_elements * sizeof(t_kd_node));
     if (!tree->nodes)
-    {
-        free(tree->photons);
-        return (print_error("Échec d'allocation pour les nœuds de l'arbre k-d."));
-    }
-    ft_memcpy(tree->photons, photons_vector->data, photons_vector->num_elements * sizeof(t_photon));
+        return (print_error1("Failed to allocate KD Tree nodes."));
+    ft_memcpy(tree->photons, photons_vector->data, photons_vector->num_elements
+			* sizeof(t_photon));
     tree->photon_count = photons_vector->num_elements;
     current_node_idx = 0;
     tree->root = build_recursive(tree->nodes, &current_node_idx, tree->photons,
-                                0, tree->photon_count - 1, 0);
+            0, tree->photon_count - 1, 0);
     if (!tree->root)
-        return (print_error("La construction récursive de l'arbre a échoué."));
+        return (print_error1("Recursive KD Tree build failed."));
     return (0);
 }

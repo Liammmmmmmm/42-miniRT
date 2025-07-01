@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/30 15:54:41 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:56:56 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,9 @@ typedef struct s_light
 	t_vec3	position;
 	double	brightness;
 	t_color	color;
+	size_t	shadow_sample;
+	float	radius;
+	double	shadow_factor;
 }	t_light;
 
 typedef struct s_dlight

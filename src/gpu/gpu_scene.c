@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/01 18:54:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/02 14:47:56 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void convert_spheres(t_scene *cpu_scene, t_gpu_sphere *gpu)
 		gpu[i].position[0] = (float)((t_sphere *)cpu_scene->elements[e].object)->position.x;
 		gpu[i].position[1] = (float)((t_sphere *)cpu_scene->elements[e].object)->position.y;
 		gpu[i].position[2] = (float)((t_sphere *)cpu_scene->elements[e].object)->position.z;
+		gpu[i].color[0] = (float)((t_sphere *)cpu_scene->elements[e].object)->color.r / 255.0;
+		gpu[i].color[1] = (float)((t_sphere *)cpu_scene->elements[e].object)->color.g / 255.0;
+		gpu[i].color[2] = (float)((t_sphere *)cpu_scene->elements[e].object)->color.b / 255.0;
 		gpu[i].radius = (float)((t_sphere *)cpu_scene->elements[e].object)->radius;
-		gpu[i].color[0] = (float)((t_sphere *)cpu_scene->elements[e].object)->color.r;
-		gpu[i].color[1] = (float)((t_sphere *)cpu_scene->elements[e].object)->color.g;
-		gpu[i].color[2] = (float)((t_sphere *)cpu_scene->elements[e].object)->color.b;
-		gpu[i].diameter = (float)((t_sphere *)cpu_scene->elements[e].object)->diameter;
+		printf("SPHERE %d : %f\n", i, gpu[i].radius);
 		gpu[i].material_id = -1;
 		i++;
 	}
@@ -113,7 +113,7 @@ int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_struc
 	create_ssbo(&gpu_structs->spheres_ssbo, sizeof(t_gpu_sphere) * gpu_structs->spheres_am, gpu_structs->spheres, SSBO_BIND_SPHERES);
 
 	printf("SCENE TRANSFORMEE GPU\n");
-	printf("vp %f %f\n", gpu_structs->viewport.height, gpu_structs->viewport.width);
+	printf("sp %f %f %f\n", gpu_structs->spheres[0].position[0], gpu_structs->spheres[0].position[1], gpu_structs->spheres[0].position[2]);
 
 	return (0);
 }

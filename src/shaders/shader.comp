@@ -13,9 +13,8 @@ struct Camera {
 
 struct Sphere {
     vec3 position;
-    vec3 color;
     float radius;
-    float diameter;
+    vec3 color;
     int material_id;
 };
 
@@ -53,7 +52,7 @@ layout(std140, binding = 2) buffer CameraBuffer {
     Camera cam;
 };
 
-layout(std430, binding = 3) buffer SphereBuffer {
+layout(std430, binding = 4) buffer SphereBuffer {
     Sphere spheres[];
 };
 
@@ -83,12 +82,12 @@ void main() {
     vec3 ro = cam.position;
     vec3 rd = normalize(pixel_pos - ro);
 
-    // for (int i = 0; i < 3; ++i) {
-    //     if (hit_sphere(ro, rd, spheres[i])) {
-    //         data[id] = vec3(1.0, 0.0, 0.0); // rouge si hit
-    //         return;
-    //     }
-    // }
+    for (int i = 0; i < 3; ++i) {
+        if (hit_sphere(ro, rd, spheres[i])) {
+            data[id] = vec3(1.0, 0.0, 0.0); // rouge si hit
+            return;
+        }
+    }
 
-    data[id] = spheres[1].position; // noir sinon
+    data[id] = vec3(0.0, 0.0, 0.0); // noir sinon
 }

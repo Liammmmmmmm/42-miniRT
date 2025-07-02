@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/01 18:30:20 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/02 14:59:20 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ typedef struct s_gpu_viewport {
 	float	defocus_disk_u[3];
 	float	_pad7;
 	float	defocus_disk_v[3];
-	float	_pad8;
-}	t_gpu_viewport;
+}	__attribute__((aligned(16))) t_gpu_viewport;
 
 typedef struct s_gpu_camera
 {
@@ -61,20 +60,15 @@ typedef struct s_gpu_camera
 	float	fov;
 	float	focus_dist;  
 	float	defocus_angle;
-	float	_pad3;
-}	t_gpu_camera;
+}	__attribute__((aligned(16))) t_gpu_camera;
 
 typedef struct s_gpu_sphere
 {
 	float	position[3];
-	float	_pad1;
-	float	color[3];
-	float	_pad2;
 	float	radius;
-	float	diameter;
+	float	color[3];
 	int		material_id;
-	float	_pad3;
-}	t_gpu_sphere;
+}	__attribute__((aligned(16))) t_gpu_sphere;
 
 
 typedef struct s_gpu_structs

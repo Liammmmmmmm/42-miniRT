@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/26 12:47:19 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/02 15:29:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,11 @@ GLuint	compile_step(char **sources, int count, GLenum shader_type)
 	int			i;
 	GLuint		shader;
 
-	printf("debug 1\n");
 	shader = glCreateShader(shader_type);
-	printf("debug 2\n");
+	printf("conditionnal jump start\n");
 	glShaderSource(shader, count, const_sources, NULL);
-	printf("debug 3\n");
+	printf("conditionnal jump end\n");
 	glCompileShader(shader);
-	printf("debug 4\n");
 	i = -1;
 	while (++i < count)
 		free(sources[i]);		
@@ -92,14 +90,17 @@ GLuint	compile_shader_from_files(const char **paths, int count,
 	return (shader);
 }
 
+#define SOURCES_AMOUNT 2
+
 int	create_program(t_shader_data *shader_data)
 {
 	GLuint	cs;
-	const char	*sources[1] = {
+	const char	*sources[SOURCES_AMOUNT] = {
+		"src/shaders/structs.comp",
 		"src/shaders/shader.comp"
 	};
 	
-	cs = compile_shader_from_files(sources, 1, GL_COMPUTE_SHADER);
+	cs = compile_shader_from_files(sources, SOURCES_AMOUNT, GL_COMPUTE_SHADER);
 	if (check_shader_compile(cs) == -1)
 		return (-1);
 	shader_data->program = glCreateProgram();

@@ -1,0 +1,38 @@
+#version 430
+
+struct Camera {
+	vec3 position;
+	float _pad1;
+	vec3 orientation;
+	float _pad2;
+	float fov;
+	float focus_dist;
+	float defocus_angle;
+	float _pad3;
+};
+
+struct Sphere {
+	vec3 position;
+	float radius;
+	vec3 color;
+	int material_id;
+};
+
+struct Viewport {
+	float focal_length;
+	float height;
+	float width;
+	int   render_w;
+	int   render_h;
+	float gamma;
+	float defocus_radius;
+	int   max_bounces;
+	vec3 u;
+	vec3 v;
+	vec3 pixel_delta_u;
+	vec3 pixel_delta_v;
+	vec3 upper_left;
+	vec3 pixel00_loc;
+	vec3 defocus_disk_u;
+	vec3 defocus_disk_v;
+};

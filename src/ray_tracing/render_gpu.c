@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/01 18:30:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/02 15:08:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ void	put_render_to_buff_upscaling(t_minirt *minirt)
 void	draw_pixels(t_minirt *minirt)
 {
 	minirt->screen.last_sample_time = get_cpu_time();
-	printf("Test compute gpu\n");
 	compute_frame_gpu(minirt);
-	printf("OKKK\n");
 	put_render_to_buff_upscaling(minirt);
 	if (minirt->options.no_display)
 		return ;

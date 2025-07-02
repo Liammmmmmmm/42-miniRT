@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/02 14:59:20 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/02 15:03:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,10 @@ typedef struct s_gpu_camera
 	float	defocus_angle;
 }	__attribute__((aligned(16))) t_gpu_camera;
 
+
+/**
+ * /!\ ATTENTION A L'ORDRE DES VARIABLES (a cause de l'alignement des vec3 par le gpu)
+ */
 typedef struct s_gpu_sphere
 {
 	float	position[3];

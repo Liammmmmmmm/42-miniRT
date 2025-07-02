@@ -1,93 +1,54 @@
-#version 430
-
-struct Camera {
-    vec3 position;
-    float _pad1;
-    vec3 orientation;
-    float _pad2;
-    float fov;
-    float focus_dist;
-    float defocus_angle;
-    float _pad3;
-};
-
-struct Sphere {
-    vec3 position;
-    float radius;
-    vec3 color;
-    int material_id;
-};
-
-struct Viewport {
-    float focal_length;
-    float height;
-    float width;
-    int   render_w;
-    int   render_h;
-    float gamma;
-    float defocus_radius;
-    int   max_bounces;
-    vec3 u;
-    vec3 v;
-    vec3 pixel_delta_u;
-    vec3 pixel_delta_v;
-    vec3 upper_left;
-    vec3 pixel00_loc;
-    vec3 defocus_disk_u;
-    vec3 defocus_disk_v;
-};
-
 
 layout(local_size_x = 8, local_size_y = 8) in;
 
 layout(std430, binding = 0) buffer Output {
-    vec3 data[];
+	vec3 data[];
 };
 
 layout(std140, binding = 1) buffer ViewportBuffer {
-    Viewport viewport;
+	Viewport viewport;
 };
 
 layout(std140, binding = 2) buffer CameraBuffer {
-    Camera cam;
+	Camera cam;
 };
 
 layout(std430, binding = 4) buffer SphereBuffer {
-    Sphere spheres[];
+	Sphere spheres[];
 };
 
 uniform uint width_render;
 uniform uint height_render;
 
 bool hit_sphere(vec3 ro, vec3 rd, Sphere sphere) {
-    vec3 oc = ro - sphere.position;
-    float a = dot(rd, rd);
-    float b = 2.0 * dot(oc, rd);
-    float c = dot(oc, oc) - sphere.radius * sphere.radius;
-    float discriminant = b * b - 4.0 * a * c;
-    return (discriminant > 0.0);
+	vec3 oc = ro - sphere.position;
+	float a = dot(rd, rd);
+	float b = 2.0 * dot(oc, rd);
+	float c = dot(oc, oc) - sphere.radius * sphere.radius;
+	float discriminant = b * b - 4.0 * a * c;
+	return (discriminant > 0.0);
 }
 
 void main() {
-    uvec2 gid = gl_GlobalInvocationID.xy;
-    if (gid.x >= width_render || gid.y >= height_render)
-        return;
+	uvec2 gid = gl_GlobalInvocationID.xy;
+	if (gid.x >= width_render || gid.y >= height_render)
+		return;
 
-    uint id = gid.y * width_render + gid.x;
+	uint id = gid.y * width_render + gid.x;
 
-    vec3 pixel_pos = viewport.upper_left
-                   + float(gid.x) * viewport.pixel_delta_u
-                   + float(gid.y) * viewport.pixel_delta_v;
+	vec3 pixel_pos = viewport.upper_left
+				+ float(gid.x) * viewport.pixel_delta_u
+				+ float(gid.y) * viewport.pixel_delta_v;
 
-    vec3 ro = cam.position;
-    vec3 rd = normalize(pixel_pos - ro);
+	vec3 ro = cam.position;
+	vec3 rd = normalize(pixel_pos - ro);
 
-    for (int i = 0; i < 3; ++i) {
-        if (hit_sphere(ro, rd, spheres[i])) {
-            data[id] = vec3(1.0, 0.0, 0.0); // rouge si hit
-            return;
-        }
-    }
+	for (int i = 0; i < 3; ++i) {
+		if (hit_sphere(ro, rd, spheres[i])) {
+			data[id] = vec3(1.0, 0.0, 0.0); // rouge si hit
+			return;
+		}
+	}
 
-    data[id] = vec3(0.0, 0.0, 0.0); // noir sinon
+	data[id] = vec3(0.0, 0.0, 0.0); // noir sinon
 }

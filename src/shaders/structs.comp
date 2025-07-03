@@ -36,3 +36,17 @@ struct Viewport {
 	vec3 defocus_disk_u;
 	vec3 defocus_disk_v;
 };
+
+struct Material {
+  vec3    color_value;
+  float   metallic_value;
+  float   roughness_value;
+  float   ior;
+  float   transmission_value;
+  float   ao_value;
+  float   emission_strength;
+  int     albedoTextureIndex;
+  int     normalTextureIndex;
+  vec3    emission_color;
+  int     roughnessTextureIndex;
+};

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gpu_scene.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/02 15:03:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/03 18:35:13 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define SSBO_BIND_VIEWPORT 1
 # define SSBO_BIND_CAMERA 2
 # define SSBO_BIND_SPHERES 4
+#define SSBO_BIND_MATERIALS 5
 
 /**
  * Tous les _pad sont pour l'alignement std430 et les vec3 qui prennent 16 octets en glsl
@@ -74,6 +75,19 @@ typedef struct s_gpu_sphere
 	int		material_id;
 }	__attribute__((aligned(16))) t_gpu_sphere;
 
+typedef struct s_gpu_material {
+    float   color_value[3];
+    float   metallic_value;
+    float   roughness_value;
+    float   ior;
+    float   transmission_value;
+    float   ao_value;
+    float   emission_strength;
+    int32_t albedoTextureIndex;
+    int32_t normalTextureIndex;
+    int32_t roughnessTextureIndex;
+    float   emission_color[3];
+}	__attribute__((aligned(16)))  t_gpu_material;
 
 typedef struct s_gpu_structs
 {
@@ -84,6 +98,9 @@ typedef struct s_gpu_structs
 	int				spheres_am;
 	t_gpu_sphere	*spheres;
 	GLuint			spheres_ssbo;
+	t_gpu_material	*mat;
+	int				mat_am;
+	GLuint			mat_ssbo;
 }	t_gpu_structs;
 
 int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs);

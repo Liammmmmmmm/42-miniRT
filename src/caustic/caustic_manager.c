@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 19:36:31 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/01 19:51:14 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/20 13:42:12 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	init_photon_map(t_minirt *minirt, int photons_per_light,
 		if (emit_photon_from_one_light(photons_per_light, minirt,
 			photon_array, i))
 		{
-			free(photon_array);
+			free(photon_array->data);
 			return (print_error1("Add photon to vector."));
 		}
 	}

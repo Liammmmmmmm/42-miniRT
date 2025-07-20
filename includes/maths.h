@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/01 17:46:45 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/17 12:26:08 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_fcolor	add_fcolor(t_fcolor c1, t_fcolor c2);
 t_fcolor	sub_fcolor(t_fcolor c1, t_fcolor c2);
 t_fcolor	clamp_fcolor(t_fcolor color);
 t_fcolor	clamp_fcolor_val(t_fcolor color, double min, double max);
+t_fcolor	get_heatmap_fcolor(int current_value, int max_value);
 
 t_vec3	vec3_random();
 t_vec3	vec3_random_neg();

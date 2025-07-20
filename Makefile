@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/07/01 19:23:49 by madelvin         ###   ########.fr        #
+#    Updated: 2025/07/17 12:35:54 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -124,7 +124,7 @@ MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/
 					matrix/matrix.c matrix/matrix_calc.c angle/angle_math.c matrix/matrix3.c fresnel_schlick.c \
 					cylinder/hit_cylinder.c quadratique/quadratique.c quadratique/quadratique_hyperboloid.c \
 					cone/hit_cone.c valid_t.c clamp_int.c hyperboloid/hit_hyperboloid.c triangle/hit_triangle.c \
-					cylinder/cylinder_uv.c color/fcolor_clamp.c color/conversions.c clamp_double.c
+					cylinder/cylinder_uv.c color/fcolor_clamp.c color/conversions.c clamp_double.c color/get_heat_map_color.c
 
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c errors3.c valid_line.c \

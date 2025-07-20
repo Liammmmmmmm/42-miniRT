@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/01 19:25:58 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/17 12:06:41 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -461,6 +461,7 @@ typedef struct s_hit_register_data
 	t_hit_record	hit_record;
 	char			is_light;
 	t_ray			*ray;
+	int				depth;			
 }	t_hit_register_data;
 
 typedef struct s_obj_lst
@@ -500,8 +501,8 @@ typedef struct s_bvh
 	char		valid; 
 	uint32_t	size;
 	uint32_t	actual;
-	int			normal_mode;
 	t_vector	task_stack;
+	char		*render_mode;
 }	t_bvh;
 
 typedef struct s_axis
@@ -632,6 +633,7 @@ typedef struct s_viewport
 	t_vec3	defocus_disk_u;
     t_vec3	defocus_disk_v;
 	int		max_bounces;
+	int		*depth_buffer;
 }	t_viewport;
 
 typedef struct s_keydown
@@ -750,6 +752,7 @@ typedef struct s_minirt
 	t_options	options;
 	t_micrort	micrort;
 	int			i;
+	char		render_mode;
 }	t_minirt;
 
 typedef struct s_upscale_data

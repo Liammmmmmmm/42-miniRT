@@ -1,5 +1,6 @@
 # TEXTURES
 #	n   name  type   path
+tex arch_st01_m image /sgoinfre/madelvin/public/minirt_asset/sponza/textures/arch_stone_wall_01_Metalness.png
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength     emission_color   scale      normal_map      normal_intensity
@@ -25,4 +26,4 @@ C	    4.000000,    3.818309,    4.000000         -0.651558,   -0.445271,   -0.61
 
 # AMBIENT
 #	strength             color
-A	1.000000             12, 12, 12
+A	0.000000             12, 12, 12

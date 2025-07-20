@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:37:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/30 14:55:39 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/17 12:48:16 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,22 @@ int	keydown_render(int key, t_minirt *minirt)
 	}
 	else if (key == KEY_N)
 	{
-		minirt->scene.bvh.normal_mode = !minirt->scene.bvh.normal_mode;
+		if (minirt->render_mode != 2)
+			minirt->render_mode = 2;
+		else
+			minirt->render_mode = 0;
 		minirt->screen.sample = 0;
+	}
+	else if (key == KEY_B)
+	{
+		if (minirt->viewport.depth_buffer != NULL)
+		{
+			if (minirt->render_mode != 1)
+				minirt->render_mode = 1;
+			else
+				minirt->render_mode = 0;
+			minirt->screen.sample = 0;
+		}
 	}
 	else if (key == KEY_P)
 		export_scene(minirt);

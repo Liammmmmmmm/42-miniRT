@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:50:29 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/31 11:08:21 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:51:07 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 t_fcolor	get_hit_register_color(t_mat *mat, t_color color,
 	t_hit_record *hit, t_bvh *bvh)
 {
-	if (bvh->normal_mode)
+	if (*bvh->render_mode == 2)
 	{
 		return ((t_fcolor){
 			.r = (hit->normal.x + 1) * 0.5,

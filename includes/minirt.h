@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/01 18:10:57 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:03:43 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 # define MAX_WIN_SIZE 32767
 
 // Control window
-# define CWIN_WIDTH 600
-# define CWIN_HEIGHT 1080
+# define CWIN_WIDTH 480
+# define CWIN_HEIGHT 864
 
 # define IT_MAX 1000
 # define IT_MIN 0.001
@@ -263,6 +263,7 @@ void		add_dlight(t_lcolor *light_color, t_hit_record *hit, t_dlight *light,
 	t_vec3 view_dir);
 t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth);
 t_fcolor	path_trace_normal(t_minirt *minirt, t_ray ray);
+int			path_trace_bvh(t_minirt *minirt, t_ray ray);
 void		debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth);
 t_fcolor	add_skybox(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 	t_ray_data data);

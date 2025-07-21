@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/21 14:30:42 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:52:55 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,33 +68,31 @@ width + uv.x * (minirt->scene.amb_light.skybox_t->hdr.width - 1))];
 	*data.power = multiply_scalar_fcolor(*data.power, 1 - costheta);
 }
 
-
-
-
-inline void default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
-    t_ray_data data)
+inline void	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
+	t_ray_data data)
 {
-    t_fcolor    direct_lighting;
-    t_fcolor    caustics_lighting;
-    t_fcolor    total_lighting;
+	t_fcolor	direct_lighting;
+	t_fcolor	caustics_lighting;
+	t_fcolor	total_lighting;
 
-    direct_lighting = compute_light_v2(hit_record, minirt);
-    if (minirt->scene.photon_map.root)
-        caustics_lighting = estimate_caustics_physically_based(&minirt->scene.photon_map,
-            hit_record->point, 15);
-    else
-        caustics_lighting = (t_fcolor){0.0, 0.0, 0.0};
-		total_lighting = add_fcolor(direct_lighting, caustics_lighting);
-    *data.accumulation = add_fcolor(*data.accumulation,
-        multiply_fcolor(multiply_fcolor(hit_record->color, *data.power), total_lighting));
-    *data.power = multiply_fcolor(*data.power, hit_record->color);
-    if (minirt->scene.amb_light.pdf_joint)
-        importance_sampling(minirt, ray, hit_record, data);
-    ray->dir = cos_weighted_sample_hemishphere(&hit_record->normal);
+	direct_lighting = compute_light_v2(hit_record, minirt);
+	if (minirt->scene.photon_map.root)
+		caustics_lighting = estimate_caustics_physically_based(\
+			&minirt->scene.photon_map, hit_record->point, 15);
+	else
+		caustics_lighting = (t_fcolor){0.0, 0.0, 0.0};
+	total_lighting = add_fcolor(direct_lighting, caustics_lighting);
+	*data.accumulation = add_fcolor(*data.accumulation, \
+		multiply_fcolor(multiply_fcolor(hit_record->color, *data.power), \
+		total_lighting));
+	*data.power = multiply_fcolor(*data.power, hit_record->color);
+	if (minirt->scene.amb_light.pdf_joint)
+		importance_sampling(minirt, ray, hit_record, data);
+	ray->dir = cos_weighted_sample_hemishphere(&hit_record->normal);
 }
 
-inline char default_mat_photon(t_hit_record *hit_record, t_fcolor *power)
+inline char	default_mat_photon(t_hit_record *hit_record, t_fcolor *power)
 {
-    *power = multiply_fcolor(*power, hit_record->color);
-    return (1);
+	*power = multiply_fcolor(*power, hit_record->color);
+	return (1);
 }

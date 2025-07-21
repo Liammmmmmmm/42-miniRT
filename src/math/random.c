@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:32:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/01 18:23:52 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:53:41 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ static inline uint64_t	xorshift_rand(uint64_t *rand)
 double	random_double(void)
 {
 	static uint64_t	rand = RANDOM_SEED;
+
 	return ((xorshift_rand(&rand) >> 11) * SCALE_FACTOR_HP);
 }
 
-double random_double_neg(void)
+double	random_double_neg(void)
 {
-    return (rand() / (RAND_MAX / 2.0)) - 1.0;
+	return ((rand() / (RAND_MAX / 2.0)) - 1.0);
 }
 
 double	random_double_in_interval(double min, double max)

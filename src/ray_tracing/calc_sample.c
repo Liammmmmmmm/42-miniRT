@@ -6,14 +6,12 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:49:52 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/19 13:18:50 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:49:31 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "maths.h"
-
-
 
 void	set_heat_map_color(t_minirt *minirt)
 {

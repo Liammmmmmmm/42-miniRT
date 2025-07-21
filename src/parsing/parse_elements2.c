@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/19 17:04:47 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:49:55 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ int	parse_light(t_scene *scene, char *line)
 	if (!parse_color(parts[3], &light->color))
 		return (invalid_struct_error(LIGHT, parts));
 	free(parts);
-	light->radius = 0;
-	light->shadow_sample = 0;
 	return (1);
 }
 

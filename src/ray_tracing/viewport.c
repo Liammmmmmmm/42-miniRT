@@ -6,13 +6,14 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/21 13:56:08 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:49:06 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "caustic.h"
 #include "bvh.h"
+#include "error_message.h"
 
 static void	init_camera_values(t_minirt *minirt)
 {
@@ -95,7 +96,7 @@ t_viewport	init_viewport(t_minirt *minirt)
 	{
 		vp.depth_buffer = malloc(sizeof(int) * (vp.render_w * vp.render_h));
 		if (!vp.depth_buffer)
-			print_warn("Failed to allocate memory for depth buffer | no heat map");
+			print_warn(HEAT_MAP_BUFFER_ERROR);
 	}
 	return (vp);
 }

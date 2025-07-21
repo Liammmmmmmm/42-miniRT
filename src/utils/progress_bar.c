@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:52:15 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/01 17:25:42 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:47:59 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,17 @@ void	print_progress_bar(size_t actual, size_t max)
 	write_no_err(1, "\e[?25h", 7);
 }
 
-char get_size_t_size(size_t nb)
+char	get_size_t_size(size_t nb)
 {
-    char count;
+	char	count;
 
 	count = 1;
-    while (nb >= 10)
-    {
-        nb /= 10;
-        count++;
-    }
-    return (count);
+	while (nb >= 10)
+	{
+		nb /= 10;
+		count++;
+	}
+	return (count);
 }
 
 void	clear_progress_bar(size_t actual, size_t max)

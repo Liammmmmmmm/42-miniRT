@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:15:04 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/01 13:51:58 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:49:00 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@
 # define ERR_MAIN "Missing scene file. Usage: ./miniRT <scene.rt> [options]"
 # define WARN_CAUSTIC_NO_LIGHT "No lights found: skipping photon map generation."
 # define ERROR_CAUSTIC_KD_TREE_NO_BUILD "KD Tree not build: caustics will be disabled."
+# define HEAT_MAP_BUFFER_ERROR "Failed to allocate memory for depth buffer | no heat map"
 
 #endif

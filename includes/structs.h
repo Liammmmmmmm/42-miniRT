@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/17 12:06:41 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:27:36 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -517,19 +517,6 @@ typedef struct s_photon
 {
     t_vec3		position;
     t_fcolor	power;
-	t_vec3		initial;
-	t_vec3		p0;
-	t_vec3		p1;
-	t_vec3		p2;
-	t_vec3		p3;
-	t_vec3		p4;
-	t_vec3		p5;
-	t_vec3		p6;
-	t_vec3		p7;
-	t_vec3		p8;
-	t_vec3		p9;
-	t_vec3		p10;
-	int			i;
 } t_photon;
 
 typedef struct s_kd_node
@@ -547,6 +534,21 @@ typedef struct s_kd_tree
 	t_kd_node   *nodes;
 	size_t		photon_count;
 } t_kd_tree;
+
+typedef struct s_knn_result
+{
+    t_photon    *photon;
+    double      dist_sq; // Distance au carré
+	double      dist; 
+}   t_knn_result;
+
+typedef struct s_knn_search
+{
+    t_knn_result    *results;     // Tableau des k meilleurs résultats
+    size_t          k;            // Le nombre de voisins à chercher
+    size_t          count;        // Le nombre de voisins trouvés pour l'instant
+    size_t          farthest_idx; // L'index du voisin le plus éloigné dans la liste
+}   t_knn_search;
 
 typedef struct s_kd_build_task
 {

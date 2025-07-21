@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/07/17 12:35:54 by madelvin         ###   ########.fr        #
+#    Updated: 2025/07/21 14:28:52 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ SRC_FILE			= main.c
 
 CAUSTIC_DIR			= src/caustic/
 CAUSTIC_FILE		= kd_tree/kd_tree_build_utils.c kd_tree/kd_tree_build.c kd_tree/kd_tree_destroy.c kd_tree/kd_tree_print.c kd_tree/kd_tree_task.c \
-					caustic_manager.c trace_photon_path.c
+					kd_tree/kd_tree_find_near.c caustic_manager.c trace_photon_path.c get_caustic.c
 
 UTILS_DIR			= src/utils/
 UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/19 17:03:43 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:40:15 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@
 
 # define PROGRESS_BAR_SIZE 50
 # define SAMPLE_PROGRESS_BAR_TIME 5000
+
+# define DBL_MAX 1.7976931348623157e+308
 
 typedef enum e_mouse_buttons
 {

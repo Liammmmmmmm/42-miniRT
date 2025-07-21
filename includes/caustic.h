@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:27:47 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/01 19:30:23 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:26:02 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,8 @@ int		process_task(t_kd_tree *tree, int *current_node_idx,
 	t_kd_task_data data);
 int		partition_photons(t_photon *p, int l, int r, int a);
 void	find_median_photon(t_photon *p, t_range r, int a);
+void	knn_find_recursive(t_kd_node *node, t_knn_search *search, t_vec3 point);
+t_fcolor    estimate_caustics_physically_based(t_kd_tree *caustic_kdtree,
+        t_vec3 point, int k_nearest);
 
 #endif

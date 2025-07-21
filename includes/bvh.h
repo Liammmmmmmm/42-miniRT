@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:11:47 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/17 11:11:10 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:32:34 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void			qsort_axis(uint32_t *arr, t_interval inter, t_bvh *bvh,
 int				compare_obj_axis_with_bvh(uint32_t a, uint32_t b, t_bvh *bvh, \
 	int axis);
 t_vec3			get_obj_position(uint32_t i, t_bvh *bvh);
-float			get_axis_value(t_vec3 pos, int axis);
+float			get_axis(t_vec3 pos, int axis);
 void			bvh_make_lst(size_t obj_c, t_object *obj_list, t_bvh *bvh);
 
 /*═════════════════════════════════════════════════════════════════════════════╗

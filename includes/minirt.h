@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/21 14:40:15 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:59:54 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@
 # define SAMPLE_PROGRESS_BAR_TIME 5000
 
 # define DBL_MAX 1.7976931348623157e+308
+
+# define PHOTON_PER_LIGHT 500000000
+# define CAUSTIC_RADIUS 0.001
+# define NORM_FACTOR 3
 
 typedef enum e_mouse_buttons
 {

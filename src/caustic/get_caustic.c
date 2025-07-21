@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 14:25:16 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/21 14:39:26 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:58:33 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_fcolor	calculate_caustic_radiance(t_knn_search *search)
 	size_t		i;
 
 	search_radius_sq = search->results[search->farthest_idx].dist_sq;
-	if (search_radius_sq > 0.0001)
+	if (search_radius_sq > CAUSTIC_RADIUS)
 		return ((t_fcolor){0.0, 0.0, 0.0});
 	surface_area = M_PI * search_radius_sq;
 	if (surface_area < 1e-9)
@@ -56,9 +56,9 @@ static t_fcolor	calculate_caustic_radiance(t_knn_search *search)
 		sum_photon_power.b += search->results[i].photon->power.b;
 		i++;
 	}
-	sum_photon_power.r = (sum_photon_power.r / surface_area) / 3.0;
-	sum_photon_power.g = (sum_photon_power.g / surface_area) / 3.0;
-	sum_photon_power.b = (sum_photon_power.b / surface_area) / 3.0;
+	sum_photon_power.r = (sum_photon_power.r / surface_area) / NORM_FACTOR;
+	sum_photon_power.g = (sum_photon_power.g / surface_area) / NORM_FACTOR;
+	sum_photon_power.b = (sum_photon_power.b / surface_area) / NORM_FACTOR;
 	return (sum_photon_power);
 }
 

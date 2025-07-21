@@ -1,0 +1,44 @@
+
+
+void	get_sphere_uv(inout hit_record hit, Sphere sp)
+{
+	hit.u = clamp(
+		(atan(
+			(-hit.point.z + sp.position.z) / sp.radius,
+			(hit.point.x - sp.position.x) / sp.radius
+		) * 2 + PI) / (2 * PI), 0, 1);
+	hit.v = clamp(acos((-hit.point.y + sp.position.y) / sp.radius) / PI, 0, 1);
+	if (sp.material_id != -1 && materials[sp.material_id].scale != 1)
+	{
+		hit.u *= materials[sp.material_id].scale;
+		hit.v *= materials[sp.material_id].scale;
+		hit.u = fract(hit.u);
+		hit.v = fract(hit.v);
+	}
+}
+
+
+bool init_sphere_quadratic(out quadratic q, Sphere sp, vec3 ro, vec3 rd)
+{
+	const vec3	oc = ro - sp.position;
+
+	q.a = dot(rd, rd);
+	q.b = 2.0 * dot(rd, oc);
+	q.c = dot(oc, oc) - sp.radius * sp.radius;
+	return (solve_quadratic(q));
+}
+
+bool	hit_sphere(Sphere sp, vec3 ro, vec3 rd, out hit_record hit)
+{
+	quadratic	q;
+	vec3		outward;
+
+	if (!init_sphere_quadratic(q, sp, ro, rd) || !valid_t(q))
+		return (false);
+	hit.t = q.t_hit;
+	hit.point = ray_at(ro, rd, hit.t);
+	outward = (hit.point - sp.position) / sp.radius;
+	hit.normal = set_normal_face(ro, rd, outward, hit);
+	get_sphere_uv(hit, sp);
+	return (true);
+}

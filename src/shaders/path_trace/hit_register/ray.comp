@@ -1,0 +1,5 @@
+
+vec3	ray_at(vec3 ro, vec3 rd, float t)
+{
+	return ro + t * rd;
+}

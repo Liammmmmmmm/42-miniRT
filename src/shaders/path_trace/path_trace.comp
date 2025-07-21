@@ -1,0 +1,25 @@
+
+vec3	path_trace(vec3 ro, vec3 rd)
+{
+	vec3		accumulation = vec3(0.0);
+	vec3		power = vec3(1.0);
+	int			depth = 0;
+	hit_record	hit;
+
+	hit.t = MAX_RENDER;
+	while (depth < max_bounces)
+	{
+		if (hit_register_all(hit, ro, rd) == true)
+		{
+			ro = hit.point;
+			material_manager_v4(rd, hit, power, accumulation);
+		}
+		else
+		{
+			accumulation = add_skybox(rd, power, accumulation);
+			break ;
+		}
+		depth++;
+	}
+	return (accumulation);
+}

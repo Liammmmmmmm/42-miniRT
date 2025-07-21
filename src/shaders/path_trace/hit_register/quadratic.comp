@@ -1,0 +1,27 @@
+
+bool	solve_quadratic(inout quadratic q)
+{
+	float	sqrt_disc;
+	float	denom;
+
+	q.disc = q.b * q.b - 4.0 * q.a * q.c;
+	if (q.disc < 0.0)
+		return (false);
+	denom = 2.0 * q.a;
+	sqrt_disc = sqrt(q.disc);
+	q.t0 = (-q.b - sqrt_disc) / denom;
+	q.t1 = (-q.b + sqrt_disc) / denom;
+	return (true);
+}
+
+bool	valid_t(inout quadratic q)
+{
+	q.t_hit = q.t0;
+	if (q.t_hit < IT_MIN || q.t_hit > IT_MAX)
+	{
+		q.t_hit = q.t1;
+		if (q.t_hit < IT_MIN || q.t_hit > IT_MAX)
+			return (false);
+	}
+	return (true);
+}

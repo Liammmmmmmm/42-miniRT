@@ -1,0 +1,38 @@
+layout(local_size_x = 8, local_size_y = 8) in;
+
+layout(std430, binding = 0) buffer Output {
+	vec3 data[];
+};
+
+layout(std140, binding = 1) buffer ViewportBuffer {
+	Viewport viewport;
+};
+
+layout(std140, binding = 2) buffer CameraBuffer {
+	Camera cam;
+};
+
+layout(std430, binding = 3) buffer MaterialBuffer {
+  Material materials[];
+};
+
+layout(std430, binding = 4) buffer SphereBuffer {
+	Sphere spheres[];
+};
+
+uniform uint width_render;
+uniform uint height_render;
+
+uniform uint spheres_am;
+
+uniform uint max_bounces;
+
+uniform uint sample_count;
+
+uint	g_seed = 0;
+
+const float PI = 3.14159265358979323846;
+const float IT_MAX = 1000.0;
+const float IT_MIN = 0.001;
+const float MIN_SCALE = 1e-3;
+const float MAX_RENDER = 100000000.0;

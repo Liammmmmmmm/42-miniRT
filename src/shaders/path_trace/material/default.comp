@@ -1,0 +1,17 @@
+
+vec3 cos_weighted_sample_hemishphere(vec3 normal)
+{
+	vec2	r = vec2(rand(), rand());
+	float	phi = 2.0 * PI * r.x;
+
+	vec3 local_dir;
+	local_dir.x = cos(phi) * sqrt(r.y);
+	local_dir.y = sqrt(1 - r.y);
+	local_dir.z = sin(phi) * sqrt(r.y);
+
+	vec3 tangent = normalize(abs(normal.y) < 0.999 ? cross(vec3(0, 1, 0), normal) : cross(vec3(1, 0, 0), normal));
+	vec3 bitangent = cross(normal, tangent);
+	local_dir = tangent * local_dir.x + normal * local_dir.y + bitangent * local_dir.z;
+
+	return (normalize(local_dir));
+}

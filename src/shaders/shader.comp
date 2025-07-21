@@ -1,36 +1,22 @@
 
-layout(local_size_x = 8, local_size_y = 8) in;
 
-layout(std430, binding = 0) buffer Output {
-	vec3 data[];
-};
-
-layout(std140, binding = 1) buffer ViewportBuffer {
-	Viewport viewport;
-};
-
-layout(std140, binding = 2) buffer CameraBuffer {
-	Camera cam;
-};
-
-layout(std430, binding = 4) buffer SphereBuffer {
-	Sphere spheres[];
-};
-
-layout(std430, binding = 5) buffer MaterialBuffer {
-  Material materials[];
-};
-
-uniform uint width_render;
-uniform uint height_render;
-
-bool hit_sphere(vec3 ro, vec3 rd, Sphere sphere) {
+bool hit_sphere(vec3 ro, vec3 rd, Sphere sphere)
+{
 	vec3 oc = ro - sphere.position;
 	float a = dot(rd, rd);
 	float b = 2.0 * dot(oc, rd);
 	float c = dot(oc, oc) - sphere.radius * sphere.radius;
 	float discriminant = b * b - 4.0 * a * c;
 	return (discriminant > 0.0);
+}
+
+void	get_thread_seed()
+{
+	g_seed = uint(gl_GlobalInvocationID.x) * 1973u 
+		* uint(gl_GlobalInvocationID.y) * 9277u 
+		+ uint(sample_count) * 6541u;
+	rand();
+	rand();
 }
 
 void main() {
@@ -40,19 +26,28 @@ void main() {
 
 	uint id = gid.y * width_render + gid.x;
 
-	vec3 pixel_pos = viewport.upper_left
-				+ float(gid.x) * viewport.pixel_delta_u
-				+ float(gid.y) * viewport.pixel_delta_v;
+	get_thread_seed();
 
-	vec3 ro = cam.position;
+	vec3 ro;
+	if (cam.defocus_angle <= 0)
+		ro = cam.position;
+	else
+		ro = defocus_disk_sample(cam.position, viewport.defocus_disk_u, viewport.defocus_disk_v);
+
+	vec3 pixel_pos = viewport.upper_left
+		+ (float(gid.x) + rand() - 0.5) * viewport.pixel_delta_u
+		+ (float(gid.y) + rand() - 0.5) * viewport.pixel_delta_v;
+
 	vec3 rd = normalize(pixel_pos - ro);
 
-	for (int i = 0; i < 3; ++i) {
-		if (hit_sphere(ro, rd, spheres[i])) {
-			data[id] = materials[spheres[i].material_id].color_value;
-			return;
-		}
-	}
+	data[id] = path_trace(ro, rd);
 
-	data[id] = vec3(0.0, 0.0, 0.0); // noir sinon
+	// for (int i = 0; i < 3; ++i) {
+	// 	if (hit_sphere(ro, rd, spheres[i])) {
+	// 		data[id] = materials[spheres[i].material_id].color_value;
+	// 		return;
+	// 	}
+	// }
+
+	// data[id] = vec3(0.0, 0.0, 0.0); // noir sinon
 }

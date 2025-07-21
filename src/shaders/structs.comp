@@ -1,5 +1,9 @@
 #version 430
 
+// Suggestion pour la nomenclature :
+// tout ce qui est objet on le met en PascalCase
+// le reste (juste stocker de la data) on reste en mode snake case normal
+
 struct Camera {
 	vec3 position;
 	float _pad1;
@@ -38,15 +42,49 @@ struct Viewport {
 };
 
 struct Material {
-  vec3    color_value;
-  float   metallic_value;
-  float   roughness_value;
-  float   ior;
-  float   transmission_value;
-  float   ao_value;
-  float   emission_strength;
-  int     albedoTextureIndex;
-  int     normalTextureIndex;
-  vec3    emission_color;
-  int     roughnessTextureIndex;
+	vec3	color_value;
+	int		albedo_tex_index;
+	float	metallic_value;
+	int		metallic_tex_index;
+	float	roughness_value;
+	int		roughness_tex_index;
+	float	ior;
+	float	transmission_value;
+	int		transmission_tex_index;
+	float	ao_value;
+	int		ao_tex_index;
+	float	emission_strength;
+	int		emission_strength_tex_index;
+	float	scale;
+	vec3	emission_color;
+	int		emission_color_tex_index;
+	int		normal_tex_index;
+	float	normal_intensity;
+};
+
+struct hit_record
+{
+	vec3		point;
+	float		t;
+	vec3		normal;
+	int			material_id;
+	vec3		color;
+	bool		front_face;
+	float		u;
+	float		v;
+	int			part_id;
+};
+
+struct quadratic
+{
+	float	a;
+	float	b;
+	float	c;
+	float	disc;
+	float	t0;
+	float	t1;
+	float	t_hit;
+	float	t_hit2;
+	float	dd;
+	float	oo;
 };

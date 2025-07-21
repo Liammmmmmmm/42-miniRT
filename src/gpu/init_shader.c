@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/02 15:29:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/21 16:43:58 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,36 @@ GLuint	compile_step(char **sources, int count, GLenum shader_type)
 	free(sources);
 	return (shader);
 }
+void	print_shader_sources(char **sources, int count, const char **paths)
+{
+    int	line_num;
+    int	k;
+    char *p;
 
+    line_num = 1;
+    printf("\n--- Combined Shader Source ---\n");
+    k = -1;
+    while (++k < count)
+    {
+        printf("--- Source from: %s ---\n", paths[k]);
+        p = sources[k];
+        if (!p)
+            continue ;
+        while (*p)
+        {
+            printf("%4d: ", line_num++);
+            while (*p && *p != '\n')
+            {
+                printf("%c", *p);
+                p++;
+            }
+			printf("\n", *p);
+            if (*p)
+                p++;
+        }
+    }
+    printf("--- End of Shader Source ---\n\n");
+}
 GLuint	compile_shader_from_files(const char **paths, int count,
 	GLenum shader_type)
 {
@@ -84,19 +113,32 @@ GLuint	compile_shader_from_files(const char **paths, int count,
 		}
 		sources[i] = (char *)tmp.data;
 	}
+	print_shader_sources(sources, count, paths);
 	shader = compile_step(sources, count, shader_type);
 	if (check_shader_compile(shader) == -1)
 		return (0);
 	return (shader);
 }
 
-#define SOURCES_AMOUNT 2
+#define SOURCES_AMOUNT 14
 
 int	create_program(t_shader_data *shader_data)
 {
 	GLuint	cs;
 	const char	*sources[SOURCES_AMOUNT] = {
 		"src/shaders/structs.comp",
+		"src/shaders/bind.comp",
+		"src/shaders/utils/random.comp",
+		"src/shaders/utils/defocus.comp",
+		"src/shaders/path_trace/material/default.comp",
+		"src/shaders/path_trace/material/manager.comp",
+		"src/shaders/path_trace/hit_register/ray.comp",
+		"src/shaders/path_trace/hit_register/normal.comp",
+		"src/shaders/path_trace/hit_register/quadratic.comp",
+		"src/shaders/path_trace/hit_register/sphere.comp",
+		"src/shaders/path_trace/hit_register/hit_register.comp",
+		"src/shaders/path_trace/skybox.comp",
+		"src/shaders/path_trace/path_trace.comp",
 		"src/shaders/shader.comp"
 	};
 	

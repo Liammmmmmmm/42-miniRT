@@ -1,0 +1,7 @@
+
+
+void	material_manager_v4(inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
+{
+	power *= hit.color;
+	rd = cos_weighted_sample_hemishphere(hit.normal);
+}

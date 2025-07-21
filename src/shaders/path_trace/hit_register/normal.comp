@@ -1,0 +1,14 @@
+
+vec3	set_normal_face(vec3 ro, vec3 rd, vec3 outward_normal, inout hit_record hit)
+{
+	bool	front_face;
+
+	front_face = dot(rd, outward_normal) < 0;
+	if (front_face)
+	{
+		hit.front_face = true;
+		return (outward_normal);
+	}
+	hit.front_face = false;
+	return (-outward_normal);
+}

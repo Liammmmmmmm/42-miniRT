@@ -1,0 +1,11 @@
+
+uint	rand_xorshift() {
+	g_seed ^= g_seed << 13;
+	g_seed ^= g_seed >> 17;
+	g_seed ^= g_seed << 5;
+	return g_seed;
+}
+
+float	rand() {
+    return float(rand_xorshift()) / float(0xFFFFFFFFu);
+}

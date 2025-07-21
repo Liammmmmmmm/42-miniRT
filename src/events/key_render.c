@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_render.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:37:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 14:25:27 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/17 12:48:16 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,22 @@ void	open_controls(int key, t_minirt *minirt)
 
 int	keydown_render(int key, t_minirt *minirt)
 {
+	if (key == KEY_I)
+	{
+		if (minirt->i < minirt->scene.photon_map.photon_count)
+			minirt->i++;
+		else
+			minirt->i = 0;
+		printf("%d\n", minirt->i);
+	}
+	if (key == KEY_O)
+	{
+		if (minirt->i > 0)
+			minirt->i--;
+		else
+			minirt->i = minirt->scene.photon_map.photon_count;
+		printf("%d\n", minirt->i);
+	}
 	if (key == KEY_D && minirt->controls.values.debug == 0)
 		minirt->controls.values.debug = 1;
 	else if (key == KEY_D && minirt->controls.values.debug == 1)
@@ -51,8 +67,22 @@ int	keydown_render(int key, t_minirt *minirt)
 	}
 	else if (key == KEY_N)
 	{
-		minirt->scene.bvh.normal_mode = !minirt->scene.bvh.normal_mode;
+		if (minirt->render_mode != 2)
+			minirt->render_mode = 2;
+		else
+			minirt->render_mode = 0;
 		minirt->screen.sample = 0;
+	}
+	else if (key == KEY_B)
+	{
+		if (minirt->viewport.depth_buffer != NULL)
+		{
+			if (minirt->render_mode != 1)
+				minirt->render_mode = 1;
+			else
+				minirt->render_mode = 0;
+			minirt->screen.sample = 0;
+		}
 	}
 	else if (key == KEY_P)
 		export_scene(minirt);

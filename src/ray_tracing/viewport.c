@@ -6,12 +6,14 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 16:45:07 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:56:58 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "caustic.h"
 #include "bvh.h"
+#include "error_message.h"
 
 static void	init_camera_values(t_minirt *minirt)
 {
@@ -43,8 +45,10 @@ static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 		init_bvh(&minirt->scene.bvh, minirt->scene.elements,
 			minirt->scene.el_amount);
 		minirt->scene.build_bvh = 0;
+		minirt->scene.bvh.render_mode = &minirt->render_mode;
 	}
 	init_plane_light_lst(minirt);
+	caustic_manager(minirt, PHOTON_PER_LIGHT);
 	vp->gamma = minirt->viewport.gamma;
 	vp->render_w = minirt->scene.render_width;
 	vp->render_h = minirt->scene.render_height;
@@ -88,5 +92,11 @@ t_viewport	init_viewport(t_minirt *minirt)
 
 	init_viewport_values(minirt, &vp, &u);
 	init_viewport_vectors(minirt, &vp, u);
+	if (vp.depth_buffer == NULL)
+	{
+		vp.depth_buffer = malloc(sizeof(int) * (vp.render_w * vp.render_h));
+		if (!vp.depth_buffer)
+			print_warn(HEAT_MAP_BUFFER_ERROR);
+	}
 	return (vp);
 }

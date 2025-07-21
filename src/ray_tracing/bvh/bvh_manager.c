@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:26:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/02 17:18:27 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:20:21 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 {
 	const uint32_t	count = count_object(obj_list, obj_c);
-	const int		normal_mode = bvh->normal_mode;
 
 	printf("\nBuilding BVH:\n");
 	ft_bzero(bvh, sizeof(t_bvh));
@@ -29,10 +28,10 @@ void	init_bvh(t_bvh *bvh, t_object *obj_list, uint32_t obj_c)
 	bvh_make_lst(obj_c, obj_list, bvh);
 	bvh->actual = 0;
 	bvh->size = count;
-	bvh->normal_mode = normal_mode;
 	bvh->bvh_nodes_used = 0;
 	print_progress_bar(0, count);
 	build_bvh(bvh, 0, count);
 	free(bvh->task_stack.data);
+	print_progress_bar(count, count);
 	ft_printf("\n\n");
 }

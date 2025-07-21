@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:31:37 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/10 18:56:33 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:32:34 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	compare_obj_axis_with_bvh(uint32_t a, uint32_t b, t_bvh *bvh, int axis)
 
 	pos_a = get_obj_position(a, bvh);
 	pos_b = get_obj_position(b, bvh);
-	va = get_axis_value(pos_a, axis);
-	vb = get_axis_value(pos_b, axis);
+	va = get_axis(pos_a, axis);
+	vb = get_axis(pos_b, axis);
 	if (va < vb)
 		return (-1);
 	else if (va > vb)

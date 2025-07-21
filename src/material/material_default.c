@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   material_default.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/23 09:37:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/21 14:52:55 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "minirt.h"
 #include "material.h"
+#include "bvh.h"
 #include "importance_sampling.h"
+#include "caustic.h"
 
 static inline t_vec3	cos_weighted_sample_hemishphere(t_vec3 *normal)
 {
@@ -40,7 +42,8 @@ static inline void	importance_sampling(t_minirt *minirt, t_ray *ray,
 	t_hit_record *hit_record, t_ray_data data)
 {
 	t_hit_register_data	data_tmp;
-	const t_vec2		uv = calc_inverse_transform_sampling_uv(&minirt->scene);
+	const t_vec2		uv
+		= calc_inverse_transform_sampling_uv(&minirt->scene);
 	float				costheta;
 	float				pdf;
 	t_fcolor			radiance;
@@ -68,21 +71,28 @@ width + uv.x * (minirt->scene.amb_light.skybox_t->hdr.width - 1))];
 inline void	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 	t_ray_data data)
 {
-	*data.accumulation = add_fcolor(
-			*data.accumulation,
-			multiply_fcolor(
-				multiply_fcolor(
-					hit_record->color,
-					*data.power
-					),
-				compute_light_v2(hit_record, minirt)
-				)
-			);
-	*data.power = multiply_fcolor(
-			*data.power,
-			hit_record->color
-			);
+	t_fcolor	direct_lighting;
+	t_fcolor	caustics_lighting;
+	t_fcolor	total_lighting;
+
+	direct_lighting = compute_light_v2(hit_record, minirt);
+	if (minirt->scene.photon_map.root)
+		caustics_lighting = estimate_caustics_physically_based(\
+			&minirt->scene.photon_map, hit_record->point, 15);
+	else
+		caustics_lighting = (t_fcolor){0.0, 0.0, 0.0};
+	total_lighting = add_fcolor(direct_lighting, caustics_lighting);
+	*data.accumulation = add_fcolor(*data.accumulation, \
+		multiply_fcolor(multiply_fcolor(hit_record->color, *data.power), \
+		total_lighting));
+	*data.power = multiply_fcolor(*data.power, hit_record->color);
 	if (minirt->scene.amb_light.pdf_joint)
 		importance_sampling(minirt, ray, hit_record, data);
 	ray->dir = cos_weighted_sample_hemishphere(&hit_record->normal);
+}
+
+inline char	default_mat_photon(t_hit_record *hit_record, t_fcolor *power)
+{
+	*power = multiply_fcolor(*power, hit_record->color);
+	return (1);
 }

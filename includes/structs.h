@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 17:40:50 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:27:36 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,13 @@ typedef struct s_mat
 	double		normal_intensity;
 }	t_mat;
 
+typedef struct s_range
+{
+	int	start;
+	int	end;
+	int	median;
+}	t_range;
+
 typedef struct s_quadratic
 {
 	double	a;
@@ -219,6 +226,9 @@ typedef struct s_light
 	t_vec3	position;
 	double	brightness;
 	t_color	color;
+	size_t	shadow_sample;
+	float	radius;
+	double	shadow_factor;
 }	t_light;
 
 typedef struct s_dlight
@@ -451,6 +461,7 @@ typedef struct s_hit_register_data
 	t_hit_record	hit_record;
 	char			is_light;
 	t_ray			*ray;
+	int				depth;			
 }	t_hit_register_data;
 
 typedef struct s_obj_lst
@@ -490,8 +501,8 @@ typedef struct s_bvh
 	char		valid; 
 	uint32_t	size;
 	uint32_t	actual;
-	int			normal_mode;
 	t_vector	task_stack;
+	char		*render_mode;
 }	t_bvh;
 
 typedef struct s_axis
@@ -501,6 +512,59 @@ typedef struct s_axis
 	double	min;
 	double	max;
 }	t_axis;
+
+typedef struct s_photon
+{
+    t_vec3		position;
+    t_fcolor	power;
+} t_photon;
+
+typedef struct s_kd_node
+{
+	t_photon			*photon;
+	struct s_kd_node	*left;
+	struct s_kd_node	*right;
+	int					axis;
+}	t_kd_node;
+
+typedef struct s_kd_tree
+{
+	t_kd_node	*root;
+	t_photon	*photons;
+	t_kd_node   *nodes;
+	size_t		photon_count;
+} t_kd_tree;
+
+typedef struct s_knn_result
+{
+    t_photon    *photon;
+    double      dist_sq; // Distance au carré
+	double      dist; 
+}   t_knn_result;
+
+typedef struct s_knn_search
+{
+    t_knn_result    *results;     // Tableau des k meilleurs résultats
+    size_t          k;            // Le nombre de voisins à chercher
+    size_t          count;        // Le nombre de voisins trouvés pour l'instant
+    size_t          farthest_idx; // L'index du voisin le plus éloigné dans la liste
+}   t_knn_search;
+
+typedef struct s_kd_build_task
+{
+	int			start;
+	int			end;
+	int			depth;
+	t_kd_node	**parent; 
+}	t_kd_build_task;
+
+typedef struct s_kd_task_data
+{
+	t_kd_build_task	task;
+	t_kd_build_task	*stack;
+	int				*stack_top;
+}	t_kd_task_data;
+
 
 typedef struct s_scene
 {
@@ -522,6 +586,7 @@ typedef struct s_scene
 	int			render_width;
 	int			render_height;
 	t_bool		have_win_el;
+	t_kd_tree	photon_map;
 }	t_scene;
 
 typedef struct s_mlx
@@ -570,6 +635,7 @@ typedef struct s_viewport
 	t_vec3	defocus_disk_u;
     t_vec3	defocus_disk_v;
 	int		max_bounces;
+	int		*depth_buffer;
 }	t_viewport;
 
 typedef struct s_keydown
@@ -687,6 +753,8 @@ typedef struct s_minirt
 	t_controls	controls;
 	t_options	options;
 	t_micrort	micrort;
+	int			i;
+	char		render_mode;
 }	t_minirt;
 
 typedef struct s_upscale_data

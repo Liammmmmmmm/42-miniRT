@@ -42,6 +42,9 @@ void main() {
 
 	data[id] = path_trace(ro, rd);
 
+	if (isnan(data[id].x) || isnan(data[id].y) || isnan(data[id].z))
+		data[id] = vec3(0.0);
+
 	// for (int i = 0; i < 3; ++i) {
 	// 	if (hit_sphere(ro, rd, spheres[i])) {
 	// 		data[id] = materials[spheres[i].material_id].color_value;

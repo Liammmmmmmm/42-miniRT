@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 10:33:49 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 12:00:52 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/21 18:29:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ void	copy_buff_to_image(t_minirt *minirt)
 	tpx = minirt->scene.win_height * minirt->scene.win_width;
 	while (++i < tpx)
 		((int *)minirt->mlx.img.img_str)[i] = minirt->screen.render[i];
+	if (minirt->controls.selected_x != -1)
+	{
+		put_pixel_image(&minirt->mlx.img, minirt->controls.selected_x + 1, minirt->controls.selected_y, 0xFF0000);
+		put_pixel_image(&minirt->mlx.img, minirt->controls.selected_x - 1, minirt->controls.selected_y, 0xFF0000);
+		put_pixel_image(&minirt->mlx.img, minirt->controls.selected_x, minirt->controls.selected_y - 1, 0xFF0000);
+		put_pixel_image(&minirt->mlx.img, minirt->controls.selected_x, minirt->controls.selected_y + 1, 0xFF0000);
+	}
 }
 
 void	init_upscale_struct(t_upscale_data *d, t_minirt *minirt)

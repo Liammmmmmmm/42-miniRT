@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:31:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/21 16:05:52 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/21 18:30:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	compute_frame_gpu(t_minirt *minirt)
 		return ;
 	}
 	i = 0;
+	// printf("Pixel 1072 600 : %f %f %f\n", minirt->screen.float_render[600 * 1920 + 1072].r, minirt->screen.float_render[600 * 1920 + 1072].g, minirt->screen.float_render[600 * 1920 + 1072].b);
+	// printf("Pixel 1072 600 : %f %f %f\n", ptr[(600 * 1920 + 1072) * 4], ptr[(600 * 1920 + 1072) * 4 + 1], ptr[(600 * 1920 + 1072) * 4 + 2]);
 	while (i < tpx)
 	{
 		minirt->screen.float_render[i].r += ptr[i * 4];
@@ -53,6 +55,7 @@ void	compute_frame_gpu(t_minirt *minirt)
 		minirt->screen.float_render[i].b += ptr[i * 4 + 2];
 		i++;
 	}
+	//printf("Pixel 1072 600 : %f %f %f\n", minirt->screen.float_render[600 * 1920 + 1072].r, minirt->screen.float_render[600 * 1920 + 1072].g, minirt->screen.float_render[600 * 1920 + 1072].b);
 
 	minirt->screen.sample++;
 	minirt->screen.sample_total_anim++;

@@ -15,3 +15,13 @@ vec3 cos_weighted_sample_hemishphere(vec3 normal)
 
 	return (normalize(local_dir));
 }
+
+void	material_default(inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
+{
+	// TODO: Ajouter le calcul des lights a l'accumulation
+
+	power *= hit.color;
+
+	// TODO: Calculer importance sampling
+	rd = cos_weighted_sample_hemishphere(hit.normal);
+}

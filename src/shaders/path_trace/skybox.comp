@@ -1,5 +1,5 @@
 
 vec3 add_skybox(vec3 rd, vec3 power, vec3 accumulation)
 {
-	return accumulation + power * vec3(0.9); // Pour l'instant skybox blanche
+	return accumulation + power * vec3(0.6); // Pour l'instant skybox blanche
 }

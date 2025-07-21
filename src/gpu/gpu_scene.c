@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/21 10:00:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/21 17:41:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void convert_spheres(t_scene *cpu_scene, t_gpu_sphere *gpu)
 		color_to_float3(&((t_sphere *)cpu_scene->elements[e].object)->color, gpu[i].color);
 		gpu[i].radius = (float)((t_sphere *)cpu_scene->elements[e].object)->radius;
 		printf("SPHERE %d : %f\n", i, gpu[i].radius);
-		gpu[i].material_id = ((t_sphere *)cpu_scene->elements[e].object)->material - cpu_scene->materials;
+		if (((t_sphere *)cpu_scene->elements[e].object)->material == NULL)
+			gpu[i].material_id = -1;
+		else
+			gpu[i].material_id = ((t_sphere *)cpu_scene->elements[e].object)->material - cpu_scene->materials;
 		i++;
 	}
 }

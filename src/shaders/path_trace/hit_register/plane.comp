@@ -1,0 +1,21 @@
+
+// bool	hit_plane(Plane plane, vec3 ro, vec3 rd, out hit_record hit)
+// {
+	// double	denom = plane.normal.x * rd.x + plane.normal.y * rd.y + plane.normal.z + rd.z;
+
+	// if (abs(denom) < 1e-8)
+	// 	return (false);
+	// double	t = ((plane.position.x - ro.x) * plane.normal.x + 
+	// 				(plane.position.y - ro.y) * plane.normal.y +
+	// 				(plane.position.z - ro.y) * plane.normal.z) / demon;
+	// if (t < IT_MIN || t > IT_MAX)
+	// 	return (false);
+	// hit.t = t;
+	// hit.point = ro + t * rd;
+	// hit.front_face = (rd.x * plane.normal.x + rd.y * plane.normal.y + rd.z * plane.normal.z) < 0;
+	// if (hit.front_face)
+	// 	hit.normal = plane.normal;
+	// else
+	// 	hit.normal = -plane.normal;
+// 	return (true);
+// }

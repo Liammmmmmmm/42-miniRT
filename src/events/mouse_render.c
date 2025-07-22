@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_render.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:42:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 19:40:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 20:56:00 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "camera.h"
+#include <X11/Xlib.h>
 
 static void	select_object_lft(t_minirt *minirt)
 {
@@ -103,5 +104,6 @@ int	mouse_move_render(int x, int y, t_minirt *minirt)
 		mouse_move_cam(x, y, minirt, delta);
 	minirt->controls.mlxc = (t_uint)x;
 	minirt->controls.mlyc = (t_uint)y;
+
 	return (0);
 }

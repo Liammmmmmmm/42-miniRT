@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_structs.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:03:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 18:57:38 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 20:55:40 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

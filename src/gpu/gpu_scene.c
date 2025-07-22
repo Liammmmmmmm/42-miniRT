@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gpu_scene.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 18:28:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 20:56:09 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,25 @@ void convert_spheres(t_scene *cpu_scene, t_gpu_sphere *gpu)
 			gpu[i].material_id = -1;
 		else
 			gpu[i].material_id = ((t_sphere *)cpu_scene->elements[e].object)->material - cpu_scene->materials;
+		i++;
+	}
+}
+
+void	convert_bvh_node(t_scene *cpu_scene, t_gpu_bvh_node *bvh_node)
+{
+	int	i;
+
+	i = 0;
+	while (i < (cpu_scene->bvh.bvh_nodes_used))
+	{
+		bvh_node[i].first_prim = cpu_scene->bvh.bvh_nodes[i].first_prim;
+		bvh_node[i].is_leaf = cpu_scene->bvh.bvh_nodes[i].is_leaf;
+		bvh_node[i].right_child = cpu_scene->bvh.bvh_nodes[i].right_child;
+		bvh_node[i].left_child = cpu_scene->bvh.bvh_nodes[i].left_child;
+		vec3_to_float3(&cpu_scene->bvh.bvh_nodes[i].node_bounds.max, bvh_node[i].node_bounds.max);
+		vec3_to_float3(&cpu_scene->bvh.bvh_nodes[i].node_bounds.min, bvh_node[i].node_bounds.min);
+		bvh_node[i].prim_count = cpu_scene->bvh.bvh_nodes[i].prim_count;
+		printf("%d | %d\n", bvh_node[i].first_prim, bvh_node[i].prim_count);
 		i++;
 	}
 }
@@ -121,7 +140,6 @@ void	convert_material(t_gpu_material *dst, t_mat *src)
 	dst->normal_intensity = src->normal_intensity;
 }
 
-
 void	convert_materials(t_scene *cpu_scene, t_gpu_material *gpu)
 {
 	int	i;
@@ -164,6 +182,16 @@ int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_struc
 		return (-1); // Tout free correctement
 	convert_spheres(scene, gpu_structs->spheres);
 	create_ssbo(&gpu_structs->spheres_ssbo, sizeof(t_gpu_sphere) * gpu_structs->spheres_am, gpu_structs->spheres, SSBO_BIND_SPHERES);
+	
+	gpu_structs->bvh_node_am = scene->bvh.bvh_nodes_used;
+	gpu_structs->bvh_node = ft_calloc(gpu_structs->bvh_node_am, sizeof(t_gpu_bvh_node));
+	if (!gpu_structs->bvh_node)
+		return (-1); // Tout free correctement
+	convert_bvh_node(scene, gpu_structs->bvh_node);
+	create_ssbo(&gpu_structs->bvh_node_ssbo, sizeof(t_gpu_bvh_node) * gpu_structs->bvh_node_am, gpu_structs->bvh_node, SSBO_BIND_BVH);
+	
+	gpu_structs->prim_indice_am = scene->bvh.size;
+	create_ssbo(&gpu_structs->prim_indice_ssbo, sizeof(uint32_t) * gpu_structs->prim_indice_am, scene->bvh.prim_indices, SSBO_BIND_PRISM_INDICE);
 
 	return (0);
 }

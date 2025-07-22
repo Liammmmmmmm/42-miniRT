@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gpu_scene.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 10:12:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 20:54:11 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@
 
 # define SSBO_BIND_VIEWPORT 1
 # define SSBO_BIND_CAMERA 2
-#define SSBO_BIND_MATERIALS 3
+# define SSBO_BIND_MATERIALS 3
 # define SSBO_BIND_SPHERES 4
+# define SSBO_BIND_BVH 5
+# define SSBO_BIND_PRISM_INDICE 6
+# define SSBO_BIND_PLANE 7
 
 /**
  * Tous les _pad sont pour l'alignement std430 et les vec3 qui prennent 16 octets en glsl
@@ -75,6 +78,52 @@ typedef struct s_gpu_sphere
 	int		material_id;
 }	__attribute__((aligned(16))) t_gpu_sphere;
 
+// typedef struct s_gpu_plane
+// {
+// 	float	position[3];
+// 	int		material_id;
+// 	float	normal[3];
+// 	float	_padding;
+// 	float	color[3];
+// }	__attribute__((aligned(16))) t_gpu_plane;
+
+// typedef struct s_gpu_cylinder
+// {
+// 	float	position[3];
+// 	int		material_id;
+// 	float	normal[3];
+// 	float	_padding;
+// 	float	color[3];
+// }	__attribute__((aligned(16))) t_gpu_cylinder;
+
+// typedef struct s_gpu_hyper
+// {
+// 	float	position[3];
+// 	int		material_id;
+// 	float	normal[3];
+// 	float	_padding;
+// 	float	color[3];
+// }	__attribute__((aligned(16))) t_gpu_hyper;
+
+// typedef struct s_gpu_cone
+// {
+// 	float	position[3];
+// 	int		material_id;
+// 	float	normal[3];
+// 	float	_padding;
+// 	float	color[3];
+// }	__attribute__((aligned(16))) t_gpu_cone;
+
+// typedef struct s_gpu_triangle
+// {
+// 	float	position[3];
+// 	int		material_id;
+// 	float	normal[3];
+// 	float	_padding;
+// 	float	color[3];
+// }	__attribute__((aligned(16))) t_gpu_triangle;
+
+
 typedef struct s_gpu_material
 {
 	float	color_value[3];
@@ -97,6 +146,23 @@ typedef struct s_gpu_material
 	float	normal_intensity;
 }	__attribute__((aligned(16))) t_gpu_material;
 
+typedef struct s_gpu_aabb
+{
+	float       min[3];
+	float       _padding;
+	float       max[3];
+} __attribute__((aligned(16))) t_gpu_aabb;
+
+typedef struct s_gpu_bvh_node
+{
+	t_gpu_aabb	node_bounds;
+	uint32_t	left_child;
+	uint32_t	right_child;
+	uint32_t	first_prim;
+	uint32_t	prim_count;
+	uint32_t	is_leaf;
+} __attribute__((aligned(16))) t_gpu_bvh_node;
+
 typedef struct s_gpu_structs
 {
 	t_gpu_viewport	viewport;
@@ -109,6 +175,11 @@ typedef struct s_gpu_structs
 	t_gpu_material	*mat;
 	int				mat_am;
 	GLuint			mat_ssbo;
+	t_gpu_bvh_node	*bvh_node;
+	int				bvh_node_am;
+	GLuint			bvh_node_ssbo;
+	int				prim_indice_am;
+	GLuint			prim_indice_ssbo;
 }	t_gpu_structs;
 
 int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs);

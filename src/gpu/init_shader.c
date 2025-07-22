@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shader.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 17:54:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 20:56:15 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,14 @@ GLuint	compile_shader_from_files(const char **paths, int count,
 		}
 		sources[i] = (char *)tmp.data;
 	}
-	// print_shader_sources(sources, count, paths);
+	print_shader_sources(sources, count, paths);
 	shader = compile_step(sources, count, shader_type);
 	if (check_shader_compile(shader) == -1)
 		return (0);
 	return (shader);
 }
 
-#define SOURCES_AMOUNT 18
+#define SOURCES_AMOUNT 20
 
 int	create_program(t_shader_data *shader_data)
 {
@@ -141,6 +141,8 @@ int	create_program(t_shader_data *shader_data)
 		"src/shaders/path_trace/hit_register/normal.comp",
 		"src/shaders/path_trace/hit_register/quadratic.comp",
 		"src/shaders/path_trace/hit_register/sphere.comp",
+		"src/shaders/path_trace/hit_register/plane.comp",
+		"src/shaders/path_trace/hit_register/hit_bvh.comp",
 		"src/shaders/path_trace/hit_register/hit_register.comp",
 		"src/shaders/path_trace/skybox.comp",
 		"src/shaders/path_trace/path_trace.comp",

@@ -6,9 +6,10 @@ vec3	path_trace(vec3 ro, vec3 rd)
 	int			depth = 0;
 	hit_record	hit;
 
-	hit.t = MAX_RENDER;
+	hit.t = IT_MAX;
 	while (depth < max_bounces)
 	{
+		hit.t = IT_MAX; 
 		if (hit_register_all(hit, ro, rd) == true)
 		{
 			ro = hit.point;

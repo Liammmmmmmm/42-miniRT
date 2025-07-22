@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:20:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 16:48:06 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:41:47 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,7 @@ int	parse_scene(t_minirt *minirt, char *filename)
 	int		ln_amount;
 	char	**lines;
 
-	minirt->scene.win_width = -1;
-	minirt->scene.win_height = -1;
+	init_scene(minirt);
 	if (!is_valid_extension(filename, minirt))
 		return (print_error("Invalid file extension. Expected a '.rt' file."));
 	ln_amount = count_valid_lines(filename);

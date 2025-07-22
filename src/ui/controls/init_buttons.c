@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_buttons.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:55:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 15:37:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 10:41:16 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	init_start_stop(t_minirt *minirt)
 	minirt->controls.buttons[0].text = ft_strdup("START");
 	minirt->controls.buttons[1].text = ft_strdup("STOP");
 	minirt->controls.buttons[2].text = ft_strdup("PAUSE/RESUME");
-	minirt->controls.buttons[0].y = 1038;
-	minirt->controls.buttons[1].y = 1038;
-	minirt->controls.buttons[2].y = 1002;
+	minirt->controls.buttons[0].y = 938;
+	minirt->controls.buttons[1].y = 938;
+	minirt->controls.buttons[2].y = 902;
 	minirt->controls.buttons[0].disabled = 1;
 	if (minirt->controls.buttons[0].param)
 		((t_btn_param *)minirt->controls.buttons[0].param)->action = 0;

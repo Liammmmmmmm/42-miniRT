@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:07:31 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/01 16:24:32 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:58:06 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ void	compute_shadow_factor(t_minirt *minirt, t_vec3 origin,
 	i = 0;
 	shadow_ray.orig = origin;
 	data.is_light = 1;
+	data.depth = 0;
 	data.ray = &shadow_ray;
-	data.hit_record.mat = NULL;
+	ft_bzero(&data.hit_record, sizeof(t_hit_record));
 	while (i < light->shadow_sample)
 	{
 		random_target = vec3_add(light->position,
@@ -51,8 +52,9 @@ char	check_plight_hit(t_minirt *minirt, t_vec3 origin, t_vec3 target)
 	double				distance_to_target;
 
 	data.is_light = 1;
+	data.depth = 0;
 	data.ray = &shadow_ray;
-	data.hit_record.mat = NULL;
+	ft_bzero(&data.hit_record, sizeof(t_hit_record));
 	shadow_ray.orig = origin;
 	shadow_ray.dir = vec3_unit(vec3_subtract(target, origin));
 	distance_to_target = vec3_length(vec3_subtract(target, origin));

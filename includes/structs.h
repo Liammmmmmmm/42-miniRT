@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/21 14:27:36 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/22 12:09:09 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ typedef struct s_amb_light
 	double	*cdf_w;
 	double	*cdf_h;
 	double	column_average;
+	char	importance_sampling;
 }	t_amb_light;
 
 typedef struct s_ray_data

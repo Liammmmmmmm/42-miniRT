@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_scene_obj.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 14:28:49 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/11 14:12:55 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 11:54:43 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	clear_obj_lists(t_minirt *minirt)
 {
-	if (minirt->scene.obj_lst.light_lst)
-		free(minirt->scene.obj_lst.light_lst);
-	if (minirt->scene.obj_lst.plane_lst)
-		free(minirt->scene.obj_lst.plane_lst);
+	free(minirt->scene.obj_lst.light_lst);
+	free(minirt->scene.obj_lst.plane_lst);
 	minirt->scene.obj_lst.light_lst = NULL;
 	minirt->scene.obj_lst.plane_lst = NULL;
 	minirt->scene.obj_lst.light_nb = 0;

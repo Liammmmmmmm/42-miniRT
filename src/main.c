@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/01 17:52:42 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:39:09 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	clean(t_minirt *minirt)
 	free_ttf(&minirt->controls.font[0]);
 	free_anim(&minirt->options.anim);
 	free(minirt->micrort.render);
+	free(minirt->viewport.depth_buffer);
 	return (1);
 }
 

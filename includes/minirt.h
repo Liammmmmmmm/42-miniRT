@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/21 14:59:54 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:41:27 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 # define MAX_WIN_SIZE 32767
 
 // Control window
-# define CWIN_WIDTH 480
-# define CWIN_HEIGHT 864
+# define CWIN_WIDTH 600
+# define CWIN_HEIGHT 1080
 
 # define IT_MAX 1000
 # define IT_MIN 0.001

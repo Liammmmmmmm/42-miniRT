@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 17:19:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 17:54:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,11 @@ GLuint	compile_step(char **sources, int count, GLenum shader_type)
 	GLuint		shader;
 
 	shader = glCreateShader(shader_type);
-	printf("conditionnal jump start\n");
 	glShaderSource(shader, count, const_sources, NULL);
-	printf("conditionnal jump end\n");
 	glCompileShader(shader);
 	i = -1;
 	while (++i < count)
-		free(sources[i]);		
+		free(sources[i]);
 	free(sources);
 	return (shader);
 }

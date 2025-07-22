@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 09:18:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 19:19:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "minirt.h"
 #include "bvh.h"
 #include "material.h"
+#include "camera.h"
 #include <math.h>
 
 void	put_render_to_buff_upscaling(t_minirt *minirt)
@@ -80,6 +81,21 @@ void	check_sample_amount(t_minirt *minirt)
 
 void	render(t_minirt *minirt)
 {
+	t_bool	last_frame_is_moving_tmp = minirt->controls.movements.last_frame_is_moving;
+	if (is_cam_moving(minirt))
+		minirt->controls.movements.last_frame_is_moving = 1;
+	else
+		minirt->controls.movements.last_frame_is_moving = 0;
+
+	if (is_cam_moving(minirt) && !last_frame_is_moving_tmp)
+	{
+		minirt->scene.render_height = minirt->scene.win_height / 10;
+		minirt->scene.render_width = minirt->scene.win_width / 10;
+		restart_minirt(minirt);
+	}
+	else if (!is_cam_moving(minirt) && last_frame_is_moving_tmp)
+		restart_minirt(minirt);
+
 	if (!minirt->screen.start_render || minirt->screen.pause_render)
 		return ;
 	if (minirt->screen.sample == 0)

@@ -6,13 +6,14 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 13:29:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 18:22:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "bvh.h"
 #include "bmp_parsing.h"
+#include "camera.h"
 
 int	exit_if_anim_finished(t_minirt *minirt)
 {
@@ -59,6 +60,7 @@ void	render_frame(t_minirt *minirt)
 {
 	static t_bool	skip = 0;
 
+	move_camera(minirt);
 	check_sample_amount(minirt);
 	if (exit_if_anim_finished(minirt))
 		return ;

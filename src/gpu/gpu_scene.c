@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 17:17:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 18:28:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void convert_spheres(t_scene *cpu_scene, t_gpu_sphere *gpu)
 		vec3_to_float3(&((t_sphere *)cpu_scene->elements[e].object)->position, gpu[i].position);
 		color_to_float3(&((t_sphere *)cpu_scene->elements[e].object)->color, gpu[i].color);
 		gpu[i].radius = (float)((t_sphere *)cpu_scene->elements[e].object)->radius;
-		printf("SPHERE %d : %f\n", i, gpu[i].radius);
 		if (((t_sphere *)cpu_scene->elements[e].object)->material == NULL)
 			gpu[i].material_id = -1;
 		else

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:03:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/01 18:31:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 18:57:38 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,6 +304,8 @@ typedef struct s_scene
 	int			win_height;
 	int			render_width;
 	int			render_height;
+	int			render_width_tmp;
+	int			render_height_tmp;
 	t_bool		have_win_el;
 }	t_scene;
 

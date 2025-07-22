@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:31:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/21 18:30:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 18:59:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 void	compute_frame_gpu(t_minirt *minirt)
 {
-	size_t			i;
-	const size_t	tpx = minirt->scene.render_width * minirt->scene.render_height;
-
+	size_t	i;
+	size_t	tpx;
+	
+	tpx = minirt->scene.render_width * minirt->scene.render_height;
+	
 	glUseProgram(minirt->shaders_data.program);
 	GLuint width_loc = glGetUniformLocation(minirt->shaders_data.program, "width_render");
 	glUniform1ui(width_loc, minirt->scene.render_width);
@@ -30,7 +32,7 @@ void	compute_frame_gpu(t_minirt *minirt)
 
 	GLuint spheres_am = glGetUniformLocation(minirt->shaders_data.program, "spheres_am");
 	glUniform1ui(spheres_am, (t_uint)minirt->shaders_data.scene.spheres_am);
-	
+
 	glDispatchCompute(
 		(minirt->scene.render_width + 7) / 8,
 		(minirt->scene.render_height + 7) / 8,

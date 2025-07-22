@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/01 18:30:58 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 19:30:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,9 +297,22 @@ typedef struct s_ui_infos
 	void		*add_object;
 }	t_ui_infos;
 
+typedef struct s_movements
+{
+	t_bool	forward;
+	t_bool	back;
+	t_bool	right;
+	t_bool	left;
+	t_bool	up;
+	t_bool	down;
+	t_bool	last_frame_is_moving;
+	t_bool	mouse;
+}	t_movements;
+
 typedef struct s_controls
 {
 	t_keydown		keydown;
+	t_movements		movements;
 	t_uint			mlxc;
 	t_uint			mlyc;
 	t_uint			mlxr;

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:37:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 15:24:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 18:50:33 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,36 +39,26 @@ void	open_controls(int key, t_minirt *minirt)
 	}
 }
 
-int	keydown_move(int key, t_minirt *minirt)
+void	keydown_move(int key, t_minirt *minirt)
 {
 	if (key == KEY_W)
-	{
-		minirt->scene.camera.position = vec3_add(minirt->scene.camera.position, vec3_multiply_scalar(minirt->scene.camera.orientation, MOVE_SENSI));
-		return (restart_minirt(minirt));
-	}
+		minirt->controls.movements.forward = 1;
 	else if (key == KEY_S)
-	{
-		minirt->scene.camera.position = vec3_subtract(minirt->scene.camera.position, vec3_multiply_scalar(minirt->scene.camera.orientation, MOVE_SENSI));
-		return (restart_minirt(minirt));
-	}
+		minirt->controls.movements.back = 1;
 	else if (key == KEY_A)
-	{
-		minirt->scene.camera.position = vec3_subtract(minirt->scene.camera.position, get_right_vector(minirt));
-		return (restart_minirt(minirt));
-	}
+		minirt->controls.movements.left = 1;
 	else if (key == KEY_D)
-	{
-		minirt->scene.camera.position = vec3_add(minirt->scene.camera.position, get_right_vector(minirt));
-		return (restart_minirt(minirt));
-	}
-	return (0);
+		minirt->controls.movements.right = 1;
+	else if (key == KEY_SPACE)
+		minirt->controls.movements.up = 1;
+	else if (key == KEY_LSHIFT)
+		minirt->controls.movements.down = 1;
 }
 
 int	keydown_render(int key, t_minirt *minirt)
 {
-	if (keydown_move(key, minirt))
-		;
-	else if (key == KEY_H && minirt->controls.values.debug == 0)
+	keydown_move(key, minirt);
+	if (key == KEY_H && minirt->controls.values.debug == 0)
 		minirt->controls.values.debug = 1;
 	else if (key == KEY_H && minirt->controls.values.debug == 1)
 	{
@@ -91,8 +81,25 @@ int	keydown_render(int key, t_minirt *minirt)
 	return (0);
 }
 
+void	keyup_move(int key, t_minirt *minirt)
+{
+	if (key == KEY_W)
+		minirt->controls.movements.forward = 0;
+	else if (key == KEY_S)
+		minirt->controls.movements.back = 0;
+	else if (key == KEY_A)
+		minirt->controls.movements.left = 0;
+	else if (key == KEY_D)
+		minirt->controls.movements.right = 0;
+	else if (key == KEY_SPACE)
+		minirt->controls.movements.up = 0;
+	else if (key == KEY_LSHIFT)
+		minirt->controls.movements.down = 0;
+}
+
 int	keyup_render(int key, t_minirt *minirt)
 {
+	keyup_move(key, minirt);
 	keyup_common(key, minirt);
 	return (0);
 }

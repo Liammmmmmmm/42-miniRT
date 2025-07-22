@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:42:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 16:35:55 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 19:40:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,37 +67,40 @@ int	mouseup_render(int key, int x, int y, t_minirt *minirt)
 {
 	minirt->controls.mlxr = (t_uint)x;
 	minirt->controls.mlyr = (t_uint)y;
+	minirt->controls.movements.mouse = 0;
 	mouseup_common(key, minirt);
 	return (0);
 }
 
 #define MOUSE_SENSITIVITY 0.005
 
-void	mouse_move_cam(int x, int y, t_minirt *minirt)
+void	mouse_move_cam(int x, int y, t_minirt *minirt, t_vec2 delta)
 {
-	float	delta_x;
-	float	delta_y;
 	t_vec3	right;
 	t_vec3	up;
 	t_vec3	world_up;
 
-	delta_x = (float)(x - (int)minirt->controls.mlxc) * MOUSE_SENSITIVITY;
-	delta_y = (float)(y - (int)minirt->controls.mlyc) * MOUSE_SENSITIVITY;
+	if (delta.x != 0 || delta.y != 0)
+		minirt->controls.movements.mouse = 1;	
 	world_up = (t_vec3){0, 1, 0};
 	right = vec3_unit(vec3_cross(minirt->scene.camera.orientation, world_up));
 	up = vec3_unit(vec3_cross(right, minirt->scene.camera.orientation));
-	minirt->scene.camera.orientation = vec3_rotate(minirt->scene.camera.orientation, up, -delta_x);
-	minirt->scene.camera.orientation = vec3_rotate(minirt->scene.camera.orientation, right, -delta_y);
+	minirt->scene.camera.orientation = vec3_rotate(minirt->scene.camera.orientation, up, -delta.x);
+	minirt->scene.camera.orientation = vec3_rotate(minirt->scene.camera.orientation, right, -delta.y);
 	minirt->scene.camera.orientation = vec3_unit(minirt->scene.camera.orientation);
 	restart_minirt(minirt);
 }
 
 int	mouse_move_render(int x, int y, t_minirt *minirt)
 {
+	t_vec2	delta;
+
+	delta.x = (float)(x - (int)minirt->controls.mlxc) * MOUSE_SENSITIVITY;
+	delta.y = (float)(y - (int)minirt->controls.mlyc) * MOUSE_SENSITIVITY;
+	if (!(delta.x != 0 || delta.y != 0))
+		minirt->controls.movements.mouse = 0;
 	if (minirt->controls.keydown.lmb)
-	{
-		mouse_move_cam(x, y, minirt);
-	}
+		mouse_move_cam(x, y, minirt, delta);
 	minirt->controls.mlxc = (t_uint)x;
 	minirt->controls.mlyc = (t_uint)y;
 	return (0);

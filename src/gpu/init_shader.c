@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/21 17:13:29 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 10:30:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,36 +59,39 @@ GLuint	compile_step(char **sources, int count, GLenum shader_type)
 	free(sources);
 	return (shader);
 }
-void	print_shader_sources(char **sources, int count, const char **paths)
-{
-    int	line_num;
-    int	k;
-    char *p;
 
-    line_num = 1;
-    printf("\n--- Combined Shader Source ---\n");
-    k = -1;
-    while (++k < count)
-    {
-        printf("--- Source from: %s ---\n", paths[k]);
-        p = sources[k];
-        if (!p)
-            continue ;
-        while (*p)
-        {
-            printf("%4d: ", line_num++);
-            while (*p && *p != '\n')
-            {
-                printf("%c", *p);
-                p++;
-            }
+int	print_shader_sources(char **sources, int count, const char **paths)
+{
+	int		line_num;
+	int		k;
+	char	*p;
+
+	line_num = 1;
+	printf("\n--- Combined Shader Source ---\n");
+	k = -1;
+	while (++k < count)
+	{
+		printf("--- Source from: %s ---\n", paths[k]);
+		p = sources[k];
+		if (!p)
+			continue ;
+		while (*p)
+		{
+			printf("%4d: ", line_num++);
+			while (*p && *p != '\n')
+			{
+				printf("%c", *p);
+				p++;
+			}
 			printf("\n", *p);
-            if (*p)
-                p++;
-        }
-    }
-    printf("--- End of Shader Source ---\n\n");
+			if (*p)
+				p++;
+		}
+	}
+	printf("--- End of Shader Source ---\n\n");
+	return (0);
 }
+
 GLuint	compile_shader_from_files(const char **paths, int count,
 	GLenum shader_type)
 {
@@ -113,14 +116,13 @@ GLuint	compile_shader_from_files(const char **paths, int count,
 		}
 		sources[i] = (char *)tmp.data;
 	}
-	print_shader_sources(sources, count, paths);
 	shader = compile_step(sources, count, shader_type);
 	if (check_shader_compile(shader) == -1)
-		return (0);
+		return (print_shader_sources(sources, count, paths));
 	return (shader);
 }
 
-#define SOURCES_AMOUNT 16
+#define SOURCES_AMOUNT 18
 
 int	create_program(t_shader_data *shader_data)
 {
@@ -133,6 +135,8 @@ int	create_program(t_shader_data *shader_data)
 		"src/shaders/path_trace/material/utils.comp",
 		"src/shaders/path_trace/material/default.comp",
 		"src/shaders/path_trace/material/metallic.comp",
+		"src/shaders/path_trace/material/refraction.comp",
+		"src/shaders/path_trace/material/dielectric.comp",
 		"src/shaders/path_trace/material/manager.comp",
 		"src/shaders/path_trace/hit_register/ray.comp",
 		"src/shaders/path_trace/hit_register/normal.comp",

@@ -1,0 +1,37 @@
+
+void	reflected_dielectric_color(inout vec3 rd, hit_record hit)
+{
+	vec3	micro_normal;
+
+	if (materials[hit.material_id].roughness_value > 0.0)
+		micro_normal = hit.normal; // TODO: GGX sample hemisphere pour la roughness
+	else
+		micro_normal = hit.normal;
+	rd = normalize(rd - micro_normal * 2 * dot(rd, micro_normal));
+}
+
+void	dielectric_mat(inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
+{
+	if (materials[hit.material_id].ior > 0)
+	{
+		if (get_reflect_value(rd, hit) >= rand()
+			&& materials[hit.material_id].ior != 1.0)
+			reflected_dielectric_color(rd, hit);
+		else
+		{
+			if (materials[hit.material_id].transmission_value == 1.0)
+				refracted_ray(rd, hit, power);
+			else if (materials[hit.material_id].transmission_value == 0.0)
+				material_default(rd, hit, power, accumulation);
+			else
+			{
+				if (materials[hit.material_id].transmission_value < rand())
+					material_default(rd, hit, power, accumulation);
+				else
+					refracted_ray(rd, hit, power);
+			}
+		}
+	}
+	else
+		material_default(rd, hit, power, accumulation);
+}

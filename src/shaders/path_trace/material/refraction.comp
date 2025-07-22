@@ -1,0 +1,37 @@
+
+vec3	refracted_v(vec3 uv, vec3 n, float ri)
+{
+	vec3	r_out_perp = (uv + n * min(dot(-uv, n), 1.0)) * ri;
+	return (n * (-sqrt(abs(1.0 - dot(r_out_perp, r_out_perp)))) + r_out_perp);
+}
+
+void	refracted_value(inout vec3 rd, hit_record hit, inout vec3 power, float eta)
+{
+	vec3	direction;
+
+	direction = normalize(refracted_v(rd, hit.normal, eta));
+	// if (materials[hit.material_id].roughness_value > 0.0)
+	// 	direction = ggx_sample_hemisphere(direction, \
+	// 			hit_record->mat->roughness_value); // TODO: GGx mes couilles
+	rd = direction;
+	power *= hit.color;
+}
+
+void	refracted_ray(inout vec3 rd, hit_record hit, inout vec3 power)
+{
+	float	eta;
+	float	cos_theta;
+	float	sin_theta;
+
+	if (hit.front_face)
+		eta = viewport.ior_global / materials[hit.material_id].ior;
+	else
+		eta = materials[hit.material_id].ior / viewport.ior_global;
+	rd = normalize(rd);
+	cos_theta = min(-dot(rd, hit.normal), 1.0);
+	sin_theta = sqrt(1.0 - cos_theta * cos_theta);
+	if (eta * sin_theta > 1.0)
+		metallic_color(rd, hit, power);
+	else
+		refracted_value(rd, hit, power, eta);
+}

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/21 09:40:51 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 10:12:21 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_gpu_viewport {
 	int		max_bounces;
 
 	float	u[3];
-	float	_pad1;
+	float	ior_global;
 	float	v[3];
 	float	_pad2;
 	float	pixel_delta_u[3];

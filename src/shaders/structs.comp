@@ -23,22 +23,23 @@ struct Sphere {
 };
 
 struct Viewport {
-	float focal_length;
-	float height;
-	float width;
-	int   render_w;
-	int   render_h;
-	float gamma;
-	float defocus_radius;
-	int   max_bounces;
-	vec3 u;
-	vec3 v;
-	vec3 pixel_delta_u;
-	vec3 pixel_delta_v;
-	vec3 upper_left;
-	vec3 pixel00_loc;
-	vec3 defocus_disk_u;
-	vec3 defocus_disk_v;
+	float	focal_length;
+	float	height;
+	float	width;
+	int		render_w;
+	int		render_h;
+	float	gamma;
+	float	defocus_radius;
+	int		max_bounces;
+	vec3	u;
+	float	ior_global;
+	vec3	v;
+	vec3	pixel_delta_u;
+	vec3	pixel_delta_v;
+	vec3	upper_left;
+	vec3	pixel00_loc;
+	vec3	defocus_disk_u;
+	vec3	defocus_disk_v;
 };
 
 struct Material {

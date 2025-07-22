@@ -8,3 +8,18 @@ vec3	fresnel_schlick_color(float cos_theta, vec3 f0)
 {
 	return (f0 + (vec3(1.0) - f0) * pow(1 - cos_theta, 5.0));
 }
+
+float	fresnel_schlick_f(float cos_theta, float f0)
+{
+	return (f0 + ((1 - f0) * pow(1 - cos_theta, 5.0)));
+}
+
+float	get_reflect_value(vec3 dir_in, hit_record hit)
+{
+	return (fresnel_schlick_f(
+			get_cos_theta(dir_in, hit.normal),
+			pow((materials[hit.material_id].ior - 1)
+				/ (materials[hit.material_id].ior + 1), 2.0)
+		)
+	);
+}

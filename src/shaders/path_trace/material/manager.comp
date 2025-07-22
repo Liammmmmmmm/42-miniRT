@@ -13,23 +13,11 @@ void	material_manager_v4(inout vec3 rd, hit_record hit, inout vec3 power, inout 
 						* materials[hit.material_id].emission_color * power;
 	}
 	if (materials[hit.material_id].metallic_value == 1)
-	{
 		metallic_color(rd, hit, power);
-		return ;
-	}
-	material_default(rd, hit, power, accumulation);
-		return ;
+	else if (materials[hit.material_id].metallic_value == 0.0)
+		dielectric_mat(rd, hit, power, accumulation);
+	else if (materials[hit.material_id].metallic_value > rand())
+		metallic_color(rd, hit, power);
+	else
+		dielectric_mat(rd, hit, power, accumulation);
 }
-
-// void	material_manager_v3(t_minirt *minirt, t_ray *ray,
-// 	t_hit_record *hit_record, t_ray_data data)
-// {
-// 	if (hit_record->mat->metallic_value == 1.0)
-// 		metallic_color(ray, hit_record, data.power);
-// 	else if (hit_record->mat->metallic_value == 0.0)
-// 		dielectric_mat(minirt, ray, hit_record, data);
-// 	else if (hit_record->mat->metallic_value > random_double())
-// 		metallic_color(ray, hit_record, data.power);
-// 	else
-// 		dielectric_mat(minirt, ray, hit_record, data);
-// }

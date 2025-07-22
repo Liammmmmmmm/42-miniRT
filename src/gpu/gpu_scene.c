@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/21 17:41:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 10:13:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	convert_camera(t_scene *cpu_scene, t_gpu_camera *cam)
 	cam->focus_dist = (float)cpu_scene->camera.focus_dist;
 }
 
-void	convert_viewport(t_gpu_viewport *dst, t_viewport *src)
+void	convert_viewport(t_gpu_viewport *dst, t_viewport *src, double ior)
 {
 	dst->focal_length = src->focal_length;
 	dst->height = src->height;
@@ -77,6 +77,7 @@ void	convert_viewport(t_gpu_viewport *dst, t_viewport *src)
 	dst->gamma = (float)src->gamma;
 	dst->defocus_radius = (float)src->defocus_radius;
 	dst->max_bounces = src->max_bounces;
+	dst->ior_global = ior;
 	vec3_to_float3(&src->u, dst->u);
 	vec3_to_float3(&src->v, dst->v);
 	vec3_to_float3(&src->pixel_delta_u, dst->pixel_delta_u);
@@ -143,7 +144,7 @@ void	create_ssbo(GLuint *ssbo, size_t size, void *data, long bind)
 
 int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs)
 {
-	convert_viewport(&gpu_structs->viewport, viewport);
+	convert_viewport(&gpu_structs->viewport, viewport, scene->ior_all);
 	create_ssbo(&gpu_structs->viewport_ssbo, sizeof(t_gpu_viewport), &gpu_structs->viewport, SSBO_BIND_VIEWPORT);
 	convert_camera(scene, &gpu_structs->camera);
 	create_ssbo(&gpu_structs->camera_ssbo, sizeof(t_gpu_camera), &gpu_structs->camera, SSBO_BIND_CAMERA);

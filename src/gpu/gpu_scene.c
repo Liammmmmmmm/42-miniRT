@@ -6,13 +6,14 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 20:56:09 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/22 21:42:00 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gpu.h"
 #include "gpu_scene.h"
 #include <stdio.h>
+#include "maths.h"
 
 void	vec3_to_float3(t_vec3 *vec, float *tab)
 {
@@ -42,19 +43,41 @@ void convert_spheres(t_scene *cpu_scene, t_gpu_sphere *gpu)
 
 	e = -1;
 	i = 0;
-	while (++e < cpu_scene->el_amount)
+	while (++e < cpu_scene->bvh.size)
 	{
-		if (cpu_scene->elements[e].type != SPHERE)
+		if (cpu_scene->bvh.obj_list[e]->type != SPHERE)
 			continue ;
-		vec3_to_float3(&((t_sphere *)cpu_scene->elements[e].object)->position, gpu[i].position);
-		color_to_float3(&((t_sphere *)cpu_scene->elements[e].object)->color, gpu[i].color);
-		gpu[i].radius = (float)((t_sphere *)cpu_scene->elements[e].object)->radius;
-		if (((t_sphere *)cpu_scene->elements[e].object)->material == NULL)
+		vec3_to_float3(&((t_sphere *)cpu_scene->bvh.obj_list[e]->object)->position, gpu[i].position);
+		color_to_float3(&((t_sphere *)cpu_scene->bvh.obj_list[e]->object)->color, gpu[i].color);
+		gpu[i].radius = (float)((t_sphere *)cpu_scene->bvh.obj_list[e]->object)->radius;
+		if (((t_sphere *)cpu_scene->bvh.obj_list[e]->object)->material == NULL)
 			gpu[i].material_id = -1;
 		else
-			gpu[i].material_id = ((t_sphere *)cpu_scene->elements[e].object)->material - cpu_scene->materials;
+			gpu[i].material_id = ((t_sphere *)cpu_scene->bvh.obj_list[e]->object)->material - cpu_scene->materials;
 		i++;
 	}
+}
+
+void convert_plane(t_scene *cpu_scene, t_gpu_plane *gpu)
+{
+    int i;
+
+    i = 0;
+    while (i < cpu_scene->obj_lst.plane_nb)
+    {
+        t_plane* p = (t_plane*)cpu_scene->obj_lst.plane_lst[i]->object;
+        vec3_to_float3(&p->position, gpu[i].position);
+        vec3_to_float3(&p->normal, gpu[i].normal);
+        color_to_float3(&p->color, gpu[i].color);
+        if (p->material == NULL)
+            gpu[i].material_id = -1;
+        else
+            gpu[i].material_id = p->material - cpu_scene->materials;
+        gpu[i].d = (p->position.x * p->normal.x +
+                    p->position.y * p->normal.y +
+                    p->position.z * p->normal.z);
+        i++;
+    }
 }
 
 void	convert_bvh_node(t_scene *cpu_scene, t_gpu_bvh_node *bvh_node)
@@ -71,7 +94,7 @@ void	convert_bvh_node(t_scene *cpu_scene, t_gpu_bvh_node *bvh_node)
 		vec3_to_float3(&cpu_scene->bvh.bvh_nodes[i].node_bounds.max, bvh_node[i].node_bounds.max);
 		vec3_to_float3(&cpu_scene->bvh.bvh_nodes[i].node_bounds.min, bvh_node[i].node_bounds.min);
 		bvh_node[i].prim_count = cpu_scene->bvh.bvh_nodes[i].prim_count;
-		printf("%d | %d\n", bvh_node[i].first_prim, bvh_node[i].prim_count);
+		// printf("%d | %d\n", bvh_node[i].first_prim, bvh_node[i].prim_count);
 		i++;
 	}
 }
@@ -192,6 +215,13 @@ int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_struc
 	
 	gpu_structs->prim_indice_am = scene->bvh.size;
 	create_ssbo(&gpu_structs->prim_indice_ssbo, sizeof(uint32_t) * gpu_structs->prim_indice_am, scene->bvh.prim_indices, SSBO_BIND_PRISM_INDICE);
+
+	gpu_structs->planes_am = scene->obj_lst.plane_nb;
+	gpu_structs->planes = ft_calloc(gpu_structs->planes_am, sizeof(t_gpu_plane));
+	if (!gpu_structs->planes)
+		return (-1); // Tout free correctement
+	convert_plane(scene, gpu_structs->planes);
+	create_ssbo(&gpu_structs->planes_ssbo, sizeof(t_gpu_plane) * gpu_structs->planes_am, gpu_structs->planes, SSBO_BIND_PLANE);
 
 	return (0);
 }

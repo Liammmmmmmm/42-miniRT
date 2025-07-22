@@ -1,30 +1,30 @@
 
-// void	hit_planes(inout hit_record hit, inout bool hit_something, vec3 ro, vec3 rd)
-// {
-// 	uint	i = 0;
+void	hit_planes(inout hit_record hit, inout bool hit_something, vec3 ro, vec3 rd)
+{
+	uint	i = 0;
 
-// 	while (i < planes_am)
-// 	{
-// 		hit_record hit_tmp;
-// 		if (hit_plane(planes[i], rd, ro, hit_tmp))
-// 		{
-// 			if (hit_tmp.t < hit.t)
-// 			{
-// 				hit_something = true;
-// 				hit = hit_tmp;
-// 				hit.material_id = planes[i].material_id;
-// 				//apply_all_map(&hit, data->is_light);
-// 				hit.color = get_hit_register_color(planes[i].color, hit);
-// 			}
-// 		}
-// 		i++;
-// 	}
-// }
+	while (i < planes_am)
+	{
+		hit_record hit_tmp;
+		if (hit_plane(planes[i], ro, rd, hit_tmp))
+		{
+			if (hit_tmp.t < hit.t)
+			{
+				hit_something = true;
+				hit = hit_tmp;
+				hit.material_id = planes[i].material_id;
+				//apply_all_map(&hit, data->is_light);
+				hit.color = get_hit_register_color(planes[i].color, hit);
+			}
+		}
+		i++;
+	}
+}
 
 bool hit_register_all(inout hit_record hit, vec3 ro, vec3 rd)
 {
 	bool	hit_something = false;
 	hit_something = hit_bvh(ro, rd, hit);
-	// hit_planes(hit, hit_something, ro, rd);
+	hit_planes(hit, hit_something, ro, rd);
 	return (hit_something);
 }

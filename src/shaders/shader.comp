@@ -41,7 +41,8 @@ void main() {
 	vec3 rd = normalize(pixel_pos - ro);
 
 	data[id] = path_trace(ro, rd);
+	// data[id] = vec3(float(planes[0].d));
 
-	if (isnan(data[id].x) || isnan(data[id].y) || isnan(data[id].z))
-		data[id] = vec3(0.0);
+	// if (isnan(data[id].x) || isnan(data[id].y) || isnan(data[id].z))
+	// 	data[id] = vec3(0.0);
 }

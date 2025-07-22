@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 20:54:11 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/22 23:18:07 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,15 @@ typedef struct s_gpu_sphere
 	int		material_id;
 }	__attribute__((aligned(16))) t_gpu_sphere;
 
-// typedef struct s_gpu_plane
-// {
-// 	float	position[3];
-// 	int		material_id;
-// 	float	normal[3];
-// 	float	_padding;
-// 	float	color[3];
-// }	__attribute__((aligned(16))) t_gpu_plane;
+typedef struct s_gpu_plane
+{
+	float	position[3];
+	int		material_id;
+	float	normal[3];
+	float	d;
+	float	color[3];
+	float   _padding;
+}	__attribute__((aligned(16))) t_gpu_plane;
 
 // typedef struct s_gpu_cylinder
 // {
@@ -180,6 +181,9 @@ typedef struct s_gpu_structs
 	GLuint			bvh_node_ssbo;
 	int				prim_indice_am;
 	GLuint			prim_indice_ssbo;
+	GLuint			planes_ssbo;
+	int				planes_am;
+	t_gpu_plane		*planes;
 }	t_gpu_structs;
 
 int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs);

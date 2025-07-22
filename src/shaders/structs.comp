@@ -26,6 +26,7 @@ struct Plane {
 	vec3 position;
 	int material_id;
 	vec3 normal;
+	float d;
 	vec3 color;
 };
 

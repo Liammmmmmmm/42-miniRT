@@ -28,9 +28,9 @@ layout(std430, binding = 6) buffer PrimitiveIndices {
     uint prim_indices[];
 };
 
-// layout(std430, binding = 7) buffer PlaneBuffer {
-//     Plane planes[];
-// };
+layout(std430, binding = 7) buffer PlaneBuffer {
+    Plane planes[];
+};
 
 
 
@@ -38,7 +38,7 @@ uniform uint width_render;
 uniform uint height_render;
 
 uniform uint spheres_am;
-// uniform uint planes_am;
+uniform uint planes_am;
 
 uniform uint max_bounces;
 

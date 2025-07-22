@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 19:30:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 22:48:51 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,6 +317,8 @@ typedef struct s_controls
 	t_uint			mlyc;
 	t_uint			mlxr;
 	t_uint			mlyr;
+	t_uint			mlxc_s;
+	t_uint			mlyc_s;
 	t_uchar			font8b[96][5];
 	int				open_controls;
 	int				nb_buttons;

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:31:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 20:56:21 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/22 21:16:23 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ void	compute_frame_gpu(t_minirt *minirt)
 
 	GLuint spheres_am = glGetUniformLocation(minirt->shaders_data.program, "spheres_am");
 	glUniform1ui(spheres_am, (t_uint)minirt->shaders_data.scene.spheres_am);
+
+	GLuint planes_am = glGetUniformLocation(minirt->shaders_data.program, "planes_am");
+	glUniform1ui(planes_am, (t_uint)minirt->shaders_data.scene.planes_am);
 
 	glDispatchCompute(
 		(minirt->scene.render_width + 7) / 8,

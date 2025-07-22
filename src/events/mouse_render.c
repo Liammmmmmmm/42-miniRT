@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:42:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 20:56:00 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/22 23:55:17 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ int	mousedown_render(int key, int x, int y, t_minirt *minirt)
 		select_object_lft(minirt);
 	else if (key == RIGHT_CLICK)
 	{
-		minirt->controls.selected_x = x;
-		minirt->controls.selected_y = y;
-		printf("new selected : %d %d\n", minirt->controls.selected_x,
-			minirt->controls.selected_y);
+        mlx_mouse_hide(minirt->mlx.mlx, minirt->mlx.render_win);
+		mlx_mouse_get_pos(minirt->mlx.mlx, minirt->mlx.render_win, &minirt->controls.mlxc_s, &minirt->controls.mlyc_s);
+        minirt->controls.mlxc = (t_uint)minirt->scene.win_width / 2;
+        minirt->controls.mlyc = (t_uint)minirt->scene.win_height / 2;
+        mlx_mouse_move(minirt->mlx.mlx, minirt->mlx.render_win, minirt->controls.mlxc, minirt->controls.mlyc);
+		minirt->controls.keydown.rmb = 1;
 	}
 	else if (key == SCROLL_DOWN)
 	{
@@ -70,6 +72,11 @@ int	mouseup_render(int key, int x, int y, t_minirt *minirt)
 	minirt->controls.mlyr = (t_uint)y;
 	minirt->controls.movements.mouse = 0;
 	mouseup_common(key, minirt);
+	if (key == RIGHT_CLICK)
+	{
+		mlx_mouse_show(minirt->mlx.mlx, minirt->mlx.render_win);
+		mlx_mouse_move(minirt->mlx.mlx, minirt->mlx.render_win, minirt->controls.mlxc_s, minirt->controls.mlyc_s);
+	}
 	return (0);
 }
 
@@ -92,18 +99,27 @@ void	mouse_move_cam(int x, int y, t_minirt *minirt, t_vec2 delta)
 	restart_minirt(minirt);
 }
 
-int	mouse_move_render(int x, int y, t_minirt *minirt)
+int mouse_move_render(int x, int y, t_minirt *minirt)
 {
-	t_vec2	delta;
+    t_vec2  delta;
+    int     center_x;
+    int     center_y;
 
-	delta.x = (float)(x - (int)minirt->controls.mlxc) * MOUSE_SENSITIVITY;
-	delta.y = (float)(y - (int)minirt->controls.mlyc) * MOUSE_SENSITIVITY;
-	if (!(delta.x != 0 || delta.y != 0))
-		minirt->controls.movements.mouse = 0;
-	if (minirt->controls.keydown.lmb)
-		mouse_move_cam(x, y, minirt, delta);
-	minirt->controls.mlxc = (t_uint)x;
-	minirt->controls.mlyc = (t_uint)y;
-
-	return (0);
+    if (minirt->controls.keydown.rmb)
+    {
+        delta.x = (float)(x - (int)minirt->controls.mlxc) * MOUSE_SENSITIVITY;
+        delta.y = (float)(y - (int)minirt->controls.mlyc) * MOUSE_SENSITIVITY;
+        mouse_move_cam(x, y, minirt, delta);
+        center_x = 1920 / 2;
+        center_y = 1080 / 2;
+        mlx_mouse_move(minirt->mlx.mlx, minirt->mlx.render_win, center_x, center_y);
+        minirt->controls.mlxc = (t_uint)center_x;
+        minirt->controls.mlyc = (t_uint)center_y;
+    }
+    else
+    {
+        minirt->controls.mlxc = (t_uint)x;
+        minirt->controls.mlyc = (t_uint)y;
+    }
+    return (0);
 }

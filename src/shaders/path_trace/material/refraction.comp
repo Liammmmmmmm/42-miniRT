@@ -10,9 +10,8 @@ void	refracted_value(inout vec3 rd, hit_record hit, inout vec3 power, float eta)
 	vec3	direction;
 
 	direction = normalize(refracted_v(rd, hit.normal, eta));
-	// if (materials[hit.material_id].roughness_value > 0.0)
-	// 	direction = ggx_sample_hemisphere(direction, \
-	// 			hit_record->mat->roughness_value); // TODO: GGx mes couilles
+	if (materials[hit.material_id].roughness_value > 0.0)
+		direction = ggx_sample_hemisphere(direction, materials[hit.material_id].roughness_value);
 	rd = direction;
 	power *= hit.color;
 }

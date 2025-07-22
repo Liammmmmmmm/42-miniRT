@@ -36,15 +36,10 @@ vec3	ggx_sample_hemisphere(vec3 normal, float roughness)
 	phi = 2.0 * PI * rand();
 	cos_theta = sqrt((1.0 - u2) / (1.0 + ((roughness * roughness) * (roughness * roughness) - 1.0) * u2));
 	sin_theta = sqrt(1.0 - cos_theta * cos_theta);
-	tangent = normalize(cross(normal, (t_vec3){1.0, 0.0, 0.0}));
-	if (vec3_length_squared(tangent) < 0.0001)
-		tangent = normalize(cross(normal, (t_vec3){0.0, 1.0, 0.0}));
-	return (vec3_add(
-			vec3_multiply_scalar(normal, cos_theta),
-			vec3_add(
-				vec3_multiply_scalar(tangent, cos(phi) * sin_theta),
-				vec3_multiply_scalar((normalize(cross(normal, tangent))),
-					sin(phi) * sin_theta)
-			)
-		));
+	tangent = normalize(cross(normal, vec3(1.0, 0.0, 0.0)));
+	if (dot(tangent, tangent) < 0.0001)
+		tangent = normalize(cross(normal, vec3(0.0, 1.0, 0.0)));
+	return (normal * cos_theta
+		+ tangent * cos(phi) * sin_theta
+		+ normalize(cross(normal, tangent)) * sin(phi) * sin_theta);
 }

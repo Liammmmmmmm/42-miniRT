@@ -5,7 +5,7 @@ void	metallic_color(inout vec3 rd, hit_record hit, inout vec3 power)
 	vec3		micro_normal;
 
 	if (materials[hit.material_id].roughness_value > 0.0)
-		micro_normal = hit.normal; // TODO: GGX sample hemisphere pour la roughness
+		micro_normal = ggx_sample_hemisphere(hit.normal, materials[hit.material_id].roughness_value);
 	else
 		micro_normal = hit.normal;
 	rd = normalize(rd - micro_normal * 2 * dot(rd, micro_normal));

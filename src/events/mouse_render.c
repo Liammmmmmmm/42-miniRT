@@ -6,11 +6,12 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:42:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 15:04:46 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 16:35:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "camera.h"
 
 static void	select_object_lft(t_minirt *minirt)
 {
@@ -45,6 +46,20 @@ int	mousedown_render(int key, int x, int y, t_minirt *minirt)
 		printf("new selected : %d %d\n", minirt->controls.selected_x,
 			minirt->controls.selected_y);
 	}
+	else if (key == SCROLL_DOWN)
+	{
+		minirt->controls.values.fov -= 1;
+		if (minirt->controls.values.fov < 1)
+			minirt->controls.values.fov = 1;
+		restart_minirt(minirt);
+	}
+	else if (key == SCROLL_UP)
+	{
+		minirt->controls.values.fov += 1;
+		if (minirt->controls.values.fov > 180)
+			minirt->controls.values.fov = 180;
+		restart_minirt(minirt);
+	}
 	return (0);
 }
 
@@ -53,5 +68,37 @@ int	mouseup_render(int key, int x, int y, t_minirt *minirt)
 	minirt->controls.mlxr = (t_uint)x;
 	minirt->controls.mlyr = (t_uint)y;
 	mouseup_common(key, minirt);
+	return (0);
+}
+
+#define MOUSE_SENSITIVITY 0.005
+
+void	mouse_move_cam(int x, int y, t_minirt *minirt)
+{
+	float	delta_x;
+	float	delta_y;
+	t_vec3	right;
+	t_vec3	up;
+	t_vec3	world_up;
+
+	delta_x = (float)(x - (int)minirt->controls.mlxc) * MOUSE_SENSITIVITY;
+	delta_y = (float)(y - (int)minirt->controls.mlyc) * MOUSE_SENSITIVITY;
+	world_up = (t_vec3){0, 1, 0};
+	right = vec3_unit(vec3_cross(minirt->scene.camera.orientation, world_up));
+	up = vec3_unit(vec3_cross(right, minirt->scene.camera.orientation));
+	minirt->scene.camera.orientation = vec3_rotate(minirt->scene.camera.orientation, up, -delta_x);
+	minirt->scene.camera.orientation = vec3_rotate(minirt->scene.camera.orientation, right, -delta_y);
+	minirt->scene.camera.orientation = vec3_unit(minirt->scene.camera.orientation);
+	restart_minirt(minirt);
+}
+
+int	mouse_move_render(int x, int y, t_minirt *minirt)
+{
+	if (minirt->controls.keydown.lmb)
+	{
+		mouse_move_cam(x, y, minirt);
+	}
+	minirt->controls.mlxc = (t_uint)x;
+	minirt->controls.mlyc = (t_uint)y;
 	return (0);
 }

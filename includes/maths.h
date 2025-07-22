@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/23 13:03:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 15:30:57 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ t_vec3	vec3_fmin(t_vec3 a, t_vec3 b);
 t_vec3	vec3_unit(const t_vec3 v);
 t_vec3	vec3_negate(const t_vec3 v);
 t_vec3	vec3_random();
+
+t_vec3	vec3_rotate(t_vec3 v, t_vec3 axis, float angle);
 
 double	ft_dmin(double a, double b);
 

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 10:13:28 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 17:17:07 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,8 @@ void	create_ssbo(GLuint *ssbo, size_t size, void *data, long bind)
 
 int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs)
 {
+	clean_scene(gpu_structs);
+
 	convert_viewport(&gpu_structs->viewport, viewport, scene->ior_all);
 	create_ssbo(&gpu_structs->viewport_ssbo, sizeof(t_gpu_viewport), &gpu_structs->viewport, SSBO_BIND_VIEWPORT);
 	convert_camera(scene, &gpu_structs->camera);

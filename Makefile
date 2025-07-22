@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/07/02 15:24:36 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/07/22 15:26:10 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -144,7 +144,7 @@ PPM_DIR				= src/utils/ppm/
 PPM_FILE			= export_ppm.c
 
 EDIT_MOD_DIR		= src/edition_mod/
-EDIT_MOD_FILE		= select_obj.c
+EDIT_MOD_FILE		= select_obj.c movements_utils.c
 
 UPSCALING_DIR		= src/upscaling/
 UPSCALING_FILE		= bilinear.c bicubic.c utils.c no_upscaling.c

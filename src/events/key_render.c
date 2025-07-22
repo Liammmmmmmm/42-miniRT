@@ -6,11 +6,12 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:37:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 14:25:27 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 15:24:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "camera.h"
 
 void	export_scene(t_minirt *minirt)
 {
@@ -38,11 +39,38 @@ void	open_controls(int key, t_minirt *minirt)
 	}
 }
 
+int	keydown_move(int key, t_minirt *minirt)
+{
+	if (key == KEY_W)
+	{
+		minirt->scene.camera.position = vec3_add(minirt->scene.camera.position, vec3_multiply_scalar(minirt->scene.camera.orientation, MOVE_SENSI));
+		return (restart_minirt(minirt));
+	}
+	else if (key == KEY_S)
+	{
+		minirt->scene.camera.position = vec3_subtract(minirt->scene.camera.position, vec3_multiply_scalar(minirt->scene.camera.orientation, MOVE_SENSI));
+		return (restart_minirt(minirt));
+	}
+	else if (key == KEY_A)
+	{
+		minirt->scene.camera.position = vec3_subtract(minirt->scene.camera.position, get_right_vector(minirt));
+		return (restart_minirt(minirt));
+	}
+	else if (key == KEY_D)
+	{
+		minirt->scene.camera.position = vec3_add(minirt->scene.camera.position, get_right_vector(minirt));
+		return (restart_minirt(minirt));
+	}
+	return (0);
+}
+
 int	keydown_render(int key, t_minirt *minirt)
 {
-	if (key == KEY_D && minirt->controls.values.debug == 0)
+	if (keydown_move(key, minirt))
+		;
+	else if (key == KEY_H && minirt->controls.values.debug == 0)
 		minirt->controls.values.debug = 1;
-	else if (key == KEY_D && minirt->controls.values.debug == 1)
+	else if (key == KEY_H && minirt->controls.values.debug == 1)
 	{
 		minirt->controls.values.debug = 0;
 		copy_buff_to_image(minirt);

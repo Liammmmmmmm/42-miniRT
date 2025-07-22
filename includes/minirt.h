@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/23 14:17:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 15:15:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ int		keyup_render(int key, t_minirt *minirt);
 int		keydown_controls(int key, t_minirt *minirt);
 int		keyup_controls(int key, t_minirt *minirt);
 
+int		mouse_move_render(int x, int y, t_minirt *minirt);
 void	mouseup_common(int key, t_minirt *minirt);
 void	mousedown_common(int key, t_minirt *minirt);
 
@@ -205,6 +206,8 @@ void	events_controls(t_minirt *minirt);
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
 void	stop_minirt(t_minirt *minirt);
+void	start_minirt(t_minirt *minirt);
+int		restart_minirt(t_minirt *minirt);
 
 void	render_frame(t_minirt *minirt);
 int		init_render(t_minirt *minirt);

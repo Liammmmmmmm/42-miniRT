@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 17:20:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/23 09:24:20 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	clean_scene(t_gpu_structs *gpu_structs)
 	free(gpu_structs->spheres);
 	gpu_structs->spheres = NULL;
 	delete_ssbo(&gpu_structs->spheres_ssbo);
-
-	return (0);
 }
 
 void	clean_shaders(t_shader_data *shader_data)

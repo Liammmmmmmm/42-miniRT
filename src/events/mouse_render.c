@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_render.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:42:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 23:55:17 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:15:51 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	mousedown_render(int key, int x, int y, t_minirt *minirt)
 		select_object_lft(minirt);
 	else if (key == RIGHT_CLICK)
 	{
-        mlx_mouse_hide(minirt->mlx.mlx, minirt->mlx.render_win);
+        mouse_hide(minirt->mlx.mlx, minirt->mlx.render_win);
 		mlx_mouse_get_pos(minirt->mlx.mlx, minirt->mlx.render_win, &minirt->controls.mlxc_s, &minirt->controls.mlyc_s);
         minirt->controls.mlxc = (t_uint)minirt->scene.win_width / 2;
         minirt->controls.mlyc = (t_uint)minirt->scene.win_height / 2;
@@ -101,25 +101,27 @@ void	mouse_move_cam(int x, int y, t_minirt *minirt, t_vec2 delta)
 
 int mouse_move_render(int x, int y, t_minirt *minirt)
 {
-    t_vec2  delta;
-    int     center_x;
-    int     center_y;
+	t_vec2	delta;
+	int		center_x;
+	int		center_y;
 
-    if (minirt->controls.keydown.rmb)
-    {
-        delta.x = (float)(x - (int)minirt->controls.mlxc) * MOUSE_SENSITIVITY;
-        delta.y = (float)(y - (int)minirt->controls.mlyc) * MOUSE_SENSITIVITY;
-        mouse_move_cam(x, y, minirt, delta);
-        center_x = 1920 / 2;
-        center_y = 1080 / 2;
-        mlx_mouse_move(minirt->mlx.mlx, minirt->mlx.render_win, center_x, center_y);
-        minirt->controls.mlxc = (t_uint)center_x;
-        minirt->controls.mlyc = (t_uint)center_y;
-    }
-    else
-    {
-        minirt->controls.mlxc = (t_uint)x;
-        minirt->controls.mlyc = (t_uint)y;
-    }
-    return (0);
+	if (minirt->controls.keydown.rmb)
+	{
+		printf("Delta %d %d %d %d - %d %d\n", x, y, minirt->controls.mlxc, minirt->controls.mlyc, x - (int)minirt->controls.mlxc, y - minirt->controls.mlyc);
+		delta.x = (float)(x - (int)minirt->controls.mlxc) * MOUSE_SENSITIVITY;
+		delta.y = (float)(y - (int)minirt->controls.mlyc) * MOUSE_SENSITIVITY;
+		if (ft_abs(x - (int)minirt->controls.mlxc) < 100 && ft_abs(y - (int)minirt->controls.mlyc) < 100)
+			mouse_move_cam(x, y, minirt, delta);
+		center_x = minirt->scene.win_width / 2;
+		center_y = minirt->scene.win_height / 2;
+		mlx_mouse_move(minirt->mlx.mlx, minirt->mlx.render_win, center_x, center_y);
+		minirt->controls.mlxc = (t_uint)center_x;
+		minirt->controls.mlyc = (t_uint)center_y;
+	}
+	else
+	{
+		minirt->controls.mlxc = (t_uint)x;
+		minirt->controls.mlyc = (t_uint)y;
+	}
+	return (0);
 }

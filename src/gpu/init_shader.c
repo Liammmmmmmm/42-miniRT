@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shader.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 20:56:15 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/23 09:21:30 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	print_shader_sources(char **sources, int count, const char **paths)
 				printf("%c", *p);
 				p++;
 			}
-			printf("\n", *p);
+			printf("\n");
 			if (*p)
 				p++;
 		}

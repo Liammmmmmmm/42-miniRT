@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/07/22 18:23:16 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/07/23 10:18:47 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ ERASE2   = $(ERASE)\033[F$(ERASE)
 # Compiler and flags
 CC       = gcc
 CFLAGS   = -Wall -Wextra #-Werror # -mavx # SIMD flag
-LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm
+LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm -lXfixes
 GPU_FLAGS = -Wall -Wextra -O3 -DUSE_GPU -lGLEW -lglfw -ldl
 DEBUG_FLAGS = -g3
 FAST_FLAGS = -O3 -flto -march=native -mtune=native -funroll-loops -ffast-math -falign-functions=32 -falign-loops=16

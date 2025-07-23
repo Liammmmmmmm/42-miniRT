@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:36:26 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 19:19:20 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/23 11:59:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	general_scene_info(t_minirt *minirt)
 {
-	t_fcolor	*new_render;
-
 	minirt->scene.camera.orientation
 		= vec3_unit(minirt->scene.camera.orientation);
 	minirt->controls.max_bounces = round(minirt->controls.max_bounces);
@@ -29,13 +27,7 @@ void	general_scene_info(t_minirt *minirt)
 			minirt->scene.render_width = (int)minirt->controls.res_render_x;
 			minirt->scene.render_height = (int)minirt->controls.res_render_y;
 		}
-		new_render = malloc(sizeof(t_fcolor) * minirt->scene.render_width
-				* minirt->scene.render_height);
-		if (new_render)
-		{
-			free(minirt->screen.float_render);
-			minirt->screen.float_render = new_render;
-		}
+		try_set_new_size(minirt);
 	}
 	if ((!minirt->scene.amb_light.skybox_t
 			|| minirt->scene.amb_light.skybox_t->type != HDR)

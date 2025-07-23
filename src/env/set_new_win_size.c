@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera.h                                           :+:      :+:    :+:   */
+/*   set_new_win_size.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/22 15:23:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 11:46:47 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/07/23 11:55:39 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/07/23 11:57:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CAMERA_H
-# define CAMERA_H
+#include "minirt.h"
 
-# include "structs.h"
+void	try_set_new_size(t_minirt *minirt)
+{
+	t_fcolor	*new_render;
 
-# define MOVE_SENSI 2 // u/s
-# define MOUSE_SENSITIVITY 0.05
-
-t_vec3	get_right_vector(t_minirt *minirt);
-t_vec3	get_up_vector(t_minirt *minirt);
-
-void	move_camera(t_minirt *minirt);
-
-#endif
+	new_render = malloc(sizeof(t_fcolor) * minirt->scene.render_width
+			* minirt->scene.render_height);
+	if (new_render)
+	{
+		free(minirt->screen.float_render);
+		minirt->screen.float_render = new_render;
+	}
+}

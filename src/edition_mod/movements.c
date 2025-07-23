@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 18:16:15 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 18:29:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/23 11:41:40 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,22 @@
 
 void	move_camera(t_minirt *minirt)
 {
+	const float	time_interval = (get_cpu_time() - minirt->screen.last_sample_time) / 1000.0;
+	
 	if (minirt->controls.movements.forward)
-	{
-		minirt->scene.camera.position = vec3_add(minirt->scene.camera.position, vec3_multiply_scalar(minirt->scene.camera.orientation, MOVE_SENSI));
-		restart_minirt(minirt);
-	}
+		minirt->scene.camera.position = vec3_add(minirt->scene.camera.position, vec3_multiply_scalar(minirt->scene.camera.orientation, MOVE_SENSI * time_interval));
 	if (minirt->controls.movements.back)
-	{
-		minirt->scene.camera.position = vec3_subtract(minirt->scene.camera.position, vec3_multiply_scalar(minirt->scene.camera.orientation, MOVE_SENSI));
-		restart_minirt(minirt);
-	}
+		minirt->scene.camera.position = vec3_subtract(minirt->scene.camera.position, vec3_multiply_scalar(minirt->scene.camera.orientation, MOVE_SENSI * time_interval));
 	if (minirt->controls.movements.left)
-	{
-		minirt->scene.camera.position = vec3_subtract(minirt->scene.camera.position, get_right_vector(minirt));
-		restart_minirt(minirt);
-	}
+		minirt->scene.camera.position = vec3_subtract(minirt->scene.camera.position, vec3_multiply_scalar(get_right_vector(minirt), MOVE_SENSI * time_interval));
 	if (minirt->controls.movements.right)
-	{
-		minirt->scene.camera.position = vec3_add(minirt->scene.camera.position, get_right_vector(minirt));
-		restart_minirt(minirt);
-	}
+		minirt->scene.camera.position = vec3_add(minirt->scene.camera.position, vec3_multiply_scalar(get_right_vector(minirt), MOVE_SENSI * time_interval));
 	if (minirt->controls.movements.up)
-	{
-		minirt->scene.camera.position = vec3_add(minirt->scene.camera.position, get_up_vector(minirt));
-		restart_minirt(minirt);
-	}
+		minirt->scene.camera.position = vec3_add(minirt->scene.camera.position, vec3_multiply_scalar(get_up_vector(minirt), MOVE_SENSI * time_interval));
 	if (minirt->controls.movements.down)
-	{
-		minirt->scene.camera.position = vec3_subtract(minirt->scene.camera.position, get_up_vector(minirt));
+		minirt->scene.camera.position = vec3_subtract(minirt->scene.camera.position, vec3_multiply_scalar(get_up_vector(minirt), MOVE_SENSI * time_interval));
+	if (minirt->controls.movements.forward || minirt->controls.movements.back
+		|| minirt->controls.movements.left || minirt->controls.movements.right
+		|| minirt->controls.movements.up || minirt->controls.movements.down)
 		restart_minirt(minirt);
-	};
 }

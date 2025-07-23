@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:42:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 11:13:52 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/23 11:44:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,15 @@ void	mouse_move_cam(int x, int y, t_minirt *minirt, t_vec2 delta)
 	t_vec3	right;
 	t_vec3	up;
 	t_vec3	world_up;
+	const float	time_interval = (get_cpu_time() - minirt->screen.last_sample_time) / 1000.0;
 
 	if (delta.x != 0 || delta.y != 0)
 		minirt->controls.movements.mouse = 1;	
 	world_up = (t_vec3){0, 1, 0};
 	right = vec3_unit(vec3_cross(minirt->scene.camera.orientation, world_up));
 	up = vec3_unit(vec3_cross(right, minirt->scene.camera.orientation));
-	minirt->scene.camera.orientation = vec3_rotate(minirt->scene.camera.orientation, up, -delta.x);
-	minirt->scene.camera.orientation = vec3_rotate(minirt->scene.camera.orientation, right, -delta.y);
+	minirt->scene.camera.orientation = vec3_rotate(minirt->scene.camera.orientation, up, -delta.x * time_interval);
+	minirt->scene.camera.orientation = vec3_rotate(minirt->scene.camera.orientation, right, -delta.y * time_interval);
 	minirt->scene.camera.orientation = vec3_unit(minirt->scene.camera.orientation);
 	restart_minirt(minirt);
 }

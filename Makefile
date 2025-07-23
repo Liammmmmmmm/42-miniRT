@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/07/23 10:18:47 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/07/23 12:08:29 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -106,7 +106,9 @@ RENDERING_DIR		= src/rendering/
 RENDERING_FILE		= pixel.c loop.c no_display.c
 
 ENV_DIR				= src/env/
-ENV_FILE			= init_mlx.c free_mlx.c init_controls.c init_ui.c set_dependant_values.c micrort_init.c set_dependant_values_objs.c set_dependant_values_objs2.c
+ENV_FILE			= init_mlx.c free_mlx.c init_controls.c init_ui.c set_dependant_values.c \
+					micrort_init.c set_dependant_values_objs.c set_dependant_values_objs2.c \
+					set_new_win_size.c
 
 MAT_DIR				= src/material/
 MAT_FILE			= utils.c dielectric.c material_default.c metallic.c refraction.c
@@ -193,6 +195,10 @@ RAY_TRACING_FILE_GPU	= render_gpu.c init_animated_items.c focus.c bvh/bvh_manage
 					importance_sampling/get_dir.c importance_sampling/calc_pdf.c importance_sampling/calc_cdf.c importance_sampling/importance_sampling_manager.c \
 					importance_sampling/init_maloc_importance_sampling.c calc_sample.c light/d_light.c light/p_light.c light/light_manager.c
 
+ENV_DIR_GPU			= src/env/
+ENV_FILE_GPU		= init_mlx.c free_mlx.c init_controls.c init_ui.c set_dependant_values.c \
+					micrort_init.c set_dependant_values_objs.c set_dependant_values_objs2.c \
+					set_new_win_size_gpu.c
 
 M_FILE_GPU = $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
@@ -208,7 +214,7 @@ M_FILE_GPU = $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 			$(addprefix $(PARSING_DIR), $(PARSING_FILE)) \
 			$(addprefix $(FONT_PARS_DIR), $(FONT_PARS_FILE)) \
 			$(addprefix $(FONT_REND_DIR), $(FONT_REND_FILE)) \
-			$(addprefix $(ENV_DIR), $(ENV_FILE)) \
+			$(addprefix $(ENV_DIR_GPU), $(ENV_FILE_GPU)) \
 			$(addprefix $(EDIT_MOD_DIR), $(EDIT_MOD_FILE)) \
 			$(addprefix $(UPSCALING_DIR), $(UPSCALING_FILE)) \
 			$(addprefix $(PPM_DIR), $(PPM_FILE)) \

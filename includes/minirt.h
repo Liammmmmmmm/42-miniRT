@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 18:23:55 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/23 11:58:02 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void	set_values_directional_light(t_dlight *obj);
 void	set_values_hyperboloid(t_hyperboloid *obj);
 void	set_values_custom(t_custom_object *obj);
 void	set_values_mat(t_mat *mat);
+void	try_set_new_size(t_minirt *minirt);
 void	set_dependant_values(t_minirt *minirt);
 
 void	debug_ray(t_minirt *minirt);

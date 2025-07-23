@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shader.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 09:21:30 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/23 14:00:44 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void	init_ssbo(t_shader_data *shader_data, size_t render_width,
 	glBufferData(GL_SHADER_STORAGE_BUFFER,
 		render_height * render_width * sizeof(float) * 4, NULL,
 		GL_DYNAMIC_COPY);
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, shader_data->ssbo);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, shader_data->ssbo);
 }
 
 int	init_shader(t_shader_data *shader_data, size_t render_width,

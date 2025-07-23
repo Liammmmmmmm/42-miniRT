@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 13:47:09 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:00:14 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@
 #include <GLFW/glfw3.h>
 #include "scene_structs.h"
 
-# define SSBO_BIND_VIEWPORT 1
-# define SSBO_BIND_CAMERA 2
-# define SSBO_BIND_MATERIALS 3
-# define SSBO_BIND_BVH 4
-# define SSBO_BIND_PRIM_INDICE 5
-# define SSBO_BIND_PRIM_TYPE 6
-# define SSBO_BIND_SPHERES 7
-# define SSBO_BIND_PLANE 8
-# define SSBO_BIND_HYPERS 9
-# define SSBO_BIND_CYLINDERS 10
-# define SSBO_BIND_CONES 11
-# define SSBO_BIND_TRIANGLES 12
+# define SSBO_BIND_VIEWPORT 2
+# define SSBO_BIND_CAMERA 3
+# define SSBO_BIND_MATERIALS 4
+# define SSBO_BIND_BVH 5
+# define SSBO_BIND_PRIM_INDICE 6
+# define SSBO_BIND_PRIM_TYPE 7
+# define SSBO_BIND_SPHERES 8
+# define SSBO_BIND_PLANE 9
+# define SSBO_BIND_HYPERS 10
+# define SSBO_BIND_CYLINDERS 11
+# define SSBO_BIND_CONES 12
+# define SSBO_BIND_TRIANGLES 13
 
 /**
  * Tous les _pad sont pour l'alignement std430 et les vec3 qui prennent 16 octets en glsl

@@ -1,54 +1,54 @@
 layout(local_size_x = 8, local_size_y = 8) in;
 
-layout(std430, binding = 0) buffer Output {
+layout(std430, binding = 1) buffer Output {
 	vec3 data[];
 };
 
-layout(std140, binding = 1) buffer ViewportBuffer {
+layout(std140, binding = 2) buffer ViewportBuffer {
 	Viewport viewport;
 };
 
-layout(std140, binding = 2) buffer CameraBuffer {
+layout(std140, binding = 3) buffer CameraBuffer {
 	Camera cam;
 };
 
-layout(std430, binding = 3) buffer MaterialBuffer {
+layout(std430, binding = 4) buffer MaterialBuffer {
   Material materials[];
 };
 
-layout(std430, binding = 4) buffer BvhNodes {
+layout(std430, binding = 5) buffer BvhNodes {
     bvh_node bvh_nodes[];
 };
 
-layout(std430, binding = 5) buffer PrimitiveIndices {
+layout(std430, binding = 6) buffer PrimitiveIndices {
     uint prim_indices[];
 };
 
-layout(std430, binding = 6) buffer PrimitiveTypes {
+layout(std430, binding = 7) buffer PrimitiveTypes {
     uint prim_types[];
 };
 
-layout(std430, binding = 7) buffer SphereBuffer {
+layout(std430, binding = 8) buffer SphereBuffer {
 	Sphere spheres[];
 };
 
-layout(std430, binding = 8) buffer PlaneBuffer {
+layout(std430, binding = 9) buffer PlaneBuffer {
     Plane planes[];
 };
 
-layout(std430, binding = 9) buffer HyperBuffer {
+layout(std430, binding = 10) buffer HyperBuffer {
     Hyper hypers[];
 };
 
-layout(std430, binding = 10) buffer CylinderBuffer {
+layout(std430, binding = 11) buffer CylinderBuffer {
     Cylinder cylinders[];
 };
 
-layout(std430, binding = 11) buffer ConeBuffer {
+layout(std430, binding = 12) buffer ConeBuffer {
 		Cone cones[];
 };
 
-layout(std430, binding = 12) buffer TriangleBuffer {
+layout(std430, binding = 13) buffer TriangleBuffer {
   	Triangle triangles[];
 };
 

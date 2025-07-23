@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:42:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 10:15:51 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/23 11:13:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,11 @@ int	mouseup_render(int key, int x, int y, t_minirt *minirt)
 	mouseup_common(key, minirt);
 	if (key == RIGHT_CLICK)
 	{
-		mlx_mouse_show(minirt->mlx.mlx, minirt->mlx.render_win);
+		mouse_show(minirt->mlx.mlx, minirt->mlx.render_win);
 		mlx_mouse_move(minirt->mlx.mlx, minirt->mlx.render_win, minirt->controls.mlxc_s, minirt->controls.mlyc_s);
 	}
 	return (0);
 }
-
-#define MOUSE_SENSITIVITY 0.005
 
 void	mouse_move_cam(int x, int y, t_minirt *minirt, t_vec2 delta)
 {
@@ -99,7 +97,7 @@ void	mouse_move_cam(int x, int y, t_minirt *minirt, t_vec2 delta)
 	restart_minirt(minirt);
 }
 
-int mouse_move_render(int x, int y, t_minirt *minirt)
+int	mouse_move_render(int x, int y, t_minirt *minirt)
 {
 	t_vec2	delta;
 	int		center_x;
@@ -107,7 +105,6 @@ int mouse_move_render(int x, int y, t_minirt *minirt)
 
 	if (minirt->controls.keydown.rmb)
 	{
-		printf("Delta %d %d %d %d - %d %d\n", x, y, minirt->controls.mlxc, minirt->controls.mlyc, x - (int)minirt->controls.mlxc, y - minirt->controls.mlyc);
 		delta.x = (float)(x - (int)minirt->controls.mlxc) * MOUSE_SENSITIVITY;
 		delta.y = (float)(y - (int)minirt->controls.mlyc) * MOUSE_SENSITIVITY;
 		if (ft_abs(x - (int)minirt->controls.mlxc) < 100 && ft_abs(y - (int)minirt->controls.mlyc) < 100)

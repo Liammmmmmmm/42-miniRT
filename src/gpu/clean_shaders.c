@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_shaders.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 09:24:20 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/23 13:07:06 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,30 @@ void	clean_scene(t_gpu_structs *gpu_structs)
 	delete_ssbo(&gpu_structs->viewport_ssbo);
 	delete_ssbo(&gpu_structs->camera_ssbo);
 	free(gpu_structs->mat);
-	gpu_structs->mat = NULL;
 	delete_ssbo(&gpu_structs->mat_ssbo);
 
 	free(gpu_structs->spheres);
-	gpu_structs->spheres = NULL;
 	delete_ssbo(&gpu_structs->spheres_ssbo);
+	
+	free(gpu_structs->hypers);
+	delete_ssbo(&gpu_structs->hypers_ssbo);
+
+	free(gpu_structs->cylinders);
+	delete_ssbo(&gpu_structs->cylinders_ssbo);
+
+	free(gpu_structs->cones);
+	delete_ssbo(&gpu_structs->cones_ssbo);
+
+	free(gpu_structs->triangles);
+	delete_ssbo(&gpu_structs->triangles_ssbo);
+
+	free(gpu_structs->prim_indice);
+	delete_ssbo(&gpu_structs->prim_indice_ssbo);
+
+	free(gpu_structs->prim_type);
+	delete_ssbo(&gpu_structs->prim_type);
+
+	ft_bzero(gpu_structs, sizeof(t_gpu_structs));
 }
 
 void	clean_shaders(t_shader_data *shader_data)

@@ -30,6 +30,55 @@ struct Plane {
 	vec3 color;
 };
 
+struct Hyper {
+	vec3	position;
+	int material_id;
+	vec3 orientation;
+	float	height;
+	vec3	color;
+	float	a;
+	float	b;
+	float	c;
+	float	shape;
+};
+
+struct	Cone {
+	vec3	position;
+	int material_id;
+	vec3 orientation;
+	float	diameter;
+	vec3	color;
+	float	height;
+	int material_id_top;
+};
+
+struct	Cylinder {
+	vec3	position;
+	int material_id;
+	vec3 orientation;
+	float	diameter;
+	vec3	color;
+	int material_id_top;
+	int material_id_bot;
+};
+
+struct	Vertex {
+	vec3	pos[3];
+	float	u;
+	vec3	normal[3];
+	float	v;
+};
+
+struct	Triangle {
+	Vertex	v0;
+	Vertex	v1;
+	Vertex	v2;
+	vec3		color;
+	int			material_id;
+	vec3		center;
+	int			obj_id;
+};
+
 struct Viewport {
 	float	focal_length;
 	float	height;

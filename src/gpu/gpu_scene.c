@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 21:42:00 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:25:21 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ void	vec3_to_float3(t_vec3 *vec, float *tab)
 	tab[0] = vec->x;
 	tab[1] = vec->y;
 	tab[2] = vec->z;
+}
+
+void	vert_to_gpu_vert(t_vertex *ver, t_gpu_vertex *gpu_ver)
+{
+	vec3_to_float3(&ver->normal, gpu_ver->normal);
+	vec3_to_float3(&ver->pos, gpu_ver->pos);
+	gpu_ver->u = ver->u;
+	gpu_ver->v = ver->v;
 }
 
 void	color_to_float3(t_color *vec, float *tab)
@@ -36,24 +44,111 @@ void	fcolor_to_float3(t_fcolor *vec, float *tab)
 	tab[2] = vec->b;
 }
 
-void convert_spheres(t_scene *cpu_scene, t_gpu_sphere *gpu)
+void convert_all_obj(t_scene *cpu_scene, t_gpu_structs *gpu_scene)
 {
-	int	e;
-	int	i;
+	uint32_t	i;
+	uint32_t	sphere;
+	uint32_t	cone;
+	uint32_t	cylindre;
+	uint32_t	hyper;
+	uint32_t	triangle;
 
-	e = -1;
 	i = 0;
-	while (++e < cpu_scene->bvh.size)
+	sphere = 0;
+	cone = 0;
+	cylindre = 0;
+	hyper = 0;
+	triangle = 0;
+	while (i < cpu_scene->bvh.size)
 	{
-		if (cpu_scene->bvh.obj_list[e]->type != SPHERE)
-			continue ;
-		vec3_to_float3(&((t_sphere *)cpu_scene->bvh.obj_list[e]->object)->position, gpu[i].position);
-		color_to_float3(&((t_sphere *)cpu_scene->bvh.obj_list[e]->object)->color, gpu[i].color);
-		gpu[i].radius = (float)((t_sphere *)cpu_scene->bvh.obj_list[e]->object)->radius;
-		if (((t_sphere *)cpu_scene->bvh.obj_list[e]->object)->material == NULL)
-			gpu[i].material_id = -1;
-		else
-			gpu[i].material_id = ((t_sphere *)cpu_scene->bvh.obj_list[e]->object)->material - cpu_scene->materials;
+		if (cpu_scene->bvh.obj_list[i]->type == SPHERE)
+		{
+			gpu_scene->prim_indice[i] = sphere;
+			gpu_scene->prim_type[i] = 0;
+			gpu_scene->spheres[sphere].radius = ((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->radius;
+			vec3_to_float3(&((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->position, gpu_scene->spheres[sphere].position);
+			color_to_float3(&((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->color, gpu_scene->spheres[sphere].color);
+			if (((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->material == NULL)
+				gpu_scene->spheres[sphere].material_id = -1;
+			else
+				gpu_scene->spheres[sphere].material_id = ((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->material - cpu_scene->materials;
+			sphere++;
+		}
+		// if (cpu_scene->bvh.obj_list[i]->type == CYLINDER)
+		// {
+		// 	gpu_scene->prim_indice[i] = cylindre;
+		// 	gpu_scene->prim_type[i] = 1;
+		// 	gpu_scene->cylinders[i].diameter = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->diameter;
+		// 	vec3_to_float3(&((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->position, gpu_scene->cylinders[i].position);
+		// 	vec3_to_float3(&((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->orientation, gpu_scene->cylinders[i].orientation);
+		// 	color_to_float3(&((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->color, gpu_scene->cylinders[i].color);
+		// 	if (((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->material == NULL)
+		// 		gpu_scene->cylinders[i].material_id = -1;
+		// 	else
+		// 		gpu_scene->cylinders[i].material_id = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->material - cpu_scene->materials;
+		// 	if (((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->material_bot == NULL)
+		// 		gpu_scene->cylinders[i].material_id_top = -1;
+		// 	else
+		// 		gpu_scene->cylinders[i].material_id_top = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->material_top - cpu_scene->materials;
+		// 	if (((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->material_bot == NULL)
+		// 		gpu_scene->cylinders[i].material_id_bot = -1;
+		// 	else
+		// 		gpu_scene->cylinders[i].material_id_bot = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->material_bot - cpu_scene->materials;
+		// 	cylindre++;
+		// }
+		// if (cpu_scene->bvh.obj_list[i]->type == CONE)
+		// {
+		// 	gpu_scene->prim_indice[i] = cone;
+		// 	gpu_scene->prim_type[i] = 2;
+		// 	gpu_scene->cones[i].height = ((t_cone *)cpu_scene->bvh.obj_list[i]->object)->height;
+		// 	gpu_scene->cones[i].diameter = ((t_cone *)cpu_scene->bvh.obj_list[i]->object)->diameter;
+		// 	vec3_to_float3(&((t_cone *)cpu_scene->bvh.obj_list[i]->object)->orientation, gpu_scene->cones[i].orientation);
+		// 	vec3_to_float3(&((t_cone *)cpu_scene->bvh.obj_list[i]->object)->position, gpu_scene->cones[i].position);
+		// 	color_to_float3(&((t_cone *)cpu_scene->bvh.obj_list[i]->object)->color, gpu_scene->cones[i].color);
+		// 	if (((t_cone *)cpu_scene->bvh.obj_list[i]->object)->material == NULL)
+		// 		gpu_scene->cones[i].material_id = -1;
+		// 	else
+		// 		gpu_scene->cones[i].material_id = ((t_cone *)cpu_scene->bvh.obj_list[i]->object)->material - cpu_scene->materials;
+		// 	if (((t_cone *)cpu_scene->bvh.obj_list[i]->object)->material_top == NULL)
+		// 		gpu_scene->cones[i].material_id_top = -1;
+		// 	else
+		// 		gpu_scene->cones[i].material_id_top = ((t_cone *)cpu_scene->bvh.obj_list[i]->object)->material_top - cpu_scene->materials;
+		// 	cone++;
+		// }
+		// if (cpu_scene->bvh.obj_list[i]->type == HYPERBOLOID)
+		// {
+		// 	gpu_scene->prim_indice[i] = hyper;
+		// 	gpu_scene->prim_type[i] = 3;
+		// 	gpu_scene->hypers[i].a = ((t_hyperboloid *)cpu_scene->bvh.obj_list[i]->object)->a;
+		// 	gpu_scene->hypers[i].b = ((t_hyperboloid *)cpu_scene->bvh.obj_list[i]->object)->b;
+		// 	gpu_scene->hypers[i].c = ((t_hyperboloid *)cpu_scene->bvh.obj_list[i]->object)->c;
+		// 	gpu_scene->hypers[i].shape = ((t_hyperboloid *)cpu_scene->bvh.obj_list[i]->object)->shape;
+		// 	gpu_scene->hypers[i].height = ((t_hyperboloid *)cpu_scene->bvh.obj_list[i]->object)->height;
+		// 	vec3_to_float3(&((t_hyperboloid *)cpu_scene->bvh.obj_list[i]->object)->orientation, gpu_scene->hypers[i].orientation);
+		// 	vec3_to_float3(&((t_hyperboloid *)cpu_scene->bvh.obj_list[i]->object)->position, gpu_scene->hypers[i].position);
+		// 	color_to_float3(&((t_hyperboloid *)cpu_scene->bvh.obj_list[i]->object)->color, gpu_scene->hypers[i].color);
+		// 	if (((t_hyperboloid *)cpu_scene->bvh.obj_list[i]->object)->material == NULL)
+		// 		gpu_scene->hypers[i].material_id = -1;
+		// 	else
+		// 		gpu_scene->hypers[i].material_id = ((t_hyperboloid *)cpu_scene->bvh.obj_list[i]->object)->material - cpu_scene->materials;
+		// 	hyper++;
+		// }
+		// if (cpu_scene->bvh.obj_list[i]->type == TRIANGLE)
+		// {
+		// 	gpu_scene->prim_indice[i] = triangle;
+		// 	gpu_scene->prim_type[i] = 4;
+		// 	vert_to_gpu_vert(&((t_triangle *)cpu_scene->bvh.obj_list[i]->object)->v0, &gpu_scene->triangles[i].v0);
+		// 	vert_to_gpu_vert(&((t_triangle *)cpu_scene->bvh.obj_list[i]->object)->v1, &gpu_scene->triangles[i].v1);
+		// 	vert_to_gpu_vert(&((t_triangle *)cpu_scene->bvh.obj_list[i]->object)->v2, &gpu_scene->triangles[i].v2);
+		// 	vec3_to_float3(&((t_triangle *)cpu_scene->bvh.obj_list[i]->object)->center, gpu_scene->triangles[i].center);
+		// 	gpu_scene->triangles[i].obj_id = -1;
+		// 	color_to_float3(&((t_triangle *)cpu_scene->bvh.obj_list[i]->object)->color,	gpu_scene->triangles[i].color);
+		// 	if (((t_triangle *)cpu_scene->bvh.obj_list[i]->object)->material == NULL)
+		// 		gpu_scene->triangles[i].material_id = -1;
+		// 	else
+		// 		gpu_scene->triangles[i].material_id = ((t_triangle *)cpu_scene->bvh.obj_list[i]->object)->material - cpu_scene->materials;
+		// 	triangle++;
+		// }
 		i++;
 	}
 }
@@ -82,7 +177,7 @@ void convert_plane(t_scene *cpu_scene, t_gpu_plane *gpu)
 
 void	convert_bvh_node(t_scene *cpu_scene, t_gpu_bvh_node *bvh_node)
 {
-	int	i;
+	uint32_t	i;
 
 	i = 0;
 	while (i < (cpu_scene->bvh.bvh_nodes_used))
@@ -129,15 +224,24 @@ void	convert_viewport(t_gpu_viewport *dst, t_viewport *src, double ior)
 	vec3_to_float3(&src->defocus_disk_v, dst->defocus_disk_v);
 }
 
-void	count_spheres(t_scene *scene, t_gpu_structs *gpu_structs)
+void	count_obj(t_scene *scene, t_gpu_structs *gpu_structs)
 {
 	int	i;
 
-	i = -1;
-	while (++i < scene->el_amount)
+	i = 0;
+	while (i < scene->bvh.size)
 	{
-		if (scene->elements[i].type == SPHERE)
-			gpu_structs->spheres_am++;		
+		if (scene->bvh.obj_list[i]->type == SPHERE)
+			gpu_structs->spheres_am++;
+		if (scene->bvh.obj_list[i]->type == CYLINDER)
+			gpu_structs->cylinders_am++;	
+		if (scene->bvh.obj_list[i]->type == CONE)
+			gpu_structs->cones_am++;
+		if (scene->bvh.obj_list[i]->type == HYPERBOLOID)
+			gpu_structs->hypers_am++;
+		if (scene->bvh.obj_list[i]->type == TRIANGLE)
+			gpu_structs->triangles_am++;
+		i++;
 	}
 }
 
@@ -198,14 +302,23 @@ int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_struc
 	convert_materials(scene, gpu_structs->mat);
 	create_ssbo(&gpu_structs->mat_ssbo, sizeof(t_gpu_material) * gpu_structs->mat_am, gpu_structs->mat, SSBO_BIND_MATERIALS);
 
-	gpu_structs->spheres_am = 0;
-	count_spheres(scene, gpu_structs);
+	count_obj(scene, gpu_structs);
 	gpu_structs->spheres = ft_calloc(gpu_structs->spheres_am, sizeof(t_gpu_sphere));
-	if (!gpu_structs->spheres)
-		return (-1); // Tout free correctement
-	convert_spheres(scene, gpu_structs->spheres);
+	gpu_structs->hypers = ft_calloc(gpu_structs->hypers_am, sizeof(t_gpu_hyper));
+	gpu_structs->cylinders = ft_calloc(gpu_structs->cylinders_am, sizeof(t_gpu_cylinder));
+	gpu_structs->cones = ft_calloc(gpu_structs->cones_am, sizeof(t_gpu_cone));
+	gpu_structs->triangles = ft_calloc(gpu_structs->triangles_am, sizeof(t_gpu_triangle));
+	gpu_structs->prim_indice = ft_calloc(scene->bvh.size, sizeof(uint32_t));
+	gpu_structs->prim_type = ft_calloc(scene->bvh.size, sizeof(uint32_t));
+	// if (!gpu_structs->spheres)
+	// 	return (-1); // Tout free correctement
+	convert_all_obj(scene, gpu_structs);
 	create_ssbo(&gpu_structs->spheres_ssbo, sizeof(t_gpu_sphere) * gpu_structs->spheres_am, gpu_structs->spheres, SSBO_BIND_SPHERES);
-	
+	create_ssbo(&gpu_structs->hypers_ssbo, sizeof(t_gpu_hyper) * gpu_structs->hypers_am, gpu_structs->hypers, SSBO_BIND_HYPERS);
+	create_ssbo(&gpu_structs->cylinders_ssbo, sizeof(t_gpu_cylinder) * gpu_structs->cylinders_am, gpu_structs->cylinders, SSBO_BIND_CYLINDERS);
+	create_ssbo(&gpu_structs->cones_ssbo, sizeof(t_gpu_cone) * gpu_structs->cones_am, gpu_structs->cones, SSBO_BIND_CONES);
+	create_ssbo(&gpu_structs->triangles_ssbo, sizeof(t_gpu_triangle) * gpu_structs->triangles_am, gpu_structs->triangles, SSBO_BIND_TRIANGLES);
+
 	gpu_structs->bvh_node_am = scene->bvh.bvh_nodes_used;
 	gpu_structs->bvh_node = ft_calloc(gpu_structs->bvh_node_am, sizeof(t_gpu_bvh_node));
 	if (!gpu_structs->bvh_node)
@@ -214,7 +327,7 @@ int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_struc
 	create_ssbo(&gpu_structs->bvh_node_ssbo, sizeof(t_gpu_bvh_node) * gpu_structs->bvh_node_am, gpu_structs->bvh_node, SSBO_BIND_BVH);
 	
 	gpu_structs->prim_indice_am = scene->bvh.size;
-	create_ssbo(&gpu_structs->prim_indice_ssbo, sizeof(uint32_t) * gpu_structs->prim_indice_am, scene->bvh.prim_indices, SSBO_BIND_PRISM_INDICE);
+	create_ssbo(&gpu_structs->prim_indice_ssbo, sizeof(uint32_t) * gpu_structs->prim_indice_am, gpu_structs->prim_indice, SSBO_BIND_PRIM_INDICE);
 
 	gpu_structs->planes_am = scene->obj_lst.plane_nb;
 	gpu_structs->planes = ft_calloc(gpu_structs->planes_am, sizeof(t_gpu_plane));

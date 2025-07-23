@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:31:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 21:16:23 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:20:19 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,18 @@ void	compute_frame_gpu(t_minirt *minirt)
 	glUniform1ui(sample_count, minirt->screen.sample);
 	GLuint max_bounces = glGetUniformLocation(minirt->shaders_data.program, "max_bounces");
 	glUniform1ui(max_bounces, (t_uint)minirt->controls.max_bounces);
-
 	GLuint spheres_am = glGetUniformLocation(minirt->shaders_data.program, "spheres_am");
 	glUniform1ui(spheres_am, (t_uint)minirt->shaders_data.scene.spheres_am);
-
 	GLuint planes_am = glGetUniformLocation(minirt->shaders_data.program, "planes_am");
 	glUniform1ui(planes_am, (t_uint)minirt->shaders_data.scene.planes_am);
+	GLuint cylinders_am = glGetUniformLocation(minirt->shaders_data.program, "cylinders_am");
+	glUniform1ui(cylinders_am, (t_uint)minirt->shaders_data.scene.cylinders_am);
+	GLuint cones_am = glGetUniformLocation(minirt->shaders_data.program, "cones_am");
+	glUniform1ui(cones_am, (t_uint)minirt->shaders_data.scene.cones_am);
+	GLuint hypers_am = glGetUniformLocation(minirt->shaders_data.program, "hypers_am");
+	glUniform1ui(hypers_am, (t_uint)minirt->shaders_data.scene.hypers_am);
+	GLuint triangles_am = glGetUniformLocation(minirt->shaders_data.program, "triangles_am");
+	glUniform1ui(triangles_am, (t_uint)minirt->shaders_data.scene.triangles_am);
 
 	glDispatchCompute(
 		(minirt->scene.render_width + 7) / 8,

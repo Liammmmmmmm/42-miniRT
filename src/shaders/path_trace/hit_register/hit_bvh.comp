@@ -19,15 +19,18 @@ bool    hit_register_loop(vec3 ro, vec3 rd, bvh_node node, inout hit_record rec)
 
     while (i < node.prim_count)
     {
-        sphere_index = prim_indices[node.first_prim + i];
-        if (hit_sphere(spheres[sphere_index], ro, rd, hit_tmp))
+        if (prim_types[node.first_prim + i] == 0)
         {
-            if (hit_tmp.t < rec.t)
+            sphere_index = prim_indices[node.first_prim + i];
+            if (hit_sphere(spheres[sphere_index], ro, rd, hit_tmp))
             {
-                rec = hit_tmp;
-                hit = true;
-                rec.material_id = spheres[sphere_index].material_id;
-                rec.color = get_hit_register_color(spheres[sphere_index].color, rec);
+                if (hit_tmp.t < rec.t)
+                {
+                    rec = hit_tmp;
+                    hit = true;
+                    rec.material_id = spheres[sphere_index].material_id;
+                    rec.color = get_hit_register_color(spheres[sphere_index].color, rec);
+                }
             }
         }
         i++;

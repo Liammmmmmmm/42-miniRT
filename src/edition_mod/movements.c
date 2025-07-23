@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 18:16:15 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 11:41:40 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/23 13:18:36 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 void	move_camera(t_minirt *minirt)
 {
-	const float	time_interval = (get_cpu_time() - minirt->screen.last_sample_time) / 1000.0;
+	const float	time_interval = ((get_cpu_time() - minirt->screen.last_sample_time) / 1000.0)
+		* minirt->controls.movements.speed_modifier * minirt->controls.movements.speed_modifier / 100.0;
 	
 	if (minirt->controls.movements.forward)
 		minirt->scene.camera.position = vec3_add(minirt->scene.camera.position, vec3_multiply_scalar(minirt->scene.camera.orientation, MOVE_SENSI * time_interval));

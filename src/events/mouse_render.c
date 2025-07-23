@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:42:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 11:44:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/23 13:25:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,37 @@ int	mousedown_render(int key, int x, int y, t_minirt *minirt)
         mlx_mouse_move(minirt->mlx.mlx, minirt->mlx.render_win, minirt->controls.mlxc, minirt->controls.mlyc);
 		minirt->controls.keydown.rmb = 1;
 	}
-	else if (key == SCROLL_DOWN)
+	if (minirt->controls.keydown.lctrl)
 	{
-		minirt->controls.values.fov -= 1;
-		if (minirt->controls.values.fov < 1)
-			minirt->controls.values.fov = 1;
-		restart_minirt(minirt);
+		if (key == SCROLL_DOWN)
+		{
+			minirt->controls.movements.speed_modifier -= 1;
+			if (minirt->controls.movements.speed_modifier < 1)
+				minirt->controls.movements.speed_modifier = 1;
+		}
+		else if (key == SCROLL_UP)
+		{
+			minirt->controls.movements.speed_modifier += 1;
+			if (minirt->controls.movements.speed_modifier > 100)
+				minirt->controls.movements.speed_modifier = 100;
+		}
 	}
-	else if (key == SCROLL_UP)
+	else
 	{
-		minirt->controls.values.fov += 1;
-		if (minirt->controls.values.fov > 180)
-			minirt->controls.values.fov = 180;
-		restart_minirt(minirt);
+		if (key == SCROLL_DOWN)
+		{
+			minirt->controls.values.fov -= 1;
+			if (minirt->controls.values.fov < 1)
+				minirt->controls.values.fov = 1;
+			restart_minirt(minirt);
+		}
+		else if (key == SCROLL_UP)
+		{
+			minirt->controls.values.fov += 1;
+			if (minirt->controls.values.fov > 180)
+				minirt->controls.values.fov = 180;
+			restart_minirt(minirt);
+		}
 	}
 	return (0);
 }

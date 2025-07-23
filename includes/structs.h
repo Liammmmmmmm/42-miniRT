@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 22:48:51 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:13:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,6 +307,7 @@ typedef struct s_movements
 	t_bool	down;
 	t_bool	last_frame_is_moving;
 	t_bool	mouse;
+	int		speed_modifier;
 }	t_movements;
 
 typedef struct s_controls

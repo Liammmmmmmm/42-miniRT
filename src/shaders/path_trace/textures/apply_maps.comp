@@ -1,0 +1,44 @@
+
+void	apply_all_map(inout hit_record hit)
+{
+	if (hit.material_id == -1)
+		return ;
+
+	// Apply la normal
+	
+	if (materials[hit.material_id].metallic_tex_index == -1)
+		hit.mat_val.metallic = materials[hit.material_id].metallic_value;
+	else
+		hit.mat_val.metallic = get_tex_color(materials[hit.material_id].metallic_tex_index, hit.u, hit.v, hit.point).x;
+
+	if (materials[hit.material_id].roughness_tex_index == -1)
+		hit.mat_val.roughness = materials[hit.material_id].roughness_value;
+	else
+		hit.mat_val.roughness = get_tex_color(materials[hit.material_id].roughness_tex_index, hit.u, hit.v, hit.point).x;
+
+	hit.mat_val.ior = materials[hit.material_id].ior;
+
+	if (materials[hit.material_id].transmission_tex_index == -1)
+		hit.mat_val.transmission = materials[hit.material_id].transmission_value;
+	else
+		hit.mat_val.transmission = get_tex_color(materials[hit.material_id].transmission_tex_index, hit.u, hit.v, hit.point).x;
+
+	if (materials[hit.material_id].ao_tex_index == -1)
+		hit.mat_val.ao = materials[hit.material_id].ao_value;
+	else
+		hit.mat_val.ao = get_tex_color(materials[hit.material_id].ao_tex_index, hit.u, hit.v, hit.point).x;
+
+	if (materials[hit.material_id].emission_strength_tex_index == -1)
+		hit.mat_val.emission_strength = materials[hit.material_id].emission_strength;
+	else
+		hit.mat_val.emission_strength = get_tex_color(materials[hit.material_id].emission_strength_tex_index, hit.u, hit.v, hit.point).x;
+
+	hit.mat_val.scale = materials[hit.material_id].scale;
+	hit.mat_val.normal_intensity = materials[hit.material_id].normal_intensity;
+
+	if (materials[hit.material_id].emission_color_tex_index == -1)
+		hit.mat_val.emission_color = materials[hit.material_id].emission_color;
+	else
+		hit.mat_val.emission_color = get_tex_color(materials[hit.material_id].emission_color_tex_index, hit.u, hit.v, hit.point);
+
+}

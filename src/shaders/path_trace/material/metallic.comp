@@ -4,8 +4,8 @@ void	metallic_color(inout vec3 rd, hit_record hit, inout vec3 power)
 	const float	cos_theta = get_cos_theta(rd, hit.normal);
 	vec3		micro_normal;
 
-	if (materials[hit.material_id].roughness_value > 0.0)
-		micro_normal = ggx_sample_hemisphere(hit.normal, materials[hit.material_id].roughness_value);
+	if (hit.mat_val.roughness > 0.0)
+		micro_normal = ggx_sample_hemisphere(hit.normal, hit.mat_val.roughness);
 	else
 		micro_normal = hit.normal;
 	rd = normalize(rd - micro_normal * 2 * dot(rd, micro_normal));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shader.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 14:00:44 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:04:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ GLuint	compile_shader_from_files(const char **paths, int count,
 	return (shader);
 }
 
-#define SOURCES_AMOUNT 20
+#define SOURCES_AMOUNT 22
 
 int	create_program(t_shader_data *shader_data)
 {
@@ -131,6 +131,8 @@ int	create_program(t_shader_data *shader_data)
 		"src/shaders/bind.comp",
 		"src/shaders/utils/random.comp",
 		"src/shaders/utils/defocus.comp",
+		"src/shaders/path_trace/textures/get_tex_color.comp",
+		"src/shaders/path_trace/textures/apply_maps.comp",
 		"src/shaders/path_trace/material/utils.comp",
 		"src/shaders/path_trace/material/default.comp",
 		"src/shaders/path_trace/material/metallic.comp",

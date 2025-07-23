@@ -13,7 +13,7 @@ void	hit_planes(inout hit_record hit, inout bool hit_something, vec3 ro, vec3 rd
 				hit_something = true;
 				hit = hit_tmp;
 				hit.material_id = planes[i].material_id;
-				//apply_all_map(&hit, data->is_light);
+				apply_all_map(hit);
 				hit.color = get_hit_register_color(planes[i].color, hit);
 			}
 		}

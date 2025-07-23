@@ -41,7 +41,8 @@ void main() {
 	vec3 rd = normalize(pixel_pos - ro);
 
 	data[id] = path_trace(ro, rd);
-	// if (prim_types[240] == 0)
+	//data[id] = checkers[2].c2;
+	// if (tex_types[1] == 0)
 	// 	data[id] = vec3(1.0);
 	// else
 	// 	data[id] = vec3(0.0);

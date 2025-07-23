@@ -1,0 +1,44 @@
+
+vec3	get_solid_texture(vec3 p, vec3 c1, vec3 c2, float scale)
+{
+	int	a;
+	int	b;
+	int	c;
+
+	p *= scale;
+	a = int(floor(p.x));
+	b = int(floor(p.y + 0.5));
+	c = int(floor(p.z));
+	if ((a + b + c) % 2 == 0)
+		return (c1);
+	return (c2);
+}
+
+vec3	get_tex_color(uint tex_index, float u, float v, vec3 hit_point)
+{
+	int	a;
+	int	b;
+
+	if (tex_types[tex_index] == 0) // Image
+	{
+		return (vec3(1.0, 0.0, 0.0));
+	}
+	else if (tex_types[tex_index] == 3) // Checker local
+	{
+		a = int(floor(u * checkers[tex_indices[tex_index]].scale));
+		b = int(floor(v * checkers[tex_indices[tex_index]].scale));
+		if ((a + b) % 2 == 0)
+			return (checkers[tex_indices[tex_index]].c1);
+		return (checkers[tex_indices[tex_index]].c2);
+	}
+	else if (tex_types[tex_index] == 4) // Checker global
+	{
+		return (get_solid_texture(hit_point, checkers[tex_indices[tex_index]].c1,
+			checkers[tex_indices[tex_index]].c2, checkers[tex_indices[tex_index]].scale));
+	}
+	else if (tex_types[tex_index] == 1) // HDR
+	{
+		return (vec3(0.0, 0.0, 1.0));
+	}
+	return (vec3(0.0));
+}

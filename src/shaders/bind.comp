@@ -13,19 +13,19 @@ layout(std140, binding = 3) buffer CameraBuffer {
 };
 
 layout(std430, binding = 4) buffer MaterialBuffer {
-  Material materials[];
+Material materials[];
 };
 
 layout(std430, binding = 5) buffer BvhNodes {
-    bvh_node bvh_nodes[];
+	bvh_node bvh_nodes[];
 };
 
 layout(std430, binding = 6) buffer PrimitiveIndices {
-    uint prim_indices[];
+	uint prim_indices[];
 };
 
 layout(std430, binding = 7) buffer PrimitiveTypes {
-    uint prim_types[];
+	uint prim_types[];
 };
 
 layout(std430, binding = 8) buffer SphereBuffer {
@@ -33,15 +33,15 @@ layout(std430, binding = 8) buffer SphereBuffer {
 };
 
 layout(std430, binding = 9) buffer PlaneBuffer {
-    Plane planes[];
+	Plane planes[];
 };
 
 layout(std430, binding = 10) buffer HyperBuffer {
-    Hyper hypers[];
+	Hyper hypers[];
 };
 
 layout(std430, binding = 11) buffer CylinderBuffer {
-    Cylinder cylinders[];
+	Cylinder cylinders[];
 };
 
 layout(std430, binding = 12) buffer ConeBuffer {
@@ -49,9 +49,23 @@ layout(std430, binding = 12) buffer ConeBuffer {
 };
 
 layout(std430, binding = 13) buffer TriangleBuffer {
-  	Triangle triangles[];
+	Triangle triangles[];
 };
 
+layout(std430, binding = 14) buffer CheckerBuffer {
+	Checker checkers[];
+};
+
+// 15 Images
+
+
+layout(std430, binding = 16) buffer TexturesTypes {
+	uint tex_types[];
+};
+
+layout(std430, binding = 17) buffer TexturesIndices {
+	uint tex_indices[];
+};
 
 uniform uint width_render;
 uniform uint height_render;

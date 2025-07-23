@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gpu_scene.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 14:12:10 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:16:22 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 # define SSBO_BIND_CYLINDERS 11
 # define SSBO_BIND_CONES 12
 # define SSBO_BIND_TRIANGLES 13
+# define SSBO_BIND_CHECKERS 14
+# define SSBO_BIND_IMAGES 15
+# define SSBO_BIND_TEX_TYPE 16
+# define SSBO_BIND_TEX_INDICE 17
 
 /**
  * Tous les _pad sont pour l'alignement std430 et les vec3 qui prennent 16 octets en glsl
@@ -153,7 +157,7 @@ typedef struct s_gpu_triangle
 typedef struct s_gpu_material
 {
 	float	color_value[3];
-	int32_t	albedo_tex_index;
+	int32_t	color_tex_index;
 	float	metallic_value;
 	int32_t	metallic_tex_index;
 	float	roughness_value;
@@ -188,6 +192,13 @@ typedef struct s_gpu_bvh_node
 	uint32_t	prim_count;
 	uint32_t	is_leaf;
 } __attribute__((aligned(16))) t_gpu_bvh_node;
+
+typedef struct s_gpu_checker
+{
+	float	c1[3];
+	float	scale;
+	float	c2[3];
+} __attribute__((aligned(16))) t_gpu_checker;
 
 typedef struct s_gpu_structs
 {
@@ -224,6 +235,20 @@ typedef struct s_gpu_structs
 	int				triangles_am;
 	t_gpu_triangle	*triangles;
 	GLuint			triangles_ssbo;
+
+	int				checkers_am;
+	t_gpu_checker	*checkers;
+	GLuint			checkers_ssbo;
+
+	int				images_am;
+	GLuint64		*images;
+	GLuint			images_ssbo;
+
+	t_uint			*textures_types;
+	GLuint			textures_types_ssbo;
+	t_uint			*textures_indices;
+	GLuint			textures_indices_ssbo;
+	
 }	t_gpu_structs;
 
 int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs);

@@ -101,7 +101,7 @@ struct Viewport {
 
 struct Material {
 	vec3	color_value;
-	int		albedo_tex_index;
+	int		color_tex_index;
 	float	metallic_value;
 	int		metallic_tex_index;
 	float	roughness_value;
@@ -120,17 +120,36 @@ struct Material {
 	float	normal_intensity;
 };
 
+struct MaterialValues {
+	float	metallic;
+	float	roughness;
+	float	ior;
+	float	transmission;
+	float	ao;
+	float	emission_strength;
+	float	scale;
+	float	normal_intensity;
+	vec3	emission_color;
+};
+
+struct Checker {
+	vec3	c1;
+	float	scale;
+	vec3	c2;
+};
+
 struct hit_record
 {
-	vec3		point;
-	float		t;
-	vec3		normal;
-	int			material_id;
-	vec3		color;
-	bool		front_face;
-	float		u;
-	float		v;
-	int			part_id;
+	vec3			point;
+	float			t;
+	vec3			normal;
+	int				material_id;
+	vec3			color;
+	bool			front_face;
+	float			u;
+	float			v;
+	int				part_id;
+	MaterialValues	mat_val;
 };
 
 struct quadratic

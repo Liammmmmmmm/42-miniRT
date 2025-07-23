@@ -10,8 +10,8 @@ void	refracted_value(inout vec3 rd, hit_record hit, inout vec3 power, float eta)
 	vec3	direction;
 
 	direction = normalize(refracted_v(rd, hit.normal, eta));
-	if (materials[hit.material_id].roughness_value > 0.0)
-		direction = ggx_sample_hemisphere(direction, materials[hit.material_id].roughness_value);
+	if (hit.mat_val.roughness > 0.0)
+		direction = ggx_sample_hemisphere(direction, hit.mat_val.roughness);
 	rd = direction;
 	power *= hit.color;
 }
@@ -23,9 +23,9 @@ void	refracted_ray(inout vec3 rd, hit_record hit, inout vec3 power)
 	float	sin_theta;
 
 	if (hit.front_face)
-		eta = viewport.ior_global / materials[hit.material_id].ior;
+		eta = viewport.ior_global / hit.mat_val.ior;
 	else
-		eta = materials[hit.material_id].ior / viewport.ior_global;
+		eta = hit.mat_val.ior / viewport.ior_global;
 	rd = normalize(rd);
 	cos_theta = min(-dot(rd, hit.normal), 1.0);
 	sin_theta = sqrt(1.0 - cos_theta * cos_theta);

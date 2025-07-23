@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gpu_scene.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 14:15:11 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:52:56 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ void	convert_viewport(t_gpu_viewport *dst, t_viewport *src, double ior)
 
 void	count_obj(t_scene *scene, t_gpu_structs *gpu_structs)
 {
-	int	i;
+	uint32_t	i;
 
 	i = 0;
 	while (i < scene->bvh.size)
@@ -245,25 +245,41 @@ void	count_obj(t_scene *scene, t_gpu_structs *gpu_structs)
 	}
 }
 
-void	convert_material(t_gpu_material *dst, t_mat *src)
+void	convert_material(t_gpu_material *dst, t_mat *src, t_scene *scene)
 {
 	color_to_float3(&src->color_value, dst->color_value);
-	dst->albedo_tex_index = -1;
+	dst->color_tex_index = src->color_tex - scene->textures;
+	if (src->color_tex == NULL)
+		dst->color_tex_index = -1;
 	dst->metallic_value = src->metallic_value;
-	dst->metallic_tex_index = -1;
+	dst->metallic_tex_index = src->metallic_tex - scene->textures;
+	if (src->metallic_tex == NULL)
+		dst->metallic_tex_index = -1;
 	dst->roughness_value = src->roughness_value;
-	dst->roughness_tex_index = -1;
+	dst->roughness_tex_index = src->roughness_tex - scene->textures;
+	if (src->roughness_tex == NULL)
+		dst->roughness_tex_index = -1;
 	dst->ior = src->ior;
 	dst->transmission_value = src->transmission_value;
-	dst->transmission_tex_index = -1;
+	dst->transmission_tex_index = src->transmission_tex - scene->textures;
+	if (src->transmission_tex == NULL)
+		dst->transmission_tex_index = -1;
 	dst->ao_value = src->ao_value;
-	dst->ao_tex_index = -1;
+	dst->ao_tex_index = src->ao_tex - scene->textures;
+	if (src->ao_tex == NULL)
+		dst->ao_tex_index = -1;
 	dst->emission_strength = src->emission_strength;
-	dst->emission_strength_tex_index = -1;
+	dst->emission_strength_tex_index = src->emission_strength_tex - scene->textures;
+	if (src->emission_strength_tex == NULL)
+		dst->emission_strength_tex_index = -1;
 	dst->scale = src->scale;
 	fcolor_to_float3(&src->emission_color, dst->emission_color);
-	dst->emission_color_tex_index = -1;
-	dst->normal_tex_index = -1;
+	dst->emission_color_tex_index = src->emission_color_tex - scene->textures;
+	if (src->emission_color_tex == NULL)
+		dst->emission_color_tex_index = -1;
+	dst->normal_tex_index = src->normal - scene->textures;
+	if (src->normal == NULL)
+		dst->normal_tex_index = -1;
 	dst->normal_intensity = src->normal_intensity;
 }
 
@@ -274,7 +290,53 @@ void	convert_materials(t_scene *cpu_scene, t_gpu_material *gpu)
 	i = -1;
 	while (++i < cpu_scene->mat_amount)
 	{
-		convert_material(&gpu[i], &cpu_scene->materials[i]);
+		convert_material(&gpu[i], &cpu_scene->materials[i], cpu_scene);
+	}
+}
+
+void	convert_textures(t_scene *scene, t_gpu_structs *gpu_structs)
+{
+	int	i;
+	int	img_i;
+	int	check_i;
+
+	i = 0;
+	img_i = 0;
+	check_i = 0;
+	while (i < scene->tex_amount)
+	{
+		gpu_structs->textures_types[i] = scene->textures[i].type;
+		printf("Type %d : %d\n", i, gpu_structs->textures_types[i]);
+		if (scene->textures[i].type == CHECKER_GLOBAL || scene->textures[i].type == CHECKER_LOCAL)
+		{
+			gpu_structs->textures_indices[i] = check_i;
+			gpu_structs->checkers[check_i].scale = scene->textures[i].checker.scale;
+			color_to_float3(&scene->textures[i].checker.c1, gpu_structs->checkers[check_i].c1);
+			color_to_float3(&scene->textures[i].checker.c2, gpu_structs->checkers[check_i].c2);
+			check_i++;
+		}
+		if (scene->textures[i].type == HDR || scene->textures[i].type == IMAGE)
+		{
+			gpu_structs->textures_indices[i] = img_i;
+			img_i++;
+			printf("Ntm on gere pas ca encore\n");
+		}
+		i++;
+	}
+}
+
+void	count_tex(t_scene *scene, t_gpu_structs *gpu_structs)
+{
+	int	i;
+
+	i = 0;
+	while (i < scene->tex_amount)
+	{
+		if (scene->textures[i].type == CHECKER_GLOBAL || scene->textures[i].type == CHECKER_LOCAL)
+			gpu_structs->checkers_am++;
+		if (scene->textures[i].type == HDR || scene->textures[i].type == IMAGE)
+			gpu_structs->images_am++;	
+		i++;
 	}
 }
 
@@ -295,6 +357,20 @@ int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_struc
 	convert_camera(scene, &gpu_structs->camera);
 	create_ssbo(&gpu_structs->camera_ssbo, sizeof(t_gpu_camera), &gpu_structs->camera, SSBO_BIND_CAMERA);
 	
+	// ---------------- TEXTURES ---------------- //
+	count_tex(scene, gpu_structs);
+	gpu_structs->checkers = ft_calloc(gpu_structs->checkers_am, sizeof(t_gpu_checker));
+	gpu_structs->images = ft_calloc(gpu_structs->images_am, sizeof(GLuint64));
+	gpu_structs->textures_types = ft_calloc(scene->tex_amount, sizeof(t_uint));
+	gpu_structs->textures_indices = ft_calloc(scene->tex_amount, sizeof(t_uint));
+	// SECURE LES MALLOC
+	convert_textures(scene, gpu_structs);
+	create_ssbo(&gpu_structs->checkers_ssbo, sizeof(t_gpu_checker) * gpu_structs->checkers_am, gpu_structs->checkers, SSBO_BIND_CHECKERS);
+	create_ssbo(&gpu_structs->images_ssbo, sizeof(GLuint64) * gpu_structs->images_am, gpu_structs->images, SSBO_BIND_IMAGES);
+	create_ssbo(&gpu_structs->textures_types_ssbo, sizeof(t_uint) * scene->tex_amount, gpu_structs->textures_types, SSBO_BIND_TEX_TYPE);
+	create_ssbo(&gpu_structs->textures_indices_ssbo, sizeof(t_uint) * scene->tex_amount, gpu_structs->textures_indices, SSBO_BIND_TEX_INDICE);
+	
+	// ---------------- MATERIALS ---------------- //
 	gpu_structs->mat_am = scene->mat_amount;
 	gpu_structs->mat = ft_calloc(gpu_structs->mat_am, sizeof(t_gpu_material));
 	if (!gpu_structs->mat)
@@ -302,6 +378,7 @@ int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_struc
 	convert_materials(scene, gpu_structs->mat);
 	create_ssbo(&gpu_structs->mat_ssbo, sizeof(t_gpu_material) * gpu_structs->mat_am, gpu_structs->mat, SSBO_BIND_MATERIALS);
 
+	// ---------------- OBJECTS ---------------- //
 	count_obj(scene, gpu_structs);
 	gpu_structs->spheres = ft_calloc(gpu_structs->spheres_am, sizeof(t_gpu_sphere));
 	gpu_structs->hypers = ft_calloc(gpu_structs->hypers_am, sizeof(t_gpu_hyper));
@@ -337,6 +414,6 @@ int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_struc
 		return (-1); // Tout free correctement
 	convert_plane(scene, gpu_structs->planes);
 	create_ssbo(&gpu_structs->planes_ssbo, sizeof(t_gpu_plane) * gpu_structs->planes_am, gpu_structs->planes, SSBO_BIND_PLANE);
-
+	
 	return (0);
 }

@@ -18,8 +18,8 @@ float	get_reflect_value(vec3 dir_in, hit_record hit)
 {
 	return (fresnel_schlick_f(
 			get_cos_theta(dir_in, hit.normal),
-			pow((materials[hit.material_id].ior - 1)
-				/ (materials[hit.material_id].ior + 1), 2.0)
+			pow((hit.mat_val.ior - 1)
+				/ (hit.mat_val.ior + 1), 2.0)
 		)
 	);
 }

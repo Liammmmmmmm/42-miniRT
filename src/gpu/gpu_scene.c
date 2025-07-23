@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 13:54:09 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:15:11 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,6 +328,8 @@ int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_struc
 	
 	gpu_structs->prim_indice_am = scene->bvh.size;
 	create_ssbo(&gpu_structs->prim_indice_ssbo, sizeof(uint32_t) * gpu_structs->prim_indice_am, gpu_structs->prim_indice, SSBO_BIND_PRIM_INDICE);
+
+	create_ssbo(&gpu_structs->prim_type_ssbo, sizeof(uint32_t) * gpu_structs->prim_indice_am, gpu_structs->prim_type, SSBO_BIND_PRIM_TYPE);
 
 	gpu_structs->planes_am = scene->obj_lst.plane_nb;
 	gpu_structs->planes = ft_calloc(gpu_structs->planes_am, sizeof(t_gpu_plane));

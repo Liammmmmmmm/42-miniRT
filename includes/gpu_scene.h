@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 14:00:14 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:12:10 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,12 +205,13 @@ typedef struct s_gpu_structs
 	int				bvh_node_am;
 	GLuint			bvh_node_ssbo;
 	int				prim_indice_am;
-	GLuint			prim_indice_ssbo;
 	GLuint			planes_ssbo;
 	int				planes_am;
 	t_gpu_plane		*planes;
 	uint32_t		*prim_type;
+	GLuint			prim_type_ssbo;
 	uint32_t		*prim_indice;
+	GLuint			prim_indice_ssbo;
 	int				cylinders_am;
 	t_gpu_cylinder	*cylinders;
 	GLuint			cylinders_ssbo;

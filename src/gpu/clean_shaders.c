@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 13:07:06 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:13:50 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	clean_scene(t_gpu_structs *gpu_structs)
 	delete_ssbo(&gpu_structs->prim_indice_ssbo);
 
 	free(gpu_structs->prim_type);
-	delete_ssbo(&gpu_structs->prim_type);
+	delete_ssbo(&gpu_structs->prim_type_ssbo);
 
 	ft_bzero(gpu_structs, sizeof(t_gpu_structs));
 }

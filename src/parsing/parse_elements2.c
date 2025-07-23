@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/21 14:49:55 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:48:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int	parse_ambiant_light(t_scene *scene, char *line)
 		return (print_error(MSG_ERR_AMBIENT_LIGHT_RATIO));
 	}
 	free(parts);
-	if (scene->amb_light.skybox_t)
-		make_importance_sampling_map(scene);
 	return (1);
 }
 

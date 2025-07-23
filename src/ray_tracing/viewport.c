@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/21 14:56:58 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:51:37 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "caustic.h"
 #include "bvh.h"
 #include "error_message.h"
+#include "importance_sampling.h"
 
 static void	init_camera_values(t_minirt *minirt)
 {
@@ -90,6 +91,8 @@ t_viewport	init_viewport(t_minirt *minirt)
 	t_viewport	vp;
 	t_vec3		u;
 
+	free_importance_sampling_malloc(&minirt->scene);
+	make_importance_sampling_map(&minirt->scene);
 	init_viewport_values(minirt, &vp, &u);
 	init_viewport_vectors(minirt, &vp, u);
 	if (vp.depth_buffer == NULL)

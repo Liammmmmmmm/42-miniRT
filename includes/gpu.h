@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:19:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 17:17:18 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 10:37:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 void	init_ssbo(t_shader_data *shader_data, size_t render_width,
 	size_t render_height);
 int		init_shader(t_shader_data *shader_data, size_t render_width,
-	size_t render_height);
+	size_t render_height, t_scene *scene);
 void	compute_frame_gpu(t_minirt *minirt);
 
 void	delete_ssbo(GLuint *ssbo);

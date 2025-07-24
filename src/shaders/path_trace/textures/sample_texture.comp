@@ -1,0 +1,10 @@
+
+vec4 sample_texture(int tex_index, vec2 uv) {
+
+    uvec2 size = uvec2(textures_data[tex_index].width, textures_data[tex_index].height);
+    uint x = uint(uv.x * (size.x - 1));
+    uint y = uint(uv.y * (size.y - 1));
+    uint pixelOffset = (y * size.x + x); // 4 channels (RGBA)
+    uint textureOffset = textures_data[tex_index].offset;
+    return textures_stream[textureOffset + pixelOffset];
+}

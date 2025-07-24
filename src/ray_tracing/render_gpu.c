@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 11:49:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 14:05:30 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ void	render(t_minirt *minirt)
 
 	if (is_cam_moving(minirt) && !last_frame_is_moving_tmp)
 	{
-		minirt->scene.render_height = minirt->scene.win_height / 10;
-		minirt->scene.render_width = minirt->scene.win_width / 10;
+		minirt->scene.render_height = minirt->scene.win_height / 3;
+		minirt->scene.render_width = minirt->scene.win_width / 3;
 		restart_minirt(minirt);
 	}
 	else if (!is_cam_moving(minirt) && last_frame_is_moving_tmp)

@@ -26,6 +26,9 @@ void main() {
 
 	uint id = gid.y * width_render + gid.x;
 
+	// vec4 tex = sample_texture(0, vec2(float(gid.x) / width_render, float(gid.y) / height_render));
+	// data[id] = vec3(tex.x, tex.y, tex.z);
+	// return ;
 	get_thread_seed();
 
 	vec3 ro;

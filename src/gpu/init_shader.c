@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 16:04:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 10:54:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,14 @@ GLuint	compile_shader_from_files(const char **paths, int count,
 		}
 		sources[i] = (char *)tmp.data;
 	}
-	print_shader_sources(sources, count, paths);
+	// print_shader_sources(sources, count, paths);
 	shader = compile_step(sources, count, shader_type);
 	if (check_shader_compile(shader) == -1)
 		return (0);
 	return (shader);
 }
 
-#define SOURCES_AMOUNT 22
+#define SOURCES_AMOUNT 23
 
 int	create_program(t_shader_data *shader_data)
 {
@@ -131,6 +131,7 @@ int	create_program(t_shader_data *shader_data)
 		"src/shaders/bind.comp",
 		"src/shaders/utils/random.comp",
 		"src/shaders/utils/defocus.comp",
+		"src/shaders/path_trace/textures/sample_texture.comp",
 		"src/shaders/path_trace/textures/get_tex_color.comp",
 		"src/shaders/path_trace/textures/apply_maps.comp",
 		"src/shaders/path_trace/material/utils.comp",
@@ -175,7 +176,7 @@ void	init_ssbo(t_shader_data *shader_data, size_t render_width,
 }
 
 int	init_shader(t_shader_data *shader_data, size_t render_width,
-	size_t render_height)
+	size_t render_height, t_scene *scene)
 {
 	if (!glfwInit())
 		return (print_errorm1("Failed to init GLFW"));
@@ -208,5 +209,6 @@ int	init_shader(t_shader_data *shader_data, size_t render_width,
 		return (-1);
 	}
 	init_ssbo(shader_data, render_width, render_height);
+	convert_textures_init(scene, &shader_data->tex);
 	return (0);
 }

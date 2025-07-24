@@ -23,9 +23,9 @@ bool    hit_register_loop(vec3 ro, vec3 rd, bvh_node node, inout hit_record rec)
 
 	while (i < node.prim_count)
 	{
-		if (prim_types[node.first_prim + i] == 0)
+		if (prim_ti[node.first_prim + i].type == 0)
 		{
-			sphere_index = prim_indices[node.first_prim + i];
+			sphere_index = prim_ti[node.first_prim + i].indice;
 			if (hit_sphere(spheres[sphere_index], ro, rd, hit_tmp))
 			{
 				if (hit_tmp.t < rec.t)

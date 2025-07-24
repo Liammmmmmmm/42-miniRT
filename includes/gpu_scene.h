@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 15:16:22 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 10:38:36 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,17 @@
 # define SSBO_BIND_CAMERA 3
 # define SSBO_BIND_MATERIALS 4
 # define SSBO_BIND_BVH 5
-# define SSBO_BIND_PRIM_INDICE 6
-# define SSBO_BIND_PRIM_TYPE 7
-# define SSBO_BIND_SPHERES 8
-# define SSBO_BIND_PLANE 9
-# define SSBO_BIND_HYPERS 10
-# define SSBO_BIND_CYLINDERS 11
-# define SSBO_BIND_CONES 12
-# define SSBO_BIND_TRIANGLES 13
-# define SSBO_BIND_CHECKERS 14
-# define SSBO_BIND_IMAGES 15
-# define SSBO_BIND_TEX_TYPE 16
-# define SSBO_BIND_TEX_INDICE 17
+# define SSBO_BIND_PRIM_TYPE_INDICE 6
+# define SSBO_BIND_SPHERES 7
+# define SSBO_BIND_PLANE 8
+# define SSBO_BIND_HYPERS 9
+# define SSBO_BIND_CYLINDERS 10
+# define SSBO_BIND_CONES 11
+# define SSBO_BIND_TRIANGLES 12
+# define SSBO_BIND_CHECKERS 13
+# define SSBO_BIND_IMAGES 14
+# define SSBO_BIND_IMAGES_STREAM 15
+# define SSBO_BIND_TEX_TYPE_INDICE 16
 
 /**
  * Tous les _pad sont pour l'alignement std430 et les vec3 qui prennent 16 octets en glsl
@@ -200,6 +199,21 @@ typedef struct s_gpu_checker
 	float	c2[3];
 } __attribute__((aligned(16))) t_gpu_checker;
 
+typedef struct s_gpu_tex_data
+{
+	uint32_t	width;
+	uint32_t	height;
+	uint32_t	offset;
+	float		exposure;
+	// float		gamma;
+} __attribute__((aligned(16))) t_gpu_tex_data;
+
+typedef struct s_type_indice
+{
+	uint32_t	type;
+	uint32_t	indice;
+} __attribute__((aligned(8))) t_type_indice;
+
 typedef struct s_gpu_structs
 {
 	t_gpu_viewport	viewport;
@@ -219,10 +233,8 @@ typedef struct s_gpu_structs
 	GLuint			planes_ssbo;
 	int				planes_am;
 	t_gpu_plane		*planes;
-	uint32_t		*prim_type;
-	GLuint			prim_type_ssbo;
-	uint32_t		*prim_indice;
-	GLuint			prim_indice_ssbo;
+	t_type_indice	*prim_types_indices;
+	GLuint			prim_types_indices_ssbo;
 	int				cylinders_am;
 	t_gpu_cylinder	*cylinders;
 	GLuint			cylinders_ssbo;
@@ -235,22 +247,29 @@ typedef struct s_gpu_structs
 	int				triangles_am;
 	t_gpu_triangle	*triangles;
 	GLuint			triangles_ssbo;
+}	t_gpu_structs;
 
+
+typedef struct s_gpu_textures
+{
 	int				checkers_am;
 	t_gpu_checker	*checkers;
 	GLuint			checkers_ssbo;
 
 	int				images_am;
-	GLuint64		*images;
+	t_gpu_tex_data	*images;
 	GLuint			images_ssbo;
-
-	t_uint			*textures_types;
-	GLuint			textures_types_ssbo;
-	t_uint			*textures_indices;
-	GLuint			textures_indices_ssbo;
 	
-}	t_gpu_structs;
+	uint32_t		total_pixel_images;
+	float			*images_stream;
+	GLuint			images_stream_ssbo;
 
+	t_type_indice	*textures_types_indices;
+	GLuint			textures_types_indices_ssbo;
+	
+}	t_gpu_textures;
+
+int	convert_textures_init(t_scene *scene, t_gpu_textures *gpu_tex);
 int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs);
 
 #endif

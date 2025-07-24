@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 18:07:38 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 10:37:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	init_all(t_minirt *minirt)
 	if (!init_render(minirt))
 		return (clean(minirt));
 	if (init_shader(&minirt->shaders_data, minirt->scene.render_width,
-		minirt->scene.render_height) == -1)
+		minirt->scene.render_height, &minirt->scene) == -1)
 		return (clean(minirt));
 	return (0);
 }

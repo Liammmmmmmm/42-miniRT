@@ -138,6 +138,19 @@ struct Checker {
 	vec3	c2;
 };
 
+struct TextureData {
+	uint	width;
+	uint	height;
+	uint	offset;
+	float	exposure;
+};
+
+struct type_indice
+{
+	uint	type;
+	uint	indice;
+};
+
 struct hit_record
 {
 	vec3			point;

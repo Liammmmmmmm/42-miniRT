@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 15:52:56 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 10:43:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void convert_all_obj(t_scene *cpu_scene, t_gpu_structs *gpu_scene)
 	{
 		if (cpu_scene->bvh.obj_list[i]->type == SPHERE)
 		{
-			gpu_scene->prim_indice[i] = sphere;
-			gpu_scene->prim_type[i] = 0;
+			gpu_scene->prim_types_indices[i].indice = sphere;
+			gpu_scene->prim_types_indices[i].type = 0;
 			gpu_scene->spheres[sphere].radius = ((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->radius;
 			vec3_to_float3(&((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->position, gpu_scene->spheres[sphere].position);
 			color_to_float3(&((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->color, gpu_scene->spheres[sphere].color);
@@ -76,8 +76,8 @@ void convert_all_obj(t_scene *cpu_scene, t_gpu_structs *gpu_scene)
 		}
 		if (cpu_scene->bvh.obj_list[i]->type == CYLINDER)
 		{
-			gpu_scene->prim_indice[i] = cylindre;
-			gpu_scene->prim_type[i] = 1;
+			gpu_scene->prim_types_indices[i].indice = cylindre;
+			gpu_scene->prim_types_indices[i].type = 1;
 			gpu_scene->cylinders[cylindre].diameter = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->diameter;
 			vec3_to_float3(&((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->position, gpu_scene->cylinders[cylindre].position);
 			vec3_to_float3(&((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->orientation, gpu_scene->cylinders[cylindre].orientation);
@@ -98,8 +98,8 @@ void convert_all_obj(t_scene *cpu_scene, t_gpu_structs *gpu_scene)
 		}
 		if (cpu_scene->bvh.obj_list[i]->type == CONE)
 		{
-			gpu_scene->prim_indice[i] = cone;
-			gpu_scene->prim_type[i] = 2;
+			gpu_scene->prim_types_indices[i].indice = cone;
+			gpu_scene->prim_types_indices[i].type = 2;
 			gpu_scene->cones[cone].height = ((t_cone *)cpu_scene->bvh.obj_list[i]->object)->height;
 			gpu_scene->cones[cone].diameter = ((t_cone *)cpu_scene->bvh.obj_list[i]->object)->diameter;
 			vec3_to_float3(&((t_cone *)cpu_scene->bvh.obj_list[i]->object)->orientation, gpu_scene->cones[cone].orientation);
@@ -117,8 +117,8 @@ void convert_all_obj(t_scene *cpu_scene, t_gpu_structs *gpu_scene)
 		}
 		if (cpu_scene->bvh.obj_list[i]->type == HYPERBOLOID)
 		{
-			gpu_scene->prim_indice[i] = hyper;
-			gpu_scene->prim_type[i] = 3;
+			gpu_scene->prim_types_indices[i].indice = hyper;
+			gpu_scene->prim_types_indices[i].type = 3;
 			gpu_scene->hypers[hyper].a = ((t_hyperboloid *)cpu_scene->bvh.obj_list[i]->object)->a;
 			gpu_scene->hypers[hyper].b = ((t_hyperboloid *)cpu_scene->bvh.obj_list[i]->object)->b;
 			gpu_scene->hypers[hyper].c = ((t_hyperboloid *)cpu_scene->bvh.obj_list[i]->object)->c;
@@ -135,8 +135,8 @@ void convert_all_obj(t_scene *cpu_scene, t_gpu_structs *gpu_scene)
 		}
 		if (cpu_scene->bvh.obj_list[i]->type == TRIANGLE)
 		{
-			gpu_scene->prim_indice[i] = triangle;
-			gpu_scene->prim_type[i] = 4;
+			gpu_scene->prim_types_indices[i].indice = triangle;
+			gpu_scene->prim_types_indices[i].type = 4;
 			vert_to_gpu_vert(&((t_triangle *)cpu_scene->bvh.obj_list[i]->object)->v0, &gpu_scene->triangles[triangle].v0);
 			vert_to_gpu_vert(&((t_triangle *)cpu_scene->bvh.obj_list[i]->object)->v1, &gpu_scene->triangles[triangle].v1);
 			vert_to_gpu_vert(&((t_triangle *)cpu_scene->bvh.obj_list[i]->object)->v2, &gpu_scene->triangles[triangle].v2);
@@ -294,49 +294,106 @@ void	convert_materials(t_scene *cpu_scene, t_gpu_material *gpu)
 	}
 }
 
-void	convert_textures(t_scene *scene, t_gpu_structs *gpu_structs)
+void	convert_textures(t_scene *scene, t_gpu_textures *gpu_textures)
 {
-	int	i;
-	int	img_i;
-	int	check_i;
+	int		i;
+	int		img_i;
+	int		check_i;
+	uint32_t	image_offset;
 
-	i = 0;
+	i = -1;
 	img_i = 0;
 	check_i = 0;
-	while (i < scene->tex_amount)
+	image_offset = 0;
+	while (++i < scene->tex_amount)
 	{
-		gpu_structs->textures_types[i] = scene->textures[i].type;
-		printf("Type %d : %d\n", i, gpu_structs->textures_types[i]);
+		gpu_textures->textures_types_indices[i].type = scene->textures[i].type;
+		printf("Type %d : %d\n", i, gpu_textures->textures_types_indices[i].type);
 		if (scene->textures[i].type == CHECKER_GLOBAL || scene->textures[i].type == CHECKER_LOCAL)
 		{
-			gpu_structs->textures_indices[i] = check_i;
-			gpu_structs->checkers[check_i].scale = scene->textures[i].checker.scale;
-			color_to_float3(&scene->textures[i].checker.c1, gpu_structs->checkers[check_i].c1);
-			color_to_float3(&scene->textures[i].checker.c2, gpu_structs->checkers[check_i].c2);
+			gpu_textures->textures_types_indices[i].indice = check_i;
+			gpu_textures->checkers[check_i].scale = scene->textures[i].checker.scale;
+			color_to_float3(&scene->textures[i].checker.c1, gpu_textures->checkers[check_i].c1);
+			color_to_float3(&scene->textures[i].checker.c2, gpu_textures->checkers[check_i].c2);
 			check_i++;
 		}
 		if (scene->textures[i].type == HDR || scene->textures[i].type == IMAGE)
 		{
-			gpu_structs->textures_indices[i] = img_i;
+			gpu_textures->textures_types_indices[i].indice = img_i;
+			
+			if (scene->textures[i].type == IMAGE)
+			{
+				if (scene->textures[i].img.rgba == NULL)
+					continue ;
+
+				gpu_textures->images[img_i].height = scene->textures[i].img.height;
+				gpu_textures->images[img_i].width = scene->textures[i].img.width;
+				gpu_textures->images[img_i].offset = image_offset;
+
+				t_uint	y = 0;
+				t_uint	tpx = scene->textures[i].img.height * scene->textures[i].img.width;
+				while (y < tpx)
+				{
+					gpu_textures->images_stream[image_offset * 4 + y * 4] = scene->textures[i].img.rgba[y].r / 255.0;
+					gpu_textures->images_stream[image_offset * 4 + y * 4 + 1] = scene->textures[i].img.rgba[y].g / 255.0;
+					gpu_textures->images_stream[image_offset * 4 + y * 4 + 2] = scene->textures[i].img.rgba[y].b / 255.0;
+					gpu_textures->images_stream[image_offset * 4 + y * 4 + 3] = scene->textures[i].img.rgba[y].a / 255.0;
+					y++;
+				}
+				image_offset += tpx;
+			}
+			else
+			{
+				if (scene->textures[i].hdr.pixels == NULL)
+					continue ;
+
+				gpu_textures->images[img_i].height = scene->textures[i].hdr.height;
+				gpu_textures->images[img_i].width = scene->textures[i].hdr.width;
+				gpu_textures->images[img_i].offset = image_offset;
+				gpu_textures->images[img_i].exposure = scene->textures[i].hdr.exposure;
+
+				t_uint	y = 0;
+				t_uint	tpx = scene->textures[i].hdr.height * scene->textures[i].hdr.width;
+				while (y < tpx)
+				{
+					gpu_textures->images_stream[image_offset * 4 + y * 4] = scene->textures[i].hdr.pixels[y].r;
+					gpu_textures->images_stream[image_offset * 4 + y * 4 + 1] = scene->textures[i].hdr.pixels[y].g;
+					gpu_textures->images_stream[image_offset * 4 + y * 4 + 2] = scene->textures[i].hdr.pixels[y].b;
+					gpu_textures->images_stream[image_offset * 4 + y * 4 + 3] = scene->textures[i].hdr.pixels[y].e;
+					y++;
+				}
+				image_offset += tpx;
+			}
 			img_i++;
-			printf("Ntm on gere pas ca encore\n");
 		}
-		i++;
 	}
 }
 
-void	count_tex(t_scene *scene, t_gpu_structs *gpu_structs)
+void	count_tex(t_scene *scene, t_gpu_textures *gpu_textures)
 {
 	int	i;
 
-	i = 0;
-	while (i < scene->tex_amount)
+	i = -1;
+	while (++i < scene->tex_amount)
 	{
 		if (scene->textures[i].type == CHECKER_GLOBAL || scene->textures[i].type == CHECKER_LOCAL)
-			gpu_structs->checkers_am++;
+			gpu_textures->checkers_am++;
 		if (scene->textures[i].type == HDR || scene->textures[i].type == IMAGE)
-			gpu_structs->images_am++;	
-		i++;
+		{
+			if (scene->textures[i].type == IMAGE)
+			{
+				if (scene->textures[i].img.rgba == NULL)
+					continue ;
+				gpu_textures->total_pixel_images += scene->textures[i].img.height * scene->textures[i].img.width;
+			}
+			else
+			{
+				if (scene->textures[i].hdr.pixels == NULL)
+					continue ;
+				gpu_textures->total_pixel_images += scene->textures[i].hdr.height * scene->textures[i].hdr.width;
+			}
+			gpu_textures->images_am++;
+		}
 	}
 }
 
@@ -348,6 +405,24 @@ void	create_ssbo(GLuint *ssbo, size_t size, void *data, long bind)
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, bind, *ssbo);
 }
 
+int	convert_textures_init(t_scene *scene, t_gpu_textures *gpu_tex)
+{
+	// ---------------- TEXTURES ---------------- //
+	count_tex(scene, gpu_tex);
+	gpu_tex->checkers = ft_calloc(gpu_tex->checkers_am, sizeof(t_gpu_checker));
+	gpu_tex->images = ft_calloc(gpu_tex->images_am, sizeof(t_gpu_tex_data));
+	gpu_tex->images_stream = ft_calloc(gpu_tex->total_pixel_images * 4, sizeof(float));
+	gpu_tex->textures_types_indices = ft_calloc(scene->tex_amount, sizeof(t_type_indice));
+	// SECURE LES MALLOC
+	convert_textures(scene, gpu_tex);
+	create_ssbo(&gpu_tex->checkers_ssbo, sizeof(t_gpu_checker) * gpu_tex->checkers_am, gpu_tex->checkers, SSBO_BIND_CHECKERS);
+	create_ssbo(&gpu_tex->images_ssbo, sizeof(t_gpu_tex_data) * gpu_tex->images_am, gpu_tex->images, SSBO_BIND_IMAGES);
+	create_ssbo(&gpu_tex->images_stream_ssbo, sizeof(float) * gpu_tex->total_pixel_images * 4, gpu_tex->images_stream, SSBO_BIND_IMAGES_STREAM);
+	create_ssbo(&gpu_tex->textures_types_indices_ssbo, sizeof(t_type_indice) * scene->tex_amount, gpu_tex->textures_types_indices, SSBO_BIND_TEX_TYPE_INDICE);
+	
+	return (0);
+}
+
 int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs)
 {
 	clean_scene(gpu_structs);
@@ -356,19 +431,7 @@ int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_struc
 	create_ssbo(&gpu_structs->viewport_ssbo, sizeof(t_gpu_viewport), &gpu_structs->viewport, SSBO_BIND_VIEWPORT);
 	convert_camera(scene, &gpu_structs->camera);
 	create_ssbo(&gpu_structs->camera_ssbo, sizeof(t_gpu_camera), &gpu_structs->camera, SSBO_BIND_CAMERA);
-	
-	// ---------------- TEXTURES ---------------- //
-	count_tex(scene, gpu_structs);
-	gpu_structs->checkers = ft_calloc(gpu_structs->checkers_am, sizeof(t_gpu_checker));
-	gpu_structs->images = ft_calloc(gpu_structs->images_am, sizeof(GLuint64));
-	gpu_structs->textures_types = ft_calloc(scene->tex_amount, sizeof(t_uint));
-	gpu_structs->textures_indices = ft_calloc(scene->tex_amount, sizeof(t_uint));
-	// SECURE LES MALLOC
-	convert_textures(scene, gpu_structs);
-	create_ssbo(&gpu_structs->checkers_ssbo, sizeof(t_gpu_checker) * gpu_structs->checkers_am, gpu_structs->checkers, SSBO_BIND_CHECKERS);
-	create_ssbo(&gpu_structs->images_ssbo, sizeof(GLuint64) * gpu_structs->images_am, gpu_structs->images, SSBO_BIND_IMAGES);
-	create_ssbo(&gpu_structs->textures_types_ssbo, sizeof(t_uint) * scene->tex_amount, gpu_structs->textures_types, SSBO_BIND_TEX_TYPE);
-	create_ssbo(&gpu_structs->textures_indices_ssbo, sizeof(t_uint) * scene->tex_amount, gpu_structs->textures_indices, SSBO_BIND_TEX_INDICE);
+
 	
 	// ---------------- MATERIALS ---------------- //
 	gpu_structs->mat_am = scene->mat_amount;
@@ -385,8 +448,7 @@ int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_struc
 	gpu_structs->cylinders = ft_calloc(gpu_structs->cylinders_am, sizeof(t_gpu_cylinder));
 	gpu_structs->cones = ft_calloc(gpu_structs->cones_am, sizeof(t_gpu_cone));
 	gpu_structs->triangles = ft_calloc(gpu_structs->triangles_am, sizeof(t_gpu_triangle));
-	gpu_structs->prim_indice = ft_calloc(scene->bvh.size, sizeof(uint32_t));
-	gpu_structs->prim_type = ft_calloc(scene->bvh.size, sizeof(uint32_t));
+	gpu_structs->prim_types_indices = ft_calloc(scene->bvh.size, sizeof(t_type_indice));
 	// if (!gpu_structs->spheres)
 	// 	return (-1); // Tout free correctement
 	convert_all_obj(scene, gpu_structs);
@@ -404,9 +466,7 @@ int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_struc
 	create_ssbo(&gpu_structs->bvh_node_ssbo, sizeof(t_gpu_bvh_node) * gpu_structs->bvh_node_am, gpu_structs->bvh_node, SSBO_BIND_BVH);
 	
 	gpu_structs->prim_indice_am = scene->bvh.size;
-	create_ssbo(&gpu_structs->prim_indice_ssbo, sizeof(uint32_t) * gpu_structs->prim_indice_am, gpu_structs->prim_indice, SSBO_BIND_PRIM_INDICE);
-
-	create_ssbo(&gpu_structs->prim_type_ssbo, sizeof(uint32_t) * gpu_structs->prim_indice_am, gpu_structs->prim_type, SSBO_BIND_PRIM_TYPE);
+	create_ssbo(&gpu_structs->prim_types_indices_ssbo, sizeof(t_type_indice) * gpu_structs->prim_indice_am, gpu_structs->prim_types_indices, SSBO_BIND_PRIM_TYPE_INDICE);
 
 	gpu_structs->planes_am = scene->obj_lst.plane_nb;
 	gpu_structs->planes = ft_calloc(gpu_structs->planes_am, sizeof(t_gpu_plane));

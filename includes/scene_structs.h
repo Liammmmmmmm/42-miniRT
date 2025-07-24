@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_structs.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:03:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 20:55:40 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/24 17:19:51 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,12 @@ typedef struct s_amb_light
 	t_tex	*skybox_t;
 	double	*gray_scale;
 	double	*raw_average;
-	double	*pdf_joint;
+	float	*pdf_joint;
 	double	*importance_map;
 	double	*pdf_marginal;
-	double	*cdf_marginal_inverse;
+	float	*cdf_marginal_inverse;
 	double	*pdf_conditional;
-	double	*cdf_conditional_inverse;
+	float	*cdf_conditional_inverse;
 	double	*DEBUG_INVERSE_SAMPLING;
 	double	*cdf_w;
 	double	*cdf_h;

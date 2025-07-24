@@ -71,6 +71,10 @@ uniform Camera cam;
 uniform Viewport viewport;
 uniform Ambiant ambiant;
 
+uniform sampler2D cdf_conditional_inverse;
+uniform sampler2D pdf_joint;
+uniform sampler1D cdf_marginal_inverse;
+
 uniform uint spheres_am;
 uniform uint planes_am;
 uniform uint cylinders_am;

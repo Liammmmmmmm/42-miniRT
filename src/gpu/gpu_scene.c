@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 16:48:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 19:09:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -432,6 +432,55 @@ int	convert_textures_init(t_scene *scene, t_gpu_textures *gpu_tex)
 	return (0);
 }
 
+GLuint create_texture2d_from_data(const float* data, int width, int height)
+{
+	GLuint texture_id;
+	glGenTextures(1, &texture_id);
+	glBindTexture(GL_TEXTURE_2D, texture_id);
+
+	glTexImage2D(
+		GL_TEXTURE_2D,		// Target
+		0,					// Mipmap level
+		GL_R32F,			// Format interne (1 canal float)
+		width, height,		// Dimensions
+		0,					// Border (doit être 0)
+		GL_RED,				// Format des données (1 canal)
+		GL_FLOAT,			// Type des données
+		data				// Pointeur vers les données
+	);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+	return (texture_id);
+}
+
+GLuint create_texture1d_from_data(const float* data, int width)
+{
+    GLuint texture_id;
+    glGenTextures(1, &texture_id);
+    glBindTexture(GL_TEXTURE_1D, texture_id);
+
+    glTexImage1D(
+        GL_TEXTURE_1D,      // Target
+        0,                  // Mipmap level
+        GL_R32F,            // Format interne (1 canal float)
+        width,              // Taille de la texture (1 dimension)
+        0,                  // Border (doit être 0)
+        GL_RED,             // Format des données (1 canal)
+        GL_FLOAT,           // Type des données
+        data                // Pointeur vers les données
+    );
+
+    glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+
+    return texture_id;
+}
+
 int	convert_scene(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs)
 {
 	clean_scene(gpu_structs);
@@ -489,8 +538,6 @@ int	convert_scene(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_
 	glUniform1ui(width_loc, minirt->scene.render_width);
 	GLuint height_loc = glGetUniformLocation(minirt->shaders_data.program, "height_render");
 	glUniform1ui(height_loc, minirt->scene.render_height);
-	GLuint sample_count = glGetUniformLocation(minirt->shaders_data.program, "sample_count");
-	glUniform1ui(sample_count, minirt->screen.sample);
 	GLuint max_bounces = glGetUniformLocation(minirt->shaders_data.program, "max_bounces");
 	glUniform1ui(max_bounces, (t_uint)minirt->controls.max_bounces);
 	GLuint spheres_am = glGetUniformLocation(minirt->shaders_data.program, "spheres_am");
@@ -534,7 +581,36 @@ int	convert_scene(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_
 	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "ambiant.ratio"), minirt->shaders_data.scene.ambiant.ratio);
 	glUniform1i(glGetUniformLocation(minirt->shaders_data.program, "ambiant.skybox_tex_index"), minirt->shaders_data.scene.ambiant.skybox_tex_index);
 
+
+	// -------- IMPORTANCE SAMPLING --------- //
+
+	// cdf_conditional_inverse 2d
+	// cdf_marginal_inverse 1d height
+	// pdf_joint 2d
+
+	clean_importance_sampling(&minirt->shaders_data.tex);
 	
+	if (scene->amb_light.skybox_t && scene->amb_light.skybox_t->hdr.pixels)
+	{
+		minirt->shaders_data.tex.cdf_ci_texture2d = create_texture2d_from_data(scene->amb_light.cdf_conditional_inverse, scene->amb_light.skybox_t->hdr.width, scene->amb_light.skybox_t->hdr.height);
+		GLuint cdf_ci_location = glGetUniformLocation(minirt->shaders_data.program, "cdf_conditional_inverse");
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, minirt->shaders_data.tex.cdf_ci_texture2d);
+		glUniform1i(cdf_ci_location, 0);
+
+		minirt->shaders_data.tex.cdf_mi_texture2d = create_texture1d_from_data(scene->amb_light.cdf_marginal_inverse, scene->amb_light.skybox_t->hdr.height);
+		GLuint cdf_mi_location = glGetUniformLocation(minirt->shaders_data.program, "cdf_marginal_inverse");
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_1D, minirt->shaders_data.tex.cdf_mi_texture2d);
+		glUniform1i(cdf_mi_location, 2);
+
+		minirt->shaders_data.tex.pdf_joint_texture2d = create_texture2d_from_data(scene->amb_light.pdf_joint, scene->amb_light.skybox_t->hdr.width, scene->amb_light.skybox_t->hdr.height);
+		GLuint pdf_joint_location = glGetUniformLocation(minirt->shaders_data.program, "pdf_joint");
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, minirt->shaders_data.tex.pdf_joint_texture2d);
+		glUniform1i(pdf_joint_location, 1);
+	}
+
 
 	return (0);
 }

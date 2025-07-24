@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 16:51:44 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 17:39:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,6 +262,10 @@ typedef struct s_gpu_textures
 
 	t_type_indice	*textures_types_indices;
 	GLuint			textures_types_indices_ssbo;
+
+	GLuint			cdf_ci_texture2d;
+	GLuint			pdf_joint_texture2d;
+	GLuint			cdf_mi_texture2d;
 	
 }	t_gpu_textures;
 

@@ -13,7 +13,7 @@ vec3	path_trace(vec3 ro, vec3 rd)
 		if (hit_register_all(hit, ro, rd) == true)
 		{
 			ro = hit.point;
-			material_manager_v4(rd, hit, power, accumulation);
+			material_manager_v4(ro, rd, hit, power, accumulation);
 		}
 		else
 		{

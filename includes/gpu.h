@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:19:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 16:51:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 17:50:25 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	compute_frame_gpu(t_minirt *minirt);
 void	delete_ssbo(GLuint *ssbo);
 void	clean_scene(t_gpu_structs *gpu_structs);
 void	clean_shaders(t_shader_data *shader_data);
+void	clean_importance_sampling(t_gpu_textures *gpu_tex);
 
-int	convert_scene(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs);
+int		convert_scene(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs);
 
 #endif

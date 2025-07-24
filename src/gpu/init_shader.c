@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 10:54:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 18:27:41 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,14 @@ GLuint	compile_shader_from_files(const char **paths, int count,
 		}
 		sources[i] = (char *)tmp.data;
 	}
-	// print_shader_sources(sources, count, paths);
+	print_shader_sources(sources, count, paths);
 	shader = compile_step(sources, count, shader_type);
 	if (check_shader_compile(shader) == -1)
 		return (0);
 	return (shader);
 }
 
-#define SOURCES_AMOUNT 23
+#define SOURCES_AMOUNT 24
 
 int	create_program(t_shader_data *shader_data)
 {
@@ -131,15 +131,10 @@ int	create_program(t_shader_data *shader_data)
 		"src/shaders/bind.comp",
 		"src/shaders/utils/random.comp",
 		"src/shaders/utils/defocus.comp",
+		"src/shaders/path_trace/importance_sampling.comp",
 		"src/shaders/path_trace/textures/sample_texture.comp",
 		"src/shaders/path_trace/textures/get_tex_color.comp",
 		"src/shaders/path_trace/textures/apply_maps.comp",
-		"src/shaders/path_trace/material/utils.comp",
-		"src/shaders/path_trace/material/default.comp",
-		"src/shaders/path_trace/material/metallic.comp",
-		"src/shaders/path_trace/material/refraction.comp",
-		"src/shaders/path_trace/material/dielectric.comp",
-		"src/shaders/path_trace/material/manager.comp",
 		"src/shaders/path_trace/hit_register/ray.comp",
 		"src/shaders/path_trace/hit_register/normal.comp",
 		"src/shaders/path_trace/hit_register/quadratic.comp",
@@ -148,6 +143,12 @@ int	create_program(t_shader_data *shader_data)
 		"src/shaders/path_trace/hit_register/hit_bvh.comp",
 		"src/shaders/path_trace/hit_register/hit_register.comp",
 		"src/shaders/path_trace/skybox.comp",
+		"src/shaders/path_trace/material/utils.comp",
+		"src/shaders/path_trace/material/default.comp",
+		"src/shaders/path_trace/material/metallic.comp",
+		"src/shaders/path_trace/material/refraction.comp",
+		"src/shaders/path_trace/material/dielectric.comp",
+		"src/shaders/path_trace/material/manager.comp",
 		"src/shaders/path_trace/path_trace.comp",
 		"src/shaders/shader.comp"
 	};

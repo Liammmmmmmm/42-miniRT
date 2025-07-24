@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 15:45:29 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 17:48:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ void	delete_ssbo(GLuint *ssbo)
         glDeleteBuffers(1, ssbo);
         *ssbo = 0;
     }
+}
+
+void	clean_importance_sampling(t_gpu_textures *gpu_tex)
+{
+	glDeleteTextures(1, &gpu_tex->cdf_ci_texture2d);
+	glDeleteTextures(1, &gpu_tex->pdf_joint_texture2d);
+	glDeleteTextures(1, &gpu_tex->cdf_mi_texture2d);
 }
 
 void	clean_scene(t_gpu_structs *gpu_structs)

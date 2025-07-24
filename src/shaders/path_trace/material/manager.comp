@@ -1,9 +1,9 @@
 
-void	material_manager_v4(inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
+void	material_manager_v4(vec3 ro, inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
 {
 	if (hit.material_id == -1)
 	{
-		material_default(rd, hit, power, accumulation);
+		material_default(ro, rd, hit, power, accumulation);
 		return ;
 	}
 	if (hit.mat_val.emission_strength > 0)
@@ -13,9 +13,9 @@ void	material_manager_v4(inout vec3 rd, hit_record hit, inout vec3 power, inout 
 	if (hit.mat_val.metallic == 1)
 		metallic_color(rd, hit, power);
 	else if (hit.mat_val.metallic == 0.0)
-		dielectric_mat(rd, hit, power, accumulation);
+		dielectric_mat(ro, rd, hit, power, accumulation);
 	else if (hit.mat_val.metallic > rand())
 		metallic_color(rd, hit, power);
 	else
-		dielectric_mat(rd, hit, power, accumulation);
+		dielectric_mat(ro, rd, hit, power, accumulation);
 }

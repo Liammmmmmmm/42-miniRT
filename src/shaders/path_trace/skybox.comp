@@ -46,5 +46,5 @@ vec3	get_background_color(vec3 rd)
 
 vec3	add_skybox(vec3 rd, vec3 power, vec3 accumulation)
 {
-	return accumulation + power * get_background_color(rd);
+	return accumulation + power * clamp(get_background_color(rd), 0, 16);
 }

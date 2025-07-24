@@ -1,0 +1,22 @@
+
+vec2	calc_inverse_transform_sampling_uv()
+{
+	const vec2	r = vec2(rand(), rand());
+	vec2		n;
+
+	n.y = texture(cdf_marginal_inverse, r.x).r;
+	n.x = texture(cdf_conditional_inverse, vec2(r.y, n.y)).r;
+	return (n);
+}
+
+vec3	calc_inverse_transform_sampling_dir(const vec2 uv)
+{
+	const float	theta = (uv.y - 0.5) * PI;
+	const float	phi = (0.5 - uv.x) * 2 * PI;
+
+	return (vec3(
+		cos(theta) * cos(phi),
+		sin(theta),
+		cos(theta) * sin(phi)
+	));
+}

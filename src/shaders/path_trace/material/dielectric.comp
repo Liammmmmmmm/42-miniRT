@@ -10,7 +10,7 @@ void	reflected_dielectric_color(inout vec3 rd, hit_record hit)
 	rd = normalize(rd - micro_normal * 2 * dot(rd, micro_normal));
 }
 
-void	dielectric_mat(inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
+void	dielectric_mat(inout vec3 ro, inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
 {
 	if (hit.mat_val.ior > 0)
 	{
@@ -22,16 +22,16 @@ void	dielectric_mat(inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 
 			if (hit.mat_val.transmission == 1.0)
 				refracted_ray(rd, hit, power);
 			else if (hit.mat_val.transmission == 0.0)
-				material_default(rd, hit, power, accumulation);
+				material_default(ro, rd, hit, power, accumulation);
 			else
 			{
 				if (hit.mat_val.transmission < rand())
-					material_default(rd, hit, power, accumulation);
+					material_default(ro, rd, hit, power, accumulation);
 				else
 					refracted_ray(rd, hit, power);
 			}
 		}
 	}
 	else
-		material_default(rd, hit, power, accumulation);
+		material_default(ro, rd, hit, power, accumulation);
 }

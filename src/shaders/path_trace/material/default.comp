@@ -16,12 +16,38 @@ vec3 cos_weighted_sample_hemishphere(vec3 normal)
 	return (normalize(local_dir));
 }
 
-void	material_default(inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
+
+void	importance_sampling(vec3 ro, inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
+{
+	hit_record		tmp_hit;
+	const vec2		uv = calc_inverse_transform_sampling_uv();
+	vec3			radiance;
+
+	tmp_hit.t = 10000000;
+	rd = calc_inverse_transform_sampling_dir(uv);
+	if (hit_register_all(tmp_hit, ro, rd))
+		return ;
+	float costheta = dot(hit.normal, rd);
+	float pdf = texture(pdf_joint, uv).r;
+	if (pdf <= 0)
+		return ;
+	radiance = get_background_color(rd);
+	if (hit.material_id != -1)
+		radiance *= hit.mat_val.ao;
+	radiance *= power;
+	radiance *= costheta / pdf;
+	accumulation += radiance;
+	power *= (1.0 - costheta);
+}
+
+void	material_default(inout vec3 ro, inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
 {
 	// TODO: Ajouter le calcul des lights a l'accumulation
 
 	power *= hit.color;
 
-	// TODO: Calculer importance sampling
+	if (ambiant.skybox_tex_index != -1)
+		importance_sampling(ro, rd, hit, power, accumulation);
+	
 	rd = cos_weighted_sample_hemishphere(hit.normal);
 }

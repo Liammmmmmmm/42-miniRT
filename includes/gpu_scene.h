@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 10:38:36 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 15:11:18 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,35 +45,25 @@ typedef struct s_gpu_viewport {
 	float	gamma;
 	float	defocus_radius;
 	int		max_bounces;
-
 	float	u[3];
 	float	ior_global;
 	float	v[3];
-	float	_pad2;
 	float	pixel_delta_u[3];
-	float	_pad3;
 	float	pixel_delta_v[3];
-	float	_pad4;
 	float	upper_left[3];
-	float	_pad5;
 	float	pixel00_loc[3];
-	float	_pad6;
 	float	defocus_disk_u[3];
-	float	_pad7;
 	float	defocus_disk_v[3];
 }	__attribute__((aligned(16))) t_gpu_viewport;
 
 typedef struct s_gpu_camera
 {
 	float	position[3];
-	float	_pad1;
 	float	orientation[3];
-	float	_pad2;
 	float	fov;
-	float	focus_dist;  
+	float	focus_dist;
 	float	defocus_angle;
 }	__attribute__((aligned(16))) t_gpu_camera;
-
 
 /**
  * /!\ ATTENTION A L'ORDRE DES VARIABLES (a cause de l'alignement des vec3 par le gpu)

@@ -4,13 +4,13 @@ layout(std430, binding = 1) buffer Output {
 	vec3 data[];
 };
 
-layout(std140, binding = 2) buffer ViewportBuffer {
-	Viewport viewport;
-};
+// layout(std140, binding = 2) buffer ViewportBuffer {
+// 	Viewport viewport;
+// };
 
-layout(std140, binding = 3) buffer CameraBuffer {
-	Camera cam;
-};
+// layout(std140, binding = 3) buffer CameraBuffer {
+// 	Camera cam;
+// };
 
 layout(std430, binding = 4) buffer MaterialBuffer {
 	Material materials[];
@@ -66,6 +66,9 @@ layout(std430, binding = 16) buffer TexturesTypes {
 
 uniform uint width_render;
 uniform uint height_render;
+
+uniform Camera cam;
+uniform Viewport viewport;
 
 uniform uint spheres_am;
 uniform uint planes_am;

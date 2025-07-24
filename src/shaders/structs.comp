@@ -6,13 +6,10 @@
 
 struct Camera {
 	vec3 position;
-	float _pad1;
-	vec3 orientation;
-	float _pad2;
 	float fov;
+	vec3 orientation;
 	float focus_dist;
 	float defocus_angle;
-	float _pad3;
 };
 
 struct Sphere {
@@ -80,23 +77,23 @@ struct	Triangle {
 };
 
 struct Viewport {
-	float	focal_length;
-	float	height;
-	float	width;
-	int		render_w;
-	int		render_h;
-	float	gamma;
-	float	defocus_radius;
-	int		max_bounces;
 	vec3	u;
-	float	ior_global;
+	float	focal_length;
 	vec3	v;
+	float	height;
 	vec3	pixel_delta_u;
+	float	width;
 	vec3	pixel_delta_v;
+	int		render_w;
 	vec3	upper_left;
+	int		render_h;
 	vec3	pixel00_loc;
+	float	gamma;
 	vec3	defocus_disk_u;
+	float	defocus_radius;
 	vec3	defocus_disk_v;
+	int		max_bounces;
+	float	ior_global;
 };
 
 struct Material {

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 10:43:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 14:48:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -430,7 +430,7 @@ int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_struc
 	convert_viewport(&gpu_structs->viewport, viewport, scene->ior_all);
 	create_ssbo(&gpu_structs->viewport_ssbo, sizeof(t_gpu_viewport), &gpu_structs->viewport, SSBO_BIND_VIEWPORT);
 	convert_camera(scene, &gpu_structs->camera);
-	create_ssbo(&gpu_structs->camera_ssbo, sizeof(t_gpu_camera), &gpu_structs->camera, SSBO_BIND_CAMERA);
+	//create_ssbo(&gpu_structs->camera_ssbo, sizeof(t_gpu_camera), &gpu_structs->camera, SSBO_BIND_CAMERA);
 
 	
 	// ---------------- MATERIALS ---------------- //

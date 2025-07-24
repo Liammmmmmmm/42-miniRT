@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   use_shader.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:31:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 13:54:36 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:15:01 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,30 @@ void	compute_frame_gpu(t_minirt *minirt)
 	glUniform1ui(hypers_am, (t_uint)minirt->shaders_data.scene.hypers_am);
 	GLuint triangles_am = glGetUniformLocation(minirt->shaders_data.program, "triangles_am");
 	glUniform1ui(triangles_am, (t_uint)minirt->shaders_data.scene.triangles_am);
+
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "cam.position"), 1, minirt->shaders_data.scene.camera.position);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "cam.orientation"), 1, minirt->shaders_data.scene.camera.orientation);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "cam.fov"), minirt->shaders_data.scene.camera.fov);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "cam.defocus_angle"), minirt->shaders_data.scene.camera.defocus_angle);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "cam.focus_dist"), minirt->shaders_data.scene.camera.focus_dist);
+
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.u"), 1, minirt->shaders_data.scene.viewport.u);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.v"), 1, minirt->shaders_data.scene.viewport.v);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.pixel_delta_u"), 1, minirt->shaders_data.scene.viewport.pixel_delta_u);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.pixel_delta_v"), 1, minirt->shaders_data.scene.viewport.pixel_delta_v);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.defocus_disk_u"), 1, minirt->shaders_data.scene.viewport.defocus_disk_u);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.defocus_disk_v"), 1, minirt->shaders_data.scene.viewport.defocus_disk_v);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.upper_left"), 1, minirt->shaders_data.scene.viewport.upper_left);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.pixel00_loc"), 1, minirt->shaders_data.scene.viewport.pixel00_loc);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "viewport.height"), minirt->shaders_data.scene.viewport.height);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "viewport.width"), minirt->shaders_data.scene.viewport.width);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "viewport.render_w"), minirt->shaders_data.scene.viewport.render_w);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "viewport.render_h"), minirt->shaders_data.scene.viewport.render_h);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "viewport.focal_length"), minirt->shaders_data.scene.viewport.focal_length);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "viewport.gamma"), minirt->shaders_data.scene.viewport.gamma);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "viewport.defocus_radius"), minirt->shaders_data.scene.viewport.defocus_radius);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "viewport.max_bounces"), minirt->shaders_data.scene.viewport.max_bounces);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "viewport.ior_global"), minirt->shaders_data.scene.viewport.ior_global);
 
 	glDispatchCompute(
 		(minirt->scene.render_width + 7) / 8,

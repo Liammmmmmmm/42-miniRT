@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_hdr_value.c                                    :+:      :+:    :+:   */
+/*   get_hdr_value.c         f                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -22,7 +22,7 @@ t_fcolor	get_hdr_pixel(t_hdr *hdr, int x, int y)
 		scale = ldexp(1.0, hdr->pixels[y * hdr->width + x].e - 128);
 	else
 		scale = ldexp(1.0, hdr->pixels[y * hdr->width + x].e - 128)
-			* powf(2.0, hdr->exposure);
+			* pow(2.0, hdr->exposure);
 	if (hdr->gamma == 1.0)
 		return ((t_fcolor){
 			.r = hdr->pixels[y * hdr->width + x].r * scale / 255.0,

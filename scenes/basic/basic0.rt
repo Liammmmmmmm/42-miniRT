@@ -1,4 +1,5 @@
 # tex texture1 assets/textures/earth_daymap_2k.bmp
+tex skybox  image         assets/textures/shanghai_bund_2k.hdr
 tex texture2 image assets/textures/non.bmp
 # tex skybox   image assets/textures/mountain_skybox.bmp
 
@@ -18,7 +19,7 @@ mat	red                           255,0,0           0.0            0.0          
 mat	green                         255,255,255           0.0            0.15            1.450000       1.000000       1.0                 0.000000            255,255,255  
 mat	blue                          0,0,255           1.0            0.1            0.000000       0.000000       1.0                 0.000000            255,255,255  
 
-A	1.0										220,220,220
+A	1.0										skybox
 
 C	0,0.2,1	0,0,-1 90
 

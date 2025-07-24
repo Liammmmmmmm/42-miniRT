@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 14:07:20 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 18:23:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 16:55:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	restart_minirt(t_minirt *minirt)
 {
 	stop_minirt(minirt);
 	start_minirt(minirt);
-	return (1);
 }
 
 void	click_start_stop(void *vparam)

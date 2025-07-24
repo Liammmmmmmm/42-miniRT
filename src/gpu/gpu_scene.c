@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 14:48:46 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 16:48:07 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,15 @@ void	convert_camera(t_scene *cpu_scene, t_gpu_camera *cam)
 	cam->fov = (float)cpu_scene->camera.fov;
 	cam->defocus_angle = (float)cpu_scene->camera.defocus_angle;
 	cam->focus_dist = (float)cpu_scene->camera.focus_dist;
+}
+
+void	convert_ambiant(t_scene *cpu_scene, t_gpu_amb_light *amb, t_scene *scene)
+{
+	color_to_float3(&cpu_scene->amb_light.skybox_c, amb->skybox_color);
+	amb->ratio = (float)cpu_scene->amb_light.ratio;
+	amb->skybox_tex_index = cpu_scene->amb_light.skybox_t - scene->textures;
+	if (cpu_scene->amb_light.skybox_t == NULL)
+		amb->skybox_tex_index = -1;
 }
 
 void	convert_viewport(t_gpu_viewport *dst, t_viewport *src, double ior)
@@ -423,14 +432,13 @@ int	convert_textures_init(t_scene *scene, t_gpu_textures *gpu_tex)
 	return (0);
 }
 
-int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs)
+int	convert_scene(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs)
 {
 	clean_scene(gpu_structs);
 
 	convert_viewport(&gpu_structs->viewport, viewport, scene->ior_all);
-	create_ssbo(&gpu_structs->viewport_ssbo, sizeof(t_gpu_viewport), &gpu_structs->viewport, SSBO_BIND_VIEWPORT);
 	convert_camera(scene, &gpu_structs->camera);
-	//create_ssbo(&gpu_structs->camera_ssbo, sizeof(t_gpu_camera), &gpu_structs->camera, SSBO_BIND_CAMERA);
+	convert_ambiant(scene, &gpu_structs->ambiant, scene);
 
 	
 	// ---------------- MATERIALS ---------------- //
@@ -475,5 +483,58 @@ int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_struc
 	convert_plane(scene, gpu_structs->planes);
 	create_ssbo(&gpu_structs->planes_ssbo, sizeof(t_gpu_plane) * gpu_structs->planes_am, gpu_structs->planes, SSBO_BIND_PLANE);
 	
+
+	glUseProgram(minirt->shaders_data.program);
+	GLuint width_loc = glGetUniformLocation(minirt->shaders_data.program, "width_render");
+	glUniform1ui(width_loc, minirt->scene.render_width);
+	GLuint height_loc = glGetUniformLocation(minirt->shaders_data.program, "height_render");
+	glUniform1ui(height_loc, minirt->scene.render_height);
+	GLuint sample_count = glGetUniformLocation(minirt->shaders_data.program, "sample_count");
+	glUniform1ui(sample_count, minirt->screen.sample);
+	GLuint max_bounces = glGetUniformLocation(minirt->shaders_data.program, "max_bounces");
+	glUniform1ui(max_bounces, (t_uint)minirt->controls.max_bounces);
+	GLuint spheres_am = glGetUniformLocation(minirt->shaders_data.program, "spheres_am");
+	glUniform1ui(spheres_am, (t_uint)minirt->shaders_data.scene.spheres_am);
+	GLuint planes_am = glGetUniformLocation(minirt->shaders_data.program, "planes_am");
+	glUniform1ui(planes_am, (t_uint)minirt->shaders_data.scene.planes_am);
+	GLuint cylinders_am = glGetUniformLocation(minirt->shaders_data.program, "cylinders_am");
+	glUniform1ui(cylinders_am, (t_uint)minirt->shaders_data.scene.cylinders_am);
+	GLuint cones_am = glGetUniformLocation(minirt->shaders_data.program, "cones_am");
+	glUniform1ui(cones_am, (t_uint)minirt->shaders_data.scene.cones_am);
+	GLuint hypers_am = glGetUniformLocation(minirt->shaders_data.program, "hypers_am");
+	glUniform1ui(hypers_am, (t_uint)minirt->shaders_data.scene.hypers_am);
+	GLuint triangles_am = glGetUniformLocation(minirt->shaders_data.program, "triangles_am");
+	glUniform1ui(triangles_am, (t_uint)minirt->shaders_data.scene.triangles_am);
+
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "cam.position"), 1, minirt->shaders_data.scene.camera.position);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "cam.orientation"), 1, minirt->shaders_data.scene.camera.orientation);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "cam.fov"), minirt->shaders_data.scene.camera.fov);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "cam.defocus_angle"), minirt->shaders_data.scene.camera.defocus_angle);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "cam.focus_dist"), minirt->shaders_data.scene.camera.focus_dist);
+
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.u"), 1, minirt->shaders_data.scene.viewport.u);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.v"), 1, minirt->shaders_data.scene.viewport.v);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.pixel_delta_u"), 1, minirt->shaders_data.scene.viewport.pixel_delta_u);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.pixel_delta_v"), 1, minirt->shaders_data.scene.viewport.pixel_delta_v);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.defocus_disk_u"), 1, minirt->shaders_data.scene.viewport.defocus_disk_u);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.defocus_disk_v"), 1, minirt->shaders_data.scene.viewport.defocus_disk_v);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.upper_left"), 1, minirt->shaders_data.scene.viewport.upper_left);
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "viewport.pixel00_loc"), 1, minirt->shaders_data.scene.viewport.pixel00_loc);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "viewport.height"), minirt->shaders_data.scene.viewport.height);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "viewport.width"), minirt->shaders_data.scene.viewport.width);
+	glUniform1i(glGetUniformLocation(minirt->shaders_data.program, "viewport.render_w"), minirt->shaders_data.scene.viewport.render_w);
+	glUniform1i(glGetUniformLocation(minirt->shaders_data.program, "viewport.render_h"), minirt->shaders_data.scene.viewport.render_h);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "viewport.focal_length"), minirt->shaders_data.scene.viewport.focal_length);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "viewport.gamma"), minirt->shaders_data.scene.viewport.gamma);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "viewport.defocus_radius"), minirt->shaders_data.scene.viewport.defocus_radius);
+	glUniform1i(glGetUniformLocation(minirt->shaders_data.program, "viewport.max_bounces"), minirt->shaders_data.scene.viewport.max_bounces);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "viewport.ior_global"), minirt->shaders_data.scene.viewport.ior_global);
+
+	glUniform3fv(glGetUniformLocation(minirt->shaders_data.program, "ambiant.skybox_color"), 1, minirt->shaders_data.scene.ambiant.skybox_color);
+	glUniform1f(glGetUniformLocation(minirt->shaders_data.program, "ambiant.ratio"), minirt->shaders_data.scene.ambiant.ratio);
+	glUniform1i(glGetUniformLocation(minirt->shaders_data.program, "ambiant.skybox_tex_index"), minirt->shaders_data.scene.ambiant.skybox_tex_index);
+
+	
+
 	return (0);
 }

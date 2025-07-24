@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 10:33:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 15:45:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void	delete_ssbo(GLuint *ssbo)
 
 void	clean_scene(t_gpu_structs *gpu_structs)
 {
-	delete_ssbo(&gpu_structs->viewport_ssbo);
-	delete_ssbo(&gpu_structs->camera_ssbo);
 	free(gpu_structs->mat);
 	delete_ssbo(&gpu_structs->mat_ssbo);
 

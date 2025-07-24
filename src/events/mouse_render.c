@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:42:48 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 13:25:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 16:54:39 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	mouseup_render(int key, int x, int y, t_minirt *minirt)
 	return (0);
 }
 
-void	mouse_move_cam(int x, int y, t_minirt *minirt, t_vec2 delta)
+void	mouse_move_cam(t_minirt *minirt, t_vec2 delta)
 {
 	t_vec3	right;
 	t_vec3	up;
@@ -127,7 +127,7 @@ int	mouse_move_render(int x, int y, t_minirt *minirt)
 		delta.x = (float)(x - (int)minirt->controls.mlxc) * MOUSE_SENSITIVITY;
 		delta.y = (float)(y - (int)minirt->controls.mlyc) * MOUSE_SENSITIVITY;
 		if (ft_abs(x - (int)minirt->controls.mlxc) < 100 && ft_abs(y - (int)minirt->controls.mlyc) < 100)
-			mouse_move_cam(x, y, minirt, delta);
+			mouse_move_cam(minirt, delta);
 		center_x = minirt->scene.win_width / 2;
 		center_y = minirt->scene.win_height / 2;
 		mlx_mouse_move(minirt->mlx.mlx, minirt->mlx.render_win, center_x, center_y);

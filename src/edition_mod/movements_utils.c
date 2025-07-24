@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:22:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 11:38:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 16:55:25 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 t_vec3	get_right_vector(t_minirt *minirt)
 {
-	t_vec3	right;
 	t_vec3	up;
 
 	up = (t_vec3){0, 1, 0};

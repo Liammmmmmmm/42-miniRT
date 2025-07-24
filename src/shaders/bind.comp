@@ -69,6 +69,7 @@ uniform uint height_render;
 
 uniform Camera cam;
 uniform Viewport viewport;
+uniform Ambiant ambiant;
 
 uniform uint spheres_am;
 uniform uint planes_am;

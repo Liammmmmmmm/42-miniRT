@@ -6,7 +6,7 @@ void	get_sphere_uv(inout hit_record hit, Sphere sp)
 		(atan(
 			(-hit.point.z + sp.position.z) / sp.radius,
 			(hit.point.x - sp.position.x) / sp.radius
-		) * 2 + PI) / (2 * PI), 0, 1);
+		) + PI) / (2 * PI), 0, 1);
 	hit.v = clamp(acos((-hit.point.y + sp.position.y) / sp.radius) / PI, 0, 1);
 	if (sp.material_id != -1 && materials[sp.material_id].scale != 1)
 	{

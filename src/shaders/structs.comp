@@ -96,6 +96,12 @@ struct Viewport {
 	float	ior_global;
 };
 
+struct Ambiant {
+	vec3	skybox_color;
+	float	ratio;
+	int		skybox_tex_index;
+};
+
 struct Material {
 	vec3	color_value;
 	int		color_tex_index;

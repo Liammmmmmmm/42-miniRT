@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 15:11:18 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 16:51:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,13 @@ typedef struct s_gpu_viewport {
 	float	defocus_disk_u[3];
 	float	defocus_disk_v[3];
 }	__attribute__((aligned(16))) t_gpu_viewport;
+
+typedef struct s_gpu_amb_light
+{
+	float	ratio;
+	float	skybox_color[3];
+	int		skybox_tex_index;
+}	__attribute__((aligned(16))) t_gpu_amb_light;
 
 typedef struct s_gpu_camera
 {
@@ -207,9 +214,8 @@ typedef struct s_type_indice
 typedef struct s_gpu_structs
 {
 	t_gpu_viewport	viewport;
-	GLuint			viewport_ssbo;
 	t_gpu_camera	camera;
-	GLuint			camera_ssbo;
+	t_gpu_amb_light	ambiant;
 	int				spheres_am;
 	t_gpu_sphere	*spheres;
 	GLuint			spheres_ssbo;
@@ -260,6 +266,5 @@ typedef struct s_gpu_textures
 }	t_gpu_textures;
 
 int	convert_textures_init(t_scene *scene, t_gpu_textures *gpu_tex);
-int	convert_scene(t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs);
 
 #endif

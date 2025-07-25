@@ -1,0 +1,166 @@
+
+
+void	get_cylinder_lateral_uv(inout hit_record hit, Cylinder cyl)
+{
+	vec3		right;
+	const vec3	rel = hit.point - cyl.position;
+
+	if (abs(cyl.orientation.y) < 0.99)
+		right = normalize(cross(vec3(0.0, 1.0, 0.0), cyl.orientation));
+	else
+		right = normalize(cross(vec3(1.0, 0.0, 0.0), cyl.orientation));
+	hit.u = clamp((atan(dot(rel, cross(cyl.orientation, right)), dot(rel, right)) + PI) / (2.0 * PI), 0.0, 1.0);
+	hit.v = clamp((dot(hit.point - cyl.position, cyl.orientation) / (cyl.height)) + 0.5, 0.0, 1.0);
+	if (hit.material_id != -1 && materials[hit.material_id].scale != 1)
+	{
+		hit.u *= materials[hit.material_id].scale;
+		hit.v *= materials[hit.material_id].scale;
+		hit.u = fract(hit.u);
+		hit.v = fract(hit.v);
+	}
+}
+
+// void	get_cylinder_cap_uv(t_hit_record *rec, t_cylinder *cyl, int top)
+// {
+// 	vec3			right;
+// 	const vec3	rel = vec3_subtract(hit.point, vec3_add(cyl.position, \
+// 		vec3_multiply_scalar(cyl.orientation, cyl.height * 0.5 * top)));
+
+// 	if (fabs(cyl.orientation.y) < 0.99)
+// 		right = normalize(cross((vec3){0, 1, 0}, cyl.orientation));
+// 	else
+// 		right = normalize(cross((vec3){1, 0, 0}, cyl.orientation));
+// 	hit.u = clamp((dot(rel, right) / cyl.diameter) + 0.5);
+// 	hit.v = clamp((dot(rel, cross(cyl.orientation, right))
+// 				/ cyl.diameter) + 0.5);
+// 	if (hit.mat && hit.mat->scale != 1)
+// 	{
+// 		hit.u *= hit.mat->scale;
+// 		hit.v *= hit.mat->scale;
+// 		hit.u = modf(hit.u, &(double){0});
+// 		hit.v = modf(hit.v, &(double){0});
+// 	}
+// }
+
+
+bool	handle_cylinder_hit(Cylinder cyl, vec3 ro, vec3 rd, inout hit_record hit, quadratic q)
+{
+	const vec3	axis = normalize(cyl.orientation);
+	const vec3	p = ray_at(ro, rd, q.t_hit);
+	const vec3	base = cyl.position - (axis * cyl.height * 0.5);
+	const float	proj = dot(p - base, axis);
+	vec3		outward;
+
+	if (proj < 0.0 || proj > cyl.height)
+		return (false);
+	outward = normalize(p - base - (axis * proj));
+	hit.t = q.t_hit;
+	hit.point = p;
+	hit.normal = set_normal_face(ro, rd, outward, hit);
+	hit.material_id = cyl.material_id;
+	get_cylinder_lateral_uv(hit, cyl); // A FAIREEEEEE
+	return (true);
+}
+
+bool	cylinder_cap_bottom(vec3 ro, vec3 rd, Cylinder cyl, hit_record hit)
+{
+	const vec3	plane_origin = cyl.position - (normalize(cyl.orientation) * cyl.height * 0.5);
+	const float	d = dot(rd, cyl.orientation);
+	float		t;
+	vec3		hit_point;
+
+	if (abs(d) < 1e-6)
+		return (false);
+	t = -dot(ro - plane_origin, cyl.orientation) / d;
+	if (t < IT_MIN || t > IT_MAX)
+		return (false);
+	hit_point = ray_at(ro, rd, t);
+	if (length(hit_point - plane_origin) > cyl.diameter * 0.5)
+		return (false);
+	hit.t = t;
+	hit.point = hit_point;
+	hit.normal = -cyl.orientation;
+	hit.front_face = dot(rd, hit.normal) < 0;
+	hit.material_id = cyl.material_id_bot;
+	if (hit.material_id == -1)
+		hit.material_id = cyl.material_id;
+	hit.part_id = 2;
+	get_cylinder_cap_uv(hit, cyl, -1);
+	return (true);
+}
+
+bool	cylinder_cap_top(vec3 ro, vec3 rd, Cylinder cyl, hit_record hit)
+{
+	const vec3	pl_o = cyl.position + normalize(cyl.orientation) * cyl.height * 0.5;
+	const float	denom = dot(rd, cyl.orientation);
+	vec3		hit_point;
+	float		t;
+
+	if (abs(denom) < 1e-6)
+		return (false);
+	t = -dot(ro - pl_o, cyl.orientation) / denom;
+	if (t < IT_MIN || t > IT_MAX)
+		return (false);
+	hit_point = ray_at(ro, rd, t);
+	if (length(hit_point - pl_o) > cyl.diameter * 0.5)
+		return (false);
+	hit.t = t;
+	hit.point = hit_point;
+	hit.normal = cyl.orientation;
+	hit.front_face = dot(rd, hit.normal) < 0;
+	hit.material_id = cyl.material_id_top;
+	if (hit.material_id == -1)
+		hit.material_id = cyl.material_id;
+	hit.part_id = 1;
+	get_cylinder_cap_uv(hit, cyl, 1);
+	return (true);
+}
+
+void	init_axe_value(inout Cylinder cyl)
+{
+	if (cyl.orientation.x == 0 && cyl.orientation.y == 0 && cyl.orientation.z == 0)
+		cyl.orientation.y = 1;
+}
+
+bool	init_cylinder_quadratic(inout quadratic q, Cylinder cyl, vec3 ro, vec3 rd)
+{
+	const vec3	oc = ro - cyl.position;
+	const float	radius = cyl.diameter * 0.5;
+
+	q.dd = dot(rd, cyl.orientation);
+	q.oo = dot(oc, cyl.orientation);
+	q.a = dot(rd, rd) - q.dd * q.dd;
+	q.b = 2.0 * (dot(rd, oc) - q.dd * q.oo);
+	q.c = dot(oc, oc) - q.oo * q.oo - radius * radius;
+	return (solve_quadratic(q));
+}
+
+bool	hit_cylinder(Cylinder cyl, vec3 ro, vec3 rd, out hit_record hit)
+{
+	quadratic	q = quadratic(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+	hit_record	tmp_rec = hit_record(vec3(0), IT_MAX, vec3(0), -1, vec3(0), false, 0.0, 0.0, 0, MaterialValues(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, vec3(0)));
+	bool		hit_any;
+
+	init_axe_value(cyl);
+	hit_any = false;
+	if (init_cylinder_quadratic(q, cyl, ro, rd) && valid_t(q))
+	{
+		if (handle_cylinder_hit(cyl, ro, rd, hit, q))
+			hit_any = true;
+	}
+	if (cylinder_cap_bottom(ro, rd, cyl, tmp_rec) && (!hit_any || tmp_rec.t < hit.t))
+	{
+		hit = tmp_rec;
+		hit_any = true;
+	}
+	if (cylinder_cap_top(ro, rd, cyl, tmp_rec) && (!hit_any || tmp_rec.t < hit.t))
+	{
+		hit = tmp_rec;
+		hit_any = true;
+	}
+	if (!hit_any)
+		return (false);
+	hit.front_face = (dot(rd, hit.normal) < 0);
+	hit.normal = set_normal_face(ro, rd, hit.normal, hit);
+	return (true);
+}

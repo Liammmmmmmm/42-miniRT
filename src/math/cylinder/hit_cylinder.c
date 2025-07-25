@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cylinder.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 16:54:11 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 14:41:10 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/25 12:40:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static inline char	init_axe_value(t_cylinder *cyl)
 	return (0);
 }
 
-char	hit_cylinder(t_cylinder *cyl, t_ray *r,	t_hit_record *rec)
+char	hit_cylinder(t_cylinder *cyl, t_ray *r, t_hit_record *rec)
 {
 	t_quadratic		q;
 	t_hit_record	tmp_rec;

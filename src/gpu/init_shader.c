@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shader.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/25 12:52:07 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/25 14:06:00 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ GLuint	compile_shader_from_files(const char **paths, int count,
 	return (shader);
 }
 
-#define SOURCES_AMOUNT 25
+#define SOURCES_AMOUNT 26
 
 int	create_program(t_shader_data *shader_data)
 {
@@ -139,6 +139,7 @@ int	create_program(t_shader_data *shader_data)
 		"src/shaders/path_trace/hit_register/normal.comp",
 		"src/shaders/path_trace/hit_register/quadratic.comp",
 		"src/shaders/path_trace/hit_register/sphere.comp",
+		"src/shaders/path_trace/hit_register/cylinder.comp",
 		"src/shaders/path_trace/hit_register/triangle.comp",
 		"src/shaders/path_trace/hit_register/plane.comp",
 		"src/shaders/path_trace/hit_register/hit_bvh.comp",

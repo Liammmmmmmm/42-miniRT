@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gpu_scene.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/25 11:03:04 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:35:56 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,46 +331,46 @@ void	convert_textures(t_scene *scene, t_gpu_textures *gpu_textures)
 			
 			if (scene->textures[i].type == IMAGE)
 			{
-				if (scene->textures[i].img.rgba == NULL)
-					continue ;
-
-				gpu_textures->images[img_i].height = scene->textures[i].img.height;
-				gpu_textures->images[img_i].width = scene->textures[i].img.width;
-				gpu_textures->images[img_i].offset = image_offset;
-
-				t_uint	y = 0;
-				t_uint	tpx = scene->textures[i].img.height * scene->textures[i].img.width;
-				while (y < tpx)
+				if (scene->textures[i].img.rgba != NULL)
 				{
-					gpu_textures->images_stream[image_offset * 4 + y * 4] = scene->textures[i].img.rgba[y].r / 255.0;
-					gpu_textures->images_stream[image_offset * 4 + y * 4 + 1] = scene->textures[i].img.rgba[y].g / 255.0;
-					gpu_textures->images_stream[image_offset * 4 + y * 4 + 2] = scene->textures[i].img.rgba[y].b / 255.0;
-					gpu_textures->images_stream[image_offset * 4 + y * 4 + 3] = scene->textures[i].img.rgba[y].a / 255.0;
-					y++;
+					gpu_textures->images[img_i].height = scene->textures[i].img.height;
+					gpu_textures->images[img_i].width = scene->textures[i].img.width;
+					gpu_textures->images[img_i].offset = image_offset;
+	
+					t_uint	y = 0;
+					t_uint	tpx = scene->textures[i].img.height * scene->textures[i].img.width;
+					while (y < tpx)
+					{
+						gpu_textures->images_stream[image_offset * 4 + y * 4] = scene->textures[i].img.rgba[y].r / 255.0;
+						gpu_textures->images_stream[image_offset * 4 + y * 4 + 1] = scene->textures[i].img.rgba[y].g / 255.0;
+						gpu_textures->images_stream[image_offset * 4 + y * 4 + 2] = scene->textures[i].img.rgba[y].b / 255.0;
+						gpu_textures->images_stream[image_offset * 4 + y * 4 + 3] = scene->textures[i].img.rgba[y].a / 255.0;
+						y++;
+					}
+					image_offset += tpx;
 				}
-				image_offset += tpx;
 			}
 			else
 			{
-				if (scene->textures[i].hdr.pixels == NULL)
-					continue ;
-
-				gpu_textures->images[img_i].height = scene->textures[i].hdr.height;
-				gpu_textures->images[img_i].width = scene->textures[i].hdr.width;
-				gpu_textures->images[img_i].offset = image_offset;
-				gpu_textures->images[img_i].exposure = scene->textures[i].hdr.exposure;
-
-				t_uint	y = 0;
-				t_uint	tpx = scene->textures[i].hdr.height * scene->textures[i].hdr.width;
-				while (y < tpx)
+				if (scene->textures[i].hdr.pixels != NULL)
 				{
-					gpu_textures->images_stream[image_offset * 4 + y * 4] = scene->textures[i].hdr.pixels[y].r;
-					gpu_textures->images_stream[image_offset * 4 + y * 4 + 1] = scene->textures[i].hdr.pixels[y].g;
-					gpu_textures->images_stream[image_offset * 4 + y * 4 + 2] = scene->textures[i].hdr.pixels[y].b;
-					gpu_textures->images_stream[image_offset * 4 + y * 4 + 3] = scene->textures[i].hdr.pixels[y].e;
-					y++;
+					gpu_textures->images[img_i].height = scene->textures[i].hdr.height;
+					gpu_textures->images[img_i].width = scene->textures[i].hdr.width;
+					gpu_textures->images[img_i].offset = image_offset;
+					gpu_textures->images[img_i].exposure = scene->textures[i].hdr.exposure;
+	
+					t_uint	y = 0;
+					t_uint	tpx = scene->textures[i].hdr.height * scene->textures[i].hdr.width;
+					while (y < tpx)
+					{
+						gpu_textures->images_stream[image_offset * 4 + y * 4] = scene->textures[i].hdr.pixels[y].r;
+						gpu_textures->images_stream[image_offset * 4 + y * 4 + 1] = scene->textures[i].hdr.pixels[y].g;
+						gpu_textures->images_stream[image_offset * 4 + y * 4 + 2] = scene->textures[i].hdr.pixels[y].b;
+						gpu_textures->images_stream[image_offset * 4 + y * 4 + 3] = scene->textures[i].hdr.pixels[y].e;
+						y++;
+					}
+					image_offset += tpx;
 				}
-				image_offset += tpx;
 			}
 			img_i++;
 		}
@@ -388,6 +388,7 @@ void	count_tex(t_scene *scene, t_gpu_textures *gpu_textures)
 			gpu_textures->checkers_am++;
 		if (scene->textures[i].type == HDR || scene->textures[i].type == IMAGE)
 		{
+			gpu_textures->images_am++;
 			if (scene->textures[i].type == IMAGE)
 			{
 				if (scene->textures[i].img.rgba == NULL)
@@ -400,7 +401,6 @@ void	count_tex(t_scene *scene, t_gpu_textures *gpu_textures)
 					continue ;
 				gpu_textures->total_pixel_images += scene->textures[i].hdr.height * scene->textures[i].hdr.width;
 			}
-			gpu_textures->images_am++;
 		}
 	}
 }

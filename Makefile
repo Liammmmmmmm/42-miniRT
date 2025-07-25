@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/07/23 17:01:00 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/07/25 12:28:44 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,9 +34,10 @@ ERASE2   = $(ERASE)\033[F$(ERASE)
 
 # Compiler and flags
 CC       = gcc
-CFLAGS   = -Wall -Wextra #-Werror # -mavx # SIMD flag
+DEPFLAGS = -MMD -MP
+CFLAGS   = $(DEPFLAGS) -Wall -Wextra #-Werror # -mavx # SIMD flag
 LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm -lXfixes
-GPU_FLAGS = -Wall -Wextra -O3 -DUSE_GPU -lGL -lGLEW -lglfw -ldl
+GPU_FLAGS = -Wall -Wextra -O3 -DUSE_GPU -lGL -lGLEW -lglfw -ldl $(DEPFLAGS)
 DEBUG_FLAGS = -g3
 FAST_FLAGS = -O3 -flto -march=native -mtune=native -funroll-loops -ffast-math -falign-functions=32 -falign-loops=16
 # -O3 -march=native -mtune=native -flto -funsafe-math-optimizations -ffast-math -fomit-frame-pointer -funroll-loops -fno-exceptions -fno-rtti -fno-stack-protector -DNDEBUG -falign-functions=32 -falign-loops=16
@@ -46,7 +47,7 @@ ifeq ($(MAKECMDGOALS), debug)
 endif
 ifeq ($(MAKECMDGOALS), fast)
 	CC     = gcc
-	CFLAGS   = -Wall -Wextra
+	CFLAGS   = $(DEPFLAGS) -Wall -Wextra
 	CFLAGS += $(FAST_FLAGS)
 endif
 

@@ -17,7 +17,7 @@ bool    hit_register_loop(vec3 ro, vec3 rd, bvh_node node, inout hit_record rec)
 {
 	bool        hit = false;
 	uint        i = 0;
-	uint        sphere_index;
+	uint        index;
 	hit_record  hit_tmp;
 	float       t;
 
@@ -26,16 +26,31 @@ bool    hit_register_loop(vec3 ro, vec3 rd, bvh_node node, inout hit_record rec)
 	{
 		if (prim_ti[node.first_prim + i].type == 0)
 		{
-			sphere_index = prim_ti[node.first_prim + i].indice;
-			if (hit_sphere(spheres[sphere_index], ro, rd, hit_tmp))
+			index = prim_ti[node.first_prim + i].indice;
+			if (hit_sphere(spheres[index], ro, rd, hit_tmp))
 			{
 				if (hit_tmp.t < rec.t)
 				{
 					rec = hit_tmp;
 					hit = true;
-					rec.material_id = spheres[sphere_index].material_id;
+					rec.material_id = spheres[index].material_id;
 					apply_all_map(rec);
-					rec.color = get_hit_register_color(spheres[sphere_index].color, rec);
+					rec.color = get_hit_register_color(spheres[index].color, rec);
+				}
+			}
+		}
+		if (prim_ti[node.first_prim + i].type == 4)
+		{
+			index = prim_ti[node.first_prim + i].indice;
+			if (hit_triangle(triangles[index], ro, rd, hit_tmp))
+			{
+				if (hit_tmp.t < rec.t)
+				{
+					rec = hit_tmp;
+					hit = true;
+					rec.material_id = triangles[index].material_id;
+					apply_all_map(rec);
+					rec.color = get_hit_register_color(triangles[index].color, rec);
 				}
 			}
 		}

@@ -1,5 +1,4 @@
 
-
 void	get_sphere_uv(inout hit_record hit, Sphere sp)
 {
 	hit.u = clamp(

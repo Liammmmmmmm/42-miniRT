@@ -57,7 +57,7 @@ void main() {
 
 	data[id] = path_trace(ro, rd);
 	// data[id] = vec3(ambiant.skybox_tex_index);
-	// if (ambiant.skybox_tex_index < )
+	// if ( < )
 	// 	data[id] = vec3(1.0);
 	// else
 	// 	data[id] = vec3(0.0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gpu_scene.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 19:09:44 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/25 11:03:04 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,14 +182,13 @@ void	convert_bvh_node(t_scene *cpu_scene, t_gpu_bvh_node *bvh_node)
 	i = 0;
 	while (i < (cpu_scene->bvh.bvh_nodes_used))
 	{
-		bvh_node[i].first_prim = cpu_scene->bvh.bvh_nodes[i].first_prim;
+		bvh_node[i].first_prim = cpu_scene->bvh.prim_indices[cpu_scene->bvh.bvh_nodes[i].first_prim];
 		bvh_node[i].is_leaf = cpu_scene->bvh.bvh_nodes[i].is_leaf;
 		bvh_node[i].right_child = cpu_scene->bvh.bvh_nodes[i].right_child;
 		bvh_node[i].left_child = cpu_scene->bvh.bvh_nodes[i].left_child;
 		vec3_to_float3(&cpu_scene->bvh.bvh_nodes[i].node_bounds.max, bvh_node[i].node_bounds.max);
 		vec3_to_float3(&cpu_scene->bvh.bvh_nodes[i].node_bounds.min, bvh_node[i].node_bounds.min);
 		bvh_node[i].prim_count = cpu_scene->bvh.bvh_nodes[i].prim_count;
-		// printf("%d | %d\n", bvh_node[i].first_prim, bvh_node[i].prim_count);
 		i++;
 	}
 }
@@ -610,6 +609,30 @@ int	convert_scene(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_
 		glBindTexture(GL_TEXTURE_2D, minirt->shaders_data.tex.pdf_joint_texture2d);
 		glUniform1i(pdf_joint_location, 1);
 	}
+
+	// int    i;
+	// i = 0;
+	// while (i < gpu_structs->spheres_am)
+	// {
+	// 	 printf("sphere %d | color %f/%f/%f | radius %f\n\n\n", i, gpu_structs->spheres[i].color[0], gpu_structs->spheres[i].color[1], gpu_structs->spheres[i].color[2], gpu_structs->spheres[i].radius);
+	// 	i++;
+	// }
+    // i = 0;
+    // while (i < gpu_structs->bvh_node_am)
+    // {
+    //     if (gpu_structs->bvh_node[i].is_leaf)
+    //         printf("%d | prim pos %d | prim count %d | min %f/%f/%f | max %f/%f/%f\n", i, gpu_structs->bvh_node[i].first_prim, gpu_structs->bvh_node[i].prim_count, gpu_structs->bvh_node[i].node_bounds.min[0], gpu_structs->bvh_node[i].node_bounds.min[1], gpu_structs->bvh_node[i].node_bounds.min[2]);
+    //     else
+    //         printf("%d | left_child %d | right child %d | min %f/%f/%f | max %f/%f/%f\n", i, gpu_structs->bvh_node[i].left_child, gpu_structs->bvh_node[i].right_child, gpu_structs->bvh_node[i].node_bounds.min[1], gpu_structs->bvh_node[i].node_bounds.min[2]);
+    //     i++;
+    // }
+    // printf("\n\n");
+    // i = 0;
+    // while (i < gpu_structs->prim_indice_am)
+    // {
+    //     printf("%d | prim indice %d | prim type %d \n", i, gpu_structs->prim_types_indices[i].indice, gpu_structs->prim_types_indices[i].type);
+    //     i++;
+    // }
 
 
 	return (0);

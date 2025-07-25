@@ -55,6 +55,7 @@ struct	Cylinder {
 	vec3 orientation;
 	float	diameter;
 	vec3	color;
+	float	height;
 	int material_id_top;
 	int material_id_bot;
 };

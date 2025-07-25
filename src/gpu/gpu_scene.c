@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/25 11:35:56 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/25 11:47:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -427,7 +427,12 @@ int	convert_textures_init(t_scene *scene, t_gpu_textures *gpu_tex)
 	create_ssbo(&gpu_tex->images_ssbo, sizeof(t_gpu_tex_data) * gpu_tex->images_am, gpu_tex->images, SSBO_BIND_IMAGES);
 	create_ssbo(&gpu_tex->images_stream_ssbo, sizeof(float) * gpu_tex->total_pixel_images * 4, gpu_tex->images_stream, SSBO_BIND_IMAGES_STREAM);
 	create_ssbo(&gpu_tex->textures_types_indices_ssbo, sizeof(t_type_indice) * scene->tex_amount, gpu_tex->textures_types_indices, SSBO_BIND_TEX_TYPE_INDICE);
-	
+
+	free(gpu_tex->checkers);
+	free(gpu_tex->images);
+	free(gpu_tex->images_stream);
+	free(gpu_tex->textures_types_indices);
+
 	return (0);
 }
 

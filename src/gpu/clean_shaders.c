@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 17:48:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/25 11:55:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ void	clean_scene(t_gpu_structs *gpu_structs)
 
 	free(gpu_structs->spheres);
 	delete_ssbo(&gpu_structs->spheres_ssbo);
+
+	free(gpu_structs->planes);
+	delete_ssbo(&gpu_structs->planes_ssbo);
 	
 	free(gpu_structs->hypers);
 	delete_ssbo(&gpu_structs->hypers_ssbo);
@@ -51,6 +54,9 @@ void	clean_scene(t_gpu_structs *gpu_structs)
 
 	free(gpu_structs->prim_types_indices);
 	delete_ssbo(&gpu_structs->prim_types_indices_ssbo);
+
+	free(gpu_structs->bvh_node);
+	delete_ssbo(&gpu_structs->bvh_node_ssbo);
 
 	ft_bzero(gpu_structs, sizeof(t_gpu_structs));
 }
@@ -70,6 +76,11 @@ void	clean_shaders(t_shader_data *shader_data)
 	delete_ssbo(&shader_data->ssbo);
 	clean_scene(&shader_data->scene);
 	
+	delete_ssbo(&shader_data->tex.checkers_ssbo);
+	delete_ssbo(&shader_data->tex.images_ssbo);
+	delete_ssbo(&shader_data->tex.images_stream_ssbo);
+	delete_ssbo(&shader_data->tex.textures_types_indices_ssbo);
+
 	glDeleteProgram(shader_data->program);
 	glfwDestroyWindow(shader_data->window);
 	glfwTerminate();

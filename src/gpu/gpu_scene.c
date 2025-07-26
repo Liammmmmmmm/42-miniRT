@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/25 13:45:22 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/26 14:42:39 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void convert_all_obj(t_scene *cpu_scene, t_gpu_structs *gpu_scene)
 		{
 			gpu_scene->prim_types_indices[i].indice = cylindre;
 			gpu_scene->prim_types_indices[i].type = 1;
+			gpu_scene->cylinders[cylindre].height = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->height;
 			gpu_scene->cylinders[cylindre].diameter = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->diameter;
 			vec3_to_float3(&((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->position, gpu_scene->cylinders[cylindre].position);
 			vec3_to_float3(&((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->orientation, gpu_scene->cylinders[cylindre].orientation);

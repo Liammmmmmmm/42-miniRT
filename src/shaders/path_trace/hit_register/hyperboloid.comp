@@ -95,7 +95,7 @@ bool	handle_hyperboloid_hit(Hyper hyp, vec3 ro, vec3 rd, inout hit_record hit, q
 	return (true);
 }
 
-bool	hit_hyperboloid(Hyper hyp, vec3 ro, vec3 rd, hit_record hit, float interval_max)
+bool	hit_hyperboloid(Hyper hyp, vec3 ro, vec3 rd, inout hit_record hit, float interval_max)
 {
 	quadratic	q = get_default_quadratic();
 	bool		hit_anything;

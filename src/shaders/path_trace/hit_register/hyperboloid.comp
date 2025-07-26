@@ -1,0 +1,124 @@
+
+
+vec3	to_local(vec3 v, vec3 x, vec3 y, vec3 z)
+{
+	return (vec3(
+		dot(v, x),
+		dot(v, y),
+		dot(v, z)
+	));
+}
+
+void	compute_quadratic_coeffs(inout quadratic q, vec3 rd, vec3 ro, Hyper h)
+{
+	const float	aa = h.a * h.a;
+	const float	bb = h.b * h.b;
+	const float	cc = h.c * h.c;
+
+	q.a = (rd.x * rd.x) / aa + (rd.y * rd.y) / bb - (rd.z * rd.z) / cc;
+	q.b = 2.0 * ((rd.x * ro.x) / aa + (rd.y * ro.y) / bb - (rd.z * ro.z) / cc);
+	q.c = (ro.x * ro.x) / aa + (ro.y * ro.y) / bb - (ro.z * ro.z) / cc - h.shape;
+}
+
+bool	init_hyperboloid_quadratic(inout quadratic q, Hyper h, vec3 ro, vec3 rd)
+{
+	vec3	x;
+	vec3	y;
+	vec3	z = normalize(h.orientation);
+
+	vec3	temp;
+	if (abs(z.x) > 0.9)
+		temp = vec3(0.0, 1.0, 0.0);
+	else
+		temp = vec3(1.0, 0.0, 0.0);
+	x = normalize(cross(temp, z));
+	y = cross(z, x);
+
+	compute_quadratic_coeffs(q, to_local(rd, x, y, z), to_local(ro - h.position, x, y, z), h);
+	return (solve_quadratic(q));
+}
+
+void	get_hyperboloid_uv(inout hit_record hit, Hyper hyper)
+{
+	vec3		right;
+	const vec3	rel = hit.point - hyper.position;
+
+	if (abs(hyper.orientation.y) < 0.99)
+		right = normalize(cross(vec3(0.0, 1.0, 0.0), hyper.orientation));
+	else
+		right = normalize(cross(vec3(1.0, 0.0, 0.0), hyper.orientation));
+	hit.u = clamp((atan(dot(rel, cross(hyper.orientation, right)), dot(rel, right)) + PI) / (2.0 * PI), 0.0, 1.0);
+	hit.v = clamp((dot(hit.point - hyper.position, hyper.orientation) / (hyper.height * 0.5)) * 0.5 + 0.5, 0.0, 1.0);
+	if (hit.material_id != -1 && materials[hit.material_id].scale != 1)
+	{
+		hit.u *= materials[hit.material_id].scale;
+		hit.v *= materials[hit.material_id].scale;
+		hit.u = fract(hit.u);
+		hit.v = fract(hit.v);
+	}
+}
+
+vec3	compute_normal(Hyper hyp, vec3 to_p, vec3 axis)
+{
+	vec3	tmp;
+	vec3	u;
+	vec3	v;
+
+	if (abs(axis.y) < 0.99)
+		tmp = vec3(0.0, 1.0, 0.0);
+	else
+		tmp = vec3(1.0, 0.0, 0.0);
+	u = normalize(cross(tmp, axis));
+	v = cross(axis, u);
+	return (normalize(
+		(u * (2.0 * dot(to_p, u) / (hyp.a * hyp.a))) + 
+		(v * (2.0 * dot(to_p, v) / (hyp.b * hyp.b))) + 
+		(axis * (-2.0 * dot(to_p, axis) / (hyp.c * hyp.c)))
+	));
+}
+
+bool	handle_hyperboloid_hit(Hyper hyp, vec3 ro, vec3 rd, inout hit_record hit, quadratic q)
+{
+	const vec3	axis = normalize(hyp.orientation);
+	const vec3	p = ray_at(ro, rd, q.t_hit);
+	const vec3	to_p = p - hyp.position;
+	vec3		normal;
+
+	if (!(abs(dot(to_p, axis)) <= hyp.height * 0.5))
+		return (false);
+	normal = compute_normal(hyp, to_p, axis);
+	hit.t = q.t_hit;
+	hit.point = p;
+	hit.normal = set_normal_face(ro, rd, normal, hit);
+	hit.front_face = dot(rd, normal) < 0;
+	get_hyperboloid_uv(hit, hyp);
+	return (true);
+}
+
+bool	hit_hyperboloid(Hyper hyp, vec3 ro, vec3 rd, hit_record hit, float interval_max)
+{
+	quadratic	q = get_default_quadratic();
+	bool		hit_anything;
+
+	if (dot(hyp.orientation, hyp.orientation) < 1e-6)
+		hyp.orientation = vec3(0.0, 0.0, 1.0);
+	if (!init_hyperboloid_quadratic(q, hyp, ro, rd))
+		return (false);
+	hit_anything = false;
+	if (q.t0 > IT_MIN && q.t0 < interval_max)
+	{
+		q.t_hit = q.t0;
+		if (handle_hyperboloid_hit(hyp, ro, rd, hit, q))
+		{
+			hit_anything = true;
+			interval_max = q.t0;
+		}
+	}
+	if (q.t1 > IT_MIN && q.t1 < interval_max)
+	{
+		q.t_hit = q.t1;
+		if (handle_hyperboloid_hit(hyp, ro, rd, hit, q))
+			hit_anything = true;
+	}
+	return (hit_anything);
+}

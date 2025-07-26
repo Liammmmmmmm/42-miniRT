@@ -3,6 +3,12 @@
 vec4	sample_texture(int tex_index, vec2 uv) {
 
 	uvec2 size = uvec2(textures_data[tex_index].width, textures_data[tex_index].height);
+	if (size.x == 0 || size.y == 0)
+	{
+		if ((int(floor(uv.x * 4.0)) + int(floor(uv.y * 4.0))) % 2 == 0)
+			return (vec4(0.0));
+		return (vec4(0.95294117647, 0.0, 0.95294117647, 0.0));
+	}
 	uint x = uint(uv.x * (size.x - 1));
 	uint y = uint(uv.y * (size.y - 1));
 	uint pixelOffset = (y * size.x + x);
@@ -13,6 +19,12 @@ vec4	sample_texture(int tex_index, vec2 uv) {
 vec3	sample_hdr_texture(int tex_index, vec2 uv, float exposure) {
 
 	uvec2 size = uvec2(textures_data[tex_index].width, textures_data[tex_index].height);
+	if (size.x == 0 || size.y == 0)
+	{
+		if ((int(floor(uv.x * 10.0)) + int(floor(uv.y * 10.0))) % 2 == 0)
+			return (vec3(0.0));
+		return (vec3(0.95294117647, 0.0, 0.95294117647));
+	}
 	uint x = uint(uv.x * (size.x - 1));
 	uint y = uint(uv.y * (size.y - 1));
 	uint pixelOffset = (y * size.x + x);

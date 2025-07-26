@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/23 13:51:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/26 16:54:22 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,12 @@ t_viewport	init_viewport(t_minirt *minirt)
 	t_viewport	vp;
 	t_vec3		u;
 
-	free_importance_sampling_malloc(&minirt->scene);
-	make_importance_sampling_map(&minirt->scene);
+	if (minirt->scene.amb_light.skybox_t != minirt->scene.amb_light.last_calc_importance)
+	{
+		free_importance_sampling_malloc(&minirt->scene);
+		make_importance_sampling_map(&minirt->scene);
+		minirt->scene.amb_light.last_calc_importance = minirt->scene.amb_light.skybox_t;
+	}
 	init_viewport_values(minirt, &vp, &u);
 	init_viewport_vectors(minirt, &vp, u);
 	if (vp.depth_buffer == NULL)

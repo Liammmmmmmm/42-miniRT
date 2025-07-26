@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:03:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/26 16:10:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/26 16:52:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_amb_light
 	double	ratio;
 	t_color	skybox_c;
 	t_tex	*skybox_t;
+	void	*last_calc_importance;
 	double	*gray_scale;
 	double	*raw_average;
 	float	*pdf_joint;

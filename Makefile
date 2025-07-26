@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/07/22 11:42:02 by madelvin         ###   ########.fr        #
+#    Updated: 2025/07/26 17:01:53 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -231,6 +231,7 @@ M_FILE_GPU = $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 			$(addprefix $(HDR_PARSING_DIR), $(HDR_PARSING_FILE)) \
 			$(addprefix $(OPTIONS_DIR), $(OPTIONS_FILE)) \
 			$(addprefix $(PNG_DIR), $(PNG_FILE)) \
+			$(addprefix $(CAUSTIC_DIR), $(CAUSTIC_FILE)) \
 			$(addprefix $(GPU_DIR), $(GPU_FILE))
 
 # Source files bonus

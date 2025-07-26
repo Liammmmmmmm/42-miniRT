@@ -181,6 +181,32 @@ struct hit_record
 	MaterialValues	mat_val;
 };
 
+hit_record	get_default_hit_record()
+{
+	return hit_record(
+		vec3(0),
+		10000000.0,
+		vec3(0),
+		-1,
+		vec3(0),
+		false,
+		0.0,
+		0.0,
+		0,
+		MaterialValues(
+			0.0,
+			0.0,
+			0.0,
+			0.0,
+			0.0,
+			0.0,
+			0.0,
+			0.0,
+			vec3(0)
+		)
+	);
+}
+
 struct quadratic
 {
 	float	a;
@@ -194,6 +220,11 @@ struct quadratic
 	float	dd;
 	float	oo;
 };
+
+quadratic	get_default_quadratic()
+{
+	return quadratic(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+}
 
 struct	aabb
 {

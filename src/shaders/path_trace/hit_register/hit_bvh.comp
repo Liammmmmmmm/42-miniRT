@@ -21,7 +21,7 @@ bool    hit_register_loop(vec3 ro, vec3 rd, bvh_node node, inout hit_record rec)
 	hit_record  hit_tmp;
 	float       t;
 
-	hit_tmp.t = 100000;
+	hit_tmp = get_default_hit_record();
 	while (i < node.prim_count)
 	{
 		if (prim_ti[node.first_prim + i].type == 0)

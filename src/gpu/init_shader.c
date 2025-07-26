@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/25 14:06:00 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/26 09:57:02 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ GLuint	compile_shader_from_files(const char **paths, int count,
 	return (shader);
 }
 
-#define SOURCES_AMOUNT 26
+#define SOURCES_AMOUNT 27
 
 int	create_program(t_shader_data *shader_data)
 {
@@ -140,6 +140,7 @@ int	create_program(t_shader_data *shader_data)
 		"src/shaders/path_trace/hit_register/quadratic.comp",
 		"src/shaders/path_trace/hit_register/sphere.comp",
 		"src/shaders/path_trace/hit_register/cylinder.comp",
+		"src/shaders/path_trace/hit_register/cone.comp",
 		"src/shaders/path_trace/hit_register/triangle.comp",
 		"src/shaders/path_trace/hit_register/plane.comp",
 		"src/shaders/path_trace/hit_register/hit_bvh.comp",

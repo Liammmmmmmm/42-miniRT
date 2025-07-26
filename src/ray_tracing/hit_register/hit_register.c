@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 14:43:54 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:42:28 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,12 @@ char	hit_register_all(t_minirt *minirt, t_hit_register_data *data)
 	t_hit_record	tmp;
 
 	hit = 0;
+	data->depth = 0;
 	tmp.part = DEFAULT;
 	if (minirt->scene.bvh.valid == 1)
-		hit = hit_bvh(&minirt->scene.bvh, 0, data);
+		hit = hit_bvh(&minirt->scene.bvh, 0, data, &data->depth);
+	if (hit == 0)
+		data->depth = 0;
 	hit_all_planes(minirt, data, &tmp, &hit);
 	return (hit);
 }

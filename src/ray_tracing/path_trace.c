@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 20:08:13 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:56:53 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,9 @@ t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 
 	accumulation = (t_fcolor){0.0, 0.0, 0.0};
 	power = (t_fcolor){1.0, 1.0, 1.0};
+	ft_bzero(&data, sizeof(t_hit_register_data));
+	ft_bzero(&data.hit_record, sizeof(t_hit_record));
 	data.hit_record.mat = NULL;
-	data.is_light = 0;
 	data.ray = &ray;
 	while (--max_depth >= 0)
 	{
@@ -83,7 +84,21 @@ t_fcolor	path_trace_normal(t_minirt *minirt, t_ray ray)
 	data.hit_record.mat = NULL;
 	data.is_light = 0;
 	data.ray = &ray;
+	data.depth = 0;
 	if (hit_register_all(minirt, &data) == 1)
 		return (data.hit_record.color);
 	return ((t_fcolor){0, 0, 0});
+}
+
+int	path_trace_bvh(t_minirt *minirt, t_ray ray)
+{
+	t_hit_register_data	data;
+
+	data.hit_record.mat = NULL;
+	data.is_light = 0;
+	data.ray = &ray;
+	data.depth = 0;
+	if (hit_register_all(minirt, &data) == 1)
+		return (data.depth);
+	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 09:08:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 14:24:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/19 18:26:25 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_rgba	*extract_rgba(uint8_t *image_data, t_png_info *infos,
 	uint32_t	x;
 	uint8_t		*pixels;
 
-	if (bpp != 3 && bpp != 4)
+	if (bpp != 1 && bpp != 2 && bpp != 3 && bpp != 4)
 		return (err_extract("Unsupported png bpp."));
 	out = malloc(infos->width * infos->height * sizeof(t_rgba));
 	if (!out)
@@ -76,10 +76,19 @@ t_rgba	*extract_rgba(uint8_t *image_data, t_png_info *infos,
 		x = (uint32_t)(-1);
 		while (++x < infos->width)
 		{
-			out[y * infos->width + x] = (t_rgba){.r = pixels[x * bpp + 0],
-				.g = pixels[x * bpp + 1], .b = pixels[x * bpp + 2], .a = 255};
-			if (bpp == 4)
-				out[y * infos->width + x].a = pixels[x * bpp + 3];
+			if (bpp == 1)
+				out[y * infos->width + x] = (t_rgba){.r = pixels[x],
+					.g = pixels[x], .b = pixels[x], .a = 255};
+			else if (bpp == 2)
+				out[y * infos->width + x] = (t_rgba){.r = pixels[x],
+					.g = pixels[x], .b = pixels[x], .a = pixels[x * 2 + 1]};
+			else
+			{
+				out[y * infos->width + x] = (t_rgba){.r = pixels[x * bpp + 0],
+					.g = pixels[x * bpp + 1], .b = pixels[x * bpp + 2], .a = 255};
+				if (bpp == 4)
+					out[y * infos->width + x].a = pixels[x * bpp + 3];
+			}
 		}
 	}
 	return (out);

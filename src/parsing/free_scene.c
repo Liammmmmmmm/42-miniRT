@@ -6,12 +6,13 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:42:28 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 13:46:10 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:54:12 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "importance_sampling.h"
+#include "caustic.h"
 
 void	free_tex_mat(t_scene *scene)
 {
@@ -77,6 +78,10 @@ static void	free_scene_element(t_scene *scene)
 
 int	free_scene(t_scene *scene, char **lines)
 {
+	free(scene->obj_lst.light_lst);
+	free(scene->obj_lst.plane_lst);
+	scene->obj_lst.light_lst = NULL;
+	scene->obj_lst.plane_lst = NULL;
 	if (lines)
 		ft_free_tab_null_term(lines);
 	if (scene->elements)
@@ -84,5 +89,6 @@ int	free_scene(t_scene *scene, char **lines)
 	free_tex_mat(scene);
 	free_bvh_obj_lst(scene);
 	free_importance_sampling_malloc(scene);
+	kd_tree_destroy(&scene->photon_map);
 	return (0);
 }

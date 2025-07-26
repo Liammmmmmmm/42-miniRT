@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:49:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/22 18:20:10 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:32:34 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ inline t_vec3	get_obj_position(uint32_t i, t_bvh *bvh)
 	return ((t_vec3){0, 0, 0});
 }
 
-inline float	get_axis_value(t_vec3 pos, int axis)
+inline float	get_axis(t_vec3 pos, int axis)
 {
 	if (axis == 0)
 		return (pos.x);

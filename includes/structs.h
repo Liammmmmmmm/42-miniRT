@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 16:54:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 12:09:09 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,7 @@ typedef struct s_hit_register_data
 	t_hit_record	hit_record;
 	char			is_light;
 	t_ray			*ray;
+	int				depth;			
 }	t_hit_register_data;
 
 typedef struct s_axis
@@ -396,6 +397,8 @@ typedef struct s_minirt
 	t_options		options;
 	t_micrort		micrort;
 	t_shader_data	shaders_data;
+	int			i;
+	char		render_mode;
 }	t_minirt;
 
 typedef struct s_upscale_data

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/24 16:37:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/21 14:26:52 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	put_render_to_buff_upscaling(t_minirt *minirt)
 void	draw_pixels(t_minirt *minirt)
 {
 	t_vec3	offset;
+	t_point	p1;
+	t_point	p2;
 
 	minirt->screen.last_sample_time = get_cpu_time();
 	offset = vec3_random();

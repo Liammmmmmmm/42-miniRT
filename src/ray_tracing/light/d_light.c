@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:07:23 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 17:08:06 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:57:01 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	check_dlight_hit_dir(t_minirt *minirt, t_vec3 origin, t_vec3 direction)
 	shadow_ray.orig = origin;
 	shadow_ray.dir = vec3_unit(direction);
 	data.is_light = 1;
+	data.depth = 0;
 	data.hit_record.mat = NULL;
 	data.ray = &shadow_ray;
 	if (hit_register_all(minirt, &data))

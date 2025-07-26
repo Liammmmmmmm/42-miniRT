@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/23 11:58:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 11:41:27 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,21 @@
 # define IT_MIN 0.001
 
 # define MIN_SCALE 1e-3
+
+# define SCALE_FACTOR_HP (1.0 / 9007199254740992.0)
+
+# ifndef RANDOM_SEED
+#  define RANDOM_SEED 42
+# endif
+
+# define PROGRESS_BAR_SIZE 50
+# define SAMPLE_PROGRESS_BAR_TIME 5000
+
+# define DBL_MAX 1.7976931348623157e+308
+
+# define PHOTON_PER_LIGHT 500000000
+# define CAUSTIC_RADIUS 0.001
+# define NORM_FACTOR 3
 
 typedef enum e_mouse_buttons
 {
@@ -160,6 +175,9 @@ void	print_tex_double_text(t_tex *tex, double value, char *txt);
 
 void	print_scene(t_scene *scene);
 void	print_progress_bar(size_t actual, size_t max);
+void	clear_progress_bar(size_t actual, size_t max);
+
+void	write_no_err(int fd, char *str, size_t size);
 
 void	export_ppm_p6_minirt(const char *filename, t_minirt *minirt);
 
@@ -246,14 +264,16 @@ t_fcolor	get_hdr_pixel_skybox(t_minirt *minirt, t_hdr *hdr, int x, int y);
 
 t_fcolor	compute_light_v2(t_hit_record *hit_record, t_minirt *minirt);
 char		check_plight_hit(t_minirt *minirt, t_vec3 origin, t_vec3 target);
+void		compute_shadow_factor(t_minirt *minirt, t_vec3 origin,
+	t_light *light);
 void		add_plight(t_lcolor *light_color, t_hit_record *hit,
 	t_light *light, t_vec3 view_dir);
 char		check_dlight_hit_dir(t_minirt *minirt, t_vec3 origin, t_vec3 direction);
 void		add_dlight(t_lcolor *light_color, t_hit_record *hit, t_dlight *light,
 	t_vec3 view_dir);
-
 t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth);
 t_fcolor	path_trace_normal(t_minirt *minirt, t_ray ray);
+int			path_trace_bvh(t_minirt *minirt, t_ray ray);
 void		debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth);
 t_fcolor	add_skybox(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 	t_ray_data data);

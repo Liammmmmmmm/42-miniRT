@@ -1,0 +1,40 @@
+# TEXTURES
+#	n   name  type   path
+
+# MATERIALS
+#	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength     emission_color   scale      normal_map      normal_intensity
+mat	DefaultMaterial               255, 255, 255     0.000000       0.450000       0.000000       0.000000       1.000000            1.000000              0, 0, 0          1.000000  
+mat	glass                         255, 255, 255     0.000000       0.000000       1.450000       1.000000       1.000000            1.000000              0, 0, 0          1.000000  
+
+# SPHERES
+#	    origin                                      diameter       material
+sp	    0.115216,    1.197374,    0.027533          0.306887       glass     
+
+
+# CYLINDERS
+#	    origin                                      orientation                                    diameter       height         material
+# cy	    0.098949,    1.234674,    0.602006         -0.050733,    0.123579,    0.043710             0.281114       0.281114       glass     
+cy	    0.098949,    1.234674,    0.602006         -0.00000,    1.00000,    0.00000             0.281114       0.281114       glass     
+# cy	    0.00,    1.234674,    0.0         -0.00000,    1.00000,    0.00000             0.781114       0.881114       glass     
+
+
+# LIGHTS
+#	    origin                                      intensity          color
+l	    -2.000000,    2.934763,    1.0          1.000000      		 255,255,255
+# l	  	-2.00000,    2.934763,    -1.00000          1.000000       		   0,255,  0
+# l	     2.00000,    2.934763,     1.00000          1.000000      		   0,  0,255
+# l	  	 2.00000,    2.934763,    -1.00000          1.000000       		 255,  0,  0
+
+# CUSTOM
+#	    origin                                      orientation                                    scale                                     path                material
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             1.000000,    1.000000,    1.000000   /home/madelvin/Documents/minirt/assets/obj/caustic/cu_base.obj    DefaultMaterial
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             1.000000,    1.000000,    1.000000   /home/madelvin/Documents/minirt/assets/obj/caustic/cu_cube.obj    glass
+
+# CAMERA
+#	    origin                                      orientation                                    field of view
+C	    2.378892,    1.888309,    1.665791         -0.784473,   -0.309693,   -0.537302             39            
+
+# AMBIENT
+#	strength             color
+A	0.000000             0,0,0
+W 1000 500

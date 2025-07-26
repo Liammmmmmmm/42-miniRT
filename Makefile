@@ -6,7 +6,7 @@
 #    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/07/25 12:28:44 by madelvin         ###   ########.fr        #
+#    Updated: 2025/07/22 11:42:02 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,10 +32,14 @@ NC       = \033[0;0m
 ERASE    = \033[2K\r
 ERASE2   = $(ERASE)\033[F$(ERASE)
 
+SEED_TMP = $(shell if command -v od >/dev/null 2>&1; then od -vAn -N8 -tu8 < /dev/urandom | tr -d ' '; fi)
+SEED	 = $(if $(SEED_TMP),$(SEED_TMP),42)
+
 # Compiler and flags
 CC       = gcc
+
 DEPFLAGS = -MMD -MP
-CFLAGS   = $(DEPFLAGS) -Wall -Wextra #-Werror # -mavx # SIMD flag
+CFLAGS   = $(DEPFLAGS) -DRANDOM_SEED=$(SEED) -Wall -Wextra #-Werror # -mavx # SIMD flag
 LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm -lXfixes
 GPU_FLAGS = -Wall -Wextra -O3 -DUSE_GPU -lGL -lGLEW -lglfw -ldl $(DEPFLAGS)
 DEBUG_FLAGS = -g3
@@ -65,6 +69,10 @@ INCLUDES = -I includes/ -I $(LIBFTDIR)includes/ -I $(MINILIBXDIR)
 SRC_DIR				= src/
 SRC_FILE			= main.c
 
+CAUSTIC_DIR			= src/caustic/
+CAUSTIC_FILE		= kd_tree/kd_tree_build_utils.c kd_tree/kd_tree_build.c kd_tree/kd_tree_destroy.c kd_tree/kd_tree_print.c kd_tree/kd_tree_task.c \
+					kd_tree/kd_tree_find_near.c caustic_manager.c trace_photon_path.c get_caustic.c
+
 UTILS_DIR			= src/utils/
 UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					bmp/bmp_extract_color.c bmp/bmp_extract_pixel.c \
@@ -72,7 +80,7 @@ UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					obj/obj_extract_value.c obj/obj_finilizer.c \
 					obj/obj_parser_utils.c obj/obj_parser.c obj/obj_utils.c \
 					obj/obj_vertex_cache.c obj/obj_extract_value_utils.c obj/obj_parse_face.c \
-					obj/obj_vertex_cache_utils.c obj/obj_vertex_utils.c print_error.c
+					obj/obj_vertex_cache_utils.c obj/obj_vertex_utils.c print_error.c print_warn.c
 
 UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c \
@@ -121,7 +129,7 @@ MATH_FILE			= vector/vec3_operations.c ray/ray.c vector/vec3_dot_cross.c vector/
 					matrix/matrix.c matrix/matrix_calc.c angle/angle_math.c matrix/matrix3.c fresnel_schlick.c \
 					cylinder/hit_cylinder.c quadratique/quadratique.c quadratique/quadratique_hyperboloid.c \
 					cone/hit_cone.c valid_t.c clamp_int.c hyperboloid/hit_hyperboloid.c triangle/hit_triangle.c \
-					cylinder/cylinder_uv.c color/fcolor_clamp.c color/conversions.c clamp_double.c
+					cylinder/cylinder_uv.c color/fcolor_clamp.c color/conversions.c clamp_double.c color/get_heat_map_color.c
 
 PARSING_DIR			= src/parsing/
 PARSING_FILE		= parse_scene.c errors.c errors2.c errors3.c valid_line.c \
@@ -129,7 +137,7 @@ PARSING_FILE		= parse_scene.c errors.c errors2.c errors3.c valid_line.c \
 					parse_elements2.c parse_elements3.c parse_elements4.c  parse_elements_utils.c \
 					parse_elements_utils2.c parse_elements_utils3.c parse_elements_utils4.c \
 					parse_elements_utils5.c parse_elements_utils6.c get_texture.c parse_elements5.c \
-					free_scene.c
+					free_scene.c init_scene.c
 
 FONT_PARS_DIR		= src/utils/font/parsing/
 FONT_PARS_FILE		= free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c read_cmap.c \
@@ -181,7 +189,8 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(PPM_DIR), $(PPM_FILE)) \
 			$(addprefix $(HDR_PARSING_DIR), $(HDR_PARSING_FILE)) \
 			$(addprefix $(OPTIONS_DIR), $(OPTIONS_FILE)) \
-			$(addprefix $(PNG_DIR), $(PNG_FILE))
+			$(addprefix $(PNG_DIR), $(PNG_FILE)) \
+			$(addprefix $(CAUSTIC_DIR), $(CAUSTIC_FILE))
 
 SRC_DIR_GPU			= src/
 SRC_FILE_GPU		= main_shader.c
@@ -241,7 +250,7 @@ REMAKE   = libft/includes/libft.h libft/includes/ft_printf.h \
 		includes/material.h includes/maths.h includes/minirt.h \
 		includes/mlx_base.h includes/mlx_components.h includes/structs.h includes/ui.h \
 		includes/utils.h includes/obj_parsing.h includes/hit_register.h \
-		includes/importance_sampling.h \
+		includes/importance_sampling.h includes/caustic.h
 		# libft/Makefile  Makefile
 
 # NORMINETTE

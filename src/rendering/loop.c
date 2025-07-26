@@ -13,6 +13,7 @@
 #include "minirt.h"
 #include "bvh.h"
 #include "bmp_parsing.h"
+#include "camera.h"
 
 int	exit_if_anim_finished(t_minirt *minirt)
 {
@@ -59,6 +60,7 @@ void	render_frame(t_minirt *minirt)
 {
 	static t_bool	skip = 0;
 
+	move_camera(minirt);
 	check_sample_amount(minirt);
 	if (exit_if_anim_finished(minirt))
 		return ;

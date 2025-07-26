@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_maloc_importance_sampling.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 11:57:51 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 13:14:42 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/24 17:15:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ char	init_all_malloc_importance_sampling(t_scene *scene, int width,
 	set_to_null_all_tab(scene);
 	scene->amb_light.gray_scale = ft_calloc(width * height, sizeof(double));
 	scene->amb_light.raw_average = ft_calloc(height, sizeof(double));
-	scene->amb_light.pdf_joint = ft_calloc(width * height, sizeof(double));
+	scene->amb_light.pdf_joint = ft_calloc(width * height, sizeof(float));
 	scene->amb_light.pdf_marginal = ft_calloc(height, sizeof(double));
 	scene->amb_light.pdf_conditional = ft_calloc(width * height,
 			sizeof(double));
 	scene->amb_light.cdf_conditional_inverse = ft_calloc(height * width,
-			sizeof(double));
-	scene->amb_light.cdf_marginal_inverse = ft_calloc(height, sizeof(double));
+			sizeof(float));
+	scene->amb_light.cdf_marginal_inverse = ft_calloc(height, sizeof(float));
 	scene->amb_light.cdf_h = ft_calloc(height, sizeof(double));
 	scene->amb_light.cdf_w = ft_calloc(width, sizeof(double));
 	if (!scene->amb_light.gray_scale || !scene->amb_light.raw_average

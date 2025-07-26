@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   calc_sample.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:49:52 by madelvin          #+#    #+#             */
 /*   Updated: 2025/07/21 14:49:31 by madelvin         ###   ########.fr       */

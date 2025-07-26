@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:40:16 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/07/01 13:17:57 by madelvin         ###   ########.fr       */
@@ -22,6 +22,7 @@ int			print_error(char *err);
 int			print_error1(char *err);
 int			print_warn(char *warn);
 int			print_warn_rv(char *warn, char rv);
+int			print_errorm1(char *err);
 int			char_tab_len(char **tab);
 char		**free_ret_null(char **fre);
 void		ft_izero(int *pointer, size_t n);

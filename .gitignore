@@ -8,6 +8,7 @@ libft/libft.a
 *.o
 
 miniRT
+miniRT_gpu
 
 .VSCodeCounter
 a.out

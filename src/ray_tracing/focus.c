@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   focus.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:25:55 by madelvin          #+#    #+#             */
 /*   Updated: 2025/07/01 18:01:23 by madelvin         ###   ########.fr       */

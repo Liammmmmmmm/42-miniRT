@@ -1,0 +1,53 @@
+
+vec3 cos_weighted_sample_hemishphere(vec3 normal)
+{
+	vec2	r = vec2(rand(), rand());
+	float	phi = 2.0 * PI * r.x;
+
+	vec3 local_dir;
+	local_dir.x = cos(phi) * sqrt(r.y);
+	local_dir.y = sqrt(1 - r.y);
+	local_dir.z = sin(phi) * sqrt(r.y);
+
+	vec3 tangent = normalize(abs(normal.y) < 0.999 ? cross(vec3(0, 1, 0), normal) : cross(vec3(1, 0, 0), normal));
+	vec3 bitangent = cross(normal, tangent);
+	local_dir = tangent * local_dir.x + normal * local_dir.y + bitangent * local_dir.z;
+
+	return (normalize(local_dir));
+}
+
+
+void	importance_sampling(vec3 ro, inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
+{
+	hit_record		tmp_hit;
+	const vec2		uv = calc_inverse_transform_sampling_uv();
+	vec3			radiance;
+
+	tmp_hit.t = 10000000;
+	rd = calc_inverse_transform_sampling_dir(uv);
+	if (hit_register_all(tmp_hit, ro, rd))
+		return ;
+	float costheta = dot(hit.normal, rd);
+	float pdf = texture(pdf_joint, uv).r;
+	if (pdf <= 0)
+		return ;
+	radiance = get_background_color(rd);
+	if (hit.material_id != -1)
+		radiance *= hit.mat_val.ao;
+	radiance *= power;
+	radiance *= costheta / pdf;
+	accumulation += radiance;
+	power *= (1.0 - costheta);
+}
+
+void	material_default(inout vec3 ro, inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
+{
+	// TODO: Ajouter le calcul des lights a l'accumulation
+
+	power *= hit.color;
+
+	if (ambiant.skybox_tex_index != -1)
+		importance_sampling(ro, rd, hit, power, accumulation);
+	
+	rd = cos_weighted_sample_hemishphere(hit.normal);
+}

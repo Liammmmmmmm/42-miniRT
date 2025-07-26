@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:59:22 by madelvin          #+#    #+#             */
 /*   Updated: 2025/06/23 18:04:33 by madelvin         ###   ########.fr       */
@@ -22,4 +22,10 @@ int	print_error1(char *err)
 {
 	ft_dprintf(2, RED"[Error]"NC" %s\n", err);
 	return (1);
+}
+
+int	print_errorm1(char *err)
+{
+	ft_dprintf(2, RED"[Error]"NC" %s\n", err);
+	return (-1);
 }

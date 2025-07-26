@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
 /*   Updated: 2025/07/22 11:39:09 by madelvin         ###   ########.fr       */
@@ -75,9 +75,11 @@ int	main(int argc, char **argv)
 	print_scene(&minirt.scene);
 	if (minirt.options.anim.enabled)
 		debug_print_animation(&minirt.options.anim);
+	mlx_do_key_autorepeatoff(minirt.mlx.mlx);
 	events(&minirt);
 	mlx_loop_hook(minirt.mlx.mlx, render_next_frame, &minirt);
 	mlx_loop(minirt.mlx.mlx);
+	mlx_do_key_autorepeaton(minirt.mlx.mlx);
 	clean(&minirt);
 	return (0);
 }

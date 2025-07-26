@@ -40,6 +40,8 @@ t_vec3	vec3_unit(const t_vec3 v);
 t_vec3	vec3_negate(const t_vec3 v);
 t_vec3	vec3_random();
 
+t_vec3	vec3_rotate(t_vec3 v, t_vec3 axis, float angle);
+
 double	ft_dmin(double a, double b);
 
 t_fcolor	color_to_fcolor(t_color color);

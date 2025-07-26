@@ -1,0 +1,44 @@
+
+vec3	get_solid_texture(vec3 p, vec3 c1, vec3 c2, float scale)
+{
+	int	a;
+	int	b;
+	int	c;
+
+	p *= scale;
+	a = int(floor(p.x));
+	b = int(floor(p.y + 0.5));
+	c = int(floor(p.z));
+	if ((a + b + c) % 2 == 0)
+		return (c1);
+	return (c2);
+}
+
+vec3	get_tex_color(int tex_index, float u, float v, vec3 hit_point)
+{
+	int	a;
+	int	b;
+
+	if (tex_ti[tex_index].type == 0) // Image
+	{
+		return (sample_texture(tex_index, vec2(u, v)).xyz);
+	}
+	else if (tex_ti[tex_index].type == 3) // Checker local
+	{
+		a = int(floor(u * checkers[tex_ti[tex_index].indice].scale));
+		b = int(floor(v * checkers[tex_ti[tex_index].indice].scale));
+		if ((a + b) % 2 == 0)
+			return (checkers[tex_ti[tex_index].indice].c1);
+		return (checkers[tex_ti[tex_index].indice].c2);
+	}
+	else if (tex_ti[tex_index].type == 4) // Checker global
+	{
+		return (get_solid_texture(hit_point, checkers[tex_ti[tex_index].indice].c1,
+			checkers[tex_ti[tex_index].indice].c2, checkers[tex_ti[tex_index].indice].scale));
+	}
+	else if (tex_ti[tex_index].type == 1) // HDR
+	{
+		return (sample_hdr_texture(tex_index, vec2(u, v), textures_data[tex_index].exposure));
+	}
+	return (vec3(0.0));
+}

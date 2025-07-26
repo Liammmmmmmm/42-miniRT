@@ -141,6 +141,7 @@ void	set_values_directional_light(t_dlight *obj);
 void	set_values_hyperboloid(t_hyperboloid *obj);
 void	set_values_custom(t_custom_object *obj);
 void	set_values_mat(t_mat *mat);
+void	try_set_new_size(t_minirt *minirt);
 void	set_dependant_values(t_minirt *minirt);
 
 void	debug_ray(t_minirt *minirt);
@@ -205,6 +206,7 @@ int		keyup_render(int key, t_minirt *minirt);
 int		keydown_controls(int key, t_minirt *minirt);
 int		keyup_controls(int key, t_minirt *minirt);
 
+int		mouse_move_render(int x, int y, t_minirt *minirt);
 void	mouseup_common(int key, t_minirt *minirt);
 void	mousedown_common(int key, t_minirt *minirt);
 
@@ -223,6 +225,8 @@ void	events_controls(t_minirt *minirt);
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
 void	stop_minirt(t_minirt *minirt);
+void	start_minirt(t_minirt *minirt);
+void	restart_minirt(t_minirt *minirt);
 
 void	render_frame(t_minirt *minirt);
 int		init_render(t_minirt *minirt);

@@ -37,8 +37,11 @@ SEED	 = $(if $(SEED_TMP),$(SEED_TMP),42)
 
 # Compiler and flags
 CC       = gcc
-CFLAGS   = -DRANDOM_SEED=$(SEED) -Wall -Wextra #-Werror # -mavx # SIMD flag
-LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm
+
+DEPFLAGS = -MMD -MP
+CFLAGS   = $(DEPFLAGS) -DRANDOM_SEED=$(SEED) -Wall -Wextra #-Werror # -mavx # SIMD flag
+LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm -lXfixes
+GPU_FLAGS = -Wall -Wextra -O3 -DUSE_GPU -lGL -lGLEW -lglfw -ldl $(DEPFLAGS)
 DEBUG_FLAGS = -g3
 FAST_FLAGS = -O3 -flto -march=native -mtune=native -funroll-loops -ffast-math -falign-functions=32 -falign-loops=16
 # -O3 -march=native -mtune=native -flto -funsafe-math-optimizations -ffast-math -fomit-frame-pointer -funroll-loops -fno-exceptions -fno-rtti -fno-stack-protector -DNDEBUG -falign-functions=32 -falign-loops=16
@@ -48,7 +51,7 @@ ifeq ($(MAKECMDGOALS), debug)
 endif
 ifeq ($(MAKECMDGOALS), fast)
 	CC     = gcc
-	CFLAGS   = -Wall -Wextra
+	CFLAGS   = $(DEPFLAGS) -Wall -Wextra
 	CFLAGS += $(FAST_FLAGS)
 endif
 
@@ -112,7 +115,9 @@ RENDERING_DIR		= src/rendering/
 RENDERING_FILE		= pixel.c loop.c no_display.c
 
 ENV_DIR				= src/env/
-ENV_FILE			= init_mlx.c free_mlx.c init_controls.c init_ui.c set_dependant_values.c micrort_init.c set_dependant_values_objs.c set_dependant_values_objs2.c
+ENV_FILE			= init_mlx.c free_mlx.c init_controls.c init_ui.c set_dependant_values.c \
+					micrort_init.c set_dependant_values_objs.c set_dependant_values_objs2.c \
+					set_new_win_size.c
 
 MAT_DIR				= src/material/
 MAT_FILE			= utils.c dielectric.c material_default.c metallic.c refraction.c
@@ -150,7 +155,7 @@ PPM_DIR				= src/utils/ppm/
 PPM_FILE			= export_ppm.c
 
 EDIT_MOD_DIR		= src/edition_mod/
-EDIT_MOD_FILE		= select_obj.c
+EDIT_MOD_FILE		= select_obj.c movements.c movements_utils.c
 
 UPSCALING_DIR		= src/upscaling/
 UPSCALING_FILE		= bilinear.c bicubic.c utils.c no_upscaling.c
@@ -187,6 +192,47 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(PNG_DIR), $(PNG_FILE)) \
 			$(addprefix $(CAUSTIC_DIR), $(CAUSTIC_FILE))
 
+SRC_DIR_GPU			= src/
+SRC_FILE_GPU		= main_shader.c
+
+GPU_DIR				= src/gpu/
+GPU_FILE			= init_shader.c clean_shaders.c use_shader.c gpu_scene.c
+
+RAY_TRACING_DIR_GPU		= src/ray_tracing/
+RAY_TRACING_FILE_GPU	= render_gpu.c init_animated_items.c focus.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c \
+					bvh/bvh_draw_utils.c bvh/bvh_obj_bounds.c setup_scene_obj.c background.c viewport.c path_trace.c hit_register/apply_map.c hit_register/get_hdr_value.c \
+					hit_register/get_hit_color.c hit_register/get_tex_color.c hit_register/hit_register.c hit_register/hit_obj.c bvh/bvh_hit.c micrort.c bvh/bvh_build.c \
+					importance_sampling/get_dir.c importance_sampling/calc_pdf.c importance_sampling/calc_cdf.c importance_sampling/importance_sampling_manager.c \
+					importance_sampling/init_maloc_importance_sampling.c calc_sample.c light/d_light.c light/p_light.c light/light_manager.c
+
+ENV_DIR_GPU			= src/env/
+ENV_FILE_GPU		= init_mlx.c free_mlx.c init_controls.c init_ui.c set_dependant_values.c \
+					micrort_init.c set_dependant_values_objs.c set_dependant_values_objs2.c \
+					set_new_win_size_gpu.c
+
+M_FILE_GPU = $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
+			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
+			$(addprefix $(DEBUG_DIR), $(DEBUG_FILE)) \
+			$(addprefix $(EVENT_DIR), $(EVENT_FILE)) \
+			$(addprefix $(RAY_TRACING_DIR_GPU), $(RAY_TRACING_FILE_GPU)) \
+			$(addprefix $(TEXTURES_DIR), $(TEXTURES_FILE)) \
+			$(addprefix $(RENDERING_DIR), $(RENDERING_FILE)) \
+			$(addprefix $(MAT_DIR), $(MAT_FILE)) \
+			$(addprefix $(MATH_DIR), $(MATH_FILE)) \
+			$(addprefix $(UTILS_MLX_DIR), $(UTILS_MLX_FILE)) \
+			$(addprefix $(UI_DIR), $(UI_FILE)) \
+			$(addprefix $(PARSING_DIR), $(PARSING_FILE)) \
+			$(addprefix $(FONT_PARS_DIR), $(FONT_PARS_FILE)) \
+			$(addprefix $(FONT_REND_DIR), $(FONT_REND_FILE)) \
+			$(addprefix $(ENV_DIR_GPU), $(ENV_FILE_GPU)) \
+			$(addprefix $(EDIT_MOD_DIR), $(EDIT_MOD_FILE)) \
+			$(addprefix $(UPSCALING_DIR), $(UPSCALING_FILE)) \
+			$(addprefix $(PPM_DIR), $(PPM_FILE)) \
+			$(addprefix $(HDR_PARSING_DIR), $(HDR_PARSING_FILE)) \
+			$(addprefix $(OPTIONS_DIR), $(OPTIONS_FILE)) \
+			$(addprefix $(PNG_DIR), $(PNG_FILE)) \
+			$(addprefix $(GPU_DIR), $(GPU_FILE))
+
 # Source files bonus
 SRCS_BONUS = 
 
@@ -195,14 +241,17 @@ OBJ_DIR   = .obj/
 OBJ       = $(M_FILE:%.c=$(OBJ_DIR)%.o)
 OBJ_BONUS = $(B_FILE:%.c=$(OBJ_DIR)%.o)
 
+OBJ_GPU = $(M_FILE_GPU:%.c=$(OBJ_DIR)%.o)
+
 # Remake all if modified
 REMAKE   = libft/includes/libft.h libft/includes/ft_printf.h \
-		libft/includes/get_next_line.h libft/Makefile  Makefile \
+		libft/includes/get_next_line.h \
 		includes/bmp_parsing.h includes/bvh.h includes/font.h includes/font_structs.h \
 		includes/material.h includes/maths.h includes/minirt.h \
 		includes/mlx_base.h includes/mlx_components.h includes/structs.h includes/ui.h \
 		includes/utils.h includes/obj_parsing.h includes/hit_register.h \
 		includes/importance_sampling.h includes/caustic.h
+		# libft/Makefile  Makefile
 
 # NORMINETTE
 NORM_RET = $(RED)[ERROR]$(BOLD) Norminette Disable$(NC)
@@ -252,6 +301,19 @@ $(NAME) : $(MINILIBX) $(LIBFT) $(OBJ)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(MINILIBX) $(LDFLAGS)
 	@make --no-print-directory end_message
 
+$(NAME)_gpu: $(MINILIBX) $(LIBFT) $(OBJ_GPU)
+	@if [ $(COMPILED_FILES) -eq 0 ]; then \
+		echo "\n$(YELLOW)╔══════════════════════════════════════════════╗$(NC)";                          \
+		echo "$(YELLOW)║        Starting $(YELLOW2)$(NAME)_gpu$(YELLOW) compilation...        ║$(NC)";           \
+		echo "$(YELLOW)╚══════════════════════════════════════════════╝$(NC)";                        \
+	fi
+	@$(eval COMPILED_FILES := 1)
+	@echo "\n\n$(GREEN)[Compiling program] $(NC)$(NAME)_gpu"
+	@$(CC) $(CFLAGS) -o $(NAME)_gpu $(OBJ_GPU) $(LIBFT) $(MINILIBX) $(LDFLAGS) $(GPU_FLAGS)
+	@make --no-print-directory end_message
+
+gpu: make_libft make_mlx $(NAME)_gpu nothing_to_be_done
+
 make_libft:
 	@make --no-print-directory -C $(LIBFTDIR) all
 
@@ -261,6 +323,7 @@ make_mlx:
 $(LIBFT): make_libft
 
 $(MINILIBX): make_mlx
+
 
 clean :
 	@make --no-print-directory -C $(LIBFTDIR) clean

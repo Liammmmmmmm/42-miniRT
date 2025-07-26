@@ -48,6 +48,7 @@ inline char	intersect_aabb(const t_ray *r, const t_aabb *b)
 	t1 = fmin((b->min.z - r->orig.z) / r->dir.z, (b->max.z - r->orig.z)
 			/ r->dir.z);
 	tmin = fmax(tmin, t1);
+
 	t1 = fmax((b->min.x - r->orig.x) / r->dir.x, (b->max.x - r->orig.x)
 			/ r->dir.x);
 	tmax = fmin(t1, fmax((b->min.y - r->orig.y) / r->dir.y,

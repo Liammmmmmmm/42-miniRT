@@ -1,0 +1,40 @@
+bool hit_triangle(Triangle t, vec3 ro, vec3 rd, inout hit_record hit)
+{
+    vec3 e1 = t.v1.pos - t.v0.pos;
+    vec3 e2 = t.v2.pos - t.v0.pos;
+    vec3 h = cross(rd, e2);
+    float a = dot(e1, h);
+
+    if (a <= 1e-6)
+        return false;
+
+    float f = 1.0 / a;
+    vec3 s = ro - t.v0.pos;
+    float u = f * dot(s, h);
+
+    if (u < 0.0 || u > 1.0)
+        return false;
+
+    vec3 q = cross(s, e1);
+    float v = f * dot(rd, q);
+
+    if (v < 0.0 || u + v > 1.0)
+        return false;
+
+    float hit_t = f * dot(e2, q);
+
+    if (hit_t > 1e-4 && hit_t < hit.t)
+    {
+        hit.t = hit_t;
+        hit.point = ro + rd * hit_t;
+        float w = 1.0 - u - v;
+        vec3 outward_normal = w * t.v0.normal + u * t.v1.normal + v * t.v2.normal;
+        hit.normal = normalize(outward_normal);
+        hit.front_face = true;
+        hit.u = w * t.v0.u + u * t.v1.u + v * t.v2.u;
+        hit.v = w * t.v0.v + u * t.v1.v + v * t.v2.v;
+        return true;
+    }
+
+    return false;
+}

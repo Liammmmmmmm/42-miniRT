@@ -1,6 +1,6 @@
 # tex texture1 assets/textures/earth_daymap_2k.bmp
 tex texture2 image assets/textures/non.bmp
-tex skybox   image assets/textures/mountain_skybox.bmp
+# tex skybox   image assets/textures/mountain_skybox.bmp
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color normal_map
@@ -14,17 +14,28 @@ mat	metal3                        255,255,255       0.0            1.0          
 mat	texture_rel2                  texture2          0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255  
 mat mat_0_0  					  255,255,255       0.05           0.0            1.460          0.0            1.0                 0.0                 220,220,220 
 
+mat	red                           255,0,0           0.0            0.0            0.000000       0.000000       1.0                 0.000000            255,255,255  
+mat	green                         0,255,0           0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255  
+mat	blue                          0,0,255           1.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255  
 
-A	0.0										skybox
+A	0.0										255,255,255
 
 C	-2,1,1	1,-0.5,-1 50
 
 # L	-4,1,1	1							255,255,255
 l	-4,1,1	1							255,255,255
 # sp	-4,1,1		1							emissive
-pl	0,-0.51,1		0,1,0						texture_rel2
+pl	0,-0.51,1		0,1,0						255,0,0
 # sp	0,-100.5,-1.2	100						204,204,204
 # sp	-1.032,0,-1		1							emissive
-sp	0,0,-1		1							glass0
-sp	1,0,-1		1							mat_0_0 # 25,51,127
-sp	2,0,-1		1							metal1
+
+
+
+sp	0,0,-1		1							red
+sp	1,0,-1		0.5							green # 25,51,127
+sp	2,0,-1		1							blue
+
+# sp	1,0,0		1							255,0,0
+# sp	0,1,0		1							0,255,0 # 25,51,127
+# sp	0,0,1		1							0,0,255
+

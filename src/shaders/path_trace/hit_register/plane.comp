@@ -1,0 +1,47 @@
+
+
+void	get_uv_plane(inout hit_record hit, Plane plane)
+{
+	vec3	up;
+	vec3	tangent;
+	vec3	local;
+	float	u;
+	float	v;
+
+	if (abs(plane.normal.y) < 0.99)
+		up = vec3(0.0, 1.0, 0.0);
+	else
+		up = vec3(1.0, 0.0, 0.0);
+	tangent = normalize(cross(up, plane.normal));
+	local = hit.point - plane.position;
+	u = dot(local, tangent);
+	v = dot(local, cross(plane.normal, tangent));
+	if (plane.material_id != -1)
+	{
+		u *= materials[plane.material_id].scale * 0.1;
+		v *= materials[plane.material_id].scale * 0.1;
+	}
+	hit.u = u - floor(u);
+	hit.v = v - floor(v);
+}
+
+bool hit_plane(Plane plane, vec3 ro, vec3 rd, inout hit_record hit)
+{
+    float denom = dot(plane.normal, rd);
+    if (abs(denom) < 1e-7)
+        return false;
+    float t = (plane.d - dot(plane.normal, ro)) / denom;
+    if (t <= IT_MIN || t > IT_MAX)
+        return false;
+    hit.t = t;
+    hit.point = ro + rd * t;
+    if (denom < 0) {
+        hit.front_face = true;
+        hit.normal = plane.normal;
+    } else {
+        hit.front_face = false;
+        hit.normal = -plane.normal;
+    }
+    get_uv_plane(hit, plane);
+    return true;
+}

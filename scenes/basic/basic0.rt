@@ -1,0 +1,41 @@
+# tex texture1 assets/textures/earth_daymap_2k.bmp
+tex skybox  image         assets/textures/shanghai_bund_2k.hdr
+tex texture2 image assets/textures/non.bmp
+# tex skybox   image assets/textures/mountain_skybox.bmp
+
+# MATERIALS
+#	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color normal_map
+mat emissive  					  255,255,255       0.0            0.0            1.460          0.0            1.0                 1                 255,255,255      
+mat	glass0                        255,255,255     0.0            0.0            1.450000       	 1.00000        1.0                 0.000000            255,255,255  
+mat	glass1                        255, 255, 255     0.0            0.0            0.750000       0.000000       1.0                 0.000000            255,255,255  
+mat	metal1                        255,227,157       1.0            0.0            0.000000       0.000000       1.0                 0.000000            255,255,255  
+mat	metal2                        255,255,255       0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255  
+mat	metal3                        255,255,255       0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255  
+# mat	texture_rel                   texture1          0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255  
+mat	texture_rel2                  texture2          0.0            1.0            0.000000       0.000000       1.0                 0.000000            255,255,255  
+mat mat_0_0  					  255,255,255       0.05           0.0            1.460          0.0            1.0                 0.0                 220,220,220 
+
+mat	red                           255,0,0           0.0            0.0            0.000000       0.000000       1.0                 0.000000            255,255,255  
+mat	green                         255,255,255           0.0            0.15            1.450000       1.000000       1.0                 0.000000            255,255,255  
+mat	blue                          0,0,255           1.0            0.1            0.000000       0.000000       1.0                 0.000000            255,255,255  
+
+A	1.0										skybox
+
+C	0,0.2,1	0,0,-1 90
+
+# L	-4,1,1	1							255,255,255
+# l	-4,1,1	1							255,255,255
+# sp	-4,1,1		1							emissive
+pl	0,-0.51,1		0,1,0					200,200,0
+# sp	0,-100.5,-1.2	100						204,204,204
+# sp	-1.032,0,-1		1							emissive
+
+# sp	0,-50.5,0  100      200,200,0
+
+sp	-1,0,-1		1							red
+sp	0,0,-1		0.7							green # 25,51,127
+sp	1,0,-1		1							blue
+
+# sp	1,0,0		1							255,0,0
+# sp	0,1,0		1							0,255,0 # 25,51,127
+# sp	0,0,1		1							0,0,255

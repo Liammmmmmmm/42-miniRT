@@ -1,0 +1,15 @@
+
+vec2 random_in_unit_disk()
+{
+	float angle = rand() * 2.0 * PI;
+	float radius = sqrt(rand());
+	return vec2(cos(angle), sin(angle)) * radius;
+}
+
+vec3	defocus_disk_sample(vec3 camera_position, vec3 defocus_disk_u, vec3 defocus_disk_v)
+{
+	vec2	random_point = random_in_unit_disk();
+	return (camera_position 
+		+ (defocus_disk_u * random_point.x)
+		+ (defocus_disk_v * random_point.y));
+}

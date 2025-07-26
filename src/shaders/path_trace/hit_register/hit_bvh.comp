@@ -1,0 +1,155 @@
+#define BVH_STACK_SIZE 64
+
+vec3	get_hit_register_color(vec3 obj_color, hit_record hit)
+{
+	if (hit.material_id != -1)
+	{
+		if (materials[hit.material_id].color_tex_index == -1)
+			return (materials[hit.material_id].color_value);
+		else
+			return get_tex_color(materials[hit.material_id].color_tex_index,
+				hit.u, hit.v, hit.point);
+	}
+	return (obj_color);
+}
+
+bool    hit_register_loop(vec3 ro, vec3 rd, bvh_node node, inout hit_record rec)
+{
+	bool        hit = false;
+	uint        i = 0;
+	uint        index;
+	hit_record  hit_tmp;
+	float       t;
+
+	hit_tmp = get_default_hit_record();
+	while (i < node.prim_count)
+	{
+		if (prim_ti[node.first_prim + i].type == 0)
+		{
+			index = prim_ti[node.first_prim + i].indice;
+			if (hit_sphere(spheres[index], ro, rd, hit_tmp))
+			{
+				if (hit_tmp.t < rec.t)
+				{
+					rec = hit_tmp;
+					hit = true;
+					rec.material_id = spheres[index].material_id;
+					apply_all_map(rec);
+					rec.color = get_hit_register_color(spheres[index].color, rec);
+				}
+			}
+		}
+		if (prim_ti[node.first_prim + i].type == 1)
+		{
+				index = prim_ti[node.first_prim + i].indice;
+				if (hit_cylinder(cylinders[index], ro, rd, hit_tmp))
+				{
+						if (hit_tmp.t < rec.t)
+						{
+								rec = hit_tmp;
+								hit = true;
+								rec.material_id = cylinders[index].material_id;
+								apply_all_map(rec);
+								rec.color = get_hit_register_color(cylinders[index].color, rec);
+						}
+				}
+		}
+		if (prim_ti[node.first_prim + i].type == 2)
+		{
+				index = prim_ti[node.first_prim + i].indice;
+				if (hit_cone(cones[index], ro, rd, hit_tmp))
+				{
+						if (hit_tmp.t < rec.t)
+						{
+								rec = hit_tmp;
+								hit = true;
+								rec.material_id = cones[index].material_id;
+								apply_all_map(rec);
+								rec.color = get_hit_register_color(cones[index].color, rec);
+						}
+				}
+		}
+		if (prim_ti[node.first_prim + i].type == 3)
+		{
+				index = prim_ti[node.first_prim + i].indice;
+				if (hit_hyperboloid(hypers[index], ro, rd, hit_tmp, IT_MAX))
+				{
+						if (hit_tmp.t < rec.t)
+						{
+								rec = hit_tmp;
+								hit = true;
+								rec.material_id = hypers[index].material_id;
+								apply_all_map(rec);
+								rec.color = get_hit_register_color(hypers[index].color, rec);
+						}
+				}
+		}
+		if (prim_ti[node.first_prim + i].type == 4)
+		{
+			index = prim_ti[node.first_prim + i].indice;
+			if (hit_triangle(triangles[index], ro, rd, hit_tmp))
+			{
+				if (hit_tmp.t < rec.t)
+				{
+					rec = hit_tmp;
+					hit = true;
+					rec.material_id = triangles[index].material_id;
+					apply_all_map(rec);
+					rec.color = get_hit_register_color(triangles[index].color, rec);
+				}
+			}
+		}
+		i++;
+	}
+	return (hit);
+}
+
+float intersect_aabb_dist(vec3 ro, vec3 rd, aabb box)
+{
+	vec3 inv_rd = 1.0 / rd;
+	vec3 t1 = (box.min - ro) * inv_rd;
+	vec3 t2 = (box.max - ro) * inv_rd;
+	vec3 tmin_vec = min(t1, t2);
+	vec3 tmax_vec = max(t1, t2);
+	float t_enter = max(max(tmin_vec.x, tmin_vec.y), tmin_vec.z);
+	float t_exit = min(min(tmax_vec.x, tmax_vec.y), tmax_vec.z);
+	if (t_enter < t_exit && t_exit > 0.0)
+		return (t_enter);
+	return (1e30);
+}
+
+
+bool hit_bvh(vec3 ro, vec3 rd, inout hit_record rec)
+{
+	bool hit_anything = false;
+	uint stack[BVH_STACK_SIZE];
+	int stack_ptr = 0;
+
+	stack[stack_ptr++] = 0;
+
+	while (stack_ptr > 0) {
+		uint node_index = stack[--stack_ptr];
+		bvh_node node = bvh_nodes[node_index];
+		if (intersect_aabb_dist(ro, rd, node.node_bounds) >= rec.t)
+			continue;
+		if (node.is_leaf)
+			hit_anything = hit_register_loop(ro, rd, node, rec) || hit_anything;
+		else
+		{
+			if (stack_ptr > BVH_STACK_SIZE - 2)
+				continue;
+			float dist_left = intersect_aabb_dist(ro, rd, bvh_nodes[node.left_child].node_bounds);
+			float dist_right = intersect_aabb_dist(ro, rd, bvh_nodes[node.right_child].node_bounds);
+			if (dist_left < dist_right)
+			{
+				if (dist_right < rec.t) stack[stack_ptr++] = node.right_child;
+				if (dist_left < rec.t) stack[stack_ptr++] = node.left_child;
+			} else
+			{
+				if (dist_left < rec.t) stack[stack_ptr++] = node.left_child;
+				if (dist_right < rec.t) stack[stack_ptr++] = node.right_child;
+			}
+		}
+	}
+	return (hit_anything);
+}

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "camera.h"
 
 void	export_scene(t_minirt *minirt)
 {
@@ -38,6 +39,22 @@ void	open_controls(int key, t_minirt *minirt)
 	}
 }
 
+void	keydown_move(int key, t_minirt *minirt)
+{
+	if (key == KEY_W)
+		minirt->controls.movements.forward = 1;
+	else if (key == KEY_S)
+		minirt->controls.movements.back = 1;
+	else if (key == KEY_A)
+		minirt->controls.movements.left = 1;
+	else if (key == KEY_D)
+		minirt->controls.movements.right = 1;
+	else if (key == KEY_SPACE)
+		minirt->controls.movements.up = 1;
+	else if (key == KEY_LSHIFT)
+		minirt->controls.movements.down = 1;
+}
+
 int	keydown_render(int key, t_minirt *minirt)
 {
 	if (key == KEY_I)
@@ -56,9 +73,11 @@ int	keydown_render(int key, t_minirt *minirt)
 			minirt->i = minirt->scene.photon_map.photon_count;
 		printf("%d\n", minirt->i);
 	}
-	if (key == KEY_D && minirt->controls.values.debug == 0)
+
+	keydown_move(key, minirt);
+	if (key == KEY_H && minirt->controls.values.debug == 0)
 		minirt->controls.values.debug = 1;
-	else if (key == KEY_D && minirt->controls.values.debug == 1)
+	else if (key == KEY_H && minirt->controls.values.debug == 1)
 	{
 		minirt->controls.values.debug = 0;
 		copy_buff_to_image(minirt);
@@ -93,8 +112,25 @@ int	keydown_render(int key, t_minirt *minirt)
 	return (0);
 }
 
+void	keyup_move(int key, t_minirt *minirt)
+{
+	if (key == KEY_W)
+		minirt->controls.movements.forward = 0;
+	else if (key == KEY_S)
+		minirt->controls.movements.back = 0;
+	else if (key == KEY_A)
+		minirt->controls.movements.left = 0;
+	else if (key == KEY_D)
+		minirt->controls.movements.right = 0;
+	else if (key == KEY_SPACE)
+		minirt->controls.movements.up = 0;
+	else if (key == KEY_LSHIFT)
+		minirt->controls.movements.down = 0;
+}
+
 int	keyup_render(int key, t_minirt *minirt)
 {
+	keyup_move(key, minirt);
 	keyup_common(key, minirt);
 	return (0);
 }

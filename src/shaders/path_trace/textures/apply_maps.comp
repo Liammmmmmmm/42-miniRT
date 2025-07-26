@@ -1,0 +1,77 @@
+
+
+
+void	init_tbn(inout mat3 tbn, hit_record hit)
+{
+	vec3	tangent;
+	vec3	bi_tangent;
+
+	tangent = cross(hit.normal, vec3(0, -1, 0));
+	if (length(tangent) == 0)
+		tangent = cross(hit.normal, vec3(0, 0, 1));
+	tangent = normalize(tangent);
+	bi_tangent = normalize(cross(hit.normal, tangent));
+	tbn[0] = tangent;
+	tbn[1] = bi_tangent;
+	tbn[2] = hit.normal;
+}
+
+void	apply_normal_map(inout hit_record hit)
+{
+	vec3	map;
+	mat3	tbn = mat3(0.0);
+	vec3	normal_map;
+
+	if (hit.material_id == -1 || materials[hit.material_id].normal_tex_index == -1)
+		return ;
+	map = get_tex_color(materials[hit.material_id].normal_tex_index, hit.u, hit.v, hit.point);
+	normal_map = map * 2 - 1;
+	init_tbn(tbn, hit);
+	hit.normal = normalize(mix(hit.normal, normalize(tbn * normal_map), materials[hit.material_id].normal_intensity));
+}
+
+
+
+void	apply_all_map(inout hit_record hit)
+{
+	if (hit.material_id == -1)
+		return ;
+
+	apply_normal_map(hit);
+	
+	if (materials[hit.material_id].metallic_tex_index == -1)
+		hit.mat_val.metallic = materials[hit.material_id].metallic_value;
+	else
+		hit.mat_val.metallic = get_tex_color(materials[hit.material_id].metallic_tex_index, hit.u, hit.v, hit.point).x;
+
+	if (materials[hit.material_id].roughness_tex_index == -1)
+		hit.mat_val.roughness = materials[hit.material_id].roughness_value;
+	else
+		hit.mat_val.roughness = get_tex_color(materials[hit.material_id].roughness_tex_index, hit.u, hit.v, hit.point).x;
+
+	hit.mat_val.ior = materials[hit.material_id].ior;
+
+	if (materials[hit.material_id].transmission_tex_index == -1)
+		hit.mat_val.transmission = materials[hit.material_id].transmission_value;
+	else
+		hit.mat_val.transmission = get_tex_color(materials[hit.material_id].transmission_tex_index, hit.u, hit.v, hit.point).x;
+
+	if (materials[hit.material_id].ao_tex_index == -1)
+		hit.mat_val.ao = materials[hit.material_id].ao_value;
+	else
+		hit.mat_val.ao = get_tex_color(materials[hit.material_id].ao_tex_index, hit.u, hit.v, hit.point).x;
+
+	if (materials[hit.material_id].emission_strength_tex_index == -1)
+		hit.mat_val.emission_strength = materials[hit.material_id].emission_strength;
+	else
+		hit.mat_val.emission_strength = get_tex_color(materials[hit.material_id].emission_strength_tex_index, hit.u, hit.v, hit.point).x;
+
+	hit.mat_val.scale = materials[hit.material_id].scale;
+	hit.mat_val.normal_intensity = materials[hit.material_id].normal_intensity;
+
+	if (materials[hit.material_id].emission_color_tex_index == -1)
+		hit.mat_val.emission_color = materials[hit.material_id].emission_color;
+	else
+		hit.mat_val.emission_color = get_tex_color(materials[hit.material_id].emission_color_tex_index, hit.u, hit.v, hit.point);
+
+}

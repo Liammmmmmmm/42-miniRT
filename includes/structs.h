@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 12:09:09 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/26 16:09:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,13 @@ typedef struct s_interpolate_pixel_bicubic
 	int		x[4];
 	int		y[4];
 }	t_interpolate_pixel_bicubic;
+
+typedef struct s_range
+{
+	int	start;
+	int	end;
+	int	median;
+}	t_range;
 
 typedef struct s_quadratic
 {

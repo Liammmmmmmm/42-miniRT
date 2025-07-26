@@ -18,9 +18,8 @@ bool    hit_register_loop(vec3 ro, vec3 rd, bvh_node node, inout hit_record rec)
 	bool        hit = false;
 	uint        i = 0;
 	uint        index;
-	hit_record  hit_tmp;
+	hit_record  hit_tmp = get_default_hit_record();
 
-	hit_tmp = get_default_hit_record();
 	while (i < node.prim_count)
 	{
 		if (prim_ti[node.first_prim + i].type == 0)
@@ -150,7 +149,7 @@ bool hit_bvh(vec3 ro, vec3 rd, inout hit_record rec)
 
 		if (node.is_leaf)
 		{
-			hit_record rec_tmp;
+			hit_record rec_tmp = get_default_hit_record();
 			if (hit_register_loop(ro, rd, node, rec_tmp))
 			{
 				if (!hit_anything || rec_tmp.t < rec.t)

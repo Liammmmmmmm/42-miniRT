@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/25 11:55:06 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/26 17:24:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ void	clean_scene(t_gpu_structs *gpu_structs)
 
 	free(gpu_structs->triangles);
 	delete_ssbo(&gpu_structs->triangles_ssbo);
+
+	free(gpu_structs->lights);
+	delete_ssbo(&gpu_structs->lights_ssbo);
 
 	free(gpu_structs->prim_types_indices);
 	delete_ssbo(&gpu_structs->prim_types_indices_ssbo);

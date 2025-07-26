@@ -4,13 +4,9 @@ layout(std430, binding = 1) buffer Output {
 	vec3 data[];
 };
 
-// layout(std140, binding = 2) buffer ViewportBuffer {
-// 	Viewport viewport;
-// };
-
-// layout(std140, binding = 3) buffer CameraBuffer {
-// 	Camera cam;
-// };
+layout(std430, binding = 2) buffer LightBuffer {
+	Light lights[];
+};
 
 layout(std430, binding = 4) buffer MaterialBuffer {
 	Material materials[];
@@ -81,6 +77,7 @@ uniform uint cylinders_am;
 uniform uint cones_am;
 uniform uint hypers_am;
 uniform uint triangles_am;
+uniform uint lights_am;
 
 uniform uint max_bounces;
 
@@ -92,3 +89,6 @@ const float PI = 3.14159265358979323846;
 const float IT_MAX = 1000.0;
 const float IT_MIN = 0.001;
 const float MIN_SCALE = 1e-3;
+
+const float SPEC_STRENGTH = 1.0;
+const float SHINE = 64.0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   random.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:32:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/21 14:53:41 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:44:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,9 @@ double	random_double_in_interval(double min, double max)
 t_vec3	random_in_unit_sphere(void)
 {
 	t_vec3	p;
-
-	while (1)
-	{
-		p \
-	= (t_vec3){random_double_neg(), random_double_neg(), random_double_neg()};
-		if (vec3_length_squared(p) < 1)
-			return (p);
-	}
+	
+	p = (t_vec3){random_double_neg(), random_double_neg(), random_double_neg()};
+	if (vec3_length_squared(p) >= 1.0)
+		p = vec3_multiply_scalar(vec3_unit(p), pow(random_double(), 1.0 / 3.0));
+	return (p);
 }

@@ -19,11 +19,10 @@ vec3 cos_weighted_sample_hemishphere(vec3 normal)
 
 void	importance_sampling(vec3 ro, inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
 {
-	hit_record		tmp_hit;
-	const vec2		uv = calc_inverse_transform_sampling_uv();
-	vec3			radiance;
+	hit_record	tmp_hit = get_default_hit_record();
+	const vec2	uv = calc_inverse_transform_sampling_uv();
+	vec3		radiance;
 
-	tmp_hit.t = 10000000;
 	rd = calc_inverse_transform_sampling_dir(uv);
 	if (hit_register_all(tmp_hit, ro, rd))
 		return ;
@@ -42,9 +41,11 @@ void	importance_sampling(vec3 ro, inout vec3 rd, hit_record hit, inout vec3 powe
 
 void	material_default(inout vec3 ro, inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
 {
-	// TODO: Ajouter le calcul des lights a l'accumulation
+	vec3	direct_lighting = compute_light(hit);
+	vec3	caustics_lighting = vec3(0.0); // estimate_caustics_physically_based
 
 	power *= hit.color;
+	accumulation += (direct_lighting + caustics_lighting) * power;
 
 	if (ambiant.skybox_tex_index != -1)
 		importance_sampling(ro, rd, hit, power, accumulation);

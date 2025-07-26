@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/26 10:35:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/26 19:13:33 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,14 @@ GLuint	compile_shader_from_files(const char **paths, int count,
 		}
 		sources[i] = (char *)tmp.data;
 	}
-	print_shader_sources(sources, count, paths);
+	// print_shader_sources(sources, count, paths);
 	shader = compile_step(sources, count, shader_type);
 	if (check_shader_compile(shader) == -1)
 		return (0);
 	return (shader);
 }
 
-#define SOURCES_AMOUNT 28
+#define SOURCES_AMOUNT 30
 
 int	create_program(t_shader_data *shader_data)
 {
@@ -148,6 +148,8 @@ int	create_program(t_shader_data *shader_data)
 		"src/shaders/path_trace/hit_register/hit_register.comp",
 		"src/shaders/path_trace/skybox.comp",
 		"src/shaders/path_trace/material/utils.comp",
+		"src/shaders/path_trace/light/p_light.comp",
+		"src/shaders/path_trace/light/light_manager.comp",
 		"src/shaders/path_trace/material/default.comp",
 		"src/shaders/path_trace/material/metallic.comp",
 		"src/shaders/path_trace/material/refraction.comp",
@@ -156,7 +158,8 @@ int	create_program(t_shader_data *shader_data)
 		"src/shaders/path_trace/path_trace.comp",
 		"src/shaders/shader.comp"
 	};
-	
+
+	printf("\nStart compiling shaders\n");
 	cs = compile_shader_from_files(sources, SOURCES_AMOUNT, GL_COMPUTE_SHADER);
 	if (check_shader_compile(cs) == -1)
 		return (-1);
@@ -166,6 +169,7 @@ int	create_program(t_shader_data *shader_data)
 	glDeleteShader(cs);
 	if (check_program_link(shader_data->program) == -1)
 		return (-1);
+	printf("End of shaders compilation\n");
 	return (0);
 }
 

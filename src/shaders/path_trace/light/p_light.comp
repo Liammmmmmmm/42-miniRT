@@ -1,0 +1,59 @@
+
+
+
+bool	check_plight_hit(vec3 origin, vec3 target)
+{
+	hit_record	tmp_hit = get_default_hit_record();
+	vec3		rd = normalize(target - origin);
+
+	float distance_to_target = length(target - origin);
+	if (hit_register_all(tmp_hit, origin, rd))
+		if (tmp_hit.t < distance_to_target)
+			return (true);
+	return (false);
+}
+
+float	compute_shadow_factor(vec3 origin, Light light)
+{
+	hit_record	tmp_hit = get_default_hit_record();
+	uint		i;
+	uint		hits_count;
+
+	hits_count = 0;
+	i = 0;
+	if (light.radius == 0 || light.shadow_sample <= 1)
+	{
+		if (!check_plight_hit(tmp_hit.point, light.pos))
+			return (1.0);
+		return (0.0);
+	}
+	while (i < light.shadow_sample)
+	{
+		vec3 random_target = light.pos + (random_in_unit_sphere() * light.radius);
+		vec3 rd = normalize(random_target - origin);
+		if (hit_register_all(tmp_hit, origin, rd) == false || tmp_hit.t >= length(random_target - origin))
+			hits_count++;
+		i++;
+	}
+	return (float(hits_count) / float(light.shadow_sample));
+}
+
+void	add_plight(inout vec3 light_color, hit_record hit, Light light, vec3 view_dir, float shadow_factor)
+{
+	const vec3	light_dir = normalize(light.pos - hit.point);
+	const float	n_dot_l = dot(hit.normal, light_dir);
+
+	if (n_dot_l <= 0.0)
+		return ;
+	float diffuse_intensity = light.brightness * n_dot_l * shadow_factor;
+	light_color.x += light.color.x * diffuse_intensity;
+	light_color.y += light.color.y * diffuse_intensity;
+	light_color.z += light.color.z * diffuse_intensity;
+	float r_dot_v = dot(reflection_vec(-light_dir, hit.normal), view_dir);
+	if (r_dot_v < 0.0)
+		r_dot_v = 0.0;
+	float spec = pow(r_dot_v, SHINE) * SPEC_STRENGTH * shadow_factor;
+	light_color.x += light.color.x * light.brightness * spec;
+	light_color.y += light.color.y * light.brightness * spec;
+	light_color.z += light.color.z * light.brightness * spec;
+}

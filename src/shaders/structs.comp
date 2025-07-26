@@ -115,6 +115,15 @@ struct Ambiant {
 	int		skybox_tex_index;
 };
 
+struct Light {
+	vec3	pos;
+	int		type;
+	vec3	color;
+	float	brightness;
+	float	radius;
+	uint	shadow_sample;
+};
+
 struct Material {
 	vec3	color_value;
 	int		color_tex_index;

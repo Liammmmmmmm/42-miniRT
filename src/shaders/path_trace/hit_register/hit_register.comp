@@ -5,7 +5,7 @@ void	hit_planes(inout hit_record hit, inout bool hit_something, vec3 ro, vec3 rd
 
 	while (i < planes_am)
 	{
-		hit_record hit_tmp;
+		hit_record hit_tmp = get_default_hit_record();
 		if (hit_plane(planes[i], ro, rd, hit_tmp))
 		{
 			if (hit_tmp.t < hit.t)

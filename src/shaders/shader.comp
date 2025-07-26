@@ -41,7 +41,11 @@ void main() {
 	// data[id] += vec3(0.1);
 	// return ;
 
-	
+	// if (gid.x < width_render / 2)
+	// 	data[id] = lights[0].color;
+	// else
+	// 	data[id] = lights[1].color;
+	// return ;
 
 	vec3 ro;
 	if (cam.defocus_angle <= 0)

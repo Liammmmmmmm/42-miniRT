@@ -7,5 +7,18 @@ uint	rand_xorshift() {
 }
 
 float	rand() {
-    return float(rand_xorshift()) / float(0xFFFFFFFFu);
+	return float(rand_xorshift()) / float(0xFFFFFFFFu);
+}
+
+float	random_double_neg() {
+	return float(rand_xorshift()) / (float(0xFFFFFFFFu) / 2.0) - 1;
+}
+
+vec3	random_in_unit_sphere()
+{
+	
+	vec3 p = vec3(random_double_neg(), random_double_neg(), random_double_neg());
+	if (dot(p, p) >= 1.0)
+		p = normalize(p) * pow(rand(), 1.0 / 3.0);
+	return (p);
 }

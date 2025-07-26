@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 17:39:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/26 17:24:08 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 #include <GLFW/glfw3.h>
 #include "scene_structs.h"
 
-# define SSBO_BIND_VIEWPORT 2
-# define SSBO_BIND_CAMERA 3
+# define SSBO_BIND_LIGHTS 2
 # define SSBO_BIND_MATERIALS 4
 # define SSBO_BIND_BVH 5
 # define SSBO_BIND_PRIM_TYPE_INDICE 6
@@ -129,6 +128,16 @@ typedef struct s_gpu_cone
 	float	height;
 	int		material_id_top;
 }	__attribute__((aligned(16))) t_gpu_cone;
+
+typedef struct s_gpu_light
+{
+	float	pos[3];
+	int		type;
+	float	color[3];
+	float	brightness;
+	float	radius;
+	t_uint	shadow_sample;
+}	__attribute__((aligned(16))) t_gpu_light;
 
 typedef	struct s_gpu_vertex
 {
@@ -243,6 +252,9 @@ typedef struct s_gpu_structs
 	int				triangles_am;
 	t_gpu_triangle	*triangles;
 	GLuint			triangles_ssbo;
+	int				lights_am;
+	t_gpu_light		*lights;
+	GLuint			lights_ssbo;
 }	t_gpu_structs;
 
 

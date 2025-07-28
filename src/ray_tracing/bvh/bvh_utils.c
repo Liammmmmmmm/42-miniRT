@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:49:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/21 14:32:34 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/28 18:39:49 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ inline char	intersect_aabb(const t_ray *r, const t_aabb *b)
 	t1 = fmin((b->min.z - r->orig.z) / r->dir.z, (b->max.z - r->orig.z)
 			/ r->dir.z);
 	tmin = fmax(tmin, t1);
-
 	t1 = fmax((b->min.x - r->orig.x) / r->dir.x, (b->max.x - r->orig.x)
 			/ r->dir.x);
 	tmax = fmin(t1, fmax((b->min.y - r->orig.y) / r->dir.y,

@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/07/26 17:01:53 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/07/28 18:44:36 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,10 +99,10 @@ DEBUG_DIR			= src/debug/
 DEBUG_FILE			= print_scene.c print_utils.c print_obj1.c print_obj2.c print_obj3.c debug_ray.c
 
 EVENT_DIR			= src/events/
-EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c key_render.c  mouse_common.c  mouse_controls.c  mouse_render.c
+EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c key_render.c key_render2.c mouse_common.c  mouse_controls.c  mouse_render.c scroll_actions.c
 
 RAY_TRACING_DIR		= src/ray_tracing/
-RAY_TRACING_FILE	= render.c init_animated_items.c focus.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c \
+RAY_TRACING_FILE	= render.c manage_movement.c init_animated_items.c focus.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c \
 					bvh/bvh_draw_utils.c bvh/bvh_obj_bounds.c setup_scene_obj.c background.c viewport.c path_trace.c hit_register/apply_map.c hit_register/get_hdr_value.c \
 					hit_register/get_hit_color.c hit_register/get_tex_color.c hit_register/hit_register.c hit_register/hit_obj.c bvh/bvh_hit.c micrort.c bvh/bvh_build.c \
 					importance_sampling/get_dir.c importance_sampling/calc_pdf.c importance_sampling/calc_cdf.c importance_sampling/importance_sampling_manager.c \
@@ -137,7 +137,7 @@ PARSING_FILE		= parse_scene.c errors.c errors2.c errors3.c valid_line.c \
 					parse_elements2.c parse_elements3.c parse_elements4.c  parse_elements_utils.c \
 					parse_elements_utils2.c parse_elements_utils3.c parse_elements_utils4.c \
 					parse_elements_utils5.c parse_elements_utils6.c get_texture.c parse_elements5.c \
-					free_scene.c init_scene.c
+					free_scene.c init_scene.c parse_elements6.c
 
 FONT_PARS_DIR		= src/utils/font/parsing/
 FONT_PARS_FILE		= free.c get_glyph_outline.c get_glyph_outline_xy.c parse_ttf.c read_cmap.c \
@@ -199,7 +199,7 @@ GPU_DIR				= src/gpu/
 GPU_FILE			= init_shader.c clean_shaders.c use_shader.c gpu_scene.c
 
 RAY_TRACING_DIR_GPU		= src/ray_tracing/
-RAY_TRACING_FILE_GPU	= render_gpu.c init_animated_items.c focus.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c \
+RAY_TRACING_FILE_GPU	= render_gpu.c manage_movement.c init_animated_items.c focus.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c \
 					bvh/bvh_draw_utils.c bvh/bvh_obj_bounds.c setup_scene_obj.c background.c viewport.c path_trace.c hit_register/apply_map.c hit_register/get_hdr_value.c \
 					hit_register/get_hit_color.c hit_register/get_tex_color.c hit_register/hit_register.c hit_register/hit_obj.c bvh/bvh_hit.c micrort.c bvh/bvh_build.c \
 					importance_sampling/get_dir.c importance_sampling/calc_pdf.c importance_sampling/calc_cdf.c importance_sampling/importance_sampling_manager.c \

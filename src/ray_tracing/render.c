@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/26 17:44:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/28 18:43:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	check_sample_amount(t_minirt *minirt)
 
 void	render(t_minirt *minirt)
 {
+	manage_movements(minirt);
 	if (!minirt->screen.start_render || minirt->screen.pause_render)
 		return ;
 	if (minirt->screen.sample == 0)

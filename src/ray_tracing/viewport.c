@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/26 18:19:24 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/28 18:57:08 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,23 @@ t_viewport	init_viewport(t_minirt *minirt)
 	t_viewport	vp;
 	t_vec3		u;
 
-	if (minirt->scene.amb_light.skybox_t != minirt->scene.amb_light.last_calc_importance)
+	if (minirt->scene.amb_light.skybox_t
+		!= minirt->scene.amb_light.last_calc_importance)
 	{
 		free_importance_sampling_malloc(&minirt->scene);
 		make_importance_sampling_map(&minirt->scene);
-		minirt->scene.amb_light.last_calc_importance = minirt->scene.amb_light.skybox_t;
+		minirt->scene.amb_light.last_calc_importance
+			= minirt->scene.amb_light.skybox_t;
 	}
 	init_viewport_values(minirt, &vp, &u);
 	init_viewport_vectors(minirt, &vp, u);
-	if (vp.depth_buffer == NULL)
+	if (minirt->viewport.depth_buffer == NULL)
 	{
 		vp.depth_buffer = malloc(sizeof(int) * (vp.render_w * vp.render_h));
 		if (!vp.depth_buffer)
 			print_warn(HEAT_MAP_BUFFER_ERROR);
 	}
+	else
+		vp.depth_buffer = minirt->viewport.depth_buffer;
 	return (vp);
 }

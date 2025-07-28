@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:22:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 16:55:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/28 18:10:16 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ t_vec3	get_right_vector(t_minirt *minirt)
 	t_vec3	up;
 
 	up = (t_vec3){0, 1, 0};
-	if (minirt->scene.camera.orientation.y > 0.999 || minirt->scene.camera.orientation.y < -0.999)
+	if (minirt->scene.camera.orientation.y > 0.999
+		|| minirt->scene.camera.orientation.y < -0.999)
 		up = (t_vec3){0, 0, 1};
 	return (vec3_cross(minirt->scene.camera.orientation, up));
 }
 
 t_vec3	get_up_vector(t_minirt *minirt)
 {
-    t_vec3	up_ref;
-    t_vec3	right_vec;
-    t_vec3	camera_orientation;
+	t_vec3	up_ref;
+	t_vec3	right_vec;
+	t_vec3	camera_orientation;
 
 	camera_orientation = minirt->scene.camera.orientation;
 	up_ref = (t_vec3){0, 1, 0};

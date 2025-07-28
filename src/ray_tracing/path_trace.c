@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_trace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:48:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/26 17:01:21 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/28 18:41:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
 	accumulation = (t_fcolor){0.0, 0.0, 0.0};
 	power = (t_fcolor){1.0, 1.0, 1.0};
 	ft_bzero(&data, sizeof(t_hit_register_data));
-	ft_bzero(&data.hit_record, sizeof(t_hit_record));
-	data.hit_record.mat = NULL;
 	data.ray = &ray;
 	while (--max_depth >= 0)
 	{

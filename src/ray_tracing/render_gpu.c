@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/25 11:23:30 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/28 18:43:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,21 +81,7 @@ void	check_sample_amount(t_minirt *minirt)
 
 void	render(t_minirt *minirt)
 {
-	t_bool	last_frame_is_moving_tmp = minirt->controls.movements.last_frame_is_moving;
-	if (is_cam_moving(minirt))
-		minirt->controls.movements.last_frame_is_moving = 1;
-	else
-		minirt->controls.movements.last_frame_is_moving = 0;
-
-	if (is_cam_moving(minirt) && !last_frame_is_moving_tmp)
-	{
-		minirt->scene.render_height = minirt->scene.win_height / 10;
-		minirt->scene.render_width = minirt->scene.win_width / 10;
-		restart_minirt(minirt);
-	}
-	else if (!is_cam_moving(minirt) && last_frame_is_moving_tmp)
-		restart_minirt(minirt);
-
+	manage_movements(minirt);
 	if (!minirt->screen.start_render || minirt->screen.pause_render)
 		return ;
 	if (minirt->screen.sample == 0)
@@ -110,7 +96,8 @@ void	render(t_minirt *minirt)
 				* minirt->scene.win_height);
 		ft_bzero(minirt->screen.float_render, sizeof(t_fcolor)
 			* minirt->viewport.render_w * minirt->viewport.render_h);
-		convert_scene(minirt, &minirt->scene, &minirt->viewport, &minirt->shaders_data.scene);
+		convert_scene(minirt, &minirt->scene, &minirt->viewport,
+			&minirt->shaders_data.scene);
 	}
 	draw_pixels(minirt);
 }

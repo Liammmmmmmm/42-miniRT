@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/26 16:09:52 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/28 18:12:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -404,8 +404,7 @@ typedef struct s_minirt
 	t_options		options;
 	t_micrort		micrort;
 	t_shader_data	shaders_data;
-	int			i;
-	char		render_mode;
+	char			render_mode;
 }	t_minirt;
 
 typedef struct s_upscale_data

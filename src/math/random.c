@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 09:32:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/26 18:44:55 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/28 16:51:12 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static inline uint64_t	xorshift_rand(uint64_t *rand)
 
 double	random_double(void)
 {
-	static uint64_t	rand = RANDOM_SEED;
+	static uint64_t	rand = (uint64_t)RANDOM_SEED;
 
 	return ((xorshift_rand(&rand) >> 11) * SCALE_FACTOR_HP);
 }

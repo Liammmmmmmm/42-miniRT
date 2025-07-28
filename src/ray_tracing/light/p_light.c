@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   p_light.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:07:31 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/22 10:58:06 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:43:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	compute_shadow_factor(t_minirt *minirt, t_vec3 origin,
 {
 	t_ray				shadow_ray;
 	t_hit_register_data	data;
-	size_t				i;
+	int					i;
 	int					hits_count;
 	t_vec3				random_target;
 

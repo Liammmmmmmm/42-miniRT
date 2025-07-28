@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/26 19:42:14 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/28 16:47:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void	convert_lights(t_scene *cpu_scene, t_gpu_structs *gpu_scene)
 			gpu_scene->lights[lights].brightness = ((t_light *)cpu_scene->obj_lst.light_lst[lights]->object)->brightness;
 			gpu_scene->lights[lights].radius = ((t_light *)cpu_scene->obj_lst.light_lst[lights]->object)->radius;
 			gpu_scene->lights[lights].shadow_sample = (t_uint)((t_light *)cpu_scene->obj_lst.light_lst[lights]->object)->shadow_sample;
-			
+
 			printf("Color %u : %f %f %f\n", lights, gpu_scene->lights[lights].color[0], gpu_scene->lights[lights].color[1], gpu_scene->lights[lights].color[2]);
 	
 			lights++;

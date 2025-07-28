@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/26 16:52:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/28 16:45:59 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,39 @@ int	parse_camera(t_scene *scene, char *line)
 	return (1);
 }
 
+int	parse_light_part2(t_light *light, char **parts, int nb_parts)
+{
+	double	tmpd;
+
+	if (!is_valid_double_el(parts[2], &light->brightness))
+	{
+		free(parts);
+		return (print_error(ERR_INVALID_LIGHT_RATIO));
+	}
+	if (nb_parts < 5)
+		return (1);
+	if (!is_valid_size(parts[4], &tmpd))
+	{
+		free(parts);
+		return (print_error(ERR_INVALID_LIGHT_RADIUS));
+	}
+	light->radius = tmpd;
+	light->shadow_sample = 5;
+	if (nb_parts < 6)
+		return (1);
+	if (!is_valid_positive_int(parts[5], &light->shadow_sample))
+	{
+		free(parts);
+		return (print_error(ERR_INVALID_LIGHT_SHADOW_SAMPLE));
+	}
+	return (1);
+}
+
 int	parse_light(t_scene *scene, char *line)
 {
 	char	**parts;
 	t_light	*light;
+	int		nb_parts;
 
 	light = ft_calloc(sizeof(t_light), 1);
 	if (!light)
@@ -73,17 +102,15 @@ int	parse_light(t_scene *scene, char *line)
 	parts = ft_split_in_line(line, " ");
 	if (!parts)
 		return (print_error(strerror(errno)));
-	if (char_tab_len(parts) != 4)
+	nb_parts = char_tab_len(parts);
+	if (nb_parts < 4 || nb_parts > 6)
 		return (invalid_struct_error(LIGHT, parts));
 	if (!parse_vector(parts[1], &light->position))
 		return (invalid_struct_error(LIGHT, parts));
-	if (!is_valid_double_el(parts[2], &light->brightness))
-	{
-		free(parts);
-		return (print_error(ERR_INVALID_LIGHT_RATIO));
-	}
 	if (!parse_color(parts[3], &light->color))
 		return (invalid_struct_error(LIGHT, parts));
+	if (parse_light_part2(light, parts, nb_parts) == 0)
+		return (0);
 	free(parts);
 	return (1);
 }

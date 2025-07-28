@@ -12,19 +12,98 @@ void	hit_planes(inout hit_record hit, inout bool hit_something, vec3 ro, vec3 rd
 			{
 				hit_something = true;
 				hit = hit_tmp;
+				hit.object_type = 5;
+				hit.object_index = i;
 				hit.material_id = planes[i].material_id;
-				apply_all_map(hit);
-				hit.color = get_hit_register_color(planes[i].color, hit);
+				// apply_all_map(hit);
+				// hit.color = get_hit_register_color(planes[i].color, hit);
 			}
 		}
 		i++;
 	}
 }
 
-bool hit_register_all(inout hit_record hit, vec3 ro, vec3 rd)
+void	set_final_values(inout hit_record hit)
+{
+	if (hit.object_type == 0) // spheres
+	{
+		get_sphere_uv(hit, spheres[hit.object_index]);
+
+		apply_all_map(hit);
+		hit.color = get_hit_register_color(spheres[hit.object_index].color, hit);
+	}
+	else if (hit.object_type == 1) // cyl
+	{
+		if (hit.part_id == 0)
+		{
+			get_cylinder_lateral_uv(hit, cylinders[hit.object_index]);
+		}
+		else if (hit.part_id == 1)
+		{
+			get_cylinder_cap_uv(hit, cylinders[hit.object_index], 1);
+		}
+		else if (hit.part_id == 2)
+		{
+			get_cylinder_cap_uv(hit, cylinders[hit.object_index], -1);
+		}
+
+		apply_all_map(hit);
+		hit.color = get_hit_register_color(cylinders[hit.object_index].color, hit);
+	}
+	else if (hit.object_type == 2) // cone
+	{
+		if (hit.part_id == 0)
+		{
+			get_cone_lateral_uv(hit, cones[hit.object_index]);
+		}
+		else if (hit.part_id == 1)
+		{
+			get_cone_cap_uv(hit, cones[hit.object_index]);
+		}
+
+		apply_all_map(hit);
+		hit.color = get_hit_register_color(cones[hit.object_index].color, hit);
+	}
+	else if (hit.object_type == 3) // hyper
+	{
+		get_hyperboloid_uv(hit, hypers[hit.object_index]);
+
+		apply_all_map(hit);
+		hit.color = get_hit_register_color(hypers[hit.object_index].color, hit);
+	}
+	else if (hit.object_type == 4) // triangle
+	{
+		float u = hit.u;
+		float v = hit.v;
+		Triangle t = triangles[hit.object_index];
+		
+		float w = 1.0 - u - v;
+		hit.normal = normalize(w * t.v0.normal + u * t.v1.normal + v * t.v2.normal);
+		hit.front_face = true;
+		hit.u = w * t.v0.u + u * t.v1.u + v * t.v2.u;
+		hit.v = w * t.v0.v + u * t.v1.v + v * t.v2.v;
+
+		apply_all_map(hit);
+		hit.color = get_hit_register_color(triangles[hit.object_index].color, hit);
+	}
+	else if (hit.object_type == 5) // planes
+	{
+		get_uv_plane(hit, planes[hit.object_index]);
+
+		apply_all_map(hit);
+		hit.color = get_hit_register_color(planes[hit.object_index].color, hit);
+	}
+	
+}
+
+bool hit_register_all(inout hit_record hit, vec3 ro, vec3 rd, bool calc_uv)
 {
 	bool	hit_something = false;
 	hit_something = hit_bvh(ro, rd, hit);
 	hit_planes(hit, hit_something, ro, rd);
+
+	if (calc_uv)
+		set_final_values(hit);
+
 	return (hit_something);
 }

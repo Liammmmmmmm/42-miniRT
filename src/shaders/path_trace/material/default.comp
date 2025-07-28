@@ -24,7 +24,7 @@ void	importance_sampling(vec3 ro, inout vec3 rd, hit_record hit, inout vec3 powe
 	vec3		radiance;
 
 	rd = calc_inverse_transform_sampling_dir(uv);
-	if (hit_register_all(tmp_hit, ro, rd))
+	if (hit_register_all(tmp_hit, ro, rd, false))
 		return ;
 	float costheta = dot(hit.normal, rd);
 	float pdf = texture(pdf_joint, uv).r;

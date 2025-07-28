@@ -55,7 +55,8 @@ bool	handle_cone_hit(Cone cone, vec3 ro, vec3 rd, inout hit_record hit, quadrati
 	hit.point = p;
 	hit.normal = set_normal_face(ro, rd, normal, hit);
 	hit.material_id = cone.material_id;
-	get_cone_lateral_uv(hit, cone);
+	hit.part_id = 0;
+	// get_cone_lateral_uv(hit, cone);
 	return (true);
 }
 
@@ -83,7 +84,7 @@ bool	cone_cap(Cone cone, vec3 ro, vec3 rd, inout hit_record hit)
 	hit.material_id = cone.material_id_top;
 	if (hit.material_id == -1)
 		hit.material_id = cone.material_id;
-	get_cone_cap_uv(hit, cone);
+	// get_cone_cap_uv(hit, cone);
 	return (true);
 }
 

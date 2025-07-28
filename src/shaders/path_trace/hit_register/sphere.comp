@@ -30,14 +30,12 @@ bool init_sphere_quadratic(out quadratic q, Sphere sp, vec3 ro, vec3 rd)
 bool	hit_sphere(Sphere sp, vec3 ro, vec3 rd, out hit_record hit)
 {
 	quadratic	q;
-	vec3		outward;
 
 	if (!init_sphere_quadratic(q, sp, ro, rd) || !valid_t(q))
 		return (false);
 	hit.t = q.t_hit;
 	hit.point = ray_at(ro, rd, hit.t);
-	outward = (hit.point - sp.position) / sp.radius;
-	hit.normal = set_normal_face(ro, rd, outward, hit);
-	get_sphere_uv(hit, sp);
+	hit.normal = set_normal_face(ro, rd, (hit.point - sp.position) / sp.radius, hit);
+	
 	return (true);
 }

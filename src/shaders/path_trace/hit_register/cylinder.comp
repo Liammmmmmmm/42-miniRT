@@ -56,7 +56,8 @@ bool	handle_cylinder_hit(Cylinder cyl, vec3 ro, vec3 rd, inout hit_record hit, q
 	hit.point = p;
 	hit.normal = set_normal_face(ro, rd, outward, hit);
 	hit.material_id = cyl.material_id;
-	get_cylinder_lateral_uv(hit, cyl);
+	hit.part_id = 0;
+	// get_cylinder_lateral_uv(hit, cyl);
 	return (true);
 }
 
@@ -83,7 +84,7 @@ bool	cylinder_cap_bottom(vec3 ro, vec3 rd, Cylinder cyl, inout hit_record hit)
 	if (hit.material_id == -1)
 		hit.material_id = cyl.material_id;
 	hit.part_id = 2;
-	get_cylinder_cap_uv(hit, cyl, -1);
+	// get_cylinder_cap_uv(hit, cyl, -1);
 	return (true);
 }
 
@@ -110,7 +111,7 @@ bool	cylinder_cap_top(vec3 ro, vec3 rd, Cylinder cyl, inout hit_record hit)
 	if (hit.material_id == -1)
 		hit.material_id = cyl.material_id;
 	hit.part_id = 1;
-	get_cylinder_cap_uv(hit, cyl, 1);
+	// get_cylinder_cap_uv(hit, cyl, 1);
 	return (true);
 }
 

@@ -27,12 +27,8 @@ bool hit_triangle(Triangle t, vec3 ro, vec3 rd, inout hit_record hit)
 	{
 		hit.t = hit_t;
 		hit.point = ro + rd * hit_t;
-		float w = 1.0 - u - v;
-		vec3 outward_normal = w * t.v0.normal + u * t.v1.normal + v * t.v2.normal;
-		hit.normal = normalize(outward_normal);
-		hit.front_face = true;
-		hit.u = w * t.v0.u + u * t.v1.u + v * t.v2.u;
-		hit.v = w * t.v0.v + u * t.v1.v + v * t.v2.v;
+		hit.u = u;
+		hit.v = v;
 		return true;
 	}
 

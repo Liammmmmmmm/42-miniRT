@@ -5,7 +5,7 @@ bool	check_dlight_hit_dir(vec3 origin, vec3 direction)
 	hit_record	tmp_hit = get_default_hit_record();
 	vec3		rd = normalize(direction);
 
-	if (hit_register_all(tmp_hit, origin, rd))
+	if (hit_register_all(tmp_hit, origin, rd, false))
 		return (true);
 	return (false);
 }

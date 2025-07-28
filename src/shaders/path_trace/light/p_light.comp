@@ -7,7 +7,7 @@ bool	check_plight_hit(vec3 origin, vec3 target)
 	vec3		rd = normalize(target - origin);
 
 	float distance_to_target = length(target - origin);
-	if (hit_register_all(tmp_hit, origin, rd))
+	if (hit_register_all(tmp_hit, origin, rd, false))
 		if (tmp_hit.t < distance_to_target)
 			return (true);
 	return (false);
@@ -31,7 +31,7 @@ float	compute_shadow_factor(vec3 origin, Light light)
 	{
 		vec3 random_target = light.pos + (random_in_unit_sphere() * light.radius);
 		vec3 rd = normalize(random_target - origin);
-		if (hit_register_all(tmp_hit, origin, rd) == false || tmp_hit.t >= length(random_target - origin))
+		if (hit_register_all(tmp_hit, origin, rd, false) == false || tmp_hit.t >= length(random_target - origin))
 			hits_count++;
 		i++;
 	}

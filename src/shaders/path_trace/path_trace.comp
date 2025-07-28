@@ -10,7 +10,7 @@ vec3	path_trace(vec3 ro, vec3 rd)
 	while (depth < max_bounces)
 	{
 		hit.t = IT_MAX; 
-		if (hit_register_all(hit, ro, rd) == true)
+		if (hit_register_all(hit, ro, rd, true) == true)
 		{
 			ro = hit.point;
 			material_manager_v4(ro, rd, hit, power, accumulation);

@@ -184,6 +184,8 @@ struct hit_record
 	int				material_id;
 	vec3			color;
 	bool			front_face;
+	uint			object_index;
+	uint			object_type;
 	float			u;
 	float			v;
 	int				part_id;
@@ -199,6 +201,8 @@ hit_record	get_default_hit_record()
 		-1,
 		vec3(0),
 		false,
+		0,
+		0,
 		0.0,
 		0.0,
 		0,

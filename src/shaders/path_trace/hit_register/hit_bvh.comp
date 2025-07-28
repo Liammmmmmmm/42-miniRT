@@ -31,56 +31,64 @@ bool    hit_register_loop(vec3 ro, vec3 rd, bvh_node node, inout hit_record rec)
 				{
 					rec = hit_tmp;
 					hit = true;
+					rec.object_type = 0;
+					rec.object_index = index;
 					rec.material_id = spheres[index].material_id;
-					apply_all_map(rec);
-					rec.color = get_hit_register_color(spheres[index].color, rec);
+					// apply_all_map(rec);
+					// rec.color = get_hit_register_color(spheres[index].color, rec);
 				}
 			}
 		}
 		if (prim_ti[node.first_prim + i].type == 1)
 		{
-				index = prim_ti[node.first_prim + i].indice;
-				if (hit_cylinder(cylinders[index], ro, rd, hit_tmp))
+			index = prim_ti[node.first_prim + i].indice;
+			if (hit_cylinder(cylinders[index], ro, rd, hit_tmp))
+			{
+				if (hit_tmp.t < rec.t)
 				{
-						if (hit_tmp.t < rec.t)
-						{
-								rec = hit_tmp;
-								hit = true;
-								rec.material_id = cylinders[index].material_id;
-								apply_all_map(rec);
-								rec.color = get_hit_register_color(cylinders[index].color, rec);
-						}
+					rec = hit_tmp;
+					hit = true;
+					rec.material_id = cylinders[index].material_id;
+					rec.object_type = 1;
+					rec.object_index = index;
+					// apply_all_map(rec);
+					// rec.color = get_hit_register_color(cylinders[index].color, rec);
 				}
+			}
 		}
 		if (prim_ti[node.first_prim + i].type == 2)
 		{
-				index = prim_ti[node.first_prim + i].indice;
-				if (hit_cone(cones[index], ro, rd, hit_tmp))
+			index = prim_ti[node.first_prim + i].indice;
+			if (hit_cone(cones[index], ro, rd, hit_tmp))
+			{
+				if (hit_tmp.t < rec.t)
 				{
-						if (hit_tmp.t < rec.t)
-						{
-								rec = hit_tmp;
-								hit = true;
-								rec.material_id = cones[index].material_id;
-								apply_all_map(rec);
-								rec.color = get_hit_register_color(cones[index].color, rec);
-						}
+					rec = hit_tmp;
+					hit = true;
+					rec.material_id = cones[index].material_id;
+					rec.object_type = 2;
+					rec.object_index = index;
+					// apply_all_map(rec);
+					// rec.color = get_hit_register_color(cones[index].color, rec);
 				}
+			}
 		}
 		if (prim_ti[node.first_prim + i].type == 3)
 		{
-				index = prim_ti[node.first_prim + i].indice;
-				if (hit_hyperboloid(hypers[index], ro, rd, hit_tmp, IT_MAX))
+			index = prim_ti[node.first_prim + i].indice;
+			if (hit_hyperboloid(hypers[index], ro, rd, hit_tmp, IT_MAX))
+			{
+				if (hit_tmp.t < rec.t)
 				{
-						if (hit_tmp.t < rec.t)
-						{
-								rec = hit_tmp;
-								hit = true;
-								rec.material_id = hypers[index].material_id;
-								apply_all_map(rec);
-								rec.color = get_hit_register_color(hypers[index].color, rec);
-						}
+					rec = hit_tmp;
+					hit = true;
+					rec.material_id = hypers[index].material_id;
+					rec.object_type = 3;
+					rec.object_index = index;
+					// apply_all_map(rec);
+					// rec.color = get_hit_register_color(hypers[index].color, rec);
 				}
+			}
 		}
 		if (prim_ti[node.first_prim + i].type == 4)
 		{
@@ -92,8 +100,10 @@ bool    hit_register_loop(vec3 ro, vec3 rd, bvh_node node, inout hit_record rec)
 					rec = hit_tmp;
 					hit = true;
 					rec.material_id = triangles[index].material_id;
-					apply_all_map(rec);
-					rec.color = get_hit_register_color(triangles[index].color, rec);
+					rec.object_type = 4;
+					rec.object_index = index;
+					// apply_all_map(rec);
+					// rec.color = get_hit_register_color(triangles[index].color, rec);
 				}
 			}
 		}

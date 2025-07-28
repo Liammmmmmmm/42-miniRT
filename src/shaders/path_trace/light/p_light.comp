@@ -23,7 +23,7 @@ float	compute_shadow_factor(vec3 origin, Light light)
 	i = 0;
 	if (light.radius == 0 || light.shadow_sample <= 1)
 	{
-		if (!check_plight_hit(tmp_hit.point, light.pos))
+		if (!check_plight_hit(origin, light.pos))
 			return (1.0);
 		return (0.0);
 	}

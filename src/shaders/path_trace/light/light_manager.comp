@@ -8,7 +8,7 @@ void	add_all_light_contribution(hit_record hit, vec3 view_dir, inout vec3 light_
 	{
 		if (lights[i].type == 0)
 		{
-			float shadow_factor = 1.0;
+			float shadow_factor = compute_shadow_factor(hit.point, lights[i]);
 			if (shadow_factor > 0.0)
 				add_plight(light_color, hit, lights[i], view_dir, shadow_factor);
 		}

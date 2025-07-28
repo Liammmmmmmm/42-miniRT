@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/26 19:13:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/28 09:55:36 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ int	create_program(t_shader_data *shader_data)
 		"src/shaders/shader.comp"
 	};
 
+	ssize_t	time_start = get_cpu_time();
 	printf("\nStart compiling shaders\n");
 	cs = compile_shader_from_files(sources, SOURCES_AMOUNT, GL_COMPUTE_SHADER);
 	if (check_shader_compile(cs) == -1)
@@ -169,7 +170,7 @@ int	create_program(t_shader_data *shader_data)
 	glDeleteShader(cs);
 	if (check_program_link(shader_data->program) == -1)
 		return (-1);
-	printf("End of shaders compilation\n");
+	printf("Shaders compilation successfull in %.2fs\n", (get_cpu_time() - time_start) / 1000.0);
 	return (0);
 }
 

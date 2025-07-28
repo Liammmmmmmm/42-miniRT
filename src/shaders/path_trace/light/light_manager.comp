@@ -12,13 +12,11 @@ void	add_all_light_contribution(hit_record hit, vec3 view_dir, inout vec3 light_
 			if (shadow_factor > 0.0)
 				add_plight(light_color, hit, lights[i], view_dir, shadow_factor);
 		}
-		// else if (lights[i].type == 1)
-		// {
-		// 	vec3 dlight = (t_dlight *)minirt.scene.obj_lst.light_lst[i].object;
-		// 	if (check_dlight_hit_dir(minirt, hit.point,
-		// 			vec3_negate(dlight.orientation)) == 0)
-		// 		add_dlight(light_color, hit, dlight, view_dir);
-		// }
+		else if (lights[i].type == 1)
+		{
+			if (check_dlight_hit_dir(hit.point, -lights[i].pos) == false)
+				add_dlight(light_color, hit, lights[i], view_dir);
+		}
 		i++;
 	}
 }

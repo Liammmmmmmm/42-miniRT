@@ -180,3 +180,35 @@ bool hit_bvh(vec3 ro, vec3 rd, inout hit_record rec)
 	return (hit_anything);
 }
 
+bool hit_bvh_depth(vec3 ro, vec3 rd, inout int depth)
+{
+	bool hit_anything = false;
+	uint stack[BVH_STACK_SIZE];
+	int stack_ptr = 0;
+
+	stack[stack_ptr++] = 0;
+
+	while (stack_ptr > 0)
+	{
+		uint node_index = stack[--stack_ptr];
+		bvh_node node = bvh_nodes[node_index];
+
+		depth++;
+
+		if (!intersect_aabb(ro, rd, node.node_bounds))
+			continue;
+
+		if (node.is_leaf)
+			hit_anything = true;
+		else
+		{
+			if (stack_ptr >= BVH_STACK_SIZE)
+				return hit_anything;
+			stack[stack_ptr++] = node.right_child;
+			if (stack_ptr >= BVH_STACK_SIZE)
+				return hit_anything;
+			stack[stack_ptr++] = node.left_child;
+		}
+	}
+	return (hit_anything);
+}

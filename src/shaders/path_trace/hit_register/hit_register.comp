@@ -107,3 +107,10 @@ bool hit_register_all(inout hit_record hit, vec3 ro, vec3 rd, bool calc_uv)
 
 	return (hit_something);
 }
+
+void hit_register_depth(inout hit_record hit, vec3 ro, vec3 rd)
+{
+	int		depth = -1;
+	if (hit_bvh_depth(ro, rd, depth) == true)
+		hit.color.x = float(depth);
+}

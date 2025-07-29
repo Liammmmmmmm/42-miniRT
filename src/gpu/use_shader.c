@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:31:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/28 14:09:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 10:32:10 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,23 @@ void	compute_frame_gpu(t_minirt *minirt)
 	i = 0;
 	// printf("Pixel 1072 600 : %f %f %f\n", minirt->screen.float_render[600 * 1920 + 1072].r, minirt->screen.float_render[600 * 1920 + 1072].g, minirt->screen.float_render[600 * 1920 + 1072].b);
 	// printf("Pixel 1072 600 : %f %f %f\n", ptr[(600 * 1920 + 1072) * 4], ptr[(600 * 1920 + 1072) * 4 + 1], ptr[(600 * 1920 + 1072) * 4 + 2]);
-	while (i < tpx)
+	if (minirt->render_mode == 1) // BVH heatmap
 	{
-		minirt->screen.float_render[i].r += ptr[i * 4];
-		minirt->screen.float_render[i].g += ptr[i * 4 + 1];
-		minirt->screen.float_render[i].b += ptr[i * 4 + 2];
-		i++;
+		while (i < tpx)
+		{
+			minirt->viewport.depth_buffer[i] = (int)(ptr[i * 4]);
+			i++;
+		}
+	}
+	else
+	{
+		while (i < tpx)
+		{
+			minirt->screen.float_render[i].r += ptr[i * 4];
+			minirt->screen.float_render[i].g += ptr[i * 4 + 1];
+			minirt->screen.float_render[i].b += ptr[i * 4 + 2];
+			i++;
+		}
 	}
 	//printf("Pixel 1072 600 : %f %f %f\n", minirt->screen.float_render[600 * 1920 + 1072].r, minirt->screen.float_render[600 * 1920 + 1072].g, minirt->screen.float_render[600 * 1920 + 1072].b);
 

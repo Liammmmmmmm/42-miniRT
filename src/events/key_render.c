@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:37:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/28 18:17:17 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 10:23:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,17 @@ int	key_render_mode(int key, t_minirt *minirt)
 			minirt->render_mode = 0;
 		minirt->screen.sample = 0;
 		return (1);
+	}
+	else if (key == KEY_B)
+	{
+		if (minirt->viewport.depth_buffer != NULL)
+		{
+			if (minirt->render_mode != 1)
+				minirt->render_mode = 1;
+			else
+				minirt->render_mode = 0;
+			minirt->screen.sample = 0;
+		}
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/28 18:43:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 10:34:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	draw_pixels(t_minirt *minirt)
 {
 	minirt->screen.last_sample_time = get_cpu_time();
 	compute_frame_gpu(minirt);
+	if (minirt->render_mode == 1)
+		set_heat_map_color(minirt);
 	put_render_to_buff_upscaling(minirt);
 	if (minirt->options.no_display)
 		return ;

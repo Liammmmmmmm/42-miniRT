@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/28 16:47:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 10:33:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -582,6 +582,8 @@ int	convert_scene(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_
 	glUniform1ui(height_loc, minirt->scene.render_height);
 	GLuint max_bounces = glGetUniformLocation(minirt->shaders_data.program, "max_bounces");
 	glUniform1ui(max_bounces, (t_uint)minirt->controls.max_bounces);
+	GLuint render_mode = glGetUniformLocation(minirt->shaders_data.program, "render_mode");
+	glUniform1ui(render_mode, (t_uint)minirt->render_mode);
 	GLuint spheres_am = glGetUniformLocation(minirt->shaders_data.program, "spheres_am");
 	glUniform1ui(spheres_am, (t_uint)minirt->shaders_data.scene.spheres_am);
 	GLuint planes_am = glGetUniformLocation(minirt->shaders_data.program, "planes_am");

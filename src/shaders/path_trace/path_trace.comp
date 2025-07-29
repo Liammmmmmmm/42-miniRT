@@ -9,7 +9,7 @@ vec3	path_trace(vec3 ro, vec3 rd)
 	hit.t = IT_MAX;
 	while (depth < max_bounces)
 	{
-		hit.t = IT_MAX; 
+		hit.t = IT_MAX;
 		if (hit_register_all(hit, ro, rd, true) == true)
 		{
 			ro = hit.point;
@@ -23,4 +23,26 @@ vec3	path_trace(vec3 ro, vec3 rd)
 		depth++;
 	}
 	return (accumulation);
+}
+
+vec3	path_trace_normal(vec3 ro, vec3 rd)
+{
+	hit_record	hit;
+
+	hit.t = IT_MAX;
+	if (hit_register_all(hit, ro, rd, true) == true)
+	{
+		hit.normal = (hit.normal + 1) * 0.5;
+		return hit.normal.xzy;
+	}
+	return (vec3(0.0));
+}
+
+vec3	path_trace_bvh(vec3 ro, vec3 rd)
+{
+	hit_record	hit;
+
+	hit.t = IT_MAX;
+	hit_register_depth(hit, ro, rd);
+	return (hit.color);
 }

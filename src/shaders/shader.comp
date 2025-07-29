@@ -59,7 +59,12 @@ void main() {
 
 	vec3 rd = normalize(pixel_pos - ro);
 
-	data[id] = path_trace(ro, rd);
+	if (render_mode == 0)
+		data[id] = path_trace(ro, rd);
+	else if (render_mode == 1)
+		data[id] = path_trace_bvh(ro, rd);
+	else if (render_mode == 2)
+		data[id] = path_trace_normal(ro, rd);
 	// data[id] = vec3(ambiant.skybox_tex_index);
 	// if ( < )
 	// 	data[id] = vec3(1.0);

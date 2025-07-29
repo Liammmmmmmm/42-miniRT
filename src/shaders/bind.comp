@@ -80,6 +80,7 @@ uniform uint triangles_am;
 uniform uint lights_am;
 
 uniform uint max_bounces;
+uniform uint render_mode;
 
 uniform uint sample_count;
 

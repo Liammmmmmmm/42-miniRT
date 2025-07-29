@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/28 18:45:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 10:42:11 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,8 @@ void	no_display_infos(t_minirt *minirt);
 char	*get_time_dhmsms(ssize_t time);
 
 void	manage_movements(t_minirt *minirt);
+
+void	set_heat_map_color(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                  RAY TRACING                                 ║

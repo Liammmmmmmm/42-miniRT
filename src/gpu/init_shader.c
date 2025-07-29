@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/28 14:31:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 09:27:25 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int	create_program(t_shader_data *shader_data)
 	};
 
 	ssize_t	time_start = get_cpu_time();
-	printf("\nStart compiling shaders\n");
+	printf("\nStart compiling shaders (it can take a lot of time)\n");
 	cs = compile_shader_from_files(sources, SOURCES_AMOUNT, GL_COMPUTE_SHADER);
 	if (check_shader_compile(cs) == -1)
 		return (-1);

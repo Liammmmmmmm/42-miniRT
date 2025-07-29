@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gpu_scene.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/29 10:33:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 16:36:06 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,74 +47,70 @@ void	fcolor_to_float3(t_fcolor *vec, float *tab)
 void convert_all_obj(t_scene *cpu_scene, t_gpu_structs *gpu_scene)
 {
 	uint32_t	i;
-	uint32_t	sphere;
-	uint32_t	cone;
-	uint32_t	cylindre;
+	uint32_t	primitive;
 	uint32_t	hyper;
 	uint32_t	triangle;
 
 	i = 0;
-	sphere = 0;
-	cone = 0;
-	cylindre = 0;
+	primitive = 0;
 	hyper = 0;
 	triangle = 0;
 	while (i < cpu_scene->bvh.size)
 	{
 		if (cpu_scene->bvh.obj_list[i]->type == SPHERE)
 		{
-			gpu_scene->prim_types_indices[i].indice = sphere;
+			gpu_scene->prim_types_indices[i].indice = primitive;
 			gpu_scene->prim_types_indices[i].type = 0;
-			gpu_scene->spheres[sphere].radius = ((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->radius;
-			vec3_to_float3(&((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->position, gpu_scene->spheres[sphere].position);
-			color_to_float3(&((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->color, gpu_scene->spheres[sphere].color);
+			gpu_scene->primitives[primitive].radius = ((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->radius;
+			vec3_to_float3(&((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->position, gpu_scene->primitives[primitive].position);
+			color_to_float3(&((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->color, gpu_scene->primitives[primitive].color);
 			if (((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->material == NULL)
-				gpu_scene->spheres[sphere].material_id = -1;
+				gpu_scene->primitives[primitive].material_id = -1;
 			else
-				gpu_scene->spheres[sphere].material_id = ((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->material - cpu_scene->materials;
-			sphere++;
+				gpu_scene->primitives[primitive].material_id = ((t_sphere *)cpu_scene->bvh.obj_list[i]->object)->material - cpu_scene->materials;
+			primitive++;
 		}
 		else if (cpu_scene->bvh.obj_list[i]->type == CYLINDER)
 		{
-			gpu_scene->prim_types_indices[i].indice = cylindre;
+			gpu_scene->prim_types_indices[i].indice = primitive;
 			gpu_scene->prim_types_indices[i].type = 1;
-			gpu_scene->cylinders[cylindre].height = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->height;
-			gpu_scene->cylinders[cylindre].diameter = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->diameter;
-			vec3_to_float3(&((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->position, gpu_scene->cylinders[cylindre].position);
-			vec3_to_float3(&((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->orientation, gpu_scene->cylinders[cylindre].orientation);
-			color_to_float3(&((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->color, gpu_scene->cylinders[cylindre].color);
+			gpu_scene->primitives[primitive].height = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->height;
+			gpu_scene->primitives[primitive].radius = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->diameter / 2;
+			vec3_to_float3(&((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->position, gpu_scene->primitives[primitive].position);
+			vec3_to_float3(&((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->orientation, gpu_scene->primitives[primitive].orientation);
+			color_to_float3(&((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->color, gpu_scene->primitives[primitive].color);
 			if (((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->material == NULL)
-				gpu_scene->cylinders[cylindre].material_id = -1;
+				gpu_scene->primitives[primitive].material_id = -1;
 			else
-				gpu_scene->cylinders[cylindre].material_id = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->material - cpu_scene->materials;
+				gpu_scene->primitives[primitive].material_id = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->material - cpu_scene->materials;
 			if (((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->material_bot == NULL)
-				gpu_scene->cylinders[cylindre].material_id_top = -1;
+				gpu_scene->primitives[primitive].material_id_top = -1;
 			else
-				gpu_scene->cylinders[cylindre].material_id_top = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->material_top - cpu_scene->materials;
+				gpu_scene->primitives[primitive].material_id_top = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->material_top - cpu_scene->materials;
 			if (((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->material_bot == NULL)
-				gpu_scene->cylinders[cylindre].material_id_bot = -1;
+				gpu_scene->primitives[primitive].material_id_bot = -1;
 			else
-				gpu_scene->cylinders[cylindre].material_id_bot = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->material_bot - cpu_scene->materials;
-			cylindre++;
+				gpu_scene->primitives[primitive].material_id_bot = ((t_cylinder *)cpu_scene->bvh.obj_list[i]->object)->material_bot - cpu_scene->materials;
+			primitive++;
 		}
 		else if (cpu_scene->bvh.obj_list[i]->type == CONE)
 		{
-			gpu_scene->prim_types_indices[i].indice = cone;
+			gpu_scene->prim_types_indices[i].indice = primitive;
 			gpu_scene->prim_types_indices[i].type = 2;
-			gpu_scene->cones[cone].height = ((t_cone *)cpu_scene->bvh.obj_list[i]->object)->height;
-			gpu_scene->cones[cone].diameter = ((t_cone *)cpu_scene->bvh.obj_list[i]->object)->diameter;
-			vec3_to_float3(&((t_cone *)cpu_scene->bvh.obj_list[i]->object)->orientation, gpu_scene->cones[cone].orientation);
-			vec3_to_float3(&((t_cone *)cpu_scene->bvh.obj_list[i]->object)->position, gpu_scene->cones[cone].position);
-			color_to_float3(&((t_cone *)cpu_scene->bvh.obj_list[i]->object)->color, gpu_scene->cones[cone].color);
+			gpu_scene->primitives[primitive].height = ((t_cone *)cpu_scene->bvh.obj_list[i]->object)->height;
+			gpu_scene->primitives[primitive].radius = ((t_cone *)cpu_scene->bvh.obj_list[i]->object)->diameter / 2;
+			vec3_to_float3(&((t_cone *)cpu_scene->bvh.obj_list[i]->object)->orientation, gpu_scene->primitives[primitive].orientation);
+			vec3_to_float3(&((t_cone *)cpu_scene->bvh.obj_list[i]->object)->position, gpu_scene->primitives[primitive].position);
+			color_to_float3(&((t_cone *)cpu_scene->bvh.obj_list[i]->object)->color, gpu_scene->primitives[primitive].color);
 			if (((t_cone *)cpu_scene->bvh.obj_list[i]->object)->material == NULL)
-				gpu_scene->cones[cone].material_id = -1;
+				gpu_scene->primitives[primitive].material_id = -1;
 			else
-				gpu_scene->cones[cone].material_id = ((t_cone *)cpu_scene->bvh.obj_list[i]->object)->material - cpu_scene->materials;
+				gpu_scene->primitives[primitive].material_id = ((t_cone *)cpu_scene->bvh.obj_list[i]->object)->material - cpu_scene->materials;
 			if (((t_cone *)cpu_scene->bvh.obj_list[i]->object)->material_top == NULL)
-				gpu_scene->cones[cone].material_id_top = -1;
+				gpu_scene->primitives[primitive].material_id_top = -1;
 			else
-				gpu_scene->cones[cone].material_id_top = ((t_cone *)cpu_scene->bvh.obj_list[i]->object)->material_top - cpu_scene->materials;
-			cone++;
+				gpu_scene->primitives[primitive].material_id_top = ((t_cone *)cpu_scene->bvh.obj_list[i]->object)->material_top - cpu_scene->materials;
+			primitive++;
 		}
 		else if (cpu_scene->bvh.obj_list[i]->type == HYPERBOLOID)
 		{
@@ -538,24 +534,22 @@ int	convert_scene(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_
 
 	// ---------------- OBJECTS ---------------- //
 	count_obj(scene, gpu_structs);
+	gpu_structs->primitive_am = gpu_structs->spheres_am + gpu_structs->cylinders_am + gpu_structs->cones_am;
 	gpu_structs->lights_am = scene->obj_lst.light_nb;
-	gpu_structs->spheres = ft_calloc(gpu_structs->spheres_am, sizeof(t_gpu_sphere));
 	gpu_structs->hypers = ft_calloc(gpu_structs->hypers_am, sizeof(t_gpu_hyper));
-	gpu_structs->cylinders = ft_calloc(gpu_structs->cylinders_am, sizeof(t_gpu_cylinder));
-	gpu_structs->cones = ft_calloc(gpu_structs->cones_am, sizeof(t_gpu_cone));
 	gpu_structs->triangles = ft_calloc(gpu_structs->triangles_am, sizeof(t_gpu_triangle));
 	gpu_structs->lights = ft_calloc(gpu_structs->lights_am, sizeof(t_gpu_light));
 	gpu_structs->prim_types_indices = ft_calloc(scene->bvh.size, sizeof(t_type_indice));
+	gpu_structs->primitives	= ft_calloc(gpu_structs->primitive_am, sizeof(t_gpu_primitive));
 	// if (!gpu_structs->spheres)
 	// 	return (-1); // Tout free correctement
 	convert_all_obj(scene, gpu_structs);
 	convert_lights(scene, gpu_structs);
-	create_ssbo(&gpu_structs->spheres_ssbo, sizeof(t_gpu_sphere) * gpu_structs->spheres_am, gpu_structs->spheres, SSBO_BIND_SPHERES);
 	create_ssbo(&gpu_structs->hypers_ssbo, sizeof(t_gpu_hyper) * gpu_structs->hypers_am, gpu_structs->hypers, SSBO_BIND_HYPERS);
-	create_ssbo(&gpu_structs->cylinders_ssbo, sizeof(t_gpu_cylinder) * gpu_structs->cylinders_am, gpu_structs->cylinders, SSBO_BIND_CYLINDERS);
-	create_ssbo(&gpu_structs->cones_ssbo, sizeof(t_gpu_cone) * gpu_structs->cones_am, gpu_structs->cones, SSBO_BIND_CONES);
 	create_ssbo(&gpu_structs->triangles_ssbo, sizeof(t_gpu_triangle) * gpu_structs->triangles_am, gpu_structs->triangles, SSBO_BIND_TRIANGLES);
 	create_ssbo(&gpu_structs->lights_ssbo, sizeof(t_gpu_light) * gpu_structs->lights_am, gpu_structs->lights, SSBO_BIND_LIGHTS);
+	create_ssbo(&gpu_structs->primitive_ssbo, sizeof(t_gpu_primitive) * gpu_structs->primitive_am, gpu_structs->primitives, SSBO_BIND_PRIMITIVE);
+
 
 	gpu_structs->bvh_node_am = scene->bvh.bvh_nodes_used;
 	gpu_structs->bvh_node = ft_calloc(gpu_structs->bvh_node_am, sizeof(t_gpu_bvh_node));

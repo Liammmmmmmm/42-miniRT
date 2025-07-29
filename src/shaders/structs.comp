@@ -12,11 +12,16 @@ struct Camera {
 	float defocus_angle;
 };
 
-struct Sphere {
-	vec3 position;
-	float radius;
-	vec3 color;
-	int material_id;
+struct Primitive
+{
+    vec3  position;
+    int   material_id;
+    vec3  orientation;
+		int   material_id_top;
+    vec3  color;
+		int   material_id_bot;
+    float radius;
+    float height;
 };
 
 struct Plane {
@@ -37,27 +42,6 @@ struct Hyper {
 	float	b;
 	float	c;
 	float	shape;
-};
-
-struct	Cone {
-	vec3	position;
-	int material_id;
-	vec3 orientation;
-	float	diameter;
-	vec3	color;
-	float	height;
-	int material_id_top;
-};
-
-struct	Cylinder {
-	vec3	position;
-	int material_id;
-	vec3 orientation;
-	float	diameter;
-	vec3	color;
-	float	height;
-	int material_id_top;
-	int material_id_bot;
 };
 
 struct Moller {
@@ -248,8 +232,8 @@ struct	aabb
 struct	bvh_node
 {
 	aabb	node_bounds;
-  uint  left_child;
-	uint  right_child;
+  uint	left_child;
+	uint	right_child;
 	uint	first_prim;
 	uint	prim_count;
 	bool	is_leaf;

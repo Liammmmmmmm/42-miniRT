@@ -1,5 +1,4 @@
-
-void	get_cone_lateral_uv(inout hit_record hit, Cone cone)
+void	get_cone_lateral_uv(inout hit_record hit, Primitive cone)
 {
 	vec3		right;
 	const vec3	rel = hit.point - cone.position;
@@ -19,7 +18,7 @@ void	get_cone_lateral_uv(inout hit_record hit, Cone cone)
 	}
 }
 
-void	get_cone_cap_uv(inout hit_record hit, Cone cone)
+void	get_cone_cap_uv(inout hit_record hit, Primitive cone)
 {
 	vec3		right;
 	const vec3	rel = hit.point - cone.position + cone.orientation * cone.height * 0.5;
@@ -28,8 +27,8 @@ void	get_cone_cap_uv(inout hit_record hit, Cone cone)
 		right = normalize(cross(vec3(0.0, 1.0, 0.0), cone.orientation));
 	else
 		right = normalize(cross(vec3(1.0, 0.0, 0.0), cone.orientation));
-	hit.u = clamp((dot(rel, right) / cone.diameter) + 0.5, 0.0, 1.0);
-	hit.v = clamp((dot(rel, cross(cone.orientation, right)) / cone.diameter) + 0.5, 0.0, 1.0);
+	hit.u = clamp((dot(rel, right) / (cone.radius * 2)) + 0.5, 0.0, 1.0);
+	hit.v = clamp((dot(rel, cross(cone.orientation, right)) / (cone.radius * 2)) + 0.5, 0.0, 1.0);
 	if (hit.material_id != -1 && materials[hit.material_id].scale != 1)
 	{
 		hit.u *= materials[hit.material_id].scale;
@@ -39,7 +38,7 @@ void	get_cone_cap_uv(inout hit_record hit, Cone cone)
 	}
 }
 
-bool	handle_cone_hit(Cone cone, vec3 ro, vec3 rd, inout hit_record hit, quadratic q)
+bool	handle_cone_hit(Primitive cone, vec3 ro, vec3 rd, inout hit_record hit, quadratic q)
 {
 	const vec3	axis = normalize(cone.orientation);
 	const vec3	p = ray_at(ro, rd, q.t_hit);
@@ -49,18 +48,17 @@ bool	handle_cone_hit(Cone cone, vec3 ro, vec3 rd, inout hit_record hit, quadrati
 
 	if (proj < 0.0 || proj > cone.height)
 		return (false);
-	normal = (p - apex - (axis * (1.0 + ((cone.diameter * 0.5 / cone.height) * (cone.diameter * 0.5 / cone.height))) * proj));
+	normal = (p - apex - (axis * (1.0 + ((cone.radius / cone.height) * (cone.radius / cone.height))) * proj));
 	normal = normalize(normal);
 	hit.t = q.t_hit;
 	hit.point = p;
 	hit.normal = set_normal_face(ro, rd, normal, hit);
 	hit.material_id = cone.material_id;
 	hit.part_id = 0;
-	// get_cone_lateral_uv(hit, cone);
 	return (true);
 }
 
-bool	cone_cap(Cone cone, vec3 ro, vec3 rd, inout hit_record hit)
+bool	cone_cap(Primitive cone, vec3 ro, vec3 rd, inout hit_record hit)
 {
 	const vec3	cap_c = cone.position + normalize(cone.orientation) * cone.height;
 	const vec3	normal = normalize(cone.orientation);
@@ -74,7 +72,7 @@ bool	cone_cap(Cone cone, vec3 ro, vec3 rd, inout hit_record hit)
 	if (t < IT_MIN || t > IT_MAX)
 		return (false);
 	hit_point = ray_at(ro, rd, t);
-	if (length(hit_point - cap_c) > (cone.diameter * 0.5))
+	if (length(hit_point - cap_c) > cone.radius)
 		return (false);
 	hit.t = t;
 	hit.point = hit_point;
@@ -84,14 +82,13 @@ bool	cone_cap(Cone cone, vec3 ro, vec3 rd, inout hit_record hit)
 	hit.material_id = cone.material_id_top;
 	if (hit.material_id == -1)
 		hit.material_id = cone.material_id;
-	// get_cone_cap_uv(hit, cone);
 	return (true);
 }
 
-bool	init_cone_quadratic(inout quadratic q, Cone cone, vec3 ro, vec3 rd)
+bool	init_cone_quadratic(inout quadratic q, Primitive cone, vec3 ro, vec3 rd)
 {
 	const vec3	oc = ro - cone.position;
-	const float	k = pow((cone.diameter * 0.5) / cone.height, 2.0);
+	const float	k = pow(cone.radius / cone.height, 2.0);
 
 	q.dd = dot(rd, cone.orientation);
 	q.oo = dot(oc, cone.orientation);
@@ -101,7 +98,7 @@ bool	init_cone_quadratic(inout quadratic q, Cone cone, vec3 ro, vec3 rd)
 	return (solve_quadratic(q));
 }
 
-bool	hit_cone(Cone cone, vec3 ro, vec3 rd, out hit_record hit)
+bool	hit_cone(Primitive cone, vec3 ro, vec3 rd, out hit_record hit)
 {
 	quadratic	q = get_default_quadratic();
 	bool		hit_cap;

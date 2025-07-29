@@ -8,55 +8,47 @@ layout(std430, binding = 2) buffer LightBuffer {
 	Light lights[];
 };
 
-layout(std430, binding = 4) buffer MaterialBuffer {
+layout(std430, binding = 3) buffer MaterialBuffer {
 	Material materials[];
 };
 
-layout(std430, binding = 5) buffer BvhNodes {
+layout(std430, binding = 4) buffer BvhNodes {
 	bvh_node bvh_nodes[];
 };
 
-layout(std430, binding = 6) buffer PrimitiveIndices {
+layout(std430, binding = 5) buffer PrimitiveIndices {
 	type_indice prim_ti[];
 };
 
-layout(std430, binding = 7) buffer SphereBuffer {
-	Sphere spheres[];
+layout(std430, binding = 6) buffer PrimitiveBuffer {
+	Primitive primitives[];
 };
 
-layout(std430, binding = 8) buffer PlaneBuffer {
+layout(std430, binding = 7) buffer PlaneBuffer {
 	Plane planes[];
 };
 
-layout(std430, binding = 9) buffer HyperBuffer {
+layout(std430, binding = 8) buffer HyperBuffer {
 	Hyper hypers[];
 };
 
-layout(std430, binding = 10) buffer CylinderBuffer {
-	Cylinder cylinders[];
-};
-
-layout(std430, binding = 11) buffer ConeBuffer {
-		Cone cones[];
-};
-
-layout(std430, binding = 12) buffer TriangleBuffer {
+layout(std430, binding = 9) buffer TriangleBuffer {
 	Triangle triangles[];
 };
 
-layout(std430, binding = 13) buffer CheckerBuffer {
+layout(std430, binding = 10) buffer CheckerBuffer {
 	Checker checkers[];
 };
 
-layout(std430, binding = 14) buffer TexturesData {
+layout(std430, binding = 11) buffer TexturesData {
 	TextureData textures_data[];
 };
 
-layout(std430, binding = 15) buffer TexturesStream {
+layout(std430, binding = 12) buffer TexturesStream {
     vec4 textures_stream[];
 };
 
-layout(std430, binding = 16) buffer TexturesTypes {
+layout(std430, binding = 13) buffer TexturesTypes {
 	type_indice tex_ti[];
 };
 

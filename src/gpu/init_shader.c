@@ -3,18 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   init_shader.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/29 17:07:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 17:33:50 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gpu.h"
 
-#define SOURCES_AMOUNT 31
+#define SOURCES_AMOUNT 24
 #define SHD "src/shaders/"
 #define SHDPT "src/shaders/path_trace/"
+
+// SHD"structs.comp",
+// SHD"bind.comp",
+// SHD"utils/random.comp",
+// SHD"utils/defocus.comp",
+// SHDPT"importance_sampling.comp",
+// SHDPT"textures/sample_texture.comp",
+// SHDPT"textures/get_tex_color.comp",
+// SHDPT"textures/apply_maps.comp",
+// SHDPT"hit_register/ray.comp",
+// SHDPT"hit_register/normal.comp",
+// SHDPT"hit_register/quadratic.comp",
+// SHDPT"hit_register/sphere.comp",
+// SHDPT"hit_register/cylinder.comp",
+// SHDPT"hit_register/cone.comp",
+// SHDPT"hit_register/hyperboloid.comp",
+// SHDPT"hit_register/triangle.comp",
+// SHDPT"hit_register/plane.comp",
+// SHDPT"hit_register/hit_bvh.comp",
+// SHDPT"hit_register/hit_register.comp",
+// SHDPT"skybox.comp",
+// SHDPT"material/utils.comp",
+// SHDPT"light/p_light.comp",
+// SHDPT"light/d_light.comp",
+// SHDPT"light/light_manager.comp",
+// SHDPT"material/default.comp",
+// SHDPT"material/metallic.comp",
+// SHDPT"material/refraction.comp",
+// SHDPT"material/dielectric.comp",
+// SHDPT"material/manager.comp",
+// SHDPT"path_trace.comp",
+// SHD"shader.comp"
 
 const char	**get_shaders_sources(void)
 {
@@ -39,15 +71,8 @@ const char	**get_shaders_sources(void)
 		SHDPT"hit_register/hit_bvh.comp",
 		SHDPT"hit_register/hit_register.comp",
 		SHDPT"skybox.comp",
-		SHDPT"material/utils.comp",
-		SHDPT"light/p_light.comp",
-		SHDPT"light/d_light.comp",
 		SHDPT"light/light_manager.comp",
-		SHDPT"material/default.comp",
-		SHDPT"material/metallic.comp",
-		SHDPT"material/refraction.comp",
-		SHDPT"material/dielectric.comp",
-		SHDPT"material/manager.comp",
+		SHDPT"material/manager_opti.comp",
 		SHDPT"path_trace.comp",
 		SHD"shader.comp"
 	};

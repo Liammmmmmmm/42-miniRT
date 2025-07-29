@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_shaders.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/26 17:24:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 17:07:41 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,14 @@ void	clean_scene(t_gpu_structs *gpu_structs)
 	free(gpu_structs->mat);
 	delete_ssbo(&gpu_structs->mat_ssbo);
 
-	free(gpu_structs->spheres);
-	delete_ssbo(&gpu_structs->spheres_ssbo);
+	free(gpu_structs->primitives);
+	delete_ssbo(&gpu_structs->primitive_ssbo);
 
 	free(gpu_structs->planes);
 	delete_ssbo(&gpu_structs->planes_ssbo);
 	
 	free(gpu_structs->hypers);
 	delete_ssbo(&gpu_structs->hypers_ssbo);
-
-	free(gpu_structs->cylinders);
-	delete_ssbo(&gpu_structs->cylinders_ssbo);
-
-	free(gpu_structs->cones);
-	delete_ssbo(&gpu_structs->cones_ssbo);
 
 	free(gpu_structs->triangles);
 	delete_ssbo(&gpu_structs->triangles_ssbo);

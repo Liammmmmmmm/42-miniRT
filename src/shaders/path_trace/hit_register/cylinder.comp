@@ -1,6 +1,6 @@
 
 
-void	get_cylinder_lateral_uv(inout hit_record hit, Cylinder cyl)
+void	get_cylinder_lateral_uv(inout hit_record hit, Primitive cyl)
 {
 	vec3		right;
 	const vec3	rel = hit.point - cyl.position;
@@ -20,7 +20,7 @@ void	get_cylinder_lateral_uv(inout hit_record hit, Cylinder cyl)
 	}
 }
 
-void	get_cylinder_cap_uv(inout hit_record hit, Cylinder cyl, int top)
+void	get_cylinder_cap_uv(inout hit_record hit, Primitive cyl, int top)
 {
 	vec3		right;
 	const vec3	rel = hit.point - cyl.position + cyl.orientation * cyl.height * 0.5 * top;
@@ -29,8 +29,8 @@ void	get_cylinder_cap_uv(inout hit_record hit, Cylinder cyl, int top)
 		right = normalize(cross(vec3(0.0, 1.0, 0.0), cyl.orientation));
 	else
 		right = normalize(cross(vec3(1.0, 0.0, 0.0), cyl.orientation));
-	hit.u = clamp(dot(rel, right) / cyl.diameter + 0.5, 0.0, 1.0);
-	hit.v = clamp(dot(rel, cross(cyl.orientation, right)) / cyl.diameter + 0.5, 0.0, 1.0);
+	hit.u = clamp(dot(rel, right) / (cyl.radius / 2) + 0.5, 0.0, 1.0);
+	hit.v = clamp(dot(rel, cross(cyl.orientation, right)) / (cyl.radius / 2) + 0.5, 0.0, 1.0);
 	if (hit.material_id != -1 && materials[hit.material_id].scale != 1)
 	{
 		hit.u *= materials[hit.material_id].scale;
@@ -41,7 +41,7 @@ void	get_cylinder_cap_uv(inout hit_record hit, Cylinder cyl, int top)
 }
 
 
-bool	handle_cylinder_hit(Cylinder cyl, vec3 ro, vec3 rd, inout hit_record hit, quadratic q)
+bool	handle_cylinder_hit(Primitive cyl, vec3 ro, vec3 rd, inout hit_record hit, quadratic q)
 {
 	const vec3	axis = normalize(cyl.orientation);
 	const vec3	p = ray_at(ro, rd, q.t_hit);
@@ -61,7 +61,7 @@ bool	handle_cylinder_hit(Cylinder cyl, vec3 ro, vec3 rd, inout hit_record hit, q
 	return (true);
 }
 
-bool	cylinder_cap_bottom(vec3 ro, vec3 rd, Cylinder cyl, inout hit_record hit)
+bool	cylinder_cap_bottom(vec3 ro, vec3 rd, Primitive cyl, inout hit_record hit)
 {
 	const vec3	plane_origin = cyl.position - (normalize(cyl.orientation) * cyl.height * 0.5);
 	const float	d = dot(rd, cyl.orientation);
@@ -74,7 +74,7 @@ bool	cylinder_cap_bottom(vec3 ro, vec3 rd, Cylinder cyl, inout hit_record hit)
 	if (t < IT_MIN || t > IT_MAX)
 		return (false);
 	hit_point = ray_at(ro, rd, t);
-	if (length(hit_point - plane_origin) > cyl.diameter * 0.5)
+	if (length(hit_point - plane_origin) > cyl.radius)
 		return (false);
 	hit.t = t;
 	hit.point = hit_point;
@@ -88,7 +88,7 @@ bool	cylinder_cap_bottom(vec3 ro, vec3 rd, Cylinder cyl, inout hit_record hit)
 	return (true);
 }
 
-bool	cylinder_cap_top(vec3 ro, vec3 rd, Cylinder cyl, inout hit_record hit)
+bool	cylinder_cap_top(vec3 ro, vec3 rd, Primitive cyl, inout hit_record hit)
 {
 	const vec3	pl_o = cyl.position + normalize(cyl.orientation) * cyl.height * 0.5;
 	const float	denom = dot(rd, cyl.orientation);
@@ -101,7 +101,7 @@ bool	cylinder_cap_top(vec3 ro, vec3 rd, Cylinder cyl, inout hit_record hit)
 	if (t < IT_MIN || t > IT_MAX)
 		return (false);
 	hit_point = ray_at(ro, rd, t);
-	if (length(hit_point - pl_o) > cyl.diameter * 0.5)
+	if (length(hit_point - pl_o) > cyl.radius)
 		return (false);
 	hit.t = t;
 	hit.point = hit_point;
@@ -115,16 +115,16 @@ bool	cylinder_cap_top(vec3 ro, vec3 rd, Cylinder cyl, inout hit_record hit)
 	return (true);
 }
 
-void	init_axe_value(inout Cylinder cyl)
+void	init_axe_value(inout Primitive cyl)
 {
 	if (cyl.orientation.x == 0 && cyl.orientation.y == 0 && cyl.orientation.z == 0)
 		cyl.orientation.y = 1;
 }
 
-bool	init_cylinder_quadratic(inout quadratic q, Cylinder cyl, vec3 ro, vec3 rd)
+bool	init_cylinder_quadratic(inout quadratic q, Primitive cyl, vec3 ro, vec3 rd)
 {
 	const vec3	oc = ro - cyl.position;
-	const float	radius = cyl.diameter * 0.5;
+	const float	radius = cyl.radius;
 
 	q.dd = dot(rd, cyl.orientation);
 	q.oo = dot(oc, cyl.orientation);
@@ -134,7 +134,7 @@ bool	init_cylinder_quadratic(inout quadratic q, Cylinder cyl, vec3 ro, vec3 rd)
 	return (solve_quadratic(q));
 }
 
-bool	hit_cylinder(Cylinder cyl, vec3 ro, vec3 rd, out hit_record hit)
+bool	hit_cylinder(Primitive cyl, vec3 ro, vec3 rd, out hit_record hit)
 {
 	quadratic	q = get_default_quadratic();
 	hit_record	tmp_rec = get_default_hit_record();

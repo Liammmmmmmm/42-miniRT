@@ -1,0 +1,554 @@
+void	material_manager_v4(vec3 ro, inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
+{
+	if (hit.material_id == -1)
+	{
+    vec3 total_light_color = vec3(0.0);
+    const vec3 view_dir = normalize(cam.position - hit.point);
+    hit_record  shadow_hit = get_default_hit_record();
+    uint i = 0;
+	
+    while (i < lights_am)
+    {
+        if (lights[i].type == 0)
+        {
+            float shadow_factor = 0.0;
+            if (lights[i].radius == 0.0 || lights[i].shadow_sample <= 1)
+            {
+                vec3 light_dir_hard = lights[i].pos - hit.point;
+                float dist_to_light = length(light_dir_hard);
+                shadow_hit.t = IT_MAX;
+                if (!hit_register_all(shadow_hit, hit.point, normalize(light_dir_hard), false) || shadow_hit.t >= dist_to_light)
+                {
+                    shadow_factor = 1.0;
+                }
+            }
+            else
+            {
+                uint hits_count = 0;
+                uint s = 0;
+                while (s < lights[i].shadow_sample)
+                {
+                    vec3 random_target = lights[i].pos + (random_in_unit_sphere() * lights[i].radius);
+                    vec3 light_dir_soft = random_target - hit.point;
+                    float dist_to_light = length(light_dir_soft);
+                    shadow_hit.t = IT_MAX;
+                    if (!hit_register_all(shadow_hit, hit.point, normalize(light_dir_soft), false) || shadow_hit.t >= dist_to_light)
+                    {
+                        hits_count++;
+                    }
+                    s++;
+                }
+                shadow_factor = float(hits_count) / float(lights[i].shadow_sample);
+            }
+            if (shadow_factor > 0.0)
+            {
+                const vec3 light_dir = normalize(lights[i].pos - hit.point);
+                const float n_dot_l = dot(hit.normal, light_dir);
+                if (n_dot_l > 0.0)
+                {
+                    float diffuse_intensity = lights[i].brightness * n_dot_l * shadow_factor;
+                    total_light_color += lights[i].color * diffuse_intensity;
+                    const vec3 reflection = reflection_vec(-light_dir, hit.normal);
+                    float r_dot_v = max(0.0, dot(reflection, view_dir));
+                    float spec = pow(r_dot_v, SHINE) * SPEC_STRENGTH * shadow_factor;
+                    total_light_color += lights[i].color * lights[i].brightness * spec;
+                }
+            }
+        }
+        else if (lights[i].type == 1)
+        {
+            const vec3 light_dir = -lights[i].pos;
+            shadow_hit.t = IT_MAX;
+            if (!hit_register_all(shadow_hit, hit.point, light_dir, false))
+            {
+                const float n_dot_l = dot(hit.normal, light_dir);
+                if (n_dot_l > 0.0)
+                {
+                    total_light_color += lights[i].color * lights[i].brightness * n_dot_l;
+                    const vec3 reflection = reflection_vec(-light_dir, hit.normal);
+                    float r_dot_v = max(0.0, dot(reflection, view_dir));
+                    float spec = pow(r_dot_v, SHINE) * SPEC_STRENGTH;
+                    total_light_color += lights[i].color * lights[i].brightness * spec;
+                }
+            }
+        }
+        i++;
+    }
+
+    // vec3 direct_lighting = compute_light(hit);
+    vec3 caustics_lighting = vec3(0.0);
+
+    power *= hit.color;
+    accumulation += (total_light_color + caustics_lighting) * power;
+
+    if (ambiant.skybox_tex_index != -1)
+    {
+        hit_record tmp_hit_skybox = get_default_hit_record();
+        const vec2 uv_skybox = calc_inverse_transform_sampling_uv();
+        vec3 radiance_skybox;
+
+        vec3 rd_skybox = calc_inverse_transform_sampling_dir(uv_skybox);
+        if (!hit_register_all(tmp_hit_skybox, ro, rd_skybox, false))
+        {
+            float costheta_skybox = dot(hit.normal, rd_skybox);
+            float pdf_skybox = texture(pdf_joint, uv_skybox).r;
+            if (pdf_skybox > 0.0)
+            {
+                radiance_skybox = get_background_color(rd_skybox);
+                if (hit.material_id != -1)
+                {
+                    radiance_skybox *= hit.mat_val.ao;
+                }
+                radiance_skybox *= power;
+                radiance_skybox *= costheta_skybox / pdf_skybox;
+                accumulation += radiance_skybox;
+                power *= (1.0 - costheta_skybox);
+            }
+        }
+    }
+  
+    vec2  r_diffuse = vec2(rand(), rand());
+    float phi_diffuse = 2.0 * PI * r_diffuse.x;
+
+    vec3 local_dir_diffuse;
+    local_dir_diffuse.x = cos(phi_diffuse) * sqrt(r_diffuse.y);
+    local_dir_diffuse.y = sqrt(1.0 - r_diffuse.y);
+    local_dir_diffuse.z = sin(phi_diffuse) * sqrt(r_diffuse.y);
+
+    vec3 tangent_diffuse = normalize(abs(hit.normal.y) < 0.999 ? cross(vec3(0, 1, 0), hit.normal) : cross(vec3(1, 0, 0), hit.normal));
+    vec3 bitangent_diffuse = cross(hit.normal, tangent_diffuse);
+
+    rd = normalize(tangent_diffuse * local_dir_diffuse.x + hit.normal * local_dir_diffuse.y + bitangent_diffuse * local_dir_diffuse.z);
+		return ;
+	}
+	if (hit.mat_val.emission_strength > 0)
+	{
+		accumulation += hit.mat_val.emission_strength * hit.mat_val.emission_color * power;
+	}
+	if (hit.mat_val.metallic == 1)
+	{
+		const float	cos_theta = -dot(normalize(rd), hit.normal);
+		vec3		micro_normal;
+
+		if (hit.mat_val.roughness > 0.0)
+		{
+			float u2 = rand();
+			float phi = 2.0 * PI * rand();
+			float cos_theta = sqrt((1.0 - u2) / (1.0 + ((hit.mat_val.roughness * hit.mat_val.roughness) * (hit.mat_val.roughness * hit.mat_val.roughness) - 1.0) * u2));
+			float sin_theta = sqrt(1.0 - cos_theta * cos_theta);
+			vec3 tangent = normalize(cross(hit.normal, vec3(1.0, 0.0, 0.0)));
+			if (dot(tangent, tangent) < 0.0001)
+				tangent = normalize(cross(hit.normal, vec3(0.0, 1.0, 0.0)));
+			micro_normal = (hit.normal * cos_theta
+				+ tangent * cos(phi) * sin_theta
+				+ normalize(cross(hit.normal, tangent)) * sin(phi) * sin_theta);
+		}
+		else
+			micro_normal = hit.normal;
+		rd = normalize(rd - micro_normal * 2 * dot(rd, micro_normal));
+		power *= (hit.color + ((1 - hit.color) * pow(1 - cos_theta, 5.0)));
+	}
+	else if (hit.mat_val.metallic == 0.0)
+	{
+		bool becomes_diffuse = (hit.mat_val.ior <= 0.0);
+		bool is_reflected = false;
+
+		if (!becomes_diffuse)
+		{
+				float cos_theta_fresnel = -dot(normalize(rd), hit.normal);
+				float f0 = pow((hit.mat_val.ior - 1.0) / (hit.mat_val.ior + 1.0), 2.0);
+				float reflect_prob = f0 + ((1.0 - f0) * pow(1.0 - cos_theta_fresnel, 5.0));
+
+				if (reflect_prob >= rand() && hit.mat_val.ior != 1.0)
+				{
+						is_reflected = true;
+				}
+				else if (hit.mat_val.transmission < 1.0)
+				{
+						if (hit.mat_val.transmission == 0.0 || hit.mat_val.transmission < rand())
+						{
+								becomes_diffuse = true;
+						}
+				}
+		}
+		if (is_reflected)
+		{
+				vec3 micro_normal;
+				if (hit.mat_val.roughness > 0.0)
+				{
+						float u2_ggx = rand();
+						float phi_ggx = 2.0 * PI * rand();
+						float cos_theta_ggx = sqrt((1.0 - u2_ggx) / (1.0 + ((hit.mat_val.roughness * hit.mat_val.roughness) * (hit.mat_val.roughness * hit.mat_val.roughness) - 1.0) * u2_ggx));
+						float sin_theta_ggx = sqrt(1.0 - cos_theta_ggx * cos_theta_ggx);
+						vec3 tangent_ggx = normalize(cross(hit.normal, vec3(1.0, 0.0, 0.0)));
+						if (dot(tangent_ggx, tangent_ggx) < 0.0001)
+								tangent_ggx = normalize(cross(hit.normal, vec3(0.0, 1.0, 0.0)));
+						micro_normal = normalize(hit.normal * cos_theta_ggx + tangent_ggx * cos(phi_ggx) * sin_theta_ggx + normalize(cross(hit.normal, tangent_ggx)) * sin(phi_ggx) * sin_theta_ggx);
+				}
+				else
+				{
+						micro_normal = hit.normal;
+				}
+				rd = normalize(rd - micro_normal * 2.0 * dot(rd, micro_normal));
+		}
+		else if (!becomes_diffuse)
+		{
+				float eta;
+				if (hit.front_face)
+						eta = viewport.ior_global / hit.mat_val.ior;
+				else
+						eta = hit.mat_val.ior / viewport.ior_global;
+
+				vec3 incident_dir = normalize(rd);
+				float cos_theta = min(-dot(incident_dir, hit.normal), 1.0);
+				float sin_theta = sqrt(1.0 - cos_theta * cos_theta);
+
+				if (eta * sin_theta > 1.0)
+				{
+						const float cos_theta_tir = -dot(normalize(rd), hit.normal);
+						vec3 micro_normal_tir;
+						if (hit.mat_val.roughness > 0.0)
+						{
+								float u2_ggx = rand();
+								float phi_ggx = 2.0 * PI * rand();
+								float cos_theta_ggx = sqrt((1.0 - u2_ggx) / (1.0 + ((hit.mat_val.roughness * hit.mat_val.roughness) * (hit.mat_val.roughness * hit.mat_val.roughness) - 1.0) * u2_ggx));
+								float sin_theta_ggx = sqrt(1.0 - cos_theta_ggx * cos_theta_ggx);
+								vec3 tangent_ggx = normalize(cross(hit.normal, vec3(1.0, 0.0, 0.0)));
+								if (dot(tangent_ggx, tangent_ggx) < 0.0001)
+										tangent_ggx = normalize(cross(hit.normal, vec3(0.0, 1.0, 0.0)));
+								micro_normal_tir = normalize(hit.normal * cos_theta_ggx + tangent_ggx * cos(phi_ggx) * sin_theta_ggx + normalize(cross(hit.normal, tangent_ggx)) * sin(phi_ggx) * sin_theta_ggx);
+						}
+						else
+								micro_normal_tir = hit.normal;
+						rd = normalize(rd - micro_normal_tir * 2.0 * dot(rd, micro_normal_tir));
+				}
+				else
+				{
+						vec3 r_out_perp = (incident_dir + hit.normal * cos_theta) * eta;
+						vec3 r_out_para = hit.normal * -sqrt(abs(1.0 - dot(r_out_perp, r_out_perp)));
+						vec3 refracted_direction = normalize(r_out_para + r_out_perp);
+						
+						if (hit.mat_val.roughness > 0.0)
+						{
+							float u2 = rand();
+							float phi = 2.0 * PI * rand();
+							float cos_theta = sqrt((1.0 - u2) / (1.0 + ((hit.mat_val.roughness * hit.mat_val.roughness) * (hit.mat_val.roughness * hit.mat_val.roughness) - 1.0) * u2));
+							float sin_theta = sqrt(1.0 - cos_theta * cos_theta);
+							vec3 tangent = normalize(cross(refracted_direction, vec3(1.0, 0.0, 0.0)));
+							if (dot(tangent, tangent) < 0.0001)
+								tangent = normalize(cross(refracted_direction, vec3(0.0, 1.0, 0.0)));
+							refracted_direction = (refracted_direction * cos_theta
+								+ tangent * cos(phi) * sin_theta
+								+ normalize(cross(refracted_direction, tangent)) * sin(phi) * sin_theta);
+						}
+						rd = refracted_direction;
+						power *= hit.color;
+				}
+		}
+		else
+		{
+			vec3 total_light_color = vec3(0.0);
+			const vec3 view_dir = normalize(cam.position - hit.point);
+			hit_record shadow_hit = get_default_hit_record();
+			uint i = 0;
+			while (i < lights_am)
+			{
+				if (lights[i].type == 0) {
+						float shadow_factor = 0.0;
+						if (lights[i].radius == 0.0 || lights[i].shadow_sample <= 1) {
+								vec3 light_dir_hard = lights[i].pos - hit.point;
+								float dist_to_light = length(light_dir_hard);
+								shadow_hit.t = IT_MAX;
+								if (!hit_register_all(shadow_hit, hit.point, normalize(light_dir_hard), false) || shadow_hit.t >= dist_to_light) {
+										shadow_factor = 1.0;
+								}
+						} else {
+								uint hits_count = 0;
+								uint s = 0;
+								while (s < lights[i].shadow_sample) {
+										vec3 random_target = lights[i].pos + (random_in_unit_sphere() * lights[i].radius);
+										vec3 light_dir_soft = random_target - hit.point;
+										float dist_to_light = length(light_dir_soft);
+										shadow_hit.t = IT_MAX;
+										if (!hit_register_all(shadow_hit, hit.point, normalize(light_dir_soft), false) || shadow_hit.t >= dist_to_light) {
+												hits_count++;
+										}
+										s++;
+								}
+								shadow_factor = float(hits_count) / float(lights[i].shadow_sample);
+						}
+						if (shadow_factor > 0.0) {
+								const vec3 light_dir = normalize(lights[i].pos - hit.point);
+								const float n_dot_l = dot(hit.normal, light_dir);
+								if (n_dot_l > 0.0) {
+										float diffuse_intensity = lights[i].brightness * n_dot_l * shadow_factor;
+										total_light_color += lights[i].color * diffuse_intensity;
+										const vec3 reflection = (light_dir - hit.normal * 2.0 * dot(light_dir, hit.normal)); // Inlining reflection_vec
+										float r_dot_v = max(0.0, dot(reflection, view_dir));
+										float spec = pow(r_dot_v, SHINE) * SPEC_STRENGTH * shadow_factor;
+										total_light_color += lights[i].color * lights[i].brightness * spec;
+								}
+						}
+				} else if (lights[i].type == 1) {
+						const vec3 light_dir = -lights[i].pos;
+						shadow_hit.t = IT_MAX;
+						if (!hit_register_all(shadow_hit, hit.point, light_dir, false)) {
+								const float n_dot_l = dot(hit.normal, light_dir);
+								if (n_dot_l > 0.0) {
+										total_light_color += lights[i].color * lights[i].brightness * n_dot_l;
+										const vec3 reflection = (light_dir - hit.normal * 2.0 * dot(light_dir, hit.normal));
+										float r_dot_v = max(0.0, dot(reflection, view_dir));
+										float spec = pow(r_dot_v, SHINE) * SPEC_STRENGTH;
+										total_light_color += lights[i].color * lights[i].brightness * spec;
+								}
+						}
+				}
+				i++;
+			}
+			power *= hit.color;
+			accumulation += total_light_color * power;
+			if (ambiant.skybox_tex_index != -1) {
+						hit_record tmp_hit_skybox = get_default_hit_record();
+					const vec2 uv_skybox = calc_inverse_transform_sampling_uv();
+					vec3 radiance_skybox;
+					vec3 rd_skybox = calc_inverse_transform_sampling_dir(uv_skybox);
+					if (!hit_register_all(tmp_hit_skybox, ro, rd_skybox, false)) {
+							float costheta_skybox = dot(hit.normal, rd_skybox);
+							float pdf_skybox = texture(pdf_joint, uv_skybox).r;
+							if (pdf_skybox > 0.0) {
+									radiance_skybox = get_background_color(rd_skybox);
+									if (hit.material_id != -1) {
+											radiance_skybox *= hit.mat_val.ao;
+									}
+									radiance_skybox *= power;
+									radiance_skybox *= costheta_skybox / pdf_skybox;
+									accumulation += radiance_skybox;
+									power *= (1.0 - costheta_skybox);
+							}
+					}
+			}
+			vec2 r_diffuse = vec2(rand(), rand());
+			float phi_diffuse = 2.0 * PI * r_diffuse.x;
+			vec3 local_dir_diffuse;
+			local_dir_diffuse.x = cos(phi_diffuse) * sqrt(r_diffuse.y);
+			local_dir_diffuse.y = sqrt(1.0 - r_diffuse.y);
+			local_dir_diffuse.z = sin(phi_diffuse) * sqrt(r_diffuse.y);
+			vec3 tangent_diffuse = normalize(abs(hit.normal.y) < 0.999 ? cross(vec3(0, 1, 0), hit.normal) : cross(vec3(1, 0, 0), hit.normal));
+			vec3 bitangent_diffuse = cross(hit.normal, tangent_diffuse);
+			rd = normalize(tangent_diffuse * local_dir_diffuse.x + hit.normal * local_dir_diffuse.y + bitangent_diffuse * local_dir_diffuse.z);
+		}
+	}
+	else if (hit.mat_val.metallic > rand())
+	{
+		const float	cos_theta = -dot(normalize(rd), hit.normal);
+		vec3		micro_normal;
+
+		if (hit.mat_val.roughness > 0.0)
+		{
+			float u2 = rand();
+			float phi = 2.0 * PI * rand();
+			float cos_theta = sqrt((1.0 - u2) / (1.0 + ((hit.mat_val.roughness * hit.mat_val.roughness) * (hit.mat_val.roughness * hit.mat_val.roughness) - 1.0) * u2));
+			float sin_theta = sqrt(1.0 - cos_theta * cos_theta);
+			vec3 tangent = normalize(cross(hit.normal, vec3(1.0, 0.0, 0.0)));
+			if (dot(tangent, tangent) < 0.0001)
+				tangent = normalize(cross(hit.normal, vec3(0.0, 1.0, 0.0)));
+			micro_normal = (hit.normal * cos_theta
+				+ tangent * cos(phi) * sin_theta
+				+ normalize(cross(hit.normal, tangent)) * sin(phi) * sin_theta);
+		}
+		else
+			micro_normal = hit.normal;
+		rd = normalize(rd - micro_normal * 2 * dot(rd, micro_normal));
+		power *= (hit.color + ((1 - hit.color) * pow(1 - cos_theta, 5.0)));
+	}
+	else
+	{
+		bool becomes_diffuse = (hit.mat_val.ior <= 0.0);
+		bool is_reflected = false;
+
+		if (!becomes_diffuse)
+		{
+				float cos_theta_fresnel = -dot(normalize(rd), hit.normal);
+				float f0 = pow((hit.mat_val.ior - 1.0) / (hit.mat_val.ior + 1.0), 2.0);
+				float reflect_prob = f0 + ((1.0 - f0) * pow(1.0 - cos_theta_fresnel, 5.0));
+
+				if (reflect_prob >= rand() && hit.mat_val.ior != 1.0)
+				{
+						is_reflected = true;
+				}
+				else if (hit.mat_val.transmission < 1.0)
+				{
+						if (hit.mat_val.transmission == 0.0 || hit.mat_val.transmission < rand())
+						{
+								becomes_diffuse = true;
+						}
+				}
+		}
+		if (is_reflected)
+		{
+				vec3 micro_normal;
+				if (hit.mat_val.roughness > 0.0)
+				{
+						float u2_ggx = rand();
+						float phi_ggx = 2.0 * PI * rand();
+						float cos_theta_ggx = sqrt((1.0 - u2_ggx) / (1.0 + ((hit.mat_val.roughness * hit.mat_val.roughness) * (hit.mat_val.roughness * hit.mat_val.roughness) - 1.0) * u2_ggx));
+						float sin_theta_ggx = sqrt(1.0 - cos_theta_ggx * cos_theta_ggx);
+						vec3 tangent_ggx = normalize(cross(hit.normal, vec3(1.0, 0.0, 0.0)));
+						if (dot(tangent_ggx, tangent_ggx) < 0.0001)
+								tangent_ggx = normalize(cross(hit.normal, vec3(0.0, 1.0, 0.0)));
+						micro_normal = normalize(hit.normal * cos_theta_ggx + tangent_ggx * cos(phi_ggx) * sin_theta_ggx + normalize(cross(hit.normal, tangent_ggx)) * sin(phi_ggx) * sin_theta_ggx);
+				}
+				else
+				{
+						micro_normal = hit.normal;
+				}
+				rd = normalize(rd - micro_normal * 2.0 * dot(rd, micro_normal));
+		}
+		else if (!becomes_diffuse)
+		{
+				float eta;
+				if (hit.front_face)
+						eta = viewport.ior_global / hit.mat_val.ior;
+				else
+						eta = hit.mat_val.ior / viewport.ior_global;
+
+				vec3 incident_dir = normalize(rd);
+				float cos_theta = min(-dot(incident_dir, hit.normal), 1.0);
+				float sin_theta = sqrt(1.0 - cos_theta * cos_theta);
+
+				if (eta * sin_theta > 1.0)
+				{
+						const float cos_theta_tir = -dot(normalize(rd), hit.normal);
+						vec3 micro_normal_tir;
+						if (hit.mat_val.roughness > 0.0)
+						{
+								float u2_ggx = rand();
+								float phi_ggx = 2.0 * PI * rand();
+								float cos_theta_ggx = sqrt((1.0 - u2_ggx) / (1.0 + ((hit.mat_val.roughness * hit.mat_val.roughness) * (hit.mat_val.roughness * hit.mat_val.roughness) - 1.0) * u2_ggx));
+								float sin_theta_ggx = sqrt(1.0 - cos_theta_ggx * cos_theta_ggx);
+								vec3 tangent_ggx = normalize(cross(hit.normal, vec3(1.0, 0.0, 0.0)));
+								if (dot(tangent_ggx, tangent_ggx) < 0.0001)
+										tangent_ggx = normalize(cross(hit.normal, vec3(0.0, 1.0, 0.0)));
+								micro_normal_tir = normalize(hit.normal * cos_theta_ggx + tangent_ggx * cos(phi_ggx) * sin_theta_ggx + normalize(cross(hit.normal, tangent_ggx)) * sin(phi_ggx) * sin_theta_ggx);
+						}
+						else
+								micro_normal_tir = hit.normal;
+						rd = normalize(rd - micro_normal_tir * 2.0 * dot(rd, micro_normal_tir));
+				}
+				else
+				{
+						vec3 r_out_perp = (incident_dir + hit.normal * cos_theta) * eta;
+						vec3 r_out_para = hit.normal * -sqrt(abs(1.0 - dot(r_out_perp, r_out_perp)));
+						vec3 refracted_direction = normalize(r_out_para + r_out_perp);
+						
+						if (hit.mat_val.roughness > 0.0)
+						{
+							float u2 = rand();
+							float phi = 2.0 * PI * rand();
+							float cos_theta = sqrt((1.0 - u2) / (1.0 + ((hit.mat_val.roughness * hit.mat_val.roughness) * (hit.mat_val.roughness * hit.mat_val.roughness) - 1.0) * u2));
+							float sin_theta = sqrt(1.0 - cos_theta * cos_theta);
+							vec3 tangent = normalize(cross(refracted_direction, vec3(1.0, 0.0, 0.0)));
+							if (dot(tangent, tangent) < 0.0001)
+								tangent = normalize(cross(refracted_direction, vec3(0.0, 1.0, 0.0)));
+							refracted_direction = (refracted_direction * cos_theta
+								+ tangent * cos(phi) * sin_theta
+								+ normalize(cross(refracted_direction, tangent)) * sin(phi) * sin_theta);
+						}
+						rd = refracted_direction;
+						power *= hit.color;
+				}
+		}
+		else
+		{
+			vec3 total_light_color = vec3(0.0);
+			const vec3 view_dir = normalize(cam.position - hit.point);
+			hit_record shadow_hit = get_default_hit_record();
+			uint i = 0;
+			while (i < lights_am)
+			{
+				if (lights[i].type == 0) {
+						float shadow_factor = 0.0;
+						if (lights[i].radius == 0.0 || lights[i].shadow_sample <= 1) {
+								vec3 light_dir_hard = lights[i].pos - hit.point;
+								float dist_to_light = length(light_dir_hard);
+								shadow_hit.t = IT_MAX;
+								if (!hit_register_all(shadow_hit, hit.point, normalize(light_dir_hard), false) || shadow_hit.t >= dist_to_light) {
+										shadow_factor = 1.0;
+								}
+						} else {
+								uint hits_count = 0;
+								uint s = 0;
+								while (s < lights[i].shadow_sample) {
+										vec3 random_target = lights[i].pos + (random_in_unit_sphere() * lights[i].radius);
+										vec3 light_dir_soft = random_target - hit.point;
+										float dist_to_light = length(light_dir_soft);
+										shadow_hit.t = IT_MAX;
+										if (!hit_register_all(shadow_hit, hit.point, normalize(light_dir_soft), false) || shadow_hit.t >= dist_to_light) {
+												hits_count++;
+										}
+										s++;
+								}
+								shadow_factor = float(hits_count) / float(lights[i].shadow_sample);
+						}
+						if (shadow_factor > 0.0) {
+								const vec3 light_dir = normalize(lights[i].pos - hit.point);
+								const float n_dot_l = dot(hit.normal, light_dir);
+								if (n_dot_l > 0.0) {
+										float diffuse_intensity = lights[i].brightness * n_dot_l * shadow_factor;
+										total_light_color += lights[i].color * diffuse_intensity;
+										const vec3 reflection = (light_dir - hit.normal * 2.0 * dot(light_dir, hit.normal)); // Inlining reflection_vec
+										float r_dot_v = max(0.0, dot(reflection, view_dir));
+										float spec = pow(r_dot_v, SHINE) * SPEC_STRENGTH * shadow_factor;
+										total_light_color += lights[i].color * lights[i].brightness * spec;
+								}
+						}
+				} else if (lights[i].type == 1) {
+						const vec3 light_dir = -lights[i].pos;
+						shadow_hit.t = IT_MAX;
+						if (!hit_register_all(shadow_hit, hit.point, light_dir, false)) {
+								const float n_dot_l = dot(hit.normal, light_dir);
+								if (n_dot_l > 0.0) {
+										total_light_color += lights[i].color * lights[i].brightness * n_dot_l;
+										const vec3 reflection = (light_dir - hit.normal * 2.0 * dot(light_dir, hit.normal));
+										float r_dot_v = max(0.0, dot(reflection, view_dir));
+										float spec = pow(r_dot_v, SHINE) * SPEC_STRENGTH;
+										total_light_color += lights[i].color * lights[i].brightness * spec;
+								}
+						}
+				}
+				i++;
+			}
+			power *= hit.color;
+			accumulation += total_light_color * power;
+			if (ambiant.skybox_tex_index != -1) {
+						hit_record tmp_hit_skybox = get_default_hit_record();
+					const vec2 uv_skybox = calc_inverse_transform_sampling_uv();
+					vec3 radiance_skybox;
+					vec3 rd_skybox = calc_inverse_transform_sampling_dir(uv_skybox);
+					if (!hit_register_all(tmp_hit_skybox, ro, rd_skybox, false)) {
+							float costheta_skybox = dot(hit.normal, rd_skybox);
+							float pdf_skybox = texture(pdf_joint, uv_skybox).r;
+							if (pdf_skybox > 0.0) {
+									radiance_skybox = get_background_color(rd_skybox);
+									if (hit.material_id != -1) {
+											radiance_skybox *= hit.mat_val.ao;
+									}
+									radiance_skybox *= power;
+									radiance_skybox *= costheta_skybox / pdf_skybox;
+									accumulation += radiance_skybox;
+									power *= (1.0 - costheta_skybox);
+							}
+					}
+			}
+			vec2 r_diffuse = vec2(rand(), rand());
+			float phi_diffuse = 2.0 * PI * r_diffuse.x;
+			vec3 local_dir_diffuse;
+			local_dir_diffuse.x = cos(phi_diffuse) * sqrt(r_diffuse.y);
+			local_dir_diffuse.y = sqrt(1.0 - r_diffuse.y);
+			local_dir_diffuse.z = sin(phi_diffuse) * sqrt(r_diffuse.y);
+			vec3 tangent_diffuse = normalize(abs(hit.normal.y) < 0.999 ? cross(vec3(0, 1, 0), hit.normal) : cross(vec3(1, 0, 0), hit.normal));
+			vec3 bitangent_diffuse = cross(hit.normal, tangent_diffuse);
+			rd = normalize(tangent_diffuse * local_dir_diffuse.x + hit.normal * local_dir_diffuse.y + bitangent_diffuse * local_dir_diffuse.z);
+		}
+	}
+}

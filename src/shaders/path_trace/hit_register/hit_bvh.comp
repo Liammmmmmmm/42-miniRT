@@ -193,10 +193,10 @@ bool hit_bvh_depth(vec3 ro, vec3 rd, inout int depth)
 		uint node_index = stack[--stack_ptr];
 		bvh_node node = bvh_nodes[node_index];
 
-		depth++;
-
 		if (!intersect_aabb(ro, rd, node.node_bounds))
 			continue;
+
+		depth++;
 
 		if (node.is_leaf)
 			hit_anything = true;

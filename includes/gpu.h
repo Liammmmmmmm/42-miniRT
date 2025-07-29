@@ -6,21 +6,27 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:19:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 17:50:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 16:36:22 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GPU_H
 # define GPU_H
 
-#include <stdlib.h>
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <GL/gl.h>
-#include "libft.h"
-#include "utils.h"
-#include "gpu_struct.h"
-#include "structs.h"
+# include <stdlib.h>
+# include <GL/glew.h>
+# include <GLFW/glfw3.h>
+# include <GL/gl.h>
+# include "libft.h"
+# include "utils.h"
+# include "gpu_struct.h"
+# include "structs.h"
+
+
+GLuint	compile_shader_from_files(const char **paths, int count,
+	GLenum shader_type);
+int		check_program_link(GLuint program);
+int		check_shader_compile(GLuint shader);
 
 void	init_ssbo(t_shader_data *shader_data, size_t render_width,
 	size_t render_height);

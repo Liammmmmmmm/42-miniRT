@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/07/28 18:44:36 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/07/29 16:36:44 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -196,7 +196,7 @@ SRC_DIR_GPU			= src/
 SRC_FILE_GPU		= main_shader.c
 
 GPU_DIR				= src/gpu/
-GPU_FILE			= init_shader.c clean_shaders.c use_shader.c gpu_scene.c
+GPU_FILE			= init_shader.c compile_shader.c clean_shaders.c use_shader.c gpu_scene.c
 
 RAY_TRACING_DIR_GPU		= src/ray_tracing/
 RAY_TRACING_FILE_GPU	= render_gpu.c manage_movement.c init_animated_items.c focus.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c \

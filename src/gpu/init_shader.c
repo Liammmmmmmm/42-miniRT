@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/29 17:33:50 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:34:59 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ const char	**get_shaders_sources(void)
 		SHDPT"hit_register/hit_bvh.comp",
 		SHDPT"hit_register/hit_register.comp",
 		SHDPT"skybox.comp",
-		SHDPT"light/light_manager.comp",
+		SHDPT"material/utils.comp",
 		SHDPT"material/manager_opti.comp",
 		SHDPT"path_trace.comp",
 		SHD"shader.comp"

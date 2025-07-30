@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/30 15:15:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 15:28:13 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,23 @@ static int	malloc_every_object_gpu(t_gpu_structs *gpu, t_scene *scene)
 	return (0);
 }
 
-void	convert_scene(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu)
+void	convert_scene(t_minirt *minirt, t_scene *scene, t_viewport *viewport,
+	t_gpu_structs *gpu)
 {
 	convert_viewport(&gpu->viewport, viewport, scene->ior_all);
 	convert_camera(scene, &gpu->camera);
 	convert_ambiant(scene, &gpu->ambiant, scene);
-	camera_uniforms(minirt->shaders_data.program, &minirt->shaders_data.scene.camera);
-	ambiant_uniforms(minirt->shaders_data.program, &minirt->shaders_data.scene.ambiant);
-	viewport_uniforms(minirt->shaders_data.program, &minirt->shaders_data.scene.viewport);
+	camera_uniforms(minirt->shaders_data.program,
+		&minirt->shaders_data.scene.camera);
+	ambiant_uniforms(minirt->shaders_data.program,
+		&minirt->shaders_data.scene.ambiant);
+	viewport_uniforms(minirt->shaders_data.program,
+		&minirt->shaders_data.scene.viewport);
+	send_uniforms(minirt);
 }
 
-int	convert_scene_build(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu)
+int	convert_scene_build(t_minirt *minirt, t_scene *scene, t_viewport *viewport,
+	t_gpu_structs *gpu)
 {
 	clean_scene(gpu);
 	convert_scene(minirt, scene, viewport, gpu);

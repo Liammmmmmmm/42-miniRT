@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/30 15:28:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 15:33:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	malloc_every_object_gpu(t_gpu_structs *gpu, t_scene *scene)
 	gpu->triangles = ft_calloc(gpu->triangles_am, sizeof(t_gpu_triangle));
 	gpu->lights = ft_calloc(gpu->lights_am, sizeof(t_gpu_light));
 	gpu->prim_types_indices = ft_calloc(scene->bvh.size, sizeof(t_type_indice));
-	gpu->primitives	= ft_calloc(gpu->primitive_am, sizeof(t_gpu_primitive));
+	gpu->primitives = ft_calloc(gpu->primitive_am, sizeof(t_gpu_primitive));
 	gpu->bvh_node = ft_calloc(gpu->bvh_node_am, sizeof(t_gpu_bvh_node));
 	gpu->planes = ft_calloc(gpu->planes_am, sizeof(t_gpu_plane));
 	if (!gpu->mat || !gpu->hypers || !gpu->triangles || !gpu->lights
@@ -69,6 +69,27 @@ void	convert_scene(t_minirt *minirt, t_scene *scene, t_viewport *viewport,
 	send_uniforms(minirt);
 }
 
+static void	all_ssbo(t_gpu_structs *gpu)
+{
+	create_ssbo(&gpu->mat_ssbo, sizeof(t_gpu_material) * gpu->mat_am,
+		gpu->mat, SSBO_BIND_MATERIALS);
+	create_ssbo(&gpu->hypers_ssbo, sizeof(t_gpu_hyper) * gpu->hypers_am,
+		gpu->hypers, SSBO_BIND_HYPERS);
+	create_ssbo(&gpu->triangles_ssbo, sizeof(t_gpu_triangle)
+		* gpu->triangles_am, gpu->triangles, SSBO_BIND_TRIANGLES);
+	create_ssbo(&gpu->lights_ssbo, sizeof(t_gpu_light) * gpu->lights_am,
+		gpu->lights, SSBO_BIND_LIGHTS);
+	create_ssbo(&gpu->primitive_ssbo, sizeof(t_gpu_primitive)
+		* gpu->primitive_am, gpu->primitives, SSBO_BIND_PRIMITIVE);
+	create_ssbo(&gpu->bvh_node_ssbo, sizeof(t_gpu_bvh_node) * gpu->bvh_node_am,
+		gpu->bvh_node, SSBO_BIND_BVH);
+	create_ssbo(&gpu->prim_types_indices_ssbo,
+		sizeof(t_type_indice) * gpu->prim_indice_am,
+		gpu->prim_types_indices, SSBO_BIND_PRIM_TYPE_INDICE);
+	create_ssbo(&gpu->planes_ssbo, sizeof(t_gpu_plane) * gpu->planes_am,
+		gpu->planes, SSBO_BIND_PLANE);
+}
+
 int	convert_scene_build(t_minirt *minirt, t_scene *scene, t_viewport *viewport,
 	t_gpu_structs *gpu)
 {
@@ -81,14 +102,7 @@ int	convert_scene_build(t_minirt *minirt, t_scene *scene, t_viewport *viewport,
 	convert_lights(scene, gpu);
 	convert_plane(scene, gpu->planes);
 	convert_bvh_node(scene, gpu->bvh_node);
-	create_ssbo(&gpu->mat_ssbo, sizeof(t_gpu_material) * gpu->mat_am, gpu->mat, SSBO_BIND_MATERIALS);
-	create_ssbo(&gpu->hypers_ssbo, sizeof(t_gpu_hyper) * gpu->hypers_am, gpu->hypers, SSBO_BIND_HYPERS);
-	create_ssbo(&gpu->triangles_ssbo, sizeof(t_gpu_triangle) * gpu->triangles_am, gpu->triangles, SSBO_BIND_TRIANGLES);
-	create_ssbo(&gpu->lights_ssbo, sizeof(t_gpu_light) * gpu->lights_am, gpu->lights, SSBO_BIND_LIGHTS);
-	create_ssbo(&gpu->primitive_ssbo, sizeof(t_gpu_primitive) * gpu->primitive_am, gpu->primitives, SSBO_BIND_PRIMITIVE);
-	create_ssbo(&gpu->bvh_node_ssbo, sizeof(t_gpu_bvh_node) * gpu->bvh_node_am, gpu->bvh_node, SSBO_BIND_BVH);
-	create_ssbo(&gpu->prim_types_indices_ssbo, sizeof(t_type_indice) * gpu->prim_indice_am, gpu->prim_types_indices, SSBO_BIND_PRIM_TYPE_INDICE);
-	create_ssbo(&gpu->planes_ssbo, sizeof(t_gpu_plane) * gpu->planes_am, gpu->planes, SSBO_BIND_PLANE);
+	all_ssbo(gpu);
 	send_uniforms(minirt);
 	send_importance_sampling(minirt, &minirt->scene);
 	return (0);

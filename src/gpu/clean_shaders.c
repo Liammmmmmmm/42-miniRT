@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_shaders.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/29 17:07:41 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/30 15:34:51 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 void	delete_ssbo(GLuint *ssbo)
 {
-    if (*ssbo && *ssbo != 0)
-    {
-        glDeleteBuffers(1, ssbo);
-        *ssbo = 0;
-    }
+	if (*ssbo && *ssbo != 0)
+	{
+		glDeleteBuffers(1, ssbo);
+		*ssbo = 0;
+	}
 }
 
 void	clean_importance_sampling(t_gpu_textures *gpu_tex)
@@ -33,28 +33,20 @@ void	clean_scene(t_gpu_structs *gpu_structs)
 {
 	free(gpu_structs->mat);
 	delete_ssbo(&gpu_structs->mat_ssbo);
-
 	free(gpu_structs->primitives);
 	delete_ssbo(&gpu_structs->primitive_ssbo);
-
 	free(gpu_structs->planes);
 	delete_ssbo(&gpu_structs->planes_ssbo);
-	
 	free(gpu_structs->hypers);
 	delete_ssbo(&gpu_structs->hypers_ssbo);
-
 	free(gpu_structs->triangles);
 	delete_ssbo(&gpu_structs->triangles_ssbo);
-
 	free(gpu_structs->lights);
 	delete_ssbo(&gpu_structs->lights_ssbo);
-
 	free(gpu_structs->prim_types_indices);
 	delete_ssbo(&gpu_structs->prim_types_indices_ssbo);
-
 	free(gpu_structs->bvh_node);
 	delete_ssbo(&gpu_structs->bvh_node_ssbo);
-
 	ft_bzero(gpu_structs, sizeof(t_gpu_structs));
 }
 
@@ -72,12 +64,10 @@ void	clean_shaders(t_shader_data *shader_data)
 {
 	delete_ssbo(&shader_data->ssbo);
 	clean_scene(&shader_data->scene);
-	
 	delete_ssbo(&shader_data->tex.checkers_ssbo);
 	delete_ssbo(&shader_data->tex.images_ssbo);
 	delete_ssbo(&shader_data->tex.images_stream_ssbo);
 	delete_ssbo(&shader_data->tex.textures_types_indices_ssbo);
-
 	glDeleteProgram(shader_data->program);
 	glfwDestroyWindow(shader_data->window);
 	glfwTerminate();

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 19:21:20 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/29 19:23:46 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 10:14:33 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,33 @@ void	convert_plane(t_scene *cpu_scene, t_gpu_plane *gpu)
 			gpu[i].material_id = p->material - cpu_scene->materials;
 		gpu[i].d = (p->position.x * p->normal.x + p->position.y * p->normal.y
 				+ p->position.z * p->normal.z);
+		i++;
+	}
+}
+
+void	convert_all_obj(t_scene *cpu_scene, t_gpu_structs *gpu_scene)
+{
+	uint32_t	i;
+	uint32_t	primitive;
+	uint32_t	hyper;
+	uint32_t	triangle;
+
+	i = 0;
+	primitive = 0;
+	hyper = 0;
+	triangle = 0;
+	while (i < cpu_scene->bvh.size)
+	{
+		if (cpu_scene->bvh.obj_list[i]->type == SPHERE)
+			convert_sphere(cpu_scene, gpu_scene, &primitive, i);
+		else if (cpu_scene->bvh.obj_list[i]->type == CYLINDER)
+			convert_cylinder(cpu_scene, gpu_scene, &primitive, i);
+		else if (cpu_scene->bvh.obj_list[i]->type == CONE)
+			convert_cone(cpu_scene, gpu_scene, &primitive, i);
+		else if (cpu_scene->bvh.obj_list[i]->type == HYPERBOLOID)
+			convert_hyper(cpu_scene, gpu_scene, &hyper, i);
+		else if (cpu_scene->bvh.obj_list[i]->type == TRIANGLE)
+			convert_triangle(cpu_scene, gpu_scene, &triangle, i);
 		i++;
 	}
 }

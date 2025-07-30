@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/07/30 09:25:41 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/07/30 10:23:08 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -199,7 +199,7 @@ GPU_DIR				= src/gpu/
 GPU_FILE			= init_shader.c compile_shader.c clean_shaders.c \
 					use_shader.c gpu_scene.c send_uniforms.c importance_sampling.c \
 					convert_utils.c convert_objects.c convert_materials.c convert_textures.c \
-					count.c convert_others.c
+					count.c convert_others.c convert_primitives.c
 					
 
 RAY_TRACING_DIR_GPU		= src/ray_tracing/

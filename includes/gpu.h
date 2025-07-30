@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:19:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/30 09:25:13 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 14:45:19 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,19 @@ void	convert_materials(t_scene *cpu_scene, t_gpu_material *gpu);
 void	convert_textures(t_scene *scene, t_gpu_textures *gpu_textures);
 void	convert_lights(t_scene *cpu_scene, t_gpu_structs *gpu_scene);
 void	convert_bvh_node(t_scene *cpu_scene, t_gpu_bvh_node *bvh_node);
+void	convert_triangle(t_scene *cpu, t_gpu_structs *gpu, uint32_t *triangle, uint32_t i);
+void	convert_hyper(t_scene *cpu, t_gpu_structs *gpu, uint32_t *hyper, uint32_t i);
+void	convert_cone(t_scene *cpu, t_gpu_structs *gpu, uint32_t *primitive, uint32_t i);
+void	convert_cylinder(t_scene *cpu, t_gpu_structs *gpu, uint32_t *primitive, uint32_t i);
+void	convert_sphere(t_scene *cpu, t_gpu_structs *gpu, uint32_t *primitive, uint32_t i);
+void	convert_all_obj(t_scene *cpu_scene, t_gpu_structs *gpu_scene);
 
+void	ambiant_uniforms(GLuint p, t_gpu_amb_light *a);
+void	camera_uniforms(GLuint p, t_gpu_camera *c);
+void	viewport_uniforms(GLuint p, t_gpu_viewport *vp);
 void	send_importance_sampling(t_minirt *minirt, t_scene *scene);
 void	send_uniforms(t_minirt *minirt);
-int		convert_scene(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs);
+void	convert_scene(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu);
+int		convert_scene_build(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs);
 
 #endif

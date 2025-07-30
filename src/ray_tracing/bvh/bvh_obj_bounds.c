@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bvh_obj_bounds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:09:39 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/29 17:44:50 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/30 16:11:49 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ inline t_aabb	compute_hyperboloid_bounds(t_hyperboloid *hyp)
 	const t_vec3	axis = vec3_unit(hyp->orientation);
 	const t_vec3	half_height_vec = vec3_multiply_scalar(axis, \
 		hyp->height * 0.5);
-	const double r_max = fmax(hyp->a, hyp->b) * sqrt(hyp->shape \
+	const double	r_max = fmax(hyp->a, hyp->b) * sqrt(hyp->shape \
 			+ ((hyp->height * 0.5) * (hyp->height * 0.5)) / (hyp->c * hyp->c));
 	const t_vec3	r_vec = {r_max * sqrt(1.0 - axis.x * axis.x), r_max * \
 		sqrt(1.0 - axis.y * axis.y), r_max * sqrt(1.0 - axis.z * axis.z)};

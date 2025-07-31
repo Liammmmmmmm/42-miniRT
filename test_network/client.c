@@ -12,6 +12,7 @@
 #define PASSIVE_PORT 14242
 
 int connect_with_timeout(int sockfd, const struct sockaddr *addr, socklen_t addrlen, int timeout_sec);
+unsigned long	password_hash(const char *input, const char *challenge);
 
 int passive_mode(int *sockfd) {
 	// Crée un socket en écoute
@@ -64,7 +65,8 @@ int passive_mode(int *sockfd) {
 	return 0;
 }
 
-int active_mode(int *sockfd, char *address, char *port) {
+int active_mode(int *sockfd, char *address, char *port, char *password)
+{
 	*sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	struct sockaddr_in server_addr = {
 		.sin_family = AF_INET,
@@ -76,6 +78,34 @@ int active_mode(int *sockfd, char *address, char *port) {
 		close(*sockfd);
 		return -1;
 	}
+
+	char challenge[32];
+	ssize_t bytes = recv(*sockfd, challenge, sizeof(challenge), 0);
+	if (bytes != 32)
+	{
+		close(*sockfd);
+		return (-1);
+	}
+
+	unsigned long hash = password_hash(password, challenge);
+
+	bytes = send(*sockfd, (char *)&hash, 8, 0);
+	if (bytes < 0)
+	{
+		close(*sockfd);
+		return (-1);
+	}
+
+	bytes = recv(*sockfd, challenge, 8, 0);
+	if (bytes >= 0 && ft_strcmp(challenge, "AUTH_OK") == 0)
+		printf("Connexion ok\n");
+	else
+	{
+		printf("Mot de passe invalide\n");
+		close(*sockfd);
+		return (-1);
+	}
+
 	return 0;
 }
 
@@ -97,8 +127,8 @@ int is_connection_alive(int sockfd) {
 int main(int argc, char **argv) {
 	int sockfd;
 
-	if (argc != 3) {
-		printf("Usage: %s <ip> <port>\n", argv[0]);
+	if (argc != 4) {
+		printf("Usage: %s <ip> <port> <password>\n", argv[0]);
 		printf("Aucun serveur fournis, basculement en mode passif...\n");
 		if (passive_mode(&sockfd) < 0) {
 			printf("Échec du mode passif\n");
@@ -107,9 +137,9 @@ int main(int argc, char **argv) {
 	}
 	else
 	{
-		if (active_mode(&sockfd, argv[1], argv[2]) < 0)
+		if (active_mode(&sockfd, argv[1], argv[2], argv[3]) < 0)
 		{
-			printf("Serveur introuvable, basculement en mode passif...\n");
+			printf("Erreur de connexion au serveur...\n");
 			if (passive_mode(&sockfd) < 0) {
 				printf("Échec du mode passif\n");
 				return 1;

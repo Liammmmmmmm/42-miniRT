@@ -62,3 +62,26 @@ int connect_with_timeout(int sockfd, const struct sockaddr *addr, socklen_t addr
 	fcntl(sockfd, F_SETFL, flags);
 	return 0;
 }
+
+/**
+ * djb2 variant
+ */
+unsigned long	password_hash(const char *input, const char *challenge)
+{
+	unsigned long	hash = 5381;
+	int				c;
+
+	c = *input++;
+	while (c)
+	{
+		hash = ((hash << 5) + hash) + c;
+		c = *input++;
+	}
+	c = *challenge++;
+	while (c)
+	{
+		hash = ((hash << 5) + hash) + c;
+		c = *challenge++;
+	}
+	return (hash);
+}

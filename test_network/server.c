@@ -14,12 +14,14 @@
 #define MAX_CLIENTS 1000
 
 int connect_with_timeout(int sockfd, const struct sockaddr *addr, socklen_t addrlen, int timeout_sec);
+unsigned long	password_hash(const char *input, const char *challenge);
 
 int g_server_fd = -1;
 
 typedef struct {
 	int client_fd;
 	struct sockaddr_in client_addr;
+	char	*password;
 } client_data_t;
 
 void handle_sigint(int sig) {
@@ -30,9 +32,58 @@ void handle_sigint(int sig) {
 	exit(130);
 }
 
+char	random_basic_char()
+{
+	const int	randnb = rand() % 82;
+	if (randnb < 26)
+		return ('a' + randnb);
+	else if (randnb < 72)
+		return ('A' + randnb - 26);
+	else
+		return ('0' + randnb - 72);
+}
+
+int	password_connexion(client_data_t *data, int client_fd)
+{
+	if (!data->password)
+		return (0);
+
+	char challenge[32];
+	for (int i = 0; i < 31; i++) {
+        challenge[i] = random_basic_char();
+    }
+    challenge[31] = '\0';
+	send(client_fd, challenge, 32, 0);
+
+	unsigned long hash = password_hash(data->password, challenge);
+
+	char client_hash_char[8];
+	ssize_t bytes = recv(client_fd, client_hash_char, 8, 0);
+	if (bytes != 8)
+	{
+		close(client_fd);
+		return (-1);
+	}
+
+	unsigned long	client_hash = *((unsigned long *)client_hash_char);
+
+	if (client_hash == hash)
+	{
+		printf("Client connecté avec succes\n");
+		send(client_fd, "AUTH_OK", 8, 0);
+	}
+	else
+	{
+		printf("Echec de la connexion du client\n");
+		close(client_fd);
+		return (-1);
+	}
+	return (0);
+}
+
 void *handle_client(void *arg)
 {
-	client_data_t* data = (client_data_t*)arg;
+	client_data_t *data = (client_data_t*)arg;
 	int client_fd = data->client_fd;
 	char client_ip[INET_ADDRSTRLEN];
 	
@@ -41,7 +92,10 @@ void *handle_client(void *arg)
 
 	char buffer[BUFFER_SIZE];
 	ssize_t bytes_received;
-	
+
+	if (password_connexion(data, client_fd) < 0)
+		return (NULL);
+
 	while ((bytes_received = recv(client_fd, buffer, BUFFER_SIZE, 0)) > 0
 		&& g_server_fd != -1)
 	{
@@ -150,7 +204,14 @@ void *cli_thread_routine(void *arg)
 	return NULL;
 }
 
-int main() {
+int main(int argc, char **argv)
+{
+	if (argc != 2)
+	{
+		printf("You need to launch the server with a password. ./server <password>\n");
+		return (1);
+	}
+
 	signal(SIGINT, handle_sigint);
 
 	g_server_fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -185,7 +246,8 @@ int main() {
 		perror("pthread_create failed, no cli");
 	}
 
-	while (g_server_fd != -1) {
+	while (g_server_fd != -1)
+	{
 		client_data_t* client_data = malloc(sizeof(client_data_t));
 		socklen_t client_len = sizeof(client_data->client_addr);
 		
@@ -198,6 +260,8 @@ int main() {
 			free(client_data);
 			continue;
 		}
+
+		client_data->password = argv[1];
 
 		pthread_t thread_id;
 		if (pthread_create(&thread_id, NULL, handle_client, (void*)client_data) != 0) {

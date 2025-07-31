@@ -6,20 +6,38 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:29:55 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/01 19:34:47 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/31 15:42:11 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "caustic.h"
 #include "minirt.h"
 
-static int	init_stack(t_kd_build_task *stack, t_kd_node **root,
-	int photon_count)
+static void	compute_photons_aabb(t_photon *photons, int count,
+	t_vec3 *min, t_vec3 *max)
+{
+	if (count == 0)
+		return ;
+	*min = photons[0].position;
+	*max = photons[0].position;
+	for (int i = 1; i < count; i++)
+	{
+		min->x = fmin(min->x, photons[i].position.x);
+		min->y = fmin(min->y, photons[i].position.y);
+		min->z = fmin(min->z, photons[i].position.z);
+		max->x = fmax(max->x, photons[i].position.x);
+		max->y = fmax(max->y, photons[i].position.y);
+		max->z = fmax(max->z, photons[i].position.z);
+	}
+}
+
+static int	init_stack(t_kd_build_task *stack, t_kd_tree *tree, t_kd_node **root)
 {
 	stack[0].start = 0;
-	stack[0].end = photon_count - 1;
+	stack[0].end = tree->photon_count - 1;
 	stack[0].depth = 0;
-	stack[0].parent = root;
+	stack[0].parent_link = root;
+	compute_photons_aabb(tree->photons, tree->photon_count, &stack[0].aabb_min, &stack[0].aabb_max);
 	return (1);
 }
 
@@ -34,7 +52,7 @@ static t_kd_node	*build_kdtree_iterative(t_kd_tree *tree)
 	if (!stack)
 		return (NULL);
 	root = NULL;
-	stack_top = init_stack(stack, &root, tree->photon_count);
+	stack_top = init_stack(stack, tree, &root);
 	current_node_idx = 0;
 	while (stack_top > 0)
 	{
@@ -44,6 +62,7 @@ static t_kd_node	*build_kdtree_iterative(t_kd_tree *tree)
 	}
 	free(stack);
 	printf("\n");
+	tree->node_count = current_node_idx;
 	return (root);
 }
 

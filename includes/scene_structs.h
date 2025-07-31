@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_structs.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:03:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/28 16:44:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/31 14:37:05 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,7 +278,7 @@ typedef struct s_bvh
 {
 	uint32_t	*prim_indices;
 	t_bvh_node	*bvh_nodes;
-	uint32_t	bvh_nodes_used;	
+	uint32_t	bvh_nodes_used;
 	t_object	**obj_list;
 	uint32_t	*closest_t;
 	uint32_t	node_index;
@@ -298,11 +298,25 @@ typedef struct s_photon
 
 typedef struct s_kd_node
 {
-	t_photon			*photon;
-	struct s_kd_node	*left;
-	struct s_kd_node	*right;
-	int					axis;
+	t_vec3	aabb_min;
+	t_vec3	aabb_max;
+	int		axis;
+	union
+	{
+		struct
+		{
+			struct s_kd_node	*left;
+			struct s_kd_node	*right;
+			float				split_position;
+		} internal;
+		struct
+		{
+			int	photon_start_idx;
+			int	photon_count;
+		} leaf;
+	} data;
 }	t_kd_node;
+
 
 typedef struct s_kd_tree
 {
@@ -310,6 +324,7 @@ typedef struct s_kd_tree
 	t_photon	*photons;
 	t_kd_node   *nodes;
 	size_t		photon_count;
+	size_t		node_count;
 } t_kd_tree;
 
 typedef struct s_knn_result
@@ -329,10 +344,12 @@ typedef struct s_knn_search
 
 typedef struct s_kd_build_task
 {
-	int			start;
-	int			end;
-	int			depth;
-	t_kd_node	**parent; 
+	int				start;
+	int				end;
+	int				depth;
+	t_kd_node		**parent_link;
+	t_vec3			aabb_min;
+	t_vec3			aabb_max;
 }	t_kd_build_task;
 
 typedef struct s_kd_task_data

@@ -42,7 +42,7 @@ void	importance_sampling(vec3 ro, inout vec3 rd, hit_record hit, inout vec3 powe
 void	material_default(inout vec3 ro, inout vec3 rd, hit_record hit, inout vec3 power, inout vec3 accumulation)
 {
 	vec3	direct_lighting = compute_light(hit);
-	vec3	caustics_lighting = vec3(0.0); // estimate_caustics_physically_based
+	vec3	caustics_lighting = get_caustic(hit);
 
 	power *= hit.color;
 	accumulation += (direct_lighting + caustics_lighting) * power;

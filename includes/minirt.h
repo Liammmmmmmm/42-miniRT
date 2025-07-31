@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/29 10:42:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/31 18:21:43 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@
 
 # define DBL_MAX 1.7976931348623157e+308
 
-# define PHOTON_PER_LIGHT 500000000
+# define MAX_PHOTONS_PER_LEAF 1000
+# define PHOTON_PER_LIGHT 100000000
 # define CAUSTIC_RADIUS 0.001
 # define NORM_FACTOR 3
 

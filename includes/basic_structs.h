@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   basic_structs.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:21:20 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/13 15:06:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/31 14:07:14 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

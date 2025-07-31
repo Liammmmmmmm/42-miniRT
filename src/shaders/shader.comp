@@ -30,9 +30,8 @@ void main() {
 	// return ;
 
 	// if (gid.x < width_render / 2)
-	// 	data[id] = lights[0].color;
 	// else
-	// 	data[id] = lights[1].color;
+	// data[id] = vec3(table_size == 0);
 	// return ;
 
 	vec3 ro;
@@ -54,7 +53,7 @@ void main() {
 	else if (render_mode == 2)
 		data[id] = path_trace_normal(ro, rd);
 	// data[id] = vec3(ambiant.skybox_tex_index);
-	// if ( < )
+	// if (kdtree_node_count )
 	// 	data[id] = vec3(1.0);
 	// else
 	// 	data[id] = vec3(0.0);

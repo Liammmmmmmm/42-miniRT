@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 14:22:05 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/21 14:41:58 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/31 14:09:13 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ static void	knn_update_best(t_knn_search *search)
 	}
 }
 
-static void	knn_set_best(t_kd_node *node, t_knn_search *search, double dist_sq)
+static void	knn_set_best(t_photon *photon, t_knn_search *search, double dist_sq)
 {
 	if (search->count < search->k)
 	{
-		search->results[search->count].photon = node->photon;
+		search->results[search->count].photon = photon;
 		search->results[search->count].dist_sq = dist_sq;
 		search->count++;
 		if (search->count == search->k)
@@ -48,37 +48,90 @@ static void	knn_set_best(t_kd_node *node, t_knn_search *search, double dist_sq)
 	}
 	else if (dist_sq < search->results[search->farthest_idx].dist_sq)
 	{
-		search->results[search->farthest_idx].photon = node->photon;
+		search->results[search->farthest_idx].photon = photon;
 		search->results[search->farthest_idx].dist_sq = dist_sq;
 		knn_update_best(search);
 	}
 }
 
-void	knn_find_recursive(t_kd_node *n, t_knn_search *search, t_vec3 point)
-{
-	t_kd_node	*next_branch;
-	t_kd_node	*other_branch;
-	double		dist_sq;
-	double		dist_from_plane;
 
+// NOUVEAU : Test d'intersection entre la sphère de recherche et l'AABB du nœud
+// MODIFIÉ : Version corrigée pour la structure t_vec3 avec x, y, z
+static int	intersects_sphere_aabb(t_vec3 point, double radius_sq, t_vec3 aabb_min, t_vec3 aabb_max)
+{
+	double dist_sq = 0.0;
+	double v;
+
+	// Axe X
+	v = point.x;
+	if (v < aabb_min.x)
+		dist_sq += (aabb_min.x - v) * (aabb_min.x - v);
+	else if (v > aabb_max.x)
+		dist_sq += (v - aabb_max.x) * (v - aabb_max.x);
+
+	// Axe Y
+	v = point.y;
+	if (v < aabb_min.y)
+		dist_sq += (aabb_min.y - v) * (aabb_min.y - v);
+	else if (v > aabb_max.y)
+		dist_sq += (v - aabb_max.y) * (v - aabb_max.y);
+
+	// Axe Z
+	v = point.z;
+	if (v < aabb_min.z)
+		dist_sq += (aabb_min.z - v) * (aabb_min.z - v);
+	else if (v > aabb_max.z)
+		dist_sq += (v - aabb_max.z) * (v - aabb_max.z);
+		
+	return (dist_sq <= radius_sq);
+}
+
+// MODIFIÉ : La fonction de recherche récursive, entièrement réécrite
+void	knn_find_recursive(t_kd_node *n, t_knn_search *search, t_vec3 point, t_photon *photons)
+{
 	if (n == NULL)
 		return ;
-	dist_sq = distance_squared(n->photon->position, point);
-	knn_set_best(n, search, dist_sq);
-	if (get_axis(point, n->axis) < get_axis(n->photon->position, n->axis))
+
+	// NOUVEAU : Élagage par AABB. Si la sphère de recherche ne touche pas la boîte, on ignore cette branche.
+	// On fait ce test seulement si notre liste de résultats est pleine.
+	if (search->count == search->k && !intersects_sphere_aabb(point, search->results[search->farthest_idx].dist_sq, n->aabb_min, n->aabb_max))
+		return;
+
+	// Si c'est un nœud feuille, on teste tous les photons à l'intérieur
+	if (n->axis == -1)
 	{
-		next_branch = n->left;
-		other_branch = n->right;
+		for (int i = 0; i < n->data.leaf.photon_count; i++)
+		{
+			t_photon *photon = &photons[n->data.leaf.photon_start_idx + i];
+			double dist_sq = distance_squared(photon->position, point);
+			knn_set_best(photon, search, dist_sq);
+		}
+		return ;
+	}
+
+	// Si c'est un nœud interne
+	t_kd_node	*next_branch;
+	t_kd_node	*other_branch;
+	double		dist_from_plane;
+
+	dist_from_plane = get_axis(point, n->axis) - n->data.internal.split_position;
+	if (dist_from_plane < 0)
+	{
+		next_branch = n->data.internal.left;
+		other_branch = n->data.internal.right;
 	}
 	else
 	{
-		next_branch = n->right;
-		other_branch = n->left;
+		next_branch = n->data.internal.right;
+		other_branch = n->data.internal.left;
 	}
-	knn_find_recursive(next_branch, search, point);
-	dist_from_plane = get_axis(point, n->axis)
-		- get_axis(n->photon->position, n->axis);
-	if ((dist_from_plane * dist_from_plane)
-		< search->results[search->farthest_idx].dist_sq)
-		knn_find_recursive(other_branch, search, point);
+
+	// On explore la branche la plus proche
+	knn_find_recursive(next_branch, search, point, photons);
+
+	// On explore l'autre branche seulement si la sphère de recherche traverse le plan de division
+	if (search->count < search->k || (dist_from_plane * dist_from_plane) < search->results[search->farthest_idx].dist_sq)
+	{
+		knn_find_recursive(other_branch, search, point, photons);
+	}
 }

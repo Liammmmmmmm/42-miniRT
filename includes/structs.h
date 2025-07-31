@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/30 16:31:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/31 16:20:33 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,12 @@ typedef struct s_range
 	int	end;
 	int	median;
 }	t_range;
+
+typedef struct s_hash_entry
+{
+    uint32_t hash;
+    uint32_t photon_index;
+}   t_hash_entry;
 
 typedef struct s_quadratic
 {

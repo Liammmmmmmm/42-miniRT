@@ -52,6 +52,18 @@ layout(std430, binding = 13) buffer TexturesTypes {
 	type_indice tex_ti[];
 };
 
+layout(std430, binding = 14) buffer PhotonIndice {
+    uint photons_indices[];
+};
+
+layout(std430, binding = 15) buffer PhotonBuffer {
+	Photon photons[];
+};
+
+layout(std430, binding = 16) buffer CellBuffer {
+	Cell cells[];
+};
+
 uniform uint width_render;
 uniform uint height_render;
 
@@ -70,6 +82,10 @@ uniform uint max_bounces;
 uniform uint render_mode;
 
 uniform uint sample_count;
+
+uniform vec3 grid_world_min;
+uniform float cell_size;
+uniform int table_size;
 
 uint	g_seed = 0;
 

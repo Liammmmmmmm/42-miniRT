@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   send_uniforms.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 17:43:45 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/30 14:45:08 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/31 17:15:18 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,12 @@ void	send_uniforms(t_minirt *minirt)
 		(t_uint)minirt->shaders_data.scene.planes_am);
 	glUniform1ui(glGetUniformLocation(prog, "lights_am"),
 		(t_uint)minirt->shaders_data.scene.lights_am);
+	glUniform3fv(glGetUniformLocation(prog, "grid_world_min"),
+		1, minirt->shaders_data.scene.grid_world_min);
+	glUniform1f(glGetUniformLocation(prog, "cell_size"),
+		minirt->shaders_data.scene.cell_size);
+	glUniform1i(glGetUniformLocation(prog, "table_size"),
+		minirt->shaders_data.scene.table_size);
 	camera_uniforms(prog, &minirt->shaders_data.scene.camera);
 	ambiant_uniforms(prog, &minirt->shaders_data.scene.ambiant);
 	viewport_uniforms(prog, &minirt->shaders_data.scene.viewport);

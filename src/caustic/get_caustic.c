@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 14:25:16 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/21 14:58:33 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/31 14:21:58 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ t_fcolor	estimate_caustics_physically_based(t_kd_tree *caustic_kdtree,
 		return ((t_fcolor){0.0, 0.0, 0.0});
 	if (!init_knn_search(&search, k_nearest, &results_array))
 		return ((t_fcolor){0.0, 0.0, 0.0});
-	knn_find_recursive(caustic_kdtree->root, &search, point);
+
+	knn_find_recursive(caustic_kdtree->root, &search, point, caustic_kdtree->photons);
+	
 	if (search.count < (size_t)k_nearest)
 	{
 		free(results_array);

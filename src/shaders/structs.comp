@@ -4,10 +4,39 @@
 // tout ce qui est objet on le met en PascalCase
 // le reste (juste stocker de la data) on reste en mode snake case normal
 
+// Structure pour conserver les résultats de la recherche
+
+struct KNNResult {
+    vec3 power;
+    float dist_sq;
+};
+
+struct KNNSearch {
+    KNNResult results[5];
+    uint count;
+    uint k;
+    float farthest_dist_sq;
+};
+
+struct Cell {
+    uint start_index;
+    uint count;
+};
+
+struct stack_item {
+    uint	node;
+    float dist_from_plane;
+};
+
+struct Photon {
+	vec3	color;
+	vec3	position;
+};
+
 struct Camera {
-	vec3 position;
+	vec3	position;
 	float fov;
-	vec3 orientation;
+	vec3	orientation;
 	float focus_dist;
 	float defocus_angle;
 };
@@ -25,17 +54,17 @@ struct Primitive
 };
 
 struct Plane {
-	vec3 position;
-	int material_id;
-	vec3 normal;
+	vec3 	position;
+	int		material_id;
+	vec3 	normal;
 	float d;
-	vec3 color;
+	vec3 	color;
 };
 
 struct Hyper {
 	vec3	position;
-	int material_id;
-	vec3 orientation;
+	int 	material_id;
+	vec3 	orientation;
 	float	height;
 	vec3	color;
 	float	a;

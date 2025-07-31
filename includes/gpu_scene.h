@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/29 16:35:32 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/31 17:15:30 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 # define SSBO_BIND_IMAGES 11
 # define SSBO_BIND_IMAGES_STREAM 12
 # define SSBO_BIND_TEX_TYPE_INDICE 13
+# define  SSBO_BIND_PHOTON_INDICE 14
+# define  SSBO_BIND_PHOTON 15
+# define  SSBO_BIND_CELL 16
+
 
 /**
  * Tous les _pad sont pour l'alignement std430 et les vec3 qui prennent 16 octets en glsl
@@ -72,6 +76,20 @@ typedef struct s_gpu_camera
 /**
  * /!\ ATTENTION A L'ORDRE DES VARIABLES (a cause de l'alignement des vec3 par le gpu)
  */
+
+typedef struct s_gpu_cell
+{
+    uint32_t start_index;
+    uint32_t count;
+}   t_gpu_cell;
+
+typedef struct s_gpu_photon
+{
+	float	color[4];
+	float	position[4];
+}	__attribute__((aligned(16))) t_gpu_photon;
+
+
 typedef struct s_gpu_plane
 {
 	float	position[3];
@@ -230,6 +248,18 @@ typedef struct s_gpu_structs
 	int				lights_am;
 	t_gpu_light		*lights;
 	GLuint			lights_ssbo;
+	t_gpu_cell		*cells;
+	GLuint			cells_ssbo;
+	uint32_t		cells_am;
+	t_gpu_photon	*photons;
+	GLuint			photons_ssbo;
+	uint32_t		photon_am;
+	float			cell_size;
+	int				table_size;
+	float			grid_world_min[3];
+	float			grid_world_max[3];
+	uint32_t		*photon_indices;
+	GLuint			photon_indices_ssbo;
 }	t_gpu_structs;
 
 

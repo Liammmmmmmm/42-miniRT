@@ -6,15 +6,11 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 17:03:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/31 17:58:46 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/31 18:20:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
-#include <fcntl.h>
-#include <sys/socket.h>
-#include <sys/select.h>
-#include <stdlib.h>
+#include "network.h"
 
 /**
  * djb2 hash variant

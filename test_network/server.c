@@ -22,7 +22,7 @@ typedef struct {
 	int client_fd;
 	struct sockaddr_in client_addr;
 	char	*password;
-} client_data_t;
+} t_client_data;
 
 void handle_sigint(int sig) {
 	printf("\nArrêt du serveur...\n");
@@ -43,7 +43,7 @@ char	random_basic_char()
 		return ('0' + randnb - 72);
 }
 
-int	password_connexion(client_data_t *data, int client_fd)
+int	password_connexion(t_client_data *data, int client_fd)
 {
 	if (!data->password)
 		return (0);
@@ -83,7 +83,7 @@ int	password_connexion(client_data_t *data, int client_fd)
 
 void *handle_client(void *arg)
 {
-	client_data_t *data = (client_data_t*)arg;
+	t_client_data *data = (t_client_data*)arg;
 	int client_fd = data->client_fd;
 	char client_ip[INET_ADDRSTRLEN];
 	
@@ -174,7 +174,7 @@ void *cli_thread_routine(void *arg)
 				continue ;
 			}
 
-			client_data_t *client_data = malloc(sizeof(client_data_t));
+			t_client_data *client_data = malloc(sizeof(t_client_data));
 			if (!client_data)
 			{
 				printf("Malloc error\n");
@@ -248,7 +248,7 @@ int main(int argc, char **argv)
 
 	while (g_server_fd != -1)
 	{
-		client_data_t* client_data = malloc(sizeof(client_data_t));
+		t_client_data* client_data = malloc(sizeof(t_client_data));
 		socklen_t client_len = sizeof(client_data->client_addr);
 		
 		client_data->client_fd = accept(g_server_fd, 

@@ -40,9 +40,8 @@ void knn_add_result(vec3 photon_power, inout KNNSearch search, float dist_sq) {
     }
 }
 
-vec3 get_caustic(hit_record hit)
-{
-    const uint MAX_PHOTONS_TO_TEST = 200;
+vec3 get_caustic(hit_record hit) {
+    const uint MAX_PHOTONS_TO_TEST = 500;
     uint photons_tested = 0;
 
     KNNSearch search;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: delmath <delmath@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/07/31 15:16:35 by madelvin         ###   ########.fr        #
+#    Updated: 2025/08/01 16:41:36 by delmath          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -199,7 +199,7 @@ GPU_DIR				= src/gpu/
 GPU_FILE			= init_shader.c compile_shader.c clean_shaders.c \
 					use_shader.c gpu_scene.c send_uniforms.c importance_sampling.c \
 					convert_utils.c convert_objects.c convert_materials.c convert_textures.c \
-					count.c convert_others.c convert_primitives.c convert_caustic.c 
+					count.c convert_others.c convert_primitives.c convert_caustic.c convert_caustic_utils.c 
 					
 
 RAY_TRACING_DIR_GPU		= src/ray_tracing/

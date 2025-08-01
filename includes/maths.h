@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/17 12:26:08 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/01 15:57:45 by delmath          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_vec3	vec3_lerp(t_vec3 a, t_vec3 b, double t);
 /*	Length and squared length calculation	*/
 double	vec3_length(const t_vec3 v);
 double	vec3_length_squared(const t_vec3 v);
+double	vec3_distance_squared(t_vec3 a, t_vec3 b);
 
 /*	Dot product and cross product	*/
 double	vec3_dot(register t_vec3 u, register t_vec3 v);

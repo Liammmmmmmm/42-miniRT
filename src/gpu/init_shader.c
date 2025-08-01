@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shader.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/29 18:44:10 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/01 17:00:09 by delmath          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ const char	**get_shaders_sources(void)
 		SHDPT"path_trace.comp",
 		SHD"shader.comp"
 	};
-
 	return (sources);
 }
 

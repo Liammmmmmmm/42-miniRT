@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_structs.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:03:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 17:19:51 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/31 14:37:05 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_amb_light
 	double	ratio;
 	t_color	skybox_c;
 	t_tex	*skybox_t;
+	void	*last_calc_importance;
 	double	*gray_scale;
 	double	*raw_average;
 	float	*pdf_joint;
@@ -138,6 +139,9 @@ typedef struct s_light
 	t_vec3	position;
 	double	brightness;
 	t_color	color;
+	int		shadow_sample;
+	float	radius;
+	double	shadow_factor;
 }	t_light;
 
 typedef struct s_dlight
@@ -274,7 +278,7 @@ typedef struct s_bvh
 {
 	uint32_t	*prim_indices;
 	t_bvh_node	*bvh_nodes;
-	uint32_t	bvh_nodes_used;	
+	uint32_t	bvh_nodes_used;
 	t_object	**obj_list;
 	uint32_t	*closest_t;
 	uint32_t	node_index;
@@ -283,7 +287,77 @@ typedef struct s_bvh
 	uint32_t	actual;
 	int			normal_mode;
 	t_vector	task_stack;
+	char		*render_mode;
 }	t_bvh;
+
+typedef struct s_photon
+{
+    t_vec3		position;
+    t_fcolor	power;
+} t_photon;
+
+typedef struct s_kd_node
+{
+	t_vec3	aabb_min;
+	t_vec3	aabb_max;
+	int		axis;
+	union
+	{
+		struct
+		{
+			struct s_kd_node	*left;
+			struct s_kd_node	*right;
+			float				split_position;
+		} internal;
+		struct
+		{
+			int	photon_start_idx;
+			int	photon_count;
+		} leaf;
+	} data;
+}	t_kd_node;
+
+
+typedef struct s_kd_tree
+{
+	t_kd_node	*root;
+	t_photon	*photons;
+	t_kd_node   *nodes;
+	size_t		photon_count;
+	size_t		node_count;
+} t_kd_tree;
+
+typedef struct s_knn_result
+{
+    t_photon    *photon;
+    double      dist_sq; // Distance au carré
+	double      dist; 
+}   t_knn_result;
+
+typedef struct s_knn_search
+{
+    t_knn_result    *results;     // Tableau des k meilleurs résultats
+    size_t          k;            // Le nombre de voisins à chercher
+    size_t          count;        // Le nombre de voisins trouvés pour l'instant
+    size_t          farthest_idx; // L'index du voisin le plus éloigné dans la liste
+}   t_knn_search;
+
+typedef struct s_kd_build_task
+{
+	int				start;
+	int				end;
+	int				depth;
+	t_kd_node		**parent_link;
+	t_vec3			aabb_min;
+	t_vec3			aabb_max;
+}	t_kd_build_task;
+
+typedef struct s_kd_task_data
+{
+	t_kd_build_task	task;
+	t_kd_build_task	*stack;
+	int				*stack_top;
+}	t_kd_task_data;
 
 typedef struct s_scene
 {
@@ -304,9 +378,8 @@ typedef struct s_scene
 	int			win_height;
 	int			render_width;
 	int			render_height;
-	int			render_width_tmp;
-	int			render_height_tmp;
 	t_bool		have_win_el;
+	t_kd_tree	photon_map;
 }	t_scene;
 
 typedef struct s_viewport
@@ -327,6 +400,7 @@ typedef struct s_viewport
 	t_vec3	defocus_disk_u;
 	t_vec3	defocus_disk_v;
 	int		max_bounces;
+	int		*depth_buffer;
 }	t_viewport;
 
 #endif

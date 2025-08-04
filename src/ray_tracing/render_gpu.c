@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/25 11:23:30 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 16:06:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	draw_pixels(t_minirt *minirt)
 {
 	minirt->screen.last_sample_time = get_cpu_time();
 	compute_frame_gpu(minirt);
+	if (minirt->render_mode == 1)
+		set_heat_map_color(minirt);
 	put_render_to_buff_upscaling(minirt);
 	if (minirt->options.no_display)
 		return ;
@@ -81,21 +83,9 @@ void	check_sample_amount(t_minirt *minirt)
 
 void	render(t_minirt *minirt)
 {
-	t_bool	last_frame_is_moving_tmp = minirt->controls.movements.last_frame_is_moving;
-	if (is_cam_moving(minirt))
-		minirt->controls.movements.last_frame_is_moving = 1;
-	else
-		minirt->controls.movements.last_frame_is_moving = 0;
+	t_bool	build_scene_gpu;
 
-	if (is_cam_moving(minirt) && !last_frame_is_moving_tmp)
-	{
-		minirt->scene.render_height = minirt->scene.win_height / 10;
-		minirt->scene.render_width = minirt->scene.win_width / 10;
-		restart_minirt(minirt);
-	}
-	else if (!is_cam_moving(minirt) && last_frame_is_moving_tmp)
-		restart_minirt(minirt);
-
+	manage_movements(minirt);
 	if (!minirt->screen.start_render || minirt->screen.pause_render)
 		return ;
 	if (minirt->screen.sample == 0)
@@ -104,13 +94,19 @@ void	render(t_minirt *minirt)
 			|| minirt->options.anim.enabled == 0)
 			minirt->screen.first_sample_time = get_cpu_time();
 		init_animated_items(minirt);
+		build_scene_gpu = minirt->scene.build_bvh;
 		minirt->viewport = init_viewport(minirt);
 		if (!minirt->options.no_display)
 			ft_izero(minirt->screen.render, minirt->scene.win_width
 				* minirt->scene.win_height);
 		ft_bzero(minirt->screen.float_render, sizeof(t_fcolor)
 			* minirt->viewport.render_w * minirt->viewport.render_h);
-		convert_scene(minirt, &minirt->scene, &minirt->viewport, &minirt->shaders_data.scene);
+		if (build_scene_gpu)
+			convert_scene_build(minirt, &minirt->scene, &minirt->viewport,
+				&minirt->shaders_data.scene);
+		else
+			convert_scene(minirt, &minirt->scene, &minirt->viewport,
+				&minirt->shaders_data.scene);
 	}
 	draw_pixels(minirt);
 }

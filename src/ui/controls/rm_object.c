@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rm_object.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 16:50:19 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 11:31:02 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/28 19:02:07 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	free_element_content(t_object *object, t_scene *scene)
 {
 	if (!object || !object->object)
-		return;
+		return ;
 	if (object->type == CUSTOM)
 	{
 		free(((t_custom_object *)object->object)->name);
@@ -40,11 +40,12 @@ static int	compact_elements_array(t_minirt *minirt, t_object *selected_obj)
 	while (read_idx < minirt->scene.el_amount)
 	{
 		if (&minirt->scene.elements[read_idx] == selected_obj)
-			free_element_content(&minirt->scene.elements[read_idx], &minirt->scene);
+			free_element_content(&minirt->scene.elements[read_idx],
+				&minirt->scene);
 		else
 		{
-			minirt->scene.elements[write_idx] =
-				minirt->scene.elements[read_idx];
+			minirt->scene.elements[write_idx] = minirt->scene.elements[read_idx]
+				;
 			write_idx++;
 		}
 		read_idx++;

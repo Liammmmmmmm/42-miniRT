@@ -91,7 +91,7 @@ bool	handle_hyperboloid_hit(Hyper hyp, vec3 ro, vec3 rd, inout hit_record hit, q
 	hit.point = p;
 	hit.normal = set_normal_face(ro, rd, normal, hit);
 	hit.front_face = dot(rd, normal) < 0;
-	get_hyperboloid_uv(hit, hyp);
+	// get_hyperboloid_uv(hit, hyp);
 	return (true);
 }
 

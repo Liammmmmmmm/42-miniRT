@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/23 13:51:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 11:26:22 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 		minirt->scene.bvh.render_mode = &minirt->render_mode;
 	}
 	init_plane_light_lst(minirt);
-	caustic_manager(minirt, PHOTON_PER_LIGHT);
+	//caustic_manager(minirt, PHOTON_PER_LIGHT);
 	vp->gamma = minirt->viewport.gamma;
 	vp->render_w = minirt->scene.render_width;
 	vp->render_h = minirt->scene.render_height;
@@ -91,15 +91,23 @@ t_viewport	init_viewport(t_minirt *minirt)
 	t_viewport	vp;
 	t_vec3		u;
 
-	free_importance_sampling_malloc(&minirt->scene);
-	make_importance_sampling_map(&minirt->scene);
+	if (minirt->scene.amb_light.skybox_t
+		!= minirt->scene.amb_light.last_calc_importance)
+	{
+		free_importance_sampling_malloc(&minirt->scene);
+		make_importance_sampling_map(&minirt->scene);
+		minirt->scene.amb_light.last_calc_importance
+			= minirt->scene.amb_light.skybox_t;
+	}
 	init_viewport_values(minirt, &vp, &u);
 	init_viewport_vectors(minirt, &vp, u);
-	if (vp.depth_buffer == NULL)
+	if (minirt->viewport.depth_buffer == NULL)
 	{
 		vp.depth_buffer = malloc(sizeof(int) * (vp.render_w * vp.render_h));
 		if (!vp.depth_buffer)
 			print_warn(HEAT_MAP_BUFFER_ERROR);
 	}
+	else
+		vp.depth_buffer = minirt->viewport.depth_buffer;
 	return (vp);
 }

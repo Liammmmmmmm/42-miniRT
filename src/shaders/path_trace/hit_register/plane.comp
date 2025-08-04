@@ -27,21 +27,21 @@ void	get_uv_plane(inout hit_record hit, Plane plane)
 
 bool hit_plane(Plane plane, vec3 ro, vec3 rd, inout hit_record hit)
 {
-    float denom = dot(plane.normal, rd);
-    if (abs(denom) < 1e-7)
-        return false;
-    float t = (plane.d - dot(plane.normal, ro)) / denom;
-    if (t <= IT_MIN || t > IT_MAX)
-        return false;
-    hit.t = t;
-    hit.point = ro + rd * t;
-    if (denom < 0) {
-        hit.front_face = true;
-        hit.normal = plane.normal;
-    } else {
-        hit.front_face = false;
-        hit.normal = -plane.normal;
-    }
-    get_uv_plane(hit, plane);
-    return true;
+	float denom = dot(plane.normal, rd);
+	if (abs(denom) < 1e-7)
+		return false;
+	float t = (plane.d - dot(plane.normal, ro)) / denom;
+	if (t <= IT_MIN || t > IT_MAX)
+		return false;
+	hit.t = t;
+	hit.point = ro + rd * t;
+	if (denom < 0) {
+		hit.front_face = true;
+		hit.normal = plane.normal;
+	} else {
+		hit.front_face = false;
+		hit.normal = -plane.normal;
+	}
+	// get_uv_plane(hit, plane);
+	return true;
 }

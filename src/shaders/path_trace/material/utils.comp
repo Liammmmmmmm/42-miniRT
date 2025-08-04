@@ -14,6 +14,11 @@ float	fresnel_schlick_f(float cos_theta, float f0)
 	return (f0 + ((1 - f0) * pow(1 - cos_theta, 5.0)));
 }
 
+vec3	reflection_vec(vec3 uv, vec3 n)
+{
+	return (uv - n * 2 * dot(uv, n));
+}
+
 float	get_reflect_value(vec3 dir_in, hit_record hit)
 {
 	return (fresnel_schlick_f(

@@ -1,0 +1,30 @@
+
+
+bool	check_dlight_hit_dir(vec3 origin, vec3 direction)
+{
+	hit_record	tmp_hit = get_default_hit_record();
+	vec3		rd = normalize(direction);
+
+	if (hit_register_all(tmp_hit, origin, rd, false))
+		return (true);
+	return (false);
+}
+
+void	add_dlight(inout vec3 light_color, hit_record hit, Light light, vec3 view_dir)
+{
+	const vec3	light_dir = -light.pos;
+	const float	n_dot_l = dot(hit.normal, light_dir);
+
+	if (n_dot_l <= 0.0)
+		return ;
+	light_color.x += light.color.x * light.brightness * n_dot_l;
+	light_color.y += light.color.y * light.brightness * n_dot_l;
+	light_color.z += light.color.z * light.brightness * n_dot_l;
+	float r_dot_v = dot(reflection_vec(-light_dir, hit.normal), view_dir);
+	if (r_dot_v < 0.0)
+		r_dot_v = 0.0;
+	float spec = pow(r_dot_v, SHINE);
+	light_color.x += light.color.x * light.brightness * SPEC_STRENGTH * spec;
+	light_color.y += light.color.y * light.brightness * SPEC_STRENGTH * spec;
+	light_color.z += light.color.z * light.brightness * SPEC_STRENGTH * spec;
+}

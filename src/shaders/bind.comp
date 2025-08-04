@@ -4,64 +4,64 @@ layout(std430, binding = 1) buffer Output {
 	vec3 data[];
 };
 
-// layout(std140, binding = 2) buffer ViewportBuffer {
-// 	Viewport viewport;
-// };
+layout(std430, binding = 2) buffer LightBuffer {
+	Light lights[];
+};
 
-// layout(std140, binding = 3) buffer CameraBuffer {
-// 	Camera cam;
-// };
-
-layout(std430, binding = 4) buffer MaterialBuffer {
+layout(std430, binding = 3) buffer MaterialBuffer {
 	Material materials[];
 };
 
-layout(std430, binding = 5) buffer BvhNodes {
+layout(std430, binding = 4) buffer BvhNodes {
 	bvh_node bvh_nodes[];
 };
 
-layout(std430, binding = 6) buffer PrimitiveIndices {
+layout(std430, binding = 5) buffer PrimitiveIndices {
 	type_indice prim_ti[];
 };
 
-layout(std430, binding = 7) buffer SphereBuffer {
-	Sphere spheres[];
+layout(std430, binding = 6) buffer PrimitiveBuffer {
+	Primitive primitives[];
 };
 
-layout(std430, binding = 8) buffer PlaneBuffer {
+layout(std430, binding = 7) buffer PlaneBuffer {
 	Plane planes[];
 };
 
-layout(std430, binding = 9) buffer HyperBuffer {
+layout(std430, binding = 8) buffer HyperBuffer {
 	Hyper hypers[];
 };
 
-layout(std430, binding = 10) buffer CylinderBuffer {
-	Cylinder cylinders[];
-};
-
-layout(std430, binding = 11) buffer ConeBuffer {
-		Cone cones[];
-};
-
-layout(std430, binding = 12) buffer TriangleBuffer {
+layout(std430, binding = 9) buffer TriangleBuffer {
 	Triangle triangles[];
 };
 
-layout(std430, binding = 13) buffer CheckerBuffer {
+layout(std430, binding = 10) buffer CheckerBuffer {
 	Checker checkers[];
 };
 
-layout(std430, binding = 14) buffer TexturesData {
+layout(std430, binding = 11) buffer TexturesData {
 	TextureData textures_data[];
 };
 
-layout(std430, binding = 15) buffer TexturesStream {
+layout(std430, binding = 12) buffer TexturesStream {
     vec4 textures_stream[];
 };
 
-layout(std430, binding = 16) buffer TexturesTypes {
+layout(std430, binding = 13) buffer TexturesTypes {
 	type_indice tex_ti[];
+};
+
+layout(std430, binding = 14) buffer PhotonIndice {
+    uint photons_indices[];
+};
+
+layout(std430, binding = 15) buffer PhotonBuffer {
+	Photon photons[];
+};
+
+layout(std430, binding = 16) buffer CellBuffer {
+	Cell cells[];
 };
 
 uniform uint width_render;
@@ -75,16 +75,17 @@ uniform sampler2D cdf_conditional_inverse;
 uniform sampler2D pdf_joint;
 uniform sampler1D cdf_marginal_inverse;
 
-uniform uint spheres_am;
 uniform uint planes_am;
-uniform uint cylinders_am;
-uniform uint cones_am;
-uniform uint hypers_am;
-uniform uint triangles_am;
+uniform uint lights_am;
 
 uniform uint max_bounces;
+uniform uint render_mode;
 
 uniform uint sample_count;
+
+uniform vec3 grid_world_min;
+uniform float cell_size;
+uniform int table_size;
 
 uint	g_seed = 0;
 
@@ -92,3 +93,6 @@ const float PI = 3.14159265358979323846;
 const float IT_MAX = 1000.0;
 const float IT_MIN = 0.001;
 const float MIN_SCALE = 1e-3;
+
+const float SPEC_STRENGTH = 1.0;
+const float SHINE = 64.0;

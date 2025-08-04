@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 09:08:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/19 18:26:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/07/28 19:06:59 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,26 @@ static inline t_rgba	*err_extract(char *str)
 	return (NULL);
 }
 
+static t_rgba	get_pixel_rgva(uint8_t *pixels, uint8_t bpp, uint32_t x)
+{
+	t_rgba	res;
+
+	if (bpp == 1)
+		res = (t_rgba){.r = pixels[x],
+			.g = pixels[x], .b = pixels[x], .a = 255};
+	else if (bpp == 2)
+		res = (t_rgba){.r = pixels[x],
+			.g = pixels[x], .b = pixels[x], .a = pixels[x * 2 + 1]};
+	else
+	{
+		res = (t_rgba){.r = pixels[x * bpp + 0],
+			.g = pixels[x * bpp + 1], .b = pixels[x * bpp + 2], .a = 255};
+		if (bpp == 4)
+			res.a = pixels[x * bpp + 3];
+	}
+	return (res);
+}
+
 t_rgba	*extract_rgba(uint8_t *image_data, t_png_info *infos,
 	uint8_t bpp, uint32_t stride)
 {
@@ -75,21 +95,7 @@ t_rgba	*extract_rgba(uint8_t *image_data, t_png_info *infos,
 		pixels = (image_data + (infos->height - y - 1) * stride) + 1;
 		x = (uint32_t)(-1);
 		while (++x < infos->width)
-		{
-			if (bpp == 1)
-				out[y * infos->width + x] = (t_rgba){.r = pixels[x],
-					.g = pixels[x], .b = pixels[x], .a = 255};
-			else if (bpp == 2)
-				out[y * infos->width + x] = (t_rgba){.r = pixels[x],
-					.g = pixels[x], .b = pixels[x], .a = pixels[x * 2 + 1]};
-			else
-			{
-				out[y * infos->width + x] = (t_rgba){.r = pixels[x * bpp + 0],
-					.g = pixels[x * bpp + 1], .b = pixels[x * bpp + 2], .a = 255};
-				if (bpp == 4)
-					out[y * infos->width + x].a = pixels[x * bpp + 3];
-			}
-		}
+			out[y * infos->width + x] = get_pixel_rgva(pixels, bpp, x);
 	}
 	return (out);
 }

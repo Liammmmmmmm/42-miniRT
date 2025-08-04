@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gpu_scene.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 17:39:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/01 17:01:57 by delmath          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,22 @@
 #include <GLFW/glfw3.h>
 #include "scene_structs.h"
 
-# define SSBO_BIND_VIEWPORT 2
-# define SSBO_BIND_CAMERA 3
-# define SSBO_BIND_MATERIALS 4
-# define SSBO_BIND_BVH 5
-# define SSBO_BIND_PRIM_TYPE_INDICE 6
-# define SSBO_BIND_SPHERES 7
-# define SSBO_BIND_PLANE 8
-# define SSBO_BIND_HYPERS 9
-# define SSBO_BIND_CYLINDERS 10
-# define SSBO_BIND_CONES 11
-# define SSBO_BIND_TRIANGLES 12
-# define SSBO_BIND_CHECKERS 13
-# define SSBO_BIND_IMAGES 14
-# define SSBO_BIND_IMAGES_STREAM 15
-# define SSBO_BIND_TEX_TYPE_INDICE 16
+# define SSBO_BIND_LIGHTS 2
+# define SSBO_BIND_MATERIALS 3
+# define SSBO_BIND_BVH 4
+# define SSBO_BIND_PRIM_TYPE_INDICE 5
+# define SSBO_BIND_PRIMITIVE 6
+# define SSBO_BIND_PLANE 7
+# define SSBO_BIND_HYPERS 8
+# define SSBO_BIND_TRIANGLES 9
+# define SSBO_BIND_CHECKERS 10
+# define SSBO_BIND_IMAGES 11
+# define SSBO_BIND_IMAGES_STREAM 12
+# define SSBO_BIND_TEX_TYPE_INDICE 13
+# define  SSBO_BIND_PHOTON_INDICE 14
+# define  SSBO_BIND_PHOTON 15
+# define  SSBO_BIND_CELL 16
+
 
 /**
  * Tous les _pad sont pour l'alignement std430 et les vec3 qui prennent 16 octets en glsl
@@ -76,13 +77,18 @@ typedef struct s_gpu_camera
  * /!\ ATTENTION A L'ORDRE DES VARIABLES (a cause de l'alignement des vec3 par le gpu)
  */
 
-typedef struct s_gpu_sphere
+typedef struct s_gpu_cell
 {
-	float	position[3];
-	float	radius;
-	float	color[3];
-	int		material_id;
-}	__attribute__((aligned(16))) t_gpu_sphere;
+    uint32_t start_index;
+    uint32_t count;
+}   t_gpu_cell;
+
+typedef struct s_gpu_photon
+{
+	float	color[4];
+	float	position[4];
+}	__attribute__((aligned(16))) t_gpu_photon;
+
 
 typedef struct s_gpu_plane
 {
@@ -94,17 +100,17 @@ typedef struct s_gpu_plane
 	float   _padding;
 }	__attribute__((aligned(16))) t_gpu_plane;
 
-typedef struct s_gpu_cylinder
+typedef struct s_gpu_primitive
 {
 	float	position[3];
 	int		material_id;
 	float	orientation[3];
-	float	diameter;
-	float	color[3];
-	float	height;
 	int		material_id_top;
+	float	color[3];
 	int		material_id_bot;
-}	__attribute__((aligned(16))) t_gpu_cylinder;
+	float   radius;
+	float	height;
+}	__attribute__((aligned(16))) t_gpu_primitive;
 
 typedef struct s_gpu_hyper
 {
@@ -119,16 +125,15 @@ typedef struct s_gpu_hyper
 	float	shape;
 }	__attribute__((aligned(16))) t_gpu_hyper;
 
-typedef struct s_gpu_cone
+typedef struct s_gpu_light
 {
-	float	position[3];
-	int		material_id;
-	float	orientation[3];
-	float	diameter;
+	float	pos[3];
+	int		type;
 	float	color[3];
-	float	height;
-	int		material_id_top;
-}	__attribute__((aligned(16))) t_gpu_cone;
+	float	brightness;
+	float	radius;
+	t_uint	shadow_sample;
+}	__attribute__((aligned(16))) t_gpu_light;
 
 typedef	struct s_gpu_vertex
 {
@@ -216,9 +221,10 @@ typedef struct s_gpu_structs
 	t_gpu_viewport	viewport;
 	t_gpu_camera	camera;
 	t_gpu_amb_light	ambiant;
+	GLuint			primitive_ssbo;
+	int				primitive_am;
+	t_gpu_primitive	*primitives;
 	int				spheres_am;
-	t_gpu_sphere	*spheres;
-	GLuint			spheres_ssbo;
 	t_gpu_material	*mat;
 	int				mat_am;
 	GLuint			mat_ssbo;
@@ -232,17 +238,28 @@ typedef struct s_gpu_structs
 	t_type_indice	*prim_types_indices;
 	GLuint			prim_types_indices_ssbo;
 	int				cylinders_am;
-	t_gpu_cylinder	*cylinders;
-	GLuint			cylinders_ssbo;
 	int				cones_am;
-	t_gpu_cone		*cones;
-	GLuint			cones_ssbo;
 	int				hypers_am;
 	t_gpu_hyper		*hypers;
 	GLuint			hypers_ssbo;
 	int				triangles_am;
 	t_gpu_triangle	*triangles;
 	GLuint			triangles_ssbo;
+	int				lights_am;
+	t_gpu_light		*lights;
+	GLuint			lights_ssbo;
+	t_gpu_cell		*cells;
+	GLuint			cells_ssbo;
+	uint32_t		cells_am;
+	t_gpu_photon	*photons;
+	GLuint			photons_ssbo;
+	uint32_t		photon_am;
+	float			cell_size;
+	int				table_size;
+	float			grid_world_min[3];
+	float			grid_world_max[3];
+	uint32_t		*photon_indices;
+	GLuint			photon_indices_ssbo;
 }	t_gpu_structs;
 
 

@@ -4,60 +4,73 @@
 // tout ce qui est objet on le met en PascalCase
 // le reste (juste stocker de la data) on reste en mode snake case normal
 
+// Structure pour conserver les résultats de la recherche
+
+struct KNNResult {
+    vec3 power;
+    float dist_sq;
+};
+
+struct KNNSearch {
+    KNNResult results[10];
+    uint count;
+    uint k;
+    float farthest_dist_sq;
+};
+
+struct Cell {
+    uint start_index;
+    uint count;
+};
+
+struct stack_item {
+    uint	node;
+    float dist_from_plane;
+};
+
+struct Photon {
+	vec3	color;
+	vec3	position;
+};
+
 struct Camera {
-	vec3 position;
+	vec3	position;
 	float fov;
-	vec3 orientation;
+	vec3	orientation;
 	float focus_dist;
 	float defocus_angle;
 };
 
-struct Sphere {
-	vec3 position;
-	float radius;
-	vec3 color;
-	int material_id;
+struct Primitive
+{
+    vec3  position;
+    int   material_id;
+    vec3  orientation;
+		int   material_id_top;
+    vec3  color;
+		int   material_id_bot;
+    float radius;
+    float height;
 };
 
 struct Plane {
-	vec3 position;
-	int material_id;
-	vec3 normal;
+	vec3 	position;
+	int		material_id;
+	vec3 	normal;
 	float d;
-	vec3 color;
+	vec3 	color;
 };
 
 struct Hyper {
 	vec3	position;
-	int material_id;
-	vec3 orientation;
+	int 	material_id;
+	vec3 	orientation;
 	float	height;
 	vec3	color;
 	float	a;
 	float	b;
 	float	c;
 	float	shape;
-};
-
-struct	Cone {
-	vec3	position;
-	int material_id;
-	vec3 orientation;
-	float	diameter;
-	vec3	color;
-	float	height;
-	int material_id_top;
-};
-
-struct	Cylinder {
-	vec3	position;
-	int material_id;
-	vec3 orientation;
-	float	diameter;
-	vec3	color;
-	float	height;
-	int material_id_top;
-	int material_id_bot;
 };
 
 struct Moller {
@@ -113,6 +126,15 @@ struct Ambiant {
 	vec3	skybox_color;
 	float	ratio;
 	int		skybox_tex_index;
+};
+
+struct Light {
+	vec3	pos;
+	int		type;
+	vec3	color;
+	float	brightness;
+	float	radius;
+	uint	shadow_sample;
 };
 
 struct Material {
@@ -175,6 +197,8 @@ struct hit_record
 	int				material_id;
 	vec3			color;
 	bool			front_face;
+	uint			object_index;
+	uint			object_type;
 	float			u;
 	float			v;
 	int				part_id;
@@ -190,6 +214,8 @@ hit_record	get_default_hit_record()
 		-1,
 		vec3(0),
 		false,
+		0,
+		0,
 		0.0,
 		0.0,
 		0,
@@ -235,8 +261,8 @@ struct	aabb
 struct	bvh_node
 {
 	aabb	node_bounds;
-  uint  left_child;
-	uint  right_child;
+  uint	left_child;
+	uint	right_child;
 	uint	first_prim;
 	uint	prim_count;
 	bool	is_leaf;

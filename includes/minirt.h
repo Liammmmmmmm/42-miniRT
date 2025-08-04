@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 11:41:27 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/07/31 18:21:43 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 
 # define MIN_SCALE 1e-3
 
-# define SCALE_FACTOR_HP (1.0 / 9007199254740992.0)
+# define SCALE_FACTOR_HP 9007199254740992.0
 
 # ifndef RANDOM_SEED
 #  define RANDOM_SEED 42
@@ -57,7 +57,8 @@
 
 # define DBL_MAX 1.7976931348623157e+308
 
-# define PHOTON_PER_LIGHT 500000000
+# define MAX_PHOTONS_PER_LEAF 1000
+# define PHOTON_PER_LIGHT 100000000
 # define CAUSTIC_RADIUS 0.001
 # define NORM_FACTOR 3
 
@@ -200,6 +201,8 @@ int		destroy(t_minirt *minirt);
 void	keydown_common(int key, t_minirt *minirt);
 void	keyup_common(int key, t_minirt *minirt);
 
+void	export_scene(t_minirt *minirt);
+void	open_controls(int key, t_minirt *minirt);
 int		keydown_render(int key, t_minirt *minirt);
 int		keyup_render(int key, t_minirt *minirt);
 
@@ -210,6 +213,7 @@ int		mouse_move_render(int x, int y, t_minirt *minirt);
 void	mouseup_common(int key, t_minirt *minirt);
 void	mousedown_common(int key, t_minirt *minirt);
 
+void	mouse_scroll(int key, t_minirt *minirt);
 int		mouse_move_controls(int x, int y, t_minirt *minirt);
 int		mouseup_controls(int key, int x, int y, t_minirt *minirt);
 int		mousedown_controls(int key, int x, int y, t_minirt *minirt);
@@ -243,6 +247,10 @@ void	check_sample_amount(t_minirt *minirt);
 void	no_display_infos_anim(t_minirt *minirt);
 void	no_display_infos(t_minirt *minirt);
 char	*get_time_dhmsms(ssize_t time);
+
+void	manage_movements(t_minirt *minirt);
+
+void	set_heat_map_color(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                  RAY TRACING                                 ║

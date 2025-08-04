@@ -1,15 +1,3 @@
-
-
-bool hit_sphere(vec3 ro, vec3 rd, Sphere sphere)
-{
-	vec3 oc = ro - sphere.position;
-	float a = dot(rd, rd);
-	float b = 2.0 * dot(oc, rd);
-	float c = dot(oc, oc) - sphere.radius * sphere.radius;
-	float discriminant = b * b - 4.0 * a * c;
-	return (discriminant > 0.0);
-}
-
 void	get_thread_seed()
 {
 	g_seed = uint(gl_GlobalInvocationID.x) * 1973u 
@@ -41,7 +29,10 @@ void main() {
 	// data[id] += vec3(0.1);
 	// return ;
 
-	
+	// if (gid.x < width_render / 2)
+	// else
+	// data[id] = vec3(table_size == 0);
+	// return ;
 
 	vec3 ro;
 	if (cam.defocus_angle <= 0)
@@ -55,9 +46,14 @@ void main() {
 
 	vec3 rd = normalize(pixel_pos - ro);
 
-	data[id] = path_trace(ro, rd);
+	if (render_mode == 0)
+		data[id] = path_trace(ro, rd);
+	else if (render_mode == 1)
+		data[id] = path_trace_bvh(ro, rd);
+	else if (render_mode == 2)
+		data[id] = path_trace_normal(ro, rd);
 	// data[id] = vec3(ambiant.skybox_tex_index);
-	// if ( < )
+	// if (kdtree_node_count )
 	// 	data[id] = vec3(1.0);
 	// else
 	// 	data[id] = vec3(0.0);

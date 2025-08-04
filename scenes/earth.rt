@@ -4,7 +4,7 @@ tex stars image assets/textures/stars_2k.bmp
 
 # MATERIALS
 #	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color normal_map
-mat	earth_mat                   110,110,110           0.0            0.0            0.000000       0.000000       1.0                 0.000000            255,255,255  1  earth_normal 100000
+mat	earth_mat                  earth_tex           0.0            0.0            0.000000       0.000000       1.0                 0.000000            255,255,255  1  earth_normal 100000
 
 A	0.1									stars
 

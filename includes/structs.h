@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 12:09:09 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/04 15:51:07 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,19 @@ typedef struct s_interpolate_pixel_bicubic
 	int		x[4];
 	int		y[4];
 }	t_interpolate_pixel_bicubic;
+
+typedef struct s_range
+{
+	int	start;
+	int	end;
+	int	median;
+}	t_range;
+
+typedef struct s_hash_entry
+{
+    uint32_t hash;
+    uint32_t photon_index;
+}   t_hash_entry;
 
 typedef struct s_quadratic
 {
@@ -366,6 +379,20 @@ typedef struct s_animation
 	t_uint		frames;
 }	t_animation;
 
+typedef struct s_server
+{
+	t_bool	enabled;
+	char	*password;
+}	t_server;
+
+typedef struct s_client
+{
+	t_bool	enabled;
+	char	*password;
+	char	*server_ip;
+	int		server_port;
+}	t_client;
+
 typedef struct s_options
 {
 	t_bool		no_display;
@@ -374,6 +401,9 @@ typedef struct s_options
 	char		*output_dir;
 	t_animation	anim;
 	t_bool		sga;
+	t_bool		cpu;
+	t_client	client;
+	t_server	server;
 }	t_options;
 
 typedef struct s_micrort
@@ -397,8 +427,7 @@ typedef struct s_minirt
 	t_options		options;
 	t_micrort		micrort;
 	t_shader_data	shaders_data;
-	int			i;
-	char		render_mode;
+	char			render_mode;
 }	t_minirt;
 
 typedef struct s_upscale_data

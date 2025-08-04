@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 17:03:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/31 18:20:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 11:47:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,18 @@ unsigned long	password_hash(const char *input, const char *challenge)
 		c = *challenge++;
 	}
 	return (hash);
+}
+
+char	random_basic_char()
+{
+	const int	randnb = rand() % 82;
+
+	if (randnb < 26)
+		return ('a' + randnb);
+	else if (randnb < 72)
+		return ('A' + randnb - 26);
+	else
+		return ('0' + randnb - 72);
 }
 
 static int	set_flag_ret(int fd, int flags, int ret)
@@ -82,4 +94,21 @@ int	connect_with_timeout(int sockfd, const struct sockaddr *addr,
 	if (socket_error != 0)
 		return (set_flag_ret(sockfd, flags, -1));
 	return (set_flag_ret(sockfd, flags, 0));
+}
+
+int	is_connection_alive(int sockfd)
+{
+	char	buf[1];
+	ssize_t	ret;
+
+	ret = recv(sockfd, buf, 1, MSG_PEEK | MSG_DONTWAIT);
+	if (ret == 0)
+		return (0);
+	else if (ret == -1)
+	{
+		if (errno == EAGAIN || errno == EWOULDBLOCK)
+			return (1);
+		return (0);
+	}
+	return (1);
 }

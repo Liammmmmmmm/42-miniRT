@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/29 19:00:39 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:26:22 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 		minirt->scene.bvh.render_mode = &minirt->render_mode;
 	}
 	init_plane_light_lst(minirt);
-	caustic_manager(minirt, PHOTON_PER_LIGHT);
+	//caustic_manager(minirt, PHOTON_PER_LIGHT);
 	vp->gamma = minirt->viewport.gamma;
 	vp->render_w = minirt->scene.render_width;
 	vp->render_h = minirt->scene.render_height;

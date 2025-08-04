@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include "libft.h"
+#include <ifaddrs.h>
 
 #ifndef BUFFER_SIZE
 	#define BUFFER_SIZE 1024
@@ -204,6 +205,38 @@ void *cli_thread_routine(void *arg)
 	return NULL;
 }
 
+static void print_network_info(int port) {
+	char hostname[256];
+	struct ifaddrs *ifaddr, *ifa;
+	
+	if (gethostname(hostname, sizeof(hostname)) == 0) {
+		printf("• Hostname: %s\n", hostname);
+	}
+	
+	if (getifaddrs(&ifaddr) == -1) {
+		perror("getifaddrs");
+		return;
+	}
+	printf("• Network IPs:\n");
+	for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next) {
+		if (ifa->ifa_addr == NULL || ifa->ifa_addr->sa_family != AF_INET)
+			continue;
+
+		struct sockaddr_in *sa = (struct sockaddr_in *)ifa->ifa_addr;
+		char ip[INET_ADDRSTRLEN];
+		inet_ntop(AF_INET, &(sa->sin_addr), ip, INET_ADDRSTRLEN);
+		
+		if (ft_strcmp(ip, "127.0.0.1") != 0) {  // On ignore localhost
+			printf("  - %s: %s\n", ifa->ifa_name, ip);
+		}
+	}
+	freeifaddrs(ifaddr);
+	
+	write(1, "• Public IP ", 15);
+	system("curl -s ifconfig.me");
+	printf("\n");
+}
+
 int main(int argc, char **argv)
 {
 	if (argc != 2)
@@ -240,6 +273,7 @@ int main(int argc, char **argv)
 	}
 
 	printf("Serveur en écoute sur le port 4242...\n");
+	print_network_info(4242);
 
 	pthread_t cli_thread;
 	if (pthread_create(&cli_thread, NULL, cli_thread_routine, NULL) != 0) {

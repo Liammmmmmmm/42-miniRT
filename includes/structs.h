@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/31 16:20:33 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/04 15:51:07 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -379,6 +379,20 @@ typedef struct s_animation
 	t_uint		frames;
 }	t_animation;
 
+typedef struct s_server
+{
+	t_bool	enabled;
+	char	*password;
+}	t_server;
+
+typedef struct s_client
+{
+	t_bool	enabled;
+	char	*password;
+	char	*server_ip;
+	int		server_port;
+}	t_client;
+
 typedef struct s_options
 {
 	t_bool		no_display;
@@ -388,6 +402,8 @@ typedef struct s_options
 	t_animation	anim;
 	t_bool		sga;
 	t_bool		cpu;
+	t_client	client;
+	t_server	server;
 }	t_options;
 
 typedef struct s_micrort

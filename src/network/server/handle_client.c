@@ -6,42 +6,45 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/31 18:29:12 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 10:38:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "network.h"
+#include "utils.h"
+
+static void	*close_connection(t_client_data *data)
+{
+	close(data->client_fd);
+	free(data);
+	return (NULL);
+}
 
 void	*handle_client(void *arg)
 {
-	t_client_data *data = (t_client_data*)arg;
-	int client_fd = data->client_fd;
-	char client_ip[INET_ADDRSTRLEN];
-	
-	inet_ntop(AF_INET, &(data->client_addr.sin_addr), client_ip, INET_ADDRSTRLEN);
-	printf("Thread: Nouveau client %s\n", client_ip);
+	t_client_data	*data;
+	char			c_ip[INET_ADDRSTRLEN];
+	char			buffer[SERV_BUFF_SIZE + 1];
+	ssize_t			bytes_received;
 
-	char buffer[BUFFER_SIZE];
-	ssize_t bytes_received;
-
-	if (password_connexion(data, client_fd) < 0)
-		return (NULL);
-
-	while ((bytes_received = recv(client_fd, buffer, BUFFER_SIZE, 0)) > 0
-		&& g_server_fd != -1)
+	data = arg;
+	inet_ntop(AF_INET, &(data->client_addr.sin_addr), c_ip, INET_ADDRSTRLEN);
+	printf("Thread: New client %s\n", c_ip);
+	if (password_connexion(data, data->client_fd) < 0)
+	{
+		print_error("Client password connection failed");
+		return (close_connection(data));
+	}
+	bytes_received = recv(data->client_fd, buffer, SERV_BUFF_SIZE, 0);
+	while (bytes_received > 0 && g_server_fd != -1)
 	{
 		buffer[bytes_received] = '\0';
-		printf("Reçu de %s: %s\n", client_ip, buffer);
-		send(client_fd, "Ok bro j'ai recu\0", 18, 0);
+		printf("Reçu de %s: %s\n", c_ip, buffer);
+		send(data->client_fd, "Ok bro j'ai recu\0", 18, 0);
 	}
-
-	if (bytes_received == 0) {
-		printf("Client %s déconnecté\n", client_ip);
-	} else {
-		perror("recv error");
-	}
-
-	close(client_fd);
-	free(data);
-	return NULL;
+	if (bytes_received == 0)
+		printf("Client %s disconnected\n", c_ip);
+	else
+		print_error("recv error");
+	return (close_connection(data));
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/07/31 15:16:35 by madelvin         ###   ########.fr        #
+#    Updated: 2025/08/04 15:29:08 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -214,6 +214,13 @@ ENV_FILE_GPU		= init_mlx.c free_mlx.c init_controls.c init_ui.c set_dependant_va
 					micrort_init.c set_dependant_values_objs.c set_dependant_values_objs2.c \
 					set_new_win_size_gpu.c
 
+
+NETWORK_DIR			= src/network/
+NETWORK_FILE		= client/active_mode.c client/client.c client/passive_mode.c \
+					server/cli.c server/connect_passive_client.c server/handle_client.c \
+					server/info.c server/password.c server/server.c server/signal.c \
+					utils.c
+
 M_FILE_GPU = $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
 			$(addprefix $(DEBUG_DIR), $(DEBUG_FILE)) \
@@ -236,7 +243,8 @@ M_FILE_GPU = $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 			$(addprefix $(OPTIONS_DIR), $(OPTIONS_FILE)) \
 			$(addprefix $(PNG_DIR), $(PNG_FILE)) \
 			$(addprefix $(CAUSTIC_DIR), $(CAUSTIC_FILE)) \
-			$(addprefix $(GPU_DIR), $(GPU_FILE))
+			$(addprefix $(GPU_DIR), $(GPU_FILE)) \
+			$(addprefix $(NETWORK_DIR), $(NETWORK_FILE))
 
 # Source files bonus
 SRCS_BONUS = 

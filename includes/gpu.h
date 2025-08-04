@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gpu.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:19:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/31 16:31:08 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/01 16:42:15 by delmath          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,9 @@ void	send_uniforms(t_minirt *minirt);
 void	convert_scene(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu);
 int		convert_scene_build(t_minirt *minirt, t_scene *scene, t_viewport *viewport, t_gpu_structs *gpu_structs);
 int		build_caustic_grid(t_scene *scene, t_gpu_structs *gpu, float cell_size, int table_size);
+
+uint32_t	hash_cell(int ix, int iy, int iz, int table_size);
+void		compute_photons_aabb(t_photon *photons, int count, float *min, float *max);
+void		ft_qsort_caustic(t_hash_entry *arr, int left, int right);
 
 #endif

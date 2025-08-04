@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_shaders.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/31 18:30:39 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/01 16:03:27 by delmath          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ void	clean_scene(t_gpu_structs *gpu_structs)
 	delete_ssbo(&gpu_structs->bvh_node_ssbo);
 	free(gpu_structs->photons);
 	delete_ssbo(&gpu_structs->photons_ssbo);
-	// free(gpu_structs->kd_nodes);
-	// delete_ssbo(&gpu_structs->kd_nodes_ssbo);
+	free(gpu_structs->photon_indices);
+	delete_ssbo(&gpu_structs->photon_indices_ssbo);
+	free(gpu_structs->cells);
+	delete_ssbo(&gpu_structs->cells_ssbo);
 	ft_bzero(gpu_structs, sizeof(t_gpu_structs));
 }
 

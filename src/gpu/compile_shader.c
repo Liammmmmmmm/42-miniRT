@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:30:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 11:26:40 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 16:02:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,37 +59,37 @@ static GLuint	compile_step(char **sources, int count, GLenum shader_type)
 	return (shader);
 }
 
-int	print_shader_sources(char **sources, int count, const char **paths)
-{
-	int		line_num;
-	int		k;
-	char	*p;
+// int	print_shader_sources(char **sources, int count, const char **paths)
+// {
+// 	int		line_num;
+// 	int		k;
+// 	char	*p;
 
-	line_num = 1;
-	printf("\n--- Combined Shader Source ---\n");
-	k = -1;
-	while (++k < count)
-	{
-		printf("--- Source from: %s ---\n", paths[k]);
-		p = sources[k];
-		if (!p)
-			continue ;
-		while (*p)
-		{
-			printf("%4d: ", line_num++);
-			while (*p && *p != '\n')
-			{
-				printf("%c", *p);
-				p++;
-			}
-			printf("\n");
-			if (*p)
-				p++;
-		}
-	}
-	printf("--- End of Shader Source ---\n\n");
-	return (0);
-}
+// 	line_num = 1;
+// 	printf("\n--- Combined Shader Source ---\n");
+// 	k = -1;
+// 	while (++k < count)
+// 	{
+// 		printf("--- Source from: %s ---\n", paths[k]);
+// 		p = sources[k];
+// 		if (!p)
+// 			continue ;
+// 		while (*p)
+// 		{
+// 			printf("%4d: ", line_num++);
+// 			while (*p && *p != '\n')
+// 			{
+// 				printf("%c", *p);
+// 				p++;
+// 			}
+// 			printf("\n");
+// 			if (*p)
+// 				p++;
+// 		}
+// 	}
+// 	printf("--- End of Shader Source ---\n\n");
+// 	return (0);
+// }
 
 GLuint	compile_shader_from_files(const char **paths, int count,
 	GLenum shader_type)

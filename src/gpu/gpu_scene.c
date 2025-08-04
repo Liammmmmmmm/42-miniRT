@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gpu_scene.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/31 17:33:59 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/01 16:04:28 by delmath          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	malloc_every_object_gpu(t_gpu_structs *gpu, t_scene *scene)
 {
 	gpu->mat_am = scene->mat_amount;
 	gpu->prim_indice_am = scene->bvh.size;
-	count_obj(scene, gpu);
 	gpu->primitive_am = gpu->spheres_am + gpu->cylinders_am + gpu->cones_am;
 	gpu->lights_am = scene->obj_lst.light_nb;
 	gpu->bvh_node_am = scene->bvh.bvh_nodes_used;
@@ -45,9 +44,11 @@ static int	malloc_every_object_gpu(t_gpu_structs *gpu, t_scene *scene)
 	gpu->bvh_node = ft_calloc(gpu->bvh_node_am, sizeof(t_gpu_bvh_node));
 	gpu->planes = ft_calloc(gpu->planes_am, sizeof(t_gpu_plane));
 	gpu->photons = ft_calloc(gpu->photon_am, sizeof(t_gpu_photon));
+	gpu->cells = ft_calloc(gpu->cells_am, sizeof(t_gpu_cell));
+	gpu->photon_indices = ft_calloc(gpu->photon_am, sizeof(uint32_t));
 	if (!gpu->mat || !gpu->hypers || !gpu->triangles || !gpu->lights
 		|| !gpu->planes || !gpu->prim_types_indices || !gpu->primitives
-		|| !gpu->bvh_node || !gpu->photons)
+		|| !gpu->bvh_node || !gpu->photons || !gpu->cells)
 	{
 		free_objects(gpu);
 		return (-1);
@@ -103,6 +104,8 @@ int	convert_scene_build(t_minirt *minirt, t_scene *scene, t_viewport *viewport,
 	clean_scene(gpu);
 	convert_scene(minirt, scene, viewport, gpu);
 	gpu->photon_am = minirt->scene.photon_map.photon_count;
+	gpu->cells_am = gpu->photon_am * 2;
+	count_obj(scene, gpu);
 	if (malloc_every_object_gpu(gpu, scene) == -1)
 		return (-1);
 	convert_materials(scene, gpu->mat);
@@ -110,7 +113,7 @@ int	convert_scene_build(t_minirt *minirt, t_scene *scene, t_viewport *viewport,
 	convert_lights(scene, gpu);
 	convert_plane(scene, gpu->planes);
 	convert_bvh_node(scene, gpu->bvh_node);
-	build_caustic_grid(scene, gpu, 0.1f, gpu->photon_am * 2);
+	build_caustic_grid(scene, gpu, 0.1f, gpu->cells_am);
 	all_ssbo(gpu);
 	send_uniforms(minirt);
 	send_importance_sampling(minirt, &minirt->scene);

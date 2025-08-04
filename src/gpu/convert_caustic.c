@@ -3,135 +3,98 @@
 /*                                                        :::      ::::::::   */
 /*   convert_caustic.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 14:39:40 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/31 18:30:51 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/01 17:02:37 by delmath          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gpu.h"
 
-static uint32_t hash_cell(int ix, int iy, int iz, int table_size)
+void	copy_photons_to_gpu(t_scene *scene, t_gpu_structs *gpu)
 {
-    const uint32_t p1 = 73856093;
-    const uint32_t p2 = 19349663;
-    const uint32_t p3 = 83492791;
-    uint32_t n = (ix * p1) ^ (iy * p2) ^ (iz * p3);
-    return (n % table_size);
+	t_vec3		pos;
+	t_fcolor	power;
+	uint32_t	i;
+
+	i = 0;
+	while (i < gpu->photon_am)
+	{
+		pos = scene->photon_map.photons[i].position;
+		power = scene->photon_map.photons[i].power;
+		gpu->photons[i].position[0] = pos.x;
+		gpu->photons[i].position[1] = pos.y;
+		gpu->photons[i].position[2] = pos.z;
+		gpu->photons[i].position[3] = 1.0f;
+		gpu->photons[i].color[0] = power.r;
+		gpu->photons[i].color[1] = power.g;
+		gpu->photons[i].color[2] = power.b;
+		gpu->photons[i].color[3] = 1.0f;
+		i++;
+	}
 }
 
-static int compare_hash_entries(const void *a, const void *b)
+void	assign_cells_and_indices(t_gpu_structs *gpu, t_hash_entry *entries)
 {
-    t_hash_entry *entry_a = (t_hash_entry *)a;
-    t_hash_entry *entry_b = (t_hash_entry *)b;
-    if (entry_a->hash < entry_b->hash) return -1;
-    if (entry_a->hash > entry_b->hash) return 1;
-    return (0);
+	uint32_t	i;
+	uint32_t	hash;
+
+	i = 0;
+	ft_memset(gpu->cells, 0, sizeof(t_gpu_cell) * gpu->table_size);
+	while (i < gpu->photon_am)
+	{
+		hash = entries[i].hash;
+		gpu->photon_indices[i] = entries[i].photon_index;
+		if (i == 0 || hash != entries[i - 1].hash)
+			gpu->cells[hash].start_index = i;
+		gpu->cells[hash].count++;
+		i++;
+	}
 }
 
-static void compute_photons_aabb(t_photon *photons, int count,
-    float *min, float *max)
+void	fill_hash_entries(t_scene *scene, t_gpu_structs *gpu,
+	t_hash_entry *entries)
 {
-    if (count == 0) return;
-    vec3_to_float3(&photons[0].position, min);
-    vec3_to_float3(&photons[0].position, max);
-    for (int i = 1; i < count; i++)
-    {
-        min[0] = fmin(min[0], photons[i].position.x);
-        min[1] = fmin(min[1], photons[i].position.y);
-        min[2] = fmin(min[2], photons[i].position.z);
-        max[0] = fmax(max[0], photons[i].position.x);
-        max[1] = fmax(max[1], photons[i].position.y);
-        max[2] = fmax(max[2], photons[i].position.z);
-    }
+	uint32_t	i;
+	int			axe[3];
+
+	i = 0
+	while (i < gpu->photon_am)
+	{
+		t_vec3 p = scene->photon_map.photons[i].position;
+		axe[0] = floor((p.x - gpu->grid_world_min[0]) / gpu->cell_size);
+		axe[1] = floor((p.y - gpu->grid_world_min[1]) / gpu->cell_size);
+		axe[2] = floor((p.z - gpu->grid_world_min[2]) / gpu->cell_size);
+		entries[i].hash = hash_cell(axe[0], axe[1], axe[2], gpu->table_size);
+		entries[i].photon_index = i++;
+	}
 }
 
-int build_caustic_grid(t_scene *scene, t_gpu_structs *gpu, float cell_size, int table_size)
+void	setup_grid_bounds_and_params(t_scene *scene, t_gpu_structs *gpu,
+	float cell_size, int table_size)
 {
-    if (gpu->photon_am == 0)
-        return (0);
-    gpu->photons = malloc(sizeof(t_gpu_photon) * gpu->photon_am);
-    gpu->cells_am = table_size;
-    gpu->cells = malloc(sizeof(t_gpu_cell) * table_size);
-    gpu->photon_indices = malloc(sizeof(uint32_t) * gpu->photon_am);
-    t_hash_entry *hash_entries = malloc(sizeof(t_hash_entry) * gpu->photon_am);
+	compute_photons_aabb(scene->photon_map.photons, gpu->photon_am,
+		gpu->grid_world_min, gpu->grid_world_max);
+	gpu->cell_size = cell_size;
+	gpu->table_size = table_size;
+}
 
-    if (!gpu->photons || !gpu->cells || !gpu->photon_indices || !hash_entries)
-    {
-        free(gpu->photons);
-        free(gpu->cells);
-        free(gpu->photon_indices);
-        free(hash_entries);
-        return (1);
-    }
-    compute_photons_aabb(scene->photon_map.photons, gpu->photon_am, gpu->grid_world_min, gpu->grid_world_max);
-    gpu->cell_size = cell_size;
-    gpu->table_size = table_size;
+int	build_caustic_grid(t_scene *scene, t_gpu_structs *gpu, float cell_size,
+	int table_size)
+{
+	t_hash_entry	*hash_entries;
 
-    for (uint32_t i = 0; i < gpu->photon_am; i++)
-    {
-        t_vec3 p = scene->photon_map.photons[i].position;
-        int ix = floor((p.x - gpu->grid_world_min[0]) / cell_size);
-        int iy = floor((p.y - gpu->grid_world_min[1]) / cell_size);
-        int iz = floor((p.z - gpu->grid_world_min[2]) / cell_size);
-
-        hash_entries[i].hash = hash_cell(ix, iy, iz, table_size);
-        hash_entries[i].photon_index = i;
-    }
-    qsort(hash_entries, gpu->photon_am, sizeof(t_hash_entry), compare_hash_entries);
-
-    ft_memset(gpu->cells, 0, sizeof(t_gpu_cell) * table_size);
-    for (uint32_t i = 0; i < gpu->photon_am; i++)
-    {
-        uint32_t hash = hash_entries[i].hash;
-        gpu->photon_indices[i] = hash_entries[i].photon_index;
-
-        if (i == 0 || hash != hash_entries[i - 1].hash)
-        {
-            gpu->cells[hash].start_index = i;
-        }
-        gpu->cells[hash].count++;
-    }
-
-    for (uint32_t i = 0; i < gpu->photon_am; i++)
-    {
-        gpu->photons[i].position[0] = scene->photon_map.photons[i].position.x;
-        gpu->photons[i].position[1] = scene->photon_map.photons[i].position.y;
-        gpu->photons[i].position[2] = scene->photon_map.photons[i].position.z;
-        gpu->photons[i].position[3] = 1.0f;
-        gpu->photons[i].color[0] = scene->photon_map.photons[i].power.r;
-        gpu->photons[i].color[1] = scene->photon_map.photons[i].power.g;
-        gpu->photons[i].color[2] = scene->photon_map.photons[i].power.b;
-        gpu->photons[i].color[3] = 1.0f;
-    }
-
-    free(hash_entries);
-    printf("--- Analyse de la grille ---\n");
-    int non_empty_cells = 0;
-    int total_photons_in_cells = 0;
-    for (int i = 0; i < table_size; i++)
-    {
-        if (gpu->cells[i].count > 0)
-        {
-            non_empty_cells++;
-            total_photons_in_cells += gpu->cells[i].count;
-        }
-    }
-
-    if (non_empty_cells > 0)
-    {
-        float avg_photons_per_cell = (float)total_photons_in_cells / (float)non_empty_cells;
-        printf("-> Nombre total de photons: %d\n", gpu->photon_am);
-        printf("-> Taille de la table de hachage: %d\n", table_size);
-        printf("-> Cellules non-vides trouvées: %d\n", non_empty_cells);
-        printf("-> Moyenne de photons par cellule non-vide: %.2f\n", avg_photons_per_cell);
-    }
-    else
-    {
-        printf("Aucune cellule non-vide trouvée. Problème possible avec la grille.\n");
-    }
-    printf("--------------------------\n");
-
-    return (0);
+	if (gpu->photon_am == 0)
+		return (0);
+	hash_entries = malloc(sizeof(t_hash_entry) * gpu->photon_am);
+	if (!hash_entries)
+		return (print_warn_rv("Hash entries malloc error, Caustic disable", 1));
+	setup_grid_bounds_and_params(scene, gpu, cell_size, table_size);
+	fill_hash_entries(scene, gpu, hash_entries);
+	ft_qsort_caustic(hash_entries, 0, gpu->photon_am - 1);
+	assign_cells_and_indices(gpu, hash_entries);
+	copy_photons_to_gpu(scene, gpu);
+	free(hash_entries);
+	return (0);
 }

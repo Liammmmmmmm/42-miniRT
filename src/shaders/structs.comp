@@ -12,7 +12,7 @@ struct KNNResult {
 };
 
 struct KNNSearch {
-    KNNResult results[5];
+    KNNResult results[10];
     uint count;
     uint k;
     float farthest_dist_sq;

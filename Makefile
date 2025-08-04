@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/04 16:02:06 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/08/04 17:26:46 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -221,6 +221,13 @@ NETWORK_FILE		= client/active_mode.c client/client.c client/passive_mode.c \
 					server/info.c server/password.c server/server.c server/signal.c \
 					utils.c
 
+OPTIONS_DIR_GPU		= src/options/
+OPTIONS_FILE_GPU	= options_server.c animation.c animation_err.c animation_move_points.c \
+					animation_parse.c animation_tesselate.c animation_rotations.c \
+					animation_auto_rota.c server.c client.c
+
+
+
 M_FILE_GPU = $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
 			$(addprefix $(DEBUG_DIR), $(DEBUG_FILE)) \
@@ -240,7 +247,7 @@ M_FILE_GPU = $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 			$(addprefix $(UPSCALING_DIR), $(UPSCALING_FILE)) \
 			$(addprefix $(PPM_DIR), $(PPM_FILE)) \
 			$(addprefix $(HDR_PARSING_DIR), $(HDR_PARSING_FILE)) \
-			$(addprefix $(OPTIONS_DIR), $(OPTIONS_FILE)) \
+			$(addprefix $(OPTIONS_DIR_GPU), $(OPTIONS_FILE_GPU)) \
 			$(addprefix $(PNG_DIR), $(PNG_FILE)) \
 			$(addprefix $(CAUSTIC_DIR), $(CAUSTIC_FILE)) \
 			$(addprefix $(GPU_DIR), $(GPU_FILE)) \

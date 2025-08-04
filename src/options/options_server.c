@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   options.c                                          :+:      :+:    :+:   */
+/*   options_server.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 09:54:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 16:00:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 17:26:21 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ int	basic_options(t_minirt *minirt, char **argv, int i)
 	else if (ft_strcmp(argv[i], "--auto-export") == 0)
 		minirt->options.auto_export = 1;
 	else if (ft_strcmp(argv[i], "--compute-cpu") == 0)
+	{
+		if (minirt->options.client.enabled)
+			return (print_error1("Cannot use cpu for a client"));
 		minirt->options.cpu = 1;
+	}
 	else if (ft_strcmp(argv[i], "--standard-galactic-alphabet") == 0)
 		minirt->options.sga = 1;
 	else

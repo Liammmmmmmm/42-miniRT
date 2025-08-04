@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 15:51:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 17:19:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -383,14 +383,15 @@ typedef struct s_server
 {
 	t_bool	enabled;
 	char	*password;
+	int		port;
 }	t_server;
 
 typedef struct s_client
 {
 	t_bool	enabled;
 	char	*password;
-	char	*server_ip;
-	int		server_port;
+	char	*ip;
+	int		port;
 }	t_client;
 
 typedef struct s_options

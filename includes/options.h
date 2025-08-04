@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:19:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/05/21 13:35:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 17:26:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,9 @@ int		parse_movement_points(char *str, t_obj_anim *obj);
 int		parse_one_anim_obj(char *str, t_obj_anim *obj);
 int		is_animate_option(t_minirt *minirt, char *argvi, int *y);
 int		parse_options(t_minirt *minirt, int argc, char **argv);
+
+char	*cut_string(char *str, char split);
+int		is_server_option(t_minirt *minirt, char *argvi, int *y);
+int		is_client_option(t_minirt *minirt, char *argvi, int *y);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:22:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 15:35:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 16:02:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	init_server(int	port)
 	return (0);
 }
 
-void	whait_for_client(char *password)
+void	whait_for_client(char *password, t_minirt *minirt)
 {
 	t_client_data	*client_data;
 	socklen_t		client_len;
@@ -64,6 +64,7 @@ void	whait_for_client(char *password)
 		return ;
 	}
 	client_data->password = password;
+	client_data->minirt = minirt;
 	if (pthread_create(&thread, NULL, handle_client, (void*)client_data) != 0)
 	{
 		close(client_data->client_fd);
@@ -73,7 +74,7 @@ void	whait_for_client(char *password)
 	pthread_detach(thread);
 }
 
-void	minirt_server(char *password, int port)
+void	minirt_server(char *password, int port, t_minirt *minirt)
 {
 	pthread_t cli_thread;
 
@@ -83,7 +84,7 @@ void	minirt_server(char *password, int port)
 	if (pthread_create(&cli_thread, NULL, cli_thread_routine, NULL) != 0)
 		print_error("pthread_create failed, no cli");
 	while (g_server_fd != -1)
-		whait_for_client(password);
+		whait_for_client(password, minirt);
 	pthread_cancel(cli_thread);
 	pthread_join(cli_thread, NULL);
 }
@@ -93,6 +94,6 @@ void	*server_thread_routine(void *arg)
 	t_server	*server;
 
 	server = arg;
-	minirt_server(server->password, server->port);
+	minirt_server(server->password, server->port, server->minirt);
 	return (NULL);
 }

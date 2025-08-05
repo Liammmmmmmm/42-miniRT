@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:22:00 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 14:07:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 18:14:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	link_client(char *line)
 	client_fd = connect_to_passive_client(line + 5);
 	if (client_fd == -1)
 		return ((void)print_error("Invalid client address"));
-	client_data = malloc(sizeof(t_client_data));
+	client_data = ft_calloc(1, sizeof(t_client_data));
 	if (!client_data)
 		return ((void)print_error("malloc failed"));
 	client_data->client_fd = client_fd;

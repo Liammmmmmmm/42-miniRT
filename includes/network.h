@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:17:56 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 14:19:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 16:59:07 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <pthread.h>
 #include <stdio.h>
 # include "libft.h"
+# include "structs.h"
 
 // ----------- SERVER ----------- //
 
@@ -36,6 +37,7 @@ typedef struct s_client_data
 	int 				client_fd;
 	struct sockaddr_in	client_addr;
 	char				*password;
+	t_minirt			*minirt;
 }	t_client_data;
 
 void		handle_sigint(int sig);
@@ -50,7 +52,8 @@ void		*server_thread_routine(void *arg);
 
 int			passive_mode(int *sockfd);
 int			active_mode(int *sockfd, char *address, int port, char *password);
-void		connect_client(char *ip, int port, char *password);
+void		connect_client(char *ip, int port, char *password, t_minirt *minirt);
+int			send_frame_to_server(const float *ptr, uint64_t tpx, uint16_t samples, int *sockfd);
 
 // ----------- UTILS ----------- //
 

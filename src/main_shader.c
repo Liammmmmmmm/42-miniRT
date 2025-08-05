@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 15:14:24 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 17:41:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	init_all(t_minirt *minirt)
 		return (clean(minirt));
 	if (!init_mlx(minirt))
 		return (clean(minirt));
+	init_controls(minirt);
 	if (!init_render(minirt))
 		return (clean(minirt));
 	if (!minirt->options.server.enabled)
@@ -90,11 +91,14 @@ int	main(int argc, char **argv)
 	// if (minirt.options.anim.enabled)
 	// 	debug_print_animation(&minirt.options.anim);
 	if (minirt.options.server.enabled)
+	{
+		minirt.options.server.minirt = &minirt;
 		if (pthread_create(&server, NULL, server_thread_routine, &minirt.options.server) != 0)
 			return (clean(&minirt));
+	}
 	if (minirt.options.client.enabled)
 	{
-		connect_client(minirt.options.client.ip, minirt.options.client.port, minirt.options.client.password);
+		connect_client(minirt.options.client.ip, minirt.options.client.port, minirt.options.client.password, &minirt);
 	}
 	else
 	{

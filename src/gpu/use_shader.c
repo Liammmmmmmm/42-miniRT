@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   use_shader.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:31:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/31 17:16:56 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/05 16:59:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gpu.h"
 #include "minirt.h"
+#include "network.h"
 
 static int	get_result(t_minirt *m)
 {
@@ -26,6 +27,13 @@ static int	get_result(t_minirt *m)
 		print_error("Failed to map GPU buffer");
 		return (1);
 	}
+
+	if (m->options.client.enabled)
+	{
+		send_frame_to_server(ptr, tpx, 1, m->options.client.sockfd);
+		return (0);
+	}
+
 	i = -1;
 	if (m->render_mode == 1)
 		while (++i < tpx)

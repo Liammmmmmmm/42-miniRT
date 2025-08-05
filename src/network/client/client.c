@@ -6,12 +6,13 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:10:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 15:32:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 17:01:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "network.h"
 #include "utils.h"
+#include "minirt.h"
 
 static int	verify_server_connection(int *sockfd)
 {
@@ -36,14 +37,17 @@ static int	read_stdin(int *sockfd, fd_set *readfds)
 		free(line);
 		return (-1);
 	}
-	if (send(*sockfd, line, ft_strlen(line), 0) < 0)
-	{
-		free(line);
-		if (passive_mode(sockfd) < 0)
-			return (print_errorm1("failed to enable passive mode"));
-		else
-			return (1);
-	}
+	// char header[10];
+	// *(uint64_t *)header = 1234567890123456;
+	// *(uint16_t *)(header + 8) = 12345;
+	// if (send(*sockfd, header, 10, 0) < 0)
+	// {
+	// 	free(line);
+	// 	if (passive_mode(sockfd) < 0)
+	// 		return (print_errorm1("failed to enable passive mode"));
+	// 	else
+	// 		return (1);
+	// }
 	free(line);
 	return (0);
 }
@@ -68,7 +72,7 @@ static int	read_socket(int *sockfd, fd_set *readfds)
 	return (0);
 }
 
-static int	listen_stdin_and_socker(int *sockfd)
+static int	listen_stdin_and_socket(int *sockfd)
 {
 	fd_set			readfds;
 	struct timeval	select_timeout;
@@ -93,7 +97,13 @@ static int	listen_stdin_and_socker(int *sockfd)
 	return (0);
 }
 
-void	connect_client(char *ip, int port, char *password)
+void	calc_sample_for_server(t_minirt *minirt, int *sockfd)
+{
+	minirt->options.client.sockfd = sockfd;
+	render(minirt);
+}
+
+void	connect_client(char *ip, int port, char *password, t_minirt *minirt)
 {
 	int	sockfd;
 	int	keepalive;
@@ -107,8 +117,9 @@ void	connect_client(char *ip, int port, char *password)
 	{
 		if (verify_server_connection(&sockfd))
 			break ;
-		if (listen_stdin_and_socker(&sockfd) < 0)
+		if (listen_stdin_and_socket(&sockfd) < 0)
 			break ;
+		calc_sample_for_server(minirt, &sockfd);
 	}
 	close(sockfd);
 }

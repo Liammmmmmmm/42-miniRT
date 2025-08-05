@@ -43,5 +43,5 @@ cu	0,0,-0.3 0,0,1 1,1,1 assets/obj/bocal/glass.obj bocal
 
 A	0.9										skybox
 C	0,1,2 0,0,-1 80
-W 512 512
+# W 512 512
 

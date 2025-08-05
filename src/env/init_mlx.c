@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 15:04:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 17:41:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	init_mlx(t_minirt *minirt)
 	}
 	if (init_mlx_img_win(minirt, mlx) == 0)
 		return (0);
-	init_controls(minirt);
 	return (init_controls_mlx(minirt));
 }
 

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 16:06:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 17:06:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	draw_pixels(t_minirt *minirt)
 	minirt->screen.last_sample_time = get_cpu_time();
 	compute_frame_gpu(minirt);
 	if (minirt->render_mode == 1)
-		set_heat_map_color(minirt);
-	put_render_to_buff_upscaling(minirt);
-	if (minirt->options.no_display)
+		set_heat_map_color(minirt);		
+	if (minirt->options.no_display || minirt->options.client.enabled)
 		return ;
+	put_render_to_buff_upscaling(minirt);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win,
 		minirt->mlx.img.img, 0, 0);
 	printf("Sample %d - %zums\n", minirt->screen.sample, get_cpu_time()
@@ -96,7 +96,7 @@ void	render(t_minirt *minirt)
 		init_animated_items(minirt);
 		build_scene_gpu = minirt->scene.build_bvh;
 		minirt->viewport = init_viewport(minirt);
-		if (!minirt->options.no_display)
+		if (!minirt->options.no_display && !minirt->options.client.enabled)
 			ft_izero(minirt->screen.render, minirt->scene.win_width
 				* minirt->scene.win_height);
 		ft_bzero(minirt->screen.float_render, sizeof(t_fcolor)

@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/05 14:45:23 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/08/05 17:00:35 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -216,7 +216,7 @@ ENV_FILE_GPU		= init_mlx.c free_mlx.c init_controls.c init_ui.c set_dependant_va
 
 
 NETWORK_DIR			= src/network/
-NETWORK_FILE		= client/active_mode.c client/client.c client/passive_mode.c \
+NETWORK_FILE		= client/active_mode.c client/client.c client/passive_mode.c client/send_frame.c \
 					server/cli.c server/connect_passive_client.c server/handle_client.c \
 					server/info.c server/password.c server/server.c server/signal.c \
 					utils.c

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 12:11:19 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 16:56:25 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,11 +381,14 @@ typedef struct s_animation
 	t_uint		frames;
 }	t_animation;
 
+typedef struct s_minirt	t_minirt;
+
 typedef struct s_server
 {
-	t_bool	enabled;
-	char	*password;
-	int		port;
+	t_bool		enabled;
+	char		*password;
+	int			port;
+	t_minirt	*minirt;
 }	t_server;
 
 typedef struct s_client
@@ -394,6 +397,7 @@ typedef struct s_client
 	char	*password;
 	char	*ip;
 	int		port;
+	int		*sockfd;
 }	t_client;
 
 typedef struct s_options

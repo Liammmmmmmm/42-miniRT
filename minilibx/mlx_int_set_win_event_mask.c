@@ -21,6 +21,7 @@ int	mlx_int_set_win_event_mask(t_xvar *xvar)
   int		i;
   XSetWindowAttributes	xwa;
 
+  memset(&xwa, 0, sizeof(xwa));
   win = xvar->win_list;
   while (win)
     {

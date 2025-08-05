@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/31 18:21:43 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/05 12:38:01 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,10 @@ void	start_minirt(t_minirt *minirt);
 void	restart_minirt(t_minirt *minirt);
 
 void	render_frame(t_minirt *minirt);
+void	render_frame_server(t_minirt *minirt);
 int		init_render(t_minirt *minirt);
+
+int		exit_if_anim_finished(t_minirt *minirt);
 
 int		calc_gradiant_color(int color_a, int color_b, float ratio);
 void	put_render_to_frame(t_minirt *minirt);

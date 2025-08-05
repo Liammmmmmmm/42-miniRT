@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   loop_server.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 14:39:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 13:46:02 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,44 +15,27 @@
 #include "bmp_parsing.h"
 #include "camera.h"
 
-static void	no_display_enable(t_minirt *minirt)
+void	render_frame_server(t_minirt *minirt)
 {
-	if (minirt->options.anim.enabled)
-		no_display_infos_anim(minirt);
-	else
-		no_display_infos(minirt);
-}
+	static int	last_sample_amount = -1;
 
-static void	no_display_enable_first(t_minirt *minirt, t_bool *skip)
-{
-	no_display_enable(minirt);
-	if (minirt->screen.sample == 0 && *skip == 0)
-	{
-		*skip = 1;
-		return ;
-	}
-}
-
-void	render_frame(t_minirt *minirt)
-{
-	static t_bool	skip = 0;
-
-	move_camera(minirt);
 	check_sample_amount(minirt);
 	if (exit_if_anim_finished(minirt))
 		return ;
-	if (minirt->options.no_display)
-		no_display_enable_first(minirt, &skip);
-	render(minirt);
-	render_micrort(minirt);
-	if (minirt->options.no_display)
-		no_display_enable(minirt);
-	if (!minirt->options.no_display)
+	pthread_mutex_lock(&minirt->screen.sample_mutex);
+	if (last_sample_amount != minirt->screen.sample)
 	{
-		render_bvh(minirt);
-		render_ui(minirt);
-		draw_selected_object(minirt);
+		put_render_to_buff(minirt);
+		last_sample_amount = minirt->screen.sample;
+		pthread_mutex_unlock(&minirt->screen.sample_mutex);
+		mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win,
+			minirt->mlx.img.img, 0, 0);
 	}
+	else
+		pthread_mutex_unlock(&minirt->screen.sample_mutex);
+	
+	// if (minirt->options.no_display) // Idealement faire un nodisplay special serveur
+	// 	no_display_enable(minirt);
+	
 	minirt->stats.frame += 1;
-	skip = 0;
 }

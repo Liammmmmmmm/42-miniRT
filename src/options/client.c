@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 17:13:09 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 17:28:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 15:09:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	is_client_option(t_minirt *minirt, char *argvi, int *y)
 	port = cut_string(argvi + 9, ':');
 	if (ft_strchr(port, '@') == NULL)
 		return (print_error_sy(CLIENT_OPT_ERR, y));
+	minirt->options.client.ip = argvi + 9;
 	minirt->options.client.password = cut_string(port, '@');
 	check_part(minirt, argvi, y, port);
 	return (1);

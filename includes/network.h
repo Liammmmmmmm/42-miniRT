@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:17:56 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 15:36:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 14:19:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ int			connect_to_passive_client(const char *client_ip);
 int			password_connexion(t_client_data *data, int client_fd);
 void		*cli_thread_routine(void *arg);
 void		*handle_client(void *arg);
+void		*server_thread_routine(void *arg);
 
 // ----------- CLIENT ----------- //
 
 int			passive_mode(int *sockfd);
 int			active_mode(int *sockfd, char *address, int port, char *password);
+void		connect_client(char *ip, int port, char *password);
 
 // ----------- UTILS ----------- //
 

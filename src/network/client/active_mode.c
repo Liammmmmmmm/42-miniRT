@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 12:18:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 15:30:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 14:22:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	active_mode(int *sockfd, char *address, int port, char *password)
 {
 	struct sockaddr_in	server_addr;
 
+	printf("IP: %s\n", address);
 	*sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	server_addr = (struct sockaddr_in){.sin_family = AF_INET,
 		.sin_port = htons(port), .sin_addr.s_addr = inet_addr(address)

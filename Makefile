@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/04 17:26:46 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/08/05 14:45:23 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ CC       = gcc
 DEPFLAGS = -MMD -MP
 CFLAGS   = $(DEPFLAGS) -DRANDOM_SEED=$(SEED) -Wall -Wextra #-Werror # -mavx # SIMD flag
 LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm -lXfixes
-GPU_FLAGS = -Wall -Wextra -O3 -DUSE_GPU -lGL -lGLEW -lglfw -ldl $(DEPFLAGS)
+GPU_FLAGS = -Wall -Wextra -g3 -DUSE_GPU -lGL -lGLEW -lglfw -ldl $(DEPFLAGS)
 DEBUG_FLAGS = -g3
 FAST_FLAGS = -O3 -flto -march=native -mtune=native -funroll-loops -ffast-math -falign-functions=32 -falign-loops=16
 # -O3 -march=native -mtune=native -flto -funsafe-math-optimizations -ffast-math -fomit-frame-pointer -funroll-loops -fno-exceptions -fno-rtti -fno-stack-protector -DNDEBUG -falign-functions=32 -falign-loops=16
@@ -60,7 +60,7 @@ LIBFTDIR = libft/
 LIBFT    = $(LIBFTDIR)libft.a
 
 MINILIBXDIR = minilibx/
-MINILIBX    = $(MINILIBXDIR)libmlx.a
+MINILIBX    = $(MINILIBXDIR)libmlx_Linux.a
 
 # Includes
 INCLUDES = -I includes/ -I $(LIBFTDIR)includes/ -I $(MINILIBXDIR)
@@ -112,7 +112,7 @@ TEXTURES_DIR		= src/ray_tracing/textures/
 TEXTURES_FILE		= get_solid_texture.c
 
 RENDERING_DIR		= src/rendering/
-RENDERING_FILE		= pixel.c loop.c no_display.c
+RENDERING_FILE		= pixel.c loop.c loop_utils.c no_display.c
 
 ENV_DIR				= src/env/
 ENV_FILE			= init_mlx.c free_mlx.c init_controls.c init_ui.c set_dependant_values.c \
@@ -226,6 +226,8 @@ OPTIONS_FILE_GPU	= options_server.c animation.c animation_err.c animation_move_p
 					animation_parse.c animation_tesselate.c animation_rotations.c \
 					animation_auto_rota.c server.c client.c
 
+RENDERING_DIR_GPU	= src/rendering/
+RENDERING_FILE_GPU	= pixel.c loop.c loop_utils.c loop_server.c no_display.c
 
 
 M_FILE_GPU = $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
@@ -234,7 +236,7 @@ M_FILE_GPU = $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 			$(addprefix $(EVENT_DIR), $(EVENT_FILE)) \
 			$(addprefix $(RAY_TRACING_DIR_GPU), $(RAY_TRACING_FILE_GPU)) \
 			$(addprefix $(TEXTURES_DIR), $(TEXTURES_FILE)) \
-			$(addprefix $(RENDERING_DIR), $(RENDERING_FILE)) \
+			$(addprefix $(RENDERING_DIR_GPU), $(RENDERING_FILE_GPU)) \
 			$(addprefix $(MAT_DIR), $(MAT_FILE)) \
 			$(addprefix $(MATH_DIR), $(MATH_FILE)) \
 			$(addprefix $(UTILS_MLX_DIR), $(UTILS_MLX_FILE)) \
@@ -296,7 +298,7 @@ $(OBJ_DIR)%.o : %.c $(REMAKE)
 	@$(CC) $(CFLAGS) -o $@ -c $< $(INCLUDES)
 	@printf "\n$(GREEN)[Compiling] $(NC)$(shell echo $< | sed 's|^srcs/||')";
 
-all : make_libft make_mlx $(NAME) nothing_to_be_done
+all : $(NAME) nothing_to_be_done
 
 nothing_to_be_done:
 	@if [ $(COMPILED_FILES) -eq 0 ]; then \
@@ -332,7 +334,7 @@ $(NAME)_gpu: $(MINILIBX) $(LIBFT) $(OBJ_GPU)
 	@$(CC) $(CFLAGS) -o $(NAME)_gpu $(OBJ_GPU) $(LIBFT) $(MINILIBX) $(LDFLAGS) $(GPU_FLAGS)
 	@make --no-print-directory end_message
 
-gpu: make_libft make_mlx $(NAME)_gpu nothing_to_be_done
+gpu: $(NAME)_gpu nothing_to_be_done
 
 make_libft:
 	@make --no-print-directory -C $(LIBFTDIR) all

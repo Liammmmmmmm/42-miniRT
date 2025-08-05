@@ -24,6 +24,7 @@ void	*mlx_init()
 		free(xvar);
 		return ((void*)0);
 	}
+	XSynchronize(xvar->display, True);
 	xvar->screen = DefaultScreen(xvar->display);
 	xvar->root = DefaultRootWindow(xvar->display);
 	xvar->cmap = DefaultColormap(xvar->display,xvar->screen);
@@ -39,12 +40,14 @@ void	*mlx_init()
 	xvar->do_flush = 1;
 	xvar->wm_delete_window = XInternAtom (xvar->display, "WM_DELETE_WINDOW", False);
 	xvar->wm_protocols = XInternAtom (xvar->display, "WM_PROTOCOLS", False);
+	XFlush(xvar->display);
 	mlx_int_deal_shm(xvar);
 	if (xvar->private_cmap)
 		xvar->cmap = XCreateColormap(xvar->display,xvar->root,
 				 xvar->visual,AllocNone);
 	mlx_int_rgb_conversion(xvar);
 	xvar->end_loop = 0;
+	XFlush(xvar->display);
 	return (xvar);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 17:19:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 12:11:19 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "basic_structs.h"
 # include "gpu_struct.h"
 # include "scene_structs.h"
+# include <pthread.h>
 
 typedef unsigned char t_bool;
 typedef unsigned char t_uchar;
@@ -261,16 +262,17 @@ typedef struct s_mlx
 
 typedef struct s_screen
 {
-	int			*render;
-	t_fcolor	*float_render;
-	int			sample;
-	int			sample_total_anim;
-	int			last_sample_am;
-	ssize_t		last_sample_time;
-	ssize_t		first_sample_time;
-	int			spp; // sample per pixel
-	t_bool		start_render;
-	t_bool		pause_render;
+	int				*render;
+	t_fcolor		*float_render;
+	int				sample;
+	int				sample_total_anim;
+	int				last_sample_am;
+	ssize_t			last_sample_time;
+	ssize_t			first_sample_time;
+	int				spp;
+	t_bool			start_render;
+	t_bool			pause_render;
+	pthread_mutex_t	sample_mutex;
 }	t_screen;
 
 typedef struct s_stats

@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/06 09:16:59 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/08/06 12:04:21 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -219,6 +219,7 @@ NETWORK_DIR			= src/network/
 NETWORK_FILE		= client/active_mode.c client/client.c client/passive_mode.c client/send_frame.c \
 					server/cli.c server/connect_passive_client.c server/handle_client.c \
 					server/info.c server/password.c server/server.c server/signal.c \
+					server/send_scene.c server/init_scene.c \
 					utils.c
 
 OPTIONS_DIR_GPU		= src/options/

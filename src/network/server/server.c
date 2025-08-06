@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:22:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/06 09:22:30 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 14:53:50 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,11 @@ void	minirt_server(char *password, int port, t_minirt *minirt)
 	print_network_info(port);
 	if (pthread_create(&cli_thread, NULL, cli_thread_routine, (void *)minirt) != 0)
 		print_error("pthread_create failed, no cli");
+
+	convert_textures_server(&minirt->scene, &minirt->shaders_data.tex);
+	init_scene_server(minirt);
+	convert_scene_server(minirt, &minirt->scene, &minirt->viewport, &minirt->shaders_data.scene);
+
 	while (g_server_fd != -1)
 		whait_for_client(password, minirt);
 	pthread_cancel(cli_thread);

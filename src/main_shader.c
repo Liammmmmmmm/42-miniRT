@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 17:41:55 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 15:28:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,11 @@ int	main(int argc, char **argv)
 	ft_bzero(&minirt, sizeof(t_minirt));
 	if (!parse_options(&minirt, argc, argv))
 		return (1);
-	if (parse_scene(&minirt, argv[1]) == 0)
-		return (1);
+	if (!minirt.options.client.enabled)
+	{
+		if (parse_scene(&minirt, argv[1]) == 0)
+			return (1);
+	}
 	if (init_all(&minirt))
 		return (1);
 	// print_scene(&minirt.scene);

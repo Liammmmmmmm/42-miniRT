@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:31:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 16:59:28 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 15:49:37 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static int	get_result(t_minirt *m)
 {
 	int			i;
 	const int	tpx = m->scene.render_width * m->scene.render_height;
+	printf("TPX : %d\n", tpx);
 	const float	*ptr = (float *)glMapBufferRange(GL_SHADER_STORAGE_BUFFER, 0,
 			tpx * sizeof(float) * 4, GL_MAP_READ_BIT);
 
@@ -53,8 +54,12 @@ static int	get_result(t_minirt *m)
 void	compute_frame_gpu(t_minirt *m)
 {
 	glUseProgram(m->shaders_data.program);
-	glUniform1ui(glGetUniformLocation(m->shaders_data.program, "sample_count"),
-		m->screen.sample);
+	if (m->options.client.enabled)
+		glUniform1ui(glGetUniformLocation(m->shaders_data.program,
+				"sample_count"), rand());
+	else
+		glUniform1ui(glGetUniformLocation(m->shaders_data.program,
+				"sample_count"), m->screen.sample);
 	glDispatchCompute(
 		(m->scene.render_width + 7) / 8, (m->scene.render_height + 7) / 8, 1);
 	glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);

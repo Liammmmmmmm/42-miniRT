@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 11:48:32 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/06 10:43:35 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 13:28:02 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	passive_mode(int *sockfd)
 		FD_SET(STDIN_FILENO, &read_fds);
 		if (select(pass_fd + 1, &read_fds, NULL, NULL, NULL) < 0)
 			break ;
-		if (read_stdin(sockfd, &read_fds) < 0)
+		if (read_stdin(&read_fds) < 0)
 			return (0);
 		if (FD_ISSET(pass_fd, &read_fds))
 		{

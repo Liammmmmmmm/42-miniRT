@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 19:28:11 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/29 19:49:40 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 11:24:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,13 @@ int	convert_textures_init(t_scene *scene, t_gpu_textures *gtx)
 			sizeof(t_type_indice));
 	if (!gtx->checkers || !gtx->images || !gtx->images_stream
 		|| !gtx->textures_types_indices)
-		print_errorm1("Malloc failed, textures not transmitted.");
+	{
+		free(gtx->checkers);
+		free(gtx->images);
+		free(gtx->images_stream);
+		free(gtx->textures_types_indices);
+		return (print_errorm1("Malloc failed, textures not transmitted."));
+	}
 	convert_textures(scene, gtx);
 	create_ssbo(&gtx->checkers_ssbo, sizeof(t_gpu_checker) * gtx->checkers_am,
 		gtx->checkers, SSBO_BIND_CHECKERS);

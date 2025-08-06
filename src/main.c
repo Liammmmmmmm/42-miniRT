@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 11:39:09 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/06 11:41:17 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	init_all(t_minirt *minirt)
 		return (clean(minirt));
 	if (!init_mlx(minirt))
 		return (clean(minirt));
+	init_controls(minirt);
 	if (!init_render(minirt))
 		return (clean(minirt));
 	return (0);

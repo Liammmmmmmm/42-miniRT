@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:22:00 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 18:14:28 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 09:21:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	replace_breakline_zero(char *line)
 	}
 }
 
-void	link_client(char *line)
+void	link_client(char *line, t_minirt *minirt)
 {
 	int				client_fd;
 	t_client_data	*client_data;
@@ -52,6 +52,7 @@ void	link_client(char *line)
 	client_data->client_fd = client_fd;
 	client_data->client_addr = (struct sockaddr_in){.sin_family = AF_INET,
 		.sin_port = htons(14242), .sin_addr.s_addr = inet_addr(line + 5)};
+	client_data->minirt = minirt;
 	if (pthread_create(&thread, NULL, handle_client, (void *)client_data) != 0)
 	{
 		close(client_data->client_fd);
@@ -78,7 +79,6 @@ void	*cli_thread_routine(void *arg)
 	char	*line;
 
 	line = NULL;
-	(void)arg;
 	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
 	pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
 	pthread_cleanup_push(cleanup_line, &line);
@@ -95,7 +95,7 @@ void	*cli_thread_routine(void *arg)
 			break ;
 		}
 		else if (ft_strncmp(line, "link ", 5) == 0)
-			link_client(line);
+			link_client(line, arg);
 		free(line);
 		line = NULL;
 	}

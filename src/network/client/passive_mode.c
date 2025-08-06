@@ -6,12 +6,15 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 11:48:32 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 15:36:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 10:43:35 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "network.h"
 #include "utils.h"
+#include "maths.h"
+#include <sys/select.h>
+#include <string.h>
 
 #define PASSIVE_PORT 14242
 
@@ -47,11 +50,26 @@ int	passive_mode(int *sockfd)
 	struct sockaddr_in	server_addr;
 	socklen_t			addr_len;
 	char				server_ip[INET_ADDRSTRLEN];
+	fd_set				read_fds;
 
 	if (init_passive_listening(&pass_fd) < 0)
 		return (-1);
 	addr_len = sizeof(server_addr);
-	*sockfd = accept(pass_fd, (struct sockaddr*)&server_addr, &addr_len);
+	while (1)
+	{
+		FD_ZERO(&read_fds);
+		FD_SET(pass_fd, &read_fds);
+		FD_SET(STDIN_FILENO, &read_fds);
+		if (select(pass_fd + 1, &read_fds, NULL, NULL, NULL) < 0)
+			break ;
+		if (read_stdin(sockfd, &read_fds) < 0)
+			return (0);
+		if (FD_ISSET(pass_fd, &read_fds))
+		{
+			*sockfd = accept(pass_fd, (struct sockaddr*)&server_addr, &addr_len);
+			break ;
+		}
+	}
 	close(pass_fd);
 	if (*sockfd < 0)
 		return (print_errorm1("accept server request failed"));

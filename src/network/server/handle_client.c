@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 17:33:51 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 10:00:36 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	receive_client_info(t_minirt *minirt, t_client_data *data, ssize_t *bytes_re
 
 	pthread_mutex_lock(&minirt->screen.sample_mutex);
 
-	printf("%f %f %f\n", data_float[0], data_float[1], data_float[2]);
 	int	i = -1;
 	while (++i < tpx)
 	{

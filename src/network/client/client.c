@@ -6,13 +6,14 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:10:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 17:01:44 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 10:38:56 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "network.h"
 #include "utils.h"
 #include "minirt.h"
+#include <signal.h>
 
 static int	verify_server_connection(int *sockfd)
 {
@@ -25,7 +26,7 @@ static int	verify_server_connection(int *sockfd)
 	return (0);
 }
 
-static int	read_stdin(int *sockfd, fd_set *readfds)
+int	read_stdin(int *sockfd, fd_set *readfds)
 {
 	char	*line;
 
@@ -62,6 +63,7 @@ static int	read_socket(int *sockfd, fd_set *readfds)
 	bytes = recv(*sockfd, response, sizeof(response), 0);
 	if (bytes <= 0)
 	{
+		*sockfd = -1;
 		if (passive_mode(sockfd) < 0)
 			return (print_errorm1("failed to enable passive mode"));
 		else
@@ -92,8 +94,8 @@ static int	listen_stdin_and_socket(int *sockfd)
 	ret = read_socket(sockfd, &readfds);
 	if (ret == -1)
 		return (-1);
-	else if (ret == 1)
-		return (1);
+	else if (ret == 1 && *sockfd == -1)
+		return (-1);
 	return (0);
 }
 
@@ -103,11 +105,18 @@ void	calc_sample_for_server(t_minirt *minirt, int *sockfd)
 	render(minirt);
 }
 
+void	do_nothing(int sig)
+{
+	(void)sig;
+	print_error("Server disconnected while sending a frame");
+}
+
 void	connect_client(char *ip, int port, char *password, t_minirt *minirt)
 {
 	int	sockfd;
 	int	keepalive;
 
+	signal(SIGPIPE, do_nothing);
 	if (active_mode(&sockfd, ip, port, password) < 0)
 		if (passive_mode(&sockfd) < 0)
 			return ((void)print_error("Failed to enable passive mode"));

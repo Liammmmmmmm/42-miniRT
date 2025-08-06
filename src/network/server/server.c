@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:22:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 16:02:52 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 09:22:30 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	minirt_server(char *password, int port, t_minirt *minirt)
 	if (init_server(port) < 0)
 		return ;
 	print_network_info(port);
-	if (pthread_create(&cli_thread, NULL, cli_thread_routine, NULL) != 0)
+	if (pthread_create(&cli_thread, NULL, cli_thread_routine, (void *)minirt) != 0)
 		print_error("pthread_create failed, no cli");
 	while (g_server_fd != -1)
 		whait_for_client(password, minirt);

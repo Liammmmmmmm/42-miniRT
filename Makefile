@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/05 17:00:35 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/08/06 09:16:59 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -295,7 +295,7 @@ $(OBJ_DIR)%.o : %.c $(REMAKE)
 	fi
 	@$(eval COMPILED_FILES := 1)
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -o $@ -c $< $(INCLUDES)
+	@$(CC) $(CFLAGS) -o $@ -c $< $(INCLUDES) -g3
 	@printf "\n$(GREEN)[Compiling] $(NC)$(shell echo $< | sed 's|^srcs/||')";
 
 all : $(NAME) nothing_to_be_done

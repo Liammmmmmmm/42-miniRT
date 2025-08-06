@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:50:09 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 17:24:27 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 09:58:28 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	send_frame_to_server(const float *ptr, uint64_t tpx, uint16_t samples, int *
 
 	*(uint64_t *)header = tpx * 4 * 4;
 	*(uint16_t *)(header + 8) = samples;
+	if (*sockfd == -1)
+		return (0);
 	if (send(*sockfd, header, 10, 0) < 0)
 	{
 		if (passive_mode(sockfd) < 0)
@@ -26,7 +28,8 @@ int	send_frame_to_server(const float *ptr, uint64_t tpx, uint16_t samples, int *
 		else
 			return (1);
 	}
-	printf("%f %f %f\n", ptr[0], ptr[1], ptr[2]);
+	if (*sockfd == -1)
+		return (0);
 	if (send(*sockfd, ptr, tpx * 4 * 4, 0) < 0)
 	{
 		if (passive_mode(sockfd) < 0)

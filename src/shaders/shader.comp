@@ -1,8 +1,8 @@
 void	get_thread_seed()
 {
-	g_seed = uint(gl_GlobalInvocationID.x) * 1973u 
-		* uint(gl_GlobalInvocationID.y) * 9277u 
-		+ uint(sample_count) * 6541u;
+	g_seed = uint(gl_GlobalInvocationID.x + 1) * 1973u 
+		* uint(gl_GlobalInvocationID.y + 1) * 9277u 
+		+ uint(sample_count + 1) * 6541u;
 	rand();
 	rand();
 }

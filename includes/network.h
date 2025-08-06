@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:17:56 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 16:59:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 10:19:45 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int			passive_mode(int *sockfd);
 int			active_mode(int *sockfd, char *address, int port, char *password);
 void		connect_client(char *ip, int port, char *password, t_minirt *minirt);
 int			send_frame_to_server(const float *ptr, uint64_t tpx, uint16_t samples, int *sockfd);
+int			read_stdin(int *sockfd, fd_set *readfds);
 
 // ----------- UTILS ----------- //
 

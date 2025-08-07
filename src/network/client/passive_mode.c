@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 11:48:32 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/06 13:28:02 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/07 11:36:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	init_passive_listening(int *pass_fd)
 	return (0);
 }
 
-int	passive_mode(int *sockfd)
+int	passive_mode(int *sockfd, t_minirt *minirt)
 {
 	int					pass_fd;
 	struct sockaddr_in	server_addr;
@@ -52,6 +52,7 @@ int	passive_mode(int *sockfd)
 	char				server_ip[INET_ADDRSTRLEN];
 	fd_set				read_fds;
 
+	minirt->screen.start_render = 0;
 	if (init_passive_listening(&pass_fd) < 0)
 		return (-1);
 	addr_len = sizeof(server_addr);

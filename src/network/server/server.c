@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:22:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/06 14:53:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/07 17:57:21 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	minirt_server(char *password, int port, t_minirt *minirt)
 
 	convert_textures_server(&minirt->scene, &minirt->shaders_data.tex);
 	init_scene_server(minirt);
+	ft_bzero(minirt->screen.float_render, sizeof(t_fcolor)
+		* minirt->viewport.render_w * minirt->viewport.render_h);
 	convert_scene_server(minirt, &minirt->scene, &minirt->viewport, &minirt->shaders_data.scene);
 
 	while (g_server_fd != -1)

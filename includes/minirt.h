@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 12:38:01 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/07 17:21:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ void	clear_progress_bar(size_t actual, size_t max);
 
 void	write_no_err(int fd, char *str, size_t size);
 
+void	auto_export(t_minirt *minirt);
 void	export_ppm_p6_minirt(const char *filename, t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗

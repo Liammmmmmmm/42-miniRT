@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 19:28:11 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/06 11:24:28 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/07 16:29:12 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,5 +140,9 @@ int	convert_textures_init(t_scene *scene, t_gpu_textures *gtx)
 	free(gtx->images);
 	free(gtx->images_stream);
 	free(gtx->textures_types_indices);
+	gtx->checkers = NULL;
+	gtx->images = NULL;
+	gtx->images_stream = NULL;
+	gtx->textures_types_indices = NULL;
 	return (0);
 }

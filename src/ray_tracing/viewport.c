@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/08/04 11:26:22 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/07 17:00:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_viewport	init_viewport(t_minirt *minirt)
 	}
 	init_viewport_values(minirt, &vp, &u);
 	init_viewport_vectors(minirt, &vp, u);
-	if (minirt->viewport.depth_buffer == NULL)
+	if (minirt->viewport.depth_buffer == NULL && !minirt->options.client.enabled && !minirt->options.server.enabled)
 	{
 		vp.depth_buffer = malloc(sizeof(int) * (vp.render_w * vp.render_h));
 		if (!vp.depth_buffer)

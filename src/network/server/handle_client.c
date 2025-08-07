@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/06 15:48:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/07 17:39:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,25 @@ static void	*close_connection(t_client_data data)
 
 int	receive_client_info(t_minirt *minirt, t_client_data *data, ssize_t *bytes_received, char *c_ip)
 {
-	char		header_buff[10];
+	char		header_buff[14];
 	uint64_t	bytes_to_read;
 	uint16_t	samples;
+	uint32_t	anime_i;
 	char		*data_buff;
 	float		*data_float;
 
 	int	tpx = minirt->scene.render_height * minirt->scene.render_width;
 	
-	*bytes_received = recv(data->client_fd, header_buff, 10, 0);
+	*bytes_received = recv(data->client_fd, header_buff, 14, 0);
 	if (*bytes_received <= 0)
 		return (-1);
-	if (*bytes_received != 10)
+	if (*bytes_received != 14)
 		return (0);
 	bytes_to_read = *(uint64_t *)header_buff;
 	samples = *(uint16_t *)(header_buff + 8);
+	anime_i = *(uint32_t *)(header_buff + 10);
 
-	if (bytes_to_read > (uint64_t)(tpx * 4 * 4))
+	if (bytes_to_read > (uint64_t)(tpx * 4 * 3))
 		return (0); // Secure on empeche un boug de faire malloc 17go au serveur
 		
 	data_buff = recv_large_data(data->client_fd, bytes_to_read);
@@ -45,8 +47,10 @@ int	receive_client_info(t_minirt *minirt, t_client_data *data, ssize_t *bytes_re
 		return (0);
 	
 	*bytes_received = bytes_to_read; // decompression step
+
+	printf("Received frame %u instead of %u\n", anime_i, minirt->options.anim.frame_i);
 		
-	if (*bytes_received != tpx * 4 * 4)
+	if (*bytes_received != tpx * 4 * 3 || anime_i != minirt->options.anim.frame_i)
 	{
 		free(data_buff);
 		return (0);
@@ -59,9 +63,9 @@ int	receive_client_info(t_minirt *minirt, t_client_data *data, ssize_t *bytes_re
 	int	i = -1;
 	while (++i < tpx)
 	{
-		minirt->screen.float_render[i].r += data_float[i * 4];
-		minirt->screen.float_render[i].g += data_float[i * 4 + 1];
-		minirt->screen.float_render[i].b += data_float[i * 4 + 2];
+		minirt->screen.float_render[i].r += data_float[i * 3];
+		minirt->screen.float_render[i].g += data_float[i * 3 + 1];
+		minirt->screen.float_render[i].b += data_float[i * 3 + 2];
 	}
 
 	minirt->screen.sample += samples;
@@ -81,14 +85,14 @@ int	receive_client_info(t_minirt *minirt, t_client_data *data, ssize_t *bytes_re
 void	send_changing_map_part(t_minirt *minirt, int *fd)
 {
 	t_gpu_structs *gsc = &minirt->shaders_data.scene;
-	// ,
-	// SRV_AMBIANT,
-	// SRV_VIEWPORT,
+
 	send_scene_data(fd, NULL, 0, SRV_COMPUTE_STOP);
 	send_scene_data(fd, (char *)&gsc->camera, sizeof(t_gpu_camera), SRV_CAMERA);
 	send_scene_data(fd, (char *)&gsc->ambiant, sizeof(t_gpu_amb_light), SRV_AMBIANT);
 	send_scene_data(fd, (char *)&gsc->viewport, sizeof(t_gpu_viewport), SRV_VIEWPORT);
-	
+
+	send_scene_data(fd, (char *)&minirt->options.anim.frame_i, sizeof(t_uint), SRV_ANIM_FRAME);
+
 	send_scene_data(fd, (char *)gsc->hypers, sizeof(t_gpu_hyper) * gsc->hypers_am, SRV_HYPER);
 	send_scene_data(fd, (char *)gsc->triangles, sizeof(t_gpu_triangle) * gsc->triangles_am, SRV_TRIANGLE);
 	send_scene_data(fd, (char *)gsc->lights, sizeof(t_gpu_light) * gsc->lights_am, SRV_LIGHTS);
@@ -115,10 +119,11 @@ void	*handle_client(void *arg)
 {
 	t_client_data	data;
 	char			c_ip[INET_ADDRSTRLEN];
-	// char			buffer[SERV_BUFF_SIZE + 1];
 	ssize_t			bytes_received;
-
+	pthread_t		monitoring;
+	
 	data = *(t_client_data *)arg;
+	data.monitor = 1;
 	free(arg);
 	inet_ntop(AF_INET, &(data.client_addr.sin_addr), c_ip, INET_ADDRSTRLEN);
 	printf("Thread: New client %s\n", c_ip);
@@ -128,10 +133,13 @@ void	*handle_client(void *arg)
 		return (close_connection(data));
 	}
 
+	printf("SEND THE MAP\n");
+
 	// ---- SEND MAP ---- //
 	t_minirt *minirt = data.minirt;
 	t_gpu_textures *gtx = &minirt->shaders_data.tex;
 	t_gpu_structs *gsc = &minirt->shaders_data.scene;
+	
 
 	send_scene_data(&data.client_fd, (char *)gtx->checkers, sizeof(t_gpu_checker) * gtx->checkers_am, SRV_CHECKERS);
 	send_scene_data(&data.client_fd, (char *)gtx->images, sizeof(t_gpu_tex_data) * gtx->images_am, SRV_IMAGES);
@@ -159,11 +167,20 @@ void	*handle_client(void *arg)
 
 	// ---- SEND MAP ---- //
 
+	if (pthread_create(&monitoring, NULL, client_monitoring, (void*)&data) != 0)
+	{
+		close(data.client_fd);
+		print_error("pthread_create failed");
+		return (NULL);
+	}
+
 	while (g_server_fd != -1)
 	{
 		if (receive_client_info(data.minirt, &data, &bytes_received, c_ip) < 0)
 			break ;
 	}
+	data.monitor = 0;
+	pthread_join(monitoring, NULL);
 	if (bytes_received == 0)
 		printf("Client %s disconnected\n", c_ip);
 	else

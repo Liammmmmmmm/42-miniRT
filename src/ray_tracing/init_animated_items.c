@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_animated_items.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:42:35 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/26 17:01:18 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/07 17:35:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ static void	find_item(t_minirt *minirt, t_uint i, t_uint *obj_num, int y)
 				*get_obj_rot(&minirt->scene.elements[y]) = minirt->\
 			options.anim.objects[i].orientations[minirt->options.anim.frame_i];
 			minirt->scene.build_bvh = 1;
-			printf("%s\n",
-				((t_custom_object *)minirt->scene.elements[y].object)->name);
 		}
 		(*obj_num)++;
 	}

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/06 15:28:28 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/07 17:29:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	clean(t_minirt *minirt)
 	free_ttf(&minirt->controls.font[0]);
 	free_anim(&minirt->options.anim);
 	free(minirt->micrort.render);
+	free(minirt->screen.client_accumulation);
 	return (1);
 }
 
@@ -73,6 +74,15 @@ int	init_all(t_minirt *minirt)
 	return (0);
 }
 
+void	clean_server_gpu_obj(t_shader_data *shader_data)
+{
+	clean_scene(&shader_data->scene);
+	free(shader_data->tex.checkers);
+	free(shader_data->tex.images);
+	free(shader_data->tex.images_stream);
+	free(shader_data->tex.textures_types_indices);
+}
+
 int	main(int argc, char **argv)
 {
 	t_minirt	minirt;
@@ -92,7 +102,7 @@ int	main(int argc, char **argv)
 		return (1);
 	// print_scene(&minirt.scene);
 	// if (minirt.options.anim.enabled)
-	// 	debug_print_animation(&minirt.options.anim);
+	debug_print_animation(&minirt.options.anim);
 	if (minirt.options.server.enabled)
 	{
 		minirt.options.server.minirt = &minirt;
@@ -121,5 +131,7 @@ int	main(int argc, char **argv)
 	clean(&minirt);
 	if (!minirt.options.server.enabled)
 		clean_shaders(&minirt.shaders_data);
+	else
+		clean_server_gpu_obj(&minirt.shaders_data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:10:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/06 15:45:55 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/07 16:24:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@
 #include "minirt.h"
 #include <signal.h>
 
-static int	verify_server_connection(int *sockfd)
+static int	verify_server_connection(int *sockfd, t_minirt *minirt)
 {
 	if (!is_connection_alive(*sockfd))
 	{
 		printf("Server disconnected\n");
-		if (passive_mode(sockfd) < 0)
+		if (passive_mode(sockfd, minirt) < 0)
 			return (print_errorm1("failed to enable passive mode"));
+		else
+			minirt->screen.start_render = 0;
 	}
 	return (0);
 }
@@ -43,10 +45,10 @@ int	read_stdin(fd_set *readfds)
 	return (0);
 }
 
-int	recv_error_client(int *sockfd)
+int	recv_error_client(int *sockfd, t_minirt *minirt)
 {
 	*sockfd = -1;
-	if (passive_mode(sockfd) < 0)
+	if (passive_mode(sockfd, minirt) < 0)
 		return (print_errorm1("failed to enable passive mode"));
 	else
 		return (1);
@@ -62,7 +64,7 @@ static int	read_socket(int *sockfd, fd_set *readfds, t_minirt *minirt)
 		return (0);
 	received = recv(*sockfd, header, 10, 0);
 	if (received <= 0)
-		recv_error_client(sockfd);
+		recv_error_client(sockfd, minirt);
 	if (received != 10)
 		return (0);
 	
@@ -82,8 +84,12 @@ static int	read_socket(int *sockfd, fd_set *readfds, t_minirt *minirt)
 		{
 			delete_ssbo(&minirt->shaders_data.ssbo);
 			init_ssbo(&minirt->shaders_data, minirt->scene.render_width, minirt->scene.render_height);
-			printf("Init ssbo\n");
-			minirt->screen.start_render = 1;
+			free(minirt->screen.client_accumulation);
+			minirt->screen.client_accumulation = ft_calloc(sizeof(float), 3 * minirt->scene.render_width * minirt->scene.render_height);
+			if (minirt->screen.client_accumulation)
+				minirt->screen.start_render = 1;
+			minirt->screen.client_samples = 0;
+			minirt->screen.client_last_sample_send = get_cpu_time();
 		}
 		else if (type == SRV_COMPUTE_STOP)
 			minirt->screen.start_render = 0;
@@ -242,6 +248,10 @@ static int	read_socket(int *sockfd, fd_set *readfds, t_minirt *minirt)
 		minirt->shaders_data.scene.viewport = *(t_gpu_viewport *)data;
 		viewport_uniforms(minirt->shaders_data.program, &minirt->shaders_data.scene.viewport);
 	}
+	else if (type == SRV_ANIM_FRAME && bytes_to_read == sizeof(t_uint))
+	{
+		minirt->options.anim.frame_i = *(t_uint *)data;
+	}
 	else if (type == SRV_WIDTH_RENDER && bytes_to_read == sizeof(int))
 	{
 		minirt->scene.render_width = *(int *)data;
@@ -351,15 +361,16 @@ void	connect_client(char *ip, int port, char *password, t_minirt *minirt)
 	int	keepalive;
 
 	minirt->screen.start_render = 0;
+	minirt->screen.client_samples = 0;
 	signal(SIGPIPE, do_nothing);
 	if (active_mode(&sockfd, ip, port, password) < 0)
-		if (passive_mode(&sockfd) < 0)
+		if (passive_mode(&sockfd, minirt) < 0)
 			return ((void)print_error("Failed to enable passive mode"));
 	keepalive = 1;
 	setsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &keepalive, sizeof(keepalive));
 	while (1)
 	{
-		if (verify_server_connection(&sockfd))
+		if (verify_server_connection(&sockfd, minirt))
 			break ;
 		if (listen_stdin_and_socket(&sockfd, minirt) < 0)
 			break ;

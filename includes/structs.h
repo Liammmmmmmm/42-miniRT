@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 16:56:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/07 15:34:00 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,6 +264,11 @@ typedef struct s_screen
 {
 	int				*render;
 	t_fcolor		*float_render;
+	float			*client_accumulation;
+	ssize_t			client_last_sample_send;
+	uint16_t		client_samples;
+	t_bool			client_conv_sc;
+	ssize_t			client_sample_exceed;
 	int				sample;
 	int				sample_total_anim;
 	int				last_sample_am;

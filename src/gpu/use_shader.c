@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:31:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/06 15:49:37 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/07 17:15:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static int	get_result(t_minirt *m)
 {
 	int			i;
 	const int	tpx = m->scene.render_width * m->scene.render_height;
-	printf("TPX : %d\n", tpx);
 	const float	*ptr = (float *)glMapBufferRange(GL_SHADER_STORAGE_BUFFER, 0,
 			tpx * sizeof(float) * 4, GL_MAP_READ_BIT);
 
@@ -31,7 +30,29 @@ static int	get_result(t_minirt *m)
 
 	if (m->options.client.enabled)
 	{
-		send_frame_to_server(ptr, tpx, 1, m->options.client.sockfd);
+		i = -1;
+		while (++i < tpx)
+		{
+			m->screen.client_accumulation[i * 3] += ptr[i * 4];
+			m->screen.client_accumulation[i * 3 + 1] += ptr[i * 4 + 1];
+			m->screen.client_accumulation[i * 3 + 2] += ptr[i * 4 + 2];
+		}
+		m->screen.client_samples++;
+
+		ssize_t	current_time = get_cpu_time();
+		if (current_time > m->screen.client_last_sample_send + CLIENT_ACCUMULATION_TIME)
+		{
+			if (send_frame_to_server(m->screen.client_accumulation, tpx, m->screen.client_samples, m->options.anim.frame_i, m->options.client.sockfd) < 0)
+			{
+				if (passive_mode(m->options.client.sockfd, m) < 0)
+					return (print_errorm1("failed to enable passive mode"));
+				else
+					return (1);
+			}
+			m->screen.client_samples = 0;
+			m->screen.client_last_sample_send = current_time;
+			ft_bzero(m->screen.client_accumulation, sizeof(float) * 3 * m->scene.render_width * m->scene.render_height);
+		}
 		return (0);
 	}
 

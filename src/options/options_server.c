@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 09:54:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 17:26:21 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/07 11:54:29 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,10 @@ int	parse_options(t_minirt *minirt, int argc, char **argv)
 	minirt->options.max_samples = 100000;
 	minirt->options.output_dir = empty_static_string();
 	i = 1;
+	if (argc >= 2)
+		is_client_option(minirt, argv[1], &i);
+	if (i == 0)
+		return (0);
 	while (++i < argc)
 	{
 		if (check_every_option(minirt, argv, i) == 0)

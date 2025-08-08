@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:22:00 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/06 09:21:54 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 11:01:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	stop_server(void)
 	shutdown(g_server_fd, SHUT_RDWR);
 	close(g_server_fd);
 	g_server_fd = -1;
-
-	// Faudra aussi faire remonter tout ca d'une maniere ou d'une autre pour vraiment tout arreter
 }
 
 static void	replace_breakline_zero(char *line)

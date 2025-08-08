@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/07 17:49:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 11:10:24 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ void	render_frame_server(t_minirt *minirt)
 	}
 	else
 		pthread_mutex_unlock(&minirt->screen.sample_mutex);
+
+	if (minirt->options.no_display)
+		no_display_enable(minirt);
 	
 	// if (minirt->options.no_display) // Idealement faire un nodisplay special serveur
 	// 	no_display_enable(minirt);

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/05 14:39:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 11:59:57 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "bmp_parsing.h"
 #include "camera.h"
 
-static void	no_display_enable(t_minirt *minirt)
+void	no_display_enable(t_minirt *minirt)
 {
 	if (minirt->options.anim.enabled)
 		no_display_infos_anim(minirt);
@@ -38,6 +38,7 @@ void	render_frame(t_minirt *minirt)
 	static t_bool	skip = 0;
 
 	move_camera(minirt);
+	printf("Cam move\n");
 	check_sample_amount(minirt);
 	if (exit_if_anim_finished(minirt))
 		return ;

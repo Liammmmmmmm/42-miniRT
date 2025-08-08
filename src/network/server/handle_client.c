@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/07 17:39:29 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 10:32:59 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	receive_client_info(t_minirt *minirt, t_client_data *data, ssize_t *bytes_re
 	
 	*bytes_received = bytes_to_read; // decompression step
 
-	printf("Received frame %u instead of %u\n", anime_i, minirt->options.anim.frame_i);
 		
 	if (*bytes_received != tpx * 4 * 3 || anime_i != minirt->options.anim.frame_i)
 	{

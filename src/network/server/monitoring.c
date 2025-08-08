@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 14:50:09 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/07 18:01:55 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 10:04:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	*client_monitoring(void *arg)
 		check_sample_amount_server(minirt, data->client_fd, &last_frame_map, &asked_to_stop);
 		if (last_frame_map == minirt->options.anim.frame_i)
 			asked_to_stop = 0;
-		usleep(1000000);
+		sleep(1);
 	}
 	return (NULL);
 }

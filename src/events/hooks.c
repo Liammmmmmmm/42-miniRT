@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:23:57 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 20:55:46 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/08 10:54:04 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,13 @@ void	events(t_minirt *minirt)
 		minirt);
 	mlx_hook(minirt->mlx.render_win, ON_MOUSEMOVE, 1L << 6,
 		mouse_move_render, minirt);
+	events_controls(minirt);
+}
+
+void	events_server(t_minirt *minirt)
+{
+	mlx_hook(minirt->mlx.render_win, ON_DESTROY, 0, destroy, minirt);
+	mlx_hook(minirt->mlx.render_win, ON_KEYDOWN, 1L << 0, keydown_render_server,
+		minirt);
 	events_controls(minirt);
 }

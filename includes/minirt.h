@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/07 17:21:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 11:08:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ void	keyup_common(int key, t_minirt *minirt);
 void	export_scene(t_minirt *minirt);
 void	open_controls(int key, t_minirt *minirt);
 int		keydown_render(int key, t_minirt *minirt);
+int		keydown_render_server(int key, t_minirt *minirt);
 int		keyup_render(int key, t_minirt *minirt);
 
 int		keydown_controls(int key, t_minirt *minirt);
@@ -223,6 +224,7 @@ int		mousedown_render(int key, int x, int y, t_minirt *minirt);
 int		mouseup_render(int key, int x, int y, t_minirt *minirt);
 
 void	events(t_minirt *minirt);
+void	events_server(t_minirt *minirt);
 void	events_controls(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
@@ -248,6 +250,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset, int max_bounces);
 
 void	check_sample_amount(t_minirt *minirt);
 
+void	no_display_enable(t_minirt *minirt);
 void	no_display_infos_anim(t_minirt *minirt);
 void	no_display_infos(t_minirt *minirt);
 char	*get_time_dhmsms(ssize_t time);

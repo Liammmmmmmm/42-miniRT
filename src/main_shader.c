@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/07 17:29:55 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 10:55:43 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	main(int argc, char **argv)
 		return (1);
 	// print_scene(&minirt.scene);
 	// if (minirt.options.anim.enabled)
-	debug_print_animation(&minirt.options.anim);
+	// debug_print_animation(&minirt.options.anim);
 	if (minirt.options.server.enabled)
 	{
 		minirt.options.server.minirt = &minirt;
@@ -115,11 +115,17 @@ int	main(int argc, char **argv)
 	}
 	else
 	{
-		mlx_do_key_autorepeatoff(minirt.mlx.mlx);
-		events(&minirt);
+		if (minirt.options.server.enabled)
+			events_server(&minirt);
+		else
+		{
+			mlx_do_key_autorepeatoff(minirt.mlx.mlx);
+			events(&minirt);
+		}
 		mlx_loop_hook(minirt.mlx.mlx, render_next_frame, &minirt);
 		mlx_loop(minirt.mlx.mlx);
-		mlx_do_key_autorepeaton(minirt.mlx.mlx);
+		if (!minirt.options.server.enabled)
+			mlx_do_key_autorepeaton(minirt.mlx.mlx);
 	}
 	if (minirt.options.server.enabled)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:20:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 11:41:47 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/08 13:05:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ static void	save_scene_name(char *filename, t_minirt *minirt)
 {
 	char	*last;
 
-	last = ft_strrchr(filename, '/') + 1;
+	last = ft_strrchr(filename, '/');
 	if (last)
-		filename = last;
+		filename = last + 1;
+	
 	last = ft_strrchr(filename, '.');
 	*last = '\0';
 	ft_strlcpy(minirt->scene.name, filename, 20);

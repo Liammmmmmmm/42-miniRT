@@ -1,0 +1,32 @@
+# MATERIALS
+#	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color     scale      normal_map      normal_intensity
+mat	mat_white                     200,200,200       0.000000       1.000000       0.0000         0.000000       1   		0.000000            255,255,255        1
+mat	mat_left                      194,93,62         0.000000       1.000000       0.0000         0.000000       1  			0.000000            255,255,255        1
+mat	mat_right                     105,195,79        0.000000       1.000000       0.0000         0.000000       1  			0.000000            255,255,255        1
+mat	mat_back                      118,164,160       0.000000       1.000000       0.0000         0.000000       1  			0.000000            255,255,255        1
+mat	mat_glass                     255,255,255       0.000000       0.000000       1.4500         0.900000       1  			0.000000            255,255,255        1
+mat	mat_glass_dragon              170,145,190       0.000000       0.000000       1.4500         1.000000       1  			0.000000            255,255,255        1
+
+# LIGHTS
+#	    origin                                      intensity          color
+l	    1.186565,    6.061048,    0.436484          0.50000       255,255,255
+
+# CUSTOM
+#	    origin                                      orientation                                    scale                                        path                               material
+cu	    0.00000,    0.000000,   -2.000000           0.000000,    0.000000,    1.000000             1.000000,    1.000000,    1.000000           assets/obj/dragon/cube.obj         mat_glass
+cu	    0.00000,    0.000000,   -2.000000           0.000000,    0.000000,    1.000000             1.000000,    1.000000,    1.000000           assets/obj/dragon/dragon.obj       mat_glass_dragon
+cu	    0.00000,    0.000000,    0.000000           0.000000,    0.000000,    1.000000             1.000000,    1.000000,    1.000000           assets/obj/dragon/plane_back.obj   mat_back
+cu	    0.00000,    0.000000,    0.000000           0.000000,    0.000000,    1.000000             1.000000,    1.000000,    1.000000           assets/obj/dragon/plane_left.obj   mat_left
+cu	    0.00000,    0.000000,    0.000000           0.000000,    0.000000,    1.000000             1.000000,    1.000000,    1.000000           assets/obj/dragon/plane_right.obj  mat_right
+cu	    0.00000,    0.000000,    0.000000           0.000000,    0.000000,    1.000000             1.000000,    1.000000,    1.000000           assets/obj/dragon/plane_white.obj  mat_white
+
+
+# CAMERA
+#	    origin                                      orientation                                    field of view
+C	    1.338892,    3.008309,  -23.584208          0.000000,    0.000000,    1.000000             23
+
+# AMBIENT
+#	strength             color
+A	0.000000            255,255,255
+
+W 1080 1080

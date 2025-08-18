@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/31 18:21:43 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/18 18:38:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ void	clear_progress_bar(size_t actual, size_t max);
 
 void	write_no_err(int fd, char *str, size_t size);
 
+void	auto_export(t_minirt *minirt);
 void	export_ppm_p6_minirt(const char *filename, t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
@@ -195,6 +196,8 @@ void	put_pixel_image(t_img *img, int x, int y, int color);
 ║                                    EVENTS                                    ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
+void	toggle_vals(char *val, char v1, char v2);
+
 int		destroy_controls(t_minirt *minirt);
 int		destroy(t_minirt *minirt);
 
@@ -204,6 +207,7 @@ void	keyup_common(int key, t_minirt *minirt);
 void	export_scene(t_minirt *minirt);
 void	open_controls(int key, t_minirt *minirt);
 int		keydown_render(int key, t_minirt *minirt);
+int		keydown_render_server(int key, t_minirt *minirt);
 int		keyup_render(int key, t_minirt *minirt);
 
 int		keydown_controls(int key, t_minirt *minirt);
@@ -222,6 +226,7 @@ int		mousedown_render(int key, int x, int y, t_minirt *minirt);
 int		mouseup_render(int key, int x, int y, t_minirt *minirt);
 
 void	events(t_minirt *minirt);
+void	events_server(t_minirt *minirt);
 void	events_controls(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
@@ -232,8 +237,15 @@ void	stop_minirt(t_minirt *minirt);
 void	start_minirt(t_minirt *minirt);
 void	restart_minirt(t_minirt *minirt);
 
+int		all_startup_options(t_minirt *minirt, pthread_t *server);
+void	clean_everything(t_minirt *minirt, pthread_t server);
+
+int		render_next_frame(t_minirt *minirt);
 void	render_frame(t_minirt *minirt);
+void	render_frame_server(t_minirt *minirt);
 int		init_render(t_minirt *minirt);
+
+int		exit_if_anim_finished(t_minirt *minirt);
 
 int		calc_gradiant_color(int color_a, int color_b, float ratio);
 void	put_render_to_frame(t_minirt *minirt);
@@ -244,6 +256,7 @@ void	calc_one_sample(t_minirt *minirt, t_vec3 offset, int max_bounces);
 
 void	check_sample_amount(t_minirt *minirt);
 
+void	no_display_enable(t_minirt *minirt);
 void	no_display_infos_anim(t_minirt *minirt);
 void	no_display_infos(t_minirt *minirt);
 char	*get_time_dhmsms(ssize_t time);
@@ -251,6 +264,9 @@ char	*get_time_dhmsms(ssize_t time);
 void	manage_movements(t_minirt *minirt);
 
 void	set_heat_map_color(t_minirt *minirt);
+
+int		clean(t_minirt *minirt);
+void	clean_server_gpu_obj(t_shader_data *shader_data);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                  RAY TRACING                                 ║

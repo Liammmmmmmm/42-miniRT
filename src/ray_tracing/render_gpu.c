@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 16:06:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 17:55:52 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	draw_pixels(t_minirt *minirt)
 	compute_frame_gpu(minirt);
 	if (minirt->render_mode == 1)
 		set_heat_map_color(minirt);
-	put_render_to_buff_upscaling(minirt);
-	if (minirt->options.no_display)
+	if (minirt->options.no_display || minirt->options.client.enabled)
 		return ;
+	put_render_to_buff_upscaling(minirt);
 	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win,
 		minirt->mlx.img.img, 0, 0);
 	printf("Sample %d - %zums\n", minirt->screen.sample, get_cpu_time()
@@ -83,30 +83,29 @@ void	check_sample_amount(t_minirt *minirt)
 
 void	render(t_minirt *minirt)
 {
-	t_bool	build_scene_gpu;
+	t_bool		build_scene_gpu;
 
 	manage_movements(minirt);
 	if (!minirt->screen.start_render || minirt->screen.pause_render)
 		return ;
-	if (minirt->screen.sample == 0)
-	{
-		if (minirt->screen.sample_total_anim == 0
-			|| minirt->options.anim.enabled == 0)
-			minirt->screen.first_sample_time = get_cpu_time();
-		init_animated_items(minirt);
-		build_scene_gpu = minirt->scene.build_bvh;
-		minirt->viewport = init_viewport(minirt);
-		if (!minirt->options.no_display)
-			ft_izero(minirt->screen.render, minirt->scene.win_width
-				* minirt->scene.win_height);
-		ft_bzero(minirt->screen.float_render, sizeof(t_fcolor)
-			* minirt->viewport.render_w * minirt->viewport.render_h);
-		if (build_scene_gpu)
-			convert_scene_build(minirt, &minirt->scene, &minirt->viewport,
-				&minirt->shaders_data.scene);
-		else
-			convert_scene(minirt, &minirt->scene, &minirt->viewport,
-				&minirt->shaders_data.scene);
-	}
+	if (minirt->screen.sample != 0)
+		return (draw_pixels(minirt));
+	if (minirt->screen.sample_total_anim == 0
+		|| minirt->options.anim.enabled == 0)
+		minirt->screen.first_sample_time = get_cpu_time();
+	init_animated_items(minirt);
+	build_scene_gpu = minirt->scene.build_bvh;
+	minirt->viewport = init_viewport(minirt);
+	if (!minirt->options.no_display && !minirt->options.client.enabled)
+		ft_izero(minirt->screen.render,
+			minirt->scene.win_width * minirt->scene.win_height);
+	ft_bzero(minirt->screen.float_render, sizeof(t_fcolor)
+		* minirt->viewport.render_w * minirt->viewport.render_h);
+	if (build_scene_gpu)
+		convert_scene_build(minirt, &minirt->scene, &minirt->viewport,
+			&minirt->shaders_data.scene);
+	else
+		convert_scene(minirt, &minirt->scene, &minirt->viewport,
+			&minirt->shaders_data.scene);
 	draw_pixels(minirt);
 }

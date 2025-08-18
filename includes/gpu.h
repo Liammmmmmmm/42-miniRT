@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gpu.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:19:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/01 16:42:15 by delmath          ###   ########.fr       */
+/*   Updated: 2025/08/18 17:35:36 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ void	clean_scene(t_gpu_structs *gpu_structs);
 void	clean_shaders(t_shader_data *shader_data);
 void	clean_importance_sampling(t_gpu_textures *gpu_tex);
 
+GLuint	create_texture2d_from_data(const float *data, int width, int height);
+GLuint	create_texture1d_from_data(const float *data, int width);
+
 void	fcolor_to_float3(t_fcolor *vec, float *tab);
 void	color_to_float3(t_color *vec, float *tab);
 void	vert_to_gpu_vert(t_vertex *ver, t_gpu_vertex *gpu_ver);
@@ -48,11 +51,15 @@ void	create_ssbo(GLuint *ssbo, size_t size, void *data, long bind);
 void	count_obj(t_scene *scene, t_gpu_structs *gpu_structs);
 void	count_tex(t_scene *scene, t_gpu_textures *gpu_textures);
 
+int		malloc_every_object_gpu(t_gpu_structs *gpu, t_scene *scene);
+
 void	convert_viewport(t_gpu_viewport *dst, t_viewport *src, double ior);
 void	convert_camera(t_scene *cpu_scene, t_gpu_camera *cam);
 void	convert_ambiant(t_scene *cpu_scene, t_gpu_amb_light *amb, t_scene *scene);
 void	convert_plane(t_scene *cpu_scene, t_gpu_plane *gpu);
 void	convert_materials(t_scene *cpu_scene, t_gpu_material *gpu);
+void	convert_checker(t_scene *scene, t_gpu_textures *gpu, int *check_i,
+	int i);
 void	convert_textures(t_scene *scene, t_gpu_textures *gpu_textures);
 void	convert_lights(t_scene *cpu_scene, t_gpu_structs *gpu_scene);
 void	convert_bvh_node(t_scene *cpu_scene, t_gpu_bvh_node *bvh_node);

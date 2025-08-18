@@ -1,0 +1,18 @@
+tex skybox image assets/textures/sunflowers_puresky_2k.hdr
+tex	color image assets/obj/alban/Texture_diffuseColor.png
+tex	normal image assets/obj/alban/Texture_normal.png
+tex	ao image assets/obj/alban/Texture_occlusion.png
+
+#	name     color        metallic       roughness      ior   transmission   ambient_occlusion   emission_strength   emission_color normal_map
+mat alban    color        0.0  			 0.5  			1.400 0.0  			 1   				 0.0   				 220,220,220    1 normal
+
+
+# L   -1,1,1 1 255,0,0
+# cu	0,0,0 1,1,1 1 assets/test7.obj mat_0_1
+
+cu	0,0,0 0,0,1 5,5,5 assets/obj/alban/model.obj alban
+
+A	1   skybox
+C	0,1,2 0,0,-1 80
+W 1000 1000
+

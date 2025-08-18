@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 12:18:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 15:30:42 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 16:22:19 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	active_mode(int *sockfd, char *address, int port, char *password)
 	server_addr = (struct sockaddr_in){.sin_family = AF_INET,
 		.sin_port = htons(port), .sin_addr.s_addr = inet_addr(address)
 	};
-	if (connect_with_timeout(*sockfd, (struct sockaddr*)&server_addr,
+	if (connect_with_timeout(*sockfd, (struct sockaddr *)&server_addr,
 			sizeof(server_addr), 5) < 0)
 	{
 		close(*sockfd);

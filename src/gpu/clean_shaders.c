@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_shaders.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/01 16:03:27 by delmath          ###   ########.fr       */
+/*   Updated: 2025/08/07 16:52:02 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ void	clean_shaders(t_shader_data *shader_data)
 	delete_ssbo(&shader_data->tex.images_ssbo);
 	delete_ssbo(&shader_data->tex.images_stream_ssbo);
 	delete_ssbo(&shader_data->tex.textures_types_indices_ssbo);
+	free(shader_data->tex.checkers);
+	free(shader_data->tex.images);
+	free(shader_data->tex.images_stream);
+	free(shader_data->tex.textures_types_indices);
 	glDeleteProgram(shader_data->program);
 	glfwDestroyWindow(shader_data->window);
 	glfwTerminate();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_structs.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:03:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/31 14:37:05 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/06 14:00:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,22 +107,23 @@ typedef struct s_mat
 
 typedef struct s_amb_light
 {
-	double	ratio;
-	t_color	skybox_c;
-	t_tex	*skybox_t;
-	void	*last_calc_importance;
-	double	*gray_scale;
-	double	*raw_average;
-	float	*pdf_joint;
-	double	*importance_map;
-	double	*pdf_marginal;
-	float	*cdf_marginal_inverse;
-	double	*pdf_conditional;
-	float	*cdf_conditional_inverse;
-	double	*DEBUG_INVERSE_SAMPLING;
-	double	*cdf_w;
-	double	*cdf_h;
-	double	column_average;
+	double		ratio;
+	t_color		skybox_c;
+	t_tex		*skybox_t;
+	t_point2	srv_skybox_wh;
+	void		*last_calc_importance;
+	double		*gray_scale;
+	double		*raw_average;
+	float		*pdf_joint;
+	double		*importance_map;
+	double		*pdf_marginal;
+	float		*cdf_marginal_inverse;
+	double		*pdf_conditional;
+	float		*cdf_conditional_inverse;
+	double		*DEBUG_INVERSE_SAMPLING;
+	double		*cdf_w;
+	double		*cdf_h;
+	double		column_average;
 }	t_amb_light;
 
 typedef struct s_camera

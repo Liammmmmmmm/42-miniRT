@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:17:56 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 15:36:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 16:21:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,48 @@
 # include <pthread.h>
 #include <stdio.h>
 # include "libft.h"
+# include "structs.h"
+
+enum e_scene_transmission_index
+{
+	SRV_NULL,
+	SRV_COMPUTE_START,
+	SRV_COMPUTE_STOP,
+	SRV_CHECKERS,
+	SRV_IMAGES,
+	SRV_IMAGE_STREAM,
+	SRV_TEX_TYPES_INDICES,
+	SRV_SKYBOX_WH,
+	SRV_CDF_CONDITIONAL_INVERSE,
+	SRV_PDF_JOINT,
+	SRV_CDF_MARGINAL_INVERSE,
+	SRV_MATERIALS,
+	SRV_AMBIANT,
+	SRV_VIEWPORT,
+	SRV_CAMERA,
+	SRV_HYPER,
+	SRV_TRIANGLE,
+	SRV_LIGHTS,
+	SRV_PRIM_TYPES_INDICES,
+	SRV_PRIMITIVES,
+	SRV_BVH_NODE,
+	SRV_PLANES,
+	SRV_PHOTONS,
+	SRV_CELLS,
+	SRV_PHOTON_INDICES,
+	SRV_WIDTH_RENDER,
+	SRV_HEIGHT_RENDER,
+	SRV_MAX_BOUNCES,
+	SRV_RENDER_MODE,
+	SRV_PLANES_AM,
+	SRV_LIGHTS_AM,
+	SRV_GRID_WORLD_MIN,
+	SRV_CELL_SIZE,
+	SRV_TABLE_SIZE,
+	SRV_ANIM_FRAME
+};
+
+# define CLIENT_ACCUMULATION_TIME 30000
 
 // ----------- SERVER ----------- //
 
@@ -36,7 +78,17 @@ typedef struct s_client_data
 	int 				client_fd;
 	struct sockaddr_in	client_addr;
 	char				*password;
+	t_bool				monitor;
+	t_minirt			*minirt;
 }	t_client_data;
+
+typedef struct s_sample_utils_data
+{
+	uint32_t	*anime_i;
+	uint16_t	*samples;
+	uint64_t	tpx;
+	uint32_t	frame_i;
+}	t_sample_utils_data;
 
 void		handle_sigint(int sig);
 void		print_network_info(int port);
@@ -44,11 +96,35 @@ int			connect_to_passive_client(const char *client_ip);
 int			password_connexion(t_client_data *data, int client_fd);
 void		*cli_thread_routine(void *arg);
 void		*handle_client(void *arg);
+void		*server_thread_routine(void *arg);
+int			convert_scene_server(t_minirt *minirt, t_scene *scene,
+	t_viewport *viewport, t_gpu_structs *gpu);
+int			convert_textures_server(t_scene *scene, t_gpu_textures *gtx);
+void		init_scene_server(t_minirt *minirt);
+void		*client_monitoring(void *arg);
+void		send_changing_map_part(t_minirt *minirt, int *fd);
+void		send_map_first_time(t_minirt *minirt, int *fd);
 
 // ----------- CLIENT ----------- //
 
-int			passive_mode(int *sockfd);
+typedef struct s_sample_net_data
+{
+	uint64_t	tpx;
+	uint32_t	anime_i;
+	uint16_t	samples;
+}	t_sample_net_data;
+
+int			passive_mode(int *sockfd, t_minirt *minirt);
 int			active_mode(int *sockfd, char *address, int port, char *password);
+void		connect_client(char *ip, int port, char *password, t_minirt *minirt);
+int			send_frame_to_server(const float *ptr, t_sample_net_data sett, int *sockfd);
+int			read_stdin(fd_set *readfds);
+void		receive_scene_if_forest(t_minirt *minirt, uint16_t type, char *data,
+	uint64_t size);
+int			recv_error_client(int *sockfd, t_minirt *minirt);
+int			no_data_instruction(t_minirt *minirt, uint16_t type);
+void		calc_sample_for_server(t_minirt *minirt, int *sockfd);
+void		do_nothing(int sig);
 
 // ----------- UTILS ----------- //
 
@@ -57,5 +133,8 @@ int			connect_with_timeout(int sockfd, const struct sockaddr *addr,
 uint64_t	password_hash(const char *input, const char *challenge);
 char		random_basic_char();
 int			is_connection_alive(int sockfd);
+char		*recv_large_data(int fd, uint64_t bytes_to_read);
+int			send_scene_data(int *sockfd, char *data, uint64_t size, uint16_t type);
+
 
 #endif

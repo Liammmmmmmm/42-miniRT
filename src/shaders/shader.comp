@@ -1,8 +1,8 @@
 void	get_thread_seed()
 {
-	g_seed = uint(gl_GlobalInvocationID.x) * 1973u 
-		* uint(gl_GlobalInvocationID.y) * 9277u 
-		+ uint(sample_count) * 6541u;
+	g_seed = uint(gl_GlobalInvocationID.x + 1) * 1973u 
+		* uint(gl_GlobalInvocationID.y + 1) * 9277u 
+		+ uint(sample_count + 1) * 6541u;
 	rand();
 	rand();
 }
@@ -15,6 +15,9 @@ void main() {
 	get_thread_seed();
 
 	uint id = gid.y * width_render + gid.x;
+
+	// data[id] = vec3(1.0, 0.5, 0.2);
+	// return ;
 
 	// vec4 tex = sample_texture(0, vec2(float(gid.x) / width_render, float(gid.y) / height_render));
 	// data[id] = vec3(tex.x, tex.y, tex.z);

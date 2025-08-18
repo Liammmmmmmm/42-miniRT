@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 17:03:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 11:47:46 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 16:23:30 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ unsigned long	password_hash(const char *input, const char *challenge)
 	return (hash);
 }
 
-char	random_basic_char()
+char	random_basic_char(void)
 {
 	const int	randnb = rand() % 82;
 

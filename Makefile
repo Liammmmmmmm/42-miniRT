@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/04 16:02:06 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/08/18 18:39:40 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ CC       = gcc
 DEPFLAGS = -MMD -MP
 CFLAGS   = $(DEPFLAGS) -DRANDOM_SEED=$(SEED) -Wall -Wextra #-Werror # -mavx # SIMD flag
 LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm -lXfixes
-GPU_FLAGS = -Wall -Wextra -O3 -DUSE_GPU -lGL -lGLEW -lglfw -ldl $(DEPFLAGS)
+GPU_FLAGS = -Wall -Wextra -g3 -DUSE_GPU -lGL -lGLEW -lglfw -ldl $(DEPFLAGS)
 DEBUG_FLAGS = -g3
 FAST_FLAGS = -O3 -flto -march=native -mtune=native -funroll-loops -ffast-math -falign-functions=32 -falign-loops=16
 # -O3 -march=native -mtune=native -flto -funsafe-math-optimizations -ffast-math -fomit-frame-pointer -funroll-loops -fno-exceptions -fno-rtti -fno-stack-protector -DNDEBUG -falign-functions=32 -falign-loops=16
@@ -60,7 +60,7 @@ LIBFTDIR = libft/
 LIBFT    = $(LIBFTDIR)libft.a
 
 MINILIBXDIR = minilibx/
-MINILIBX    = $(MINILIBXDIR)libmlx.a
+MINILIBX    = $(MINILIBXDIR)libmlx_Linux.a
 
 # Includes
 INCLUDES = -I includes/ -I $(LIBFTDIR)includes/ -I $(MINILIBXDIR)
@@ -99,7 +99,7 @@ DEBUG_DIR			= src/debug/
 DEBUG_FILE			= print_scene.c print_utils.c print_obj1.c print_obj2.c print_obj3.c debug_ray.c
 
 EVENT_DIR			= src/events/
-EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c key_render.c key_render2.c mouse_common.c  mouse_controls.c  mouse_render.c scroll_actions.c
+EVENT_FILE			= utils.c destroy.c  hooks.c  key_common.c  key_controls.c key_render.c key_render2.c mouse_common.c  mouse_controls.c  mouse_render.c scroll_actions.c
 
 RAY_TRACING_DIR		= src/ray_tracing/
 RAY_TRACING_FILE	= render.c manage_movement.c init_animated_items.c focus.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c \
@@ -112,7 +112,7 @@ TEXTURES_DIR		= src/ray_tracing/textures/
 TEXTURES_FILE		= get_solid_texture.c
 
 RENDERING_DIR		= src/rendering/
-RENDERING_FILE		= pixel.c loop.c no_display.c
+RENDERING_FILE		= pixel.c loop.c loop_utils.c no_display.c
 
 ENV_DIR				= src/env/
 ENV_FILE			= init_mlx.c free_mlx.c init_controls.c init_ui.c set_dependant_values.c \
@@ -161,7 +161,7 @@ UPSCALING_DIR		= src/upscaling/
 UPSCALING_FILE		= bilinear.c bicubic.c utils.c no_upscaling.c
 
 OPTIONS_DIR			= src/options/
-OPTIONS_FILE		= options.c animation.c animation_err.c animation_move_points.c animation_parse.c animation_tesselate.c animation_rotations.c animation_auto_rota.c
+OPTIONS_FILE		= options.c options_common.c animation.c animation_err.c animation_move_points.c animation_parse.c animation_tesselate.c animation_rotations.c animation_auto_rota.c
 
 PNG_DIR				= src/utils/png/
 PNG_FILE			= bit_stream.c dynamic_huffman_block.c parse_png_header.c png_filters.c decode_deflate_utils.c \
@@ -193,12 +193,12 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(CAUSTIC_DIR), $(CAUSTIC_FILE))
 
 SRC_DIR_GPU			= src/
-SRC_FILE_GPU		= main_shader.c
+SRC_FILE_GPU		= main_shader.c main_shader_utils.c
 
 GPU_DIR				= src/gpu/
 GPU_FILE			= init_shader.c compile_shader.c clean_shaders.c \
 					use_shader.c gpu_scene.c send_uniforms.c importance_sampling.c \
-					convert_utils.c convert_objects.c convert_materials.c convert_textures.c \
+					convert_utils.c convert_objects.c convert_materials.c convert_textures.c convert_textures2.c \
 					count.c convert_others.c convert_primitives.c convert_caustic.c convert_caustic_utils.c 
 					
 
@@ -216,10 +216,21 @@ ENV_FILE_GPU		= init_mlx.c free_mlx.c init_controls.c init_ui.c set_dependant_va
 
 
 NETWORK_DIR			= src/network/
-NETWORK_FILE		= client/active_mode.c client/client.c client/passive_mode.c \
+NETWORK_FILE		= client/active_mode.c client/client.c client/passive_mode.c client/send_frame.c \
+					client/receive_scene.c client/receive_scene2.c client/utils.c \
 					server/cli.c server/connect_passive_client.c server/handle_client.c \
 					server/info.c server/password.c server/server.c server/signal.c \
-					utils.c
+					server/send_scene.c server/convert_scene.c server/init_scene.c server/monitoring.c \
+					utils.c utils2.c
+
+OPTIONS_DIR_GPU		= src/options/
+OPTIONS_FILE_GPU	= options_server.c options_common.c animation.c animation_err.c animation_move_points.c \
+					animation_parse.c animation_tesselate.c animation_rotations.c \
+					animation_auto_rota.c server.c client.c
+
+RENDERING_DIR_GPU	= src/rendering/
+RENDERING_FILE_GPU	= pixel.c loop.c loop_utils.c loop_server.c no_display.c
+
 
 M_FILE_GPU = $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
@@ -227,7 +238,7 @@ M_FILE_GPU = $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 			$(addprefix $(EVENT_DIR), $(EVENT_FILE)) \
 			$(addprefix $(RAY_TRACING_DIR_GPU), $(RAY_TRACING_FILE_GPU)) \
 			$(addprefix $(TEXTURES_DIR), $(TEXTURES_FILE)) \
-			$(addprefix $(RENDERING_DIR), $(RENDERING_FILE)) \
+			$(addprefix $(RENDERING_DIR_GPU), $(RENDERING_FILE_GPU)) \
 			$(addprefix $(MAT_DIR), $(MAT_FILE)) \
 			$(addprefix $(MATH_DIR), $(MATH_FILE)) \
 			$(addprefix $(UTILS_MLX_DIR), $(UTILS_MLX_FILE)) \
@@ -240,7 +251,7 @@ M_FILE_GPU = $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 			$(addprefix $(UPSCALING_DIR), $(UPSCALING_FILE)) \
 			$(addprefix $(PPM_DIR), $(PPM_FILE)) \
 			$(addprefix $(HDR_PARSING_DIR), $(HDR_PARSING_FILE)) \
-			$(addprefix $(OPTIONS_DIR), $(OPTIONS_FILE)) \
+			$(addprefix $(OPTIONS_DIR_GPU), $(OPTIONS_FILE_GPU)) \
 			$(addprefix $(PNG_DIR), $(PNG_FILE)) \
 			$(addprefix $(CAUSTIC_DIR), $(CAUSTIC_FILE)) \
 			$(addprefix $(GPU_DIR), $(GPU_FILE)) \
@@ -289,7 +300,7 @@ $(OBJ_DIR)%.o : %.c $(REMAKE)
 	@$(CC) $(CFLAGS) -o $@ -c $< $(INCLUDES)
 	@printf "\n$(GREEN)[Compiling] $(NC)$(shell echo $< | sed 's|^srcs/||')";
 
-all : make_libft make_mlx $(NAME) nothing_to_be_done
+all : $(NAME) nothing_to_be_done
 
 nothing_to_be_done:
 	@if [ $(COMPILED_FILES) -eq 0 ]; then \
@@ -325,7 +336,7 @@ $(NAME)_gpu: $(MINILIBX) $(LIBFT) $(OBJ_GPU)
 	@$(CC) $(CFLAGS) -o $(NAME)_gpu $(OBJ_GPU) $(LIBFT) $(MINILIBX) $(LDFLAGS) $(GPU_FLAGS)
 	@make --no-print-directory end_message
 
-gpu: make_libft make_mlx $(NAME)_gpu nothing_to_be_done
+gpu: $(NAME)_gpu nothing_to_be_done
 
 make_libft:
 	@make --no-print-directory -C $(LIBFTDIR) all

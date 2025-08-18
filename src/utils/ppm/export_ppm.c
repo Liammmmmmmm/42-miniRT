@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:22:35 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/06 14:27:44 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/07 16:57:08 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static void	put_image_to_buf(int tpx, int fd, t_minirt *minirt,
 			divide, gamma_corr)) * 255;
 	}
 	(void)!write(fd, (char *)buf, tpx * 3);
+	free(buf);
 }
 
 void	export_ppm_p6_minirt(const char *filename, t_minirt *minirt)

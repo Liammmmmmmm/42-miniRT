@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shader.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/01 17:00:09 by delmath          ###   ########.fr       */
+/*   Updated: 2025/08/18 17:49:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ const char	**get_shaders_sources(void)
 		SHDPT"path_trace.comp",
 		SHD"shader.comp"
 	};
+
 	return (sources);
 }
 
@@ -140,7 +141,9 @@ int	init_shader(t_shader_data *shader_data, size_t render_width,
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+	printf("INVALID READ LA\n");
 	shader_data->window = glfwCreateWindow(1, 1, "Compute Shader", NULL, NULL);
+	printf("INVALID READ LA\n");
 	if (!shader_data->window)
 	{
 		glfwTerminate();

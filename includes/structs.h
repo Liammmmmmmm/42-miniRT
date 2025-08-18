@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 15:51:07 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/07 15:34:00 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "basic_structs.h"
 # include "gpu_struct.h"
 # include "scene_structs.h"
+# include <pthread.h>
 
 typedef unsigned char t_bool;
 typedef unsigned char t_uchar;
@@ -261,16 +262,22 @@ typedef struct s_mlx
 
 typedef struct s_screen
 {
-	int			*render;
-	t_fcolor	*float_render;
-	int			sample;
-	int			sample_total_anim;
-	int			last_sample_am;
-	ssize_t		last_sample_time;
-	ssize_t		first_sample_time;
-	int			spp; // sample per pixel
-	t_bool		start_render;
-	t_bool		pause_render;
+	int				*render;
+	t_fcolor		*float_render;
+	float			*client_accumulation;
+	ssize_t			client_last_sample_send;
+	uint16_t		client_samples;
+	t_bool			client_conv_sc;
+	ssize_t			client_sample_exceed;
+	int				sample;
+	int				sample_total_anim;
+	int				last_sample_am;
+	ssize_t			last_sample_time;
+	ssize_t			first_sample_time;
+	int				spp;
+	t_bool			start_render;
+	t_bool			pause_render;
+	pthread_mutex_t	sample_mutex;
 }	t_screen;
 
 typedef struct s_stats
@@ -379,18 +386,23 @@ typedef struct s_animation
 	t_uint		frames;
 }	t_animation;
 
+typedef struct s_minirt	t_minirt;
+
 typedef struct s_server
 {
-	t_bool	enabled;
-	char	*password;
+	t_bool		enabled;
+	char		*password;
+	int			port;
+	t_minirt	*minirt;
 }	t_server;
 
 typedef struct s_client
 {
 	t_bool	enabled;
 	char	*password;
-	char	*server_ip;
-	int		server_port;
+	char	*ip;
+	int		port;
+	int		*sockfd;
 }	t_client;
 
 typedef struct s_options

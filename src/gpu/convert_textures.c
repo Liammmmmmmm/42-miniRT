@@ -6,21 +6,11 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 19:28:11 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/29 19:49:40 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 17:49:12 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gpu.h"
-
-void	convert_checker(t_scene *scene, t_gpu_textures *gpu, int *check_i,
-	int i)
-{
-	gpu->textures_types_indices[i].indice = *check_i;
-	gpu->checkers[*check_i].scale = scene->textures[i].checker.scale;
-	color_to_float3(&scene->textures[i].checker.c1, gpu->checkers[*check_i].c1);
-	color_to_float3(&scene->textures[i].checker.c2, gpu->checkers[*check_i].c2);
-	(*check_i)++;
-}
 
 void	convert_image(t_scene *scene, t_gpu_textures *gpu, t_point2 i,
 	uint32_t *image_offset)
@@ -108,17 +98,8 @@ void	convert_textures(t_scene *scene, t_gpu_textures *gpu)
 	}
 }
 
-int	convert_textures_init(t_scene *scene, t_gpu_textures *gtx)
+void	convert_textures_init2(t_scene *scene, t_gpu_textures *gtx)
 {
-	count_tex(scene, gtx);
-	gtx->checkers = ft_calloc(gtx->checkers_am, sizeof(t_gpu_checker));
-	gtx->images = ft_calloc(gtx->images_am, sizeof(t_gpu_tex_data));
-	gtx->images_stream = ft_calloc(gtx->total_pixel_images * 4, sizeof(float));
-	gtx->textures_types_indices = ft_calloc(scene->tex_amount,
-			sizeof(t_type_indice));
-	if (!gtx->checkers || !gtx->images || !gtx->images_stream
-		|| !gtx->textures_types_indices)
-		print_errorm1("Malloc failed, textures not transmitted.");
 	convert_textures(scene, gtx);
 	create_ssbo(&gtx->checkers_ssbo, sizeof(t_gpu_checker) * gtx->checkers_am,
 		gtx->checkers, SSBO_BIND_CHECKERS);
@@ -134,5 +115,29 @@ int	convert_textures_init(t_scene *scene, t_gpu_textures *gtx)
 	free(gtx->images);
 	free(gtx->images_stream);
 	free(gtx->textures_types_indices);
+	gtx->checkers = NULL;
+	gtx->images = NULL;
+	gtx->images_stream = NULL;
+	gtx->textures_types_indices = NULL;
+}
+
+int	convert_textures_init(t_scene *scene, t_gpu_textures *gtx)
+{
+	count_tex(scene, gtx);
+	gtx->checkers = ft_calloc(gtx->checkers_am, sizeof(t_gpu_checker));
+	gtx->images = ft_calloc(gtx->images_am, sizeof(t_gpu_tex_data));
+	gtx->images_stream = ft_calloc(gtx->total_pixel_images * 4, sizeof(float));
+	gtx->textures_types_indices = ft_calloc(scene->tex_amount,
+			sizeof(t_type_indice));
+	if (!gtx->checkers || !gtx->images || !gtx->images_stream
+		|| !gtx->textures_types_indices)
+	{
+		free(gtx->checkers);
+		free(gtx->images);
+		free(gtx->images_stream);
+		free(gtx->textures_types_indices);
+		return (print_errorm1("Malloc failed, textures not transmitted."));
+	}
+	convert_textures_init2(scene, gtx);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:40 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/20 15:19:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 17:41:48 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	init_mlx(t_minirt *minirt)
 		minirt->scene.win_height = MAX_WIN_SIZE;
 	if (minirt->scene.win_width > MAX_WIN_SIZE)
 		minirt->scene.win_width = MAX_WIN_SIZE;
+	if (minirt->options.client.enabled)
+		return (1);
 	mlx = &minirt->mlx;
 	mlx->mlx = mlx_init();
 	if (!mlx->mlx)
@@ -72,7 +74,6 @@ int	init_mlx(t_minirt *minirt)
 	}
 	if (init_mlx_img_win(minirt, mlx) == 0)
 		return (0);
-	init_controls(minirt);
 	return (init_controls_mlx(minirt));
 }
 
@@ -89,15 +90,15 @@ void	init_ui_components(t_minirt *minirt)
 
 int	init_render(t_minirt *minirt)
 {
-	if (!minirt->options.no_display)
+	if (!minirt->options.no_display && !minirt->options.client.enabled)
 		minirt->screen.render = malloc(sizeof(int) * minirt->scene.win_width * \
 		minirt->scene.win_height);
 	minirt->screen.float_render = malloc(sizeof(t_fcolor) * \
 	minirt->scene.render_width * minirt->scene.render_height);
 	if (!minirt->screen.float_render || (!minirt->screen.render
-			&& !minirt->options.no_display))
+			&& !minirt->options.no_display && !minirt->options.client.enabled))
 		return (0);
-	if (!minirt->options.no_display)
+	if (!minirt->options.no_display && !minirt->options.client.enabled)
 		ft_bzero(minirt->screen.render, sizeof(int) * minirt->scene.win_width
 			* minirt->scene.win_height);
 	ft_bzero(minirt->screen.float_render, sizeof(t_fcolor)

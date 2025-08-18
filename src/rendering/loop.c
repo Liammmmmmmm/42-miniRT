@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/30 14:57:05 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/18 18:12:40 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,7 @@
 #include "bmp_parsing.h"
 #include "camera.h"
 
-int	exit_if_anim_finished(t_minirt *minirt)
-{
-	char	*txt;
-	ssize_t	time;
-
-	if (!minirt->options.anim.enabled)
-		return (0);
-	if (minirt->options.anim.frame_i == minirt->options.anim.frames)
-	{
-		printf("Every frames have been generated\n");
-		time = get_cpu_time() - minirt->screen.first_sample_time;
-		txt = get_time_dhmsms(time);
-		if (txt)
-			printf("%d samples and %u frames generated in %zums (%s)\n",
-				minirt->screen.sample_total_anim, minirt->options.anim.frames,
-				time, txt);
-		free(txt);
-		mlx_loop_end(minirt->mlx.mlx);
-		return (1);
-	}
-	return (0);
-}
-
-static void	no_display_enable(t_minirt *minirt)
+void	no_display_enable(t_minirt *minirt)
 {
 	if (minirt->options.anim.enabled)
 		no_display_infos_anim(minirt);

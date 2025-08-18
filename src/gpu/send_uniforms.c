@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   send_uniforms.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 17:43:45 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/31 17:15:18 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/06 15:00:00 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

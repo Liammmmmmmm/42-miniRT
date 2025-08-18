@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 09:50:49 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 09:55:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 09:07:24 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	connect_to_passive_client(const char *client_ip)
 		.sin_port = htons(14242),
 		.sin_addr.s_addr = inet_addr(client_ip)
 	};
-	if (connect_with_timeout(sockfd, (struct sockaddr*)&client_addr,
+	if (connect_with_timeout(sockfd, (struct sockaddr *)&client_addr,
 			sizeof(client_addr), 3) < 0)
 	{
 		close(sockfd);

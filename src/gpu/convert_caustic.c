@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   convert_caustic.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 14:39:40 by madelvin          #+#    #+#             */
-/*   Updated: 2025/08/18 14:37:45 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/18 17:24:47 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,18 @@ void	fill_hash_entries(t_scene *scene, t_gpu_structs *gpu,
 {
 	uint32_t	i;
 	int			axe[3];
+	t_vec3		p;
 
 	i = 0;
 	while (i < gpu->photon_am)
 	{
-		t_vec3 p = scene->photon_map.photons[i].position;
+		p = scene->photon_map.photons[i].position;
 		axe[0] = floor((p.x - gpu->grid_world_min[0]) / gpu->cell_size);
 		axe[1] = floor((p.y - gpu->grid_world_min[1]) / gpu->cell_size);
 		axe[2] = floor((p.z - gpu->grid_world_min[2]) / gpu->cell_size);
 		entries[i].hash = hash_cell(axe[0], axe[1], axe[2], gpu->table_size);
-		entries[i].photon_index = i++;
+		entries[i].photon_index = i;
+		i++;
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gpu_scene.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:03:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/01 16:04:28 by delmath          ###   ########.fr       */
+/*   Updated: 2025/08/06 12:05:37 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@ static void	free_objects(t_gpu_structs *gpu)
 	free(gpu->primitives);
 	free(gpu->bvh_node);
 	free(gpu->planes);
+	free(gpu->photons);
+	free(gpu->cells);
+	free(gpu->photon_indices);
 }
 
-static int	malloc_every_object_gpu(t_gpu_structs *gpu, t_scene *scene)
+int	malloc_every_object_gpu(t_gpu_structs *gpu, t_scene *scene)
 {
 	gpu->mat_am = scene->mat_amount;
 	gpu->prim_indice_am = scene->bvh.size;

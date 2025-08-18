@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/08/07 17:00:34 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 17:56:38 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 		minirt->scene.bvh.render_mode = &minirt->render_mode;
 	}
 	init_plane_light_lst(minirt);
+	// GERER CA AVEC UNE OPTION OU UNE COUILLE DANS LE GENRE
 	//caustic_manager(minirt, PHOTON_PER_LIGHT);
 	vp->gamma = minirt->viewport.gamma;
 	vp->render_w = minirt->scene.render_width;
@@ -101,7 +102,8 @@ t_viewport	init_viewport(t_minirt *minirt)
 	}
 	init_viewport_values(minirt, &vp, &u);
 	init_viewport_vectors(minirt, &vp, u);
-	if (minirt->viewport.depth_buffer == NULL && !minirt->options.client.enabled && !minirt->options.server.enabled)
+	if (minirt->viewport.depth_buffer == NULL && !minirt->options.client.enabled
+		&& !minirt->options.server.enabled)
 	{
 		vp.depth_buffer = malloc(sizeof(int) * (vp.render_w * vp.render_h));
 		if (!vp.depth_buffer)

@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/18 10:28:58 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/08/18 18:11:44 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,7 +99,7 @@ DEBUG_DIR			= src/debug/
 DEBUG_FILE			= print_scene.c print_utils.c print_obj1.c print_obj2.c print_obj3.c debug_ray.c
 
 EVENT_DIR			= src/events/
-EVENT_FILE			= destroy.c  hooks.c  key_common.c  key_controls.c key_render.c key_render2.c mouse_common.c  mouse_controls.c  mouse_render.c scroll_actions.c
+EVENT_FILE			= utils.c destroy.c  hooks.c  key_common.c  key_controls.c key_render.c key_render2.c mouse_common.c  mouse_controls.c  mouse_render.c scroll_actions.c
 
 RAY_TRACING_DIR		= src/ray_tracing/
 RAY_TRACING_FILE	= render.c manage_movement.c init_animated_items.c focus.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c \
@@ -161,7 +161,7 @@ UPSCALING_DIR		= src/upscaling/
 UPSCALING_FILE		= bilinear.c bicubic.c utils.c no_upscaling.c
 
 OPTIONS_DIR			= src/options/
-OPTIONS_FILE		= options.c animation.c animation_err.c animation_move_points.c animation_parse.c animation_tesselate.c animation_rotations.c animation_auto_rota.c
+OPTIONS_FILE		= options.c options_common.c animation.c animation_err.c animation_move_points.c animation_parse.c animation_tesselate.c animation_rotations.c animation_auto_rota.c
 
 PNG_DIR				= src/utils/png/
 PNG_FILE			= bit_stream.c dynamic_huffman_block.c parse_png_header.c png_filters.c decode_deflate_utils.c \
@@ -193,12 +193,12 @@ M_FILE	=	$(addprefix $(SRC_DIR), $(SRC_FILE)) \
 			$(addprefix $(CAUSTIC_DIR), $(CAUSTIC_FILE))
 
 SRC_DIR_GPU			= src/
-SRC_FILE_GPU		= main_shader.c
+SRC_FILE_GPU		= main_shader.c main_shader_utils.c
 
 GPU_DIR				= src/gpu/
 GPU_FILE			= init_shader.c compile_shader.c clean_shaders.c \
 					use_shader.c gpu_scene.c send_uniforms.c importance_sampling.c \
-					convert_utils.c convert_objects.c convert_materials.c convert_textures.c \
+					convert_utils.c convert_objects.c convert_materials.c convert_textures.c convert_textures2.c \
 					count.c convert_others.c convert_primitives.c convert_caustic.c convert_caustic_utils.c 
 					
 
@@ -217,13 +217,14 @@ ENV_FILE_GPU		= init_mlx.c free_mlx.c init_controls.c init_ui.c set_dependant_va
 
 NETWORK_DIR			= src/network/
 NETWORK_FILE		= client/active_mode.c client/client.c client/passive_mode.c client/send_frame.c \
+					client/receive_scene.c client/receive_scene2.c client/utils.c \
 					server/cli.c server/connect_passive_client.c server/handle_client.c \
 					server/info.c server/password.c server/server.c server/signal.c \
 					server/send_scene.c server/convert_scene.c server/init_scene.c server/monitoring.c \
-					utils.c
+					utils.c utils2.c
 
 OPTIONS_DIR_GPU		= src/options/
-OPTIONS_FILE_GPU	= options_server.c animation.c animation_err.c animation_move_points.c \
+OPTIONS_FILE_GPU	= options_server.c options_common.c animation.c animation_err.c animation_move_points.c \
 					animation_parse.c animation_tesselate.c animation_rotations.c \
 					animation_auto_rota.c server.c client.c
 

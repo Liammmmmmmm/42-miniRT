@@ -6,13 +6,49 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:31:23 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/07 17:15:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 17:03:53 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gpu.h"
 #include "minirt.h"
 #include "network.h"
+
+static void	float3_add(float *c1, const float *c2)
+{
+	c1[0] += c2[0];
+	c1[1] += c2[1];
+	c1[2] += c2[2];
+}
+
+static int	is_client_render(const int tpx, t_minirt *m, const float *ptr)
+{
+	ssize_t	current_time;
+	int		i;
+
+	i = -1;
+	while (++i < tpx)
+		float3_add(&m->screen.client_accumulation[i * 3], &ptr[i * 4]);
+	m->screen.client_samples++;
+	current_time = get_cpu_time();
+	if (!(current_time
+			> m->screen.client_last_sample_send + CLIENT_ACCUMULATION_TIME))
+		return (0);
+	if (send_frame_to_server(m->screen.client_accumulation, (t_sample_net_data)
+			{tpx, m->options.anim.frame_i, m->screen.client_samples},
+			m->options.client.sockfd) < 0)
+	{
+		if (passive_mode(m->options.client.sockfd, m) < 0)
+			return (print_errorm1("failed to enable passive mode"));
+		else
+			return (1);
+	}
+	m->screen.client_samples = 0;
+	m->screen.client_last_sample_send = current_time;
+	ft_bzero(m->screen.client_accumulation, sizeof(float) * 3
+		* m->scene.render_width * m->scene.render_height);
+	return (0);
+}
 
 static int	get_result(t_minirt *m)
 {
@@ -27,35 +63,8 @@ static int	get_result(t_minirt *m)
 		print_error("Failed to map GPU buffer");
 		return (1);
 	}
-
 	if (m->options.client.enabled)
-	{
-		i = -1;
-		while (++i < tpx)
-		{
-			m->screen.client_accumulation[i * 3] += ptr[i * 4];
-			m->screen.client_accumulation[i * 3 + 1] += ptr[i * 4 + 1];
-			m->screen.client_accumulation[i * 3 + 2] += ptr[i * 4 + 2];
-		}
-		m->screen.client_samples++;
-
-		ssize_t	current_time = get_cpu_time();
-		if (current_time > m->screen.client_last_sample_send + CLIENT_ACCUMULATION_TIME)
-		{
-			if (send_frame_to_server(m->screen.client_accumulation, tpx, m->screen.client_samples, m->options.anim.frame_i, m->options.client.sockfd) < 0)
-			{
-				if (passive_mode(m->options.client.sockfd, m) < 0)
-					return (print_errorm1("failed to enable passive mode"));
-				else
-					return (1);
-			}
-			m->screen.client_samples = 0;
-			m->screen.client_last_sample_send = current_time;
-			ft_bzero(m->screen.client_accumulation, sizeof(float) * 3 * m->scene.render_width * m->scene.render_height);
-		}
-		return (0);
-	}
-
+		return (is_client_render(tpx, m, ptr));
 	i = -1;
 	if (m->render_mode == 1)
 		while (++i < tpx)
@@ -63,11 +72,8 @@ static int	get_result(t_minirt *m)
 	else
 	{
 		while (++i < tpx)
-		{
-			m->screen.float_render[i].r += ptr[i * 4];
-			m->screen.float_render[i].g += ptr[i * 4 + 1];
-			m->screen.float_render[i].b += ptr[i * 4 + 2];
-		}
+			m->screen.float_render[i] = add_fcolor_float3(
+					m->screen.float_render[i], &ptr[i * 4]);
 	}
 	return (0);
 }

@@ -6,12 +6,13 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:28:59 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/18 10:28:05 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 17:50:32 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "network.h"
 #include "utils.h"
+#include "maths.h"
 
 static void	*close_connection(t_client_data data)
 {
@@ -66,8 +67,8 @@ int	receive_client_info(t_minirt *minirt, t_client_data *data,
 	pthread_mutex_lock(&minirt->screen.sample_mutex);
 	i = -1;
 	while (++i < tpx)
-		minirt->screen.float_render[i] = (t_fcolor){data_float[i * 3],
-			data_float[i * 3 + 1], data_float[i * 3 + 2]};
+		minirt->screen.float_render[i] = add_fcolor_float3(
+				minirt->screen.float_render[i], &data_float[i * 3]);
 	minirt->screen.sample += samples;
 	minirt->screen.sample_total_anim++;
 	minirt->screen.last_sample_am = minirt->screen.sample;

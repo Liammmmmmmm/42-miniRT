@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:37:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/29 10:23:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 17:19:56 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ int	key_render_mode(int key, t_minirt *minirt)
 	}
 	else if (key == KEY_N)
 	{
-		if (minirt->render_mode != 2)
-			minirt->render_mode = 2;
-		else
-			minirt->render_mode = 0;
+		toggle_vals(&minirt->render_mode, 2, 0);
 		minirt->screen.sample = 0;
 		return (1);
 	}
@@ -52,10 +49,7 @@ int	key_render_mode(int key, t_minirt *minirt)
 	{
 		if (minirt->viewport.depth_buffer != NULL)
 		{
-			if (minirt->render_mode != 1)
-				minirt->render_mode = 1;
-			else
-				minirt->render_mode = 0;
+			toggle_vals(&minirt->render_mode, 1, 0);
 			minirt->screen.sample = 0;
 		}
 	}

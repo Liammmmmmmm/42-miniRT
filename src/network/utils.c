@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 17:03:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/06 11:43:55 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 16:23:30 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ unsigned long	password_hash(const char *input, const char *challenge)
 	return (hash);
 }
 
-char	random_basic_char()
+char	random_basic_char(void)
 {
 	const int	randnb = rand() % 82;
 
@@ -111,50 +111,4 @@ int	is_connection_alive(int sockfd)
 		return (0);
 	}
 	return (1);
-}
-
-char	*recv_large_data(int fd, uint64_t bytes_to_read)
-{
-	char		*data_buff;
-	uint64_t	total_received;
-	ssize_t		chunk_received;
-
-	data_buff = malloc(bytes_to_read);
-	if (!data_buff)
-		return (NULL);
-	total_received = 0;
-	while (total_received < bytes_to_read)
-	{
-		chunk_received = recv(fd, data_buff + total_received,
-			bytes_to_read - total_received, 0);
-		if (chunk_received <= 0)
-		{
-			free(data_buff);
-			return (NULL);
-		}
-		total_received += chunk_received;
-	}
-	return (data_buff);
-}
-
-int	send_scene_data(int *sockfd, char *data, uint64_t size, uint16_t type)
-{
-	char	header[10];
-
-	if (!data)
-		size = 0;
-	*(uint64_t *)header = size;
-	*(uint16_t *)(header + 8) = type;
-	if (*sockfd == -1)
-		return (0);
-	if (send(*sockfd, header, 10, 0) < 0)
-		return (-1);
-	if (*sockfd == -1)
-		return (0);
-	if (size > 0)
-	{
-		if (send(*sockfd, data, size, 0) < 0)
-			return (-1);
-	}
-	return (0);
 }

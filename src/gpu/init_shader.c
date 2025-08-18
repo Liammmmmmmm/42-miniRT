@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/06 15:26:25 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 17:49:55 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ const char	**get_shaders_sources(void)
 		SHDPT"path_trace.comp",
 		SHD"shader.comp"
 	};
+
 	return (sources);
 }
 
@@ -149,7 +150,6 @@ int	init_shader(t_shader_data *shader_data, size_t render_width,
 		return (print_errorm1("Failed to create GLFW window"));
 	}
 	glfwMakeContextCurrent(shader_data->window);
-
 	if (!glfwGetCurrentContext())
 	{
 		glfwDestroyWindow(shader_data->window);

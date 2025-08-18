@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/08 11:59:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 18:12:40 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	render_frame(t_minirt *minirt)
 	static t_bool	skip = 0;
 
 	move_camera(minirt);
-	printf("Cam move\n");
 	check_sample_amount(minirt);
 	if (exit_if_anim_finished(minirt))
 		return ;

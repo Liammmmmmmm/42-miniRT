@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:17:56 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/18 10:28:30 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 16:21:44 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,24 @@ void		send_map_first_time(t_minirt *minirt, int *fd);
 
 // ----------- CLIENT ----------- //
 
+typedef struct s_sample_net_data
+{
+	uint64_t	tpx;
+	uint32_t	anime_i;
+	uint16_t	samples;
+}	t_sample_net_data;
+
 int			passive_mode(int *sockfd, t_minirt *minirt);
 int			active_mode(int *sockfd, char *address, int port, char *password);
 void		connect_client(char *ip, int port, char *password, t_minirt *minirt);
-int			send_frame_to_server(const float *ptr, uint64_t tpx, uint16_t samples, uint32_t anime_i, int *sockfd);
+int			send_frame_to_server(const float *ptr, t_sample_net_data sett, int *sockfd);
 int			read_stdin(fd_set *readfds);
+void		receive_scene_if_forest(t_minirt *minirt, uint16_t type, char *data,
+	uint64_t size);
+int			recv_error_client(int *sockfd, t_minirt *minirt);
+int			no_data_instruction(t_minirt *minirt, uint16_t type);
+void		calc_sample_for_server(t_minirt *minirt, int *sockfd);
+void		do_nothing(int sig);
 
 // ----------- UTILS ----------- //
 

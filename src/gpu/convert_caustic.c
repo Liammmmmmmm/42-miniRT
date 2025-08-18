@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 14:39:40 by madelvin          #+#    #+#             */
-/*   Updated: 2025/08/04 16:50:04 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 17:24:47 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,12 @@ void	fill_hash_entries(t_scene *scene, t_gpu_structs *gpu,
 {
 	uint32_t	i;
 	int			axe[3];
+	t_vec3		p;
 
 	i = 0;
 	while (i < gpu->photon_am)
 	{
-		t_vec3 p = scene->photon_map.photons[i].position;
+		p = scene->photon_map.photons[i].position;
 		axe[0] = floor((p.x - gpu->grid_world_min[0]) / gpu->cell_size);
 		axe[1] = floor((p.y - gpu->grid_world_min[1]) / gpu->cell_size);
 		axe[2] = floor((p.z - gpu->grid_world_min[2]) / gpu->cell_size);

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/08 11:08:44 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 18:11:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,8 @@ void	put_pixel_image(t_img *img, int x, int y, int color);
 ║                                    EVENTS                                    ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
+void	toggle_vals(char *val, char v1, char v2);
+
 int		destroy_controls(t_minirt *minirt);
 int		destroy(t_minirt *minirt);
 
@@ -235,6 +237,10 @@ void	stop_minirt(t_minirt *minirt);
 void	start_minirt(t_minirt *minirt);
 void	restart_minirt(t_minirt *minirt);
 
+int		all_startup_options(t_minirt *minirt, pthread_t *server);
+void	clean_everything(t_minirt *minirt, pthread_t server);
+
+int		render_next_frame(t_minirt *minirt);
 void	render_frame(t_minirt *minirt);
 void	render_frame_server(t_minirt *minirt);
 int		init_render(t_minirt *minirt);

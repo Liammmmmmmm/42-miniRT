@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:19:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/06 14:12:32 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 17:35:36 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	convert_camera(t_scene *cpu_scene, t_gpu_camera *cam);
 void	convert_ambiant(t_scene *cpu_scene, t_gpu_amb_light *amb, t_scene *scene);
 void	convert_plane(t_scene *cpu_scene, t_gpu_plane *gpu);
 void	convert_materials(t_scene *cpu_scene, t_gpu_material *gpu);
+void	convert_checker(t_scene *scene, t_gpu_textures *gpu, int *check_i,
+	int i);
 void	convert_textures(t_scene *scene, t_gpu_textures *gpu_textures);
 void	convert_lights(t_scene *cpu_scene, t_gpu_structs *gpu_scene);
 void	convert_bvh_node(t_scene *cpu_scene, t_gpu_bvh_node *bvh_node);

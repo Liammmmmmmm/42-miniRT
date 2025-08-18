@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec3_operations.c                                  :+:      :+:    :+:   */
+/*   convert_textures2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 17:44:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/08/18 16:56:19 by lilefebv         ###   ########lyon.fr   */
+/*   Created: 2025/07/29 19:28:11 by lilefebv          #+#    #+#             */
+/*   Updated: 2025/08/18 17:35:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
-#include "maths.h"
-#include <math.h>
+#include "gpu.h"
 
-inline t_vec3	vec3_add(const t_vec3 u, const t_vec3 v)
+void	convert_checker(t_scene *scene, t_gpu_textures *gpu, int *check_i,
+	int i)
 {
-	return ((t_vec3){u.x + v.x, u.y + v.y, u.z + v.z});
-}
-
-inline t_vec3	vec3_subtract(register t_vec3 u, register t_vec3 v)
-{
-	return ((t_vec3){u.x - v.x, u.y - v.y, u.z - v.z});
-}
-
-inline t_vec3	vec3_multiply(const t_vec3 u, const t_vec3 v)
-{
-	return ((t_vec3){u.x * v.x, u.y * v.y, u.z * v.z});
+	gpu->textures_types_indices[i].indice = *check_i;
+	gpu->checkers[*check_i].scale = scene->textures[i].checker.scale;
+	color_to_float3(&scene->textures[i].checker.c1, gpu->checkers[*check_i].c1);
+	color_to_float3(&scene->textures[i].checker.c2, gpu->checkers[*check_i].c2);
+	(*check_i)++;
 }

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/08 10:55:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 18:09:32 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	init_all(t_minirt *minirt)
 		minirt->scene.render_width = WIN_WIDTH;
 		minirt->scene.render_height = WIN_HEIGHT;
 	}
-	if (!init_ui(minirt))
+	if (!minirt->options.client.enabled && !init_ui(minirt))
 		return (clean(minirt));
 	if (!init_micrort(minirt))
 		return (clean(minirt));
@@ -100,44 +100,8 @@ int	main(int argc, char **argv)
 	}
 	if (init_all(&minirt))
 		return (1);
-	// print_scene(&minirt.scene);
-	// if (minirt.options.anim.enabled)
-	// debug_print_animation(&minirt.options.anim);
-	if (minirt.options.server.enabled)
-	{
-		minirt.options.server.minirt = &minirt;
-		if (pthread_create(&server, NULL, server_thread_routine, &minirt.options.server) != 0)
-			return (clean(&minirt));
-	}
-	if (minirt.options.client.enabled)
-	{
-		connect_client(minirt.options.client.ip, minirt.options.client.port, minirt.options.client.password, &minirt);
-	}
-	else
-	{
-		if (minirt.options.server.enabled)
-			events_server(&minirt);
-		else
-		{
-			mlx_do_key_autorepeatoff(minirt.mlx.mlx);
-			events(&minirt);
-		}
-		mlx_loop_hook(minirt.mlx.mlx, render_next_frame, &minirt);
-		mlx_loop(minirt.mlx.mlx);
-		if (!minirt.options.server.enabled)
-			mlx_do_key_autorepeaton(minirt.mlx.mlx);
-	}
-	if (minirt.options.server.enabled)
-	{
-		shutdown(g_server_fd, SHUT_RDWR);
-		close(g_server_fd);
-		g_server_fd = -1;
-		pthread_join(server, NULL);
-	}
-	clean(&minirt);
-	if (!minirt.options.server.enabled)
-		clean_shaders(&minirt.shaders_data);
-	else
-		clean_server_gpu_obj(&minirt.shaders_data);
+	if (all_startup_options(&minirt, &server))
+		return (1);
+	clean_everything(&minirt, server);
 	return (0);
 }

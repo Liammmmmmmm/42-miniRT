@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   convert_caustic.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 14:39:40 by madelvin          #+#    #+#             */
-/*   Updated: 2025/08/01 17:02:37 by delmath          ###   ########.fr       */
+/*   Updated: 2025/08/18 14:37:45 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	fill_hash_entries(t_scene *scene, t_gpu_structs *gpu,
 	uint32_t	i;
 	int			axe[3];
 
-	i = 0
+	i = 0;
 	while (i < gpu->photon_am)
 	{
 		t_vec3 p = scene->photon_map.photons[i].position;

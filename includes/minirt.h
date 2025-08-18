@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/18 18:11:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 18:38:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,6 +264,9 @@ char	*get_time_dhmsms(ssize_t time);
 void	manage_movements(t_minirt *minirt);
 
 void	set_heat_map_color(t_minirt *minirt);
+
+int		clean(t_minirt *minirt);
+void	clean_server_gpu_obj(t_shader_data *shader_data);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                  RAY TRACING                                 ║

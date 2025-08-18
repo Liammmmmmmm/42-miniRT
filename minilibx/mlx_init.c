@@ -24,7 +24,7 @@ void	*mlx_init()
 		free(xvar);
 		return ((void*)0);
 	}
-	XSynchronize(xvar->display, True);
+	// XSynchronize(xvar->display, True);
 	xvar->screen = DefaultScreen(xvar->display);
 	xvar->root = DefaultRootWindow(xvar->display);
 	xvar->cmap = DefaultColormap(xvar->display,xvar->screen);

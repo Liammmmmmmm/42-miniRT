@@ -6,29 +6,34 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 14:50:09 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/08 10:04:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 09:07:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "network.h"
 
-void	check_sample_amount_server(t_minirt *minirt, int fd, t_uint *last_frame_map, t_bool *asked_to_stop)
+void	check_first_exceed(t_minirt *minirt)
+{
+	if (minirt->screen.client_sample_exceed != 0)
+		return ;
+	minirt->screen.client_sample_exceed = get_cpu_time();
+	if (!(minirt->options.anim.enabled && minirt->options.anim.frame_i
+			< minirt->options.anim.frames))
+		return ;
+	minirt->options.anim.frame_i++;
+	init_scene_server(minirt);
+	convert_scene_server(minirt, &minirt->scene, &minirt->viewport,
+		&minirt->shaders_data.scene);
+	minirt->options.anim.frame_i--;
+}
+
+void	check_sample_amount_server(t_minirt *minirt, int fd,
+	t_uint *last_frame_map, t_bool *asked_to_stop)
 {
 	pthread_mutex_lock(&minirt->screen.sample_mutex);
 	if (minirt->screen.sample >= minirt->screen.spp)
 	{
-		if (minirt->screen.client_sample_exceed == 0)
-		{
-			minirt->screen.client_sample_exceed = get_cpu_time();
-			if (minirt->options.anim.enabled && minirt->options.anim.frame_i
-				< minirt->options.anim.frames)
-			{
-				minirt->options.anim.frame_i++;
-				init_scene_server(minirt);
-				convert_scene_server(minirt, &minirt->scene, &minirt->viewport, &minirt->shaders_data.scene);
-				minirt->options.anim.frame_i--;
-			}
-		}
+		check_first_exceed(minirt);
 		if (*asked_to_stop == 0)
 		{
 			send_scene_data(&fd, NULL, 0, SRV_COMPUTE_STOP);
@@ -62,7 +67,8 @@ void	*client_monitoring(void *arg)
 	minirt = data->minirt;
 	while (g_server_fd != -1 && data->monitor)
 	{
-		check_sample_amount_server(minirt, data->client_fd, &last_frame_map, &asked_to_stop);
+		check_sample_amount_server(minirt, data->client_fd, &last_frame_map,
+			&asked_to_stop);
 		if (last_frame_map == minirt->options.anim.frame_i)
 			asked_to_stop = 0;
 		sleep(1);

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:17:56 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/07 17:14:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 10:28:30 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,14 @@ typedef struct s_client_data
 	t_minirt			*minirt;
 }	t_client_data;
 
+typedef struct s_sample_utils_data
+{
+	uint32_t	*anime_i;
+	uint16_t	*samples;
+	uint64_t	tpx;
+	uint32_t	frame_i;
+}	t_sample_utils_data;
+
 void		handle_sigint(int sig);
 void		print_network_info(int port);
 int			connect_to_passive_client(const char *client_ip);
@@ -95,6 +103,7 @@ int			convert_textures_server(t_scene *scene, t_gpu_textures *gtx);
 void		init_scene_server(t_minirt *minirt);
 void		*client_monitoring(void *arg);
 void		send_changing_map_part(t_minirt *minirt, int *fd);
+void		send_map_first_time(t_minirt *minirt, int *fd);
 
 // ----------- CLIENT ----------- //
 

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:19:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/18 18:08:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/19 18:40:46 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ int		is_server_option(t_minirt *minirt, char *argvi, int *y);
 int		is_client_option(t_minirt *minirt, char *argvi, int *y);
 int		is_max_samples_option(t_minirt *minirt, char *argvi, int *y);
 int		is_out_dir_option(t_minirt *minirt, char *argvi, int *y);
+int		is_max_bounces_option(t_minirt *minirt, char *argvi, int *y);
 
 #endif

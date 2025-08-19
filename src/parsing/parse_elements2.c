@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/28 18:34:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/19 16:55:10 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ int	parse_ambiant_light(t_scene *scene, char *line)
 int	parse_camera(t_scene *scene, char *line)
 {
 	char	**parts;
+	int		nb_parts;
 
 	parts = ft_split_in_line(line, " ");
 	if (!parts)
 		return (print_error(strerror(errno)));
-	if (char_tab_len(parts) != 4)
+	nb_parts = char_tab_len(parts);
+	if (nb_parts < 4 || nb_parts > 6)
 		return (invalid_struct_error(CAMERA, parts));
 	if (!parse_vector(parts[1], &scene->camera.position))
 		return (invalid_struct_error(CAMERA, parts));
@@ -56,6 +58,10 @@ int	parse_camera(t_scene *scene, char *line)
 		free(parts);
 		return (print_error(ERR_INVALID_FOV));
 	}
+	if (nb_parts > 4 && !is_valid_size(parts[4], &scene->camera.defocus_angle))
+		return (invalid_struct_error(CAMERA, parts));
+	if (nb_parts > 5 && !is_valid_size(parts[5], &scene->camera.focus_dist))
+		return (invalid_struct_error(CAMERA, parts));
 	free(parts);
 	return (1);
 }

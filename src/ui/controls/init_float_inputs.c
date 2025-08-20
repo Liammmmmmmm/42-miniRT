@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 13:42:29 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 15:52:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/19 17:08:03 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	init_camera_float_inputs(t_minirt *minirt)
 	base_tiers_float_input(&minirt->controls.float_input[24]);
 	minirt->controls.float_input[24].x = 220;
 	minirt->controls.float_input[24].y = 114;
-	minirt->scene.camera.focus_dist = 1;
+	if (!minirt->scene.camera.focus_dist)
+		minirt->scene.camera.focus_dist = 1;
 	base_tiers_float_input(&minirt->controls.float_input[25]);
 	minirt->controls.float_input[25].x = 160;
 	minirt->controls.float_input[25].y = 214;

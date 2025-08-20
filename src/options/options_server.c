@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 09:54:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/18 17:51:32 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/19 18:41:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ int	basic_options(t_minirt *minirt, char **argv, int i)
 int	check_every_option2(t_minirt *minirt, char **argv, int *i)
 {
 	if (is_max_samples_option(minirt, argv[*i], i))
+	{
+		if (*i == 0)
+			return (0);
+	}
+	else if (is_max_bounces_option(minirt, argv[*i], i))
 	{
 		if (*i == 0)
 			return (0);

@@ -1,0 +1,35 @@
+# TEXTURES
+#	n   name  type   path
+tex palette image  assets/textures/Palette.png
+tex skybox  image  assets/textures/sunflowers_puresky_2k.hdr
+
+# MATERIALS
+#	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength     emission_color   scale      normal_map      normal_intensity
+mat	base                    palette           0.000000       0.500000       1.450000       0.000000       1.000000            0.000000              0, 0, 0          1.000000
+
+# CUSTOM
+#	    origin                                      orientation                                    scale                                     path                material
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             	 1.000000,    1.000000,    1.000000  /home/madelvin/Documents/minirt/assets/obj/winter/cu_Plane.002.obj            base
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             	 1.000000,    1.000000,    1.000000  /home/madelvin/Documents/minirt/assets/obj/winter/cu_Cube.obj               	base
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             	 1.000000,    1.000000,    1.000000  /home/madelvin/Documents/minirt/assets/obj/winter/cu_Cube.005.obj           	base
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             	 1.000000,    1.000000,    1.000000  /home/madelvin/Documents/minirt/assets/obj/winter/cu_Plane.012.obj          	base
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             	 1.000000,    1.000000,    1.000000  /home/madelvin/Documents/minirt/assets/obj/winter/cu_Cylinder.003.obj         base
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             	 1.000000,    1.000000,    1.000000  /home/madelvin/Documents/minirt/assets/obj/winter/cu_Cylinder.001.obj         base
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             	 1.000000,    1.000000,    1.000000  /home/madelvin/Documents/minirt/assets/obj/winter/cu_Cylinder.002.obj      		base
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             	 1.000000,    1.000000,    1.000000  /home/madelvin/Documents/minirt/assets/obj/winter/cu_Plane.obj           			base
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             	 1.000000,    1.000000,    1.000000  /home/madelvin/Documents/minirt/assets/obj/winter/cu_Cylinder.obj           	base
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             	 1.000000,    1.000000,    1.000000  /home/madelvin/Documents/minirt/assets/obj/winter/cu_Plane.009.obj           	base
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             	 1.000000,    1.000000,    1.000000  /home/madelvin/Documents/minirt/assets/obj/winter/cu_Cylinder.000.obj        	base
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             	 1.000000,    1.000000,    1.000000  /home/madelvin/Documents/minirt/assets/obj/winter/cu_Plane.001.obj          	base
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             	 1.000000,    1.000000,    1.000000  /home/madelvin/Documents/minirt/assets/obj/winter/cu_Cylinder_Cylinder.009.obj base
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             	 1.000000,    1.000000,    1.000000  /home/madelvin/Documents/minirt/assets/obj/winter/cu_Cube.035.obj              base
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,    1.000000             	 1.000000,    1.000000,    1.000000  /home/madelvin/Documents/minirt/assets/obj/winter/cu_Cylinder.008.obj          base
+
+# CAMERA
+#	    origin                                      orientation                                    field of view
+C	    19.083267,   11.533700,   22.129530         -0.621609,   -0.348510,   -0.701529            60
+
+# AMBIENT
+#	strength             color
+A	1.000000             skybox
+W 900 900

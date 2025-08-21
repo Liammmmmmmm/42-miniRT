@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:37:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/18 17:19:56 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 11:45:57 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int	keydown_render(int key, t_minirt *minirt)
 		;
 	else if (key == KEY_P)
 		export_scene(minirt);
+	else if (key == KEY_O)
+		export_render_state(minirt);
 	else if (key == KEY_SPACE)
 		minirt->screen.pause_render = !minirt->screen.pause_render;
 	keydown_common(key, minirt);

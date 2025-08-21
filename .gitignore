@@ -24,4 +24,8 @@ assets/textures/primitives/
 assets/textures/Water_001_NORM.bmp
 assets/textures/brown_photostudio_02_2k_greyscale.bmp
 
+assets/textures/voortrekker_interior_4k.hdr
+
 minirt_export_*
+
+render_state.rts

@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/18 18:39:40 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/08/21 12:33:41 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,8 @@ UTILS_FILE			= utils.c bmp/bmp_parser.c bmp/bmp_extract_header.c \
 					obj/obj_extract_value.c obj/obj_finilizer.c \
 					obj/obj_parser_utils.c obj/obj_parser.c obj/obj_utils.c \
 					obj/obj_vertex_cache.c obj/obj_extract_value_utils.c obj/obj_parse_face.c \
-					obj/obj_vertex_cache_utils.c obj/obj_vertex_utils.c print_error.c print_warn.c
+					obj/obj_vertex_cache_utils.c obj/obj_vertex_utils.c print_error.c print_warn.c \
+					export_render_state.c
 
 UTILS_MLX_DIR		= src/utils/mlx/
 UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_circles.c \
@@ -161,7 +162,7 @@ UPSCALING_DIR		= src/upscaling/
 UPSCALING_FILE		= bilinear.c bicubic.c utils.c no_upscaling.c
 
 OPTIONS_DIR			= src/options/
-OPTIONS_FILE		= options.c options_common.c animation.c animation_err.c animation_move_points.c animation_parse.c animation_tesselate.c animation_rotations.c animation_auto_rota.c
+OPTIONS_FILE		= options.c options_common.c load_render.c animation.c animation_err.c animation_move_points.c animation_parse.c animation_tesselate.c animation_rotations.c animation_auto_rota.c
 
 PNG_DIR				= src/utils/png/
 PNG_FILE			= bit_stream.c dynamic_huffman_block.c parse_png_header.c png_filters.c decode_deflate_utils.c \
@@ -224,7 +225,7 @@ NETWORK_FILE		= client/active_mode.c client/client.c client/passive_mode.c clien
 					utils.c utils2.c
 
 OPTIONS_DIR_GPU		= src/options/
-OPTIONS_FILE_GPU	= options_server.c options_common.c animation.c animation_err.c animation_move_points.c \
+OPTIONS_FILE_GPU	= options_server.c options_common.c load_render.c animation.c animation_err.c animation_move_points.c \
 					animation_parse.c animation_tesselate.c animation_rotations.c \
 					animation_auto_rota.c server.c client.c
 

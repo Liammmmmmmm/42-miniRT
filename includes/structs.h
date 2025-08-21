@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/07 15:34:00 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 12:24:08 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -416,6 +416,7 @@ typedef struct s_options
 	t_bool		cpu;
 	t_client	client;
 	t_server	server;
+	t_bin		load_render;
 }	t_options;
 
 typedef struct s_micrort

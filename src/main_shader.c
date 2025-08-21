@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/19 10:26:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 13:02:09 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	clean(t_minirt *minirt)
 	free_anim(&minirt->options.anim);
 	free(minirt->micrort.render);
 	free(minirt->screen.client_accumulation);
+	free(minirt->options.load_render.data);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:51:35 by madelvin          #+#    #+#             */
-/*   Updated: 2025/05/29 17:58:02 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/21 20:47:07 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ int	read_palette(t_bin *bin, size_t *i, t_bmp *bmp, size_t palette_entry_count)
 	palette_start = 14 + bmp->info.info_header_size;
 	palette_end = bmp->header.pixel_data_offset;
 	if (get_palette_bytes(palette_end, palette_start) < palette_entry_count * 4)
-		return (error_and_return(ERR_BMP_PALETTE"\n"));
+		return (error_and_return(RED ERR_BMP_P"\n"));
 	bmp->palette = malloc(palette_entry_count * sizeof(uint32_t));
 	if (!bmp->palette)
-		return (error_and_return(ERR_BMP_PALETTE_ALLOCATION"\n"));
+		return (error_and_return(RED ERR_BMP_PATION"\n"));
 	*i = palette_start;
 	while (j < palette_entry_count && *i + 4 <= bin->size)
 	{
 		if (read_uint32_move_little(bin, i, &bmp->palette[j]))
 		{
 			free(bmp->palette);
-			return (error_and_return(ERR_BMP_PALETTE_READ_COLOR"\n"));
+			return (error_and_return(RED ERR_BMP_P_READ_COLOR"\n"));
 		}
 		j++;
 	}

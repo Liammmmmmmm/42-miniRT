@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:11:47 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/26 17:13:57 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/21 20:48:57 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void			bvh_make_lst(size_t obj_c, t_object *obj_list, t_bvh *bvh);
 ╚═════════════════════════════════════════════════════════════════════════════*/
 char			intersect_aabb(const t_ray *ray, const t_aabb *aabb);
 char			hit_bvh(t_bvh *bvh, uint32_t node_index,
-	t_hit_register_data *data, int *depth);
+					t_hit_register_data *data, int *depth);
 char			hit_register_bvh(t_bvh *bvh, t_bvh_node *node,
-	t_hit_register_data *data);
+					t_hit_register_data *data);
 void			render_bvh(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗

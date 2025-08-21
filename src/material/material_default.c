@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:27:14 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/21 14:52:55 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/21 22:01:40 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ inline void	default_mat(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
 	direct_lighting = compute_light_v2(hit_record, minirt);
 	if (minirt->scene.photon_map.root)
 		caustics_lighting = estimate_caustics_physically_based(\
-			&minirt->scene.photon_map, hit_record->point, 15);
+			&minirt->scene.photon_map, hit_record->point, 15, minirt);
 	else
 		caustics_lighting = (t_fcolor){0.0, 0.0, 0.0};
 	total_lighting = add_fcolor(direct_lighting, caustics_lighting);

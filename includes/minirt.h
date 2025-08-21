@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 14:21:01 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 22:44:31 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@
 
 # define MAX_WIN_SIZE 32767
 
-// Control window
 # define CWIN_WIDTH 600
 # define CWIN_HEIGHT 1080
 
@@ -55,12 +54,9 @@
 # define PROGRESS_BAR_SIZE 50
 # define SAMPLE_PROGRESS_BAR_TIME 5000
 
-# define DBL_MAX 1.7976931348623157e+308
-
 # define MAX_PHOTONS_PER_LEAF 1000
-# define PHOTON_PER_LIGHT 100000000
-# define CAUSTIC_RADIUS 0.001
-# define NORM_FACTOR 3
+
+# define DBL_MAX 1.7976931348623157e+308
 
 typedef enum e_mouse_buttons
 {
@@ -131,57 +127,56 @@ typedef enum e_keys
 
 # define ERR_F "Invalid format for"
 
-void	init_animated_items(t_minirt *minirt);
+void		init_animated_items(t_minirt *minirt);
 
-void	set_values_cone(t_cone *obj);
-void	set_values_light(t_light *obj);
-void	set_values_plane(t_plane *obj);
-void	set_values_cylinder(t_cylinder *obj);
-void	set_values_sphere(t_sphere *obj);
-void	set_values_directional_light(t_dlight *obj);
-void	set_values_hyperboloid(t_hyperboloid *obj);
-void	set_values_custom(t_custom_object *obj);
-void	set_values_mat(t_mat *mat);
-void	try_set_new_size(t_minirt *minirt);
-void	set_dependant_values(t_minirt *minirt);
+void		set_values_cone(t_cone *obj);
+void		set_values_light(t_light *obj);
+void		set_values_plane(t_plane *obj);
+void		set_values_cylinder(t_cylinder *obj);
+void		set_values_sphere(t_sphere *obj);
+void		set_values_directional_light(t_dlight *obj);
+void		set_values_hyperboloid(t_hyperboloid *obj);
+void		set_values_custom(t_custom_object *obj);
+void		set_values_mat(t_mat *mat);
+void		try_set_new_size(t_minirt *minirt);
+void		set_dependant_values(t_minirt *minirt);
 
-void	debug_ray(t_minirt *minirt);
+void		debug_ray(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                   MICRORT                                    ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-int		init_micrort(t_minirt *minirt);
-void	render_micrort(t_minirt *minirt);
-
+int			init_micrort(t_minirt *minirt);
+void		render_micrort(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    UTILS                                     ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-void	print_dlight(t_dlight *light);
-void	print_light(t_light *light);
-void	print_cone(t_cone *cone);
-void	print_cylinder(t_cylinder *cylinder);
-void	print_plane(t_plane *plane);
-void	print_sphere(t_sphere *sphere);
-void	print_hyperboloid(t_hyperboloid *hyp);
-void	print_objects(t_scene *scene);
+void		print_dlight(t_dlight *light);
+void		print_light(t_light *light);
+void		print_cone(t_cone *cone);
+void		print_cylinder(t_cylinder *cylinder);
+void		print_plane(t_plane *plane);
+void		print_sphere(t_sphere *sphere);
+void		print_hyperboloid(t_hyperboloid *hyp);
+void		print_objects(t_scene *scene);
 
-void	print_color(t_color color);
-void	print_vec3(t_vec3 vec);
-void	print_mat_color(t_mat *mat, t_color color);
-void	print_tex_color_text(t_tex *tex, t_color color, char *txt);
-void	print_tex_double_text(t_tex *tex, double value, char *txt);
+void		print_color(t_color color);
+void		print_vec3(t_vec3 vec);
+void		print_mat_color(t_mat *mat, t_color color);
+void		print_tex_color_text(t_tex *tex, t_color color, char *txt);
+void		print_tex_double_text(t_tex *tex, double value, char *txt);
 
-void	print_scene(t_scene *scene);
-void	print_progress_bar(size_t actual, size_t max);
-void	clear_progress_bar(size_t actual, size_t max);
+void		print_scene(t_scene *scene);
+void		print_progress_bar(size_t actual, size_t max);
+void		clear_progress_bar(size_t actual, size_t max);
 
-void	write_no_err(int fd, char *str, size_t size);
+void		write_no_err(int fd, char *str, size_t size);
 
-void	auto_export(t_minirt *minirt);
-void	export_ppm_p6_minirt(const char *filename, t_minirt *minirt);
+void		auto_export(t_minirt *minirt);
+void		export_ppm_p6_minirt(const char *filename, t_minirt *minirt);
 
 void	export_render_state(t_minirt *minirt);
 
@@ -189,86 +184,85 @@ void	export_render_state(t_minirt *minirt);
 ║                                     MLX                                      ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-int		init_mlx(t_minirt *minirt);
-void	free_mlx(t_minirt *minirt);
+int			init_mlx(t_minirt *minirt);
+void		free_mlx(t_minirt *minirt);
 
-void	put_pixel_image(t_img *img, int x, int y, int color);
+void		put_pixel_image(t_img *img, int x, int y, int color);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    EVENTS                                    ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-void	toggle_vals(char *val, char v1, char v2);
+void		toggle_vals(char *val, char v1, char v2);
 
-int		destroy_controls(t_minirt *minirt);
-int		destroy(t_minirt *minirt);
+int			destroy_controls(t_minirt *minirt);
+int			destroy(t_minirt *minirt);
 
-void	keydown_common(int key, t_minirt *minirt);
-void	keyup_common(int key, t_minirt *minirt);
+void		keydown_common(int key, t_minirt *minirt);
+void		keyup_common(int key, t_minirt *minirt);
 
-void	export_scene(t_minirt *minirt);
-void	open_controls(int key, t_minirt *minirt);
-int		keydown_render(int key, t_minirt *minirt);
-int		keydown_render_server(int key, t_minirt *minirt);
-int		keyup_render(int key, t_minirt *minirt);
+void		export_scene(t_minirt *minirt);
+void		open_controls(int key, t_minirt *minirt);
+int			keydown_render(int key, t_minirt *minirt);
+int			keydown_render_server(int key, t_minirt *minirt);
+int			keyup_render(int key, t_minirt *minirt);
 
-int		keydown_controls(int key, t_minirt *minirt);
-int		keyup_controls(int key, t_minirt *minirt);
+int			keydown_controls(int key, t_minirt *minirt);
+int			keyup_controls(int key, t_minirt *minirt);
 
-int		mouse_move_render(int x, int y, t_minirt *minirt);
-void	mouseup_common(int key, t_minirt *minirt);
-void	mousedown_common(int key, t_minirt *minirt);
+int			mouse_move_render(int x, int y, t_minirt *minirt);
+void		mouseup_common(int key, t_minirt *minirt);
+void		mousedown_common(int key, t_minirt *minirt);
 
-void	mouse_scroll(int key, t_minirt *minirt);
-int		mouse_move_controls(int x, int y, t_minirt *minirt);
-int		mouseup_controls(int key, int x, int y, t_minirt *minirt);
-int		mousedown_controls(int key, int x, int y, t_minirt *minirt);
+void		mouse_scroll(int key, t_minirt *minirt);
+int			mouse_move_controls(int x, int y, t_minirt *minirt);
+int			mouseup_controls(int key, int x, int y, t_minirt *minirt);
+int			mousedown_controls(int key, int x, int y, t_minirt *minirt);
 
-int		mousedown_render(int key, int x, int y, t_minirt *minirt);
-int		mouseup_render(int key, int x, int y, t_minirt *minirt);
+int			mousedown_render(int key, int x, int y, t_minirt *minirt);
+int			mouseup_render(int key, int x, int y, t_minirt *minirt);
 
-void	events(t_minirt *minirt);
-void	events_server(t_minirt *minirt);
-void	events_controls(t_minirt *minirt);
+void		events(t_minirt *minirt);
+void		events_server(t_minirt *minirt);
+void		events_controls(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    RENDER                                    ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-void	stop_minirt(t_minirt *minirt);
-void	start_minirt(t_minirt *minirt);
-void	restart_minirt(t_minirt *minirt);
+void		stop_minirt(t_minirt *minirt);
+void		start_minirt(t_minirt *minirt);
+void		restart_minirt(t_minirt *minirt);
 
-int		all_startup_options(t_minirt *minirt, pthread_t *server);
-void	clean_everything(t_minirt *minirt, pthread_t server);
+int			all_startup_options(t_minirt *minirt, pthread_t *server);
+void		clean_everything(t_minirt *minirt, pthread_t server);
 
-int		render_next_frame(t_minirt *minirt);
-void	render_frame(t_minirt *minirt);
-void	render_frame_server(t_minirt *minirt);
-int		init_render(t_minirt *minirt);
+int			render_next_frame(t_minirt *minirt);
+void		render_frame(t_minirt *minirt);
+void		render_frame_server(t_minirt *minirt);
+int			init_render(t_minirt *minirt);
 
-int		exit_if_anim_finished(t_minirt *minirt);
+int			exit_if_anim_finished(t_minirt *minirt);
 
-int		calc_gradiant_color(int color_a, int color_b, float ratio);
-void	put_render_to_frame(t_minirt *minirt);
-void	put_render_to_buff(t_minirt *minirt);
-void	copy_buff_to_image(t_minirt *minirt);
-void	render(t_minirt *minirt);
-void	calc_one_sample(t_minirt *minirt, t_vec3 offset, int max_bounces);
+int			calc_gradiant_color(int color_a, int color_b, float ratio);
+void		put_render_to_buff(t_minirt *minirt);
+void		copy_buff_to_image(t_minirt *minirt);
+void		render(t_minirt *minirt);
+void		calc_one_sample(t_minirt *minirt, t_vec3 offset, int max_bounces);
 
-void	check_sample_amount(t_minirt *minirt);
+void		check_sample_amount(t_minirt *minirt);
 
-void	no_display_enable(t_minirt *minirt);
-void	no_display_infos_anim(t_minirt *minirt);
-void	no_display_infos(t_minirt *minirt);
-char	*get_time_dhmsms(ssize_t time);
+void		no_display_enable(t_minirt *minirt);
+void		no_display_infos_anim(t_minirt *minirt);
+void		no_display_infos(t_minirt *minirt);
+char		*get_time_dhmsms(ssize_t time);
 
-void	manage_movements(t_minirt *minirt);
+void		manage_movements(t_minirt *minirt);
 
-void	set_heat_map_color(t_minirt *minirt);
+void		set_heat_map_color(t_minirt *minirt);
 
-int		clean(t_minirt *minirt);
-void	clean_server_gpu_obj(t_shader_data *shader_data);
+int			clean(t_minirt *minirt);
+void		clean_server_gpu_obj(t_shader_data *shader_data);
 
 void	init_float_render(t_minirt *minirt);
 
@@ -287,26 +281,23 @@ int			init_plane_light_lst(t_minirt *minirt);
 t_fcolor	get_hdr_pixel(t_hdr *hdr, int x, int y);
 t_fcolor	get_hdr_pixel_skybox(t_minirt *minirt, t_hdr *hdr, int x, int y);
 
-
-// V2 
-
 t_fcolor	compute_light_v2(t_hit_record *hit_record, t_minirt *minirt);
 char		check_plight_hit(t_minirt *minirt, t_vec3 origin, t_vec3 target);
 void		compute_shadow_factor(t_minirt *minirt, t_vec3 origin,
-	t_light *light);
+				t_light *light);
 void		add_plight(t_lcolor *light_color, t_hit_record *hit,
-	t_light *light, t_vec3 view_dir);
-char		check_dlight_hit_dir(t_minirt *minirt, t_vec3 origin, t_vec3 direction);
-void		add_dlight(t_lcolor *light_color, t_hit_record *hit, t_dlight *light,
-	t_vec3 view_dir);
+				t_light *light, t_vec3 view_dir);
+char		check_dlight_hit_dir(t_minirt *minirt, t_vec3 origin,
+				t_vec3 direction);
+void		add_dlight(t_lcolor *light_color, t_hit_record *hit,
+				t_dlight *light, t_vec3 view_dir);
 t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth);
 t_fcolor	path_trace_normal(t_minirt *minirt, t_ray ray);
 int			path_trace_bvh(t_minirt *minirt, t_ray ray);
-void		debug_path_trace(t_minirt *minirt, t_ray ray, int max_depth);
 t_fcolor	add_skybox(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,
-	t_ray_data data);
+				t_ray_data data);
 void		material_manager_v3(t_minirt *minirt, t_ray *ray,
-		t_hit_record *hit_record, t_ray_data data);
+				t_hit_record *hit_record, t_ray_data data);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                    EDIT MOD                                  ║
@@ -315,22 +306,16 @@ void		material_manager_v3(t_minirt *minirt, t_ray *ray,
 t_object	*select_object(t_minirt *minirt, int x, int y);
 void		draw_selected_object(t_minirt *minirt);
 
-
 int			free_mlx_error(t_minirt *minirt);
-
 
 t_color		render_float_to_color(t_fcolor *color, int divide);
 int			render_float_to_int(t_fcolor *color, int divide);
 int			render_float_to_int_gamma(t_fcolor *color, double gamma_corr,
-	int divide);
+				int divide);
 void		copy_buff_to_image(t_minirt *minirt);
 
 void		init_upscale_struct(t_upscale_data *d, t_minirt *minirt);
 void		bilinear_upscale(t_minirt *minirt);
-void		neighbor_upscale(t_minirt *minirt);
-void		lanczos3_upscale(t_minirt *minirt);
 void		bicubic_upscale(t_minirt *minirt);
-void		no_upscaling(t_minirt *minirt);
-
 
 #endif

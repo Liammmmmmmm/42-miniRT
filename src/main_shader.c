@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_shader.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 13:02:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 22:45:00 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	init_all(t_minirt *minirt)
 	{
 		if (init_shader(&minirt->shaders_data, minirt->scene.render_width,
 				minirt->scene.render_height, &minirt->scene) == -1)
-			return (clean(minirt));	
+			return (clean(minirt));
 	}
 	return (0);
 }

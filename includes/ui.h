@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ui.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:22:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/10 16:57:19 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 21:08:42 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,11 @@
 ║                                 CONTROLS / UI                                ║
 ╚═════════════════════════════════════════════════════════════════════════════*/
 
-// typedef struct s_ui_param
-// {
-// 	int	key;
-// 	int	mouse_x;
-// 	int	mouse_y;
-// }	t_ui_param;
-
 void	put_micrort_to_image(t_minirt *minirt);
-
 void	draw_box_2d(t_img *img, t_point2 p1, t_point2 p2, int color);
 void	setcolor(t_img *img, uint32_t color);
 
 int		init_ui(t_minirt *minirt);
-
 void	init_font(t_minirt *minirt);
 void	init_controls(t_minirt *minirt);
 int		init_buttons(t_minirt *minirt);
@@ -49,7 +40,7 @@ void	clear_sliders(t_minirt *minirt);
 void	click_start_stop(void *vparam);
 void	clear_buttons(t_minirt *minirt);
 
-const char	*get_upscaling_name(t_upscalings up);
+t_cchar	get_upscaling_name(t_upscalings up);
 void	init_choose_object(t_minirt *minirt);
 void	init_tex_dropdown(t_minirt *minirt);
 void	base_dropdown_tex(t_dropdown *dropdown);
@@ -74,10 +65,12 @@ void	draw_dropdown_select_box(t_img *img, t_dropdown *dropdown);
 int		toggle_dropdown(int key, t_point2 pos, t_dropdown *dropdown);
 
 void	display_mat_dropdown(t_minirt *minirt, t_dropdown *dropdown);
-int		mouse_down_dropdown_mat(t_minirt *minirt, int key, t_point2 pos, t_dropdown *dropdown);
+int		mouse_down_dropdown_mat(t_minirt *minirt, int key, t_point2 pos,
+			t_dropdown *dropdown);
 
 void	display_tex_dropdown(t_minirt *minirt, t_dropdown *dropdown);
-int		mouse_down_dropdown_tex(t_minirt *minirt, int key, t_point2 pos, t_dropdown *d);
+int		mouse_down_dropdown_tex(t_minirt *minirt, int key, t_point2 pos,
+			t_dropdown *d);
 
 void	display_dropdown(t_minirt *minirt, t_dropdown *dropdown);
 int		mouse_down_dropdown(int key, t_point2 pos, t_dropdown *d);
@@ -104,7 +97,7 @@ void	draw_plane_prop(t_img *img, t_minirt *mrt, t_ttf *ttf);
 void	draw_cyl_prop(t_img *img, t_minirt *minirt, t_ttf *ttf);
 void	draw_light_prop(t_img *img, t_minirt *minirt, t_ttf *ttf);
 void	draw_directional_light_prop(t_img *img, t_minirt *minirt,
-	t_ttf *ttf);
+			t_ttf *ttf);
 void	draw_hyperboloid_prop(t_img *img, t_minirt *minirt, t_ttf *ttf);
 void	draw_cone_prop(t_img *img, t_minirt *minirt, t_ttf *ttf);
 void	draw_custom_prop(t_img *img, t_minirt *minirt, t_ttf *ttf);
@@ -120,9 +113,9 @@ int		mouse_down_custom(int key, int x, int y, t_minirt *minirt);
 int		mouse_down_directional_light(int x, int y, t_minirt *minirt);
 int		mouse_down_selected_object(int key, int x, int y, t_minirt *minirt);
 int		color_picker_stop_minirt(t_minirt *minirt, int x, int y,
-		t_color_picker *cp);
+			t_color_picker *cp);
 int		color_picker_stop_minirt_mat(t_minirt *minirt, int x, int y,
-		t_color_picker *cp);
+			t_color_picker *cp);
 void	float_input_position(t_minirt *minirt, int x, int y);
 void	float_input_orientation(t_minirt *minirt, int x, int y);
 int		manage_scroll_selected_object(int key, int x, int y, t_minirt *minirt);

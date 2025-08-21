@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/08/18 17:56:38 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 22:36:15 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 
 	ft_bzero(vp, sizeof(t_viewport));
 	init_camera_values(minirt);
+	init_plane_light_lst(minirt);
 	if (minirt->scene.build_bvh)
 	{
 		init_bvh(&minirt->scene.bvh, minirt->scene.elements,
 			minirt->scene.el_amount);
 		minirt->scene.build_bvh = 0;
 		minirt->scene.bvh.render_mode = &minirt->render_mode;
+		if (minirt->options.caustic.caustic_enable)
+			caustic_manager(minirt, minirt->options.caustic.nb_photon);
 	}
-	init_plane_light_lst(minirt);
-	// GERER CA AVEC UNE OPTION OU UNE COUILLE DANS LE GENRE
-	//caustic_manager(minirt, PHOTON_PER_LIGHT);
 	vp->gamma = minirt->viewport.gamma;
 	vp->render_w = minirt->scene.render_width;
 	vp->render_h = minirt->scene.render_height;
@@ -107,7 +107,7 @@ t_viewport	init_viewport(t_minirt *minirt)
 	{
 		vp.depth_buffer = malloc(sizeof(int) * (vp.render_w * vp.render_h));
 		if (!vp.depth_buffer)
-			print_warn(HEAT_MAP_BUFFER_ERROR);
+			print_warn(HEAT_MBE);
 	}
 	else
 		vp.depth_buffer = minirt->viewport.depth_buffer;

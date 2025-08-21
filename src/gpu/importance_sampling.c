@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   importance_sampling.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 18:49:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/06 14:12:08 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 22:02:26 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bilinear.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 19:39:11 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/23 12:00:48 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 19:05:16 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static inline void	process_pixel(t_upscale_data *d, const int px, const int py)
 {
 	int				x1;
 	int				y1;
-	const float		tx = px * d->scaleX - d->x;
-	const float		ty = py * d->scaleY - d->y;
+	const float		tx = px * d->scale_x - d->x;
+	const float		ty = py * d->scale_y - d->y;
 	t_color			c[4];
 
 	set_xy(d, &x1, &y1);
@@ -65,8 +65,8 @@ void	bilinear_upscale(t_minirt *minirt)
 		px = -1;
 		while (++px < d.dw)
 		{
-			d.x = (int)(px * d.scaleX);
-			d.y = (int)(py * d.scaleY);
+			d.x = (int)(px * d.scale_x);
+			d.y = (int)(py * d.scale_y);
 			process_pixel(&d, px, py);
 		}
 	}

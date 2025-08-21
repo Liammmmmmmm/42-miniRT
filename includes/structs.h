@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 12:24:08 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 22:44:55 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,50 +23,25 @@
 # include "scene_structs.h"
 # include <pthread.h>
 
-typedef unsigned char t_bool;
-typedef unsigned char t_uchar;
-
-typedef	enum	e_mat_type
-{
-	DEFFAULT,
-	EMISSIVE
-}	t_mat_type;
-
 typedef struct s_lcolor
 {
-	__uint64_t	r;
-	__uint64_t	g;
-	__uint64_t	b;
+	uint64_t	r;
+	uint64_t	g;
+	uint64_t	b;
 }	t_lcolor;
-
-typedef struct s_lsc_point
-{
-	t_uint		x;
-	t_uint		y;
-	t_lcolor	color;
-}	t_lsc_point;
 
 typedef struct s_key_map
 {
-	int from;
-	int to;
-} t_key_map;
+	int	from;
+	int	to;
+}	t_key_map;
 
-/**
- * @struct s_point
- * @brief Structure representing a point in 2D space with a color.
- * 
- * @param x X-coordinate of the point on the screen.
- * @param y Y-coordinate of the point on the screen.
- * @param z Depth of the point.
- * @param color Color of the point.
- */
 typedef struct s_sc_point
 {
-	t_uint	x;		/* X-coordinate of the point on the screen. */
-	t_uint	y;		/* Y-coordinate of the point on the screen. */
-	float	z;		/* Depth of the point. */
-	t_color	color;	/* Color of the point. */
+	t_uint	x;
+	t_uint	y;
+	float	z;
+	t_color	color;
 }	t_sc_point;
 
 typedef struct s_calc_trigo
@@ -81,9 +56,9 @@ typedef struct s_calc_trigo
 
 typedef struct s_ray
 {
-	t_vec3	orig;	/* The origin of the ray. */
-	t_vec3	dir;	/* The direction of the ray. */
-}	t_ray;	/*	Add more section for future (length_squared for optimisation)	*/
+	t_vec3	orig;
+	t_vec3	dir;
+}	t_ray;
 
 typedef struct s_interpolate_pixel_bicubic
 {
@@ -103,9 +78,9 @@ typedef struct s_range
 
 typedef struct s_hash_entry
 {
-    uint32_t hash;
-    uint32_t photon_index;
-}   t_hash_entry;
+	uint32_t	hash;
+	uint32_t	photon_index;
+}	t_hash_entry;
 
 typedef struct s_quadratic
 {
@@ -117,8 +92,8 @@ typedef struct s_quadratic
 	double	t1;
 	double	t_hit;
 	double	t_hit2;
-	double  dd;
-	double  oo;
+	double	dd;
+	double	oo;
 }	t_quadratic;
 
 typedef struct s_moller
@@ -201,8 +176,8 @@ typedef struct s_mesh_build_data
 
 typedef struct s_vec2
 {
-	double x;
-	double y;
+	double	x;
+	double	y;
 }	t_vec2;
 
 typedef struct s_vertex_indexed
@@ -221,7 +196,7 @@ typedef struct s_mesh
 	char				*name;
 }	t_mesh;
 
-typedef	struct s_hit_record
+typedef struct s_hit_record
 {
 	t_object	*obj;
 	t_vec3		point;
@@ -405,6 +380,14 @@ typedef struct s_client
 	int		*sockfd;
 }	t_client;
 
+typedef struct s_caustic
+{
+	char		caustic_enable;
+	uint64_t	nb_photon;
+	double		caustic_radius;
+	double		norm_factor;
+}	t_caustic;
+
 typedef struct s_options
 {
 	t_bool		no_display;
@@ -417,6 +400,7 @@ typedef struct s_options
 	t_client	client;
 	t_server	server;
 	t_bin		load_render;
+	t_caustic	caustic;
 }	t_options;
 
 typedef struct s_micrort
@@ -453,8 +437,8 @@ typedef struct s_upscale_data
 	int			dw;
 	int			dh;
 	int			divide;
-	float		scaleX;
-	float		scaleY;
+	float		scale_x;
+	float		scale_y;
 }	t_upscale_data;
 
 typedef struct s_btn_param

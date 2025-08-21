@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements6.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:34:28 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/28 18:34:36 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 20:34:35 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

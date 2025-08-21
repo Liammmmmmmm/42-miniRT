@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/21 12:33:41 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/08/21 22:44:13 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -162,7 +162,7 @@ UPSCALING_DIR		= src/upscaling/
 UPSCALING_FILE		= bilinear.c bicubic.c utils.c no_upscaling.c
 
 OPTIONS_DIR			= src/options/
-OPTIONS_FILE		= options.c options_common.c load_render.c animation.c animation_err.c animation_move_points.c animation_parse.c animation_tesselate.c animation_rotations.c animation_auto_rota.c
+OPTIONS_FILE		= options.c options_common.c load_render.c animation.c animation_err.c animation_move_points.c animation_parse.c animation_tesselate.c animation_rotations.c animation_auto_rota.c option_caustic.c
 
 PNG_DIR				= src/utils/png/
 PNG_FILE			= bit_stream.c dynamic_huffman_block.c parse_png_header.c png_filters.c decode_deflate_utils.c \

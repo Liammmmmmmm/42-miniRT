@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   gpu_scene.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:53:33 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/01 17:01:57 by delmath          ###   ########.fr       */
+/*   Updated: 2025/08/21 22:39:11 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GPU_SCENE_H
 # define GPU_SCENE_H
 
-#include <GLFW/glfw3.h>
-#include "scene_structs.h"
+# include <GLFW/glfw3.h>
+# include "scene_structs.h"
 
 # define SSBO_BIND_LIGHTS 2
 # define SSBO_BIND_MATERIALS 3
@@ -28,16 +28,12 @@
 # define SSBO_BIND_IMAGES 11
 # define SSBO_BIND_IMAGES_STREAM 12
 # define SSBO_BIND_TEX_TYPE_INDICE 13
-# define  SSBO_BIND_PHOTON_INDICE 14
-# define  SSBO_BIND_PHOTON 15
-# define  SSBO_BIND_CELL 16
+# define SSBO_BIND_PHOTON_INDICE 14
+# define SSBO_BIND_PHOTON 15
+# define SSBO_BIND_CELL 16
 
-
-/**
- * Tous les _pad sont pour l'alignement std430 et les vec3 qui prennent 16 octets en glsl
- */
-
-typedef struct s_gpu_viewport {
+typedef struct s_gpu_viewport
+{
 	float	focal_length;
 	float	height;
 	float	width;
@@ -55,14 +51,14 @@ typedef struct s_gpu_viewport {
 	float	pixel00_loc[3];
 	float	defocus_disk_u[3];
 	float	defocus_disk_v[3];
-}	__attribute__((aligned(16))) t_gpu_viewport;
+} __attribute__((aligned(16)))	t_gpu_viewport;
 
 typedef struct s_gpu_amb_light
 {
 	float	ratio;
 	float	skybox_color[3];
 	int		skybox_tex_index;
-}	__attribute__((aligned(16))) t_gpu_amb_light;
+} __attribute__((aligned(16)))	t_gpu_amb_light;
 
 typedef struct s_gpu_camera
 {
@@ -71,24 +67,19 @@ typedef struct s_gpu_camera
 	float	fov;
 	float	focus_dist;
 	float	defocus_angle;
-}	__attribute__((aligned(16))) t_gpu_camera;
-
-/**
- * /!\ ATTENTION A L'ORDRE DES VARIABLES (a cause de l'alignement des vec3 par le gpu)
- */
+} __attribute__((aligned(16)))	t_gpu_camera;
 
 typedef struct s_gpu_cell
 {
-    uint32_t start_index;
-    uint32_t count;
-}   t_gpu_cell;
+	uint32_t	start_index;
+	uint32_t	count;
+}	t_gpu_cell;
 
 typedef struct s_gpu_photon
 {
 	float	color[4];
 	float	position[4];
-}	__attribute__((aligned(16))) t_gpu_photon;
-
+} __attribute__((aligned(16)))	t_gpu_photon;
 
 typedef struct s_gpu_plane
 {
@@ -97,8 +88,8 @@ typedef struct s_gpu_plane
 	float	normal[3];
 	float	d;
 	float	color[3];
-	float   _padding;
-}	__attribute__((aligned(16))) t_gpu_plane;
+	float	_padding;
+} __attribute__((aligned(16)))	t_gpu_plane;
 
 typedef struct s_gpu_primitive
 {
@@ -108,9 +99,9 @@ typedef struct s_gpu_primitive
 	int		material_id_top;
 	float	color[3];
 	int		material_id_bot;
-	float   radius;
+	float	radius;
 	float	height;
-}	__attribute__((aligned(16))) t_gpu_primitive;
+} __attribute__((aligned(16)))	t_gpu_primitive;
 
 typedef struct s_gpu_hyper
 {
@@ -123,7 +114,7 @@ typedef struct s_gpu_hyper
 	float	b;
 	float	c;
 	float	shape;
-}	__attribute__((aligned(16))) t_gpu_hyper;
+} __attribute__((aligned(16)))	t_gpu_hyper;
 
 typedef struct s_gpu_light
 {
@@ -133,27 +124,26 @@ typedef struct s_gpu_light
 	float	brightness;
 	float	radius;
 	t_uint	shadow_sample;
-}	__attribute__((aligned(16))) t_gpu_light;
+} __attribute__((aligned(16)))	t_gpu_light;
 
-typedef	struct s_gpu_vertex
+typedef struct s_gpu_vertex
 {
 	float	pos[3];
 	float	u;
 	float	normal[3];
 	float	v;
-}	__attribute__((aligned(16))) t_gpu_vertex;
+} __attribute__((aligned(16)))	t_gpu_vertex;
 
 typedef struct s_gpu_triangle
 {
 	t_gpu_vertex	v0;
 	t_gpu_vertex	v1;
 	t_gpu_vertex	v2;
-	float	color[3];
-	int		material_id;
-	float	center[3];
-	int		obj_id;
-}	__attribute__((aligned(16))) t_gpu_triangle;
-
+	float			color[3];
+	int				material_id;
+	float			center[3];
+	int				obj_id;
+} __attribute__((aligned(16)))	t_gpu_triangle;
 
 typedef struct s_gpu_material
 {
@@ -175,14 +165,14 @@ typedef struct s_gpu_material
 	int32_t	emission_color_tex_index;
 	int32_t	normal_tex_index;
 	float	normal_intensity;
-}	__attribute__((aligned(16))) t_gpu_material;
+} __attribute__((aligned(16)))	t_gpu_material;
 
 typedef struct s_gpu_aabb
 {
-	float       min[3];
-	float       _padding;
-	float       max[3];
-} __attribute__((aligned(16))) t_gpu_aabb;
+	float	min[3];
+	float	_padding;
+	float	max[3];
+} __attribute__((aligned(16)))	t_gpu_aabb;
 
 typedef struct s_gpu_bvh_node
 {
@@ -192,14 +182,14 @@ typedef struct s_gpu_bvh_node
 	uint32_t	first_prim;
 	uint32_t	prim_count;
 	uint32_t	is_leaf;
-} __attribute__((aligned(16))) t_gpu_bvh_node;
+} __attribute__((aligned(16)))	t_gpu_bvh_node;
 
 typedef struct s_gpu_checker
 {
 	float	c1[3];
 	float	scale;
 	float	c2[3];
-} __attribute__((aligned(16))) t_gpu_checker;
+} __attribute__((aligned(16)))	t_gpu_checker;
 
 typedef struct s_gpu_tex_data
 {
@@ -207,14 +197,13 @@ typedef struct s_gpu_tex_data
 	uint32_t	height;
 	uint32_t	offset;
 	float		exposure;
-	// float		gamma;
-} __attribute__((aligned(16))) t_gpu_tex_data;
+} __attribute__((aligned(16)))	t_gpu_tex_data;
 
 typedef struct s_type_indice
 {
 	uint32_t	type;
 	uint32_t	indice;
-} __attribute__((aligned(8))) t_type_indice;
+} __attribute__((aligned(8)))	t_type_indice;
 
 typedef struct s_gpu_structs
 {
@@ -262,28 +251,22 @@ typedef struct s_gpu_structs
 	GLuint			photon_indices_ssbo;
 }	t_gpu_structs;
 
-
 typedef struct s_gpu_textures
 {
 	int				checkers_am;
 	t_gpu_checker	*checkers;
 	GLuint			checkers_ssbo;
-
 	int				images_am;
 	t_gpu_tex_data	*images;
 	GLuint			images_ssbo;
-	
 	uint32_t		total_pixel_images;
 	float			*images_stream;
 	GLuint			images_stream_ssbo;
-
 	t_type_indice	*textures_types_indices;
 	GLuint			textures_types_indices_ssbo;
-
 	GLuint			cdf_ci_texture2d;
 	GLuint			pdf_joint_texture2d;
 	GLuint			cdf_mi_texture2d;
-	
 }	t_gpu_textures;
 
 int	convert_textures_init(t_scene *scene, t_gpu_textures *gpu_tex);

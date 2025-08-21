@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kd_tree_task.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:21:32 by madelvin          #+#    #+#             */
-/*   Updated: 2025/08/01 15:54:28 by delmath          ###   ########.fr       */
+/*   Updated: 2025/08/21 22:04:22 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static void	create_leaf_node(t_kd_tree *tree, int *current_node_idx,
 	node->axis = -1;
 	node->aabb_min = task->aabb_min;
 	node->aabb_max = task->aabb_max;
-	node->data.leaf.photon_start_idx = task->start;
-	node->data.leaf.photon_count = task->end - task->start + 1;
+	node->u_data.t_leaf.photon_start_idx = task->start;
+	node->u_data.t_leaf.photon_count = task->end - task->start + 1;
 }
 
 static void	push_subtasks(t_kd_task_data *data,
@@ -35,8 +35,8 @@ static void	push_subtasks(t_kd_task_data *data,
 
 	top = data->stack_top;
 	data->stack[*top] = (t_kd_build_task){mi + 1, data->task.end,
-		data->task.depth + 1, &node->data.internal.right, data->task.aabb_min,
-		data->task.aabb_max};
+		data->task.depth + 1, &node->u_data.t_internal.right,
+		data->task.aabb_min, data->task.aabb_max};
 	if (axis == 0)
 		data->stack[*top].aabb_min.x = split_pos;
 	else if (axis == 1)
@@ -45,8 +45,8 @@ static void	push_subtasks(t_kd_task_data *data,
 		data->stack[*top].aabb_min.z = split_pos;
 	(*top)++;
 	data->stack[*top] = (t_kd_build_task){data->task.start, mi - 1,
-		data->task.depth + 1, &node->data.internal.left, data->task.aabb_min,
-		data->task.aabb_max};
+		data->task.depth + 1, &node->u_data.t_internal.left,
+		data->task.aabb_min, data->task.aabb_max};
 	if (axis == 0)
 		data->stack[*top].aabb_max.x = split_pos;
 	else if (axis == 1)
@@ -73,7 +73,7 @@ static void	create_internal_node(t_kd_tree *tree, int *current_node_idx,
 	node->axis = axis;
 	node->aabb_min = data->task.aabb_min;
 	node->aabb_max = data->task.aabb_max;
-	node->data.internal.split_position = split_pos;
+	node->u_data.t_internal.split_position = split_pos;
 	push_subtasks(data, split_pos, axis, node);
 }
 

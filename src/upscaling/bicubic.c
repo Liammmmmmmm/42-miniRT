@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bicubic.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 19:54:36 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/23 13:03:11 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 19:05:16 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,13 @@ void	bicubic_upscale(t_minirt *minirt)
 	init_upscale_struct(&d, minirt);
 	while (++xy[1] < d.dh)
 	{
-		src = xy[1] * d.scaleY;
+		src = xy[1] * d.scale_y;
 		t[1] = src - (int)src;
 		y0 = (int)src - 1;
 		xy[0] = -1;
 		while (++xy[0] < d.dw)
 		{
-			src = xy[0] * d.scaleX;
+			src = xy[0] * d.scale_x;
 			t[0] = src - (int)src;
 			minirt->screen.render[xy[1] * d.dw + xy[0]]
 				= interpolate_pixel(&d, (int [2]){(int)src - 1, y0}, t);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 10:33:49 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/28 18:02:01 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 19:05:16 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ void	init_upscale_struct(t_upscale_data *d, t_minirt *minirt)
 	d->divide = minirt->screen.last_sample_am;
 	if (d->divide == 0)
 		d->divide = 1;
-	d->scaleX = (float)(d->sw - 1) / (d->dw - 1);
-	d->scaleY = (float)(d->sh - 1) / (d->dh - 1);
+	d->scale_x = (float)(d->sw - 1) / (d->dw - 1);
+	d->scale_y = (float)(d->sh - 1) / (d->dh - 1);
 }

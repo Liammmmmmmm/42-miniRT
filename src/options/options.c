@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 09:54:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/18 17:51:45 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 22:27:21 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,21 @@ int	basic_options(t_minirt *minirt, char **argv, int i)
 	return (1);
 }
 
+int	check_every_option2(t_minirt *minirt, char **argv, int *i)
+{
+	if (is_animate_option(minirt, argv[*i], i))
+	{
+		if (i == 0)
+			return (0);
+	}
+	if (parse_caustic_option(minirt, argv[*i], i))
+	{
+		if (i == 0)
+			return (0);
+	}
+	return (1);
+}
+
 int	check_every_option(t_minirt *minirt, char **argv, int i)
 {
 	if (basic_options(minirt, argv, i))
@@ -42,7 +57,7 @@ int	check_every_option(t_minirt *minirt, char **argv, int i)
 		if (i == 0)
 			return (0);
 	}
-	else if (is_animate_option(minirt, argv[i], &i))
+	else if (check_every_option2(minirt, argv, &i))
 	{
 		if (i == 0)
 			return (0);

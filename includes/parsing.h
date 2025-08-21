@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:35:11 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/22 11:41:32 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/21 21:06:51 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,18 @@ int		is_valid_fov(char *str, unsigned char *fov);
 int		parse_color(char *color, t_color *store);
 int		parse_vector(char *str, t_vec3 *vec);
 int		parse_vector_normalized(char *str, t_vec3 *vec);
-int		parse_color_or_mat(char *str, t_color *store, t_mat **mat, t_scene *scene);
+int		parse_color_or_mat(char *str, t_color *store, t_mat **mat,
+			t_scene *scene);
 int		parse_only_mat(char *str, t_mat **mat, t_scene *scene);
-int		parse_color_or_tex(char *str, t_color *store, t_tex **tex, t_scene *scene);
-int		parse_double_b_or_tex(char *str, double *d, t_tex **tex, t_scene *scene);
+int		parse_color_or_tex(char *str, t_color *store, t_tex **tex,
+			t_scene *scene);
+int		parse_double_b_or_tex(char *str, double *d, t_tex **tex, t_scene *scene)
+		;
 int		parse_double_or_tex(char *str, double *d, t_tex **tex, t_scene *scene);
 t_tex	*get_texture(char *str, t_scene *scene);
 void	get_texture_image(t_tex *tex, char *filename);
 int		is_extension(char *filename, char *extension);
 int		is_valid_positive_int(char *str, int *res);
-
 
 int		parse_ambiant_light(t_scene *scene, char *line);
 int		parse_camera(t_scene *scene, char *line);

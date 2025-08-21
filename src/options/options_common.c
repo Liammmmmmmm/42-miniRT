@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options_common.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 17:51:35 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/19 18:40:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 22:23:57 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,30 @@ int	is_max_samples_option(t_minirt *minirt, char *argvi, int *y)
 			return (1);
 		}
 		return (print_error_sy("Invalid sample value", y));
+	}
+	return (0);
+}
+
+int	is_caustic_option(t_minirt *minirt, char *argvi, int *y)
+{
+	int	i;
+
+	if (ft_strcmp(argvi, "--caustic") == 0)
+		return (print_error_sy("Caustic need values", y));
+	else if (ft_strncmp(argvi, "--caustics=", 11) == 0)
+	{
+		if (ft_strlen(argvi + 11) > 0 && ft_strlen(argvi + 14) < 10)
+		{
+			i = -1;
+			while ((argvi + 14)[++i])
+			{
+				if (!ft_isdigit((argvi + 14)[i]))
+					return (print_error_sy("Invalid caustic values", y));
+			}
+			minirt->controls.max_bounces = ft_atoi(argvi + 14);
+			return (1);
+		}
+		return (print_error_sy("Invalid caustic values", y));
 	}
 	return (0);
 }

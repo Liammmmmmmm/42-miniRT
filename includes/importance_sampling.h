@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 11:59:32 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/01 18:03:42 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/21 21:01:24 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 # include "structs.h"
 
 char	init_all_malloc_importance_sampling(t_scene	*scene, int width,
-	int height);
-void	simulate_importance_sampling_debug(t_scene *scene, int width,
-	int height);
+			int height);
+
 void	free_unused_malloc_importance_sampling(t_scene *scene);
 t_vec2	calc_inverse_transform_sampling_uv(t_scene *scene);
 t_vec3	calc_inverse_transform_sampling_dir(const t_vec2 *uv);

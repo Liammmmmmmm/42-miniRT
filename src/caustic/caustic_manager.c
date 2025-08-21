@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 19:36:31 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/21 14:46:26 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/21 21:58:36 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	init_photon_map(t_minirt *minirt, int photons_per_light,
 	int			i;
 
 	if (minirt->scene.obj_lst.light_nb == 0)
-		return (print_warn_rv(WARN_CAUSTIC_NO_LIGHT, 2));
+		return (print_warn_rv(WARN_CAUSTIC_NO_L, 2));
 	if (vector_init(photon_array, sizeof(t_photon),
 			get_capacity(minirt, photons_per_light)) == -1)
 		return (print_error1("Init vector in init_photon_map"));
@@ -94,7 +94,7 @@ int	caustic_manager(t_minirt *minirt, int photons_to_shoot)
 	if (kd_tree_build(&minirt->scene.photon_map, &photon_array))
 	{
 		free(photon_array.data);
-		return (print_error1(ERROR_CAUSTIC_KD_TREE_NO_BUILD));
+		return (print_error1(ERR_C_KD_TREE_NO_B));
 	}
 	free(photon_array.data);
 	printf("Photon map and KD Tree build !\n\n");

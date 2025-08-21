@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_components.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:34:13 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/04 11:20:57 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 21:04:57 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_int_slider
 	int	bar_color;
 	int	min;
 	int	max;
-	int *value;
+	int	*value;
 	int	is_clicked;
 }	t_int_slider;
 
@@ -109,7 +109,7 @@ typedef struct s_dropdown
 	int				y;
 	int				width;
 	int				height;
-	int 			deployed_height;
+	int				deployed_height;
 	void			**selected;
 	t_bool			active;
 	int				scroll_offset;
@@ -134,7 +134,8 @@ void	put_pixel_image(t_img *img, int x, int y, int color);
  * @param p The starting position and color.
  * @param str The string to draw.
  */
-void	string_to_img(t_img *img, unsigned char font[96][5], t_point p, char *str);
+void	string_to_img(t_img *img, unsigned char font[96][5], t_point p,
+			char *str);
 
 int		string_size(char *str);
 
@@ -163,7 +164,8 @@ int		slider_mouse_up(t_int_slider *slider);
 int		slider_mouse_move(t_int_slider *slider, int mouse_x);
 
 void	display_button(t_img *img, const t_button button, t_ttf *ttf);
-int		button_action(t_button *button, int mouse_x, int mouse_y, int *is_clicked);
+int		button_action(t_button *button, int mouse_x, int mouse_y,
+			int *is_clicked);
 int		button_release(t_button *button);
 
 void	display_text_input(t_img *img, t_text_input *text_input, t_ttf *ttf);

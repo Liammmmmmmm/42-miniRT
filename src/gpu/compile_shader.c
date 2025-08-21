@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compile_shader.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:30:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/04 16:02:26 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 21:12:19 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ GLuint	compile_shader_from_files(const char **paths, int count,
 		}
 		sources[i] = (char *)tmp.data;
 	}
-	// print_shader_sources(sources, count, paths);
 	shader = compile_step(sources, count, shader_type);
 	if (check_shader_compile(shader) == -1)
 		return (0);

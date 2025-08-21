@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_shader_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 18:09:17 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/19 10:21:32 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 21:54:06 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	all_startup_options(t_minirt *minirt, pthread_t *server)
 	{
 		minirt->options.server.minirt = minirt;
 		if (pthread_create(server, NULL, server_thread_routine,
-			&minirt->options.server) != 0)
+				&minirt->options.server) != 0)
 			return (clean(minirt));
 	}
 	if (minirt->options.client.enabled)

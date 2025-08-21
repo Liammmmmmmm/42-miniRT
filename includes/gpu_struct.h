@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   gpu_struct.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:19:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/24 10:31:03 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 21:00:57 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GPU_STRUCT_H
 # define GPU_STRUCT_H
 
-#include <GLFW/glfw3.h>
-#include "gpu_scene.h"
+# include <GLFW/glfw3.h>
+# include "gpu_scene.h"
 
 typedef struct s_shader_data
 {

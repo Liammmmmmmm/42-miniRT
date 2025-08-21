@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kd_tree_find_near.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 14:22:05 by madelvin          #+#    #+#             */
-/*   Updated: 2025/08/01 15:58:20 by delmath          ###   ########.fr       */
+/*   Updated: 2025/08/21 19:14:56 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ void	knn_process_leaf(t_kd_node *n, t_knn_search *search, t_vec3 point,
 	t_photon	*photon;
 
 	i = 0;
-	while (i < n->data.leaf.photon_count)
+	while (i < n->u_data.t_leaf.photon_count)
 	{
-		photon = &photons[n->data.leaf.photon_start_idx + i];
+		photon = &photons[n->u_data.t_leaf.photon_start_idx + i];
 		dist_sq = vec3_distance_squared(photon->position, point);
 		knn_set_best(photon, search, dist_sq);
 		i++;
@@ -103,16 +103,16 @@ n->aabb_min, n->aabb_max)))
 		return ;
 	if (n->axis == -1)
 		return (knn_process_leaf(n, search, point, photons));
-	d_plane = get_axis(point, n->axis) - n->data.internal.split_position;
+	d_plane = get_axis(point, n->axis) - n->u_data.t_internal.split_position;
 	if (d_plane < 0)
 	{
-		next_branch = n->data.internal.left;
-		other_branch = n->data.internal.right;
+		next_branch = n->u_data.t_internal.left;
+		other_branch = n->u_data.t_internal.right;
 	}
 	else
 	{
-		next_branch = n->data.internal.right;
-		other_branch = n->data.internal.left;
+		next_branch = n->u_data.t_internal.right;
+		other_branch = n->u_data.t_internal.left;
 	}
 	knn_find_recursive(next_branch, search, point, photons);
 	if (search->count < search->k || (d_plane * d_plane)

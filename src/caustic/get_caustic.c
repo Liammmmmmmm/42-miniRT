@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_caustic.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delmath <delmath@student.42.fr>            +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 14:25:16 by madelvin          #+#    #+#             */
-/*   Updated: 2025/08/01 15:14:26 by delmath          ###   ########.fr       */
+/*   Updated: 2025/08/21 22:10:00 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,17 @@ static int	init_knn_search(t_knn_search *search, int k_nearest,
 	return (1);
 }
 
-static t_fcolor	calculate_caustic_radiance(t_knn_search *search)
+static t_fcolor	calculate_caustic_radiance(t_knn_search *search,
+	t_minirt *minirt)
 {
-	t_fcolor	sum_photon_power;
-	double		search_radius_sq;
-	double		surface_area;
-	size_t		i;
+	const double	norm_factor = minirt->options.caustic.norm_factor;
+	t_fcolor		sum_photon_power;
+	double			search_radius_sq;
+	double			surface_area;
+	size_t			i;
 
 	search_radius_sq = search->results[search->farthest_idx].dist_sq;
-	if (search_radius_sq > CAUSTIC_RADIUS)
+	if (search_radius_sq > minirt->options.caustic.caustic_radius)
 		return ((t_fcolor){0.0, 0.0, 0.0});
 	surface_area = M_PI * search_radius_sq;
 	if (surface_area < 1e-9)
@@ -56,14 +58,14 @@ static t_fcolor	calculate_caustic_radiance(t_knn_search *search)
 		sum_photon_power.b += search->results[i].photon->power.b;
 		i++;
 	}
-	sum_photon_power.r = (sum_photon_power.r / surface_area) / NORM_FACTOR;
-	sum_photon_power.g = (sum_photon_power.g / surface_area) / NORM_FACTOR;
-	sum_photon_power.b = (sum_photon_power.b / surface_area) / NORM_FACTOR;
+	sum_photon_power.r = (sum_photon_power.r / surface_area) / norm_factor;
+	sum_photon_power.g = (sum_photon_power.g / surface_area) / norm_factor;
+	sum_photon_power.b = (sum_photon_power.b / surface_area) / norm_factor;
 	return (sum_photon_power);
 }
 
 t_fcolor	estimate_caustics_physically_based(t_kd_tree *caustic_kdtree,
-		t_vec3 point, int k_nearest)
+		t_vec3 point, int k_nearest, t_minirt *minirt)
 {
 	t_knn_search	search;
 	t_knn_result	*results_array;
@@ -80,7 +82,7 @@ t_fcolor	estimate_caustics_physically_based(t_kd_tree *caustic_kdtree,
 		free(results_array);
 		return ((t_fcolor){0.0, 0.0, 0.0});
 	}
-	caustic_color = calculate_caustic_radiance(&search);
+	caustic_color = calculate_caustic_radiance(&search, minirt);
 	free(results_array);
 	return (caustic_color);
 }

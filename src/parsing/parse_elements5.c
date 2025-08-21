@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements5.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:31:25 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 14:45:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 20:37:26 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	parse_dlight(t_scene *scene, char *line)
 	if (!is_valid_double_el(parts[2], &light->brightness))
 	{
 		free(parts);
-		return (print_error(ERR_INVALID_LIGHT_RATIO));
+		return (print_error(ERR_ILR));
 	}
 	if (!parse_color(parts[3], &light->color))
 		return (invalid_struct_error(DIRECTIONAL_LIGHT, parts));

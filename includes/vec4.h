@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 12:43:13 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/29 18:11:12 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/21 20:07:45 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 # include "basic_structs.h"
 # include <immintrin.h>
 
-typedef struct s_vec4 {
-	__m256d data;
+typedef struct s_vec4
+{
+	__m256d	data;
 }	t_vec4;
 
 t_vec3	vec4_to_vec3(t_vec4 v);

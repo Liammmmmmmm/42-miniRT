@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:00:25 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/19 16:55:10 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 20:37:26 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	parse_ambiant_light(t_scene *scene, char *line)
 			|| !scene->amb_light.skybox_t) && scene->amb_light.ratio < 0.0)
 	{
 		free(parts);
-		return (print_error(MSG_ERR_AMBIENT_LIGHT_RATIO));
+		return (print_error(ERR_AMBIENT_LF));
 	}
 	free(parts);
 	if (scene->amb_light.skybox_t)
@@ -73,14 +73,14 @@ static int	parse_light_part2(t_light *light, char **parts, int nb_parts)
 	if (!is_valid_double_el(parts[2], &light->brightness))
 	{
 		free(parts);
-		return (print_error(ERR_INVALID_LIGHT_RATIO));
+		return (print_error(ERR_ILR));
 	}
 	if (nb_parts < 5)
 		return (1);
 	if (!is_valid_size(parts[4], &tmpd))
 	{
 		free(parts);
-		return (print_error(ERR_INVALID_LIGHT_RADIUS));
+		return (print_error(ERR_ILRADIUS));
 	}
 	light->radius = tmpd;
 	light->shadow_sample = 5;
@@ -89,7 +89,7 @@ static int	parse_light_part2(t_light *light, char **parts, int nb_parts)
 	if (!is_valid_positive_int(parts[5], &light->shadow_sample))
 	{
 		free(parts);
-		return (print_error(ERR_INVALID_LIGHT_SHADOW_SAMPLE));
+		return (print_error(ER_ILSS));
 	}
 	return (1);
 }

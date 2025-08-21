@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   network.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 18:17:56 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/18 16:21:44 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 19:22:33 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <arpa/inet.h>
 # include <stdlib.h>
 # include <pthread.h>
-#include <stdio.h>
 # include "libft.h"
 # include "structs.h"
 
@@ -66,7 +65,9 @@ enum e_scene_transmission_index
 
 # define CLIENT_ACCUMULATION_TIME 30000
 
-// ----------- SERVER ----------- //
+/*═════════════════════════════════════════════════════════════════════════════╗
+║                                  SERVER                                      ║
+╚═════════════════════════════════════════════════════════════════════════════*/
 
 # define MAX_CLIENTS 100
 # define SERV_BUFF_SIZE 16000
@@ -75,7 +76,7 @@ extern int	g_server_fd;
 
 typedef struct s_client_data
 {
-	int 				client_fd;
+	int					client_fd;
 	struct sockaddr_in	client_addr;
 	char				*password;
 	t_bool				monitor;
@@ -98,14 +99,16 @@ void		*cli_thread_routine(void *arg);
 void		*handle_client(void *arg);
 void		*server_thread_routine(void *arg);
 int			convert_scene_server(t_minirt *minirt, t_scene *scene,
-	t_viewport *viewport, t_gpu_structs *gpu);
+				t_viewport *viewport, t_gpu_structs *gpu);
 int			convert_textures_server(t_scene *scene, t_gpu_textures *gtx);
 void		init_scene_server(t_minirt *minirt);
 void		*client_monitoring(void *arg);
 void		send_changing_map_part(t_minirt *minirt, int *fd);
 void		send_map_first_time(t_minirt *minirt, int *fd);
 
-// ----------- CLIENT ----------- //
+/*═════════════════════════════════════════════════════════════════════════════╗
+║                                 CLIENT                                       ║
+╚═════════════════════════════════════════════════════════════════════════════*/
 
 typedef struct s_sample_net_data
 {
@@ -116,25 +119,29 @@ typedef struct s_sample_net_data
 
 int			passive_mode(int *sockfd, t_minirt *minirt);
 int			active_mode(int *sockfd, char *address, int port, char *password);
-void		connect_client(char *ip, int port, char *password, t_minirt *minirt);
-int			send_frame_to_server(const float *ptr, t_sample_net_data sett, int *sockfd);
+void		connect_client(char *ip, int port, char *password, t_minirt *minirt)
+			;
+int			send_frame_to_server(const float *ptr, t_sample_net_data sett,
+				int *sockfd);
 int			read_stdin(fd_set *readfds);
 void		receive_scene_if_forest(t_minirt *minirt, uint16_t type, char *data,
-	uint64_t size);
+				uint64_t size);
 int			recv_error_client(int *sockfd, t_minirt *minirt);
 int			no_data_instruction(t_minirt *minirt, uint16_t type);
 void		calc_sample_for_server(t_minirt *minirt, int *sockfd);
 void		do_nothing(int sig);
 
-// ----------- UTILS ----------- //
+/*═════════════════════════════════════════════════════════════════════════════╗
+║                                  UTILS                                       ║
+╚═════════════════════════════════════════════════════════════════════════════*/
 
 int			connect_with_timeout(int sockfd, const struct sockaddr *addr,
-	socklen_t addrlen, int timeout_sec);
+				socklen_t addrlen, int timeout_sec);
 uint64_t	password_hash(const char *input, const char *challenge);
-char		random_basic_char();
+char		random_basic_char(void);
 int			is_connection_alive(int sockfd);
 char		*recv_large_data(int fd, uint64_t bytes_to_read);
-int			send_scene_data(int *sockfd, char *data, uint64_t size, uint16_t type);
-
+int			send_scene_data(int *sockfd, char *data, uint64_t size,
+				uint16_t type);
 
 #endif

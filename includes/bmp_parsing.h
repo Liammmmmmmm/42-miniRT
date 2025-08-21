@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_parsing.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:42:24 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/17 12:17:41 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 21:00:44 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	BMP_PARSING_H
+#ifndef BMP_PARSING_H
 # define BMP_PARSING_H
 
-#include "structs.h"
+# include "structs.h"
 
 typedef struct s_bmp_header
 {
@@ -60,7 +60,7 @@ int	extract_24bpp_pixel(t_bin *bin, size_t *i, uint32_t *value);
 int	extract_32bpp_pixel(t_bin *bin, size_t *i, uint32_t *value);
 int	extract_pixel(t_bin *bin, size_t *i, t_bmp *bmp, uint32_t *value);
 int	error_and_return(char *message);
-int	read_palette(t_bin* bin, size_t *i, t_bmp *bmp, size_t palette_entry_count);
+int	read_palette(t_bin *bin, size_t *i, t_bmp *bmp, size_t palette_entry_count);
 int	read_header(t_bmp *bmp, size_t *i, t_bin *bin);
 int	read_info(t_bmp *bmp, size_t *i, t_bin *bin);
 int	extract_raw_pixels(t_bin *bin, size_t *i, t_bmp *bmp);

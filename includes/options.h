@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:19:27 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 12:30:09 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 22:44:39 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ typedef struct s_bezier_frame
 	int			frame2;
 }	t_bezier_frame;
 
-int		tesselate_everything(int tab_size, t_tmp_obj_anim *pts, t_obj_anim *obj);
+int		tesselate_everything(int tab_size, t_tmp_obj_anim *pts, t_obj_anim *obj)
+		;
 int		get_frame_index_of_created_point(t_tmp_obj_anim *pts, int index);
-void	tessellate_straight_line(t_vec3 *output, uint32_t output_size, t_vec3 p1, t_vec3 p2);
+void	tessellate_straight_line(t_vec3 *output, uint32_t output_size,
+			t_vec3 p1, t_vec3 p2);
 void	tessellate_bezier3(t_vec3 *output, uint32_t output_size, t_bezier3 b);
 
 void	debug_print_animation(t_animation *anim);
@@ -50,6 +52,7 @@ int		parse_movement_points(char *str, t_obj_anim *obj);
 int		parse_one_anim_obj(char *str, t_obj_anim *obj);
 int		is_animate_option(t_minirt *minirt, char *argvi, int *y);
 int		parse_options(t_minirt *minirt, int argc, char **argv);
+int		parse_caustic_option(t_minirt *minirt, char *arg, int *y);
 
 char	*cut_string(char *str, char split);
 int		is_server_option(t_minirt *minirt, char *argvi, int *y);

@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 22:44:31 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/21 22:59:04 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ void		write_no_err(int fd, char *str, size_t size);
 void		auto_export(t_minirt *minirt);
 void		export_ppm_p6_minirt(const char *filename, t_minirt *minirt);
 
-void	export_render_state(t_minirt *minirt);
+void		export_render_state(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                     MLX                                      ║
@@ -264,7 +264,7 @@ void		set_heat_map_color(t_minirt *minirt);
 int			clean(t_minirt *minirt);
 void		clean_server_gpu_obj(t_shader_data *shader_data);
 
-void	init_float_render(t_minirt *minirt);
+void		init_float_render(t_minirt *minirt);
 
 /*═════════════════════════════════════════════════════════════════════════════╗
 ║                                  RAY TRACING                                 ║

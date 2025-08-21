@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_render_state.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 11:33:34 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 14:31:16 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 22:58:51 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ void	init_float_render(t_minirt *minirt)
 		|| read_int32_little(&minirt->options.load_render, 8, &sample) < 0
 		|| minirt->options.load_render.size - 12 != (size_t)(rw * rh * 3 * 8)
 		|| minirt->scene.win_width != rw || minirt->scene.win_height != rh)
-			return (ft_bzero(minirt->screen.float_render, sizeof(t_fcolor)
-			* minirt->viewport.render_w * minirt->viewport.render_h));
+		return (ft_bzero(minirt->screen.float_render, sizeof(t_fcolor)
+				* minirt->viewport.render_w * minirt->viewport.render_h));
 	minirt->screen.sample = sample;
-	ft_memcpy(minirt->screen.float_render, minirt->options.load_render.data + 12, rw * rh * 3 * 8);
+	ft_memcpy(minirt->screen.float_render,
+		minirt->options.load_render.data + 12, rw * rh * 3 * 8);
 }

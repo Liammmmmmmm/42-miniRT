@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/18 17:55:52 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 14:21:27 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,7 @@ void	render(t_minirt *minirt)
 	if (!minirt->options.no_display && !minirt->options.client.enabled)
 		ft_izero(minirt->screen.render,
 			minirt->scene.win_width * minirt->scene.win_height);
-	ft_bzero(minirt->screen.float_render, sizeof(t_fcolor)
-		* minirt->viewport.render_w * minirt->viewport.render_h);
+	init_float_render(minirt);
 	if (build_scene_gpu)
 		convert_scene_build(minirt, &minirt->scene, &minirt->viewport,
 			&minirt->shaders_data.scene);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options_server.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 09:54:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 22:50:44 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/23 18:21:33 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,6 @@ int	check_every_option2(t_minirt *minirt, char **argv, int *i)
 			return (0);
 	}
 	else if (is_server_option(minirt, argv[*i], i))
-	{
-		if (*i == 0)
-			return (0);
-	}
-	else if (check_every_option3(minirt, argv, i))
 	{
 		if (*i == 0)
 			return (0);

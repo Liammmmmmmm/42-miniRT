@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/21 22:58:36 by madelvin         ###   ########.fr        #
+#    Updated: 2025/08/23 16:27:04 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -227,7 +227,7 @@ NETWORK_FILE		= client/active_mode.c client/client.c client/passive_mode.c clien
 OPTIONS_DIR_GPU		= src/options/
 OPTIONS_FILE_GPU	= options_server.c options_common.c load_render.c animation.c animation_err.c animation_move_points.c \
 					animation_parse.c animation_tesselate.c animation_rotations.c \
-					animation_auto_rota.c server.c client.c
+					animation_auto_rota.c server.c client.c option_caustic.c
 
 RENDERING_DIR_GPU	= src/rendering/
 RENDERING_FILE_GPU	= pixel.c loop.c loop_utils.c loop_server.c no_display.c

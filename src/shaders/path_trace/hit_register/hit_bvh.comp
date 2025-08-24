@@ -22,66 +22,6 @@ bool    hit_register_loop(vec3 ro, vec3 rd, bvh_node node, inout hit_record rec)
 
 	while (i < node.prim_count)
 	{
-		if (prim_ti[node.first_prim + i].type == 0)
-		{
-			index = prim_ti[node.first_prim + i].indice;
-			if (hit_sphere(primitives[index], ro, rd, hit_tmp))
-			{
-				if (hit_tmp.t < rec.t)
-				{
-					rec = hit_tmp;
-					hit = true;
-					rec.object_type = 0;
-					rec.object_index = index;
-					rec.material_id = primitives[index].material_id;
-				}
-			}
-		}
-		if (prim_ti[node.first_prim + i].type == 1)
-		{
-			index = prim_ti[node.first_prim + i].indice;
-			if (hit_cylinder(primitives[index], ro, rd, hit_tmp))
-			{
-				if (hit_tmp.t < rec.t)
-				{
-					rec = hit_tmp;
-					hit = true;
-					rec.material_id = primitives[index].material_id;
-					rec.object_type = 1;
-					rec.object_index = index;
-				}
-			}
-		}
-		if (prim_ti[node.first_prim + i].type == 2)
-		{
-			index = prim_ti[node.first_prim + i].indice;
-			if (hit_cone(primitives[index], ro, rd, hit_tmp))
-			{
-				if (hit_tmp.t < rec.t)
-				{
-					rec = hit_tmp;
-					hit = true;
-					rec.material_id = primitives[index].material_id;
-					rec.object_type = 2;
-					rec.object_index = index;
-				}
-			}
-		}
-		if (prim_ti[node.first_prim + i].type == 3)
-		{
-			index = prim_ti[node.first_prim + i].indice;
-			if (hit_hyperboloid(hypers[index], ro, rd, hit_tmp, IT_MAX))
-			{
-				if (hit_tmp.t < rec.t)
-				{
-					rec = hit_tmp;
-					hit = true;
-					rec.material_id = hypers[index].material_id;
-					rec.object_type = 3;
-					rec.object_index = index;
-				}
-			}
-		}
 		if (prim_ti[node.first_prim + i].type == 4)
 		{
 			index = prim_ti[node.first_prim + i].indice;
@@ -111,6 +51,66 @@ bool    hit_register_loop(vec3 ro, vec3 rd, bvh_node node, inout hit_record rec)
 					}
 
 					
+				}
+			}
+		}
+		else if (prim_ti[node.first_prim + i].type == 0)
+		{
+			index = prim_ti[node.first_prim + i].indice;
+			if (hit_sphere(primitives[index], ro, rd, hit_tmp))
+			{
+				if (hit_tmp.t < rec.t)
+				{
+					rec = hit_tmp;
+					hit = true;
+					rec.object_type = 0;
+					rec.object_index = index;
+					rec.material_id = primitives[index].material_id;
+				}
+			}
+		}
+		else if (prim_ti[node.first_prim + i].type == 1)
+		{
+			index = prim_ti[node.first_prim + i].indice;
+			if (hit_cylinder(primitives[index], ro, rd, hit_tmp))
+			{
+				if (hit_tmp.t < rec.t)
+				{
+					rec = hit_tmp;
+					hit = true;
+					rec.material_id = primitives[index].material_id;
+					rec.object_type = 1;
+					rec.object_index = index;
+				}
+			}
+		}
+		else if (prim_ti[node.first_prim + i].type == 2)
+		{
+			index = prim_ti[node.first_prim + i].indice;
+			if (hit_cone(primitives[index], ro, rd, hit_tmp))
+			{
+				if (hit_tmp.t < rec.t)
+				{
+					rec = hit_tmp;
+					hit = true;
+					rec.material_id = primitives[index].material_id;
+					rec.object_type = 2;
+					rec.object_index = index;
+				}
+			}
+		}
+		else if (prim_ti[node.first_prim + i].type == 3)
+		{
+			index = prim_ti[node.first_prim + i].indice;
+			if (hit_hyperboloid(hypers[index], ro, rd, hit_tmp, IT_MAX))
+			{
+				if (hit_tmp.t < rec.t)
+				{
+					rec = hit_tmp;
+					hit = true;
+					rec.material_id = hypers[index].material_id;
+					rec.object_type = 3;
+					rec.object_index = index;
 				}
 			}
 		}

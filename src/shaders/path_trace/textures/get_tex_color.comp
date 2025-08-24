@@ -42,3 +42,16 @@ vec3	get_tex_color(int tex_index, float u, float v, vec3 hit_point)
 	}
 	return (vec3(0.0));
 }
+
+
+float	get_transparency(int tex_index, float u, float v)
+{
+	int	a;
+	int	b;
+
+	if (tex_ti[tex_index].type == 0) // Image
+	{
+		return (sample_texture(tex_index, vec2(u, v)).w);
+	}
+	return (0.0);
+}

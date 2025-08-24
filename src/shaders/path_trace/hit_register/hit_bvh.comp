@@ -89,11 +89,28 @@ bool    hit_register_loop(vec3 ro, vec3 rd, bvh_node node, inout hit_record rec)
 			{
 				if (hit_tmp.t < rec.t)
 				{
-					rec = hit_tmp;
-					hit = true;
-					rec.material_id = triangles[index].material_id;
-					rec.object_type = 4;
-					rec.object_index = index;
+
+					if (triangles[index].material_id != -1 && materials[triangles[index].material_id].color_tex_index != -1)
+					{
+						if (rand() < get_transparency(materials[triangles[index].material_id].color_tex_index, hit_tmp.u, hit_tmp.v))
+						{
+							rec = hit_tmp;
+							hit = true;
+							rec.material_id = triangles[index].material_id;
+							rec.object_type = 4;
+							rec.object_index = index;
+						}
+					}
+					else
+					{
+						rec = hit_tmp;
+						hit = true;
+						rec.material_id = triangles[index].material_id;
+						rec.object_type = 4;
+						rec.object_index = index;
+					}
+
+					
 				}
 			}
 		}

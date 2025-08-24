@@ -70,16 +70,6 @@ void	set_final_values(inout hit_record hit)
 	}
 	else if (hit.object_type == 4) // triangle
 	{
-		float u = hit.u;
-		float v = hit.v;
-		Triangle t = triangles[hit.object_index];
-		
-		float w = 1.0 - u - v;
-		hit.normal = normalize(w * t.v0.normal + u * t.v1.normal + v * t.v2.normal);
-		hit.front_face = true;
-		hit.u = w * t.v0.u + u * t.v1.u + v * t.v2.u;
-		hit.v = w * t.v0.v + u * t.v1.v + v * t.v2.v;
-
 		apply_all_map(hit);
 		hit.color = get_hit_register_color(triangles[hit.object_index].color, hit);
 	}

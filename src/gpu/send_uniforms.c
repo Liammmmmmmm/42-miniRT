@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   send_uniforms.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 17:43:45 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/06 15:00:00 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/26 16:58:34 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	viewport_uniforms(GLuint p, t_gpu_viewport *vp)
 	;
 	glUniform1i(glGetUniformLocation(p, VP"max_bounces"), vp->max_bounces);
 	glUniform1f(glGetUniformLocation(p, VP"ior_global"), vp->ior_global);
+	glUniform1f(glGetUniformLocation(p, VP"t_double_sided"), vp->t_double_sided)
+	;
 }
 
 void	camera_uniforms(GLuint p, t_gpu_camera *c)

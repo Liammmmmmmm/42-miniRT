@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   convert_objects.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 19:21:20 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/30 10:14:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/26 17:04:58 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	convert_viewport(t_gpu_viewport *dst, t_viewport *src, double ior)
 	dst->defocus_radius = (float)src->defocus_radius;
 	dst->max_bounces = src->max_bounces;
 	dst->ior_global = ior;
+	dst->t_double_sided = src->t_double_sided;
 	vec3_to_float3(&src->u, dst->u);
 	vec3_to_float3(&src->v, dst->v);
 	vec3_to_float3(&src->pixel_delta_u, dst->pixel_delta_u);

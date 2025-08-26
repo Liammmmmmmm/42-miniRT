@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:40:53 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/23 17:04:41 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/26 10:24:11 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,19 @@ int	parse_obj(char *filepath, t_custom_object *out_obj)
 	t_mesh				mesh;
 
 	printf("Start parsing : " YELLOW "%s\n" NC, filepath);
-	printf("Start reading file.\n");
 	ft_bzero(&mesh, sizeof(t_mesh));
 	if (read_file_to_temp_data(filepath, &temp_data) != 0)
 	{
 		free_after_exit(&temp_data, &mesh, 1);
 		return (print_error1("Failed to read and parse file data"));
 	}
-	printf("File finished being read.\n");
 	print_progress_bar(0, temp_data.temp_faces.num_elements);
 	if (build_indexed_mesh(&mesh, &temp_data) != 0)
 	{
 		free_after_exit(&temp_data, &mesh, 2);
 		return (print_error1("Failed to build indexed mesh"));
 	}
+	printf("\n");
 	if (flatten_mesh_to_object(out_obj, &mesh) != 0)
 	{
 		free_after_exit(&temp_data, &mesh, 3);

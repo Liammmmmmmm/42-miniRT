@@ -1,0 +1,31 @@
+tex wall1 image assets/textures/cube/greystone.bmp
+tex wall2 image assets/textures/cube/redbrick.bmp
+tex wall1n image assets/textures/cube/gray_wall.bmp
+tex wall2n image assets/textures/cube/brick.bmp
+
+# MATERIALS
+#	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color     scale      normal_map      normal_intensity
+mat	mat_top                       93, 93, 93       0.000000        1.000000       0.0000         0.000000    	1   				0.000000            255,255,255        1
+mat	mat_bot                       36, 36, 36        0.000000       1.000000       0.0000         0.000000    	1  					0.000000            255,255,255        1
+mat	mat_w1                        wall1   		    0.000000       1.000000       0.0000     	 0.000000     	1  					0.000000            255,255,255        1 wall1n   1
+mat	mat_w2                        wall2    		    0.000000       1.000000       0.0000     	 0.000000     	1  					0.000000            255,255,255        1 wall2n   1
+mat	mat_light                     255,255,255       0.000000       0.000000       0.0000     	 0.000000     	1  					15.000000           255,255,255        1
+
+
+# CUSTOM
+#	    origin                                      orientation                                    scale                                     path                material
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,  1.000000            10.000000,   10.000000,   10.000000         assets/obj/cube/wall2.obj			mat_w1
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,  1.000000            10,          10,          10     		    assets/obj/cube/top.obj				mat_top
+cu	  	0,    		 0,    	      0          		0.000000,    1.000000, -0.000000            10,          10,          10        		assets/obj/cube/light.obj        	mat_light
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,  1.000000            10.000000,   10.000000,   10.000000         assets/obj/cube/ground.obj       	mat_bot
+cu	    0.000000,    0.000000,   -0.000000          0.000000,    0.000000,  1.000000            10.000000,   10.000000,   10.000000         assets/obj/cube/wall1.obj           mat_w2
+
+# CAMERA
+#	    origin                                      orientation                                    field of view
+C       34.816000, 6.126592, 33.920000 -0.9, 0.000000, -0.2  45
+
+# AMBIENT
+#	strength             color
+A	1.000000             60,60,60
+
+W 384 216 #3840 2160

@@ -1,0 +1,14 @@
+tex earth_tex    image assets/textures/earth/earth_daymap_2k.bmp
+tex earth_normal image assets/textures/earth/earth_normal_map_2k.bmp
+tex stars        image assets/textures/skybox/stars-2k.hdr
+
+# MATERIALS
+#	name                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength   emission_color normal_map
+mat	earth_mat                  earth_tex           0.0            0.0            0.000000       0.000000       1.0                 0.000000            255,255,255  1  earth_normal 10
+
+A	0.1									stars
+
+C	4,2,0	-1,-0.5,0 90
+
+sp 0,0,0		4							earth_mat
+L  10,3,5        1    250, 249, 225

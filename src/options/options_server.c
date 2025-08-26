@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 09:54:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/23 18:21:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/26 15:16:39 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	basic_options(t_minirt *minirt, char **argv, int i)
 		minirt->options.no_display = 1;
 	else if (ft_strcmp(argv[i], "--auto-export") == 0)
 		minirt->options.auto_export = 1;
+	else if (ft_strcmp(argv[i], "--auto-save") == 0)
+		minirt->options.auto_save = 1;
 	else if (ft_strcmp(argv[i], "--compute-cpu") == 0)
 	{
 		if (minirt->options.client.enabled)

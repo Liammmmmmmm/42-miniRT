@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/23 16:27:04 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/08/26 15:25:27 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -349,6 +349,7 @@ $(LIBFT): make_libft
 
 $(MINILIBX): make_mlx
 
+bonus: all
 
 clean :
 	@make --no-print-directory -C $(LIBFTDIR) clean
@@ -387,4 +388,4 @@ fdebug: fcleanp
 norminette:
 	@norminette src/ libft/ includes/
 
-.PHONY: all clean fclean nothing_to_be_done re end_message norminette fast ffast debug fdebug fcleanp
+.PHONY: all clean fclean nothing_to_be_done re end_message norminette fast ffast debug fdebug fcleanp bonus

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 22:44:55 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/26 15:06:00 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -392,10 +392,11 @@ typedef struct s_options
 {
 	t_bool		no_display;
 	t_bool		auto_export;
+	t_bool		auto_save;
+	t_bool		sga;
 	int			max_samples;
 	char		*output_dir;
 	t_animation	anim;
-	t_bool		sga;
 	t_bool		cpu;
 	t_client	client;
 	t_server	server;

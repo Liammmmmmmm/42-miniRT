@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/19 10:26:15 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/26 15:24:15 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	render_frame(t_minirt *minirt)
 	if (minirt->options.no_display)
 		no_display_enable_first(minirt, &skip);
 	render(minirt);
+	if (minirt->options.auto_save && minirt->screen.sample % 10 == 0)
+		export_render_state(minirt);
 	render_micrort(minirt);
 	if (minirt->options.no_display)
 		no_display_enable(minirt);

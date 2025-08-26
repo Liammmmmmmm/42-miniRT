@@ -5,9 +5,9 @@ import mathutils
 
 # --- CONFIGURATION ---
 # Modifiez ces chemins pour qu'ils correspondent à votre configuration
-output_file_path = bpy.path.abspath("/home/liam/Documents/dev/42-miniRT/scenes/overview/church.rt")
-output_dir_obj = bpy.path.abspath("/home/liam/Documents/dev/42-miniRT/assets/obj/church/")
-output_texture_dir = bpy.path.abspath("/home/liam/Documents/dev/42-miniRT/assets/textures/church/")
+output_file_path = bpy.path.abspath("/home/liam/Documents/dev/42-miniRT/scenes/overview/2chevaux.rt")
+output_dir_obj = bpy.path.abspath("/home/liam/Documents/dev/42-miniRT/assets/obj/2chevaux/")
+output_texture_dir = bpy.path.abspath("/home/liam/Documents/dev/42-miniRT/assets/textures/2chevaux/")
 
 # --- FIN DE LA CONFIGURATION ---
 

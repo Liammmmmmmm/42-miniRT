@@ -6,7 +6,7 @@
 #    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/26 15:25:27 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/08/26 16:48:02 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,13 +33,13 @@ ERASE    = \033[2K\r
 ERASE2   = $(ERASE)\033[F$(ERASE)
 
 SEED_TMP = $(shell if command -v od >/dev/null 2>&1; then od -vAn -N8 -tu8 < /dev/urandom | tr -d ' '; fi)
-SEED	 = $(if $(SEED_TMP),$(SEED_TMP),42)
+SEED	 = $(if $(SEED_TMP),$(SEED_TMP)U,42)
 
 # Compiler and flags
 CC       = gcc
 
 DEPFLAGS = -MMD -MP
-CFLAGS   = $(DEPFLAGS) -DRANDOM_SEED=$(SEED) -Wall -Wextra #-Werror # -mavx # SIMD flag
+CFLAGS   = $(DEPFLAGS) -DRANDOM_SEED=$(SEED) -Wall -Wextra -Werror # -mavx # SIMD flag
 LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm -lXfixes
 GPU_FLAGS = -Wall -Wextra -g3 -DUSE_GPU -lGL -lGLEW -lglfw -ldl $(DEPFLAGS)
 DEBUG_FLAGS = -g3
@@ -301,7 +301,7 @@ $(OBJ_DIR)%.o : %.c $(REMAKE)
 	@$(CC) $(CFLAGS) -o $@ -c $< $(INCLUDES)
 	@printf "\n$(GREEN)[Compiling] $(NC)$(shell echo $< | sed 's|^srcs/||')";
 
-all : $(NAME) nothing_to_be_done
+all : make_libft make_mlx $(NAME) nothing_to_be_done
 
 nothing_to_be_done:
 	@if [ $(COMPILED_FILES) -eq 0 ]; then \
@@ -312,7 +312,7 @@ nothing_to_be_done:
 
 end_message:
 	@echo ""
-	@./print_image 40 40 < assets/make_image/res
+	@./assets/make_image/print_image 40 40 < assets/make_image/res
 	@echo "\n$(NORM_RET)";
 
 $(NAME) : $(MINILIBX) $(LIBFT) $(OBJ)
@@ -337,7 +337,7 @@ $(NAME)_gpu: $(MINILIBX) $(LIBFT) $(OBJ_GPU)
 	@$(CC) $(CFLAGS) -o $(NAME)_gpu $(OBJ_GPU) $(LIBFT) $(MINILIBX) $(LDFLAGS) $(GPU_FLAGS)
 	@make --no-print-directory end_message
 
-gpu: $(NAME)_gpu nothing_to_be_done
+gpu: make_libft make_mlx $(NAME)_gpu nothing_to_be_done
 
 make_libft:
 	@make --no-print-directory -C $(LIBFTDIR) all

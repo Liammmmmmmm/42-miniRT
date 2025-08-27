@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/27 13:01:24 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/08/27 13:30:51 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,7 +91,7 @@ UTILS_MLX_FILE		= font.c button.c editable_text.c slider_int.c string.c draw_cir
 UI_DIR				= src/ui/
 UI_FILE				= controls/button_click.c controls/init_buttons.c controls/clear_buttons.c controls/init_float_inputs.c controls/init_float_inputs2.c controls/init_text_inputs.c \
 					controls/init_sliders.c controls/init_color_picker.c controls/init_dropdown.c controls/init_dropdown2.c controls/add_material.c controls/add_object.c controls/add_object2.c controls/rm_object.c \
-					render/layout.c render/layout_left.c render/material_tab.c render/object_prop2.c render/object_prop3.c render/object_prop.c render/objects_tab.c \
+					render/layout.c render/layout_left.c render/material_tab.c render/object_prop2.c render/object_prop3.c render/object_prop.c render/objects_tab.c controls/check_material.c \
 					mouse_events/global.c mouse_events/materials.c mouse_events/objects2.c mouse_events/objects.c mouse_events/utils.c\
 					render.c list_objects.c list_materials.c selected_object.c selected_object2.c selected_mat.c \
 					dropdown.c dropdown2.c materials_dropdown.c default_dropdown.c textures_dropdown.c

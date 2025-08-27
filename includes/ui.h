@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:22:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 21:08:42 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/27 13:32:49 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ int		manage_scroll_selected_object(int key, int x, int y, t_minirt *minirt);
 int		material_tab_events(int key, int x, int y, t_minirt *minirt);
 
 void	add_material(t_minirt *minirt);
+char	check_mat(t_minirt *minirt, int i);
 void	create_default_sphere(t_object *obj);
 void	create_default_cyl(t_object *obj);
 void	create_default_cone(t_object *obj);

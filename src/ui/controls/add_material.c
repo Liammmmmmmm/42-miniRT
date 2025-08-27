@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   add_material.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 12:48:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/27 13:07:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/27 14:03:44 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "ui.h"
 
 t_mat	create_default_mat(void)
 {
@@ -26,45 +27,54 @@ t_mat	create_default_mat(void)
 	return (mat);
 }
 
-void	change_custom_obj_mat(t_minirt *minirt, t_mat *new, int i)
+void    change_custom_obj_mat(t_minirt *minirt, t_mat *new, int i)
 {
-	size_t			j;
-	t_custom_object	*obj;
+	size_t          j;
+	t_custom_object *obj;
 
 	obj = (t_custom_object *)minirt->scene.elements[i].object;
+	if (obj->material)
+	{
+		obj->material = (obj->material - &minirt->scene.materials[0]) \
+			+ &new[1];
+	}
 	j = 0;
 	while (j < obj->triangle_count)
 	{
-		obj->triangles->material
-			= (obj->material - &minirt->scene.materials[0]) + &new[1];
+		if (obj->triangles[j].material)
+		{
+			obj->triangles[j].material = 
+				(obj->triangles[j].material - &minirt->scene.materials[0]) \
+				+ &new[1];
+		}
 		j++;
 	}
 }
 
 void	change_primitive_mat(t_minirt *minirt, t_mat *new, int i)
 {
-	if (minirt->scene.elements[i].type == SPHERE)
-		((t_sphere *)minirt->scene.elements->object)->material
+	if (minirt->scene.elements[i].type == SPHERE && !check_mat(minirt, i))
+		((t_sphere *)minirt->scene.elements[i].object)->material
 			= (((t_sphere *)minirt->scene.elements[i].object)->material
 				- &minirt->scene.materials[0]) + &new[1];
-	if (minirt->scene.elements->type == CYLINDER)
-		((t_cylinder *)minirt->scene.elements->object)->material
+	if (minirt->scene.elements->type == CYLINDER && !check_mat(minirt, i))
+		((t_cylinder *)minirt->scene.elements[i].object)->material
 			= (((t_cylinder *)minirt->scene.elements[i].object)->material
 				- &minirt->scene.materials[0]) + &new[1];
-	if (minirt->scene.elements->type == PLANE)
-		((t_plane *)minirt->scene.elements->object)->material
+	if (minirt->scene.elements->type == PLANE && !check_mat(minirt, i))
+		((t_plane *)minirt->scene.elements[i].object)->material
 			= (((t_plane *)minirt->scene.elements[i].object)->material
 				- &minirt->scene.materials[0]) + &new[1];
-	if (minirt->scene.elements->type == CONE)
-		((t_cone *)minirt->scene.elements->object)->material
+	if (minirt->scene.elements->type == CONE && !check_mat(minirt, i))
+		((t_cone *)minirt->scene.elements[i].object)->material
 			= (((t_cone *)minirt->scene.elements[i].object)->material
 				- &minirt->scene.materials[0]) + &new[1];
-	if (minirt->scene.elements->type == HYPERBOLOID)
-		((t_hyperboloid *)minirt->scene.elements->object)->material
+	if (minirt->scene.elements->type == HYPERBOLOID && !check_mat(minirt, i))
+		((t_hyperboloid *)minirt->scene.elements[i].object)->material
 			= (((t_hyperboloid *)minirt->scene.elements[i].object)->material
 				- &minirt->scene.materials[0]) + &new[1];
-	if (minirt->scene.elements->type == TRIANGLE)
-		((t_triangle *)minirt->scene.elements->object)->material
+	if (minirt->scene.elements->type == TRIANGLE && !check_mat(minirt, i))
+		((t_triangle *)minirt->scene.elements[i].object)->material
 			= (((t_triangle *)minirt->scene.elements[i].object)->material
 				- &minirt->scene.materials[0]) + &new[1];
 }
@@ -80,7 +90,7 @@ void	change_all_material(t_minirt *minirt, t_mat *new)
 		if (minirt->scene.elements->type == CUSTOM)
 			change_custom_obj_mat(minirt, new, i);
 		i++;
-	}
+	}	
 }
 
 void	add_material(t_minirt *minirt)

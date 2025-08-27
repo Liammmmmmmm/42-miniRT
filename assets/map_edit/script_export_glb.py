@@ -3,20 +3,14 @@ import math
 import os
 import mathutils
 
-# --- CONFIGURATION ---
-# Modifiez ces chemins pour qu'ils correspondent à votre configuration
 output_file_path = bpy.path.abspath("/home/liam/Documents/dev/42-miniRT/scenes/overview/2chevaux.rt")
 output_dir_obj = bpy.path.abspath("/home/liam/Documents/dev/42-miniRT/assets/obj/2chevaux/")
 output_texture_dir = bpy.path.abspath("/home/liam/Documents/dev/42-miniRT/assets/textures/2chevaux/")
-
-# --- FIN DE LA CONFIGURATION ---
-
 
 short_names = {}
 full_names = {}
 
 def get_material_info(material):
-    # Valeurs par défaut
     color = (204, 204, 204)
     metallic = 0.0
     roughness = 0.5
@@ -37,10 +31,8 @@ def get_material_info(material):
     roughness_map = None
 
     if material.use_nodes and material.node_tree:
-        # Correction: Utiliser la variable 'material' passée en argument, pas 'mat'
         if material.users == 0:
-            return None # Ne pas traiter les matériaux non utilisés
-
+            return None
         for node in material.node_tree.nodes:
             if node.type == 'BSDF_PRINCIPLED':
                 # --- Base Color ---
@@ -216,12 +208,11 @@ def get_custom_info(obj):
     if not os.path.exists(output_dir_obj):
         os.makedirs(output_dir_obj)
 
-    # CORRECTION: Utilisation de la nouvelle fonction d'export OBJ
     if not os.path.exists(export_path):
         bpy.ops.wm.obj_export(
             filepath=export_path,
             check_existing=False,
-            export_selected_objects=True,  # Ce paramètre est correct pour cet opérateur
+            export_selected_objects=True,
             forward_axis='NEGATIVE_Z',
             up_axis='Y'
         )
@@ -310,16 +301,14 @@ with open(output_file_path, 'w') as file:
         os.makedirs(output_texture_dir)
 
     for image in bpy.data.images:
-        # On ignore les images générées ou vides
         if not image.has_data or image.size[0] == 0:
             continue
 
         short_name = make_unique_short_name(image.name)
-        ext = ".png"  # on choisit PNG pour l’universalité, sinon image.file_format peut être utilisé
+        ext = ".png"
         dst_filename = f"{short_name}{ext}"
         dst_path = os.path.join(output_texture_dir, dst_filename)
 
-        # Sauvegarde l’image si le fichier n’existe pas déjà
         if not os.path.exists(dst_path):
             try:
                 image.filepath_raw = dst_path
@@ -328,13 +317,9 @@ with open(output_file_path, 'w') as file:
             except Exception as e:
                 print(f"[Erreur] Impossible de sauvegarder {image.name} vers {dst_path} : {e}")
                 continue
-
-        # Écrire le chemin relatif dans le fichier .rt
         relative_texture_path = os.path.relpath(dst_path, os.path.dirname(output_file_path))
         line = f"tex {short_name} image {relative_texture_path}"
         file.write(line + "\n")
-
-
     file.write("\n")
     file.write("# MATERIALS\n")
     file.write("#\tname                          color             metallic       roughness      ior            transmission   ambient_occlusion   emission_strength     emission_color   scale      normal_map      normal_intensity\n")

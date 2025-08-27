@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 11:52:51 by madelvin          #+#    #+#             */
-/*   Updated: 2025/06/20 16:36:48 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/27 11:53:56 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char	handle_hit(t_object *obj, t_hit_register_data *data,
 	t_hit_record	tmp;
 
 	tmp.part = DEFAULT;
+	tmp.one_sided = out->one_sided;
 	if (obj->type == SPHERE
 		&& hit_sphere(obj->object, data->ray, &tmp))
 		return (update_hit_default(obj, &tmp, closest_t, out));

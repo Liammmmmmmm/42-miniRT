@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/26 16:48:02 by lilefebv         ###   ########lyon.fr    #
+#    Updated: 2025/08/27 11:43:02 by madelvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,12 +36,12 @@ SEED_TMP = $(shell if command -v od >/dev/null 2>&1; then od -vAn -N8 -tu8 < /de
 SEED	 = $(if $(SEED_TMP),$(SEED_TMP)U,42)
 
 # Compiler and flags
-CC       = gcc
+CC       = cc
 
 DEPFLAGS = -MMD -MP
 CFLAGS   = $(DEPFLAGS) -DRANDOM_SEED=$(SEED) -Wall -Wextra -Werror # -mavx # SIMD flag
 LDFLAGS  = -L$(MINILIBXDIR) -lXext -lX11 -lm -lXfixes
-GPU_FLAGS = -Wall -Wextra -g3 -DUSE_GPU -lGL -lGLEW -lglfw -ldl $(DEPFLAGS)
+GPU_FLAGS = -Wall -Wextra -DUSE_GPU -lGL -lGLEW -lglfw -ldl $(DEPFLAGS)
 DEBUG_FLAGS = -g3
 FAST_FLAGS = -O3 -flto -march=native -mtune=native -funroll-loops -ffast-math -falign-functions=32 -falign-loops=16
 # -O3 -march=native -mtune=native -flto -funsafe-math-optimizations -ffast-math -fomit-frame-pointer -funroll-loops -fno-exceptions -fno-rtti -fno-stack-protector -DNDEBUG -falign-functions=32 -falign-loops=16

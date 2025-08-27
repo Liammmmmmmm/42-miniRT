@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:40:21 by madelvin          #+#    #+#             */
-/*   Updated: 2025/07/17 11:42:28 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:41:53 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 #include "hit_register.h"
 #include <math.h>
 
-static void	init_hit_data(t_hit_register_data *data, double *closest_t)
+static void	init_hit_data(t_hit_register_data *data, double *closest_t,
+	char one_sided)
 {
 	*closest_t = 1000;
 	data->hit_record.part = DEFAULT;
+	data->hit_record.one_sided = one_sided;
 }
 
 static char	hit_loop(t_bvh *bvh, t_bvh_node *node,
@@ -50,7 +52,7 @@ char	hit_register_bvh(t_bvh *bvh, t_bvh_node *node,
 	double	closest_t;
 	double	transparency;
 
-	init_hit_data(data, &closest_t);
+	init_hit_data(data, &closest_t, bvh->one_sided);
 	if (!hit_loop(bvh, node, data, &closest_t))
 		return (0);
 	if (data->hit_record.mat && data->hit_record.mat->color_tex)

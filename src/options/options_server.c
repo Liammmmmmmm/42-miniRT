@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options_server.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 09:54:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/26 15:16:39 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/27 11:33:31 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	basic_options(t_minirt *minirt, char **argv, int i)
 		minirt->options.auto_export = 1;
 	else if (ft_strcmp(argv[i], "--auto-save") == 0)
 		minirt->options.auto_save = 1;
+	else if (ft_strcmp(argv[i], "--triangle-one-sided") == 0)
+		minirt->options.triangle_one_sided = 1;
 	else if (ft_strcmp(argv[i], "--compute-cpu") == 0)
 	{
 		if (minirt->options.client.enabled)
@@ -118,7 +120,6 @@ int	parse_options(t_minirt *minirt, int argc, char **argv)
 	minirt->options.auto_export = 0;
 	minirt->options.max_samples = 100000;
 	minirt->options.output_dir = empty_static_string();
-	printf("test\n");
 	i = 1;
 	if (argc >= 2)
 		is_client_option(minirt, argv[1], &i);
@@ -129,6 +130,5 @@ int	parse_options(t_minirt *minirt, int argc, char **argv)
 		if (check_every_option(minirt, argv, i) == 0)
 			return (0);
 	}
-	printf("test\n");
 	return (1);
 }

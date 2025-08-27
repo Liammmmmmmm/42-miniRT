@@ -5,7 +5,7 @@ bool hit_triangle(Triangle t, vec3 ro, vec3 rd, inout hit_record hit)
   vec3 h = cross(rd, e2);
   float a = dot(e1, h);
 
-  if (t_double_sided == 1)
+  if (viewport.t_one_sided == 0)
 	{
     if (abs(a) < 1e-6)
 			return false;
@@ -38,7 +38,7 @@ bool hit_triangle(Triangle t, vec3 ro, vec3 rd, inout hit_record hit)
     float w = 1.0 - u - v;
     vec3 outward_normal = normalize(w * t.v0.normal + u * t.v1.normal + v * t.v2.normal);
 
-    if ((t_double_sided == 1) && (dot(rd, outward_normal) > 0.0))
+    if ((viewport.t_one_sided == 0) && (dot(rd, outward_normal) > 0.0))
     {
       hit.front_face = false;
       hit.normal = -outward_normal;

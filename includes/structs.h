@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:39:37 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/26 15:06:00 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/27 11:48:59 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ typedef struct s_hit_record
 	double		u;
 	double		v;
 	t_obj_part	part;
+	char		one_sided;
 }	t_hit_record;
 
 typedef struct s_hit_register_data
@@ -394,6 +395,7 @@ typedef struct s_options
 	t_bool		auto_export;
 	t_bool		auto_save;
 	t_bool		sga;
+	t_bool		triangle_one_sided;
 	int			max_samples;
 	char		*output_dir;
 	t_animation	anim;

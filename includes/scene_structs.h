@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:03:30 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 19:19:27 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/27 11:53:05 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,6 +288,7 @@ typedef struct s_bvh
 	int			normal_mode;
 	t_vector	task_stack;
 	char		*render_mode;
+	char		one_sided;
 }	t_bvh;
 
 typedef struct s_photon
@@ -400,6 +401,7 @@ typedef struct s_viewport
 	t_vec3	defocus_disk_v;
 	int		max_bounces;
 	int		*depth_buffer;
+	t_bool	t_one_sided;
 }	t_viewport;
 
 #endif

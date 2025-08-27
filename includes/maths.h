@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:55:09 by madelvin          #+#    #+#             */
-/*   Updated: 2025/08/21 19:30:06 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/27 11:49:33 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char		hit_sphere(t_sphere *sphere, t_ray *r, t_hit_record *rec);
 char		hit_plane(t_plane *plane, const t_ray *r, t_hit_record *rec);
 char		hit_cylinder(t_cylinder *cylinder, t_ray *r, t_hit_record *rec);
 char		hit_cone(t_cone *cone, t_ray *ray, t_hit_record *rec);
-char		hit_triangle(t_triangle *t, t_ray *r, t_hit_record *rec);
+char    	hit_triangle(t_triangle *t, t_ray *r, t_hit_record *rec);
 char		hit_register_all(t_minirt *minirt, t_hit_register_data *data);
 char		hit_hyperboloid(t_hyperboloid *hyp, t_ray *r, t_hit_record *rec,
 				double interval_max);

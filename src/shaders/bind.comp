@@ -77,7 +77,6 @@ uniform sampler1D cdf_marginal_inverse;
 
 uniform uint planes_am;
 uniform uint lights_am;
-uniform uint t_double_sided;
 
 
 uniform uint max_bounces;

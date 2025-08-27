@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 09:54:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/23 18:25:50 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/27 11:04:55 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	basic_options(t_minirt *minirt, char **argv, int i)
 		minirt->options.auto_export = 1;
 	else if (ft_strcmp(argv[i], "--compute-cpu") == 0)
 		minirt->options.cpu = 1;
+	else if (ft_strcmp(argv[i], "--triangle-one-sided") == 0)
+		minirt->options.triangle_one_sided = 1;
 	else if (ft_strcmp(argv[i], "--standard-galactic-alphabet") == 0)
 		minirt->options.sga = 1;
 	else

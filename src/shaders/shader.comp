@@ -56,7 +56,7 @@ void main() {
 	else if (render_mode == 2)
 		data[id] = path_trace_normal(ro, rd);
 	// data[id] = vec3(ambiant.skybox_tex_index);
-	// if (kdtree_node_count )
+	// if (viewport.t_one_sided == 1)
 	// 	data[id] = vec3(1.0);
 	// else
 	// 	data[id] = vec3(0.0);

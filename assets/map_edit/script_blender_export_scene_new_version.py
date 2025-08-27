@@ -3,18 +3,14 @@ import math
 import os
 import mathutils
 
-# --- CONFIGURATION ---
-# Modifiez ces chemins pour qu'ils correspondent à votre configuration
 output_file_path = bpy.path.abspath("/home/madelvin/Documents/minirt/scenes/overview/winter.rt")
 output_dir_obj = bpy.path.abspath("/home/madelvin/Documents/minirt/assets/obj/winter/")
-# --- FIN DE LA CONFIGURATION ---
 
 
 short_names = {}
 full_names = {}
 
 def get_material_info(material):
-    # Valeurs par défaut
     color = (204, 204, 204)
     metallic = 0.0
     roughness = 0.5
@@ -35,9 +31,8 @@ def get_material_info(material):
     roughness_map = None
 
     if material.use_nodes and material.node_tree:
-        # Correction: Utiliser la variable 'material' passée en argument, pas 'mat'
         if material.users == 0:
-            return None # Ne pas traiter les matériaux non utilisés
+            return None
 
         for node in material.node_tree.nodes:
             if node.type == 'BSDF_PRINCIPLED':
@@ -214,12 +209,11 @@ def get_custom_info(obj):
     if not os.path.exists(output_dir_obj):
         os.makedirs(output_dir_obj)
 
-    # CORRECTION: Utilisation de la nouvelle fonction d'export OBJ
     if not os.path.exists(export_path):
         bpy.ops.wm.obj_export(
             filepath=export_path,
             check_existing=False,
-            export_selected_objects=True,  # Ce paramètre est correct pour cet opérateur
+            export_selected_objects=True,
             forward_axis='NEGATIVE_Z',
             up_axis='Y'
         )

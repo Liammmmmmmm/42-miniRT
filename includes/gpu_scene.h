@@ -37,7 +37,7 @@ typedef struct s_gpu_viewport
 	float	focal_length;
 	float	height;
 	float	width;
-	int		t_double_sided;
+	int		t_one_sided;
 	int		render_w;
 	int		render_h;
 	float	gamma;

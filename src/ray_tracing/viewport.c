@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/08/21 22:36:15 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/27 11:57:28 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ static void	init_viewport_values(t_minirt *minirt, t_viewport *vp, t_vec3 *u)
 			minirt->scene.el_amount);
 		minirt->scene.build_bvh = 0;
 		minirt->scene.bvh.render_mode = &minirt->render_mode;
+		minirt->scene.bvh.one_sided = minirt->options.triangle_one_sided;
 		if (minirt->options.caustic.caustic_enable)
 			caustic_manager(minirt, minirt->options.caustic.nb_photon);
 	}
-	vp->gamma = minirt->viewport.gamma;
 	vp->render_w = minirt->scene.render_width;
 	vp->render_h = minirt->scene.render_height;
 	vp->width = 2.0 * tan(minirt->controls.values.fov * (PI_D / 180.0) / 2.0)
@@ -100,8 +100,10 @@ t_viewport	init_viewport(t_minirt *minirt)
 		minirt->scene.amb_light.last_calc_importance
 			= minirt->scene.amb_light.skybox_t;
 	}
+	vp.gamma = minirt->viewport.gamma;
 	init_viewport_values(minirt, &vp, &u);
 	init_viewport_vectors(minirt, &vp, u);
+	vp.t_one_sided = minirt->options.triangle_one_sided;
 	if (minirt->viewport.depth_buffer == NULL && !minirt->options.client.enabled
 		&& !minirt->options.server.enabled)
 	{

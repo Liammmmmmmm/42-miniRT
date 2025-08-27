@@ -120,6 +120,7 @@ struct Viewport {
 	vec3	defocus_disk_v;
 	int		max_bounces;
 	float	ior_global;
+	int		t_one_sided;
 };
 
 struct Ambiant {

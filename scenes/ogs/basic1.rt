@@ -1,7 +1,7 @@
-# tex skybox2  image         assets/textures/skybox/syferfontein_18d_clear_2k.hdr
+tex skybox  image         assets/textures/skybox/syferfontein_18d_clear_2k.hdr
 # tex skybox image assets/textures/skybox/sunflowers_puresky_2k.hdr
 # tex skybox  image         assets/textures/skybox/brown_photostudio_02_2k_greyscale.bmp
-tex skybox  image         assets/textures/skybox/shanghai_bund_2k.hdr
+# tex skybox  image         assets/textures/skybox/shanghai_bund_2k.hdr
 tex checker checker_local  2  204,158,51 255,255,255
 tex checkerm checker_local 2  255,255,255 0,0,0
 tex checkerr checker_local 2  13, 13, 13  250,250,250

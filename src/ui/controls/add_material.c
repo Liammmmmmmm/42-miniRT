@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_material.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 12:48:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/11 17:40:31 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/27 13:07:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ void	change_all_material(t_minirt *minirt, t_mat *new)
 {
 	int	i;
 
-	printf("entry\n");
-	(void)new;
 	i = 0;
 	while (i < minirt->scene.el_amount)
 	{

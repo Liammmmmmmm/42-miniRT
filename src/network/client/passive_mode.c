@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 11:48:32 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/18 10:46:49 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/27 13:06:42 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	passive_mode(int *sockfd, t_minirt *minirt)
 	char				server_ip[INET_ADDRSTRLEN];
 
 	minirt->screen.start_render = 0;
+	ft_bzero(&server_addr,sizeof(server_addr));
 	if (init_passive_listening(&pass_fd) < 0)
 		return (-1);
 	addr_len = sizeof(server_addr);

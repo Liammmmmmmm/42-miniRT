@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/27 11:43:02 by madelvin         ###   ########.fr        #
+#    Updated: 2025/08/27 13:01:24 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SEED_TMP = $(shell if command -v od >/dev/null 2>&1; then od -vAn -N8 -tu8 < /de
 SEED	 = $(if $(SEED_TMP),$(SEED_TMP)U,42)
 
 # Compiler and flags
-CC       = cc
+CC       = gcc
 
 DEPFLAGS = -MMD -MP
 CFLAGS   = $(DEPFLAGS) -DRANDOM_SEED=$(SEED) -Wall -Wextra -Werror # -mavx # SIMD flag

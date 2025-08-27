@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   importance_sampling.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 18:49:12 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 22:02:26 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/27 13:05:23 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ Good to know:
 glTexImage2D(
 	GL_TEXTURE_2D,	// Target
 	0,				// Mipmap level
-	GL_R32F,		// Format interne (1 canal float)
+	GL_R32F,		// Intern format (1 canal float)
 	width, height,	// Dimensions
-	0,				// Border (doit être 0)
-	GL_RED,			// Format des données (1 canal)
-	GL_FLOAT,		// Type des données
-	data			// Pointeur vers les données
+	0,				// Border (must be 0)
+	GL_RED,			// Data format (1 canal)
+	GL_FLOAT,		// Data type
+	data			// Pointer to the data
 );
 */
 GLuint	create_texture2d_from_data(const float *data, int width, int height)
@@ -45,12 +45,12 @@ Good to know:
 glTexImage1D(
 	GL_TEXTURE_1D,	// Target
 	0,				// Mipmap level
-	GL_R32F,		// Format interne (1 canal float)
+	GL_R32F,		// Intern format (1 canal float)
 	width,			// Taille de la texture (1 dimension)
-	0,				// Border (doit être 0)
-	GL_RED,			// Format des données (1 canal)
-	GL_FLOAT,		// Type des données
-	data			// Pointeur vers les données
+	0,				// Border (must be 0)
+	GL_RED,			// Data format (1 canal)
+	GL_FLOAT,		// Data type
+	data			// Pointer to the data
 );
 */
 GLuint	create_texture1d_from_data(const float *data, int width)

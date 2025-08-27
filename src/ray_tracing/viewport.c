@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viewport.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:36:33 by madelvin          #+#    #+#             */
-/*   Updated: 2025/08/27 11:57:28 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/27 13:03:34 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ t_viewport	init_viewport(t_minirt *minirt)
 		minirt->scene.amb_light.last_calc_importance
 			= minirt->scene.amb_light.skybox_t;
 	}
-	vp.gamma = minirt->viewport.gamma;
 	init_viewport_values(minirt, &vp, &u);
 	init_viewport_vectors(minirt, &vp, u);
+	vp.gamma = minirt->viewport.gamma;
 	vp.t_one_sided = minirt->options.triangle_one_sided;
 	if (minirt->viewport.depth_buffer == NULL && !minirt->options.client.enabled
 		&& !minirt->options.server.enabled)

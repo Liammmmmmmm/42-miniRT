@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 14:08:52 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 20:46:02 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/27 13:06:58 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	more_types(t_objects type)
 	else if (type == TEXTURE)
 	{
 		ft_dprintf(2, RED"[Error]"NC" Invalid texture. Expected: tex "BLUE);
-		ft_dprintf(2, "<name> <filepath>\n"NC);
+		ft_dprintf(2, "<name> <type> <filepath>\n"NC);
 	}
 	else if (type == WINDOW)
 	{

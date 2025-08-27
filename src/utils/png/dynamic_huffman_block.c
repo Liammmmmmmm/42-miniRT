@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 10:56:08 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/06/17 11:09:43 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/27 14:29:54 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,7 @@ int	handle_dynamic_huffman_block(t_bit_stream *stream, t_bin_cursor *out_buf,
 		free(huffman_table.hlit.codes);
 		return (print_err_png("Failed to decompress Huffman data"));
 	}
+	free(huffman_table.hlit.code_lengths);
+	free(huffman_table.hlit.codes);
 	return (0);
 }

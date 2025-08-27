@@ -65,7 +65,7 @@ make
 
 ## Authors
 
-**[Liammmmmmmm](https://github.com/Liammmmmmmm)** & **[delnath](https://github.com/delmath)**
+**[Liammmmmmmm](https://github.com/Liammmmmmmm)** & **[delmath](https://github.com/delmath)**
 
 *Project carried out as part of the 42 curriculum, but we admit we got a little carried away...*
 

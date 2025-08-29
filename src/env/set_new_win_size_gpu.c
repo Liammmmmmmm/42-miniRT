@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:55:39 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/28 18:10:33 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/29 10:24:51 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@ void	try_set_new_size(t_minirt *minirt)
 			* minirt->scene.render_height);
 	if (new_render)
 	{
-		delete_ssbo(&minirt->shaders_data.ssbo);
-		init_ssbo(&minirt->shaders_data, minirt->scene.render_width,
-			minirt->scene.render_height);
+		if (!minirt->options.cpu)
+		{
+			delete_ssbo(&minirt->shaders_data.ssbo);
+			init_ssbo(&minirt->shaders_data, minirt->scene.render_width,
+				minirt->scene.render_height);
+		}
 		free(minirt->screen.float_render);
 		minirt->screen.float_render = new_render;
 	}

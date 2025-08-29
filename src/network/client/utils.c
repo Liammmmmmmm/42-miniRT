@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:19:43 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/18 16:29:31 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/29 10:19:38 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	calc_sample_for_server(t_minirt *minirt, int *sockfd)
 	printf("Called to calculate a frame\n");
 	minirt->options.client.sockfd = sockfd;
 	minirt->screen.sample = 1;
-	render(minirt);
+	render_gpu(minirt);
 }
 
 int	no_data_instruction(t_minirt *minirt, uint16_t type)

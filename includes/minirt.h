@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:40:06 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 22:59:04 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/29 10:18:33 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,13 @@ typedef enum e_keys
 
 # define ERR_F "Invalid format for"
 
+int			main_cpu(t_minirt *minirt, char **argv);
+int			main_gpu(t_minirt *minirt, char **argv);
+
+void		put_render_to_buff_upscaling(t_minirt *minirt);
+void		auto_export(t_minirt *minirt);
+void		check_sample_amount(t_minirt *minirt);
+
 void		init_animated_items(t_minirt *minirt);
 
 void		set_values_cone(t_cone *obj);
@@ -237,7 +244,6 @@ void		restart_minirt(t_minirt *minirt);
 int			all_startup_options(t_minirt *minirt, pthread_t *server);
 void		clean_everything(t_minirt *minirt, pthread_t server);
 
-int			render_next_frame(t_minirt *minirt);
 void		render_frame(t_minirt *minirt);
 void		render_frame_server(t_minirt *minirt);
 int			init_render(t_minirt *minirt);
@@ -247,7 +253,8 @@ int			exit_if_anim_finished(t_minirt *minirt);
 int			calc_gradiant_color(int color_a, int color_b, float ratio);
 void		put_render_to_buff(t_minirt *minirt);
 void		copy_buff_to_image(t_minirt *minirt);
-void		render(t_minirt *minirt);
+void		render_cpu(t_minirt *minirt);
+void		render_gpu(t_minirt *minirt);
 void		calc_one_sample(t_minirt *minirt, t_vec3 offset, int max_bounces);
 
 void		check_sample_amount(t_minirt *minirt);

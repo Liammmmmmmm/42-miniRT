@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/07/28 18:43:23 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/29 10:17:32 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	put_render_to_buff_upscaling(t_minirt *minirt)
 		bicubic_upscale(minirt);
 }
 
-void	draw_pixels(t_minirt *minirt)
+static void	draw_pixels(t_minirt *minirt)
 {
 	t_vec3	offset;
 
@@ -83,7 +83,7 @@ void	check_sample_amount(t_minirt *minirt)
 	}
 }
 
-void	render(t_minirt *minirt)
+void	render_cpu(t_minirt *minirt)
 {
 	manage_movements(minirt);
 	if (!minirt->screen.start_render || minirt->screen.pause_render)

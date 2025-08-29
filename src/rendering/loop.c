@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:31:03 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/27 13:54:25 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/29 10:15:31 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ void	render_frame(t_minirt *minirt)
 		return ;
 	if (minirt->options.no_display)
 		no_display_enable_first(minirt, &skip);
-	render(minirt);
+	if (minirt->options.cpu)
+		render_cpu(minirt);
+	else
+		render_gpu(minirt);
 	if (minirt->options.auto_save && minirt->screen.sample % 10 == 0)
 		export_render_state(minirt);
 	render_micrort(minirt);

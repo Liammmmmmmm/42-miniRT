@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+         #
+#    By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 09:42:48 by lilefebv          #+#    #+#              #
-#    Updated: 2025/08/27 15:01:17 by madelvin         ###   ########.fr        #
+#    Updated: 2025/08/29 10:27:34 by lilefebv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,8 +66,6 @@ MINILIBX    = $(MINILIBXDIR)libmlx_Linux.a
 INCLUDES = -I includes/ -I $(LIBFTDIR)includes/ -I $(MINILIBXDIR)
 
 # Source files mandatory
-SRC_DIR             = src/
-SRC_FILE            = main.c
 
 CAUSTIC_DIR         = src/caustic/
 CAUSTIC_FILE        = kd_tree/kd_tree_build_utils.c kd_tree/kd_tree_build.c kd_tree/kd_tree_destroy.c kd_tree/kd_tree_print.c kd_tree/kd_tree_task.c \
@@ -102,23 +100,8 @@ DEBUG_FILE          = print_scene.c print_utils.c print_obj1.c print_obj2.c prin
 EVENT_DIR           = src/events/
 EVENT_FILE          = utils.c destroy.c  hooks.c  key_common.c  key_controls.c key_render.c key_render2.c mouse_common.c  mouse_controls.c  mouse_render.c scroll_actions.c
 
-RAY_TRACING_DIR     = src/ray_tracing/
-RAY_TRACING_FILE    = render.c manage_movement.c init_animated_items.c focus.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c \
-					bvh/bvh_draw_utils.c bvh/bvh_obj_bounds.c setup_scene_obj.c background.c viewport.c path_trace.c hit_register/apply_map.c hit_register/get_hdr_value.c \
-					hit_register/get_hit_color.c hit_register/get_tex_color.c hit_register/hit_register.c hit_register/hit_obj.c bvh/bvh_hit.c micrort.c bvh/bvh_build.c \
-					importance_sampling/get_dir.c importance_sampling/calc_pdf.c importance_sampling/calc_cdf.c importance_sampling/importance_sampling_manager.c \
-					importance_sampling/init_maloc_importance_sampling.c calc_sample.c light/d_light.c light/p_light.c light/light_manager.c
-
 TEXTURES_DIR        = src/ray_tracing/textures/
 TEXTURES_FILE       = get_solid_texture.c
-
-RENDERING_DIR       = src/rendering/
-RENDERING_FILE      = pixel.c loop.c loop_utils.c no_display.c
-
-ENV_DIR             = src/env/
-ENV_FILE            = init_mlx.c free_mlx.c init_controls.c init_ui.c set_dependant_values.c \
-					micrort_init.c set_dependant_values_objs.c set_dependant_values_objs2.c \
-					set_new_win_size.c
 
 MAT_DIR             = src/material/
 MAT_FILE            = utils.c dielectric.c material_default.c metallic.c refraction.c
@@ -161,40 +144,14 @@ EDIT_MOD_FILE       = select_obj.c movements.c movements_utils.c
 UPSCALING_DIR       = src/upscaling/
 UPSCALING_FILE      = bilinear.c bicubic.c utils.c no_upscaling.c
 
-OPTIONS_DIR         = src/options/
-OPTIONS_FILE        = options.c options_common.c load_render.c animation.c animation_err.c animation_move_points.c animation_parse.c animation_tesselate.c animation_rotations.c animation_auto_rota.c option_caustic.c
-
 PNG_DIR             = src/utils/png/
 PNG_FILE            = bit_stream.c dynamic_huffman_block.c parse_png_header.c png_filters.c decode_deflate_utils.c \
 					generate_huffman_codes.c parse_png_idat.c read_deflate.c decode_table.c huffman_table.c \
 					parse_png_utils.c zlib_block.c decompress_data.c parse_png.c png_debug.c decompress_data_utils.c \
 					parse_png_chunk.c png_filter.c
 
-M_FILE  =   $(addprefix $(SRC_DIR), $(SRC_FILE)) \
-			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
-			$(addprefix $(DEBUG_DIR), $(DEBUG_FILE)) \
-			$(addprefix $(EVENT_DIR), $(EVENT_FILE)) \
-			$(addprefix $(RAY_TRACING_DIR), $(RAY_TRACING_FILE)) \
-			$(addprefix $(TEXTURES_DIR), $(TEXTURES_FILE)) \
-			$(addprefix $(RENDERING_DIR), $(RENDERING_FILE)) \
-			$(addprefix $(MAT_DIR), $(MAT_FILE)) \
-			$(addprefix $(MATH_DIR), $(MATH_FILE)) \
-			$(addprefix $(UTILS_MLX_DIR), $(UTILS_MLX_FILE)) \
-			$(addprefix $(UI_DIR), $(UI_FILE)) \
-			$(addprefix $(PARSING_DIR), $(PARSING_FILE)) \
-			$(addprefix $(FONT_PARS_DIR), $(FONT_PARS_FILE)) \
-			$(addprefix $(FONT_REND_DIR), $(FONT_REND_FILE)) \
-			$(addprefix $(ENV_DIR), $(ENV_FILE)) \
-			$(addprefix $(EDIT_MOD_DIR), $(EDIT_MOD_FILE)) \
-			$(addprefix $(UPSCALING_DIR), $(UPSCALING_FILE)) \
-			$(addprefix $(PPM_DIR), $(PPM_FILE)) \
-			$(addprefix $(HDR_PARSING_DIR), $(HDR_PARSING_FILE)) \
-			$(addprefix $(OPTIONS_DIR), $(OPTIONS_FILE)) \
-			$(addprefix $(PNG_DIR), $(PNG_FILE)) \
-			$(addprefix $(CAUSTIC_DIR), $(CAUSTIC_FILE))
-
 SRC_DIR_GPU         = src/
-SRC_FILE_GPU        = main_shader.c main_shader_utils.c
+SRC_FILE_GPU        = main.c main_cpu.c main_shader.c main_shader_utils.c
 
 GPU_DIR             = src/gpu/
 GPU_FILE            = init_shader.c compile_shader.c clean_shaders.c \
@@ -204,7 +161,7 @@ GPU_FILE            = init_shader.c compile_shader.c clean_shaders.c \
 					
 
 RAY_TRACING_DIR_GPU     = src/ray_tracing/
-RAY_TRACING_FILE_GPU    = render_gpu.c manage_movement.c init_animated_items.c focus.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c \
+RAY_TRACING_FILE_GPU    = render_gpu.c render.c manage_movement.c init_animated_items.c focus.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c \
 					bvh/bvh_draw_utils.c bvh/bvh_obj_bounds.c setup_scene_obj.c background.c viewport.c path_trace.c hit_register/apply_map.c hit_register/get_hdr_value.c \
 					hit_register/get_hit_color.c hit_register/get_tex_color.c hit_register/hit_register.c hit_register/hit_obj.c bvh/bvh_hit.c micrort.c bvh/bvh_build.c \
 					importance_sampling/get_dir.c importance_sampling/calc_pdf.c importance_sampling/calc_cdf.c importance_sampling/importance_sampling_manager.c \
@@ -225,15 +182,14 @@ NETWORK_FILE        = client/active_mode.c client/client.c client/passive_mode.c
 					utils.c utils2.c
 
 OPTIONS_DIR_GPU     = src/options/
-OPTIONS_FILE_GPU    = options_server.c options_common.c load_render.c animation.c animation_err.c animation_move_points.c \
+OPTIONS_FILE_GPU    = options.c options_common.c load_render.c animation.c animation_err.c animation_move_points.c \
 					animation_parse.c animation_tesselate.c animation_rotations.c \
 					animation_auto_rota.c server.c client.c option_caustic.c
 
 RENDERING_DIR_GPU   = src/rendering/
 RENDERING_FILE_GPU  = pixel.c loop.c loop_utils.c loop_server.c no_display.c
 
-
-M_FILE_GPU = $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
+M_FILE  =   $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 			$(addprefix $(UTILS_DIR), $(UTILS_FILE)) \
 			$(addprefix $(DEBUG_DIR), $(DEBUG_FILE)) \
 			$(addprefix $(EVENT_DIR), $(EVENT_FILE)) \
@@ -261,9 +217,7 @@ M_FILE_GPU = $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 # Object files directory
 OBJ_DIR   = .obj/
 OBJ       = $(M_FILE:%.c=$(OBJ_DIR)%.o)
-OBJ_GPU   = $(M_FILE_GPU:%.c=$(OBJ_DIR)%.o)
 DEPS      = $(M_FILE:%.c=$(OBJ_DIR)%.d)
-DEPS_GPU  = $(M_FILE_GPU:%.c=$(OBJ_DIR)%.d)
 
 # NORMINETTE
 NORM_RET = $(RED)[ERROR]$(BOLD) Norminette Disable$(NC)
@@ -310,21 +264,8 @@ $(NAME) : $(MINILIBX) $(LIBFT) $(OBJ)
 	fi
 	@$(eval COMPILED_FILES := 1)
 	@echo "\n\n$(GREEN)[Compiling program] $(NC)$(NAME)"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(MINILIBX) $(LDFLAGS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(MINILIBX) $(LDFLAGS) $(GPU_FLAGS)
 	@make --no-print-directory end_message
-
-$(NAME)_gpu: $(MINILIBX) $(LIBFT) $(OBJ_GPU)
-	@if [ $(COMPILED_FILES) -eq 0 ]; then \
-		echo "\n$(YELLOW)╔══════════════════════════════════════════════╗$(NC)";                          \
-		echo "$(YELLOW)║        Starting $(YELLOW2)$(NAME)_gpu$(YELLOW) compilation...        ║$(NC)";           \
-		echo "$(YELLOW)╚══════════════════════════════════════════════╝$(NC)";                        \
-	fi
-	@$(eval COMPILED_FILES := 1)
-	@echo "\n\n$(GREEN)[Compiling program] $(NC)$(NAME)_gpu"
-	@$(CC) $(CFLAGS) -o $(NAME)_gpu $(OBJ_GPU) $(LIBFT) $(MINILIBX) $(LDFLAGS) $(GPU_FLAGS)
-	@make --no-print-directory end_message
-
-gpu: make_libft make_mlx $(NAME)_gpu nothing_to_be_done
 
 make_libft:
 	@make --no-print-directory -C $(LIBFTDIR) all
@@ -378,4 +319,3 @@ norminette:
 .PHONY: all clean fclean nothing_to_be_done re end_message norminette fast ffast debug fdebug fcleanp bonus
 
 -include $(DEPS)
--include $(DEPS_GPU)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_shader_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 18:09:17 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 21:54:06 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/29 10:13:06 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@
 #include "options.h"
 #include "error_message.h"
 #include "network.h"
+
+static int	render_next_frame(t_minirt *minirt)
+{
+	if (minirt->options.server.enabled)
+		render_frame_server(minirt);
+	else
+		render_frame(minirt);
+	return (1);
+}
 
 void	default_startup(t_minirt *minirt)
 {

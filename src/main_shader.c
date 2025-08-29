@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_shader.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:31:47 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 22:45:00 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/29 10:13:26 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,6 @@
 #include "options.h"
 #include "error_message.h"
 #include "network.h"
-
-int	render_next_frame(t_minirt *minirt)
-{
-	if (minirt->options.server.enabled)
-		render_frame_server(minirt);
-	else
-		render_frame(minirt);
-	return (1);
-}
 
 int	clean(t_minirt *minirt)
 {
@@ -46,7 +37,7 @@ int	clean(t_minirt *minirt)
 	return (1);
 }
 
-int	init_all(t_minirt *minirt)
+static int	init_all(t_minirt *minirt)
 {
 	if (pthread_mutex_init(&minirt->screen.sample_mutex, NULL))
 		return (clean(minirt));
@@ -84,25 +75,19 @@ void	clean_server_gpu_obj(t_shader_data *shader_data)
 	free(shader_data->tex.textures_types_indices);
 }
 
-int	main(int argc, char **argv)
+int	main_gpu(t_minirt *minirt, char **argv)
 {
-	t_minirt	minirt;
 	pthread_t	server;
 
-	if (argc < 2)
-		return (print_error1(ERR_MAIN));
-	ft_bzero(&minirt, sizeof(t_minirt));
-	if (!parse_options(&minirt, argc, argv))
-		return (1);
-	if (!minirt.options.client.enabled)
+	if (!minirt->options.client.enabled)
 	{
-		if (parse_scene(&minirt, argv[1]) == 0)
+		if (parse_scene(minirt, argv[1]) == 0)
 			return (1);
 	}
-	if (init_all(&minirt))
+	if (init_all(minirt))
 		return (1);
-	if (all_startup_options(&minirt, &server))
+	if (all_startup_options(minirt, &server))
 		return (1);
-	clean_everything(&minirt, server);
+	clean_everything(minirt, server);
 	return (0);
 }

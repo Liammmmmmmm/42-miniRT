@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 09:54:53 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/27 11:04:55 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/08/29 10:08:19 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,16 @@ int	basic_options(t_minirt *minirt, char **argv, int i)
 		minirt->options.no_display = 1;
 	else if (ft_strcmp(argv[i], "--auto-export") == 0)
 		minirt->options.auto_export = 1;
-	else if (ft_strcmp(argv[i], "--compute-cpu") == 0)
-		minirt->options.cpu = 1;
+	else if (ft_strcmp(argv[i], "--auto-save") == 0)
+		minirt->options.auto_save = 1;
 	else if (ft_strcmp(argv[i], "--triangle-one-sided") == 0)
 		minirt->options.triangle_one_sided = 1;
+	else if (ft_strcmp(argv[i], "--compute-cpu") == 0)
+	{
+		if (minirt->options.client.enabled)
+			return (print_error1("Cannot use cpu for a client"));
+		minirt->options.cpu = 1;
+	}
 	else if (ft_strcmp(argv[i], "--standard-galactic-alphabet") == 0)
 		minirt->options.sga = 1;
 	else
@@ -30,16 +36,48 @@ int	basic_options(t_minirt *minirt, char **argv, int i)
 	return (1);
 }
 
-int	check_every_option2(t_minirt *minirt, char **argv, int *i)
+int	check_every_option3(t_minirt *minirt, char **argv, int *i)
 {
-	if (is_animate_option(minirt, argv[*i], i))
+	if (is_max_bounces_option(minirt, argv[*i], i))
+	{
+		if (*i == 0)
+			return (0);
+	}
+	else if (is_client_option(minirt, argv[*i], i))
+	{
+		if (*i == 0)
+			return (0);
+	}
+	else if (is_load_render_option(minirt, argv[*i], i))
+	{
+		if (*i == 0)
+			return (0);
+	}
+	else if (parse_caustic_option(minirt, argv[*i], i))
 	{
 		if (i == 0)
 			return (0);
 	}
-	if (parse_caustic_option(minirt, argv[*i], i))
+	else
+		return (-1);
+	return (1);
+}
+
+int	check_every_option2(t_minirt *minirt, char **argv, int *i)
+{
+	if (is_max_samples_option(minirt, argv[*i], i))
+	{
+		if (*i == 0)
+			return (0);
+	}
+	else if (check_every_option3(minirt, argv, i) >= 0)
 	{
 		if (i == 0)
+			return (0);
+	}
+	else if (is_server_option(minirt, argv[*i], i))
+	{
+		if (*i == 0)
 			return (0);
 	}
 	else
@@ -51,7 +89,7 @@ int	check_every_option(t_minirt *minirt, char **argv, int i)
 {
 	if (basic_options(minirt, argv, i))
 		;
-	else if (is_max_samples_option(minirt, argv[i], &i))
+	else if (check_every_option2(minirt, argv, &i) >= 0)
 	{
 		if (i == 0)
 			return (0);
@@ -61,7 +99,7 @@ int	check_every_option(t_minirt *minirt, char **argv, int i)
 		if (i == 0)
 			return (0);
 	}
-	else if (check_every_option2(minirt, argv, &i))
+	else if (is_animate_option(minirt, argv[i], &i))
 	{
 		if (i == 0)
 			return (0);
@@ -83,6 +121,10 @@ int	parse_options(t_minirt *minirt, int argc, char **argv)
 	minirt->options.max_samples = 100000;
 	minirt->options.output_dir = empty_static_string();
 	i = 1;
+	if (argc >= 2)
+		is_client_option(minirt, argv[1], &i);
+	if (i == 0)
+		return (0);
 	while (++i < argc)
 	{
 		if (check_every_option(minirt, argv, i) == 0)

@@ -6,7 +6,7 @@
 /*   By: lilefebv <lilefebv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:55:21 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 14:21:27 by lilefebv         ###   ########lyon.fr   */
+/*   Updated: 2025/08/29 10:18:17 by lilefebv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,7 @@
 #include "camera.h"
 #include <math.h>
 
-void	put_render_to_buff_upscaling(t_minirt *minirt)
-{
-	if ((long)minirt->controls.selected_upscaling == 0)
-		put_render_to_buff(minirt);
-	else if ((long)minirt->controls.selected_upscaling == 1)
-		bilinear_upscale(minirt);
-	else if ((long)minirt->controls.selected_upscaling == 2)
-		bicubic_upscale(minirt);
-}
-
-void	draw_pixels(t_minirt *minirt)
+static void	draw_pixels(t_minirt *minirt)
 {
 	minirt->screen.last_sample_time = get_cpu_time();
 	compute_frame_gpu(minirt);
@@ -42,46 +32,7 @@ void	draw_pixels(t_minirt *minirt)
 		- minirt->screen.last_sample_time);
 }
 
-void	auto_export(t_minirt *minirt)
-{
-	char	*filename;
-
-	if (minirt->options.anim.enabled && minirt->options.anim.frame_i
-		< minirt->options.anim.frames)
-		filename \
-	= ft_sprintf("%sminirt_export_%s.FRAME.%u.SAMPLES.%d.%u.ppm",
-			minirt->options.output_dir, minirt->scene.name,
-			minirt->options.anim.frame_i, minirt->screen.sample,
-			(unsigned int)get_cpu_time());
-	else
-		filename \
-	= ft_sprintf("%sminirt_export_%s.SAMPLES.%d.%u.ppm",
-			minirt->options.output_dir, minirt->scene.name,
-			minirt->screen.sample, (unsigned int)get_cpu_time());
-	printf("Start image export\n");
-	if (filename)
-		export_ppm_p6_minirt(filename, minirt);
-	free(filename);
-}
-
-void	check_sample_amount(t_minirt *minirt)
-{
-	if (minirt->screen.sample == minirt->screen.spp)
-	{
-		if (minirt->options.auto_export)
-			auto_export(minirt);
-		minirt->screen.sample = 0;
-		minirt->screen.start_render = 0;
-		if (minirt->options.anim.enabled && minirt->options.anim.frame_i
-			< minirt->options.anim.frames)
-		{
-			minirt->options.anim.frame_i++;
-			minirt->screen.start_render = 1;
-		}
-	}
-}
-
-void	render(t_minirt *minirt)
+void	render_gpu(t_minirt *minirt)
 {
 	t_bool		build_scene_gpu;
 

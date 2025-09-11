@@ -54,6 +54,15 @@ typedef struct s_gpu_viewport
 	float	defocus_disk_v[3];
 } __attribute__((aligned(16)))	t_gpu_viewport;
 
+typedef struct s_gpu_ray_out
+{
+	float	in[3];
+	int		mat;
+	float	normal[3];
+	int		front;
+	float	pos[3];
+} __attribute__((aligned(16)))	t_gpu_ray_out;
+
 typedef struct s_gpu_amb_light
 {
 	float	ratio;

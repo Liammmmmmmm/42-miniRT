@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:02:02 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 22:02:50 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/09/11 17:58:17 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,30 +48,59 @@
 // SHDPT"path_trace.comp",
 // SHD"shader.comp"
 
-const char	**get_shaders_sources(void)
+const char	**get_shaders_sources_1(void)
 {
 	static const char	*sources[SOURCES_AMOUNT] = {
-		SHD"structs.comp",
-		SHD"bind.comp",
-		SHD"utils/random.comp",
-		SHD"utils/defocus.comp",
-		SHDPT"importance_sampling.comp",
-		SHDPT"textures/sample_texture.comp",
-		SHDPT"textures/get_tex_color.comp",
-		SHDPT"textures/apply_maps.comp",
-		SHDPT"hit_register/ray.comp",
-		SHDPT"hit_register/normal.comp",
-		SHDPT"hit_register/quadratic.comp",
-		SHDPT"hit_register/sphere.comp",
-		SHDPT"hit_register/cylinder.comp",
-		SHDPT"hit_register/cone.comp",
-		SHDPT"hit_register/hyperboloid.comp",
-		SHDPT"hit_register/triangle.comp",
-		SHDPT"hit_register/plane.comp",
-		SHDPT"hit_register/hit_bvh.comp",
-		SHDPT"hit_register/hit_register.comp", SHDPT"skybox.comp",
-		SHDPT"material/utils.comp", SHDPT"material/manager_opti.comp",
-		SHDPT"path_trace.comp", SHD"shader.comp"
+		// SHD"structs.comp",
+		// SHD"bind.comp",
+		// SHD"utils/random.comp",
+		// SHD"utils/defocus.comp",
+		// SHDPT"importance_sampling.comp",
+		// SHDPT"textures/sample_texture.comp",
+		// SHDPT"textures/get_tex_color.comp",
+		// SHDPT"textures/apply_maps.comp",
+		// SHDPT"hit_register/ray.comp",
+		// SHDPT"hit_register/normal.comp",
+		// SHDPT"hit_register/quadratic.comp",
+		// SHDPT"hit_register/sphere.comp",
+		// SHDPT"hit_register/cylinder.comp",
+		// SHDPT"hit_register/cone.comp",
+		// SHDPT"hit_register/hyperboloid.comp",
+		// SHDPT"hit_register/triangle.comp",
+		// SHDPT"hit_register/plane.comp",
+		// SHDPT"hit_register/hit_bvh.comp",
+		// SHDPT"hit_register/hit_register.comp", SHDPT"skybox.comp",
+		// SHDPT"material/utils.comp", SHDPT"material/manager_opti.comp",
+		// SHDPT"path_trace.comp", SHD"shader.comp"
+	};
+
+	return (sources);
+}
+
+const char	**get_shaders_sources_2(void)
+{
+	static const char	*sources[SOURCES_AMOUNT] = {
+		// SHD"structs.comp",
+		// SHD"bind.comp",
+		// SHD"utils/random.comp",
+		// SHD"utils/defocus.comp",
+		// SHDPT"importance_sampling.comp",
+		// SHDPT"textures/sample_texture.comp",
+		// SHDPT"textures/get_tex_color.comp",
+		// SHDPT"textures/apply_maps.comp",
+		// SHDPT"hit_register/ray.comp",
+		// SHDPT"hit_register/normal.comp",
+		// SHDPT"hit_register/quadratic.comp",
+		// SHDPT"hit_register/sphere.comp",
+		// SHDPT"hit_register/cylinder.comp",
+		// SHDPT"hit_register/cone.comp",
+		// SHDPT"hit_register/hyperboloid.comp",
+		// SHDPT"hit_register/triangle.comp",
+		// SHDPT"hit_register/plane.comp",
+		// SHDPT"hit_register/hit_bvh.comp",
+		// SHDPT"hit_register/hit_register.comp", SHDPT"skybox.comp",
+		// SHDPT"material/utils.comp", SHDPT"material/manager_opti.comp",
+		// SHDPT"path_trace.comp", SHD"shader.comp"
 	};
 
 	return (sources);
@@ -80,20 +109,35 @@ const char	**get_shaders_sources(void)
 int	create_program(t_shader_data *shader_data)
 {
 	GLuint			cs;
-	const char		**sources = get_shaders_sources();
+	const char		**sources1 = get_shaders_sources1();
+	const char		**sources2 = get_shaders_sources1();
 	const ssize_t	time_start = get_cpu_time();
 
-	printf("\nStart compiling shaders (it can take a lot of time)\n");
+	printf("\nStart compiling shaders 1(it can take a lot of time)\n");
 	cs = compile_shader_from_files(sources, SOURCES_AMOUNT, GL_COMPUTE_SHADER);
 	if (check_shader_compile(cs) == -1)
 		return (-1);
-	shader_data->program = glCreateProgram();
-	glAttachShader(shader_data->program, cs);
-	glLinkProgram(shader_data->program);
+	shader_data->program1 = glCreateProgram();
+	glAttachShader(shader_data->program1, cs);
+	glLinkProgram(shader_data->program1);
 	glDeleteShader(cs);
-	if (check_program_link(shader_data->program) == -1)
+	if (check_program_link(shader_data->program1) == -1)
 		return (-1);
-	printf("Shaders compilation successfull in %.2fs\n",
+	printf("Shaders 1 compilation successfull in %.2fs\n",
+		(get_cpu_time() - time_start) / 1000.0);
+
+
+	printf("\nStart compiling shaders 2(it can take a lot of time)\n");
+	cs = compile_shader_from_files(sources2, SOURCES_AMOUNT, GL_COMPUTE_SHADER);
+	if (check_shader_compile(cs) == -1)
+		return (-1);
+	shader_data->program2 = glCreateProgram();
+	glAttachShader(shader_data->program2, cs);
+	glLinkProgram(shader_data->program2);
+	glDeleteShader(cs);
+	if (check_program_link(shader_data->program2) == -1)
+		return (-1);
+	printf("Shaders 2 compilation successfull in %.2fs\n",
 		(get_cpu_time() - time_start) / 1000.0);
 	return (0);
 }
@@ -101,12 +145,20 @@ int	create_program(t_shader_data *shader_data)
 void	init_ssbo(t_shader_data *shader_data, size_t render_width,
 	size_t render_height)
 {
-	glGenBuffers(1, &shader_data->ssbo);
-	glBindBuffer(GL_SHADER_STORAGE_BUFFER, shader_data->ssbo);
+	glGenBuffers(1, &shader_data->ssbo_out);
+	glBindBuffer(GL_SHADER_STORAGE_BUFFER, shader_data->ssbo_out);
 	glBufferData(GL_SHADER_STORAGE_BUFFER,
 		render_height * render_width * sizeof(float) * 4, NULL,
 		GL_DYNAMIC_COPY);
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, shader_data->ssbo);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, shader_data->ssbo_out);
+
+
+	glGenBuffers(1, &shader_data->ssbo_ray);
+	glBindBuffer(GL_SHADER_STORAGE_BUFFER, shader_data->ssbo_ray);
+	glBufferData(GL_SHADER_STORAGE_BUFFER,
+		render_height * render_width * sizeof(t_gpu_ray_out), NULL,
+		GL_DYNAMIC_COPY);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, shader_data->ssbo_ray);
 }
 
 static int	init_shader_p2(t_shader_data *shader_data, size_t render_width,

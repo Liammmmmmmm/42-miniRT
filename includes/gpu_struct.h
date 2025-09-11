@@ -6,7 +6,7 @@
 /*   By: madelvin <madelvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:19:55 by lilefebv          #+#    #+#             */
-/*   Updated: 2025/08/21 21:00:57 by madelvin         ###   ########.fr       */
+/*   Updated: 2025/09/11 17:49:38 by madelvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 typedef struct s_shader_data
 {
 	GLFWwindow		*window;
-	GLuint			program;
-	GLuint			ssbo;
+	GLuint			program1;
+	GLuint			program2;
+	GLuint			ssbo_out;
+	GLuint			ssbo_ray;
 	t_gpu_structs	scene;
 	t_gpu_textures	tex;
 }	t_shader_data;

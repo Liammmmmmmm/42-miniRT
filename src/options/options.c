@@ -21,6 +21,20 @@ int	basic_options(t_minirt *minirt, char **argv, int i)
 		minirt->options.auto_export = 1;
 	else if (ft_strcmp(argv[i], "--auto-save") == 0)
 		minirt->options.auto_save = 1;
+	else if (ft_strcmp(argv[i], "--denoise-quality") == 0)
+		return (print_error1("Denoise quality option needs a value (--denoise-quality=max|performance|details)"));
+	else if (ft_strncmp(argv[i], "--denoise-quality=", 18) == 0)
+	{
+		if (ft_strcmp(argv[i] + 18, "max") == 0)
+			minirt->options.denoise_quality = 0;
+		else if (ft_strcmp(argv[i] + 18, "performance") == 0)
+			minirt->options.denoise_quality = 1;
+		else if (ft_strcmp(argv[i] + 18, "details") == 0)
+			minirt->options.denoise_quality = 2;
+		else
+			return (print_error1("Invalid denoise quality (use: max|performance|details)"));
+		return (1);
+	}
 	else if (ft_strcmp(argv[i], "--triangle-one-sided") == 0)
 		minirt->options.triangle_one_sided = 1;
 	else if (ft_strcmp(argv[i], "--compute-cpu") == 0)

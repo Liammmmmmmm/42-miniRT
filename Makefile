@@ -46,6 +46,21 @@ DEBUG_FLAGS = -g3
 FAST_FLAGS = -O3 -flto -march=native -mtune=native -funroll-loops -ffast-math -falign-functions=32 -falign-loops=16
 # -O3 -march=native -mtune=native -flto -funsafe-math-optimizations -ffast-math -fomit-frame-pointer -funroll-loops -fno-exceptions -fno-rtti -fno-stack-protector -DNDEBUG -falign-functions=32 -falign-loops=16
 
+# OIDN (Intel Open Image Denoise) - Auto-detect
+OIDN_DIR = thirdparty/oidn
+OIDN_INCLUDE = -I$(OIDN_DIR)/include
+OIDN_LIB = -L$(OIDN_DIR)/lib -lOpenImageDenoise -Wl,-rpath,$(OIDN_DIR)/lib
+OIDN_AVAILABLE := $(shell [ -f $(OIDN_DIR)/lib/libOpenImageDenoise.so ] && echo 1 || echo 0)
+
+ifeq ($(OIDN_AVAILABLE),1)
+    CFLAGS += -DUSE_OIDN $(OIDN_INCLUDE)
+    LDFLAGS += $(OIDN_LIB)
+    $(info $(GREEN)[OIDN]$(NC) Auto-detected - Compiling with denoising support)
+else
+    $(info $(YELLOW)[OIDN]$(NC) Not found - Compiling without denoising support)
+    $(info $(YELLOW)[OIDN]$(NC) To install: Download from https://github.com/OpenImageDenoise/oidn/releases)
+endif
+
 ifeq ($(MAKECMDGOALS), debug)
 	CFLAGS += $(DEBUG_FLAGS)
 endif
@@ -142,7 +157,7 @@ EDIT_MOD_DIR        = src/edition_mod/
 EDIT_MOD_FILE       = select_obj.c movements.c movements_utils.c
 
 UPSCALING_DIR       = src/upscaling/
-UPSCALING_FILE      = bilinear.c bicubic.c utils.c no_upscaling.c
+UPSCALING_FILE      = bilinear.c bicubic.c utils.c no_upscaling.c denoiser_apply.c
 
 PNG_DIR             = src/utils/png/
 PNG_FILE            = bit_stream.c dynamic_huffman_block.c parse_png_header.c png_filters.c decode_deflate_utils.c \
@@ -157,8 +172,8 @@ GPU_DIR             = src/gpu/
 GPU_FILE            = init_shader.c compile_shader.c clean_shaders.c \
 					use_shader.c gpu_scene.c send_uniforms.c importance_sampling.c \
 					convert_utils.c convert_objects.c convert_materials.c convert_textures.c convert_textures2.c \
-					count.c convert_others.c convert_primitives.c convert_caustic.c convert_caustic_utils.c 
-					
+					count.c convert_others.c convert_primitives.c convert_caustic.c convert_caustic_utils.c
+
 
 RAY_TRACING_DIR_GPU     = src/ray_tracing/
 RAY_TRACING_FILE_GPU    = render_gpu.c render.c manage_movement.c init_animated_items.c focus.c bvh/bvh_manager.c bvh/bvh_math.c bvh/bvh_make_lst.c bvh/bvh_utils.c bvh/qshort_axis.c bvh/bvh_draw.c \
@@ -180,6 +195,9 @@ NETWORK_FILE        = client/active_mode.c client/client.c client/passive_mode.c
 					server/info.c server/password.c server/server.c server/signal.c \
 					server/send_scene.c server/convert_scene.c server/init_scene.c server/monitoring.c \
 					utils.c utils2.c
+
+DENOISER_DIR        = src/denoiser/
+DENOISER_FILE       = denoiser_init.c denoiser_process.c denoiser_utils.c
 
 OPTIONS_DIR_GPU     = src/options/
 OPTIONS_FILE_GPU    = options.c options_common.c load_render.c animation.c animation_err.c animation_move_points.c \
@@ -212,7 +230,8 @@ M_FILE  =   $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 			$(addprefix $(PNG_DIR), $(PNG_FILE)) \
 			$(addprefix $(CAUSTIC_DIR), $(CAUSTIC_FILE)) \
 			$(addprefix $(GPU_DIR), $(GPU_FILE)) \
-			$(addprefix $(NETWORK_DIR), $(NETWORK_FILE))
+			$(addprefix $(NETWORK_DIR), $(NETWORK_FILE)) \
+			$(addprefix $(DENOISER_DIR), $(DENOISER_FILE))
 
 # Object files directory
 OBJ_DIR   = .obj/
@@ -305,7 +324,7 @@ re : fclean
 
 fast: all
 
-debug: all 
+debug: all
 
 ffast: fcleanp
 	@make --no-print-directory fast

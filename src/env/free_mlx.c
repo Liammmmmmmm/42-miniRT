@@ -25,6 +25,8 @@ void	free_mlx(t_minirt *minirt)
 	if (minirt->mlx.mlx)
 		mlx_destroy_display(minirt->mlx.mlx);
 	free(minirt->mlx.mlx);
+	if (minirt->denoiser)
+		denoiser_cleanup(minirt->denoiser);
 }
 
 int	free_mlx_error(t_minirt *minirt)

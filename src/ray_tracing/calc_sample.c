@@ -44,8 +44,9 @@ void	set_heat_map_color(t_minirt *minirt)
 void	calc_one_sample_task(t_minirt *minirt, t_vec3 offset, t_uint i,
 	int max_bounces)
 {
-	t_fcolor		color;
-	t_ray			ray;
+	t_fcolor			color;
+	t_ray				ray;
+	t_hit_register_data	hit_data;
 
 	if (minirt->scene.camera.defocus_angle <= 0)
 		ray.orig = minirt->scene.camera.position;
@@ -67,6 +68,24 @@ void	calc_one_sample_task(t_minirt *minirt, t_vec3 offset, t_uint i,
 		minirt->screen.float_render[i].r += color.r;
 		minirt->screen.float_render[i].g += color.g;
 		minirt->screen.float_render[i].b += color.b;
+		if (minirt->screen.sample == 0 && minirt->denoiser
+			&& minirt->denoiser->available)
+		{
+			ft_bzero(&hit_data, sizeof(t_hit_register_data));
+			hit_data.ray = &ray;
+			if (hit_register_all(minirt, &hit_data) == 1)
+			{
+				if (hit_data.hit_record.mat)
+					minirt->screen.albedo_buffer[i] = (t_fcolor){
+						hit_data.hit_record.mat->color_value.r,
+						hit_data.hit_record.mat->color_value.g,
+						hit_data.hit_record.mat->color_value.b};
+				minirt->screen.normal_buffer[i].r = (hit_data.hit_record.normal.x + 1.0) * 0.5;
+				minirt->screen.normal_buffer[i].g = (hit_data.hit_record.normal.y + 1.0) * 0.5;
+				minirt->screen.normal_buffer[i].b = (hit_data.hit_record.normal.z + 1.0) * 0.5;
+				minirt->screen.depth_buffer_denoise[i] = hit_data.hit_record.t;
+			}
+		}
 	}
 }
 

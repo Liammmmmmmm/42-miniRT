@@ -21,6 +21,7 @@
 # include "basic_structs.h"
 # include "gpu_struct.h"
 # include "scene_structs.h"
+# include "denoiser.h"
 # include <pthread.h>
 
 typedef struct s_lcolor
@@ -240,6 +241,10 @@ typedef struct s_screen
 {
 	int				*render;
 	t_fcolor		*float_render;
+	t_fcolor		*float_render_backup;
+	t_fcolor		*albedo_buffer;
+	t_fcolor		*normal_buffer;
+	float			*depth_buffer_denoise;
 	float			*client_accumulation;
 	ssize_t			client_last_sample_send;
 	uint16_t		client_samples;
@@ -396,6 +401,7 @@ typedef struct s_options
 	t_bool		auto_save;
 	t_bool		sga;
 	t_bool		triangle_one_sided;
+	int			denoise_quality;
 	int			max_samples;
 	char		*output_dir;
 	t_animation	anim;
@@ -427,6 +433,8 @@ typedef struct s_minirt
 	t_options		options;
 	t_micrort		micrort;
 	t_shader_data	shaders_data;
+	t_denoiser		*denoiser;
+	bool			show_denoised;
 	char			render_mode;
 }	t_minirt;
 

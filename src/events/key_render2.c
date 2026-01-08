@@ -14,13 +14,34 @@
 
 void	export_scene(t_minirt *minirt)
 {
-	char	*filename;
+	char			*filename_noisy;
+	char			*filename_denoised;
+	bool			was_enabled;
+	unsigned int	timestamp;
 
-	filename = ft_sprintf("%sminirt_export_%s.SAMPLES.%d.%u.ppm",
+	timestamp = (unsigned int)get_cpu_time();
+	was_enabled = minirt->show_denoised;
+	minirt->show_denoised = false;
+	filename_noisy = ft_sprintf("%sminirt_export_%s.SAMPLES.%d.%u.NOISY.ppm",
 			minirt->options.output_dir, minirt->scene.name,
-			minirt->screen.sample, (unsigned int)get_cpu_time());
-	if (filename)
-		export_ppm_p6_minirt(filename, minirt);
+			minirt->screen.sample, timestamp);
+	printf("Exporting noisy image...\n");
+	if (filename_noisy)
+		export_ppm_p6_minirt(filename_noisy, minirt);
+	free(filename_noisy);
+	if (minirt->denoiser && minirt->denoiser->available)
+	{
+		minirt->show_denoised = true;
+		filename_denoised = ft_sprintf("%sminirt_export_%s.SAMPLES.%d.%u.DENOISED.ppm",
+				minirt->options.output_dir, minirt->scene.name,
+				minirt->screen.sample, timestamp);
+		printf("Exporting denoised image...\n");
+		if (filename_denoised)
+			export_ppm_p6_minirt(filename_denoised, minirt);
+		free(filename_denoised);
+	}
+	minirt->show_denoised = was_enabled;
+	printf("Export complete\n");
 }
 
 void	open_controls(int key, t_minirt *minirt)

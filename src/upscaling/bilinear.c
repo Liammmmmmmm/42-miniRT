@@ -36,13 +36,13 @@ static inline void	process_pixel(t_upscale_data *d, const int px, const int py)
 
 	set_xy(d, &x1, &y1);
 	c[0] = render_float_to_color(
-			&d->minirt->screen.float_render[d->y * d->sw + d->x], d->divide);
+			&d->minirt->screen.float_render_backup[d->y * d->sw + d->x], d->divide);
 	c[1] = render_float_to_color(
-			&d->minirt->screen.float_render[d->y * d->sw + x1], d->divide);
+			&d->minirt->screen.float_render_backup[d->y * d->sw + x1], d->divide);
 	c[2] = render_float_to_color(
-			&d->minirt->screen.float_render[y1 * d->sw + d->x], d->divide);
+			&d->minirt->screen.float_render_backup[y1 * d->sw + d->x], d->divide);
 	c[3] = render_float_to_color(
-			&d->minirt->screen.float_render[y1 * d->sw + x1], d->divide);
+			&d->minirt->screen.float_render_backup[y1 * d->sw + x1], d->divide);
 	d->minirt->screen.render[py * d->minirt->scene.win_width + px] = \
 	color_to_int((t_color){(c[0].r + (c[1].r - c[0].r) * tx) + ((c[2].r + \
 	(c[3].r - c[2].r) * tx) - (c[0].r + (c[1].r - c[0].r) * tx)) * ty, \

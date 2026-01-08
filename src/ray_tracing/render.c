@@ -14,6 +14,23 @@
 #include "bvh.h"
 #include "material.h"
 #include <math.h>
+#include <string.h>
+
+static void	copy_to_display_buffer(t_minirt *minirt)
+{
+	int	total;
+
+	total = minirt->scene.render_width * minirt->scene.render_height;
+	memcpy(minirt->screen.float_render_backup, minirt->screen.float_render,
+		total * sizeof(t_fcolor));
+}
+
+static void	prepare_display_buffer(t_minirt *minirt)
+{
+	copy_to_display_buffer(minirt);
+	if (minirt->show_denoised && minirt->denoiser && minirt->denoiser->available)
+		apply_denoising_forced(minirt);
+}
 
 void	put_render_to_buff_upscaling(t_minirt *minirt)
 {
@@ -35,6 +52,7 @@ static void	draw_pixels(t_minirt *minirt)
 	minirt->screen.sample++;
 	minirt->screen.sample_total_anim++;
 	minirt->screen.last_sample_am = minirt->screen.sample;
+	prepare_display_buffer(minirt);
 	put_render_to_buff_upscaling(minirt);
 	if (minirt->options.no_display)
 		return ;
@@ -46,24 +64,54 @@ static void	draw_pixels(t_minirt *minirt)
 
 void	auto_export(t_minirt *minirt)
 {
-	char	*filename;
+	char	*filename_noisy;
+	char	*filename_denoised;
+	bool	was_enabled;
+	unsigned int	timestamp;
+
+	timestamp = (unsigned int)get_cpu_time();
+
+	was_enabled = minirt->show_denoised;
+	minirt->show_denoised = false;
 
 	if (minirt->options.anim.enabled && minirt->options.anim.frame_i
 		< minirt->options.anim.frames)
-		filename \
-	= ft_sprintf("%sminirt_export_%s.FRAME.%u.SAMPLES.%d.%u.ppm",
+		filename_noisy = ft_sprintf("%sminirt_export_%s.FRAME.%u.SAMPLES.%d.%u.NOISY.ppm",
 			minirt->options.output_dir, minirt->scene.name,
-			minirt->options.anim.frame_i, minirt->screen.sample,
-			(unsigned int)get_cpu_time());
+			minirt->options.anim.frame_i, minirt->screen.sample, timestamp);
 	else
-		filename \
-	= ft_sprintf("%sminirt_export_%s.SAMPLES.%d.%u.ppm",
+		filename_noisy = ft_sprintf("%sminirt_export_%s.SAMPLES.%d.%u.NOISY.ppm",
 			minirt->options.output_dir, minirt->scene.name,
-			minirt->screen.sample, (unsigned int)get_cpu_time());
-	printf("Start image export\n");
-	if (filename)
-		export_ppm_p6_minirt(filename, minirt);
-	free(filename);
+			minirt->screen.sample, timestamp);
+
+	printf("Exporting noisy image...\n");
+	if (filename_noisy)
+		export_ppm_p6_minirt(filename_noisy, minirt);
+	free(filename_noisy);
+
+	if (minirt->denoiser && minirt->denoiser->available)
+	{
+		minirt->show_denoised = true;
+
+		if (minirt->options.anim.enabled && minirt->options.anim.frame_i
+			< minirt->options.anim.frames)
+			filename_denoised = ft_sprintf("%sminirt_export_%s.FRAME.%u.SAMPLES.%d.%u.DENOISED.ppm",
+				minirt->options.output_dir, minirt->scene.name,
+				minirt->options.anim.frame_i, minirt->screen.sample, timestamp);
+		else
+			filename_denoised = ft_sprintf("%sminirt_export_%s.SAMPLES.%d.%u.DENOISED.ppm",
+				minirt->options.output_dir, minirt->scene.name,
+				minirt->screen.sample, timestamp);
+
+		printf("Exporting denoised image...\n");
+		if (filename_denoised)
+			export_ppm_p6_minirt(filename_denoised, minirt);
+		free(filename_denoised);
+	}
+
+	// Restaurer l'état original
+	minirt->show_denoised = was_enabled;
+	printf("Export complete\n");
 }
 
 void	check_sample_amount(t_minirt *minirt)

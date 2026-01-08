@@ -12,6 +12,7 @@
 
 #include "ppm.h"
 #include "minirt.h"
+#include <string.h>
 
 void	export_ppm_p6(const char *filename, int *pixels, int width, int height)
 {
@@ -55,11 +56,11 @@ static void	put_image_to_buf(int tpx, int fd, t_minirt *minirt,
 	i = -1;
 	while (++i < tpx)
 	{
-		buf[i * 3] = clamp_double(pow(minirt->screen.float_render[i].r / \
+		buf[i * 3] = clamp_double(pow(minirt->screen.float_render_backup[i].r / \
 			divide, gamma_corr)) * 255;
-		buf[i * 3 + 1] = clamp_double(pow(minirt->screen.float_render[i].g / \
+		buf[i * 3 + 1] = clamp_double(pow(minirt->screen.float_render_backup[i].g / \
 			divide, gamma_corr)) * 255;
-		buf[i * 3 + 2] = clamp_double(pow(minirt->screen.float_render[i].b / \
+		buf[i * 3 + 2] = clamp_double(pow(minirt->screen.float_render_backup[i].b / \
 			divide, gamma_corr)) * 255;
 	}
 	(void)!write(fd, (char *)buf, tpx * 3);
@@ -71,6 +72,7 @@ void	export_ppm_p6_minirt(const char *filename, t_minirt *minirt)
 	int		fd;
 	int		tpx;
 	double	gamma_corr;
+	int		total;
 
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
@@ -78,6 +80,11 @@ void	export_ppm_p6_minirt(const char *filename, t_minirt *minirt)
 		ft_printf("Error creating file\n");
 		return ;
 	}
+	total = minirt->scene.render_width * minirt->scene.render_height;
+	memcpy(minirt->screen.float_render_backup, minirt->screen.float_render,
+		total * sizeof(t_fcolor));
+	if (minirt->show_denoised && minirt->denoiser && minirt->denoiser->available)
+		apply_denoising_forced(minirt);
 	gamma_corr = 1.0 / minirt->viewport.gamma;
 	ft_dprintf(fd, "P6\n%d %d\n255\n", minirt->scene.render_width,
 		minirt->scene.render_height);

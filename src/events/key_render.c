@@ -76,6 +76,18 @@ int	keydown_render(int key, t_minirt *minirt)
 		export_render_state(minirt);
 	else if (key == KEY_SPACE)
 		minirt->screen.pause_render = !minirt->screen.pause_render;
+	else if (key == KEY_I && minirt->denoiser && minirt->denoiser->available)
+	{
+		minirt->show_denoised = !minirt->show_denoised;
+		printf("[Display] Showing %s image\n", 
+			minirt->show_denoised ? "DENOISED" : "NOISY");
+		put_render_to_buff_upscaling(minirt);
+		mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win,
+			minirt->mlx.img.img, 0, 0);
+	}
+
+	else if (key == KEY_L && minirt->denoiser)
+		denoiser_print_info(minirt->denoiser);
 	keydown_common(key, minirt);
 	open_controls(key, minirt);
 	return (0);

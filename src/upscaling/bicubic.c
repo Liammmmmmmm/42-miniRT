@@ -47,13 +47,13 @@ static inline void	calc_bicubic_v_val(t_upscale_data *d,
 		while (++j < 4)
 		{
 			weight = ipb->wx[j] * ipb->wy[i];
-			ipb->v[0] += (int)(clamp_double(d->minirt->screen.float_render
+			ipb->v[0] += (int)(clamp_double(d->minirt->screen.float_render_backup
 					[ipb->y[i] * d->sw + ipb->x[j]].r / d->divide) * 255)
 				*weight;
-			ipb->v[1] += (int)(clamp_double(d->minirt->screen.float_render
+			ipb->v[1] += (int)(clamp_double(d->minirt->screen.float_render_backup
 					[ipb->y[i] * d->sw + ipb->x[j]].g / d->divide) * 255)
 				*weight;
-			ipb->v[2] += (int)(clamp_double(d->minirt->screen.float_render
+			ipb->v[2] += (int)(clamp_double(d->minirt->screen.float_render_backup
 					[ipb->y[i] * d->sw + ipb->x[j]].b / d->divide) * 255)
 				*weight;
 			ipb->v[3] += weight;

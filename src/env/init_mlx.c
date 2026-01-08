@@ -95,7 +95,17 @@ int	init_render(t_minirt *minirt)
 		minirt->scene.win_height);
 	minirt->screen.float_render = malloc(sizeof(t_fcolor) * \
 	minirt->scene.render_width * minirt->scene.render_height);
-	if (!minirt->screen.float_render || (!minirt->screen.render
+	minirt->screen.float_render_backup = malloc(sizeof(t_fcolor) * \
+	minirt->scene.render_width * minirt->scene.render_height);
+	minirt->screen.albedo_buffer = malloc(sizeof(t_fcolor) * \
+	minirt->scene.render_width * minirt->scene.render_height);
+	minirt->screen.normal_buffer = malloc(sizeof(t_fcolor) * \
+	minirt->scene.render_width * minirt->scene.render_height);
+	minirt->screen.depth_buffer_denoise = malloc(sizeof(float) * \
+	minirt->scene.render_width * minirt->scene.render_height);
+	if (!minirt->screen.float_render || !minirt->screen.float_render_backup
+		|| !minirt->screen.albedo_buffer || !minirt->screen.normal_buffer
+		|| !minirt->screen.depth_buffer_denoise || (!minirt->screen.render
 			&& !minirt->options.no_display && !minirt->options.client.enabled))
 		return (0);
 	if (!minirt->options.no_display && !minirt->options.client.enabled)
@@ -103,11 +113,34 @@ int	init_render(t_minirt *minirt)
 			* minirt->scene.win_height);
 	ft_bzero(minirt->screen.float_render, sizeof(t_fcolor)
 		* minirt->scene.render_width * minirt->scene.render_height);
+	ft_bzero(minirt->screen.float_render_backup, sizeof(t_fcolor)
+		* minirt->scene.render_width * minirt->scene.render_height);
+	ft_bzero(minirt->screen.albedo_buffer, sizeof(t_fcolor)
+		* minirt->scene.render_width * minirt->scene.render_height);
+	ft_bzero(minirt->screen.normal_buffer, sizeof(t_fcolor)
+		* minirt->scene.render_width * minirt->scene.render_height);
+	ft_bzero(minirt->screen.depth_buffer_denoise, sizeof(float)
+		* minirt->scene.render_width * minirt->scene.render_height);
 	minirt->stats.frame = 0;
 	minirt->screen.start_render = 1;
 	minirt->screen.pause_render = 0;
 	minirt->screen.spp = minirt->options.max_samples;
 	minirt->screen.sample = 0;
+	minirt->denoiser = denoiser_init(minirt->scene.render_width,
+			minirt->scene.render_height);
+	minirt->show_denoised = false;
+	if (minirt->denoiser && minirt->denoiser->available)
+	{
+		denoiser_set_enabled(minirt->denoiser, true);
+		if (minirt->options.denoise_quality == 0)
+			denoiser_set_quality(minirt->denoiser, true, true, "RT");
+		else if (minirt->options.denoise_quality == 1)
+			denoiser_set_quality(minirt->denoiser, true, false, "RT");
+		else if (minirt->options.denoise_quality == 2)
+			denoiser_set_quality(minirt->denoiser, true, true, "RTLightmap");
+		printf("[OIDN] Denoiser available\n");
+		printf("[OIDN] Toggle display: 'I' | Info: 'L' | Export: 'P' (both versions)\n");
+	}
 	init_ui_components(minirt);
 	return (1);
 }

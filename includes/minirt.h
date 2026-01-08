@@ -324,5 +324,7 @@ void		copy_buff_to_image(t_minirt *minirt);
 void		init_upscale_struct(t_upscale_data *d, t_minirt *minirt);
 void		bilinear_upscale(t_minirt *minirt);
 void		bicubic_upscale(t_minirt *minirt);
+bool		apply_denoising(t_minirt *minirt);
+bool		apply_denoising_forced(t_minirt *minirt);
 
 #endif

@@ -13,7 +13,7 @@
 #include "minirt.h"
 
 static void	put_render_same_size(t_minirt *minirt, double gamma_corr,
-	int divide)
+	int divide, t_fcolor *display_buffer)
 {
 	int	i;
 	int	tpx;
@@ -24,17 +24,17 @@ static void	put_render_same_size(t_minirt *minirt, double gamma_corr,
 	{
 		while (++i < tpx)
 			minirt->screen.render[i]
-				= render_float_to_int(&minirt->screen.float_render[i], divide);
+				= render_float_to_int(&display_buffer[i], divide);
 	}
 	else
 		while (++i < tpx)
 			minirt->screen.render[i] = \
-render_float_to_int_gamma(&minirt->screen.float_render[i], gamma_corr, divide)
+render_float_to_int_gamma(&display_buffer[i], gamma_corr, divide)
 				;
 }
 
 static void	put_render_default_gamma(t_minirt *minirt, double gamma_corr,
-	int div)
+	int div, t_fcolor *display_buffer)
 {
 	int	x;
 	int	y;
@@ -51,13 +51,14 @@ static void	put_render_default_gamma(t_minirt *minirt, double gamma_corr,
 	minirt->scene.render_width + (int)((float)x / (minirt->scene.win_width \
 	- 1) * (minirt->scene.render_width - 1));
 			minirt->screen.render[y * (minirt->scene.win_width) + x]
-				= render_float_to_int_gamma(&minirt->screen.float_render[i],
+				= render_float_to_int_gamma(&display_buffer[i],
 					gamma_corr, div);
 		}
 	}
 }
 
-static void	put_render_default(t_minirt *minirt, double gamma_corr, int div)
+static void	put_render_default(t_minirt *minirt, double gamma_corr, int div,
+	t_fcolor *display_buffer)
 {
 	int	x;
 	int	y;
@@ -76,30 +77,32 @@ static void	put_render_default(t_minirt *minirt, double gamma_corr, int div)
 	minirt->scene.render_width + (int)((float)x / (minirt->scene.win_width \
 	- 1) * (minirt->scene.render_width - 1));
 				minirt->screen.render[y * (minirt->scene.win_width) + x]
-					= render_float_to_int(&minirt->screen.float_render[i], div);
+					= render_float_to_int(&display_buffer[i], div);
 			}
 		}
 	}
 	else
-		put_render_default_gamma(minirt, gamma_corr, div);
+		put_render_default_gamma(minirt, gamma_corr, div, display_buffer);
 }
 
 void	put_render_to_buff(t_minirt *minirt)
 {
-	int		divide;
-	double	gamma_corr;
+	int			divide;
+	double		gamma_corr;
+	t_fcolor	*display_buffer;
 
 	if (minirt->options.no_display)
 		return ;
+	display_buffer = minirt->screen.float_render_backup;
 	divide = minirt->screen.last_sample_am;
 	if (divide == 0)
 		divide = 1;
 	gamma_corr = 1.0 / minirt->viewport.gamma;
 	if (minirt->scene.win_height == minirt->scene.render_height
 		&& minirt->scene.win_width == minirt->scene.render_width)
-		put_render_same_size(minirt, gamma_corr, divide);
+		put_render_same_size(minirt, gamma_corr, divide, display_buffer);
 	else
-		put_render_default(minirt, gamma_corr, divide);
+		put_render_default(minirt, gamma_corr, divide, display_buffer);
 	copy_buff_to_image(minirt);
 }
 

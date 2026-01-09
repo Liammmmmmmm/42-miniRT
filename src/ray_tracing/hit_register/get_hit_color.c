@@ -21,8 +21,8 @@ t_fcolor	get_hit_register_color(t_mat *mat, t_color color,
 	{
 		return ((t_fcolor){
 			.r = (hit->normal.x + 1) * 0.5,
-			.g = (hit->normal.z + 1) * 0.5,
-			.b = (hit->normal.y + 1) * 0.5
+			.g = (hit->normal.y + 1) * 0.5,
+			.b = (hit->normal.z + 1) * 0.5
 		});
 	}
 	if (mat)

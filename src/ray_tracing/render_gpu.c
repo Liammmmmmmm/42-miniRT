@@ -16,6 +16,18 @@
 #include "material.h"
 #include "camera.h"
 #include <math.h>
+#include <string.h>
+
+static void	prepare_display_buffer(t_minirt *minirt)
+{
+	int	total;
+
+	total = minirt->scene.render_width * minirt->scene.render_height;
+	memcpy(minirt->screen.float_render_backup, minirt->screen.float_render,
+		total * sizeof(t_fcolor));
+	if (minirt->show_denoised && minirt->denoiser && minirt->denoiser->available)
+		apply_denoising_forced(minirt);
+}
 
 static void	draw_pixels(t_minirt *minirt)
 {
@@ -23,6 +35,7 @@ static void	draw_pixels(t_minirt *minirt)
 	compute_frame_gpu(minirt);
 	if (minirt->render_mode == 1)
 		set_heat_map_color(minirt);
+	prepare_display_buffer(minirt);
 	if (minirt->options.no_display || minirt->options.client.enabled)
 		return ;
 	put_render_to_buff_upscaling(minirt);

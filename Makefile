@@ -51,9 +51,11 @@ OIDN_DIR = thirdparty/oidn
 OIDN_INCLUDE = -I$(OIDN_DIR)/include
 OIDN_LIB = -L$(OIDN_DIR)/lib -lOpenImageDenoise -Wl,-rpath,$(OIDN_DIR)/lib
 OIDN_AVAILABLE := $(shell [ -f $(OIDN_DIR)/lib/libOpenImageDenoise.so ] && echo 1 || echo 0)
+OIDN_FLAGS =
 
 ifeq ($(OIDN_AVAILABLE),1)
-    CFLAGS += -DUSE_OIDN $(OIDN_INCLUDE)
+    OIDN_FLAGS = -DUSE_OIDN $(OIDN_INCLUDE)
+    CFLAGS += $(OIDN_FLAGS)
     LDFLAGS += $(OIDN_LIB)
     $(info $(GREEN)[OIDN]$(NC) Auto-detected - Compiling with denoising support)
 else
@@ -66,7 +68,7 @@ ifeq ($(MAKECMDGOALS), debug)
 endif
 ifeq ($(MAKECMDGOALS), fast)
 	CC     = gcc
-	CFLAGS   = $(DEPFLAGS) -Wall -Wextra
+	CFLAGS   = $(DEPFLAGS) -Wall -Wextra $(OIDN_FLAGS)
 	CFLAGS += $(FAST_FLAGS)
 endif
 

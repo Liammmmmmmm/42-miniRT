@@ -43,8 +43,17 @@ void	init_float_render(t_minirt *minirt)
 		|| read_int32_little(&minirt->options.load_render, 8, &sample) < 0
 		|| minirt->options.load_render.size - 12 != (size_t)(rw * rh * 3 * 8)
 		|| minirt->scene.win_width != rw || minirt->scene.win_height != rh)
-		return (ft_bzero(minirt->screen.float_render, sizeof(t_fcolor)
-				* minirt->viewport.render_w * minirt->viewport.render_h));
+	{
+		ft_bzero(minirt->screen.float_render, sizeof(t_fcolor)
+			* minirt->viewport.render_w * minirt->viewport.render_h);
+		ft_bzero(minirt->screen.albedo_buffer, sizeof(t_fcolor)
+			* minirt->viewport.render_w * minirt->viewport.render_h);
+		ft_bzero(minirt->screen.normal_buffer, sizeof(t_fcolor)
+			* minirt->viewport.render_w * minirt->viewport.render_h);
+		ft_bzero(minirt->screen.depth_buffer_denoise, sizeof(float)
+			* minirt->viewport.render_w * minirt->viewport.render_h);
+		return ;
+	}
 	minirt->screen.sample = sample;
 	ft_memcpy(minirt->screen.float_render,
 		minirt->options.load_render.data + 12, rw * rh * 3 * 8);

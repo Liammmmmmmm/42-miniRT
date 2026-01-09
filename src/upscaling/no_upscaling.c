@@ -97,6 +97,10 @@ void	put_render_to_buff(t_minirt *minirt)
 	divide = minirt->screen.last_sample_am;
 	if (divide == 0)
 		divide = 1;
+	// int center = minirt->scene.render_width * minirt->scene.render_height / 2;
+	// printf("[DEBUG put_render_to_buff] divide=%d, render_mode=%d\n", divide, minirt->render_mode);
+	// printf("[DEBUG] display_buffer[center]: r=%.3f g=%.3f b=%.3f (pixel %d)\n",
+		// display_buffer[center].r, display_buffer[center].g, display_buffer[center].b, center);
 	gamma_corr = 1.0 / minirt->viewport.gamma;
 	if (minirt->scene.win_height == minirt->scene.render_height
 		&& minirt->scene.win_width == minirt->scene.render_width)

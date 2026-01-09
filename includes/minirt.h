@@ -298,7 +298,7 @@ char		check_dlight_hit_dir(t_minirt *minirt, t_vec3 origin,
 				t_vec3 direction);
 void		add_dlight(t_lcolor *light_color, t_hit_record *hit,
 				t_dlight *light, t_vec3 view_dir);
-t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth);
+t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth, int i);
 t_fcolor	path_trace_normal(t_minirt *minirt, t_ray ray);
 int			path_trace_bvh(t_minirt *minirt, t_ray ray);
 t_fcolor	add_skybox(t_minirt *minirt, t_ray *ray, t_hit_record *hit_record,

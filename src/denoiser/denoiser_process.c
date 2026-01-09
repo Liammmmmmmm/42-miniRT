@@ -33,14 +33,12 @@ static bool	execute_oidn_filter(t_denoiser *denoiser)
 	if (denoiser->quality.max_memory_mb > 0)
 		oidnSetFilterInt(denoiser->filter, "maxMemoryMB",
 			denoiser->quality.max_memory_mb);
+	oidnSetFilterInt(denoiser->filter, "quality", 0);
 	oidnCommitFilter(denoiser->filter);
 	oidnExecuteFilter(denoiser->filter);
 	if (oidnGetDeviceError(denoiser->device, &error_message)
 		!= OIDN_ERROR_NONE)
-	{
-		fprintf(stderr, "[OIDN] Filter error: %s\n", error_message);
 		return (false);
-	}
 	return (true);
 }
 
@@ -59,17 +57,7 @@ static bool	should_denoise(t_denoiser *denoiser, bool force)
 {
 	if (!denoiser || !denoiser->enabled || !denoiser->available)
 		return (false);
-	if (force)
-		return (true);
-	denoiser->frame_counter++;
-	if (denoiser->update_interval == 0)
-		return (true);
-	if (denoiser->frame_counter >= denoiser->update_interval)
-	{
-		denoiser->frame_counter = 0;
-		return (true);
-	}
-	return (false);
+	return (force);
 }
 
 float	*denoiser_process(t_denoiser *denoiser, const float *render_buffer,
@@ -88,54 +76,8 @@ float	*denoiser_process(t_denoiser *denoiser, const float *render_buffer,
 	{
 		if (execute_oidn_filter(denoiser))
 			return (denoiser->output_buffer);
-		fprintf(stderr, "[OIDN] Denoising failed, using noisy buffer\n");
 	}
 #endif
 	return (denoiser->input_buffer);
 }
 
-void	denoiser_rgba_to_float(const unsigned int *rgba_buffer,
-	float *rgb_float, int width, int height)
-{
-	int				i;
-	int				total;
-	unsigned int	pixel;
-
-	total = width * height;
-	i = 0;
-	while (i < total)
-	{
-		pixel = rgba_buffer[i];
-		rgb_float[i * 3 + 0] = ((pixel >> 16) & 0xFF) / 255.0f;
-		rgb_float[i * 3 + 1] = ((pixel >> 8) & 0xFF) / 255.0f;
-		rgb_float[i * 3 + 2] = (pixel & 0xFF) / 255.0f;
-		i++;
-	}
-}
-
-void	denoiser_float_to_rgba(const float *rgb_float,
-	unsigned int *rgba_buffer, int width, int height)
-{
-	int				i;
-	int				total;
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-
-	total = width * height;
-	i = 0;
-	while (i < total)
-	{
-		r = (unsigned char)(rgb_float[i * 3 + 0] * 255.0f);
-		g = (unsigned char)(rgb_float[i * 3 + 1] * 255.0f);
-		b = (unsigned char)(rgb_float[i * 3 + 2] * 255.0f);
-		if (rgb_float[i * 3 + 0] > 1.0f)
-			r = 255;
-		if (rgb_float[i * 3 + 1] > 1.0f)
-			g = 255;
-		if (rgb_float[i * 3 + 2] > 1.0f)
-			b = 255;
-		rgba_buffer[i] = (0xFF << 24) | (r << 16) | (g << 8) | b;
-		i++;
-	}
-}

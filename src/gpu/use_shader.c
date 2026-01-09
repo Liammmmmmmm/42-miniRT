@@ -50,12 +50,30 @@ static int	is_client_render(const int tpx, t_minirt *m, const float *ptr)
 	return (0);
 }
 
+static void	read_auxiliary_buffers(t_minirt *m, const float *ptr)
+{
+	const int	tpx = m->scene.render_width * m->scene.render_height;
+	int			i;
+
+	i = -1;
+	while (++i < tpx)
+	{
+		m->screen.depth_buffer_denoise[i] += ptr[i * 4 + 3];
+		m->screen.albedo_buffer[i].r += ptr[(tpx + i) * 4 + 0];
+		m->screen.albedo_buffer[i].g += ptr[(tpx + i) * 4 + 1];
+		m->screen.albedo_buffer[i].b += ptr[(tpx + i) * 4 + 2];
+		m->screen.normal_buffer[i].r += ptr[(tpx * 2 + i) * 4 + 0];
+		m->screen.normal_buffer[i].g += ptr[(tpx * 2 + i) * 4 + 1];
+		m->screen.normal_buffer[i].b += ptr[(tpx * 2 + i) * 4 + 2];
+	}
+}
+
 static int	get_result(t_minirt *m)
 {
 	int			i;
 	const int	tpx = m->scene.render_width * m->scene.render_height;
 	const float	*ptr = (float *)glMapBufferRange(GL_SHADER_STORAGE_BUFFER, 0,
-			tpx * sizeof(float) * 4, GL_MAP_READ_BIT);
+			tpx * sizeof(float) * 4 * 3, GL_MAP_READ_BIT);
 
 	if (!ptr)
 	{
@@ -75,6 +93,7 @@ static int	get_result(t_minirt *m)
 			m->screen.float_render[i] = add_fcolor_float3(
 					m->screen.float_render[i], &ptr[i * 4]);
 	}
+	read_auxiliary_buffers(m, ptr);
 	return (0);
 }
 

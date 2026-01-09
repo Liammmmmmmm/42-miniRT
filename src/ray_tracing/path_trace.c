@@ -47,20 +47,33 @@ hit_record->mat->ao_value), *data.power)));
 				get_background_color_clamp(minirt, *ray), *data.power)));
 }
 
-t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth)
+t_fcolor	path_trace(t_minirt *minirt, t_ray ray, int max_depth, int i)
 {
 	t_fcolor			accumulation;
 	t_fcolor			power;
 	t_hit_register_data	data;
+	int					initial_depth;
 
 	accumulation = (t_fcolor){0.0, 0.0, 0.0};
 	power = (t_fcolor){1.0, 1.0, 1.0};
 	ft_bzero(&data, sizeof(t_hit_register_data));
 	data.ray = &ray;
+	initial_depth = max_depth;
 	while (--max_depth >= 0)
 	{
 		if (hit_register_all(minirt, &data) == 1)
 		{
+			if (max_depth == initial_depth - 1)
+			{
+				minirt->screen.albedo_buffer[i].r += data.hit_record.color.r;
+				minirt->screen.albedo_buffer[i].g += data.hit_record.color.g;
+				minirt->screen.albedo_buffer[i].b += data.hit_record.color.b;
+				minirt->screen.normal_buffer[i].r += (data.hit_record.normal.x + 1.0) * 0.5;
+				minirt->screen.normal_buffer[i].g += (data.hit_record.normal.y + 1.0) * 0.5;
+				minirt->screen.normal_buffer[i].b += (data.hit_record.normal.z + 1.0) * 0.5;
+				minirt->screen.depth_buffer_denoise[i] += data.hit_record.t;
+			}
+
 			ray.orig = data.hit_record.point;
 			material_manager_v3(minirt, &ray, &data.hit_record,
 				(t_ray_data){&power, &accumulation});

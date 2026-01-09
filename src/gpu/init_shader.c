@@ -101,10 +101,14 @@ int	create_program(t_shader_data *shader_data)
 void	init_ssbo(t_shader_data *shader_data, size_t render_width,
 	size_t render_height)
 {
+	size_t	buffer_size;
+	size_t	total_pixels;
+
+	total_pixels = render_height * render_width;
+	buffer_size = total_pixels * sizeof(float);
 	glGenBuffers(1, &shader_data->ssbo);
 	glBindBuffer(GL_SHADER_STORAGE_BUFFER, shader_data->ssbo);
-	glBufferData(GL_SHADER_STORAGE_BUFFER,
-		render_height * render_width * sizeof(float) * 4, NULL,
+	glBufferData(GL_SHADER_STORAGE_BUFFER, buffer_size * 4 * 3, NULL,
 		GL_DYNAMIC_COPY);
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, shader_data->ssbo);
 }

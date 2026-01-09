@@ -1,7 +1,7 @@
 void	get_thread_seed()
 {
-	g_seed = uint(gl_GlobalInvocationID.x + 1) * 1973u 
-		* uint(gl_GlobalInvocationID.y + 1) * 9277u 
+	g_seed = uint(gl_GlobalInvocationID.x + 1) * 1973u
+		* uint(gl_GlobalInvocationID.y + 1) * 9277u
 		+ uint(sample_count + 1) * 6541u;
 	rand();
 	rand();
@@ -25,7 +25,7 @@ void main() {
 	// return ;
 	// data[id] = vec3(texture(pdf_joint, vec2(float(gid.x) / width_render, float(gid.y) / height_render)).r);
 	// return ;
-	
+
 
 	// vec2 test = calc_inverse_transform_sampling_uv();
 	// id = uint((1 - test.y) * (height_render - 1)) * width_render + uint(test.x * (width_render - 1));
@@ -49,18 +49,35 @@ void main() {
 
 	vec3 rd = normalize(pixel_pos - ro);
 
+	uint total_pixels = width_render * height_render;
+	uint albedo_offset = total_pixels;
+	uint normal_offset = total_pixels * 2;
+
+	// Fill auxiliary buffers for this sample (first hit only)
+	hit_record hit = get_default_hit_record();
+	if (hit_register_all(hit, ro, rd, true))
+	{
+		data[id].w = hit.t;
+		data[albedo_offset + id].xyz = hit.color;
+		data[normal_offset + id].xyz = (hit.normal + 1.0) * 0.5;
+	}
+	else
+	{
+		data[id].w = 0.0;
+		data[albedo_offset + id].xyz = vec3(0.0);
+		data[normal_offset + id].xyz = vec3(0.0);
+	}
+
+	// Calculate color for this sample
 	if (render_mode == 0)
-		data[id] = path_trace(ro, rd);
+		data[id].xyz = path_trace(ro, rd);
 	else if (render_mode == 1)
-		data[id] = path_trace_bvh(ro, rd);
+		data[id].xyz = path_trace_bvh(ro, rd);
 	else if (render_mode == 2)
-		data[id] = path_trace_normal(ro, rd);
-	// data[id] = vec3(ambiant.skybox_tex_index);
-	// if (viewport.t_one_sided == 1)
-	// 	data[id] = vec3(1.0);
-	// else
-	// 	data[id] = vec3(0.0);
+		data[id].xyz = path_trace_normal(ro, rd);
+
+
 
 	if (isnan(data[id].x) || isnan(data[id].y) || isnan(data[id].z))
-		data[id] = vec3(0.0);
+		data[id].xyz = vec3(0.0);
 }

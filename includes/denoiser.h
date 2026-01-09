@@ -28,8 +28,6 @@ typedef struct s_denoiser
 	float				*albedo_buffer;		// Buffer albedo (RGB float)
 	float				*normal_buffer;		// Buffer normal (RGB float)
 	float				*depth_buffer;		// Buffer depth (1 canal float)
-	int					update_interval;	// Fréquence de mise à jour (frames)
-	int					frame_counter;		// Compteur de frames
 	t_denoiser_quality	quality;			// Paramètres de qualité
 	bool				use_albedo;			// Utiliser le buffer albedo
 	bool				use_normal;			// Utiliser le buffer normal
@@ -50,27 +48,12 @@ void		denoiser_cleanup(t_denoiser *denoiser);
 
 void		denoiser_set_enabled(t_denoiser *denoiser, bool enabled);
 
-void		denoiser_set_update_interval(t_denoiser *denoiser, int interval);
-
-void		denoiser_set_quality(t_denoiser *denoiser, bool hdr, 
+void		denoiser_set_quality(t_denoiser *denoiser, bool hdr,
 				bool clean_aux, const char *filter_type);
 
 bool		denoiser_is_available(void);
 
 float		*denoiser_process(t_denoiser *denoiser, const float *render_buffer,
 				bool force);
-
-void		denoiser_rgba_to_float(const unsigned int *rgba_buffer,
-				float *rgb_float, int width, int height);
-
-void		denoiser_float_to_rgba(const float *rgb_float,
-				unsigned int *rgba_buffer, int width, int height);
-
-void		denoiser_print_info(t_denoiser *denoiser);
-
-float		*denoiser_buffer_copy(const float *src, int width, int height);
-
-void		denoiser_lerp_buffers(float *output, const float *buffer_a,
-				const float *buffer_b, float alpha, int width, int height);
 
 #endif /* DENOISER_H */

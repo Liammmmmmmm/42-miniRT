@@ -50,20 +50,24 @@ static void	copy_albedo_buffer(t_minirt *minirt)
 {
 	int			i;
 	int			total;
+	int			divide;
 	t_fcolor	*src;
 	float		*dst;
 
 	if (!minirt->denoiser || !minirt->denoiser->albedo_buffer)
 		return ;
+	divide = minirt->screen.last_sample_am;
+	if (divide == 0)
+		divide = 1;
 	total = minirt->scene.render_width * minirt->scene.render_height;
 	src = minirt->screen.albedo_buffer;
 	dst = minirt->denoiser->albedo_buffer;
 	i = 0;
 	while (i < total)
 	{
-		dst[i * 3 + 0] = (float)src[i].r;
-		dst[i * 3 + 1] = (float)src[i].g;
-		dst[i * 3 + 2] = (float)src[i].b;
+		dst[i * 3 + 0] = (float)(src[i].r / divide);
+		dst[i * 3 + 1] = (float)(src[i].g / divide);
+		dst[i * 3 + 2] = (float)(src[i].b / divide);
 		i++;
 	}
 }
@@ -72,20 +76,24 @@ static void	copy_normal_buffer(t_minirt *minirt)
 {
 	int			i;
 	int			total;
+	int			divide;
 	t_fcolor	*src;
 	float		*dst;
 
 	if (!minirt->denoiser || !minirt->denoiser->normal_buffer)
 		return ;
+	divide = minirt->screen.last_sample_am;
+	if (divide == 0)
+		divide = 1;
 	total = minirt->scene.render_width * minirt->scene.render_height;
 	src = minirt->screen.normal_buffer;
 	dst = minirt->denoiser->normal_buffer;
 	i = 0;
 	while (i < total)
 	{
-		dst[i * 3 + 0] = (float)src[i].r;
-		dst[i * 3 + 1] = (float)src[i].g;
-		dst[i * 3 + 2] = (float)src[i].b;
+		dst[i * 3 + 0] = (float)(src[i].r / divide);
+		dst[i * 3 + 1] = (float)(src[i].g / divide);
+		dst[i * 3 + 2] = (float)(src[i].b / divide);
 		i++;
 	}
 }
@@ -94,18 +102,22 @@ static void	copy_depth_buffer(t_minirt *minirt)
 {
 	int		i;
 	int		total;
+	int		divide;
 	float	*src;
 	float	*dst;
 
 	if (!minirt->denoiser || !minirt->denoiser->depth_buffer)
 		return ;
+	divide = minirt->screen.last_sample_am;
+	if (divide == 0)
+		divide = 1;
 	total = minirt->scene.render_width * minirt->scene.render_height;
 	src = minirt->screen.depth_buffer_denoise;
 	dst = minirt->denoiser->depth_buffer;
 	i = 0;
 	while (i < total)
 	{
-		dst[i] = src[i];
+		dst[i] = src[i] / divide;
 		i++;
 	}
 }

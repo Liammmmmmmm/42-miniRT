@@ -41,8 +41,12 @@ int	key_render_mode(int key, t_minirt *minirt)
 	}
 	else if (key == KEY_N)
 	{
-		toggle_vals(&minirt->render_mode, 2, 0);
+		minirt->render_mode = (minirt->render_mode + 1) % 6;
 		minirt->screen.sample = 0;
+		printf("Render Mode: %d (0=Normal, 1=BVH, 2=Normals, 3=Albedo, 4=NormalBuf, 5=Depth)\n",
+			minirt->render_mode);
+		if (minirt->render_mode >= 3 && !minirt->options.cpu)
+			printf("Warning: Modes 3-5 (Albedo/Normal/Depth buffers) only work in CPU mode!\n");
 		return (1);
 	}
 	else if (key == KEY_B)
@@ -79,15 +83,13 @@ int	keydown_render(int key, t_minirt *minirt)
 	else if (key == KEY_I && minirt->denoiser && minirt->denoiser->available)
 	{
 		minirt->show_denoised = !minirt->show_denoised;
-		printf("[Display] Showing %s image\n", 
+		printf("[Display] Showing %s image\n",
 			minirt->show_denoised ? "DENOISED" : "NOISY");
 		put_render_to_buff_upscaling(minirt);
 		mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.render_win,
 			minirt->mlx.img.img, 0, 0);
 	}
 
-	else if (key == KEY_L && minirt->denoiser)
-		denoiser_print_info(minirt->denoiser);
 	keydown_common(key, minirt);
 	open_controls(key, minirt);
 	return (0);

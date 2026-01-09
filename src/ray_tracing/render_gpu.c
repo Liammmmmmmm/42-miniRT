@@ -12,20 +12,61 @@
 
 #include "gpu.h"
 #include "minirt.h"
-#include "bvh.h"
-#include "material.h"
-#include "camera.h"
-#include <math.h>
 #include <string.h>
+
+static void	copy_buffer_to_backup(t_minirt *minirt, t_fcolor *src)
+{
+	int	total;
+	int	i;
+	int	divide;
+
+	divide = minirt->screen.last_sample_am;
+	if (divide == 0)
+		divide = 1;
+	total = minirt->scene.render_width * minirt->scene.render_height;
+	i = 0;
+	while (i < total)
+	{
+		minirt->screen.float_render_backup[i].r = src[i].r;
+		minirt->screen.float_render_backup[i].g = src[i].g;
+		minirt->screen.float_render_backup[i].b = src[i].b;
+		i++;
+	}
+}
 
 static void	prepare_display_buffer(t_minirt *minirt)
 {
 	int	total;
 
 	total = minirt->scene.render_width * minirt->scene.render_height;
-	memcpy(minirt->screen.float_render_backup, minirt->screen.float_render,
-		total * sizeof(t_fcolor));
-	if (minirt->show_denoised && minirt->denoiser && minirt->denoiser->available)
+	if (minirt->render_mode == 3)
+		copy_buffer_to_backup(minirt, minirt->screen.albedo_buffer);
+	else if (minirt->render_mode == 4)
+		copy_buffer_to_backup(minirt, minirt->screen.normal_buffer);
+	else if (minirt->render_mode == 5)
+	{
+		int	i;
+		int	divide;
+
+		divide = minirt->screen.last_sample_am;
+		if (divide == 0)
+			divide = 1;
+		i = 0;
+		while (i < total)
+		{
+			float depth = minirt->screen.depth_buffer_denoise[i] / divide;
+			float normalized = 1.0f / (1.0f + depth * 0.1f);
+			minirt->screen.float_render_backup[i].r = normalized * divide;
+			minirt->screen.float_render_backup[i].g = normalized * divide;
+			minirt->screen.float_render_backup[i].b = normalized * divide;
+			i++;
+		}
+	}
+	else
+		memcpy(minirt->screen.float_render_backup, minirt->screen.float_render,
+			total * sizeof(t_fcolor));
+	if (minirt->show_denoised && minirt->denoiser && minirt->denoiser->available
+		&& minirt->render_mode == 0)
 		apply_denoising_forced(minirt);
 }
 

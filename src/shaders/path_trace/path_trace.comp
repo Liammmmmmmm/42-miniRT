@@ -33,7 +33,7 @@ vec3	path_trace_normal(vec3 ro, vec3 rd)
 	if (hit_register_all(hit, ro, rd, true) == true)
 	{
 		hit.normal = (hit.normal + 1) * 0.5;
-		return hit.normal.xzy;
+		return hit.normal.xyz;
 	}
 	return (vec3(0.0));
 }

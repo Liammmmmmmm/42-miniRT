@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>miniRT</title>
+<style>
+:root {
+	--bg: #101216; --panel: #181b21; --line: #2a2f39; --text: #e4e7ec;
+	--muted: #8b93a1; --accent: #f0a63a; --accent-ink: #1a1305; --danger: #e5604f;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+	background: var(--bg); color: var(--text);
+	font: 13px/1.45 ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+	display: grid; grid-template-columns: minmax(0, 1fr) 320px;
+}
+#stage {
+	position: relative; display: flex; align-items: center; justify-content: center;
+	min-height: 0; padding: 16px; overflow: hidden; outline: none;
+}
+#frame {
+	max-width: 100%; max-height: 100%; image-rendering: auto; background: #000;
+	box-shadow: 0 0 0 1px var(--line); cursor: grab; user-select: none;
+}
+#frame.drag { cursor: grabbing; }
+#hint {
+	position: absolute; left: 16px; bottom: 12px; color: var(--muted); font-size: 12px;
+	background: rgba(16, 18, 22, .8); padding: 4px 8px; border-radius: 4px;
+}
+#bar { position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--line); }
+#bar > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+aside {
+	background: var(--panel); border-left: 1px solid var(--line);
+	overflow-y: auto; padding: 14px 16px 24px;
+}
+h1 { font-size: 15px; margin: 0 0 2px; letter-spacing: .02em; }
+h2 {
+	font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted);
+	margin: 18px 0 8px; font-weight: 600;
+}
+#sub { color: var(--muted); overflow-wrap: anywhere; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.stat { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 7px 9px; }
+.stat b { display: block; font-size: 15px; font-variant-numeric: tabular-nums; font-weight: 600; }
+.stat span { color: var(--muted); font-size: 11px; }
+.row { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
+.row > label { flex: 0 0 96px; color: var(--muted); }
+.row > input, .row > select { flex: 1 1 0; min-width: 0; }
+input, select, button {
+	font: inherit; color: var(--text); background: var(--bg);
+	border: 1px solid var(--line); border-radius: 5px; padding: 5px 8px;
+}
+input:focus, select:focus, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 0; }
+button { cursor: pointer; flex: 1 1 0; }
+button:hover { border-color: var(--muted); }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+.pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 8px; }
+.pad button { padding: 7px 0; }
+#state { color: var(--accent); }
+#state.err { color: var(--danger); }
+a { color: var(--accent); }
+@media (max-width: 760px) {
+	body { grid-template-columns: 1fr; grid-template-rows: 55vh auto; }
+	aside { border-left: 0; border-top: 1px solid var(--line); }
+}
+</style>
+</head>
+<body>
+<main id="stage" tabindex="0">
+	<div id="bar"><i></i></div>
+	<img id="frame" alt="Current render" draggable="false">
+	<div id="hint">Click the image, then W A S D / Q E to move, arrows or drag to look, wheel to advance</div>
+</main>
+<aside>
+	<h1>miniRT <span id="state">connecting</span></h1>
+	<div id="sub">&nbsp;</div>
+	<div class="stats">
+		<div class="stat"><b id="s-sample">-</b><span>samples</span></div>
+		<div class="stat"><b id="s-ms">-</b><span>per sample</span></div>
+		<div class="stat"><b id="s-elapsed">-</b><span>render time</span></div>
+		<div class="stat"><b id="s-eta">-</b><span>remaining</span></div>
+	</div>
+
+	<h2>Render</h2>
+	<div class="row">
+		<button id="b-pause" class="primary">Pause</button>
+		<button id="b-restart">Restart</button>
+	</div>
+	<div class="row"><label for="i-spp">Max samples</label><input id="i-spp" type="number" min="1" data-key="spp"></div>
+	<div class="row"><label for="i-bounces">Max bounces</label><input id="i-bounces" type="number" min="1" max="1000" data-key="bounces"></div>
+	<div class="row"><label for="i-width">Resolution</label>
+		<input id="i-width" type="number" min="2" max="8192" aria-label="Width">
+		<input id="i-height" type="number" min="2" max="8192" aria-label="Height"></div>
+	<div class="row"><label for="i-mode">View</label>
+		<select id="i-mode" data-key="mode">
+			<option value="0">Path traced</option>
+			<option value="2">Normals</option>
+			<option value="1">BVH heat map</option>
+		</select></div>
+	<div class="row"><label for="i-gamma">Gamma</label><input id="i-gamma" type="number" min="0.1" max="10" step="0.1" data-key="gamma"></div>
+
+	<h2>Camera</h2>
+	<div class="pad">
+		<button data-move="0,0,1" title="Q">Up</button>
+		<button data-move="1,0,0" title="W">Forward</button>
+		<button data-move="0,0,-1" title="E">Down</button>
+		<button data-move="0,-1,0" title="A">Left</button>
+		<button data-move="-1,0,0" title="S">Back</button>
+		<button data-move="0,1,0" title="D">Right</button>
+	</div>
+	<div class="row"><label for="i-step">Move step</label><input id="i-step" type="number" min="0.001" step="0.05" value="0.25"></div>
+	<div class="row"><label for="i-pos">Position</label><input id="i-pos" data-key="pos" spellcheck="false"></div>
+	<div class="row"><label for="i-dir">Direction</label><input id="i-dir" data-key="dir" spellcheck="false"></div>
+	<div class="row"><label for="i-fov">FOV</label><input id="i-fov" type="number" min="1" max="179" data-key="fov"></div>
+	<div class="row"><label for="i-focus">Focus dist.</label><input id="i-focus" type="number" min="0.001" step="0.1" data-key="focus"></div>
+	<div class="row"><label for="i-defocus">Defocus angle</label><input id="i-defocus" type="number" min="0" max="179" step="0.1" data-key="defocus"></div>
+
+	<h2>Image</h2>
+	<div class="row"><label for="i-scale">Preview</label>
+		<select id="i-scale">
+			<option value="1">Full size</option>
+			<option value="2">1/2</option>
+			<option value="4">1/4</option>
+		</select></div>
+	<div class="row"><label for="i-every">Refresh</label>
+		<select id="i-every">
+			<option value="0">Every sample</option>
+			<option value="1000">1 s</option>
+			<option value="5000">5 s</option>
+			<option value="30000">30 s</option>
+		</select></div>
+	<div class="row">
+		<button id="b-download">Download image</button>
+		<button id="b-save" title="Writes a .ppm in the output directory of the server">Save on server</button>
+	</div>
+</aside>
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const frame = $("frame"), stage = $("stage");
+let status = null, lastShown = -1, lastFetch = 0, loading = false, objectUrl = null;
+
+function cmd(query) {
+	return fetch("/cmd?" + query, { method: "POST", headers: { "X-MiniRT": "1" } }).catch(() => {});
+}
+
+function duration(ms) {
+	if (!isFinite(ms) || ms < 0) return "-";
+	const s = Math.round(ms / 1000);
+	if (s < 60) return s + " s";
+	if (s < 3600) return Math.floor(s / 60) + " min " + (s % 60) + " s";
+	return Math.floor(s / 3600) + " h " + Math.floor((s % 3600) / 60) + " min";
+}
+
+function setField(id, value) {
+	const el = $(id);
+	if (document.activeElement !== el && el.value !== String(value)) el.value = value;
+}
+
+function showStatus(s) {
+	status = s;
+	const done = s.sample >= s.spp;
+	$("state").className = "";
+	$("state").textContent = s.paused ? "paused" : done ? "finished" : "rendering";
+	$("sub").textContent = s.scene + " · " + s.backend + " · " + s.width + "×" + s.height;
+	$("s-sample").textContent = s.sample + " / " + s.spp;
+	$("s-ms").textContent = s.ms >= 1000 ? (s.ms / 1000).toFixed(2) + " s" : s.ms.toFixed(1) + " ms";
+	$("s-elapsed").textContent = duration(s.elapsed);
+	$("s-eta").textContent = done || !s.sample ? "-" : duration(s.elapsed / s.sample * (s.spp - s.sample));
+	document.querySelector("#bar > i").style.width = Math.min(100, 100 * s.sample / s.spp) + "%";
+	$("b-pause").textContent = s.paused ? "Resume" : "Pause";
+	setField("i-spp", s.spp); setField("i-bounces", s.bounces);
+	if (document.activeElement !== $("i-width") && document.activeElement !== $("i-height")) {
+		setField("i-width", s.width); setField("i-height", s.height);
+	}
+	setField("i-mode", s.mode); setField("i-gamma", s.gamma);
+	setField("i-pos", s.pos.map((v) => +v.toFixed(3)).join(", "));
+	setField("i-dir", s.dir.map((v) => +v.toFixed(3)).join(", "));
+	setField("i-fov", s.fov); setField("i-focus", s.focus); setField("i-defocus", s.defocus);
+	document.title = "miniRT – " + s.sample + "/" + s.spp;
+}
+
+async function refreshFrame(force) {
+	if (loading || !status) return;
+	const every = +$("i-every").value;
+	if (!force && (status.sample === lastShown || Date.now() - lastFetch < every)) return;
+	loading = true;
+	const shown = status.sample;
+	try {
+		const res = await fetch("/frame.bmp?scale=" + $("i-scale").value);
+		if (res.ok) {
+			const url = URL.createObjectURL(await res.blob());
+			frame.src = url;
+			if (objectUrl) URL.revokeObjectURL(objectUrl);
+			objectUrl = url;
+			lastShown = shown;
+			lastFetch = Date.now();
+		}
+	} catch (e) { /* the status poll reports the disconnection */ }
+	loading = false;
+}
+
+async function poll() {
+	try {
+		const res = await fetch("/status");
+		showStatus(await res.json());
+		refreshFrame(false);
+	} catch (e) {
+		$("state").className = "err";
+		$("state").textContent = "disconnected";
+	}
+	setTimeout(poll, 400);
+}
+
+/* ---- render controls */
+$("b-pause").onclick = () => cmd("action=" + (status && status.paused ? "resume" : "pause"));
+$("b-restart").onclick = () => cmd("action=restart");
+$("b-save").onclick = () => cmd("action=save");
+$("b-download").onclick = async () => {
+	const res = await fetch("/frame.bmp?scale=1");
+	const link = document.createElement("a");
+	link.href = URL.createObjectURL(await res.blob());
+	link.download = (status ? status.scene + "_" + status.sample + "spp" : "minirt") + ".bmp";
+	link.click();
+	setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+};
+$("i-scale").onchange = () => refreshFrame(true);
+document.querySelectorAll("[data-key]").forEach((el) => {
+	el.onchange = () => {
+		const value = el.value.replace(/\s+/g, "");
+		if (value !== "") cmd(el.dataset.key + "=" + encodeURIComponent(value));
+		el.blur();
+	};
+});
+function sendSize() {
+	const w = +$("i-width").value, h = +$("i-height").value;
+	if (w >= 2 && h >= 2) cmd("width=" + w + "&height=" + h);
+}
+$("i-width").onchange = sendSize;
+$("i-height").onchange = sendSize;
+
+/* ---- camera: deltas are accumulated and sent at most every 120 ms */
+const pending = { move: [0, 0, 0], rot: [0, 0] };
+let flushTimer = null;
+function flush() {
+	flushTimer = null;
+	const parts = [];
+	if (pending.move.some((v) => v)) parts.push("move=" + pending.move.map((v) => v.toFixed(5)).join(","));
+	if (pending.rot.some((v) => v)) parts.push("rot=" + pending.rot.map((v) => v.toFixed(3)).join(","));
+	pending.move = [0, 0, 0]; pending.rot = [0, 0];
+	if (parts.length) cmd(parts.join("&"));
+}
+function queue(move, rot) {
+	const step = +$("i-step").value || 0.25;
+	if (move) move.forEach((v, i) => { pending.move[i] += v * step; });
+	if (rot) rot.forEach((v, i) => { pending.rot[i] += v; });
+	if (!flushTimer) flushTimer = setTimeout(flush, 120);
+}
+document.querySelectorAll("[data-move]").forEach((el) => {
+	el.onclick = () => queue(el.dataset.move.split(",").map(Number), null);
+});
+const keys = {
+	w: [[1, 0, 0], null], s: [[-1, 0, 0], null], a: [[0, -1, 0], null], d: [[0, 1, 0], null],
+	q: [[0, 0, 1], null], e: [[0, 0, -1], null],
+	arrowleft: [null, [-4, 0]], arrowright: [null, [4, 0]], arrowup: [null, [0, 4]], arrowdown: [null, [0, -4]],
+};
+stage.addEventListener("keydown", (ev) => {
+	const k = keys[ev.key.toLowerCase()];
+	if (!k || ev.ctrlKey || ev.metaKey || ev.altKey) return;
+	ev.preventDefault();
+	queue(k[0], k[1]);
+});
+let drag = null;
+frame.addEventListener("pointerdown", (ev) => {
+	stage.focus();
+	drag = { x: ev.clientX, y: ev.clientY };
+	frame.setPointerCapture(ev.pointerId);
+	frame.classList.add("drag");
+});
+frame.addEventListener("pointermove", (ev) => {
+	if (!drag || !status) return;
+	const degPerPx = status.fov / Math.max(1, frame.clientWidth);
+	queue(null, [-(ev.clientX - drag.x) * degPerPx, (ev.clientY - drag.y) * degPerPx]);
+	drag = { x: ev.clientX, y: ev.clientY };
+});
+const endDrag = () => { drag = null; frame.classList.remove("drag"); };
+frame.addEventListener("pointerup", endDrag);
+frame.addEventListener("pointercancel", endDrag);
+frame.addEventListener("wheel", (ev) => {
+	ev.preventDefault();
+	queue([ev.deltaY < 0 ? 1 : -1, 0, 0], null);
+}, { passive: false });
+
+poll();
+</script>
+</body>
+</html>

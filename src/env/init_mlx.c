@@ -61,7 +61,7 @@ int	init_mlx(t_minirt *minirt)
 		minirt->scene.win_height = MAX_WIN_SIZE;
 	if (minirt->scene.win_width > MAX_WIN_SIZE)
 		minirt->scene.win_width = MAX_WIN_SIZE;
-	if (minirt->options.client.enabled)
+	if (minirt->options.client.enabled || minirt->options.web.enabled)
 		return (1);
 	mlx = &minirt->mlx;
 	mlx->mlx = mlx_init();

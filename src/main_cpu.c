@@ -14,6 +14,7 @@
 #include "bmp_parsing.h"
 #include "options.h"
 #include "error_message.h"
+#include "web.h"
 
 static int	render_next_frame(t_minirt *minirt)
 {
@@ -51,6 +52,12 @@ int	main_cpu(t_minirt *minirt, char **argv)
 	print_scene(&minirt->scene);
 	if (minirt->options.anim.enabled)
 		debug_print_animation(&minirt->options.anim);
+	if (minirt->options.web.enabled)
+	{
+		web_run(minirt);
+		clean(minirt);
+		return (0);
+	}
 	mlx_do_key_autorepeatoff(minirt->mlx.mlx);
 	events(minirt);
 	mlx_loop_hook(minirt->mlx.mlx, render_next_frame, minirt);

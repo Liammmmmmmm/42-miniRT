@@ -12,6 +12,7 @@
 
 #include "options.h"
 #include "utils.h"
+#include "web.h"
 
 int	basic_options(t_minirt *minirt, char **argv, int i)
 {
@@ -87,6 +88,8 @@ int	check_every_option2(t_minirt *minirt, char **argv, int *i)
 
 int	check_every_option(t_minirt *minirt, char **argv, int i)
 {
+	if (ft_strncmp(argv[i], "--web", 5) == 0)
+		return (parse_web_option(minirt, argv[i]));
 	if (basic_options(minirt, argv, i))
 		;
 	else if (check_every_option2(minirt, argv, &i) >= 0)

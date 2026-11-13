@@ -16,6 +16,7 @@
 #include "options.h"
 #include "error_message.h"
 #include "network.h"
+#include "web.h"
 
 static int	render_next_frame(t_minirt *minirt)
 {
@@ -28,6 +29,11 @@ static int	render_next_frame(t_minirt *minirt)
 
 void	default_startup(t_minirt *minirt)
 {
+	if (minirt->options.web.enabled && !minirt->options.server.enabled)
+	{
+		web_run(minirt);
+		return ;
+	}
 	if (minirt->options.server.enabled)
 		events_server(minirt);
 	else

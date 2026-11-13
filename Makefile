@@ -59,6 +59,7 @@ ifneq ($(CUDA),)
 	CFLAGS    += -DUSE_CUDA
 	GPU_FLAGS = -DUSE_GPU -DUSE_CUDA -lstdc++ -ldl $(DEPFLAGS)
 ifeq ($(CUDA), emu)
+	CFLAGS    += -DRT_CUDA_EMU
 	GPU_FLAGS += -fopenmp
 else
 	GPU_FLAGS += -L$(CUDA_HOME)/lib64 -L$(CUDA_HOME)/lib/x86_64-linux-gnu -lcudart
@@ -200,6 +201,9 @@ NETWORK_FILE        = client/active_mode.c client/client.c client/passive_mode.c
 					server/send_scene.c server/convert_scene.c server/init_scene.c server/monitoring.c \
 					utils.c utils2.c
 
+WEB_DIR             = src/web/
+WEB_FILE            = web_run.c web_http.c web_frame.c web_commands.c
+
 OPTIONS_DIR_GPU     = src/options/
 OPTIONS_FILE_GPU    = options.c options_common.c load_render.c animation.c animation_err.c animation_move_points.c \
 					animation_parse.c animation_tesselate.c animation_rotations.c \
@@ -231,7 +235,8 @@ M_FILE  =   $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 			$(addprefix $(PNG_DIR), $(PNG_FILE)) \
 			$(addprefix $(CAUSTIC_DIR), $(CAUSTIC_FILE)) \
 			$(addprefix $(GPU_DIR), $(GPU_FILE)) \
-			$(addprefix $(NETWORK_DIR), $(NETWORK_FILE))
+			$(addprefix $(NETWORK_DIR), $(NETWORK_FILE)) \
+			$(addprefix $(WEB_DIR), $(WEB_FILE))
 
 # Object files directory
 OBJ_DIR   = .obj/

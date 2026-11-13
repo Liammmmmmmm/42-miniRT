@@ -78,11 +78,25 @@ make CUDA=emu        # same kernel on the CPU with OpenMP, to debug without an N
 
 - `MINIRT_CUDA_DEVICE=1 ./miniRT ...` selects another GPU.
 - `NVCCFLAGS="-O3 -arch=sm_90" make CUDA=1` to target a specific architecture.
-- Without a screen: client mode (`--client=...`) opens no window at all; the
-  other modes still open an X window, so use
-  `xvfb-run -a ./miniRT scene.rt --no-display --auto-export --max-samples=1000`.
+- Without a screen: use `--web=PORT` (see below) or client mode
+  (`--client=...`), neither opens a window. The other modes need an X server
+  (`xvfb-run -a ./miniRT scene.rt --no-display --auto-export`).
 - `make`, `make CUDA=1` and `make CUDA=emu` use separate object directories
   but all produce `./miniRT`.
+
+## Web interface
+
+`--web=PORT` renders without opening any window and serves a control page:
+live image, pause / restart, samples, bounces, resolution, camera, export.
+It works with every backend (OpenGL, CUDA, `--compute-cpu`).
+
+```bash
+./miniRT scenes/example.rt --web=8080      # then open http://127.0.0.1:8080/
+```
+
+The server listens on 127.0.0.1 only and has no authentication. To use it
+from another machine, forward the port: `ssh -L 8080:127.0.0.1:8080 user@server`.
+`--web=0.0.0.0:8080` exposes it to the network, at your own risk.
 
 ## Authors
 

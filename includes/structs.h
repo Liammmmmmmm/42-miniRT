@@ -389,6 +389,13 @@ typedef struct s_caustic
 	double		norm_factor;
 }	t_caustic;
 
+typedef struct s_web
+{
+	t_bool	enabled;
+	int		port;
+	char	addr[48];
+}	t_web;
+
 typedef struct s_options
 {
 	t_bool		no_display;
@@ -404,6 +411,7 @@ typedef struct s_options
 	t_server	server;
 	t_bin		load_render;
 	t_caustic	caustic;
+	t_web		web;
 }	t_options;
 
 typedef struct s_micrort

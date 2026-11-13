@@ -81,7 +81,7 @@ static void	route_status(int fd)
 	m = g_web.minirt;
 	lock_for_read();
 	i = 0;
-	while (m->scene.name && m->scene.name[i] && i < 63)
+	while (i < 19 && m->scene.name[i])
 	{
 		name[i] = m->scene.name[i];
 		if (name[i] == '"' || name[i] == '\\' || (t_uchar)name[i] < 32)

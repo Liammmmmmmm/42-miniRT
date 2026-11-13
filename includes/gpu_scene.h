@@ -13,8 +13,23 @@
 #ifndef GPU_SCENE_H
 # define GPU_SCENE_H
 
-# include <GLFW/glfw3.h>
-# include "scene_structs.h"
+# ifdef RT_CUDA_KERNEL
+#  include <stdint.h>
+
+typedef unsigned int	t_uint;
+typedef unsigned int	GLuint;
+# else
+#  ifdef USE_CUDA
+
+typedef unsigned int	GLuint;
+typedef unsigned int	GLenum;
+typedef int				GLint;
+typedef void			GLFWwindow;
+#  else
+#   include <GLFW/glfw3.h>
+#  endif
+#  include "scene_structs.h"
+# endif
 
 # define SSBO_BIND_LIGHTS 2
 # define SSBO_BIND_MATERIALS 3
@@ -270,6 +285,9 @@ typedef struct s_gpu_textures
 	GLuint			cdf_mi_texture2d;
 }	t_gpu_textures;
 
+# ifndef RT_CUDA_KERNEL
+
 int	convert_textures_init(t_scene *scene, t_gpu_textures *gpu_tex);
+# endif
 
 #endif

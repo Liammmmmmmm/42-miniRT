@@ -97,8 +97,13 @@ static void	all_ssbo(t_gpu_structs *gpu)
 		gpu->photon_indices, SSBO_BIND_PHOTON_INDICE);
 	create_ssbo(&gpu->photons_ssbo, sizeof(t_gpu_photon) * gpu->photon_am,
 		gpu->photons, SSBO_BIND_PHOTON);
+#ifdef USE_CUDA
+	create_ssbo(&gpu->cells_ssbo, sizeof(t_gpu_cell) * gpu->cells_am,
+		gpu->cells, SSBO_BIND_CELL);
+#else
 	create_ssbo(&gpu->photons_ssbo, sizeof(t_gpu_photon) * gpu->photon_am,
 		gpu->photons, SSBO_BIND_CELL);
+#endif
 }
 
 int	convert_scene_build(t_minirt *minirt, t_scene *scene, t_viewport *viewport,

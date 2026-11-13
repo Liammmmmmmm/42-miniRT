@@ -12,6 +12,7 @@
 
 # Program name
 NAME     = miniRT
+.DEFAULT_GOAL := all
 
 # Style
 GREY     = \033[0;30m
@@ -45,6 +46,24 @@ GPU_FLAGS = -Wall -Wextra -DUSE_GPU -lGL -lGLEW -lglfw -ldl $(DEPFLAGS)
 DEBUG_FLAGS = -g3
 FAST_FLAGS = -O3 -flto -march=native -mtune=native -funroll-loops -ffast-math -falign-functions=32 -falign-loops=16
 # -O3 -march=native -mtune=native -flto -funsafe-math-optimizations -ffast-math -fomit-frame-pointer -funroll-loops -fno-exceptions -fno-rtti -fno-stack-protector -DNDEBUG -falign-functions=32 -falign-loops=16
+
+# CUDA backend: `make CUDA=1` (needs nvcc), `make CUDA=emu` runs the same
+# kernel on the CPU. Without CUDA the OpenGL compute shader is used.
+CUDA      ?=
+NVCC      ?= nvcc
+CXX       ?= g++
+CUDA_HOME ?= $(patsubst %/bin/,%,$(dir $(shell command -v $(NVCC) 2>/dev/null)))
+NVCCFLAGS ?= -O3
+CUDA_INC  = -DRT_CUDA_KERNEL -I includes/ -I src/cuda/
+ifneq ($(CUDA),)
+	CFLAGS    += -DUSE_CUDA
+	GPU_FLAGS = -DUSE_GPU -DUSE_CUDA -lstdc++ -ldl $(DEPFLAGS)
+ifeq ($(CUDA), emu)
+	GPU_FLAGS += -fopenmp
+else
+	GPU_FLAGS += -L$(CUDA_HOME)/lib64 -L$(CUDA_HOME)/lib/x86_64-linux-gnu -lcudart
+endif
+endif
 
 ifeq ($(MAKECMDGOALS), debug)
 	CFLAGS += $(DEBUG_FLAGS)
@@ -216,7 +235,16 @@ M_FILE  =   $(addprefix $(SRC_DIR_GPU), $(SRC_FILE_GPU)) \
 
 # Object files directory
 OBJ_DIR   = .obj/
-OBJ       = $(M_FILE:%.c=$(OBJ_DIR)%.o)
+ifneq ($(CUDA),)
+	OBJ_DIR   = .obj_cuda_$(CUDA)/
+	M_FILE    := $(filter-out src/gpu/init_shader.c src/gpu/compile_shader.c, $(M_FILE)) src/cuda/cuda_host.c
+ifeq ($(CUDA), emu)
+	CUDA_OBJ  = $(OBJ_DIR)src/cuda/rt_emu.o
+else
+	CUDA_OBJ  = $(OBJ_DIR)src/cuda/rt_cuda.o
+endif
+endif
+OBJ       = $(M_FILE:%.c=$(OBJ_DIR)%.o) $(CUDA_OBJ)
 DEPS      = $(M_FILE:%.c=$(OBJ_DIR)%.d)
 
 # NORMINETTE
@@ -242,7 +270,25 @@ $(OBJ_DIR)%.o : %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(INCLUDES)
 	@printf "\n$(GREEN)[Compiling] $(NC)$(shell echo $< | sed 's|^srcs/||')";
 
+CUDA_DEPS = src/cuda/rt_kernel.h src/cuda/rt_runtime.h includes/rt_cuda.h includes/gpu_scene.h
+
+$(OBJ_DIR)src/cuda/rt_cuda.o : src/cuda/rt_cuda.cu $(CUDA_DEPS)
+	@mkdir -p $(dir $@)
+	@printf "\n$(GREEN)[Compiling] $(NC)$< (nvcc)"
+	@$(NVCC) $(NVCCFLAGS) $(CUDA_INC) -c $< -o $@
+
+$(OBJ_DIR)src/cuda/rt_emu.o : src/cuda/rt_emu.cpp $(CUDA_DEPS)
+	@mkdir -p $(dir $@)
+	@printf "\n$(GREEN)[Compiling] $(NC)$<"
+	@$(CXX) -O3 -fopenmp -Wall -Wextra $(CUDA_INC) -c $< -o $@
+
 all : make_libft make_mlx $(NAME) nothing_to_be_done
+
+cuda :
+	@$(MAKE) --no-print-directory CUDA=1 all
+
+cuda_emu :
+	@$(MAKE) --no-print-directory CUDA=emu all
 
 nothing_to_be_done:
 	@if [ $(COMPILED_FILES) -eq 0 ]; then \
@@ -256,7 +302,14 @@ end_message:
 	@./assets/make_image/print_image 40 40 < assets/make_image/res
 	@echo "\n$(NORM_RET)";
 
-$(NAME) : $(MINILIBX) $(LIBFT) $(OBJ)
+# Relink when switching between the OpenGL / CUDA / emulation backends
+BACKEND_STAMP = .backend_$(if $(CUDA),cuda_$(CUDA),gl)
+
+$(BACKEND_STAMP) :
+	@rm -f .backend_*
+	@touch $@
+
+$(NAME) : $(MINILIBX) $(LIBFT) $(OBJ) $(BACKEND_STAMP)
 	@if [ $(COMPILED_FILES) -eq 0 ]; then \
 		echo "\n$(YELLOW)╔══════════════════════════════════════════════╗$(NC)";                          \
 		echo "$(YELLOW)║        Starting $(YELLOW2)$(NAME)$(YELLOW) compilation...        ║$(NC)";           \
@@ -283,7 +336,8 @@ clean :
 	@make --no-print-directory -C $(LIBFTDIR) clean
 	@make --no-print-directory -C $(MINILIBXDIR) clean
 	@echo "$(RED)[Removing] $(NC)object files"
-	@rm -rf $(OBJ_DIR)
+	@rm -rf .obj/ .obj_cuda_1/ .obj_cuda_emu/
+	@rm -f .backend_*
 
 fclean : clean
 	@make --no-print-directory -C $(LIBFTDIR) fclean
@@ -316,6 +370,6 @@ fdebug: fcleanp
 norminette:
 	@norminette src/ libft/ includes/
 
-.PHONY: all clean fclean nothing_to_be_done re end_message norminette fast ffast debug fdebug fcleanp bonus
+.PHONY: cuda cuda_emu all clean fclean nothing_to_be_done re end_message norminette fast ffast debug fdebug fcleanp bonus
 
 -include $(DEPS)

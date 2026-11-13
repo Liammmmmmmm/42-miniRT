@@ -81,6 +81,10 @@ static int	get_result(t_minirt *m)
 void	compute_frame_gpu(t_minirt *m)
 {
 	glUseProgram(m->shaders_data.program);
+#ifdef USE_CUDA
+	if (cuda_compute_frame(m))
+		return ;
+#else
 	if (m->options.client.enabled)
 		glUniform1ui(glGetUniformLocation(m->shaders_data.program,
 				"sample_count"), rand());
@@ -89,6 +93,7 @@ void	compute_frame_gpu(t_minirt *m)
 				"sample_count"), m->screen.sample);
 	glDispatchCompute(
 		(m->scene.render_width + 7) / 8, (m->scene.render_height + 7) / 8, 1);
+#endif
 	glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
 	glBindBuffer(GL_SHADER_STORAGE_BUFFER, m->shaders_data.ssbo);
 	if (get_result(m))

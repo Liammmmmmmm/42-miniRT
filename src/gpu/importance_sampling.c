@@ -12,6 +12,20 @@
 
 #include "gpu.h"
 
+#ifdef USE_CUDA
+
+GLuint	create_texture2d_from_data(const float *data, int width, int height)
+{
+	return (rt_cuda_tex_create(data, width, height));
+}
+
+GLuint	create_texture1d_from_data(const float *data, int width)
+{
+	return (rt_cuda_tex_create(data, width, 1));
+}
+
+#else
+
 /*
 Good to know:
 glTexImage2D(
@@ -65,6 +79,8 @@ GLuint	create_texture1d_from_data(const float *data, int width)
 	glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	return (texture_id);
 }
+
+#endif
 
 void	send_importance_sampling(t_minirt *minirt, t_scene *scene)
 {

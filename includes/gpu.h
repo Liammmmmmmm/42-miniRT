@@ -14,13 +14,18 @@
 # define GPU_H
 
 # include <stdlib.h>
-# include <GL/glew.h>
-# include <GLFW/glfw3.h>
-# include <GL/gl.h>
+# ifndef USE_CUDA
+#  include <GL/glew.h>
+#  include <GLFW/glfw3.h>
+#  include <GL/gl.h>
+# endif
 # include "libft.h"
 # include "utils.h"
 # include "gpu_struct.h"
 # include "structs.h"
+# ifdef USE_CUDA
+#  include "rt_cuda.h"
+# endif
 
 GLuint		compile_shader_from_files(const char **paths, int count,
 				GLenum shader_type);
@@ -32,6 +37,7 @@ void		init_ssbo(t_shader_data *shader_data, size_t render_width,
 int			init_shader(t_shader_data *shader_data, size_t render_width,
 				size_t render_height, t_scene *scene);
 void		compute_frame_gpu(t_minirt *minirt);
+int			cuda_compute_frame(t_minirt *minirt);
 
 void		delete_ssbo(GLuint *ssbo);
 void		clean_scene(t_gpu_structs *gpu_structs);

@@ -29,3 +29,5 @@ assets/textures/voortrekker_interior_4k.hdr
 minirt_export_*
 
 render_state.rts
+.obj_cuda_*/
+.backend_*

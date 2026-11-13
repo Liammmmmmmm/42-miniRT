@@ -13,7 +13,9 @@
 #ifndef GPU_STRUCT_H
 # define GPU_STRUCT_H
 
-# include <GLFW/glfw3.h>
+# ifndef USE_CUDA
+#  include <GLFW/glfw3.h>
+# endif
 # include "gpu_scene.h"
 
 typedef struct s_shader_data

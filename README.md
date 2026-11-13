@@ -63,6 +63,27 @@ make
 ./miniRT scenes/example.rt
 ```
 
+## CUDA backend
+
+The GPU renderer also exists as a CUDA kernel (`src/cuda/`), a port of the
+compute shaders in `src/shaders/`. It needs no OpenGL context, so it runs on a
+headless NVIDIA server.
+
+```bash
+make CUDA=1          # needs nvcc (CUDA toolkit); OpenGL/GLEW/GLFW are not needed
+./miniRT scenes/example.rt
+
+make CUDA=emu        # same kernel on the CPU with OpenMP, to debug without an NVIDIA GPU
+```
+
+- `MINIRT_CUDA_DEVICE=1 ./miniRT ...` selects another GPU.
+- `NVCCFLAGS="-O3 -arch=sm_90" make CUDA=1` to target a specific architecture.
+- Without a screen: client mode (`--client=...`) opens no window at all; the
+  other modes still open an X window, so use
+  `xvfb-run -a ./miniRT scene.rt --no-display --auto-export --max-samples=1000`.
+- `make`, `make CUDA=1` and `make CUDA=emu` use separate object directories
+  but all produce `./miniRT`.
+
 ## Authors
 
 **[Liammmmmmmm](https://github.com/Liammmmmmmm)** & **[delmath](https://github.com/delmath)**

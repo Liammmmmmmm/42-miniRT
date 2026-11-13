@@ -43,8 +43,12 @@ void	fcolor_to_float3(t_fcolor *vec, float *tab)
 
 void	create_ssbo(GLuint *ssbo, size_t size, void *data, long bind)
 {
+#ifdef USE_CUDA
+	*ssbo = rt_cuda_buffer_set(bind, size, data);
+#else
 	glGenBuffers(1, ssbo);
 	glBindBuffer(GL_SHADER_STORAGE_BUFFER, *ssbo);
 	glBufferData(GL_SHADER_STORAGE_BUFFER, size, data, GL_STATIC_DRAW);
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, bind, *ssbo);
+#endif
 }
